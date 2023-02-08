@@ -1,48 +1,125 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-	<%@include file="/WEB-INF/views/common/head.jsp" %>
+  	<%@include file="/WEB-INF/views/common/head.jsp" %>
 </head>
-<body>
-<div class="d-flex flex-column vh-100">
-	<%@include file="/WEB-INF/views/common/top.jsp" %>
-		<div class="container-fluid flex-grow-1">
-			<div class="row h-100">
-				<div class="col-md-2 bg-dark text-white">
-					<%@include file="/WEB-INF/views/common/menu.jsp" %>
-				</div>
-				<div class="col-md-10">
-				<!-- ********************************** -->
-				<div class="card m-2">
-					<div class="card-header">
-						로그인 폼
-					</div>
-					<div class="card-body">
-						<form method="post" action="login">
-							<div class="form-group">
-							    <label for="mid">Member ID</label>
-							    <input type="text" class="form-control" id="mid" name="mid" value="${member.mid}">
-							    <c:if test="${result == 'wrongMid'}">
-							   		<small id="midHelp" class="form-text text-danger">아이디가 존재하지 않음</small>
-							    </c:if>
-							</div>
-							<div class="form-group">
-								<label for="mpassword">Member Password</label>
-								<input type="password" class="form-control" id="mpassword" name="mpassword">
-								<c:if test="${result == 'wrongMpassword'}">
-									<small id="mpasswordHelp" class="form-text text-danger">패스워드가 존재하지 않음</small>
-							    </c:if>
-							</div>
-							<button type="submit" class="btn btn-info btn-sm mt-2">로그인</button>
-						</form>	
-					</div>
-				</div>
-				<!-- ********************************** -->
-				</div>
-			</div>
-		</div>
-	<%@include file="/WEB-INF/views/common/bottom.jsp" %>
-	</div>
+
+<body id="page-top">
+  <div id="wrapper">
+  
+    <!-- Sidebar -->
+   	<%@include file="/WEB-INF/views/common/sidebar.jsp" %>
+    <!-- Sidebar -->
+    
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        
+        <!-- TopBar -->
+         <%@include file="/WEB-INF/views/common/topbar.jsp" %>
+        <!-- Topbar -->
+
+        <!-- 메인 컨테이너 Container Fluid-->
+        <div class="container-fluid" id="container-wrapper">
+        
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">로그인</h1>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="./">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">나의 할일 </li>
+            </ol>
+          </div>
+		
+          <!-- Row -->
+          <div class="container-login">
+		    <div class="row justify-content-center">
+		      <div class="col-xl-6 col-lg-12 col-md-9">
+		        <div class="card shadow-sm my-5">
+		          <div class="card-body p-0">
+		            <div class="row">
+		              <div class="col-lg-12">
+		                <div class="login-form">
+		                  <div class="text-center">
+		                    <h1 class="h4 text-gray-900 mb-4">Login</h1>
+		                  </div>
+		                  <form class="user">
+		                    <div class="form-group">
+		                      <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
+		                        placeholder="Enter Email Address">
+		                    </div>
+		                    <div class="form-group">
+		                      <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
+		                    </div>
+		                    <div class="form-group">
+		                      <div class="custom-control custom-checkbox small" style="line-height: 1.5rem;">
+		                        <input type="checkbox" class="custom-control-input" id="customCheck">
+		                        <label class="custom-control-label" for="customCheck">Remember
+		                          Me</label>
+		                      </div>
+		                    </div>
+		                    <div class="form-group">
+		                      <a href="index.html" class="btn btn-primary btn-block">Login</a>
+		                    </div>
+		                    <hr>
+		                    <a href="index.html" class="btn btn-google btn-block">
+		                      <i class="fab fa-google fa-fw"></i> Login with Google
+		                    </a>
+		                    <a href="index.html" class="btn btn-facebook btn-block">
+		                      <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+		                    </a>
+		                  </form>
+		                  <hr>
+		                  <div class="text-center">
+		                    <a class="font-weight-bold small" href="register.html">Create an Account!</a>
+		                  </div>
+		                  <div class="text-center">
+		                  </div>
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+          </div>
+          <!-- Row -->
+
+          
+
+          <!-- 로그아웃 모달 -->
+          <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure you want to logout?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                  <a href="login.html" class="btn btn-primary">Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!---Container Fluid-->
+      </div>
+      <!-- Footer -->
+     	 <%@include file="/WEB-INF/views/common/footer.jsp" %>
+     <!-- Footer -->
+    </div>
+  </div>
+ <%@include file="/WEB-INF/views/common/bottom.jsp" %>
 </body>
+
+</html>
+

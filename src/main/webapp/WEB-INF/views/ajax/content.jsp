@@ -6,7 +6,6 @@
 	</head>
 	<body>
 	<div class="d-flex flex-column vh-100">
-		<%@include file="/WEB-INF/views/common/top.jsp" %>
 		<div class="container-fluid flex-grow-1">
 			<div class="row h-100">
 				<div class="col-md-2 bg-dark text-white">
