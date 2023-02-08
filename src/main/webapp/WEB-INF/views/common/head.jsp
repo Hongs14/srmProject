@@ -1,10 +1,12 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Home</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.min.css" />
-<script src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/bootstrap/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css"/>
-<script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
-	
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link href="${pageContext.request.contextPath}/resources/images/logoOnlyBlue.png" rel="icon">
+<title>SRM SYSTEM</title>
+<link href="${pageContext.request.contextPath}/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/css/ruang-admin.min.css" rel="stylesheet">
