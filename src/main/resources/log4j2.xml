@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+
+  <Appenders>
+  <!-- 콘솔에 출력해라 ,  어떤방식? pattern-->
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%-5level %logger{1}, %M() - %msg%n"/>
+    </Console>
+  </Appenders>
+  
+  <!-- 언제 출력할건지(로그레벨에 따라 어떤 레벨이상에만 로그 출력) root:기본 / 
+  info, warning, error -->
+   <Loggers>
+  	<Logger name="com.team01.webapp" level="info" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Root level="warn">
+      <AppenderRef ref="Console"/>
+    </Root>
+  </Loggers>
+
+  
+</Configuration>

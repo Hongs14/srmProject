@@ -1,0 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.col, [class*="col-"] {
+    padding:0px;
+    grid-template-columns:auto-fill;
+    
+ }
+ 
+
+
+ 
