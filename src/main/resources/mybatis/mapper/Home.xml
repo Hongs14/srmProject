@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team01.webapp.dao.HomeDao">
+
+	<insert id="insert">
+		INSERT INTO PROGRESS (PROG_NO, PROG_TYPE, PROG_START_DATE, PROG_END_DATE, PROG_RATE, SR_NO)
+		VALUES(13, '임시', sysdate, sysdate, 10, 1);
+	</insert>
+
+
+</mapper>

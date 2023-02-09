@@ -4,8 +4,6 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 <typeAliases>
- 	<typeAlias type="com.team01.webapp.dto.Board" alias="board"/>
- 	<typeAlias type="com.team01.webapp.dto.Pager" alias="pager"/>
- 	<typeAlias type="com.team01.webapp.dto.Member" alias="member"/>
+ 	<typeAlias type="com.team01.webapp.util.Pager" alias="pager"/>
 </typeAliases>
 </configuration>
