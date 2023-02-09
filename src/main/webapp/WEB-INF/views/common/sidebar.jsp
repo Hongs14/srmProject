@@ -27,7 +27,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
           aria-controls="collapseForm">
-          <i class="fab fa-fw fa-wpforms"></i>
+          <i class="far fa-fw fa-clipboard"></i>
           <span>SR 검토 관리 </span>
         </a>
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
@@ -40,13 +40,13 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/develop/list">
-          <i class="fas fa-fw fa-palette"></i>
+          <i class="fas fa-fw fa-file-code"></i>
           <span>SR 개발 관리</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/progress/list/1">
-          <i class="fas fa-fw fa-palette"></i>
+          <i class="fas fa-fw fa-chart-bar"></i>
           <span>SR 진척 관리</span>
         </a>
       </li>
@@ -57,13 +57,13 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="${pageContext.request.contextPath}/notice/list" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true"
           aria-controls="collapsePage">
-          <i class="fas fa-fw fa-columns"></i>
+          <i class="fas fa-fw fa-list-alt"></i>
           <span>공지사항 </span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
+        <a class="nav-link" href="${pageContext.request.contextPath}/qna/list">
+          <i class="fas fa-fw fa-sticky-note"></i>
           <span>QnA게시판</span>
         </a>
       </li>

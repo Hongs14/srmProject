@@ -76,6 +76,13 @@ a:focus {
   font-weight: 800
 }
 
+.searchboard{
+	background-color: lightgray;
+	height: 80px;
+	display: block;
+	
+}
+
 @-webkit-keyframes growIn {
   0% {
       -webkit-transform: scale(.9);

@@ -18,6 +18,6 @@ public class DevelopController {
 	public String getList() {
 //		developService.getList();
 		log.info("SR개발관리 리스트 목록");
-		return "sr/develop/developlist";
+		return "develop/developlist";
 	}
 }
