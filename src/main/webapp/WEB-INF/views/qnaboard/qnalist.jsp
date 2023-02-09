@@ -67,13 +67,15 @@
 								                    </tr>
 						                   		</thead>
 						                   		<tbody>
-						                      		<tr>
-						                        		<td></td>
-								                        <td>Pre-Sales Support</td>
-								                        <td>New York</td>
-								                        <td>21</td>
-								                        <td>$106,450</td>
-						                     		</tr>
+						                   			<c:forEach var="Qnaboard" items="${qnalist}">
+							                   			<tr>
+							                        		<td>1</td>
+									                        <td>${Qnaboard.qstnTtl}</td>
+									                        <td>${Qnaboard.UserId}</td>
+									                        <td>${Qnaboard.qstnWrtDate}</td>
+									                        <td>${Qnaboard.qstnInqCnt}</td>
+							                     		</tr>
+						                     		</c:forEach>
 						                 		</tbody>
 						                  	</table>
 						                </div>

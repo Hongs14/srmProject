@@ -7,5 +7,6 @@ import com.team01.webapp.util.Pager;
 
 public interface IQnaboardRepository {
 	public List<Qnaboard> selectQnaboardList(Pager pager);
+	public int totalRow();
 	
 }

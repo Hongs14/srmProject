@@ -1,7 +1,12 @@
 package com.team01.webapp.qnaboard.service;
 
-public interface QnaboardService {
+import java.util.List;
 
-	 getList();
+import com.team01.webapp.qnaboard.dto.Qnaboard;
+
+public interface QnaboardService {
+	
+	public List<Qnaboard> getList();
+
 	
 }
