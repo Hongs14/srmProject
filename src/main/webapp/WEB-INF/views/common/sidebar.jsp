@@ -39,18 +39,10 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
-          aria-controls="collapseTable">
-          <i class="fas fa-fw fa-table"></i>
-          <span>SR 개발 관리 </span>
+        <a class="nav-link" href="${pageContext.request.contextPath}/develop/list">
+          <i class="fas fa-fw fa-palette"></i>
+          <span>SR 개발 관리</span>
         </a>
-        <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Tables</h6>
-            <a class="collapse-item" href="simple-tables.html">Simple Tables</a>
-            <a class="collapse-item" href="datatables.html">DataTables</a>
-          </div>
-        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/progress/list/1">
