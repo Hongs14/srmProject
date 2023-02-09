@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath}">
         <div class="sidebar-brand-icon">
@@ -65,7 +65,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="ui-colors.html">
+        <a class="nav-link" href="${pageContext.request.contextPath}/progress/list/1">
           <i class="fas fa-fw fa-palette"></i>
           <span>SR 진척 관리</span>
         </a>
