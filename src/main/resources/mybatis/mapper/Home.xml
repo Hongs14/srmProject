@@ -4,7 +4,7 @@
 
 	<insert id="insert">
 		INSERT INTO PROGRESS (PROG_NO, PROG_TYPE, PROG_START_DATE, PROG_END_DATE, PROG_RATE, SR_NO)
-		VALUES(11, '임시', sysdate, sysdate, 10, 1);
+		VALUES(11, '임시', sysdate, sysdate, 10, 1)
 	</insert>
 
 

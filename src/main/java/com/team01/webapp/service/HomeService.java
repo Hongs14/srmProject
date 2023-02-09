@@ -1,5 +1,6 @@
 package com.team01.webapp.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team01.webapp.dao.HomeDao;
@@ -7,6 +8,7 @@ import com.team01.webapp.dao.HomeDao;
 @Service
 public class HomeService {
 	
+	@Autowired
 	private HomeDao homeDao;
 	
 	public int insert() {
