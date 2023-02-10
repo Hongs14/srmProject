@@ -120,7 +120,7 @@
                 		<div class="col-4">키워드
             				<form class="navbar-search">
 			                	<div class="input-group">
-			                    	<input type="text" class="form-control bg-light border-1 small" placeholder="What do you want to look for?"
+			                    	<input type="text" class="form-control bg-light border-1 small" 
 			                   		aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
 			                    	<div class="input-group-append">
 			                      		<button class="btn btn-primary" type="button">
@@ -134,8 +134,13 @@
                 </div>
                 <hr/>
                 <!-- SR 검토 목록 -->
+                <div class="d-sm-flex justify-content-end">
+                	<button class="btn btn-sm btn-secondary mr-1">일괄 처리 (검토중)</button>
+                	<button class="btn btn-sm btn-secondary mr-1">일괄 처리 (접수)</button>
+                	<button class="btn btn-sm btn-secondary mr-3">엑셀 다운로드</button>
+                </div>
                 <div class="table-responsive p-3">
-                  <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                  <table class="table align-items-center table-flush table-hover">
                     <thead class="thead-light" style="font-size:13px; text-align: center;">
 	                    <tr>
 		                    <th> </th>	
@@ -276,7 +281,7 @@
 
     </div>
 
- <%@include file="/WEB-INF/views/common/bottom.jsp" %>
+	<%@include file="/WEB-INF/views/common/bottom.jsp" %>
 </body>
 
 </html>
