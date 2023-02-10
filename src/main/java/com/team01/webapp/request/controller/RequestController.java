@@ -22,7 +22,7 @@ public class RequestController {
 	@RequestMapping(value="/request/list", method = RequestMethod.GET)
 	public String getListAll(HttpSession session, Model model, Pager pager) {
 		log.info("정보 로그 실행");
-		return "request/list1";
+		return "request/list";
 		
 	}
 
