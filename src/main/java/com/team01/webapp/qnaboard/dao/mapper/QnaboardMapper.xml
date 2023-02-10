@@ -2,23 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team01.webapp.qnaboard.dao.IQnaboardRepository">
 	
-	<select id="selectQnaboardList" resultType="qnaboard" parameterType="pager">
+	<select id="selectQnaboardList" resultType="qnaboardDto" parameterType="pager">
 		<![CDATA[
 			SELECT 
 					rnum,
 					QSTN_TTL AS "qstnTtl",
 					QSTN_INQ_CNT AS "qstnInqCnt",
 					QSTN_WRT_DATE AS "qstnWrtDate",
-					USER_ID AS "userId"			
+					USER_NM AS "userNm"			
 			from(
-		   		select rownum as rnum, qstn_no, qstn_ttl, qstn_cn, qstn_inq_cnt, qstn_wrt_date, user_id
-		   		from(
-		     		select qstn_no, qstn_ttl, qstn_cn, qstn_inq_cnt, qstn_wrt_date, user_id
-		      		from qstn
-		      		order by qstn_no desc
-		    	) 
-	   			 where rownum <= #{endRowNo}
-			)
+				   	select rownum as rnum, qstn_no, qstn_ttl, qstn_cn, qstn_inq_cnt, qstn_wrt_date, user_no, user_nm
+				   	from(
+				      select qstn_no, qstn_ttl, qstn_cn, qstn_inq_cnt, qstn_wrt_date, qstn.user_no, user_nm
+				      from qstn, users
+			          where qstn.user_no = users.user_no and qstn.user_no = 3
+				      order by qstn_no desc
+				    ) 
+			    where rownum <= #{endRowNo}
+				)
 			where rnum >= #{startRowNo}
 		]]>
 	</select>

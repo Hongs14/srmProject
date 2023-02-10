@@ -34,27 +34,28 @@
 			         	<!-- Row -->
 			         	<div>
 			          		<div class="qnacontent mx-3 my-0">
-					         	<div class="container-fluid searchboard">
-					         		<div class="col-6 row">
-					         			<div>조회기간</div>
-						         		<input type="date"/> ~
-						         		<input type="date"/>
-						         		<button class="btn btn-info">조회</button>
-					         		</div>
-					         		<div class="col-6 row">
-					         			<div>
-					         				<input type="text"/>
-					         			</div>
-					         			<button class="btn btn-info">검색</button>
-					         		</div>
-					         	</div>
+					         	
 					         	
 					         	<!-- table -->
 					         	<div class="col-lg-12">
 									<div class="card mb-4">
 						            	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-						            		<h6 class="m-0 font-weight-bold text-primary">QNA 게시글</h6>
-						                </div>
+						            		<div><h6 class="m-0 font-weight-bold text-primary">Qna 목록</h6></div>
+						            	</div>	
+						            	<div class="mx-3 px-3 d-flex flex-row justify-content-between searchboard">
+							            	<div>
+								         		<div>조회기간</div>
+									         	<input type="date"/> ~
+									         	<input type="date"/>
+									         	<button class="btn btn-primary">조회</button>
+								         	</div>
+							         		<div>
+							         			<div>
+							         				<input type="text"/>
+							         				<button class="btn btn-primary">검색</button>
+							         			</div>
+							         		</div>
+						            	</div>
 						                <div class="table-responsive p-3">
 						                	<table class="table align-items-center table-flush table-hover" id="dataTableHover">
 						                    	<thead class="thead-light">
@@ -67,13 +68,13 @@
 								                    </tr>
 						                   		</thead>
 						                   		<tbody>
-						                   			<c:forEach var="Qnaboard" items="${qnalist}">
+						                   			<c:forEach var="QnaboardDto" items="${qnalist}">
 							                   			<tr>
 							                        		<td>1</td>
-									                        <td>${Qnaboard.qstnTtl}</td>
-									                        <td>${Qnaboard.userId}</td>
-									                        <td>${Qnaboard.qstnWrtDate}</td>
-									                        <td>${Qnaboard.qstnInqCnt}</td>
+									                        <td>${QnaboardDto.qstnTtl}</td>
+									                        <td>${QnaboardDto.userNm}</td>
+									                        <td>${QnaboardDto.qstnWrtDate}</td>
+									                        <td>${QnaboardDto.qstnInqCnt}</td>
 							                     		</tr>
 						                     		</c:forEach>
 						                 		</tbody>
