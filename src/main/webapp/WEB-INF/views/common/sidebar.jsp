@@ -25,20 +25,22 @@
         </a>
       </li>
       <li class="nav-item">
+
         <a class="nav-link" href="${pageContext.request.contextPath}/examine/list">
           <i class="fab fa-fw fa-wpforms"></i>
+
           <span>SR 검토 관리 </span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/develop/list">
-          <i class="fas fa-fw fa-palette"></i>
+          <i class="fas fa-fw fa-file-code"></i>
           <span>SR 개발 관리</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/progress/list/1">
-          <i class="fas fa-fw fa-palette"></i>
+          <i class="fas fa-fw fa-chart-bar"></i>
           <span>SR 진척 관리</span>
         </a>
       </li>
@@ -53,8 +55,8 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
+        <a class="nav-link" href="${pageContext.request.contextPath}/qna/list">
+          <i class="fas fa-fw fa-sticky-note"></i>
           <span>QnA게시판</span>
         </a>
       </li>
