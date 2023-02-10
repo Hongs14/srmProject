@@ -12,8 +12,9 @@
         </div>
 		
         <div class="row">
-            <div class="col-lg-12 text-center">
-              <p>빠른 상담을 원하시나요? <a href="https://github.com/indrijunanda/RuangAdmin"
+            <div class="col-lg-12 text-center"><br>
+              <p>빠른 상담을 원하시나요? 
+              <a href="https://github.com/indrijunanda/RuangAdmin"
                   class="btn btn-primary btn-sm" target="_blank"><i class="fab fa-fw fa-github"></i>&nbsp;GitHub</a></p>
             </div>
           </div>
