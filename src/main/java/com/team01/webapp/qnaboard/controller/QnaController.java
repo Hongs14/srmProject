@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.team01.webapp.qnaboard.dto.Qnaboard;
-import com.team01.webapp.qnaboard.service.QnaboardService;
+import com.team01.webapp.qnaboard.service.IQnaboardService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j2;
 public class QnaController {
 	
 	@Autowired
-	private QnaboardService qnaboardService;
+	private IQnaboardService qnaboardService;
 	
 	@GetMapping("/list")
 	public String getList(Model model) {

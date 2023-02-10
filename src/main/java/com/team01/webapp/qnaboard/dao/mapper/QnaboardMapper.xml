@@ -4,7 +4,12 @@
 	
 	<select id="selectQnaboardList" resultType="qnaboard" parameterType="pager">
 		<![CDATA[
-			select rnum, qstn_no, qstn_ttl, qstn_cn, qstn_inq_cnt, qstn_wrt_date, user_id
+			SELECT 
+					rnum,
+					QSTN_TTL AS "qstnTtl",
+					QSTN_INQ_CNT AS "qstnInqCnt",
+					QSTN_WRT_DATE AS "qstnWrtDate",
+					USER_ID AS "userId"			
 			from(
 		   		select rownum as rnum, qstn_no, qstn_ttl, qstn_cn, qstn_inq_cnt, qstn_wrt_date, user_id
 		   		from(
@@ -12,9 +17,9 @@
 		      		from qstn
 		      		order by qstn_no desc
 		    	) 
-	   			 where rownum <= {endRowNo}
+	   			 where rownum <= #{endRowNo}
 			)
-			where rnum >= #{startRowNo};
+			where rnum >= #{startRowNo}
 		]]>
 	</select>
 	

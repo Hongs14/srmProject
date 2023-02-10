@@ -71,7 +71,7 @@
 							                   			<tr>
 							                        		<td>1</td>
 									                        <td>${Qnaboard.qstnTtl}</td>
-									                        <td>${Qnaboard.UserId}</td>
+									                        <td>${Qnaboard.userId}</td>
 									                        <td>${Qnaboard.qstnWrtDate}</td>
 									                        <td>${Qnaboard.qstnInqCnt}</td>
 							                     		</tr>
