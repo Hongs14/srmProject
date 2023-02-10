@@ -10,4 +10,12 @@
 <link href="${pageContext.request.contextPath}/resources/vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/resources/css/ruang-admin.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+<link href="${pageContext.request.contextPath}/resources/vendor/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css">
+<!-- Bootstrap DatePicker -->  
+<link href="${pageContext.request.contextPath}/resources/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" >
+<!-- Bootstrap Touchspin -->
+<link href="${pageContext.request.contextPath}/resources/vendor/bootstrap-touchspin/css/jquery.bootstrap-touchspin.css" rel="stylesheet" >
+<!-- ClockPicker -->
+<link href="${pageContext.request.contextPath}/resources/vendor/clock-picker/clockpicker.css" rel="stylesheet">
