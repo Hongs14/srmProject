@@ -6,14 +6,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.team01.webapp.progress.service.IProgressService;
+
 @Controller
 public class ProgressController {
 	
-//	@Autowired
-//	private ProgressService progressService;
+	@Autowired
+	private IProgressService progressService;
 	
 	@RequestMapping(value="/progress/list/{pageNo}", method = RequestMethod.GET)
 	public String progressList(@PathVariable int pageNo) {
+		
+		progressService.taskList();
+		
 		return "progress/list";
 	}
 }
