@@ -10,7 +10,7 @@
       </a>
       <hr class="sidebar-divider my-0">
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="${pageContext.request.contextPath}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>My Home</span></a>
       </li>
