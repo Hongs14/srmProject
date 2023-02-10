@@ -5,6 +5,27 @@
 
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
+  	<script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Bootstrap Datepicker -->
+  	<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+  	<!-- RuangAdmin Javascript -->
+  	<script src="${pageContext.request.contextPath}/resources/js/ruang-admin.min.js"></script>
+  	
+  	
+  	<script>
+  	$(document).ready(function () {
+	    $('#simple-date4 .input-daterange').datepicker({        
+	        format: 'yyyy/mm/dd',        
+	        autoclose: true,     
+	        todayHighlight: true,   
+	        todayBtn: 'linked',
+	      });  
+  	});
+  	</script>
+  	
 </head>
 
 <body id="page-top">
@@ -74,7 +95,7 @@
                 
                 <!-- 공지사항 목록 -->
                 <div class="table-responsive p-3">
-                  <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                  <table class="table align-items-center table-flush table-hover">
                     <thead class="thead-light">
                     <tr>
                       <th>카테고리</th>
