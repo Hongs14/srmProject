@@ -31,46 +31,52 @@
 										<div class="card-body">
 											<div class="form-group">
 												<div class="row">
-													<div class="col-lg-1 border border-dark">
-														<label for="system" style="margin:10px 0px">시스템 구분</label>
+													<div class="col-lg-1">
+														<label style="margin:10px 0px">시스템 구분</label>
 													</div>
-													<div class="col-lg-2 border border-dark">
-														<select class="select2-single from-control" style="margin:10px 0px; width:100%" id="system">
-															<option value="">Select</option>
-															<option value="system1">시스템1</option>
-															<option value="system2">시스템2</option>
-															<option value="system3">시스템3</option>
-															<option value="system4">시스템4</option>
-															<option value="system5">시스템5</option>
-														</select>
+													<div class="col-lg-2">
+														<div style="margin:10px 0px; width:100%">
+															<select class="select2-single from-control" style="width:100%">
+																<option value="">Select</option>
+																<option value="system1">시스템1</option>
+																<option value="system2">시스템2</option>
+																<option value="system3">시스템3</option>
+																<option value="system4">시스템4</option>
+																<option value="system5">시스템5</option>
+															</select>
+														</div>
 													</div>
-													<div class="col-lg-1 border border-dark">
-														<label for="system" style="margin:10px 0px">업무 구분</label>
+													<div class="col-lg-1">
+														<label for="" style="margin:10px 0px">업무 구분</label>
 													</div>
-													<div class="col-lg-2 border border-dark">
-														<select class="select2-single from-control" style="margin:10px 0px; width:100%" id="system">
-															<option value="">Select</option>
-															<option value="system1">시스템1</option>
-															<option value="system2">시스템2</option>
-															<option value="system3">시스템3</option>
-															<option value="system4">시스템4</option>
-															<option value="system5">시스템5</option>
-														</select>
+													<div class="col-lg-2">
+														<div style="margin:10px 0px; width:100%">
+															<select class="select2-single from-control" style="width:100%">
+																<option value="">Select</option>
+																<option value="system1">시스템1</option>
+																<option value="system2">시스템2</option>
+																<option value="system3">시스템3</option>
+																<option value="system4">시스템4</option>
+																<option value="system5">시스템5</option>
+															</select>
+														</div>
 													</div>
-													<div class="col-lg-1 border border-dark">
-														<label for="system" style="margin:10px 0px">진행 상태</label>
+													<div class="col-lg-1">
+														<label for="" style="margin:10px 0px">진행 상태</label>
 													</div>
-													<div class="col-lg-2 border border-dark">
-														<select class="select2-single from-control" style="margin:10px 0px; width:100%" id="system">
-															<option value="">Select</option>
-															<option value="system1">시스템1</option>
-															<option value="system2">시스템2</option>
-															<option value="system3">시스템3</option>
-															<option value="system4">시스템4</option>
-															<option value="system5">시스템5</option>
-														</select>
+													<div class="col-lg-2">
+														<div style="margin:10px 0px; width:100%">
+															<select class="select2-single from-control" style="width:100%">
+																<option value="">Select</option>
+																<option value="system1">시스템1</option>
+																<option value="system2">시스템2</option>
+																<option value="system3">시스템3</option>
+																<option value="system4">시스템4</option>
+																<option value="system5">시스템5</option>
+															</select>
+														</div>
 													</div>
-													<div class="col-lg-3 border">
+													<div class="col-lg-3">
 														<div class="input-group-append float-right">
 															<button class="btn btn-primary" type="button" style="margin:3px 0px">
 																<i class="fas fa-search fa-sm"></i>
@@ -79,43 +85,47 @@
 													</div>
 												</div>
 												<div class="row">
-													<div class="col-lg-1 border border-dark">
-														<label for="system" style="margin:10px 0px">SR 제목</label>
+													<div class="col-lg-1">
+														<label for="" style="margin:10px 0px">SR 제목</label>
 													</div>
-													<div class="col-lg-2 border border-dark">
-														<select class="select2-single from-control" style="margin:10px 0px; width:100%" id="system">
-															<option value="">Select</option>
-															<option value="system1">시스템1</option>
-															<option value="system2">시스템2</option>
-															<option value="system3">시스템3</option>
-															<option value="system4">시스템4</option>
-															<option value="system5">시스템5</option>
-														</select>
+													<div class="col-lg-2">
+														<div style="margin:10px 0px; width:100%">
+															<select class="select2-single from-control" style="width:100%">
+																<option value="">Select</option>
+																<option value="system1">시스템1</option>
+																<option value="system2">시스템2</option>
+																<option value="system3">시스템3</option>
+																<option value="system4">시스템4</option>
+																<option value="system5">시스템5</option>
+															</select>
+														</div>
 													</div>
-													<div class="col-lg-1 border border-dark">
-														<label for="system" style="margin:10px 0px">SR 번호</label>
+													<div class="col-lg-1">
+														<label for="" style="margin:10px 0px">SR 번호</label>
 													</div>
-													<div class="col-lg-2 border border-dark">
-														<select class="select2-single from-control" style="margin:10px 0px; width:100%" id="system">
-															<option value="">Select</option>
-															<option value="system1">시스템1</option>
-															<option value="system2">시스템2</option>
-															<option value="system3">시스템3</option>
-															<option value="system4">시스템4</option>
-															<option value="system5">시스템5</option>
-														</select>
+													<div class="col-lg-2">
+														<div style="margin:10px 0px; width:100%">
+															<select class="select2-single from-control" style="width:100%">
+																<option value="">Select</option>
+																<option value="system1">시스템1</option>
+																<option value="system2">시스템2</option>
+																<option value="system3">시스템3</option>
+																<option value="system4">시스템4</option>
+																<option value="system5">시스템5</option>
+															</select>
+														</div>
 													</div>
-													<div class="col-lg-1 border border-dark">
+													<div class="col-lg-1">
 														<label for="system" style="margin:10px 0px">키워드</label>
 													</div>
-													<div class="col-lg-2 border border-dark">
+													<div class="col-lg-2">
 														<form class="navbar-search">
-															<div class="input-group">
+															<div class="input-group" style="margin:2px 0px">
 																<input type="text" class="form-control bg-light border-1 small" aria-label="Search">
 															</div>
 														</form>
 													</div>
-													<div class="col-lg-3 border">
+													<div class="col-lg-3">
 														<div class="input-group-append float-right">
 															<button class="btn btn-danger" type="button" style="margin:3px 5px">
 																초기화
