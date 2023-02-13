@@ -1,7 +1,7 @@
 package com.team01.webapp.progress.service;
 
-import java.util.ArrayList;
+import com.team01.webapp.model.ProgressFilter;
 
 public interface IProgressService {
-	ArrayList<String> taskList();
+	public ProgressFilter filterList(ProgressFilter progressfilter);
 }

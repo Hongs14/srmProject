@@ -5,7 +5,8 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class Qnaboard {
+public class QSTN {
+
 	private String qstnNo;
 	private String qstnTtl;
 	private String qstnCn;
@@ -13,4 +14,5 @@ public class Qnaboard {
 	private Date qstnWrtDate;
 	private String userNo;
 	private String userNm;
+	
 }

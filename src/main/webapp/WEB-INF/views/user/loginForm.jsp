@@ -23,49 +23,42 @@
           <!-- Row -->
           <div class="container-login mt-5">
 		    <div class="row justify-content-center">
-		      <div class="col-xl-6 col-lg-12 col-md-9">
+		      <div class="col-xl-6 col-lg-12 p-0">
 		        <div class="card shadow-sm my-5">
 		          <div class="card-body p-0">
-		          	<div class="container">
-			          <div class="row">
-			              <div class="col-lg-12">
+		          	<div class="container p-0">
+			          <div class="row p-0">
+			              <div class="col-lg-9 p-0">
 			                <div class="login-form">
 			                  <div class="text-center">
 			                    <h1 class="h4 text-gray-900 mb-4">Login</h1>
 			                  </div>
-			                  <form class="user">
+			                  <form class="user" method="post" action="login">
 			                    <div class="form-group">
-			                      <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
-			                        placeholder="Enter Email Address">
+			                      <input type="text" class="form-control" id="userId" name="userId" placeholder="ID">
 			                    </div>
 			                    <div class="form-group">
-			                      <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
+			                      <input type="password" class="form-control" id="userPswd" name="userPswd" placeholder="Password">
 			                    </div>
 			                    <div class="form-group">
-			                      <div class="custom-control custom-checkbox small" style="line-height: 1.5rem;">
-			                        <input type="checkbox" class="custom-control-input" id="customCheck">
-			                        <label class="custom-control-label" for="customCheck">Remember
-			                          Me</label>
-			                      </div>
+			                      <button type="submit" class="btn btn-primary btn-block">로그인 </button>
 			                    </div>
-			                    <div class="form-group">
-			                      <a href="index.html" class="btn btn-primary btn-block">Login</a>
-			                    </div>
-			                    <hr>
-			                    <a href="index.html" class="btn btn-google btn-block">
-			                      <i class="fab fa-google fa-fw"></i> Login with Google
-			                    </a>
-			                    <a href="index.html" class="btn btn-facebook btn-block">
-			                      <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-			                    </a>
+			                     <div class="text-center">
+			                    <a class="font-weight-bold small" href="${pageContext.request.contextPath}/user/join">회원가입</a>
+			                  </div>
 			                  </form>
-			                  <hr>
-			                  <div class="text-center">
-			                    <a class="font-weight-bold small" href="register.html">Create an Account!</a>
-			                  </div>
-			                  <div class="text-center">
-			                  </div>
+			                  </div> 
 			                  
+			                  </div>
+			                  <div class="col-lg-3 m-0 p-0 bg-primary">
+			                  	<div class="brand-icon" >
+						          <img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:50px; margin:50px 30px 20px 30px;">
+						        </div>
+						        <h3 class="text-white" style="margin:0px 30px;">SRM </h3>
+						        <h3 class="text-white" style="margin:0px 30px;">SYSTEM</h3>
+						        <h6 class="text-light" style="margin:5px 30px 50px 30px;">OTI Team01</h6>
+			                  </div>
+			                  <hr>
 			                </div>
 			              </div>
 			             <div>
@@ -84,8 +77,6 @@
         <!---Container Fluid-->
       </div>
     
-    </div>
-  </div>
  <%@include file="/WEB-INF/views/common/bottom.jsp" %>
 </body>
 

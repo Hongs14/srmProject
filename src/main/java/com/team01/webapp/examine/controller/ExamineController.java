@@ -23,4 +23,10 @@ public class ExamineController {
 		return "examine/list";
 	}
 	
+	@GetMapping(value="/detail")
+	public String getExamineDetail() {
+		log.info("실행");
+		return "examine/detail";
+	}
+	
 }

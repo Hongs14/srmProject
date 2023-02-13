@@ -94,6 +94,9 @@
                 <hr/>
                 
                 <!-- 공지사항 목록 -->
+                <div class="d-sm-flex justify-content-end">
+                	<a href="${pageContext.request.contextPath}/notice/write" class="btn btn-sm btn-secondary mr-3">글작성</a>
+                </div>
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush table-hover">
                     <thead class="thead-light">
@@ -111,38 +114,6 @@
 	                      <td>공지사항</td>
 	                      <td>1</td>
 	                      <td>SRM 요청등록 하는 방법</td>
-	                      <td>관리자</td>
-	                      <td>2023-02-09</td>
-	                      <td>111</td>
-	                    </tr>
-	                    <tr>
-	                      <td>공지사항</td>
-	                      <td>2</td>
-	                      <td>SRM 요청등록 수정 하는 방법</td>
-	                      <td>관리자</td>
-	                      <td>2023-02-09</td>
-	                      <td>111</td>
-	                    </tr>
-	                    <tr>
-	                      <td>공지사항</td>
-	                      <td>3</td>
-	                      <td>SRM 요청등록 삭제 하는 방법</td>
-	                      <td>관리자</td>
-	                      <td>2023-02-09</td>
-	                      <td>111</td>
-	                    </tr>
-	                    <tr>
-	                      <td>공지사항</td>
-	                      <td>4</td>
-	                      <td>SRM 사용방법</td>
-	                      <td>관리자</td>
-	                      <td>2023-02-09</td>
-	                      <td>111</td>
-	                    </tr>
-	                    <tr>
-	                      <td>공지사항</td>
-	                      <td>5</td>
-	                      <td>SRM 검토</td>
 	                      <td>관리자</td>
 	                      <td>2023-02-09</td>
 	                      <td>111</td>

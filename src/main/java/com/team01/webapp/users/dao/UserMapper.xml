@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team01.webapp.users.dao.IUserRepository">
+
+	<select id="selectByUserId" parameterType="string" resultType="users">
+		SELECT 
+		     user_no as "userNo",
+		     user_id as "userId", 
+		     user_pswd as "userPswd", 
+		     user_jbps as "userJbps", 
+		     user_nm as "userNm", 
+		     user_type as "userType", 
+		     user_ogdp as "userOgdp", 
+		     user_eml as "userEml", 
+		     user_telno as "userTelno", 
+		     user_dp_nm as "userDpNm"
+		     
+		  FROM 
+			users
+		  WHERE user_id = #{userId}
+	</select>
+	
+	<insert id="insert" parameterType="users">
+		insert into users ( user_no, user_id, user_pswd, user_jbps, user_nm, user_type, user_ogdp, user_eml, user_telno, user_dp_nm )
+		values (user_seq.nextval, #{userId}, #{userPswd}, #{userJbps}, #{userNm}, #{userType}, #{userOgdp}, #{userEml}, #{userTelno}, #{userDpNm} )
+	</insert>
+</mapper>

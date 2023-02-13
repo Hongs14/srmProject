@@ -75,7 +75,7 @@
               </div>
             </li>
             
-            <li class="nav-item dropdown no-arrow mx-1">
+            <%-- <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
@@ -157,39 +157,40 @@
                 </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">View All Taks</a>
               </div>
-            </li>
+            </li> --%>
             <div class="topbar-divider d-none d-sm-block"></div>
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <img class="img-profile rounded-circle" src="${pageContext.request.contextPath}/resources/images/boy.png" style="max-width: 60px">
-                <span class="ml-2 d-none d-lg-inline text-white small">${loginMember.mid}</span>
+                <img class="img-profile rounded-circle" src="${pageContext.request.contextPath}/resources/images/user.png" style="max-width: 60px; border:0px; ">
+                <c:if test="${!empty sessionScope.loginUser.userId}">
+              		<button class= "btn text-white" style="background-color:transparent; border:0px;">${sessionScope.loginUser.userNm} 님</button>
+              	</c:if>
               </a>
               
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
+                  	나의 정보 확인
                 </a>
                 <a class="dropdown-item" href="#">
                   <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
+                  설정
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
+                  로그아웃 
                 </a>
               </div>
             </li>
             <li>
-            <c:if test="${empty sessionScope.userId}">
-            	  <a class="btn btn-sm btn-primary mt-3" href="${pageContext.request.contextPath}/login">로그인</a>
-              </c:if>
+            	<c:if test="${empty sessionScope.loginUser.userId}">
+            	  <a class="btn btn-sm btn-primary mt-3" href="${pageContext.request.contextPath}/user/login">로그인</a>
+              	</c:if>
+             	<c:if test="${!empty sessionScope.loginUser.userId}">
+            	  <a class="btn btn-sm btn-primary mt-3" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">로그아웃</a>
+              	</c:if>
             </li>
           </ul>
         </nav>

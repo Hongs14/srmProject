@@ -112,6 +112,33 @@
                     </tbody>
                   </table>
                 </div>
+                
+                <div class="pagingButtonSet d-flex justify-content-center m-3">
+					<c:if test="${pager.pageNo > 1}">
+						<a href="1" type="button" class="btn btn-muted shadow">◀◀</a>
+					</c:if>
+
+					<c:if test="${pager.groupNo > 1}">
+						<a href="${pager.startPageNo-1}" type="button" class="btn btn-muted shadow">◀</a>
+					</c:if>
+
+					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+						<c:if test="${pager.pageNo != i}">
+							<a href="${i}" type="button" class="btn btn-white shadow">${i}</a>
+						</c:if>
+						<c:if test="${pager.pageNo == i}">
+							<a href="${i}" type="button" class="btn btn-dark shadow">${i}</a>
+						</c:if>
+					</c:forEach>
+
+					<c:if test="${pager.groupNo < pager.totalGroupNo }">
+						<a href="${pager.endPageNo+1}" type="button" class="btn btn-muted shadow">▶</a>
+					</c:if>
+					<c:if test="${pager.pageNo < pager.totalPageNo}">
+                  		<a href="${pager.totalPageNo}" type="button" class="btn btn-muted shadow">▶▶</a>
+               		</c:if>
+				</div>
+				
               </div>
           </div>
           </div>

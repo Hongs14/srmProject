@@ -17,6 +17,5 @@
 	
 	<mybatis-spring:scan base-package="com.team01.webapp"/>
 	<!--기능별로 할 경우 여러개 작성-->
-	
 
 </beans>

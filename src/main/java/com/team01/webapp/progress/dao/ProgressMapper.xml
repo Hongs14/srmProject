@@ -2,9 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team01.webapp.progress.dao.IProgressRepository">
 
+	<!-- 필터링 시스템 구분 조회 -->
+	<select id="selectSysNmList" resultType="string">
+		SELECT SYS_NM 
+		FROM SYSTEM
+	</select>
+
 	<!-- 필터링 업무 구분 조회 -->
-	<select id="taskList" resultType="arraylist">
-		select STTS_NM
+	<select id="selectSrType" resultType="srtype">
+		SELECT 
+		    SR_TYPE_NO AS "srTypeNo",
+		    SR_TYPE_NM AS "srTypeNm"
+		FROM SR_TYPE
+	</select>
+	
+	<!-- 필터링 진행 상태 조회 -->
+	<select id="selectSttsNmList" resultType="srstts">
+		SELECT 
+		    STTS_NO AS "sttsNo",
+		    STTS_NM AS "sttsNm"
 		FROM SR_STTS
 	</select>
 

@@ -5,6 +5,25 @@
 <configuration>
 <typeAliases>
  	<typeAlias type="com.team01.webapp.util.Pager" alias="pager"/>
- 	<typeAlias type="com.team01.webapp.model.Qnaboard" alias="qnaboard"/>
+ 	<typeAlias type="com.team01.webapp.users.model.User" alias="users"/>
+ 	<typeAlias type="com.team01.webapp.model.HR" alias="hr"/>
+ 	<typeAlias type="com.team01.webapp.model.Notice" alias="notice"/>
+ 	<typeAlias type="com.team01.webapp.model.NoticeComment" alias="noticeComment"/>
+ 	<typeAlias type="com.team01.webapp.model.NoticeFile" alias="noticeFile"/>
+ 	<typeAlias type="com.team01.webapp.model.Progress" alias="progress"/>
+ 	<typeAlias type="com.team01.webapp.model.ProgressFile" alias="progressFile"/>
+ 	<typeAlias type="com.team01.webapp.model.ProgressFilter" alias="progressFilter"/>
+ 	<typeAlias type="com.team01.webapp.model.ProgressType" alias="progressType"/>
+ 	<typeAlias type="com.team01.webapp.model.QSTN" alias="qstn"/>
+ 	<typeAlias type="com.team01.webapp.model.QSTNComment" alias="qstnComment"/>
+ 	<typeAlias type="com.team01.webapp.model.QSTNFile" alias="qstnFile"/>
+ 	<typeAlias type="com.team01.webapp.model.SR" alias="sr"/>
+ 	<typeAlias type="com.team01.webapp.model.SRFile" alias="srFile"/>
+ 	<typeAlias type="com.team01.webapp.model.SRStts" alias="srstts"/>
+ 	<typeAlias type="com.team01.webapp.model.SRType" alias="srtype"/>
+ 	<typeAlias type="com.team01.webapp.model.System" alias="system"/>
+ 	<typeAlias type="com.team01.webapp.model.Task" alias="task"/>
+ 	<typeAlias type="com.team01.webapp.model.UserSystem" alias="userSystem"/>
+ 	
 </typeAliases>
 </configuration>
