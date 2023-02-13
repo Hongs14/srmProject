@@ -8,10 +8,12 @@ import lombok.Data;
 public class Notice {
 	
 	private int ntcNo;
-	private String userId;
+	private int userNo;
 	private String ntcTtl;
 	private String ntcCn;
 	private int ntcInqCnt;
 	private Date ntcWrtDate;
+	private String ntcPry;
+	private String userId;
 	
 }

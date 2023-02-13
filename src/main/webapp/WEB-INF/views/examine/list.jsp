@@ -182,7 +182,7 @@
 	                      <td>2023-02-09</td>
 	                      <td>     </td>
 	                      <td>N</td>
-	                      <td><button class="btn btn-sm btn-info">상세보기</button></td>
+	                      <td><a href="${pageContext.request.contextPath}/examine/detail" class="btn btn-sm btn-info">상세보기</a></td>
 	                    </tr>
 	                    <tr>
 	                      <td>2</td>
