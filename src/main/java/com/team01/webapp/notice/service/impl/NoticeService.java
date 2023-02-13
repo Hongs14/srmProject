@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.team01.webapp.model.Notice;
 import com.team01.webapp.notice.dao.INoticeRepository;
 import com.team01.webapp.notice.service.INoticeService;
+import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -24,10 +25,10 @@ public class NoticeService implements INoticeService{
 		return rows;
 	}
 	@Override
-	public List<Notice> getNoticeList(int pageNo) {
+	public List<Notice> getNoticeList(Pager pager) {
 		log.info("실행");
 		
-		List<Notice> list = noticeRepository.list(pageNo);
+		List<Notice> list = noticeRepository.list(pager);
 		
 		return list;
 	}
