@@ -7,5 +7,6 @@
  	<typeAlias type="com.team01.webapp.util.Pager" alias="pager"/>
  	<typeAlias type="com.team01.webapp.qnaboard.dto.Qnaboard" alias="qnaboard"/>
  	<typeAlias type="com.team01.webapp.qnaboard.dto.QnaboardDto" alias="qnaboardDto"/>
+ 	<typeAlias type="com.team01.webapp.users.model.User" alias="users"/>
 </typeAliases>
 </configuration>
