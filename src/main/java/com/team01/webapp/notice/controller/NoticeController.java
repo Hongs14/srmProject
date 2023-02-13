@@ -30,7 +30,7 @@ public class NoticeController {
 		int totalRows = noticeService.getTotalRows();
 		Pager pager = new Pager(5,5, totalRows, pageNo);
 		
-		List<Notice> noticeList = noticeService.getNoticeList(pageNo);
+		List<Notice> noticeList = noticeService.getNoticeList(pager);
 		
 		model.addAttribute("noticeList",noticeList);
 		model.addAttribute("pager",pager);

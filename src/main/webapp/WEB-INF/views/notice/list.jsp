@@ -118,38 +118,6 @@
 	                      <td>2023-02-09</td>
 	                      <td>111</td>
 	                    </tr>
-	                    <tr>
-	                      <td>공지사항</td>
-	                      <td>2</td>
-	                      <td>SRM 요청등록 수정 하는 방법</td>
-	                      <td>관리자</td>
-	                      <td>2023-02-09</td>
-	                      <td>111</td>
-	                    </tr>
-	                    <tr>
-	                      <td>공지사항</td>
-	                      <td>3</td>
-	                      <td>SRM 요청등록 삭제 하는 방법</td>
-	                      <td>관리자</td>
-	                      <td>2023-02-09</td>
-	                      <td>111</td>
-	                    </tr>
-	                    <tr>
-	                      <td>공지사항</td>
-	                      <td>4</td>
-	                      <td>SRM 사용방법</td>
-	                      <td>관리자</td>
-	                      <td>2023-02-09</td>
-	                      <td>111</td>
-	                    </tr>
-	                    <tr>
-	                      <td>공지사항</td>
-	                      <td>5</td>
-	                      <td>SRM 검토</td>
-	                      <td>관리자</td>
-	                      <td>2023-02-09</td>
-	                      <td>111</td>
-	                    </tr>
                   	</tbody>
                   </table>
                 </div>
