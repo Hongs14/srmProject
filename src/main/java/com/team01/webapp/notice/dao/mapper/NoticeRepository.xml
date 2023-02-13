@@ -9,11 +9,11 @@
 	<select id="list" parameterType="pager" resultType="notice">
 		<![CDATA[
 			SELECT 
-			    RNUM AS seq,
-			    USER_ID AS userId,
-			    NTC_TTL AS ntcTtl,
-			    NTC_INQ_CNT AS ntcInqCnt,
-			    NTC_WRT_DATE AS ntcWrtDate
+			    RNUM AS "seq",
+			    USER_ID AS "userId",
+			    NTC_TTL AS "ntcTtl",
+			    NTC_INQ_CNT AS "ntcInqCnt",
+			    NTC_WRT_DATE AS "ntcWrtDate"
 			FROM(
 			    SELECT 
 			        NTC_NO,
@@ -21,7 +21,7 @@
 			        NTC_INQ_CNT,
 			        NTC_WRT_DATE,
 			        NTC_PRY,
-			        USER_ID,
+			        USER_ID
 			    FROM(
 			        SELECT 
 			            n.NTC_NO,

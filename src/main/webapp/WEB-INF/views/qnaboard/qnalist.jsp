@@ -87,6 +87,9 @@
 	                                 	</div>
 						         	
 						                <div class="table-responsive p-3">
+						                	<div class="text-right px-3">
+						         				<button id="writeQna" class="btn btn-primary ml-3" onclick="location.href='${pageContext.request.contextPath}/qnaboard/write'">Qna등록하기</button>
+						         			</div> 
 						                	<table class="table align-items-center table-flush">
 						                    	<thead class="thead-light">
 								                	<tr>
@@ -110,9 +113,6 @@
 						                 		</tbody>
 						                  	</table>
 						                </div>
-						                <div class="text-right px-3">
-						         			<button id="writeQna" class="btn btn-primary">Qna등록하기</button>
-						         		</div> 
 					              	</div>
 					         	</div>  
 					         	<!-- table -->

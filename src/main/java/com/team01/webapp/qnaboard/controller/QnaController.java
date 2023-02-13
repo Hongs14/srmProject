@@ -35,5 +35,10 @@ public class QnaController {
 		return "qnaboard/qnadetail";
 	}
 	
+	@GetMapping("/write")
+	public String writeQna() {
+		log.info("Qna작성하기");
+		return "qnaboard/qnawrite";
+	}
 	
 }

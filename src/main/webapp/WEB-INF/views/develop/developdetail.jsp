@@ -169,7 +169,7 @@
 	                            		</div>
 	                            		<div class="text-right"> 
 	                            			<input type="button" class="btn btn-primary" value="수정"/>
-	                            			<button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/list'">목록</button>
+	                            			<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/list'">목록</button>
 	                            		</div>
                             		</form>
 	                            </div>
