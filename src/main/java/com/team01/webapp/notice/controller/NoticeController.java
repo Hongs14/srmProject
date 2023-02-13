@@ -14,12 +14,23 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class NoticeController {
 	
-	@Autowired
-	INoticeService noticeService;
+//	@Autowired
+//	INoticeService noticeService;
 
 	@GetMapping("/list")
 	public String getNoticeList() {
 		log.info("실행");
+		
+		//게시글 목록
+		String list = noticeService.getNoticeList();
+		
 		return "notice/list";
 	}
+	
+	@GetMapping("/write")
+	public String getNoticeWrite() {
+		log.info("실행");
+		return "notice/write";
+	}
+	
 }

@@ -44,31 +44,61 @@
 		                  <div class="text-center">
 		                    <h1 class="h4 text-gray-900 mb-4">Register</h1>
 		                  </div>
-		                  <form>
+		                  <form action="join" method="post">
 		                    <div class="form-group">
-		                      <label>First Name</label>
-		                      <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter First Name">
+		                      <label>이름 </label>
+		                      <input type="text" class="form-control" id="userNm" name="userNm" placeholder="Enter Name">
 		                    </div>
+		                    
 		                    <div class="form-group">
-		                      <label>Last Name</label>
-		                      <input type="text" class="form-control" id="exampleInputLastName" placeholder="Enter Last Name">
-		                    </div>
-		                    <div class="form-group">
-		                      <label>Email</label>
-		                      <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
+		                      <label>이메일 </label>
+		                      <input type="email" class="form-control" id="userEml" name="userEml" aria-describedby="emailHelp"
 		                        placeholder="Enter Email Address">
 		                    </div>
 		                    <div class="form-group">
-		                      <label>Password</label>
-		                      <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
+		                      <label>전화번호 </label>
+		                      <input type="tel" class="form-control" id="userTelno" name="userTelno" >
 		                    </div>
 		                    <div class="form-group">
-		                      <label>Repeat Password</label>
-		                      <input type="password" class="form-control" id="exampleInputPasswordRepeat"
-		                        placeholder="Repeat Password">
+		                      <label>아이디 </label>
+		                      <input type="text" class="form-control" id="userId" name="userId" placeholder="Enter Name">
 		                    </div>
 		                    <div class="form-group">
-		                      <button type="submit" class="btn btn-primary btn-block">Register</button>
+		                      <label>비밀번호 </label>
+		                      <input type="password" class="form-control" id="userPswd" name="userPswd" placeholder="Password">
+		                    </div>
+		                    <div class="form-group">
+		                      <label>비밀번호 재입력 </label>
+		                      <input type="password" class="form-control" id="userPswdRepeat" name="userPswdRepeat"
+		                        placeholder="Repeat Password"> 
+		                    </div>
+		                    <div class="form-group">
+		                      <label>타입 </label>
+		                      <select class="form-control" id="userType" name="userType">
+		                      	<option value="고객사">고객사</option>
+		                      	<option value="개발자">개발자</option>
+		                      	<option value="관리자">관리자</option>
+		                      </select>
+		                    </div>
+		                    
+		                    <div class="form-group">
+		                      <label>소속 </label>
+		                      <input type="text" class="form-control" id="userOgdp" name="userOgdp" >
+		                    </div>
+		                    
+		                    <div class="form-group">
+		                      <label>직급 </label>
+		                      <input type="text" class="form-control" id="userJbps" name="userJbps">
+		                    </div>
+		                    
+		                    <div class="form-group">
+		                      <label>부서 </label>
+		                      <input type="text" class="form-control" id="userDpNm" name="userDpNm">
+		                    </div>
+		                    
+		                    
+		                    <div class="form-group">
+		                      <button type="submit" class="btn btn-primary btn-block">가입</button>
 		                    </div>
 		                    <hr>
 		                    <a href="index.html" class="btn btn-google btn-block">
@@ -93,31 +123,6 @@
 		    </div>
           </div>
           <!-- Row -->
-
-          
-
-          <!-- 로그아웃 모달 -->
-          <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <p>Are you sure you want to logout?</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
-                  <a href="login.html" class="btn btn-primary">Logout</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
         <!---Container Fluid-->
       </div>

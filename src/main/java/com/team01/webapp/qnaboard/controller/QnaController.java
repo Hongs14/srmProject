@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.team01.webapp.qnaboard.dto.Qnaboard;
+import com.team01.webapp.model.Qnaboard;
 import com.team01.webapp.qnaboard.service.IQnaboardService;
 
 import lombok.extern.log4j.Log4j2;
@@ -27,6 +27,12 @@ public class QnaController {
 		model.addAttribute("qnalist", list);
 		log.info("qna목록보기");
 		return "qnaboard/qnalist";
+	}
+	
+	@GetMapping("/detail")
+	public String getDetail(Model model) {
+		log.info("qna상세보기");
+		return "qnaboard/qnadetail";
 	}
 	
 	

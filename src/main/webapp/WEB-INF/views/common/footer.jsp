@@ -13,9 +13,13 @@
 		
         <div class="row">
             <div class="col-lg-12 text-center"><br>
-              <p>빠른 상담을 원하시나요? 
+             <!--  <p>빠른 상담을 원하시나요? 
               <a href="https://github.com/indrijunanda/RuangAdmin"
-                  class="btn btn-primary btn-sm" target="_blank"><i class="fab fa-fw fa-github"></i>&nbsp;GitHub</a></p>
+                  class="btn btn-primary btn-sm" target="_blank"><i class="fab fa-fw fa-github"></i>&nbsp;GitHub</a></p> -->
+                  
+            	<p>팀원 : 김희률, 김태희, 정홍주, 황건희</p>
+            	<a href="https://github.com/SRM-TEAM01/srmProject"
+                  class="btn btn-primary btn-sm" target="_blank"><i class="fab fa-fw fa-github"></i>&nbsp;GitHub</a>
             </div>
           </div>
       </footer>
