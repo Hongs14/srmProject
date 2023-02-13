@@ -9,6 +9,7 @@ public class QSTNComment {
 
 	private int qstnCmntNo;
 	private int qstnNo;
+	private int userNo;
 	private String userId;
 	private String qstnCmntCn;
 	private Date qstnCmntDate;

@@ -138,8 +138,8 @@
 	                	<div class="row">
 		                	<div class="col-12">
 		                		<div class="d-sm-flex justify-content-end">
-		                			<button class="btn btn-sm btn-primary mr-1">저장</button>
-		                			<button class="btn btn-sm btn-danger mr-1">닫기</button>
+		                			<a href="${pageContext.request.contextPath}/examine/list" class="btn btn-sm btn-primary mr-1">저장</a>
+		                			<a href="${pageContext.request.contextPath}/examine/list" class="btn btn-sm btn-danger mr-1">닫기</a>
 								</div>	                	
 		                	</div>
 	                	</div>

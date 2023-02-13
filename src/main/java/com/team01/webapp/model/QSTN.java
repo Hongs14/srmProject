@@ -7,11 +7,12 @@ import lombok.Data;
 @Data
 public class QSTN {
 
-	private int qstnNo;
-	private String userId;
+	private String qstnNo;
 	private String qstnTtl;
 	private String qstnCn;
 	private int qstnInqCnt;
 	private Date qstnWrtDate;
+	private String userNo;
+	private String userNm;
 	
 }

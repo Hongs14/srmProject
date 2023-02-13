@@ -2,12 +2,12 @@ package com.team01.webapp.qnaboard.service;
 
 import java.util.List;
 
-import com.team01.webapp.model.Qnaboard;
+import com.team01.webapp.model.QSTN;
 
 
 public interface IQnaboardService {
 	
-	public List<Qnaboard> getList();
+	public List<QSTN> getList();
 
 	
 }

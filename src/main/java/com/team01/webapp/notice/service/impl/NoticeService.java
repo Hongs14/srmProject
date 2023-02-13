@@ -1,24 +1,35 @@
 package com.team01.webapp.notice.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.team01.webapp.model.Notice;
 import com.team01.webapp.notice.dao.INoticeRepository;
 import com.team01.webapp.notice.service.INoticeService;
 
+import lombok.extern.log4j.Log4j2;
+
 @Service
+@Log4j2
 public class NoticeService implements INoticeService{
 
-//	@Autowired
-//	INoticeRepository noticeRepository;
-	
+	@Autowired
+	INoticeRepository noticeRepository;
 	@Override
-	public String getNoticeList() {
+	public int getTotalRows() {
+		log.info("실행");
+		int rows = noticeRepository.count();
+		return rows;
+	}
+	@Override
+	public List<Notice> getNoticeList(int pageNo) {
+		log.info("실행");
 		
-//		String list = noticeRepository.getNoticeList();
+		List<Notice> list = noticeRepository.list(pageNo);
 		
-		
-		return null;
+		return list;
 	}
 
 }

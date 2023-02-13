@@ -7,8 +7,8 @@ public class NoticeComment {
 	
 	private int ntcCmntNo;
 	private int ntcNo;
-	private String userId;
+	private int userNo;
 	private String ntcCmntCn;
 	private String ntcCmntDate;
-	
+	private String userId;
 }
