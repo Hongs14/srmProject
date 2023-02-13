@@ -8,5 +8,6 @@
  	<typeAlias type="com.team01.webapp.qnaboard.dto.Qnaboard" alias="qnaboard"/>
  	<typeAlias type="com.team01.webapp.qnaboard.dto.QnaboardDto" alias="qnaboardDto"/>
  	<typeAlias type="com.team01.webapp.users.model.User" alias="users"/>
+ 	<typeAlias type="com.team01.webapp.model.Qnaboard" alias="qnaboard"/>
 </typeAliases>
 </configuration>

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team01.webapp.qnaboard.dao.IQnaboardRepository">
 	
-	<select id="selectQnaboardList" resultType="qnaboardDto" parameterType="pager">
+	<select id="selectQnaboardList" resultType="qnaboard" parameterType="pager">
 		<![CDATA[
 			SELECT 
 					rnum,
