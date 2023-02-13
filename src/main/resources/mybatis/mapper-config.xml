@@ -8,5 +8,7 @@
  	<typeAlias type="com.team01.webapp.model.Qnaboard" alias="qnaboard"/>
  	<typeAlias type="com.team01.webapp.model.ProgressFilter" alias="progressFilter"/>
  	<typeAlias type="com.team01.webapp.users.model.User" alias="users"/>
+ 	<typeAlias type="com.team01.webapp.model.SRType" alias="srtype"/>
+ 	<typeAlias type="com.team01.webapp.model.SRStts" alias="srstts"/>
 </typeAliases>
 </configuration>

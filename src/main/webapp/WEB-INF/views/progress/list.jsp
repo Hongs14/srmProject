@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -47,12 +49,10 @@
 													<div class="col-lg-2">
 														<div style="margin:10px 0px; width:100%">
 															<select class="select2-single from-control" style="width:100%">
-																<option value="">Select</option>
-																<option value="system1">시스템1</option>
-																<option value="system2">시스템2</option>
-																<option value="system3">시스템3</option>
-																<option value="system4">시스템4</option>
-																<option value="system5">시스템5</option>
+																<option>전체</option>
+																<c:forEach var="item" items="${progressFilter.sysNmList}">
+																	<option>${item}</option>
+																</c:forEach>
 															</select>
 														</div>
 													</div>
@@ -62,12 +62,10 @@
 													<div class="col-lg-2">
 														<div style="margin:10px 0px; width:100%">
 															<select class="select2-single from-control" style="width:100%">
-																<option value="">Select</option>
-																<option value="system1">시스템1</option>
-																<option value="system2">시스템2</option>
-																<option value="system3">시스템3</option>
-																<option value="system4">시스템4</option>
-																<option value="system5">시스템5</option>
+																<option>전체</option>
+																<c:forEach var="item" items="${progressFilter.srTypeList}">
+																	<option value="${item.srTypeNo}">${item.srTypeNm}</option>
+																</c:forEach>
 															</select>
 														</div>
 													</div>
@@ -77,12 +75,10 @@
 													<div class="col-lg-2">
 														<div style="margin:10px 0px; width:100%">
 															<select class="select2-single from-control" style="width:100%">
-																<option value="">Select</option>
-																<option value="system1">시스템1</option>
-																<option value="system2">시스템2</option>
-																<option value="system3">시스템3</option>
-																<option value="system4">시스템4</option>
-																<option value="system5">시스템5</option>
+																<option>전체</option>
+																<c:forEach var="item" items="${progressFilter.srSttsList}">
+																	<option value="${item.sttsNo}">${item.sttsNm}</option>
+																</c:forEach>
 															</select>
 														</div>
 													</div>
@@ -98,37 +94,17 @@
 													<div class="col-lg-1">
 														<label for="" style="margin:10px 0px">SR 제목</label>
 													</div>
-													<div class="col-lg-2">
-														<div style="margin:10px 0px; width:100%">
-															<select class="select2-single from-control" style="width:100%">
-																<option value="">Select</option>
-																<option value="system1">시스템1</option>
-																<option value="system2">시스템2</option>
-																<option value="system3">시스템3</option>
-																<option value="system4">시스템4</option>
-																<option value="system5">시스템5</option>
-															</select>
-														</div>
+													<div class="col-lg-3">
+														<form class="navbar-search">
+															<div class="input-group" style="margin:2px 0px">
+																<input type="text" class="form-control bg-light border-1 small" aria-label="Search">
+															</div>
+														</form>
 													</div>
 													<div class="col-lg-1">
 														<label for="" style="margin:10px 0px">SR 번호</label>
 													</div>
-													<div class="col-lg-2">
-														<div style="margin:10px 0px; width:100%">
-															<select class="select2-single from-control" style="width:100%">
-																<option value="">Select</option>
-																<option value="system1">시스템1</option>
-																<option value="system2">시스템2</option>
-																<option value="system3">시스템3</option>
-																<option value="system4">시스템4</option>
-																<option value="system5">시스템5</option>
-															</select>
-														</div>
-													</div>
-													<div class="col-lg-1">
-														<label for="system" style="margin:10px 0px">키워드</label>
-													</div>
-													<div class="col-lg-2">
+													<div class="col-lg-4">
 														<form class="navbar-search">
 															<div class="input-group" style="margin:2px 0px">
 																<input type="text" class="form-control bg-light border-1 small" aria-label="Search">
