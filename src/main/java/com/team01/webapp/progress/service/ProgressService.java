@@ -18,16 +18,15 @@ public class ProgressService implements IProgressService {
 	@Autowired
 	private IProgressRepository progressRepository;
 	
-	private ProgressFilter progressFilter;
-	
 	@Override
-	public ArrayList<String> taskList() {
+	public ProgressFilter taskList(ProgressFilter progressfilter) {
 		List<String> list = new ArrayList<>();
 		list = progressRepository.taskList();
 		
-		log.info(list.get(0));
+		progressfilter.setTaskList(list);
 		
-		return null;
+		
+		return progressfilter;
 	}
 
 }

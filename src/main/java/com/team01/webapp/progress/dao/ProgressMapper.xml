@@ -4,7 +4,7 @@
 
 	<!-- 필터링 업무 구분 조회 -->
 	<select id="taskList" resultType="String">
-		select STTS_NM AS "taskList"
+		select STTS_NM
 		FROM SR_STTS
 	</select>
 

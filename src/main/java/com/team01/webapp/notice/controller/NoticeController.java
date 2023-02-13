@@ -22,7 +22,7 @@ public class NoticeController {
 		log.info("실행");
 		
 		//게시글 목록
-		String list = noticeService.getNoticeList();
+//		String list = noticeService.getNoticeList();
 		
 		return "notice/list";
 	}
