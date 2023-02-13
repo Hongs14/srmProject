@@ -5,12 +5,10 @@ import org.apache.ibatis.annotations.Mapper;
 import com.team01.webapp.users.model.User;
 
 @Mapper
-public interface IUserDao {
+public interface IUserRepository {
 
-	User selectUser(String userId);
+	public User selectByUserId(String userId);
 
-	User selectByUserId(String userId);
-
-	int insert(User user);
+	public int insert(User user);
 
 }
