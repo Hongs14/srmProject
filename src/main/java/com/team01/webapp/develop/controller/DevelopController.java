@@ -15,9 +15,15 @@ public class DevelopController {
 //	private DevelopService developService;
 	
 	@GetMapping("/list")
-	public String getList() {
+	public String getDevelopList() {
 //		developService.getList();
 		log.info("SR개발관리 리스트 목록");
 		return "develop/developlist";
+	}
+	
+	@GetMapping("/detail")
+	public String getDevelopDetail() {
+		log.info("SR개발관리 상세보기");
+		return "develop/developdetail";
 	}
 }
