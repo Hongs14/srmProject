@@ -9,13 +9,13 @@ import com.team01.webapp.notice.service.INoticeService;
 @Service
 public class NoticeService implements INoticeService{
 
-	@Autowired
-	INoticeRepository noticeRepository;
+//	@Autowired
+//	INoticeRepository noticeRepository;
 	
 	@Override
 	public String getNoticeList() {
 		
-		String list = noticeRepository.getNoticeList();
+//		String list = noticeRepository.getNoticeList();
 		
 		
 		return null;

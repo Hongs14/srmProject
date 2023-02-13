@@ -18,17 +18,12 @@ public class ProgressController {
 	@Autowired
 	private IProgressService progressService;
 	
-	private ProgressFilter progressFilter;
-	
 	@RequestMapping(value="/progress/list/{pageNo}", method = RequestMethod.GET)
-	public String progressList(@PathVariable int pageNo) {
+	public String progressList(@PathVariable int pageNo, ProgressFilter progressfilter) {
 		
-		progressService.taskList();
+		progressfilter = progressService.taskList(progressfilter);
 		
-		String a = "인사";
-		
-		progressFilter.setName(a);
-		log.info(progressFilter.getName());
+		log.info(progressfilter);
 		
 		
 		return "progress/list";
