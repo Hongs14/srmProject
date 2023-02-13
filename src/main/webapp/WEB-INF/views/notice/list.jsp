@@ -94,6 +94,9 @@
                 <hr/>
                 
                 <!-- 공지사항 목록 -->
+                <div class="d-sm-flex justify-content-end">
+                	<a href="${pageContext.request.contextPath}/notice/write" class="btn btn-sm btn-secondary mr-3">글작성</a>
+                </div>
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush table-hover">
                     <thead class="thead-light">
