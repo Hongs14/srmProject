@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class ProgressFilter {
-	private String name;
-	private List<String> taskList;
+	private List<String> SysNmList;
+	private List<SRType> SrTypeList;
+	private List<SRStts> SrSttsList;
 }
