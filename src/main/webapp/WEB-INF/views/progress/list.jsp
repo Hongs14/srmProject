@@ -19,15 +19,25 @@
 				<%@include file="/WEB-INF/views/common/topbar.jsp"%>
 				<!-- 메인 컨테이너 Container Fluid-->
 				<div class="container-fluid" id="container-wrapper">
+					<div
+						class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">SR 진척관리</h1>
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a
+								href="${pageContext.request.contextPath}">Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page">진척관리
+							</li>
+						</ol>
+					</div>
 					<div class="row">
 						<!-- 진척관리 테이블 -->
 						<div class="col-lg-12">
 							<div class="card mb-4">
 								<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-									<h6 class="m-0 font-weight-bold text-primary">SR 진척관리</h6>
+									<h6 class="m-0 font-weight-bold text-primary">SR 진척목록</h6>
 								</div>
 								<div class="col-lg-12">
-									<div class="card mb-4">
+									<div class="border-bottom border-dark">
 										<div class="card-body">
 											<div class="form-group">
 												<div class="row">
@@ -154,6 +164,18 @@
 												<th>진행 상태</th>
 											</tr>
 										</thead>
+										<tbody onclick="location.href='${pageContext.request.contextPath}/progress/detail/1'">
+											<tr>
+												<th>13</th>
+												<th>황건희 시스템</th>
+												<th>황건희 댓글 추가</th>
+												<th>건희 건희</th>
+												<th>황 아저씨</th>
+												<th>건희씨 생일</th>
+												<th>건희씨 생일쯤 ^^</th>
+												<th>많이 됬을걸?</th>
+											</tr>
+										</tbody>
 										<tbody>
 											<tr>
 												<th>13</th>
