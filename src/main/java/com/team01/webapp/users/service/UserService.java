@@ -5,7 +5,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.team01.webapp.users.dao.IUserDao;
+import com.team01.webapp.users.dao.IUserRepository;
 import com.team01.webapp.users.model.User;
 
 import lombok.extern.log4j.Log4j2;
@@ -21,13 +21,15 @@ public class UserService implements IUserService {
 	public static final int JOIN_FAIL=1;
 	
 	@Autowired
-	IUserDao userRepository;
+	IUserRepository userRepository;
 	
 	@Override
 	public LoginResult login(User user) {
 		log.info("userId: "+ user.getUserId()+ "실행");
 		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		User dbUser = getUser(user.getUserId());
+		log.info("dbUser"+ dbUser);
+		log.info("ViewUser: "+ user);
 		
 		if(dbUser == null) {
 			return LoginResult.WRONG_ID;
@@ -52,7 +54,7 @@ public class UserService implements IUserService {
 	
 	@Override
 	public User getUser(String userId) {
-		log.info("실행 ");
+		log.info(userId+ "실행 ");
 		return userRepository.selectByUserId(userId);
 	}
 
