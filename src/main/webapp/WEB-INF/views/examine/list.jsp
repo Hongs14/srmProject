@@ -44,8 +44,10 @@
         <!-- 메인 컨테이너 Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
         
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">SR 검토 관리</h1>
+          <div class="d-sm-flex align-items-center justify-content-between">
+	          <div class="bg-gray" style="border-top-radius:10px;">
+	         	 <h1 class="h3 mb-0 text-white-700">SR 검토 관리</h1>
+	          </div>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}">Home</a></li>
               <li class="breadcrumb-item active" aria-current="page">나의 할일 </li>
@@ -141,7 +143,7 @@
                 </div>
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush table-hover">
-                    <thead class="thead-light" style="font-size:13px; text-align: center;">
+                    <thead class="thead-light" style="text-align: center;">
 	                    <tr>
 		                    <th> </th>	
 		                    <th>
@@ -163,7 +165,7 @@
 		                    <th>상세보기</th>
 	                    </tr>
                     </thead>
-                   	<tbody style="font-size:10px;">
+                   	<tbody>
                     	<tr>
 	                      <td>1</td>
 	                      <td>
