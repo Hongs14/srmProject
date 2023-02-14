@@ -162,25 +162,45 @@
 								                    </tr>
 						                   		</thead>
 						                   		<tbody>
+						                   			<c:forEach items="${developlist}" var="SrDevelopDto">
 						                   			<tr>
-						                        		<td>SR-230103-001</td>
-								                        <td>대댓글 기능 추가 요청</td>
-								                        <td>JHJ시스템</td>
-								                        <td>김현주</td>
-								                        <td>JHJ시스템</td>
-								                        <td></td>
-								                        <td>개발신규</td>
-								                        <td>2023/01/03</td>
-								                        <td>2023/02/14</td>
-								                        <td>중</td>
+						                        		<td>${SrDevelopDto.srNo}</td>
+								                        <td>${SrDevelopDto.srTtl}</td>
+								                        <td>${SrDevelopDto.sysNo}</td>
+								                        <td>${SrDevelopDto.userNm}</td>
+								                        <td>${SrDevelopDto.userOgdp}</td>
+								                        <td>${SrDevelopDto.userDpNm }</td>
+								                        <td>${SrDevelopDto.sttsNo}</td>
+								                        <td>${SrDevelopDto.srRegDate}</td>
+								                        <td>${SrDevelopDto.srDdlnDate}</td>
+								                        <td>${SrDevelopDto.srPry}</td>
 								                        <td><button class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/detail'">보기</button></td>
 							                     	</tr>
+							                     	</c:forEach>
 						                 		</tbody>
 						                  	</table>
 						                </div>
 	                                   	<!-- 테이블 -->
-	                                   	<div class="text-center"><button class="btn btn-secondary">1</button></div>
-	                                   	
+	                                   	<div class="text-center">
+		                                   	<a class="btn btn-outline-primary btn-sm" href="list?pageNo=1">처음</a>
+												<c:if test="${pager.groupNo>1}">
+													<a class="btn btn-outline-info btn-sm" href="list?pageNo=${pager.startPageNo-1}">이전</a>
+												</c:if>
+	
+												<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+													<c:if test="${pager.pageNo != i}">
+														<a class="btn btn-outline-secondary btn-sm" href="list?pageNo=${i}">${i}</a>
+													</c:if>
+													<c:if test="${pager.pageNo == i}">
+														<a class="btn btn-warning btn-sm" href="list?pageNo=${i}">${i}</a>
+													</c:if>
+												</c:forEach>
+	
+												<c:if test="${pager.groupNo<pager.totalGroupNo}">
+													<a class="btn btn-outline-info btn-sm" href="list?pageNo=${pager.endPageNo+1}">다음</a>
+												</c:if>
+												<a class="btn btn-outline-primary btn-sm" href="list?pageNo=${pager.totalPageNo}">맨끝</a>
+	                                	</div>
 	                          		</div>
 	                          	</div>
 	                    	</div>
