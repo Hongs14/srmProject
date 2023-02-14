@@ -1,7 +1,13 @@
 package com.team01.webapp.develop.service;
 
-public interface IDevelopService {
+import java.util.List;
 
-	void getList();
+import com.team01.webapp.model.SR;
+import com.team01.webapp.util.Pager;
+
+public interface IDevelopService {
+	
+	public int totalRow();
+	public List<SR> getDevelopList(Pager pager);
 
 }
