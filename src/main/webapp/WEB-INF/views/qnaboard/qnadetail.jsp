@@ -80,7 +80,7 @@
 	                            		</div>
 	                            		<div class="text-right"> 
 	                            			<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/qna/list'">목록</button>
-	                            			<input type="button" class="btn btn-primary" value="수정"/>
+	                            			<input type="button" class="btn btn-primary" value="수정" onclick="location.href='${pageContext.request.contextPath}/qna/update'"/>
 	                            			<button class="btn btn-primary">삭제</button>
 	                            		</div>
 		                            </form>

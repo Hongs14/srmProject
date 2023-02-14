@@ -31,7 +31,7 @@
           				<div class="col-lg-12">
               				<div class="card mb-4">   
 			             		<div class="card-header d-flex flex-row align-items-center justify-content-between">
-                        			<div><h6 class="m-0 font-weight-bold text-primary">QNA 작성</h6></div>
+                        			<div><h6 class="m-0 font-weight-bold text-primary">QNA 수정</h6></div>
 	                            </div> 
                 				<!-- 게시글 작성 -->
                 				<div class="card-body">
