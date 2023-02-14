@@ -112,7 +112,7 @@
                     </thead>
                    	<tbody>
                    		<c:forEach var="notice" items="${noticeList}">
-		                    <tr>
+		                    <tr onclick="location.href='${pageContext.request.contextPath}/notice/detail?ntcNo=${notice.ntcNo}'" style="cursor:pointer;">
 		                      <td>공지사항</td>
 		                      <td>${notice.ntcNo}</td>
 		                      <td>${notice.ntcTtl}</td>
@@ -121,6 +121,30 @@
 		                      <td>${notice.ntcInqCnt}</td>
 		                    </tr>
                    		</c:forEach>
+                   		<tr>
+							<td colspan="6" class="text-center">
+								<div>
+									<a class="btn btn-outline-primary btn-sm" href="list?pageNo=1">처음</a>
+									<c:if test="${pager.groupNo>1}">
+										<a class="btn btn-outline-info btn-sm" href="list?pageNo=${pager.startPageNo-1}">이전</a>
+									</c:if>
+									
+									<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+										<c:if test="${pager.pageNo != i}">
+											<a class="btn btn-outline-success btn-sm" href="list?pageNo=${i}">${i}</a>
+										</c:if>
+										<c:if test="${pager.pageNo == i}">
+											<a class="btn btn-danger btn-sm" href="list?pageNo=${i}">${i}</a>
+										</c:if>
+									</c:forEach>
+									
+									<c:if test="${pager.groupNo<pager.totalGroupNo}">
+										<a class="btn btn-outline-info btn-sm" href="list?pageNo=${pager.endPageNo+1}">다음</a>
+									</c:if>
+									<a class="btn btn-outline-primary btn-sm" href="list?pageNo=${pager.totalPageNo}">맨끝</a>
+								</div>
+							</td>
+						</tr>
                   	</tbody>
                   </table>
                 </div>

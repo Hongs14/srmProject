@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,33 +54,45 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/write")
-	public String getNoticeWrite(Notice notice,NoticeFile noticeFile, HttpSession session) throws IOException  {
+	public String getNoticeWrite(Notice notice) throws IOException  {
 		log.info("실행");
-		System.out.println(notice.toString());
-		//첨부 파일 유무 조사
-		/*MultipartFile mf = noticeFile.getNtcMFile();
-		if(!mf.isEmpty()) {
-			//파일 원래 이름 저장
-			noticeFile.setNtcFileActlNm(mf.getOriginalFilename());
-			//파일의 저장 이름 설정
-			String noticeFilename = new Date().getTime()+"-"+mf.getOriginalFilename();
-			noticeFile.setNtcFilePhysNm(noticeFilename);
-			//파일 타입 설정
-			noticeFile.setNtcFileExtnNm(mf.getContentType());
-			//서버 파일 시스템에 파일로 저장
-			File file = new File("C:/Temp/uploadfiles/"+noticeFilename);
-			mf.transferTo(file);
-		}*/
 		
+		//첨부 파일 유무 조사
+		MultipartFile mf = notice.getNtcMFile();
+		System.out.println(mf);
+		if(mf!=null &&!mf.isEmpty()) {
+			//파일 원래 이름 저장
+			notice.setNtcFileActlNm(mf.getOriginalFilename());
+			//파일의 저장 이름 설정
+			String ntcFilePhysNm = new Date().getTime()+"-"+mf.getOriginalFilename();
+			notice.setNtcFilePhysNm(ntcFilePhysNm);
+			//파일 타입 설정
+			notice.setNtcFileExtnNm(mf.getContentType());
+			//서버 파일 시스템에 파일로 저장
+			File file = new File("C:/Temp/uploadfiles/"+ntcFilePhysNm);
+			mf.transferTo(file);
+			noticeService.noticeFileUpload(notice);
+		}
 		
 		noticeService.noticeWrite(notice);
+		
 		
 		return "redirect:/notice/list";
 	}
 	
 	@GetMapping("/detail")
-	public String getNoticeDetail() {
+	public String getNoticeDetail(int ntcNo, Model model) {
 		log.info("실행");
+		
+		Notice notice =(Notice) noticeService.noticeDetail(ntcNo);
+		
+		model.addAttribute("ntcTtl",notice.getNtcTtl());
+		model.addAttribute("ntcNo",ntcNo);
+		model.addAttribute("userId",notice.getUserId());
+		model.addAttribute("ntcInqCnt",notice.getNtcInqCnt());
+		model.addAttribute("ntcWrtDate",notice.getNtcWrtDate());
+		model.addAttribute("ntcCn",notice.getNtcCn());
+		
 		return "notice/detail";
 	}
 	
