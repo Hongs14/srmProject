@@ -19,17 +19,20 @@
 
 		        <!-- 메인 컨테이너 Container Fluid-->
 		        <div class="container-fluid" id="container-wrapper">
-		        	<div class="d-sm-flex align-items-center justify-content-between mb-4">
-			            <h1 class="h3 mb-0 text-gray-800">Q&A 상세보기</h1>
-			            <ol class="breadcrumb">
-			            	<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}">Home</a></li>
-			            	<li class="breadcrumb-item active" aria-current="page">Qna 자세히보기 </li>
-			            </ol>
-		          	</div>
-          			
-					<div class="developContent mx-3 my-0">
+		        	<div class="d-sm-flex align-items-end justify-content-between">
+          				<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px;">
+            				<h6 class="mb-0 text-white">Q&A 게시판</h6>
+         				</div>
+           				<ol class="breadcrumb">
+             					<li class="breadcrumb-item">Q&A</li>
+             					<li class="breadcrumb-item active" aria-current="page">목록보기</li>
+           				</ol>
+          			</div>
+          			<!-- Row -->
+					<div class="row">
 		       			<div class="col-lg-12">
-	                    	<div class="card mb-4  p-3">
+	                    	<div class="card mb-4">
+	                    	
 	                        	<div class="card-header">
 	                            	<div class="d-flex flex-row align-items-center justify-content-between">
 	                                 	<div><h6 class="m-0 font-weight-bold text-primary mb-3">문의사항 No.131</h6></div>

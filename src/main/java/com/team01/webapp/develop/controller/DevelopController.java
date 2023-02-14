@@ -36,7 +36,7 @@ public class DevelopController {
 		return "develop/developlist";
 	}
 	
-	@GetMapping("/detail")
+	@GetMapping("/view")
 	public String getDevelopDetail() {
 		log.info("SR개발관리 상세보기");
 		return "develop/developdetail";
