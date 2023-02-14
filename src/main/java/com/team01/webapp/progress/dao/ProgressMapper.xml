@@ -3,8 +3,10 @@
 <mapper namespace="com.team01.webapp.progress.dao.IProgressRepository">
 
 	<!-- 필터링 시스템 구분 조회 -->
-	<select id="selectSysNmList" resultType="string">
-		SELECT SYS_NM 
+	<select id="selectSysNmList" resultType="system">
+		SELECT 
+			SYS_NO AS "sysNo",
+			SYS_NM AS "sysNm"
 		FROM SYSTEM
 	</select>
 
@@ -23,5 +25,105 @@
 		    STTS_NM AS "sttsNm"
 		FROM SR_STTS
 	</select>
-
+	
+	<!-- 페이징 처리 하기 위한 행의 수 -->
+	<select id="selectTotalProgressCount" parameterType="progressAjax" resultType="int">
+		SELECT
+		    COUNT(SR_NO)
+		FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, SR_TYPE type
+		where sr.sys_no = system.sys_no
+		AND sr.stts_no = stts.stts_no
+		AND sr.sr_cust_no = users.user_no
+		AND sr.sr_type = type.sr_type_no
+		<if test="sysNo != 0">
+			AND sr.sys_no = #{sysNo}
+		</if>
+		<if test="srTypeNo != 0">
+			AND sr.sr_type = #{srTypeNo}
+		</if>
+		<if test="srSttsNo != 0">
+			AND sr.stts_no = #{srSttsNo}
+		</if>
+		<if test="srName != ''">
+			AND sr.sr_ttl LIKE #{srName}
+		</if>
+		<if test="srNo != ''">
+			AND sr.sr_no LIKE #{srNo}
+		</if>
+	</select>
+	
+	<!-- 페이징 된 리스트 -->
+	<select id="selectProgressList" parameterType="progressAjax" resultType="progressList">
+	SELECT
+		rownum,
+	    SR_NO AS "srNo",
+	    SYS_NM AS "sysNm",
+	    SR_TYPE_NM AS "srTypeNm",
+	    SR_TTL AS "srTtl",
+	    USER_NM AS "userNm",
+	    SR_DDLN_DATE AS "srDdlnDate",
+	    STTS_NM AS "sttsNm",
+	    SR_PRY AS "srPry"
+		FROM(
+			SELECT
+				rownum as rnum,
+				SR_NO,
+				SYS_NM,
+				SR_TYPE_NM,
+				SR_TTL,
+				USER_NM,
+				SR_DDLN_DATE,
+				STTS_NM,
+				SR_PRY
+				FROM(
+					SELECT
+						SR_NO,
+						SYS_NM,
+						SR_TYPE_NM,
+						SR_TTL,
+						USER_NM,
+						SR_DDLN_DATE,
+						STTS_NM,
+						SR_PRY
+						FROM(
+							SELECT
+							    SR_NO,
+							    SYS_NM,
+							    SR_TYPE_NM,
+							    SR_TTL,
+							    USER_NM,
+							    SR_DDLN_DATE,
+							    STTS_NM,
+							    SR_PRY
+							FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, SR_TYPE type
+							where sr.sys_no = system.sys_no
+							AND sr.stts_no = stts.stts_no
+							AND sr.sr_cust_no = users.user_no
+							AND sr.sr_type = type.sr_type_no
+							<if test="sysNo != 0">
+								AND sr.sys_no = #{sysNo}
+							</if>
+							<if test="srTypeNo != 0">
+								AND sr.sr_type = #{srTypeNo}
+							</if>
+							<if test="srSttsNo != 0">
+								AND sr.stts_no = #{srSttsNo}
+							</if>
+							<if test="srName != ''">
+								AND sr.sr_ttl LIKE #{srName}
+							</if>
+							<if test="srNo != ''">
+								AND sr.sr_no LIKE #{srNo}
+							</if>
+						)
+					ORDER BY SR_PRY
+				)
+			<![CDATA[
+			WHERE rownum <= #{end}
+			]]>
+		)
+		<![CDATA[
+		WHERE rnum >= #{start}
+		]]>
+	</select>
 </mapper>

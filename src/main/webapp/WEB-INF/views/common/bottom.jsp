@@ -5,7 +5,6 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.js"></script>
   <script src="${pageContext.request.contextPath}/resources/vendor/jquery-easing/jquery.easing.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/ruang-admin.js"></script>

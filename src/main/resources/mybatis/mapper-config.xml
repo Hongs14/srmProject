@@ -24,6 +24,8 @@
  	<typeAlias type="com.team01.webapp.model.System" alias="system"/>
  	<typeAlias type="com.team01.webapp.model.Task" alias="task"/>
  	<typeAlias type="com.team01.webapp.model.UserSystem" alias="userSystem"/>
+ 	<typeAlias type="com.team01.webapp.model.SrProgressAjax" alias="progressAjax"/>
+ 	<typeAlias type="com.team01.webapp.model.SrProgressList" alias="progressList"/>
  	
 </typeAliases>
 </configuration>
