@@ -19,3 +19,5 @@
 <link href="${pageContext.request.contextPath}/resources/vendor/bootstrap-touchspin/css/jquery.bootstrap-touchspin.css" rel="stylesheet" >
 <!-- ClockPicker -->
 <link href="${pageContext.request.contextPath}/resources/vendor/clock-picker/clockpicker.css" rel="stylesheet">
+
+<script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>

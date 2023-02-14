@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 import com.team01.webapp.model.ProgressFilter;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SRType;
+import com.team01.webapp.model.SrProgressAjax;
+import com.team01.webapp.model.SrProgressList;
+import com.team01.webapp.model.System;
 import com.team01.webapp.progress.dao.IProgressRepository;
+import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -23,7 +27,7 @@ public class ProgressService implements IProgressService {
 	@Override
 	public ProgressFilter filterList(ProgressFilter progressfilter) {
 		// 사용할 리스트 선언
-		List<String> systemList = new ArrayList<>();
+		List<System> systemList = new ArrayList<>();
 		List<SRType> srTypeList = new ArrayList<>();
 		List<SRStts> srSttsList = new ArrayList<>();
 		
@@ -40,6 +44,28 @@ public class ProgressService implements IProgressService {
 		progressfilter.setSrSttsList(srSttsList);
 		
 		return progressfilter;
+	}
+	
+	@Override
+	public Pager returnPage(String pageNo, Pager pager, SrProgressAjax srProgressAjax) {
+		// Pager
+		int totalListNum = (int) progressRepository.selectTotalProgressCount(srProgressAjax);
+		
+		int pagerNo = Integer.parseInt(pageNo);
+		pager = new Pager(10, 5, totalListNum, pagerNo);
+		
+		return pager;
+	}
+
+	@Override
+	public List<SrProgressList> ProgressList(Pager pager, SrProgressAjax srProgressAjax) {
+		int end = pager.getPageNo() * pager.getRowsPerPage();
+		int start = (pager.getPageNo()-1)* pager.getRowsPerPage()+1;
+		
+		srProgressAjax.setEnd(end);
+		srProgressAjax.setStart(start);
+		
+		return progressRepository.selectProgressList(srProgressAjax);
 	}
 
 }

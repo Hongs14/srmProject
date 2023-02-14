@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -48,10 +47,10 @@
 													</div>
 													<div class="col-lg-2">
 														<div style="margin:10px 0px; width:100%">
-															<select id="sysNm" class="select2-single from-control" style="width:100%">
-																<option>전체</option>
+															<select id="sysNo" class="select2-single from-control" style="width:100%">
+																<option value="0">전체</option>
 																<c:forEach var="item" items="${progressFilter.sysNmList}">
-																	<option value="${item}">${item}</option>
+																	<option value="${item.sysNo}">${item.sysNm}</option>
 																</c:forEach>
 															</select>
 														</div>
@@ -62,7 +61,7 @@
 													<div class="col-lg-2">
 														<div style="margin:10px 0px; width:100%">
 															<select id="srTypeNo" class="select2-single from-control" style="width:100%">
-																<option>전체</option>
+																<option value="0">전체</option>
 																<c:forEach var="item" items="${progressFilter.srTypeList}">
 																	<option value="${item.srTypeNo}">${item.srTypeNm}</option>
 																</c:forEach>
@@ -75,7 +74,7 @@
 													<div class="col-lg-2">
 														<div style="margin:10px 0px; width:100%">
 															<select id="srSttsNo" class="select2-single from-control" style="width:100%">
-																<option>전체</option>
+																<option value="0">전체</option>
 																<c:forEach var="item" items="${progressFilter.srSttsList}">
 																	<option value="${item.sttsNo}">${item.sttsNm}</option>
 																</c:forEach>
@@ -84,7 +83,7 @@
 													</div>
 													<div class="col-lg-3">
 														<div class="input-group-append float-right">
-															<button class="btn btn-primary" type="button" onclick="progressList()" style="margin:3px 0px">
+															<button class="btn btn-primary" type="button" onclick="progressList(1)" style="margin:3px 0px">
 																<i class="fas fa-search fa-sm"></i>
 															</button>
 														</div>										
@@ -123,24 +122,68 @@
 													</div>
 													
 													<script>
-														function progressList() {
-															var sysNmSelect = document.getElementById("sysNm");
+														$(document).ready(function () {
+															console.log("시작");
+															var sysNoSelect = document.getElementById("sysNo");
 															var srTypeNoSelect = document.getElementById("srTypeNo");
 															var srSttsNoSelect = document.getElementById("srSttsNo");
 															
-															var sysNm = sysNmSelect.options[document.getElementById("sysNm").selectedIndex].value;
+															var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
 															var srTypeNo = srTypeNoSelect.options[document.getElementById("srTypeNo").selectedIndex].value;
 															var srSttsNo = srSttsNoSelect.options[document.getElementById("srSttsNo").selectedIndex].value;
 															
 															var srName = document.getElementById('srName').value;
-															var srNo = document.getElementById('srNo').value;
+															var srNo = document.getElementById('srNo').value;	
 															
-															let data = {sysNm : sysNm, srTypeNo : srTypeNo, srSttsNo : srSttsNo, srName : srName, srNo : srNo};
+															if(srName !== "") {
+																srName = "%" + srName + "%";
+															}
+															
+															if(srNo !== "") {
+																srNo = "%" + srNo + "%";
+															}
+															
+															let data = {sysNo : sysNo, srTypeNo : srTypeNo, srSttsNo : srSttsNo, srName : srName, srNo : srNo};
 															
 															console.log(data);
 															
 															$.ajax({
-																url : "progressajax",
+																url : "progressajax/" + ${pageNo},
+																method : "post",
+																data : JSON.stringify(data),
+																contentType: "application/json; charset=UTF-8"
+															}).done((data) => {
+																$("#progressListView").html(data)
+															});
+														});
+													
+														function progressList(pageNo) {
+															console.log(pageNo);
+															var sysNoSelect = document.getElementById("sysNo");
+															var srTypeNoSelect = document.getElementById("srTypeNo");
+															var srSttsNoSelect = document.getElementById("srSttsNo");
+															
+															var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+															var srTypeNo = srTypeNoSelect.options[document.getElementById("srTypeNo").selectedIndex].value;
+															var srSttsNo = srSttsNoSelect.options[document.getElementById("srSttsNo").selectedIndex].value;
+															
+															var srName = document.getElementById('srName').value;
+															var srNo = document.getElementById('srNo').value;	
+															
+															if(srName !== "") {
+																srName = "%" + srName + "%";
+															}
+															
+															if(srNo !== "") {
+																srNo = "%" + srNo + "%";
+															}
+															
+															let data = {sysNo : sysNo, srTypeNo : srTypeNo, srSttsNo : srSttsNo, srName : srName, srNo : srNo};
+															
+															console.log(data);
+															
+															$.ajax({
+																url : "progressajax/" + pageNo,
 																method : "post",
 																data : JSON.stringify(data),
 																contentType: "application/json; charset=UTF-8"

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <!DOCTYPE html>
 	<div class="table-responsive p-3">
@@ -11,34 +11,55 @@
 					<th>업무 구분</th>
 					<th>SR 명</th>
 					<th>요청자</th>
-					<th>완료 요청일</th>
 					<th>완료 예정일</th>
 					<th>진행 상태</th>
+					<th>중요도</th>
 				</tr>
 			</thead>
-			<tbody onclick="location.href='${pageContext.request.contextPath}/progress/detail/1'">
+			<c:forEach var="list" items="${ProgressList}">
+				<tbody onclick="location.href='${pageContext.request.contextPath}/progress/detail/${list.srNo}'">
 				<tr>
-					<th>13</th>
-					<th>황건희 시스템</th>
-					<th>황건희 댓글 추가</th>
-					<th>건희 건희</th>
-					<th>황 아저씨</th>
-					<th>건희씨 생일</th>
-					<th>건희씨 생일쯤 ^^</th>
-					<th>많이 됬을걸?</th>
+					<th>${list.srNo}</th>
+					<th>${list.sysNm}</th>
+					<th>${list.srTypeNm}</th>
+					<th>${list.srTtl}</th>
+					<th>${list.userNm}</th>
+					<th>${list.srDdlnDate}</th>
+					<th>${list.sttsNm}</th>
+					<th>${list.srPry}</th>
 				</tr>
-			</tbody>
-			<tbody>
-				<tr>
-					<th>13</th>
-					<th>황건희 시스템</th>
-					<th>황건희 댓글 추가</th>
-					<th>건희 건희</th>
-					<th>황 아저씨</th>
-					<th>건희씨 생일</th>
-					<th>건희씨 생일쯤 ^^</th>
-					<th>많이 됬을걸?</th>
-				</tr>
-			</tbody>
+			</c:forEach>
 		</table>
+		
+		<c:if test="${pager.totalRows != 0}">
+			<div class="pager d-flex justify-content-center my-3">
+				<div class="flex-fulfill"></div>
+				<div class="pagingButtonSet d-flex justify-content-center">
+					<c:if test="${pager.pageNo > 1}">
+						<a onclick="progressList(1)" type="button" class="btn btn-muted shadow">◀◀</a>
+					</c:if>
+					<c:if test="${pager.groupNo > 1}">
+						<a onclick="progressList(${pager.startPageNo-1})" type="button" class="btn btn-muted shadow">◀</a>
+					</c:if>
+	
+					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+						<c:if test="${pager.pageNo != i}">
+							<a onclick="progressList(${i})" type="button" class="btn btn-white shadow">${i}</a>
+						</c:if>
+						<c:if test="${pager.pageNo == i}">
+							<a onclick="progressList(${i})" type="button" class="btn btn-dark shadow">${i}</a>
+						</c:if>
+					</c:forEach>
+	
+					<c:if test="${pager.groupNo < pager.totalGroupNo }">
+						<a onclick="progressList(${pager.endPageNo+1})" type="button" class="btn btn-muted shadow">▶</a>
+	
+					</c:if>
+					<c:if test="${pager.pageNo < pager.totalPageNo }">
+						<a onclick="progressList(${pager.totalPageNo})" type="button" class="btn btn-muted shadow">▶▶</a>
+					</c:if>
+				</div>
+				<div class="flex-fulfill"></div>
+			</div>
+		</c:if>
 	</div>
