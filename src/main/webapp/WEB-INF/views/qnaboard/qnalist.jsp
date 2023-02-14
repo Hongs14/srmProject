@@ -87,6 +87,9 @@
 	                                 	</div>
 						         	
 						                <div class="table-responsive p-3">
+						                	<div class="text-right">
+						         				<button id="writeQna" class="btn btn-sm btn-secondary mb-2" onclick="location.href='${pageContext.request.contextPath}/qna/write'">Qna등록하기</button>
+						         			</div> 
 						                	<table class="table align-items-center table-flush">
 						                    	<thead class="thead-light">
 								                	<tr>
@@ -95,6 +98,7 @@
 								                        <th>작성자</th>
 								                        <th>작성일</th>
 								                        <th>조회수</th>
+								                        <th>댓글수</th>
 								                    </tr>
 						                   		</thead>
 						                   		<tbody>
@@ -105,17 +109,16 @@
 									                        <td>${QnaboardDto.userNm}</td>
 									                        <td>${QnaboardDto.qstnWrtDate}</td>
 									                        <td>${QnaboardDto.qstnInqCnt}</td>
+									                        <td>2</td>
 							                     		</tr>
 						                     		</c:forEach>
 						                 		</tbody>
 						                  	</table>
 						                </div>
-						                <div class="text-right px-3">
-						         			<button id="writeQna" class="btn btn-primary">Qna등록하기</button>
-						         		</div> 
+						                <!-- table -->
+					         			<div class="text-center"><button class="btn btn-secondary">1</button></div>
 					              	</div>
 					         	</div>  
-					         	<!-- table -->
 							</div>
 			        	</div> 
 						<!-- Row -->

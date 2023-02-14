@@ -24,6 +24,7 @@
 			        NTC_PRY,
 			        USER_ID,
 			        ROWNUM as RNUM
+
 			    FROM(
 			        SELECT 
 			            n.NTC_NO,

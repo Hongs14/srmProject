@@ -22,7 +22,7 @@ public class QnaController {
 	private IQnaboardService qnaboardService;
 	
 	@GetMapping("/list")
-	public String getList(Model model) {
+	public String getQnaList(Model model) {
 		List<QSTN> list = qnaboardService.getList();
 		model.addAttribute("qnalist", list);
 		log.info("qna목록보기");
@@ -30,10 +30,21 @@ public class QnaController {
 	}
 	
 	@GetMapping("/detail")
-	public String getDetail(Model model) {
+	public String getQnaDetail(Model model) {
 		log.info("qna상세보기");
 		return "qnaboard/qnadetail";
 	}
 	
+	@GetMapping("/write")
+	public String writeQna() {
+		log.info("Qna작성하기");
+		return "qnaboard/qnawrite";
+	}
+	
+	@GetMapping("/update")
+	public String updateQna() {
+		log.info("Qna수정하기");
+		return "qnaboard/qnaupdate";
+	}
 	
 }
