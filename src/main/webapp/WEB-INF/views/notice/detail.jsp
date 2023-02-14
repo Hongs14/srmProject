@@ -31,11 +31,20 @@
 								<div class="card mb-4  p-3">
 	                        		<div class="card-header">
 	                            		<div class="d-flex flex-row align-items-center justify-content-between">
-		                            		<div><h6 class="m-0 font-weight-bold text-primary mb-3">공지사항 No.11</h6></div>
-		                                	<div>조회수 2</div>
+		                            		<div>
+		                            			<c:set var="ntcNo" value="${ntcNo}"/>
+		                            			<h6 class="m-0 font-weight-bold text-primary mb-3">공지사항 No.<c:out value="${ntcNo}"/></h6>
+		                            		</div>
+		                                	<div>
+		                                		<span>조회수 : 
+		                                			<c:set var="ntcInqCnt" value="${ntcInqCnt}"/>
+		                                			<c:out value="${ntcInqCnt}"/>
+		                                		</span>
+		                                	</div>
 		                                 </div>
 		                                 <div>
-		                                 	<h2 class="m-0 font-weight-bold text-primary">계속 검토중에 멈춰있습니다.</h2>
+		                                 	<c:set var="ntcTtl" value="${ntcTtl}"/>
+		                                 	<h2 class="m-0 font-weight-bold text-primary">제목 : <c:out value="${ntcTtl}"/></h2>
 		                                 </div>
 		                                 <hr/>
 	                           		</div>   
@@ -46,7 +55,8 @@
 		                            				<label class="col-form-label">작성자</label>
 			                            		</div>
 			                            		<div class="col-sm-9">
-				                            			정홍주
+			                            			<c:set var="userId" value="${userId}"/>
+				                            		<span><c:out value="${userId}"/></span>
 			                            		</div>
 		                            		</div>	
 		                            		<div class="row mb-2">
@@ -54,7 +64,8 @@
 		                            				<label class="col-form-label">작성일</label>
 			                            		</div>
 			                            		<div class="col-sm-9">
-				                            			2023.02.13
+				                            		<c:set var="ntcWrtDate" value="${ntcWrtDate}"/>
+				                            		<span><c:out value="${ntcWrtDate}"/></span>
 				                            	</div>
 			                            	</div>
 			                            	<div class="row mb-2">
@@ -62,8 +73,8 @@
 				                            		<label class="col-form-label">내용</label>
 				                            	</div>
 				                            	<div class="col-sm-9">
-				                            		지금 한달째 검토중입니다. 빨리 접수해주세요
-				                            			
+				                            		<c:set var="ntcCn" value="${ntcCn}"/>
+				                            		<span><c:out value="${ntcCn}"/></span>	
 				                            	</div>
 			                            	</div>
 			                            	<div class="row mb-2">

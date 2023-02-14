@@ -112,7 +112,7 @@
                     </thead>
                    	<tbody>
                    		<c:forEach var="notice" items="${noticeList}">
-		                    <tr>
+		                    <tr onclick="location.href='${pageContext.request.contextPath}/notice/detail?ntcNo=${notice.ntcNo}'" style="cursor:pointer;">
 		                      <td>공지사항</td>
 		                      <td>${notice.ntcNo}</td>
 		                      <td>${notice.ntcTtl}</td>

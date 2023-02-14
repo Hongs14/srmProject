@@ -37,7 +37,7 @@
                 <!-- 게시글 작성 -->
                 <div class="card-body">
                 	<!-- 글 제목 -->
-                	<form method="post" action="write">
+                	<form method="post" action="write" enctype="multipart/form-data">
 	                	<div class="row">
 	                		<div class="col-1">글제목 : </div>
 	                		<div class="col-9">

@@ -17,5 +17,8 @@ public class Notice {
 	private Date ntcWrtDate;
 	private String ntcPry;
 	private String userId;
-	
+	private String ntcFilePhysNm; //바꾼 파일 명
+	private String ntcFileActlNm; //원본 파일 이름
+	private String ntcFileExtnNm; //파일 확장명
+	private MultipartFile ntcMFile;
 }

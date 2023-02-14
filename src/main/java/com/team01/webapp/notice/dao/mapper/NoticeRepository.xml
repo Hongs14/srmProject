@@ -6,6 +6,7 @@
 		SELECT COUNT(*) FROM NOTICE
 	</select>
 	
+	<!-- 게시글 목록 -->
 	<select id="list" parameterType="pager" resultType="notice">
 		<![CDATA[
 			SELECT 
@@ -43,14 +44,52 @@
 		]]>
 	</select>
 	
+	<!-- 게시글 작성 -->
 	<insert id="write" parameterType="notice">
-		<![CDATA[
-		
-			INSERT INTO NOTICE( NTC_NO, USER_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, NTC_WRT_DATE, NTC_PRY)
-			VALUES( ntcno_seq.nextval, #{userNo}, #{ntcTtl}, #{ntcCn}, 0, sysdate, #{ntcPry} ) 
-		]]>
+		<selectKey keyProperty="ntcNo" resultType="int" order="BEFORE">
+			SELECT ntcno_seq.nextval FROM dual
+		</selectKey>
+		<if test="ntcFileActlNm == null">
+			<![CDATA[
+				INSERT INTO NOTICE( NTC_NO, USER_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, NTC_WRT_DATE, NTC_PRY)
+				VALUES( ntcno_seq.nextval, #{userNo}, #{ntcTtl}, #{ntcCn}, 0, sysdate, #{ntcPry} ) 
+			]]>
+		</if>
+		<if test="ntcFileActlNm != null">
+			<![CDATA[
+				INSERT INTO NOTICE( NTC_NO, USER_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, NTC_WRT_DATE, NTC_PRY, NTC_FILE_PHYS_NM, NTC_FILE_ACTL_NM, NTC_FILE_EXTN_NM)
+				VALUES( ntcno_seq.nextval, #{userNo}, #{ntcTtl}, #{ntcCn}, 0, sysdate, #{ntcPry}, #{ntcFilePhysNm}, #{ntcFileActlNm}, #{ntcFileExtnNm} ) 
+			]]>
+		</if>
 		
 	</insert>
+	
+	<!-- 첨부파일 -->
+	<insert id="noticeFileUpload" parameterType="notice">
+		<![CDATA[
+			INSERT INTO NTC_FILE( NTC_FILE_NO, NTC_NO, NTC_FILE_PHYS_NM, NTC_FILE_ACTL_NM, NTC_FILE_EXTN_NM)
+			VALUES( ntcFileNo_seq.nextval, #{ntcNo}, #{ntcFilePhysNm}, #{ntcFileActlNm}, #{ntcFileExtnNm})
+		]]>
+	</insert>
+	
 
-
+	<!-- 게시글 상세조회 -->
+	<select id="detail" parameterType="int" resultType="notice">
+		<![CDATA[
+			
+			SELECT 
+			    n.NTC_TTL AS ntcTtl,
+			    n.NTC_NO AS ntcNo,
+			    u.USER_ID AS userId,
+			    n.NTC_PRY AS ntcPry,
+			    n.NTC_WRT_DATE AS ntcWrtDate,
+			    n.NTC_CN AS ntcCn
+			FROM NOTICE n , USERS u
+			WHERE NTC_NO = #{ntcNo}
+			AND n.user_no = u.user_no
+		
+		]]>
+		
+	</select>
+	
 </mapper>
