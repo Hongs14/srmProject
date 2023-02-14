@@ -38,22 +38,22 @@
                                  	<div class="d-flex flex-row align-items-center justify-content-between">
                                  		<div class="col-6">
 		                                 	<div class="row">
-		                                 		<div class="4">등록자: </div>
-		                                 		<div class="col-8">김지율</div>
+		                                 		<div class="col-2"><h6 class="m-0 font-weight-bold text-primary">등록자</h6></div>
+		                                 		<div class="col-10">김지율</div>
 		                                 	</div>
 		                                 	<div class="row">
-		                                 		<div class="4">등록일: </div>
-		                                 		<div class="col-8">2023-02-03</div>
+		                                 		<div class="col-2"><h6 class="m-0 font-weight-bold text-primary">등록일</h6></div>
+		                                 		<div class="col-10">2023-02-03</div>
 		                                 	</div>
 	                                 	</div>
 	                                 	<div class="col-6">
 	                                 		<div class="row">
-		                                 		<div class="4">소속: </div>
-		                                 		<div class="col-8">JHJ시스템</div>
+		                                 		<div class="col-2"><h6 class="m-0 font-weight-bold text-primary">소속</h6></div>
+		                                 		<div class="col-10">JHJ시스템</div>
 		                                 	</div>
 		                                 	<div class="row">
-		                                 		<div class="4">관련시스템: </div>
-		                                 		<div class="col-8">JHJ시스템</div>
+		                                 		<div class="col-2"><h6 class="m-0 font-weight-bold text-primary">관련시스템</h6></div>
+		                                 		<div class="col-10">JHJ시스템</div>
 		                                 	</div>
 	                                 	</div>
                                  	</div>
@@ -65,13 +65,16 @@
 		                            	<div class="d-flex flex-row align-items-center justify-content-between">
 		                            		<div class="col-6">
 		                            			<div class="form-group row">
-		                            				<div class="col-sm-3 col-form-label">개발담당자</div>
+		                            				<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">개발담당자</h6></div>
 		                            				<div class="col-sm-9">
-		                            					<input type="text" class="form-control"/>
+		                            					<select class="form-control">
+		                            						<option></option>
+		                            						<option>김태희</option>
+		                            					</select>
 		                            				</div>
 		                            			</div>
 		                            			<div class="form-group row">
-		                            				<div class="col-sm-3 col-form-label">개발부서</div>
+		                            				<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">개발부서</h6></div>
 		                            				<div class="col-sm-9">
 		                            					<select class="form-control">
 		                            						<option></option>
@@ -81,7 +84,7 @@
 		                            				</div>
 		                            			</div>
 		                            			<div class="form-group row">
-		                            				<div class="col-sm-3 col-form-label">진행상태</div>
+		                            				<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">진행상태</h6></div>
 		                            				<div class="col-sm-9">
 		                            					<select class="form-control">
 		                            						<option></option>
@@ -91,38 +94,39 @@
 		                            				</div>
 		                            			</div>
 		                            			
-		                            			<div class="row mb-2">
-		                            				<div class="col-3">투입인력</div>
-		                            				<div class="col-9">
-		                            					<select class="select-multiple form-control" name="dev_hr[]" multiple="multiple">
-															<option>황건희</option>
-															<option>김태희</option>
-														</select>
+		                            			<div class="form-group row mb-2">
+		                            				<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">투입인력</h6></div>
+		                            				<div class="col-sm-9">
+		                            					<select class="select2-multiple form-control" name="states[]" multiple="multiple" id="select2Multiple">
+									                    	<option value="">Select</option>
+									                      	<option value="Aceh">황건희</option>
+									                      	<option value="Sumatra Utara">김태희</option> 
+									                    </select>
 													</div>	                            			
 												</div>
 		                            		</div>
 		                            		
 		                            		<div class="col-6">
 		                            			<div class="form-group row">
-		                            				<div class="col-sm-3 col-form-label">완료(예정)일</div>
+		                            				<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">완료(예정)일</h6></div>
 		                            				<div class="col-sm-9">
 		                            					<input type="date" class="form-control"/>
 		                            				</div>
 		                            			</div>
 		                            			<div class="form-group row">
-		                            				<div class="col-sm-3 col-form-label">소요예산</div>
+		                            				<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">소요예산</h6></div>
 		                            				<div class="col-sm-9">
 		                            					<input type="text" class="form-control"/>
 		                            				</div>
 		                            			</div>
 		                            			<div class="form-group row">
-		                            				<div class="col-sm-3 col-form-label">계획 시작일</div>
+		                            				<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">계획 시작일</h6></div>
 		                            				<div class="col-sm-9">
 		                            					<input type="date" class="form-control"/>
 		                            				</div>
 		                            			</div>
 		                            			<div class="form-group row">
-		                            				<div class="col-sm-3 col-form-label">계획 종료일</div>
+		                            				<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">계획 종료일</h6></div>
 		                            				<div class="col-sm-9">
 		                            					<input type="date" class="form-control"/>
 		                            				</div>
@@ -133,7 +137,7 @@
 		                            	
 		                            	<div class="ml-2">
 		                            		<div class="form-group row">
-		                            			<div class="col-sm-2 col-form-control pr-0">개발 내용</div>
+		                            			<div class="col-sm-2 col-form-control pr-0"><h6 class="m-0 font-weight-bold text-primary">개발 내용</h6></div>
 		                            			<div class="col-sm-10 p-0">
 		                            				<textarea style="width: 80%"></textarea>
 		                            			</div>
@@ -144,31 +148,31 @@
 		                            	<!-- SR내용 -->
 		                            	<hr/>
 	                            		<div class="row mb-2">
-		                            		<div class="col-sm-3">SR제목</div>
-		                            		<div class="col-sm-9">
+		                            		<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">SR제목</h6></div>
+		                            		<div class="col-sm-10">
 		                            			버튼 수정
 		                            		</div>
 	                            		</div>	
 	                            		<div class="row mb-2">
-		                            		<div class="col-sm-3">관련근거(목적)</div>
-		                            		<div class="col-sm-9">
+		                            		<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">관련근거(목적)</h6></div>
+		                            		<div class="col-sm-10">
 		                            			첨부파일 참고
 		                            		</div>
 	                            		</div>
 	                            		<div class="row mb-2">
-		                            		<div class="col-sm-3">SR내용</div>
-		                            		<div class="col-sm-9">
+		                            		<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">SR내용</h6></div>
+		                            		<div class="col-sm-10">
 		                            			버튼을 누르면 다른 링크로 넘어갑니다.
 		                            		</div>
 	                            		</div>
 	                            		<div class="row mb-2">
-		                            		<div class="col-sm-3">첨부파일</div>
-		                            		<div class="col-sm-9">
+		                            		<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">첨부파일</h6></div>
+		                            		<div class="col-sm-10">
 		                            			화면캡처.png
 		                            		</div>
 	                            		</div>
 	                            		<div class="text-right"> 
-	                            			<input type="button" class="btn btn-primary" value="수정"/>
+	                            			<input type="button" class="btn btn-primary" value="저장"/>
 	                            			<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/list'">목록</button>
 	                            		</div>
                             		</form>

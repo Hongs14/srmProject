@@ -178,8 +178,9 @@
 						                 		</tbody>
 						                  	</table>
 						                </div>
-	                                   
 	                                   	<!-- 테이블 -->
+	                                   	<div class="text-center"><button class="btn btn-secondary">1</button></div>
+	                                   	
 	                          		</div>
 	                          	</div>
 	                    	</div>
