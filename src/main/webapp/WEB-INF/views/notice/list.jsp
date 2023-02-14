@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -110,14 +111,16 @@
                     </tr>
                     </thead>
                    	<tbody>
-	                    <tr>
-	                      <td>공지사항</td>
-	                      <td>1</td>
-	                      <td>SRM 요청등록 하는 방법</td>
-	                      <td>관리자</td>
-	                      <td>2023-02-09</td>
-	                      <td>111</td>
-	                    </tr>
+                   		<c:forEach var="notice" items="${noticeList}">
+		                    <tr>
+		                      <td>공지사항</td>
+		                      <td>${notice.ntcNo}</td>
+		                      <td>${notice.ntcTtl}</td>
+		                      <td>${notice.userId}</td>
+		                      <td>${notice.ntcWrtDate}</td>
+		                      <td>${notice.ntcInqCnt}</td>
+		                    </tr>
+                   		</c:forEach>
                   	</tbody>
                   </table>
                 </div>

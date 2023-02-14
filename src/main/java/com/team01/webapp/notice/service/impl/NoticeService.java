@@ -32,5 +32,11 @@ public class NoticeService implements INoticeService{
 		
 		return list;
 	}
+	@Override
+	public void noticeWrite(Notice notice) {
+		log.info("실행");
+		noticeRepository.write(notice);
+		
+	}
 
 }
