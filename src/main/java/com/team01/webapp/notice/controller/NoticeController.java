@@ -53,9 +53,10 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/write")
-	public String getNoticeWrite(Notice notice,NoticeFile noticeFile, HttpSession session) throws IOException  {
+	public String getNoticeWrite(Notice notice) throws IOException  {
 		log.info("실행");
 		System.out.println(notice.toString());
+		
 		//첨부 파일 유무 조사
 		/*MultipartFile mf = noticeFile.getNtcMFile();
 		if(!mf.isEmpty()) {

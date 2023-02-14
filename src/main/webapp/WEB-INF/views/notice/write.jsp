@@ -65,10 +65,13 @@
 	                	<div class="row mt-2">
 	                		<div class="col-1">첨부파일 : </div>
 	                		<div class="col-11">
-	                			<input type="file" class="form-control" id="ntcMFile" name="ntcMfile"> 
+	                			<input type="file" class="form-control" id="ntcMFile" name="ntcMFile"> 
 	                		</div>
 	                	</div>
-	                	
+						<!-- userNo -->	                	
+		               	<div>
+		               		<input type="hidden" id="userNo" name="userNo" value="${sessionScope.loginUser.userNo}">
+		               	</div>
 	                	<!-- 작성완료/닫기 -->
 	                	<div class="row mt-2">
 		                	<div class="col-12">
@@ -77,9 +80,6 @@
 		                			<button class="btn btn-sm btn-danger mr-1">닫기</button>
 								</div>	                	
 		                	</div>
-		               	</div>
-		               	<div>
-		               		<input type="hidden" id="userNo" name="userNo" value="${sessionScope.loginUser.userNo}">
 		               	</div>
 	               	</form>
                 </div>
