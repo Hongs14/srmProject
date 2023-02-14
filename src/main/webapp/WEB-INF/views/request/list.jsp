@@ -25,7 +25,7 @@
         
           <div class="d-sm-flex align-items-end justify-content-between">
           <div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px;">
-            <h1 class="h5 mb-0 text-white">SR 요청관리</h1>
+            <h6 class="mb-0 text-white">SR 요청관리</h6>
           </div>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/request/list">SR 관리</a></li>
@@ -36,35 +36,28 @@
           <!-- Row -->
         <div class="row">
      	<div class="col-lg-12">
-         	<div class="card mb-4">
+         	<div class="card mb-4 ">
          		<!-- 검색 -->
-                <div class="m-4">
+                <div class="mb-1 mt-5 px-5">
+                <form class="navbar-search">
                 	<div class="row">
-                		<div class="col-4">조회기간
-                			<div class="form-group" id="simple-date4" >
+                		<div class="col-4">
+                			<div class="form-group row" id="simple-date4" >
 			                	<div class="input-daterange input-group input-group-sm">
-			                    	<input type="text" class="input-sm form-control form-control-sm" name="start" />
+			                		<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
+			                    	<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" />
 			                    	<div class="input-group-prepend">
-			                    		<span class="input-group-text">~</span>
+			                    		<span class="input-group-text" style="height:31px;">~</span>
 			                    	</div>
 			                    	<input type="text" class="input-sm form-control form-control-sm" name="end" />
 			                    </div>
 			            	</div>
                 		</div>
-                		<div class="col-4">관련시스템
-                			<div class="form-group">
-		                    	<select class="form-control form-control-sm" id="exampleFormControlSelect1" >
-		                        	<option selected>전체</option>
-		                        	<option>KHR시스템</option>
-		                        	<option>KTH시스템</option>
-		                        	<option>JHJ시스템 </option>
-		                        	<option>HGH시스템 </option>
-		                    	</select>
-		                	</div>
-                		</div>
-                		<div class="col-4">진행상태
-                			<div class="form-group">
-		                    	<select class="form-control form-control-sm" id="exampleFormControlSelect1">
+                		
+                		<div class="col-3">
+                			<div class="form-group row">
+                				<label class="col-sm-3 col-form-label-sm">진행상태</label>
+		                    	<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1">
 		                        	<option selected>전체</option>
 		                        	<option>요청</option>
 		                        	<option>검토중</option>
@@ -75,11 +68,28 @@
 		                    	</select>
 		                	</div>
                 		</div>
+                		<div class="col-4">
+                			<div class="form-group row">
+                				<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">관련시스템</label>
+		                    	<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1" >
+		                        	<option selected>전체</option>
+		                        	<option>KHR시스템</option>
+		                        	<option>KTH시스템</option>
+		                        	<option>JHJ시스템 </option>
+		                        	<option>HGH시스템 </option>
+		                    	</select>
+		                	</div>
+                		</div>
+                		<div class="col-1">
+                			
+                		</div>
+                		
                 	</div>
                 	<div class="row">
-                		<div class="col-4">등록자 소속
-                			<div class="form-group">
-		                    	<select class="form-control form-control-sm" id="exampleFormControlSelect1">
+                		<div class="col-4">
+                			<div class="form-group row">
+                				<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">등록자 소속</label>
+		                    	<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1">
 		                        	<option selected>전체</option>
 		                        	<option>KHR시스템</option>
 		                        	<option>KTH시스템</option>
@@ -88,9 +98,10 @@
 		                    	</select>
 		                	</div>
                 		</div>
-                		<div class="col-4">개발 부서
-                			<div class="form-group">
-		                    	<select class="form-control form-control-sm" id="exampleFormControlSelect1">
+                		<div class="col-3">
+                			<div class="form-group row">
+                			<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">개발부서</label>
+		                    	<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1">
 		                        	<option selected>전체</option>
 		                        	<option>한국소프트웨어 개발1팀</option>
 		                        	<option>한국소프트웨어 개발2팀</option>
@@ -99,25 +110,24 @@
 		                    	</select>
 		                	</div>
                 		</div>
-                		<div class="col-4">키워드
-            				<form class="navbar-search">
-			                	<div class="input-group">
-			                    	<input type="text" class="form-control form-control-sm bg-light border-1 small" 
-			                   		aria-label="Search" aria-describedby="basic-addon2" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
-			                    	<div class="input-group-append">
-			                      		<button class="btn btn-primary btn-sm" type="button">
-			                        		<i class="fas fa-search fa-sm"></i>
-			                      		</button>
-			                    	</div>
-			                  	</div>
-			            	</form>
+                		<div class="col-4">
+		                	<div class="form-group row">
+		                		<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">키워드</label>
+		                    	<input type="text" class="form-control form-control-sm col-sm-9 bg-light" 
+		                   		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
+		                  	</div>
+                		</div>
+                		<div class="col-1">
+                			<div class="input-group-append float-right">
+								<button class="btn btn-primary btn-sm" type="button" onclick="progressList()" >
+									조회 <i class="fas fa-search fa-sm"></i>
+								</button>
+							</div>
                 		</div>
                 	</div>
+                </form>
                 </div>
                 <hr/>
-               
-                
-                
          		<!-- SR 검토 목록 -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">SR 요청 목록</h6>

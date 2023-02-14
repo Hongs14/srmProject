@@ -8,12 +8,10 @@
               <b><a href="https://indrijunanda.gitlab.io/" target="_blank">KOSA OTI과정 TEAM01</a></b>
             </span>
           </div>
-          
         </div>
-		
         <div class="row">
             <div class="col-lg-12 text-center">
-            	<span class="m-1">팀원 : 김희률, 김태희, 정홍주, 황건희</span>
+            	<span class="m-1 small">팀원 : 김희률, 김태희, 정홍주, 황건희</span>
             	<a href="https://github.com/SRM-TEAM01/srmProject"
                   class="btn btn-primary btn-sm" target="_blank"><i class="fab fa-fw fa-github"></i>&nbsp;GitHub</a>
             </div>
