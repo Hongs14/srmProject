@@ -10,6 +10,7 @@
 		<![CDATA[
 			SELECT 
 			    RNUM AS "seq",
+			    NTC_NO AS "ntcNo",
 			    USER_ID AS "userId",
 			    NTC_TTL AS "ntcTtl",
 			    NTC_INQ_CNT AS "ntcInqCnt",
@@ -21,7 +22,9 @@
 			        NTC_INQ_CNT,
 			        NTC_WRT_DATE,
 			        NTC_PRY,
-			        USER_ID
+			        USER_ID,
+			        ROWNUM as RNUM
+
 			    FROM(
 			        SELECT 
 			            n.NTC_NO,
@@ -39,6 +42,15 @@
 			WHERE rnum >=#{startRowNo}
 		]]>
 	</select>
+	
+	<insert id="write" parameterType="notice">
+		<![CDATA[
+		
+			INSERT INTO NOTICE( NTC_NO, USER_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, NTC_WRT_DATE, NTC_PRY)
+			VALUES( ntcno_seq.nextval, #{userNo}, #{ntcTtl}, #{ntcCn}, 0, sysdate, #{ntcPry} ) 
+		]]>
+		
+	</insert>
 
 
 </mapper>

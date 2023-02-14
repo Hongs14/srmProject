@@ -37,45 +37,51 @@
                 <!-- 게시글 작성 -->
                 <div class="card-body">
                 	<!-- 글 제목 -->
-                	<div class="row">
-                		<div class="col-1">글제목 : </div>
-                		<div class="col-9">
-                			<textarea class="form-control" rows="1"></textarea>
-                		</div>
-                		<div class="col-1 my-2">중요 여부</div>
-                		<div class="col-1">
-                			<div class="form-group">
-		                    	<select class="form-control" id="exampleFormControlSelect1">
-		                        	<option></option>
-		                        	<option>Yes</option>
-		                        	<option>No</option>
-		                    	</select>
+                	<form method="post" action="write">
+	                	<div class="row">
+	                		<div class="col-1">글제목 : </div>
+	                		<div class="col-9">
+	                			<textarea class="form-control" rows="1" id="ntcTtl" name="ntcTtl"></textarea>
 	                		</div>
-                		</div>
-                	</div>
-                	<!-- 글 내용 -->
-                	<div class="row mt-2">
-                		<div class="col-1">글 내용 : </div>
-                		<div class="col-11">
-                			<textarea class="form-control" rows="10"></textarea>
-                		</div>
-                	</div>
-                	<!-- 첨부파일 -->
-                	<div class="row mt-2">
-                		<div class="col-1">첨부파일 : </div>
-                		<div class="col-11">
-                			<textarea class="form-control" rows="1"></textarea>
-                		</div>
-                	</div>
-                	<!-- 작성완료/닫기 -->
-                	<div class="row mt-2">
-	                	<div class="col-12">
-	                		<div class="d-sm-flex justify-content-end">
-	                			<button class="btn btn-sm btn-primary mr-1">작성완료</button>
-	                			<button class="btn btn-sm btn-danger mr-1">닫기</button>
-							</div>	                	
+	                		<div class="col-1 my-2">중요 여부</div>
+	                		<div class="col-1">
+	                			<div class="form-group">
+			                    	<select class="form-control" id="exampleFormControlSelect1" id="ntcPry" name="ntcPry">
+			                        	<option></option>
+			                        	<option>Yes</option>
+			                        	<option>No</option>
+			                    	</select>
+		                		</div>
+	                		</div>
 	                	</div>
-	               	</div>
+	                	<!-- 글 내용 -->
+	                	<div class="row mt-2">
+	                		<div class="col-1">글 내용 : </div>
+	                		<div class="col-11">
+	                			<textarea class="form-control" rows="10" id="ntcCn" name="ntcCn"></textarea>
+	                		</div>
+	                	</div>
+	                	<!-- 첨부파일 -->
+	                	<div class="row mt-2">
+	                		<div class="col-1">첨부파일 : </div>
+	                		<div class="col-11">
+	                			<input type="file" class="form-control" id="ntcMFile" name="ntcMfile"> 
+	                		</div>
+	                	</div>
+	                	
+	                	<!-- 작성완료/닫기 -->
+	                	<div class="row mt-2">
+		                	<div class="col-12">
+		                		<div class="d-sm-flex justify-content-end">
+		                			<button  type="submit" class="btn btn-sm btn-primary mr-1">작성완료</button>
+		                			<button class="btn btn-sm btn-danger mr-1">닫기</button>
+								</div>	                	
+		                	</div>
+		               	</div>
+		               	<div>
+		               		<input type="hidden" id="userNo" name="userNo" value="${sessionScope.loginUser.userNo}">
+		               	</div>
+	               	</form>
                 </div>
               </div>
             </div>

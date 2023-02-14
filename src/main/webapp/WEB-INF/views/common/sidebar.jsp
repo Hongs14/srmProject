@@ -6,7 +6,7 @@
         <div class="sidebar-brand-icon">
           <img src="${pageContext.request.contextPath}/resources/images/logoOnly.png">
         </div>
-        <div class="sidebar-brand-text mx-3">SRM SYSTEM</div>
+        <div class="sidebar-brand-text mx-2 mt-1">SRM SYSTEM</div>
       </a>
       <hr class="sidebar-divider my-0">
       <li class="nav-item active">

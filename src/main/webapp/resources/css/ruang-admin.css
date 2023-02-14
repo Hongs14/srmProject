@@ -769,7 +769,8 @@ a:focus {
   padding: 1.5rem 1rem;
   text-align: center;
   letter-spacing: .05rem;
-  z-index: 1
+  z-index: 1;
+  font-family: sans-serif;
 }
 
 .sidebar .sidebar-brand .sidebar-brand-icon img {
