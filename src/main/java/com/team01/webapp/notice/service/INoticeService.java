@@ -9,5 +9,6 @@ public interface INoticeService {
 	
 	public int getTotalRows();
 	public List<Notice> getNoticeList(Pager pager);
+	public void noticeWrite(Notice notice);
 
 }

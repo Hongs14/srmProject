@@ -9,6 +9,7 @@ public interface INoticeRepository {
 
 	public int count();
 	public List<Notice> list(Pager pager);
+	public void write(Notice notice);
 
 	
 }
