@@ -628,7 +628,9 @@ pre code {
   flex-wrap: wrap;
   margin-right: -0.75rem;
   margin-left: -0.75rem;
+  white-space: nowrap;
 }
+
 
 .no-gutters {
   margin-right: 0;
@@ -1929,8 +1931,6 @@ pre code {
   border-top: 1px solid #e3e6f0;
   font-size: 75%;
   white-space: nowrap;
-  overflow-x: auto;
-  width:100%;
   text-overflow: ellipsis;
 }
 
@@ -5641,7 +5641,6 @@ input[type="button"].btn-block {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  padding: 0.75rem 1rem;
   margin-bottom: 1rem;
   list-style: none;
   background-color: #eaecf4;
