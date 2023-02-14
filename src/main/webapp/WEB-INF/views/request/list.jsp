@@ -23,8 +23,10 @@
         <!-- 메인 컨테이너 Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
         
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-900">SR 요청관리</h1>
+          <div class="d-sm-flex align-items-end justify-content-between">
+          <div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px;">
+            <h1 class="h5 mb-0 text-white">SR 요청관리</h1>
+          </div>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/request/list">SR 관리</a></li>
               <li class="breadcrumb-item active" aria-current="page">SR 요청관리</li>
@@ -35,9 +37,98 @@
         <div class="row">
      	<div class="col-lg-12">
          	<div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h4 class="m-0 font-weight-bold text-primary">SR 요청 목록</h4>
+         		<!-- 검색 -->
+                <div class="m-4">
+                	<div class="row">
+                		<div class="col-4">조회기간
+                			<div class="form-group" id="simple-date4" >
+			                	<div class="input-daterange input-group input-group-sm">
+			                    	<input type="text" class="input-sm form-control form-control-sm" name="start" />
+			                    	<div class="input-group-prepend">
+			                    		<span class="input-group-text">~</span>
+			                    	</div>
+			                    	<input type="text" class="input-sm form-control form-control-sm" name="end" />
+			                    </div>
+			            	</div>
+                		</div>
+                		<div class="col-4">관련시스템
+                			<div class="form-group">
+		                    	<select class="form-control form-control-sm" id="exampleFormControlSelect1" >
+		                        	<option selected>전체</option>
+		                        	<option>KHR시스템</option>
+		                        	<option>KTH시스템</option>
+		                        	<option>JHJ시스템 </option>
+		                        	<option>HGH시스템 </option>
+		                    	</select>
+		                	</div>
+                		</div>
+                		<div class="col-4">진행상태
+                			<div class="form-group">
+		                    	<select class="form-control form-control-sm" id="exampleFormControlSelect1">
+		                        	<option selected>전체</option>
+		                        	<option>요청</option>
+		                        	<option>검토중</option>
+		                        	<option>접수</option>
+		                        	<option>개발중</option>
+		                        	<option>개발완료</option>
+		                        	<option>재검토</option>
+		                    	</select>
+		                	</div>
+                		</div>
+                	</div>
+                	<div class="row">
+                		<div class="col-4">등록자 소속
+                			<div class="form-group">
+		                    	<select class="form-control form-control-sm" id="exampleFormControlSelect1">
+		                        	<option selected>전체</option>
+		                        	<option>KHR시스템</option>
+		                        	<option>KTH시스템</option>
+		                        	<option>JHJ시스템</option>
+		                        	<option>HGH시스템</option>
+		                    	</select>
+		                	</div>
+                		</div>
+                		<div class="col-4">개발 부서
+                			<div class="form-group">
+		                    	<select class="form-control form-control-sm" id="exampleFormControlSelect1">
+		                        	<option selected>전체</option>
+		                        	<option>한국소프트웨어 개발1팀</option>
+		                        	<option>한국소프트웨어 개발2팀</option>
+		                        	<option>서강소프트웨어 개발1팀</option>
+		                        	<option>미래소프트웨어 개발1팀</option>
+		                    	</select>
+		                	</div>
+                		</div>
+                		<div class="col-4">키워드
+            				<form class="navbar-search">
+			                	<div class="input-group">
+			                    	<input type="text" class="form-control form-control-sm bg-light border-1 small" 
+			                   		aria-label="Search" aria-describedby="basic-addon2" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
+			                    	<div class="input-group-append">
+			                      		<button class="btn btn-primary btn-sm" type="button">
+			                        		<i class="fas fa-search fa-sm"></i>
+			                      		</button>
+			                    	</div>
+			                  	</div>
+			            	</form>
+                		</div>
+                	</div>
                 </div>
+                <hr/>
+               
+                
+                
+         		<!-- SR 검토 목록 -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">SR 요청 목록</h6>
+                  <div class="d-sm-flex justify-content-end">
+                	<button class="btn btn-sm btn-secondary mr-1">일괄 처리 (검토중)</button>
+                	<button class="btn btn-sm btn-secondary mr-1">일괄 처리 (접수)</button>
+                	<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
+                  </div>
+                </div>
+                
+                
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush table-hover border" id="dataTableHover">
                     <thead class="thead-light">
