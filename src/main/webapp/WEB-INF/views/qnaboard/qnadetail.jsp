@@ -83,12 +83,14 @@
 	                            		</div>
 	                            		<div class="text-right"> 
 	                            			<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/qna/list'">목록</button>
+	                            			<button type="button" class="btn btn-primary" onclick="writeComment()">댓글</button>
 	                            			<input type="button" class="btn btn-primary" value="수정" onclick="location.href='${pageContext.request.contextPath}/qna/update'"/>
 	                            			<button class="btn btn-primary">삭제</button>
 	                            		</div>
 		                            </form>
 		                        </div>
-	                        
+	                        	
+	                        	<!-- 댓글 -->
 	                        	<div class="mb-2">댓글(2)</div>
 	                        	<div>
 	                        		<hr/>
@@ -103,22 +105,28 @@
 	                        		<div id="commentContent">
 	                        			한 번 확인해보겠습니다.
 	                        		</div>
+	                        		<script>
+										function writeComment(){
+											console.log("댓글달기 실행");
+
+											let data = {name: "photo8.jpg", info:"여행사진"};
+
+											$.ajax({
+												url: "ajax3",
+												method: "post",
+												data: JSON.stringify(data),
+												contentType: "application/json; charset=UTF-8"
+											}).done((data) => {
+												console.log(data);
+												data.name
+												let img = "<img src='${pageContext.request.request.contextPath}/resources/images/"+data.name+"' width='200px'/>";
+												$('#div3').html(img);
+											});
+										}
+									</script>
 	                        		
 	                        	</div>
-	                        	<!-- 댓글 -->
-	                        	<div>
-	                        		<hr/>
-	                        		<div class="d-flex px-2 flex-row align-items-center justify-content-between">
-	                        			<div class="row">
-	                        				<h6 style="color: #406882"><b>김희률</b></h6>
-	                        				<h6 class="ml-3">2023.02.13</h6>
-	                        			</div>
-	                        			<div>| <a href="#">수정</a> | <a href="#">삭제</a> |</div>
-	                        		</div>
-	                        		
-	                        		<div id="commentContent">
-	                        			요청서가 안보입니다. 다시 작성해주세요.
-	                        		</div>
+	                        	
 	                        	</div>
                         	</div>
                        	</div>
