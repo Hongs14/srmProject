@@ -31,60 +31,63 @@
 								<div class="card mb-4  p-3">
 	                        		<div class="card-header">
 	                            		<div class="d-flex flex-row align-items-center justify-content-between">
+		                            		<!-- 카테고리 -->
 		                            		<div>
+		                            			
 		                            			<h6 class="m-0 font-weight-bold text-primary mb-3">공지사항 No.${notice.ntcNo}</h6>
+		                            			
 		                            		</div>
 		                                	<div>
-		                                		<span>조회수 : ${notice.ntcInqCnt} </span>
+		                                		<span>조회수 : ${notice.ntcInqCnt}</span>
 		                                	</div>
 		                                 </div>
+		                                 <!-- 글 제목 -->
 		                                 <div>
-		                                 	<h2 class="m-0 font-weight-bold text-primary">제목 :${notice.ntcTtl} </h2>
+		                                 	
+		                                 	<h2 class="m-0 font-weight-bold text-primary">제목 : ${notice.ntcTtl}</h2>
 		                                 </div>
 		                                 <hr/>
 	                           		</div>   
 		                            <div class="mx-3 p-3 d-flex flex-column">
-	                            		
-                            			<div class="row mb-2">
-	                            			<div class="form-group col-sm-3 ">
-	                            				<label class="col-form-label">작성자</label>
-		                            		</div>
-		                            		<div class="col-sm-9">
-		                            			<span>${notice.userId}</span>
-		                            		</div>
-	                            		</div>	
-	                            		<div class="row mb-2">
-	                            			<div class="form-group col-sm-3 ">
-	                            				<label class="col-form-label">작성일</label>
-		                            		</div>
-		                            		<div class="col-sm-9">
-			                            		<span>${notice.ntcWrtDate}</span>
+	                            		<form method="post" action="update" enctype="multipart/form-data">	
+	                            			<div><input type="hidden" id="ntcNo" name="ntcNo" value="${notice.ntcNo}"></div>
+	                            			<div class="row mb-2">
+		                            			<div class="form-group col-sm-3 ">
+		                            				<label class="col-form-label">작성자</label>
+			                            		</div>
+			                            		<div class="col-sm-9">
+				                            		<span>${notice.userId}</span>
+			                            		</div>
+		                            		</div>	
+		                            		<div class="row mb-2">
+		                            			<div class="form-group col-sm-3 ">
+		                            				<label class="col-form-label">작성일</label>
+			                            		</div>
+			                            		<div class="col-sm-9">
+			                            			<span>${notice.ntcWrtDate}</span>
+				                            	</div>
 			                            	</div>
-		                            	</div>
-		                            	<div class="row mb-2">
-			                            	<div class="form-group col-sm-3 ">
-			                            		<label class="col-form-label">내용</label>
+			                            	<div class="row mb-2">
+				                            	<div class="form-group col-sm-3 ">
+				                            		<label class="col-form-label">내용</label>
+				                            	</div>
+				                            	<div class="col-sm-9">
+				                            		<textarea class="form-control" rows="10" id="ntcCn" name="ntcCn"></textarea>
+				                            	</div>
 			                            	</div>
-			                            	<div class="col-sm-9">
-			                            		<span>${notice.ntcCn}</span>
+			                            	<div class="row mb-2">
+				                            	<div class="form-group col-sm-3 ">
+				                            		<label class="col-form-label">첨부파일</label>
+				                            	</div>
+				                            	<div class="col-sm-9">	                            		
+													<span><input type="file" id="ntcMFile" name="ntcMFile"></span>
+			                            		</div>
 			                            	</div>
-		                            	</div>
-		                            	<div class="row mb-2">
-			                            	<div class="form-group col-sm-3 ">
-			                            		<label class="col-form-label">첨부파일</label>
-			                            	</div>
-			                            	<div class="col-sm-9">		                            		
-												<span><a href="fileDownload?ntcNo=${notice.ntcNo}">${notice.ntcFileActlNm}</a></span>
-			                            	</div>
-		                            	</div>			                            		
-		                            	<div class="d-sm-flex justify-content-end">
-		                            		<a href="${pageContext.request.contextPath}/notice/list" class="btn btn-primary mr-1">목록</a>
-		                            		<a href="${pageContext.request.contextPath}/notice/update?ntcNo=${notice.ntcNo}" class="btn btn-primary mr-1">수정</a>
-		                            		<form method="post" action="delete" enctype="multipart/form-data">
-		                            			<input type="hidden" id="ntcNo" name="ntcNo" value="${notice.ntcNo}"/>
-			                            		<button class="btn btn-primary">삭제</button>
-		                            		</form>
-		                            	</div>
+			                            	<div class="text-right">
+			                            		<a href="${pageContext.request.contextPath}/notice/list" class="btn btn-primary">목록</a>
+			                            		<button  type="submit" class="btn btn-primary">수정 완료</button>
+			                            	</div>	
+			                            </form>
 		                            </div>
 		                        </div>
 		                     	<!-- 댓글 -->

@@ -1,18 +1,23 @@
 package com.team01.webapp.notice.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,27 +59,35 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/write")
-	public String getNoticeWrite(Notice notice) throws IOException  {
+	public String getNoticeWrite(Notice notice, NoticeFile noticeFile) throws IOException  {
 		log.info("실행");
+
+		noticeService.noticeWrite(notice);
 		
 		//첨부 파일 유무 조사
-		MultipartFile mf = notice.getNtcMFile();
-		System.out.println(mf);
+		MultipartFile mf = noticeFile.getNtcMFile();
 		if(mf!=null &&!mf.isEmpty()) {
 			//파일 원래 이름 저장
-			notice.setNtcFileActlNm(mf.getOriginalFilename());
+			noticeFile.setNtcFileActlNm(mf.getOriginalFilename());
 			//파일의 저장 이름 설정
 			String ntcFilePhysNm = new Date().getTime()+"-"+mf.getOriginalFilename();
-			notice.setNtcFilePhysNm(ntcFilePhysNm);
+			noticeFile.setNtcFilePhysNm(ntcFilePhysNm);
 			//파일 타입 설정
-			notice.setNtcFileExtnNm(mf.getContentType());
+			String str = mf.getContentType();
+			int beginIndex = str.indexOf("/");
+			int endIndex = str.length();
+			String type = str.substring(beginIndex,endIndex);
+			noticeFile.setNtcFileExtnNm(type);
+			noticeFile.setNtcNo(notice.getNtcNo());		
+			
+			if((noticeFile.getNtcNo()) == notice.getNtcNo()) {
+				noticeService.noticeFileUpload(noticeFile);			
+			}			
 			//서버 파일 시스템에 파일로 저장
 			File file = new File("C:/Temp/uploadfiles/"+ntcFilePhysNm);
 			mf.transferTo(file);
-			noticeService.noticeFileUpload(notice);
 		}
 		
-		noticeService.noticeWrite(notice);
 		
 		
 		return "redirect:/notice/list";
@@ -84,16 +97,112 @@ public class NoticeController {
 	public String getNoticeDetail(int ntcNo, Model model) {
 		log.info("실행");
 		
-		Notice notice =(Notice) noticeService.noticeDetail(ntcNo);
+		Notice notice = noticeService.noticeDetail(ntcNo);
 		
-		model.addAttribute("ntcTtl",notice.getNtcTtl());
-		model.addAttribute("ntcNo",ntcNo);
-		model.addAttribute("userId",notice.getUserId());
-		model.addAttribute("ntcInqCnt",notice.getNtcInqCnt());
-		model.addAttribute("ntcWrtDate",notice.getNtcWrtDate());
-		model.addAttribute("ntcCn",notice.getNtcCn());
+		model.addAttribute("notice",notice);
+		
+		//조회수 카운트
+		noticeService.inqCnt(ntcNo);
+
 		
 		return "notice/detail";
+	}
+	
+	//게시글 수정
+	@GetMapping("/update")
+	public String noticeUpdate(int ntcNo, Model model) {
+		log.info("실행");
+		Notice notice = noticeService.noticeDetail(ntcNo);
+		
+		model.addAttribute("notice",notice);
+		
+		return "notice/update";
+	}
+	
+	@PostMapping("/update")
+	public String noticeUpdate(Notice notice) throws IOException {
+		log.info("실행");
+		
+		//첨부 파일 유무 조사
+		MultipartFile mf = notice.getNtcMFile();
+		if(mf!=null &&!mf.isEmpty()) {
+			//파일 원래 이름 저장
+			notice.setNtcFileActlNm(mf.getOriginalFilename());
+			//파일의 저장 이름 설정
+			String ntcFilePhysNm = new Date().getTime()+"-"+mf.getOriginalFilename();
+			notice.setNtcFilePhysNm(ntcFilePhysNm);
+			//파일 타입 설정
+			String str = mf.getContentType();
+			int beginIndex = str.indexOf("/");
+			int endIndex = str.length();
+			String type = str.substring(beginIndex,endIndex);
+			notice.setNtcFileExtnNm(type);
+			notice.setNtcNo(notice.getNtcNo());		
+			
+			NoticeFile noticeFile = new NoticeFile();
+			noticeFile.setNtcFileActlNm(notice.getNtcFileActlNm());
+			noticeFile.setNtcFilePhysNm(notice.getNtcFilePhysNm());
+			noticeFile.setNtcFileExtnNm(notice.getNtcFileExtnNm());
+			noticeFile.setNtcNo(notice.getNtcNo());
+			
+			noticeService.noticeUpdate(notice,noticeFile);
+			
+		}else {			
+			noticeService.noticeUpdate(notice);
+		}
+		
+		
+		return "redirect:/notice/list";
+	}
+	
+	//게시글 삭제
+	@PostMapping("/delete")
+	public String noticeDelete(int ntcNo) {
+		log.info("실행");
+		noticeService.noticeDelete(ntcNo);
+		
+		return "redirect:/notice/list";
+	}
+	
+	//파일 다운로드
+	@GetMapping("/fileDownload")
+	public void download(int ntcNo,@RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
+		log.info("실행");
+		
+		Notice notice = noticeService.noticeDetail(ntcNo);
+		
+		String originalName = notice.getNtcFileActlNm();
+		String savedName = notice.getNtcFilePhysNm();
+		String contentType = notice.getNtcFileExtnNm();
+		log.info(userAgent);
+		
+		//originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩하는 방법
+		if(userAgent.contains("Trident")|| userAgent.contains("MSIE")) {
+			//Trident: IE 11
+			//MSIE: IE 10 이하
+			originalName = URLEncoder.encode(originalName,"UTF-8");
+		}else {
+			//Edge, Chrome, Safari
+			originalName = new String(originalName.getBytes("UTF-8"),"ISO-8859-1");
+		}
+		
+		//응답 헤더 설정
+		response.setHeader("Content-Disposition", "attachmemnt; filename=\""+originalName+"\"");
+		response.setContentType(contentType);
+		
+		//응답 바디에 파일 데이터 실기
+		String filePath = "C:/Temp/uploadfiles/"+savedName;
+		File file = new File(filePath);
+		if(file.exists()) {
+			InputStream is = new FileInputStream(file);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			os.flush();
+			os.close();
+			is.close();
+		}
+		
+		
 	}
 	
 }

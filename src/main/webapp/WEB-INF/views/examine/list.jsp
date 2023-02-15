@@ -184,106 +184,29 @@
 	                    </tr>
                     </thead>
                    	<tbody>
-                    	<tr>
-	                      <td>1</td>
-	                      <td>
-	                      	<div class="custom-control custom-checkbox m-0">
-                          		<input type="checkbox" class="custom-control-input" id="customCheck2">
-                          		<label class="custom-control-label" for="customCheck2"></label>
-                        	</div>
-	                      </td>
-	                      <td>SR-001</td>
-	                      <td>청년구직활동지원금 화면 개선</td>
-	                      <td>워크넷(외부망)</td>
-	                      <td>홍길동</td>
-	                      <td>서울강남고용센터</td>
-	                      <td>일자리포털개발팀</td>
-	                      <td>요청</td>
-	                      <td>2023-02-09</td>
-	                      <td>     </td>
-	                      <td>N</td>
-	                      <td><a href="${pageContext.request.contextPath}/examine/detail" class="btn btn-sm btn-info">상세보기</a></td>
-	                    </tr>
-	                    <tr>
-	                      <td>2</td>
-	                      <td>
-	                      	<div class="custom-control custom-checkbox">
-                          		<input type="checkbox" class="custom-control-input" id="customCheck3">
-                          		<label class="custom-control-label" for="customCheck3"></label>
-                        	</div>
-	                      </td>
-	                      <td>SR-002</td>
-	                      <td>청년구직활동지원금 화면 개선</td>
-	                      <td>워크넷(외부망)</td>
-	                      <td>홍길동</td>
-	                      <td>서울강남고용센터</td>
-	                      <td>일자리포털개발팀</td>
-	                      <td>요청</td>
-	                      <td>2023-02-09</td>
-	                      <td>     </td>
-	                      <td>Y</td>
-	                      <td><button class="btn btn-sm btn-info">상세보기</button></td>
-	                    </tr>
-	                    <tr>
-	                      <td>3</td>
-	                      <td>
-	                      	<div class="custom-control custom-checkbox">
-                          		<input type="checkbox" class="custom-control-input" id="customCheck4">
-                          		<label class="custom-control-label" for="customCheck4"></label>
-                        	</div>
-	                      </td>
-	                      <td>SR-003</td>
-	                      <td>청년구직활동지원금 화면 개선</td>
-	                      <td>워크넷(외부망)</td>
-	                      <td>홍길동</td>
-	                      <td>서울강남고용센터</td>
-	                      <td>일자리포털개발팀</td>
-	                      <td>요청</td>
-	                      <td>2023-02-09</td>
-	                      <td>     </td>
-	                      <td>N</td>
-	                      <td><button class="btn btn-sm btn-info">상세보기</button></td>
-	                    </tr>
-	                    <tr>
-	                      <td>4</td>
-	                      <td>
-	                      	<div class="custom-control custom-checkbox">
-                          		<input type="checkbox" class="custom-control-input" id="customCheck5">
-                          		<label class="custom-control-label" for="customCheck5"></label>
-                        	</div>
-	                      </td>
-	                      <td>SR-004</td>
-	                      <td>청년구직활동지원금 화면 개선</td>
-	                      <td>워크넷(외부망)</td>
-	                      <td>홍길동</td>
-	                      <td>서울강남고용센터</td>
-	                      <td>일자리포털개발팀</td>
-	                      <td>요청</td>
-	                      <td>2023-02-09</td>
-	                      <td>     </td>
-	                      <td>N</td>
-	                      <td><button class="btn btn-sm btn-info">상세보기</button></td>
-	                    </tr>
-	                    <tr>
-	                      <td>5</td>
-	                      <td>
-	                      	<div class="custom-control custom-checkbox">
-                          		<input type="checkbox" class="custom-control-input" id="customCheck6">
-                          		<label class="custom-control-label" for="customCheck6"></label>
-                        	</div>
-	                      </td>
-	                      <td>SR-005</td>
-	                      <td>청년구직활동지원금 화면 개선</td>
-	                      <td>워크넷(외부망)</td>
-	                      <td>홍길동</td>
-	                      <td>서울강남고용센터</td>
-	                      <td>일자리포털개발팀</td>
-	                      <td>요청</td>
-	                      <td>2023-02-09</td>
-	                      <td>     </td>
-	                      <td>N</td>
-	                      <td><button class="btn btn-sm btn-info">상세보기</button></td>
-	                    </tr>
+                   		<c:forEach var="examine" items="${examineList}">
+	                    	<tr>
+		                      <td>1</td>
+		                      <td>
+		                      	<div class="custom-control custom-checkbox m-0">
+	                          		<input type="checkbox" class="custom-control-input" id="customCheck2">
+	                          		<label class="custom-control-label" for="customCheck2"></label>
+	                        	</div>
+		                      </td>
+		                      <td>SR-001</td>
+		                      <td>청년구직활동지원금 화면 개선</td>
+		                      <td>워크넷(외부망)</td>
+		                      <td>홍길동</td>
+		                      <td>서울강남고용센터</td>
+		                      <td>일자리포털개발팀</td>
+		                      <td>요청</td>
+		                      <td>2023-02-09</td>
+		                      <td>     </td>
+		                      <td>N</td>
+		                      <td><a href="${pageContext.request.contextPath}/examine/detail" class="btn btn-sm btn-info">상세보기</a></td>
+		                    </tr>
+                   		</c:forEach>
+	                    
                   	</tbody>
                   </table>
                 </div>
