@@ -1,16 +1,28 @@
 package com.team01.webapp.progress.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.team01.webapp.model.HR;
+import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFilter;
+import com.team01.webapp.model.SRFile;
 import com.team01.webapp.model.SrProgressAjax;
 import com.team01.webapp.model.SrProgressList;
 import com.team01.webapp.progress.service.IProgressService;
@@ -25,6 +37,7 @@ public class ProgressController {
 	@Autowired
 	private IProgressService progressService;
 	
+	// 리스트 필터링 값 불러오기
 	@RequestMapping(value="/progress/list/{pageNo}", method = RequestMethod.GET)
 	public String progressList(@PathVariable int pageNo, ProgressFilter progressfilter, Model model) {
 		
@@ -36,11 +49,16 @@ public class ProgressController {
 	}
 	
 	@RequestMapping(value="/progress/detail/{srNo}", method = RequestMethod.GET)
-	public String progressDetail(@PathVariable int srNo) {
+	public String progressDetail(@PathVariable String srNo, Model model) {
+		
+		ProgressDetail progressdetail = progressService.selectDetail(srNo);
+		
+		model.addAttribute("progressDetail", progressdetail);
 		
 		return "progress/detail";
 	}
 	
+	// progress 리스트 ajax 안에 필터링된 리스트 불러오기
 	@RequestMapping(value="progress/list/progressajax/{pageNo}", produces="application/json; charset=UTF-8")
 	public String progressAjax(@PathVariable String pageNo, @RequestBody SrProgressAjax srProgressAjax, Model model, Pager pager) {
 		
@@ -58,4 +76,54 @@ public class ProgressController {
 		
 		return "progress/progressListView";
 	}
+	
+	@RequestMapping(value="progress/detail/filedownload", method = RequestMethod.GET)
+	public void filedownload(int srFileNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception {
+		SRFile srFile = progressService.getSrFile(srFileNo);
+		
+		String originalName = srFile.getSrFileActlNm();
+		String savedName = srFile.getSrFilePhysNm();
+		String contentType = srFile.getSrFileExtnNm();
+		
+		// originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩
+		if(userAgent.contains("Trident") || userAgent.contains("MSIE")) {
+			originalName = URLEncoder.encode(originalName, "UTF-8");
+		} else {
+			originalName = new String(originalName.getBytes("UTF-8"), "ISO-8859-1");
+		}
+		
+		// 응답 헤더 설정
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + originalName + "\"");
+		response.setContentType(contentType);
+		
+		// 응답 바디에 파일 데이터 싣기
+		String filePath = "C:/Temp/uploadfiles/" + savedName;
+		
+		File file = new File(filePath);
+		
+		if(file.exists()) {
+			InputStream is = new FileInputStream(file);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			os.flush();
+			os.close();
+			is.close();
+		}
+	}
+	
+	// Detail SR 인적 자원 list
+	@RequestMapping(value="progress/detail/progressajax/1", produces="application/json; charset=UTF-8")
+	public String humanResourceAjax(@RequestBody HR hr, Model model) {
+		
+		String srNo = hr.getSrNo();
+		
+		List<HR> hrList = progressService.humanResourceList(srNo);
+		
+		log.info(hrList);
+		
+		model.addAttribute("hrList", hrList);
+		
+		return "progress/humanResourceList";
+	}
+
 }
