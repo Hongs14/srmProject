@@ -8,5 +8,6 @@ import com.team01.webapp.util.Pager;
 public interface IQnaboardRepository {
 	public List<QSTN> selectQnaboardList(Pager pager);
 	public int totalRow();
+	public QSTN getDetail(int qstnNo);
 	
 }

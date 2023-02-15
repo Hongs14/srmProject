@@ -6,6 +6,7 @@
 		<![CDATA[
 			SELECT 
 					rnum,
+					QSTN_NO AS 	"qstnNo",
 					QSTN_TTL AS "qstnTtl",
 					QSTN_INQ_CNT AS "qstnInqCnt",
 					QSTN_WRT_DATE AS "qstnWrtDate",
@@ -26,5 +27,16 @@
 	
 	<select id="totalRow" resultType="int">
 		select count(*) from qstn
+	</select>
+	
+	<select id="getDetail" parameterType="int" resultType="qstn">
+		SELECT QSTN_NO AS "qstnNo", 
+				USER_NM AS "userNm", 
+				QSTN_TTL AS "qstnTtl", 
+				QSTN_CN AS "qstnCn", 
+				QSTN_INQ_CNT AS "qstnInqCnt", 
+				QSTN_WRT_DATE AS "qstnWrtDate"
+		FROM QSTN, USERS
+		WHERE QSTN.USER_NO = USERS.USER_NO AND QSTN.QSTN_NO =#{qstnNo}
 	</select>
 </mapper>
