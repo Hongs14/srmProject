@@ -47,7 +47,7 @@ public class UserService implements IUserService {
 		user.setUserType(dbUser.getUserType());
 		user.setUserOgdp(dbUser.getUserOgdp());
 		user.setUserEml(dbUser.getUserEml());
-		user.setUserTelno(dbUser.getUserEml());
+		user.setUserTelno(dbUser.getUserTelno());
 		user.setUserDpNm(dbUser.getUserDpNm());
 		return LoginResult.SUCCESS;
 	}

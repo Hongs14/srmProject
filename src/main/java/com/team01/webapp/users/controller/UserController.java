@@ -25,7 +25,7 @@ public class UserController {
 	
 	//로그인하기 
 	@RequestMapping(value="/login", method = RequestMethod.GET)
-	public String login(HttpSession session, Model model, Pager pager) {
+	public String login(HttpSession session, Model model) {
 		log.info("실행");
 		return "user/loginForm";
 	}
@@ -75,5 +75,11 @@ public class UserController {
 			return "user/joinForm";
 		}
 	}
-
+	
+	//나의 정보 확인
+	@RequestMapping(value = "/myinfo", method = RequestMethod.GET)
+	public String myinfo() {
+		log.info("실행");
+		return "user/myInfo";
+	}
 }

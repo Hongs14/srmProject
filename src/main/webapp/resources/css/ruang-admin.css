@@ -43,7 +43,9 @@ a:focus {
   padding-right: 1.5rem
 }
 
-
+#requestModal-dialog{
+	width:700px;
+}
 .scroll-to-top {
   position: fixed;
   right: 1rem;
@@ -151,9 +153,9 @@ a:focus {
 }
 
 .bg-gradient-primary {
-  background-color: #6777ef;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #6777ef), to(#303f9f));
-  background-image: linear-gradient(180deg, #6777ef 10%, #303f9f 100%);
+  background-color: #214763;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #214763), to(#1A374D));
+  background-image: linear-gradient(180deg, #214763 10%, #1A374D 100%);
   background-size: cover
 }
 

@@ -28,7 +28,7 @@
             <h6 class="mb-0 text-white">SR 요청관리</h6>
           </div>
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/request/list">SR 관리</a></li>
+              <li class="breadcrumb-item"><b>SR 관리</b></li>
               <li class="breadcrumb-item active" aria-current="page">SR 요청관리</li>
             </ol>
           </div>
@@ -44,8 +44,8 @@
                 		<div class="col-4">
                 			<div class="form-group row" id="simple-date4" >
 			                	<div class="input-daterange input-group input-group-sm">
-			                		<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
-			                    	<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" />
+			                		<label for="startDate" class="col-sm-3 col-form-label-sm">조회기간</label>
+			                    	<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" id="startDate"/>
 			                    	<div class="input-group-prepend">
 			                    		<span class="input-group-text" style="height:31px;">~</span>
 			                    	</div>
@@ -56,8 +56,8 @@
                 		
                 		<div class="col-3">
                 			<div class="form-group row">
-                				<label class="col-sm-3 col-form-label-sm">진행상태</label>
-		                    	<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1">
+                				<label class="col-sm-3 col-form-label-sm" for="srStts">진행상태</label>
+		                    	<select class="form-control form-control-sm col-sm-9" id="srStts">
 		                        	<option selected>전체</option>
 		                        	<option>요청</option>
 		                        	<option>검토중</option>
@@ -70,8 +70,8 @@
                 		</div>
                 		<div class="col-4">
                 			<div class="form-group row">
-                				<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">관련시스템</label>
-		                    	<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1" >
+                				<label for="srSystem" class="col-sm-3 col-form-label-sm">관련시스템</label>
+		                    	<select class="form-control form-control-sm col-sm-9" id="srSystem" >
 		                        	<option selected>전체</option>
 		                        	<option>KHR시스템</option>
 		                        	<option>KTH시스템</option>
@@ -88,8 +88,8 @@
                 	<div class="row">
                 		<div class="col-4">
                 			<div class="form-group row">
-                				<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">등록자 소속</label>
-		                    	<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1">
+                				<label for="srOgdp" class="col-sm-3 col-form-label-sm">등록자 소속</label>
+		                    	<select class="form-control form-control-sm col-sm-9" id="srOgdp">
 		                        	<option selected>전체</option>
 		                        	<option>KHR시스템</option>
 		                        	<option>KTH시스템</option>
@@ -100,8 +100,8 @@
                 		</div>
                 		<div class="col-3">
                 			<div class="form-group row">
-                			<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">개발부서</label>
-		                    	<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1">
+                			<label for="srDept" class="col-sm-3 col-form-label-sm">개발부서</label>
+		                    	<select class="form-control form-control-sm col-sm-9" id="srDept">
 		                        	<option selected>전체</option>
 		                        	<option>한국소프트웨어 개발1팀</option>
 		                        	<option>한국소프트웨어 개발2팀</option>
@@ -112,8 +112,8 @@
                 		</div>
                 		<div class="col-4">
 		                	<div class="form-group row">
-		                		<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">키워드</label>
-		                    	<input type="text" class="form-control form-control-sm col-sm-9 bg-light" 
+		                		<label for="srKeyWord" class="col-sm-3 col-form-label-sm">키워드</label>
+		                    	<input type="text" id="srKeyWord" class="form-control form-control-sm col-sm-9 bg-light" 
 		                   		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
 		                  	</div>
                 		</div>
@@ -131,13 +131,15 @@
          		<!-- SR 검토 목록 -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">SR 요청 목록</h6>
-                  <div class="d-sm-flex justify-content-end">
-                	<button class="btn btn-sm btn-secondary mr-1">일괄 처리 (검토중)</button>
-                	<button class="btn btn-sm btn-secondary mr-1">일괄 처리 (접수)</button>
-                	<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
-                  </div>
-                </div>
-                
+					<div class="d-sm-flex justify-content-end">
+						<a class="btn btn-sm btn-secondary mr-1"
+							href="javascript:void(0);" data-toggle="modal"
+							data-target="#requestModal"> 요청등록 </a>
+						<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
+					</div>
+				</div>
+	            <!--요청 모달 -->
+	           <%@include file="/WEB-INF/views/request/requestModal.jsp" %>
                 
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush table-hover border" id="dataTableHover">
@@ -239,7 +241,6 @@
                   		<a href="${pager.totalPageNo}" type="button" class="btn btn-muted shadow">▶▶</a>
                		</c:if>
 				</div>
-				
               </div>
           </div>
           </div>
