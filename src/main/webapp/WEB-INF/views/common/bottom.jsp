@@ -10,6 +10,7 @@
   <script src="${pageContext.request.contextPath}/resources/js/ruang-admin.js"></script>
   <script src="${pageContext.request.contextPath}/resources/vendor/chart.js/Chart.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/demo/chart-area-demo.js"></script> 
+  <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bs-custom-file-input.js"></script> 
   <%-- <!-- Page level plugins -->
   <script src="${pageContext.request.contextPath}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script> --%>
