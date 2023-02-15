@@ -39,4 +39,8 @@
 		FROM QSTN, USERS
 		WHERE QSTN.USER_NO = USERS.USER_NO AND QSTN.QSTN_NO =#{qstnNo}
 	</select>
+	
+	<insert id="writeComment" parameterType="qstn">
+		INSERT INTO QSTN_COMMENT VALUES(QSTNCMNTNO_SEQ.NEXTVAL, #{, 27, '안됩니다.', SYSDATE);
+	</insert>
 </mapper>

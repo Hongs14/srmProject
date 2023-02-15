@@ -39,7 +39,7 @@
 	                                 	<div>조회수 2</div>
 	                                </div>
 	                                 	<div>
-	                                 		<h2 class="m-0 font-weight-bold text-primary">계속 검토중에 멈춰있습니다.</h2>
+	                                 		<h2 class="m-0 font-weight-bold text-primary">${qstn.qstnTtl}</h2>
 	                                 	</div>
 	                                 	<hr/>
 	                          	</div>   
@@ -51,7 +51,7 @@
 		                            		</div>
 		                            		<div class="col-sm-9">
 		                            			<!-- <input type="text" class="form-control" id="qqnaWriter" value="정홍주"/> -->
-		                            			${qstn.qstnNm}
+		                            			${qstn.userNm}
 		                            		</div>
 	                            		</div>	
 	                            		<div class="row mb-2">
@@ -85,72 +85,77 @@
 	                            		</div>
 		                            </form>
 		                        </div>
+		                        <input type="hidden"/>
 	                        	
 	                        	<!-- 댓글 -->
 	                        	<div class="mx-3 mb-2">댓글(2)</div>
 		                        	<div class="mx-3">
-		                        		<form>
-			                        		<div class="row">
-			                        			<div class="col-sm-1 form-group">
-			                        				${sessionScope.loginUser.userNm}
-			                        			</div>
-			                        			<div class="col-sm-10 form-group">
-			                        				<textarea style="width: 100%" name="qnaCmntCn"></textarea>
-			                        			</div>
-			                        			<div class="col-sm-1">
-			                        				<input type="submit" class="btn btn-lg btn-secondary" value="등록"/>
-			                        			</div>
-			                        		</div>
-		                        		</form>
+		                        		<div class="row">
+		                        			<div class="col-sm-1 form-group" id="qnaComentWriter">
+		                        				${sessionScope.loginUser.userNm}
+		                        			</div>
+		                        			<div class="col-sm-10 form-group">
+		                        				<textarea style="width: 100%" id="qnaCmntCn"></textarea>
+		                        			</div>
+		                        			<div class="col-sm-1">
+		                        				<button onclick="writeComment();">등록하기</button>
+		                        			</div>
+				                        </div>
 		                        	</div>
-	                        	
-	                        	<div>
-	                        		<hr/>
-	                        		<div class="d-flex px-2 flex-row align-items-center justify-content-between">
-	                        			<div class="row">
-	                        				<h6 style="color: #406882"><b>김희률</b></h6>
-	                        				<h6 class="ml-3">2023.02.13</h6>
-	                        			</div>
-	                        			<div>| <a href="#">수정</a> | <a href="#">삭제</a> |</div>
-	                        		</div>
-	                        		
-	                        		<div id="commentContent">
-	                        			한 번 확인해보겠습니다.
-	                        		</div>
-	                        		<!-- <script>
+		                        	<script>
 										function writeComment(){
 											console.log("댓글달기 실행");
-
-											let data = {name: "photo8.jpg", info:"여행사진"};
+											let content = $('#qnaCmntCn').val();
+											let qcwriterNo = '${sessionScope.loginUser.userNo}';
+											let qcwriter = '${sessionScope.loginUser.userNm}';
+											let qstnNo = '${qstn.qstnNo}';
+											console.log(qcwriter);
+											console.log("내용"+content);
+											
+											
+											let data = {userNo: qcwriterNo, qstnNo: qstnNo, userNm: qcwriter, qstnCmntCn: content};
 
 											$.ajax({
-												url: "ajax3",
+												url: "comment/write",
 												method: "post",
 												data: JSON.stringify(data),
 												contentType: "application/json; charset=UTF-8"
 											}).done((data) => {
 												console.log(data);
-												data.name
-												let img = "<img src='${pageContext.request.request.contextPath}/resources/images/"+data.name+"' width='200px'/>";
-												$('#div3').html(img);
+												
+												/* data.name */
+												/* let img = "";
+												$('#div3').html(img); */
 											});
 										}
-									</script> -->
-	                        		
-	                        	</div>
-                        	</div>
-                       	</div>
-                    </div> 
-          			<!-- 로그아웃 모달 -->
-           			<%@include file="/WEB-INF/views/common/logout.jsp" %>
-       			</div>
-       		<!---Container Fluid-->
+									</script>
+	                        	
+		                        	<div>
+		                        		<hr/>
+		                        		<div class="d-flex px-2 flex-row align-items-center justify-content-between">
+		                        			<div class="row">
+		                        				<h6 style="color: #406882"><b>김희률</b></h6>
+		                        				<h6 class="ml-3">2023.02.13</h6>
+		                        			</div>
+		                        			<div>| <a href="#">수정</a> | <a href="#">삭제</a> |</div>
+		                        		</div>
+		                        		
+		                        		<div id="commentContent">
+		                        			한 번 확인해보겠습니다.
+		                        		</div>
+		                        	</div>
+                        		</div>
+                       		</div>
+                    	</div> 
+          				<!-- 로그아웃 모달 -->
+           				<%@include file="/WEB-INF/views/common/logout.jsp" %>
+       				</div>
+       			<!---Container Fluid-->
+      			</div>
+     			<%@include file="/WEB-INF/views/common/footer.jsp" %>
       		</div>
-     		<%@include file="/WEB-INF/views/common/footer.jsp" %>
-      	</div>
      	<!-- Footer -->
    	 	</div>
  		<%@include file="/WEB-INF/views/common/bottom.jsp" %>
 	</body>
-
 </html>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team01.webapp.model.QSTN;
+import com.team01.webapp.model.QSTNComment;
 import com.team01.webapp.qnaboard.dao.IQnaboardRepository;
 import com.team01.webapp.util.Pager;
 
@@ -31,6 +32,11 @@ public class QnaboardService implements IQnaboardService {
 	public QSTN getDetail(int qstnNo) {
 		QSTN qstn = qnaboardRepository.getDetail(qstnNo);
 		return qstn;
+	}
+
+	@Override
+	public void writeComment(QSTNComment qComment) {
+		qnaboardRepository.writeComment(qComment);
 	}
 	
 }

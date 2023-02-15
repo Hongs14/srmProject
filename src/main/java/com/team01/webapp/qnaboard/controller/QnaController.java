@@ -60,6 +60,10 @@ public class QnaController {
 	public  QSTNComment ajax3(@RequestBody QSTNComment qComment){
 		//RequestBody안에는 json타입으로 있어야 함.
 		log.info("QSTN댓글달기");
+		log.info(qComment);
+		
+		qnaboardService.writeComment(qComment);
+		
 		return qComment;
 		
 	}
