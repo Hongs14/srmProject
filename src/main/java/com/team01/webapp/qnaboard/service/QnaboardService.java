@@ -26,5 +26,11 @@ public class QnaboardService implements IQnaboardService {
 		List<QSTN> list = qnaboardRepository.selectQnaboardList(pager);
 		return list;
 	}
+
+	@Override
+	public QSTN getDetail(int qstnNo) {
+		QSTN qstn = qnaboardRepository.getDetail(qstnNo);
+		return qstn;
+	}
 	
 }

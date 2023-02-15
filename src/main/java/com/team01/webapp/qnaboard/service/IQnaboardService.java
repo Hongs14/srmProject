@@ -9,5 +9,7 @@ public interface IQnaboardService {
 	
 	public List<QSTN> getList();
 
+	public QSTN getDetail(int qstnNo);
+
 	
 }

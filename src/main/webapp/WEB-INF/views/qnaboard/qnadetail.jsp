@@ -35,7 +35,7 @@
 	                    	
 	                        	<div class="card-header">
 	                            	<div class="d-flex flex-row align-items-center justify-content-between">
-	                                 	<div><h6 class="m-0 font-weight-bold text-primary mb-3">문의사항 No.131</h6></div>
+	                                 	<div><h6 class="m-0 font-weight-bold text-primary mb-3">문의사항 No.${qstn.qstnNo}</h6></div>
 	                                 	<div>조회수 2</div>
 	                                </div>
 	                                 	<div>
@@ -51,7 +51,7 @@
 		                            		</div>
 		                            		<div class="col-sm-9">
 		                            			<!-- <input type="text" class="form-control" id="qqnaWriter" value="정홍주"/> -->
-		                            			정홍주
+		                            			${qstn.qstnNm}
 		                            		</div>
 	                            		</div>	
 	                            		<div class="row mb-2">
@@ -60,7 +60,7 @@
 		                            		</div>
 		                            		<div class="col-sm-9">
 		                            			<!-- <input type="text" class="form-control" id="qqnaWriter" value="정홍주"/> -->
-		                            			2023.02.13
+		                            			${qstn.qstnWrtDate}
 		                            		</div>
 	                            		</div>
 	                            		<div class="row mb-2">
@@ -68,7 +68,7 @@
 		                            			<label class="col-form-label">내용</label>
 		                            		</div>
 		                            		<div class="col-sm-9">
-		                            			지금 한달째 검토중입니다. 빨리 접수해주세요
+		                            			${qstn.qstnCn}
 		                            			<!-- <textarea rows="5" cols="80" readonly>지금 한달째 검토중입니다. 빨리 접수해주세요</textarea> -->
 		                            		</div>
 	                            		</div>
@@ -76,14 +76,10 @@
 		                            		<div class="form-group col-sm-3 ">
 		                            			<label class="col-form-label">첨부파일</label>
 		                            		</div>
-		                            		<div class="col-sm-9">
-		                            	
-		                            			화면캡처.png
-		                            		</div>
+		                            		<div class="col-sm-9">화면캡처.png</div>
 	                            		</div>
 	                            		<div class="text-right"> 
 	                            			<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/qna/list'">목록</button>
-	                            			<button type="button" class="btn btn-primary" onclick="writeComment()">댓글</button>
 	                            			<input type="button" class="btn btn-primary" value="수정" onclick="location.href='${pageContext.request.contextPath}/qna/update'"/>
 	                            			<button class="btn btn-primary">삭제</button>
 	                            		</div>
@@ -91,7 +87,23 @@
 		                        </div>
 	                        	
 	                        	<!-- 댓글 -->
-	                        	<div class="mb-2">댓글(2)</div>
+	                        	<div class="mx-3 mb-2">댓글(2)</div>
+		                        	<div class="mx-3">
+		                        		<form>
+			                        		<div class="row">
+			                        			<div class="col-sm-1 form-group">
+			                        				${sessionScope.loginUser.userNm}
+			                        			</div>
+			                        			<div class="col-sm-10 form-group">
+			                        				<textarea style="width: 100%" name="qnaCmntCn"></textarea>
+			                        			</div>
+			                        			<div class="col-sm-1">
+			                        				<input type="submit" class="btn btn-lg btn-secondary" value="등록"/>
+			                        			</div>
+			                        		</div>
+		                        		</form>
+		                        	</div>
+	                        	
 	                        	<div>
 	                        		<hr/>
 	                        		<div class="d-flex px-2 flex-row align-items-center justify-content-between">
@@ -105,7 +117,7 @@
 	                        		<div id="commentContent">
 	                        			한 번 확인해보겠습니다.
 	                        		</div>
-	                        		<script>
+	                        		<!-- <script>
 										function writeComment(){
 											console.log("댓글달기 실행");
 
@@ -123,10 +135,8 @@
 												$('#div3').html(img);
 											});
 										}
-									</script>
+									</script> -->
 	                        		
-	                        	</div>
-	                        	
 	                        	</div>
                         	</div>
                        	</div>

@@ -110,7 +110,7 @@
 					                   		</thead>
 					                   		<tbody>
 					                   			<c:forEach var="QnaboardDto" items="${qnalist}">
-						                   			<tr onclick="location.href='${pageContext.request.contextPath}/qna/detail'">
+						                   			<tr onclick="location.href='${pageContext.request.contextPath}/qna/view?qstnNo=${QnaboardDto.qstnNo}'">
 						                        		<td>1</td>
 								                        <td>${QnaboardDto.qstnTtl}</td>
 								                        <td>${QnaboardDto.userNm}</td>
