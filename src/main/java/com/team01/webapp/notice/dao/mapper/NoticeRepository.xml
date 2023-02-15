@@ -36,7 +36,7 @@
 			            u.USER_ID
 			        FROM NOTICE n, USERS u
 			        WHERE n.user_no = u.user_no
-			        ORDER BY n.ntc_pry
+			        ORDER BY n.ntc_pry desc
 			    )
 			    WHERE ROWNUM <=#{endRowNo}
 			)
@@ -49,47 +49,84 @@
 		<selectKey keyProperty="ntcNo" resultType="int" order="BEFORE">
 			SELECT ntcno_seq.nextval FROM dual
 		</selectKey>
-		<if test="ntcFileActlNm == null">
-			<![CDATA[
-				INSERT INTO NOTICE( NTC_NO, USER_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, NTC_WRT_DATE, NTC_PRY)
-				VALUES( ntcno_seq.nextval, #{userNo}, #{ntcTtl}, #{ntcCn}, 0, sysdate, #{ntcPry} ) 
-			]]>
-		</if>
-		<if test="ntcFileActlNm != null">
-			<![CDATA[
-				INSERT INTO NOTICE( NTC_NO, USER_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, NTC_WRT_DATE, NTC_PRY, NTC_FILE_PHYS_NM, NTC_FILE_ACTL_NM, NTC_FILE_EXTN_NM)
-				VALUES( ntcno_seq.nextval, #{userNo}, #{ntcTtl}, #{ntcCn}, 0, sysdate, #{ntcPry}, #{ntcFilePhysNm}, #{ntcFileActlNm}, #{ntcFileExtnNm} ) 
-			]]>
-		</if>
+		<![CDATA[
+			INSERT INTO NOTICE( NTC_NO, USER_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, NTC_WRT_DATE, NTC_PRY)
+			VALUES( ntcno_seq.nextval, #{userNo}, #{ntcTtl}, #{ntcCn}, 0, sysdate, #{ntcPry} )
+		]]>
 		
 	</insert>
 	
 	<!-- 첨부파일 -->
-	<insert id="noticeFileUpload" parameterType="notice">
+	<insert id="noticeFileUpload" parameterType="noticeFile">
 		<![CDATA[
 			INSERT INTO NTC_FILE( NTC_FILE_NO, NTC_NO, NTC_FILE_PHYS_NM, NTC_FILE_ACTL_NM, NTC_FILE_EXTN_NM)
-			VALUES( ntcFileNo_seq.nextval, #{ntcNo}, #{ntcFilePhysNm}, #{ntcFileActlNm}, #{ntcFileExtnNm})
+			VALUES(ntcFileNo_seq.nextval, #{ntcNo}+1, #{ntcFilePhysNm}, #{ntcFileActlNm}, #{ntcFileExtnNm})
 		]]>
 	</insert>
 	
 
 	<!-- 게시글 상세조회 -->
 	<select id="detail" parameterType="int" resultType="notice">
-		<![CDATA[
-			
-			SELECT 
-			    n.NTC_TTL AS ntcTtl,
-			    n.NTC_NO AS ntcNo,
-			    u.USER_ID AS userId,
-			    n.NTC_PRY AS ntcPry,
-			    n.NTC_WRT_DATE AS ntcWrtDate,
-			    n.NTC_CN AS ntcCn
-			FROM NOTICE n , USERS u
-			WHERE NTC_NO = #{ntcNo}
-			AND n.user_no = u.user_no
-		
-		]]>
-		
+		SELECT 
+		    n.NTC_TTL AS ntcTtl,
+		    n.NTC_NO AS ntcNo,
+		    u.USER_ID AS userId,
+		    n.NTC_INQ_CNT AS ntcInqCnt,
+		    n.NTC_WRT_DATE AS ntcWrtDate,
+		    n.NTC_CN AS ntcCn,
+		    nf.NTC_FILE_ACTL_NM AS ntcFileActlNm,
+		    nf.NTC_FILE_PHYS_NM AS ntcFilePhysNm,
+		    nf.NTC_FILE_EXTN_NM AS ntcFileExtnNm
+		FROM NOTICE n
+		LEFT OUTER JOIN NTC_FILE nf
+		ON n.NTC_NO = nf.NTC_NO
+		LEFT OUTER JOIN USERS u
+		ON n.USER_NO = u.USER_NO
+		WHERE n.NTC_NO = #{ntcNo}
 	</select>
+	
+	<!-- 게시글 조회수 -->
+	<update id="inqCnt" parameterType="int">
+		UPDATE NOTICE
+		SET NTC_INQ_CNT = NTC_INQ_CNT+1
+		WHERE NTC_NO = #{ntcNo} 
+		
+	</update>
+	
+	<!-- 게시글 수정 -->
+	<update id="update" parameterType="notice">
+		UPDATE NOTICE
+		SET NTC_CN = #{ntcCn}
+		WHERE NTC_NO = #{ntcNo}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM NOTICE
+		WHERE NTC_NO = #{ntcNo}
+	</delete>
+	
+	<!-- 첨부파일 수정 -->
+	<update id="updateFile" parameterType="noticeFile">
+		UPDATE NTC_FILE
+		SET 
+			NTC_FILE_ACTL_NM = #{ntcFileActlNm},
+			NTC_FILE_PHYS_NM = #{ntcFilePhysNm},
+			NTC_FILE_EXTN_NM = #{ntcFileExtnNm}
+		WHERE NTC_NO = #{ntcNo}
+			
+	</update>	
+	
+	<select id="selectMaxFileNo" resultType="int">
+		SELECT COUNT(*) FROM NTC_FILE
+	</select>
+	
+	<insert id="noticeFileUpdateUpload" parameterType="noticeFile">
+		<![CDATA[
+			INSERT INTO NTC_FILE( NTC_FILE_NO, NTC_NO, NTC_FILE_PHYS_NM, NTC_FILE_ACTL_NM, NTC_FILE_EXTN_NM)
+			VALUES(#{ntcFileNo}, #{ntcNo}, #{ntcFilePhysNm}, #{ntcFileActlNm}, #{ntcFileExtnNm})
+		]]>
+	</insert>
+	
 	
 </mapper>

@@ -20,6 +20,7 @@ public class ExamineController {
 	@GetMapping(value="/list")
 	public String getExamineList() {
 		log.info("실행");
+		
 		return "examine/list";
 	}
 	

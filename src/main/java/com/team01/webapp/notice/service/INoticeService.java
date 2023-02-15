@@ -14,8 +14,15 @@ public interface INoticeService {
 	//게시글 작성
 	public void noticeWrite(Notice notice);
 	//게시글 첨부파일
-	public NoticeFile noticeFileUpload(Notice notice);
+	public void noticeFileUpload(NoticeFile noticeFile);
 	//게시글 상세조회
 	public Notice noticeDetail(int ntcNo);
+	//게시글 조회수
+	public void inqCnt(int ntcNo);
+	//게시글 수정
+	public void noticeUpdate(Notice notice);
+	public void noticeUpdate(Notice notice, NoticeFile noticeFile);
+	//게시글 삭제
+	public void noticeDelete(int ntcNo);
 
 }
