@@ -6,7 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.team01.webapp.model.HR;
+import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFilter;
+import com.team01.webapp.model.SRFile;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SRType;
 import com.team01.webapp.model.SrProgressAjax;
@@ -67,5 +70,35 @@ public class ProgressService implements IProgressService {
 		
 		return progressRepository.selectProgressList(srProgressAjax);
 	}
+
+	@Override
+	public ProgressDetail selectDetail(String srNo) {
+		
+		ProgressDetail progressDetail = progressRepository.selectProgressRequester(srNo);
+		
+		// 개발자 정보 담아주기
+		ProgressDetail progressDetailDeveloper = progressRepository.selectProgessdeveloper(srNo);
+		progressDetail.setDpNm(progressDetailDeveloper.getDpNm());
+		progressDetail.setDeveloperNm(progressDetailDeveloper.getDeveloperNm());
+		progressDetail.setSrStartDate(progressDetailDeveloper.getSrStartDate());
+		progressDetail.setSrEndDate(progressDetailDeveloper.getSrEndDate());
+		
+		// 파일 정보 담아주기
+		List<SRFile> srFile = progressRepository.selectSrFileList(srNo);
+		progressDetail.setSrFile(srFile);
+		
+		return progressDetail;
+	}
+
+	@Override
+	public SRFile getSrFile(int srFileNo) {
+		return progressRepository.selectSrFile(srFileNo);
+	}
+
+	@Override
+	public List<HR> humanResourceList(String srNo) {
+		return progressRepository.selectHumanResourceList(srNo);
+	}
+
 
 }

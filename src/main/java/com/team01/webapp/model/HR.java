@@ -12,4 +12,10 @@ public class HR {
 	private Date hrStartDate;
 	private Date hrEndDate;
 	private String hrLeader;
+	
+	private String userNm;
+	private String userDpNm;
+	private String userJbps;
+	private String userTelNo;
+	private String taskNm;
 }

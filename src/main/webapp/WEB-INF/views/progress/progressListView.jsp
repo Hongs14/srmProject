@@ -28,6 +28,7 @@
 					<th>${list.sttsNm}</th>
 					<th>${list.srPry}</th>
 				</tr>
+				</tbody>
 			</c:forEach>
 		</table>
 		
