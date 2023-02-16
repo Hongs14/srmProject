@@ -28,7 +28,6 @@
       <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/examine/list">
           <i class="fab fa-fw fa-wpforms"></i>
-
           <span>SR 검토 관리 </span>
         </a>
       </li>

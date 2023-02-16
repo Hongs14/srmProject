@@ -170,12 +170,11 @@
 								<table class="table align-items-center table-flush table-hover">
 									<thead class="thead-light" style="text-align: center;">
 										<tr>
-											<th>No</th>	
-											<th>
-												<div class="custom-control custom-checkbox m-0">
-													<input type="checkbox" class="custom-control-input" id="customCheck1">
-													<label class="custom-control-label" for="customCheck1"></label>
-												</div>
+											<th class="pr-0">
+						                        <div class="custom-control custom-checkbox">
+						                   			<input type="checkbox" class="custom-control-input" id="customCheck1">
+						                   			<label class="custom-control-label" for="customCheck1"></label>
+						                 		</div>
 											</th>
 											<th>요청번호</th>
 											<th>제목</th>

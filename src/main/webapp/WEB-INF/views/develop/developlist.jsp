@@ -140,9 +140,15 @@
 			                		
 	                                <!-- 테이블 -->
 	                                <div class="table-responsive p-3">
-						      			<table class="table align-items-center table-flush table-hover">
+						      			<table class="table align-items-center table-flush table-hover border">
 						                	<thead class="thead-light">
 							                	<tr>
+							                		<th class="pr-0">
+								                        <div class="custom-control custom-checkbox">
+								                   			<input type="checkbox" class="custom-control-input" id="customCheck${srNo}">
+								                   			<label class="custom-control-label" for="customCheck${srNo}"></label>
+								                 		</div>
+								                 	</th>
 							                    	<th>요청번호</th>
 							                        <th>제목</th>
 							                        <th>관련시스템</th>
@@ -158,6 +164,12 @@
 						                   	<tbody>
 					                   			<c:forEach items="${developlist}" var="SrDevelopDto">
 						                   			<tr onclick="location.href='${pageContext.request.contextPath}/develop/view'">
+						                   				<td class="pr-0">
+								                        <div class="custom-control custom-checkbox">
+								                   			<input type="checkbox" class="custom-control-input" id="customCheck${srNo}">
+								                   			<label class="custom-control-label" for="customCheck${srNo}"></label>
+								                 		</div>
+								                 		</td>
 						                        		<td>${SrDevelopDto.srNo}</td>
 								                        <td>${SrDevelopDto.srTtl}</td>
 								                        <td>${SrDevelopDto.sysNo}</td>
@@ -174,7 +186,7 @@
 						            	</table>
 						            </div>
                                  		<!-- 테이블 -->
-                                   	<div class="text-center">
+                                   	<div class="text-center mb-4">
 	                                	<a class="btn btn-outline-primary btn-sm" href="list?pageNo=1">처음</a>
 											<c:if test="${pager.groupNo>1}">
 												<a class="btn btn-outline-info btn-sm" href="list?pageNo=${pager.startPageNo-1}">이전</a>
