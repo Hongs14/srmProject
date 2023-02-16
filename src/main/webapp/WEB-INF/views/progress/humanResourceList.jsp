@@ -18,10 +18,10 @@
 			추가
 		</button>
 		<button class="btn btn-primary btn-sm mr-3" type="button" data-toggle="modal" data-target="#HumanResourceUpdate" id="#modalScroll" onclick="developerUpdate()">
-			선택 변경
+			변경
 		</button>
 		<button class="btn btn-primary btn-sm" type="button" onclick="developerDelete()">
-			선택 삭제
+			삭제
 		</button>
 	</div>
 		<table class="table align-items-center table-flush table-hover">
@@ -41,8 +41,8 @@
 			<c:forEach var="list" items="${hrList}">
 				<tr>
 					<th>
-						<div class="custom-control custom-checkbox">
-							<input name="hrcheck" value="${list.userNo}" type="checkbox" class="custom-control-input" id="SR+${list.userNo}">
+						<div class="custom-control custom-radio">
+							<input type="radio" id="SR+${list.userNo}" name="customRadio" class="custom-control-input">
 							<label class="custom-control-label" for="SR+${list.userNo}"></label>
 						</div>
 					</th>
