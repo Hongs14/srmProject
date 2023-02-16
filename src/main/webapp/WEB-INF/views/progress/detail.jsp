@@ -162,6 +162,24 @@
 								</ul>
 								<hr/>
 								<script>
+									$(document).ready(function () {
+										var srNo = '${progressDetail.srNo}';
+										console.log(srNo);
+										
+										let data = {srNo : srNo};
+										
+										console.log(data);
+
+										$.ajax({
+											url : "progressajax/1",
+											method : "post",
+											data : JSON.stringify(data),
+											contentType: "application/json; charset=UTF-8"
+										}).done((data) => {
+											$("#progressDetailView").html(data)
+										});
+									});
+								
 									function progressDetail(choice) {
 										console.log(choice);
 										var srNo = '${progressDetail.srNo}';
