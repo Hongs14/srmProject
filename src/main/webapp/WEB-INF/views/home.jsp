@@ -223,11 +223,11 @@ background-color: white;
           <div class="row">
           <div class="col-xl-6 col-lg-6 ">
               <div class="card">
-                <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-light">공지사항 </h6>
+                <div class="card-header align-items-center">
+                  <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-fw fa-columns"></i> Notice </h6>
                 </div>
                 <div class="table-responsive">
-                  <table class="table align-items-center table-flush">
+                  <table class="table align-items-center table-flush  m-3">
                     <thead class="thead-light">
                       <tr>
                         <th>글번호 </th>
@@ -243,7 +243,7 @@ background-color: white;
                         <td>공지사항1 </td>
                         <td>관리자</td>
                         <td>2023/04/14 </td>
-                        <td><a href="#" class="btn btn-sm btn-primary">상세</a></td>
+                        <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=114" class="btn btn-sm btn-primary">상세</a></td>
                       </tr>
                       </tbody>
                       </table>
@@ -253,11 +253,11 @@ background-color: white;
           	</div>
           	<div class="col-xl-6 col-lg-6 ">
               <div class="card">
-                <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-light">QnA </h6>
+               <div class="card-header align-items-center">
+                  <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-fw fa-sticky-note"></i>QnA </h6>
                 </div>
                 <div class="table-responsive">
-                  <table class="table align-items-center table-flush">
+                  <table class="table align-items-center table-flush m-3">
                     <thead class="thead-light">
                       <tr>
                         <th>글번호 </th>
@@ -273,7 +273,7 @@ background-color: white;
                         <td>QnA1 </td>
                         <td>관리자</td>
                         <td>2023/04/14 </td>
-                        <td><a href="#" class="btn btn-sm btn-primary">상세</a></td>
+                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
                       </tr>
                       </tbody>
                       </table>

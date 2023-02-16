@@ -24,7 +24,7 @@
           <span>SR 요청 관리</span>
         </a>
       </li>
-      <c:if test="sessionScope.loginUser.userType != '고객사'">
+      <c:if test="${sessionScope.loginUser.userType != '고객사'}">
       <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/examine/list">
           <i class="fab fa-fw fa-wpforms"></i>
