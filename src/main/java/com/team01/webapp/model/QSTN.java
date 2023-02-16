@@ -1,6 +1,7 @@
 package com.team01.webapp.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -14,5 +15,8 @@ public class QSTN {
 	private Date qstnWrtDate;
 	private String userNo;
 	private String userNm;
+	private int countCmnt;
+	
+	private List<QSTNComment> qstnCmnt;
 	
 }
