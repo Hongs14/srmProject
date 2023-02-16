@@ -3,9 +3,15 @@
     
 <!DOCTYPE html>
 	<div class="table-responsive p-3">
-		<table class="table align-items-center table-flush table-hover">
+		<table class="table align-items-center table-hover border">
 			<thead class="thead-light">
 				<tr>
+					<th>
+                       <div class="custom-control custom-checkbox">
+                  			<input type="checkbox" class="custom-control-input" id="customCheckAll">
+                  			<label class="custom-control-label" for="customCheckAll"></label>
+                		</div>
+					</th>
 					<th>SR 번호</th>
 					<th>시스템 구분</th>
 					<th>업무 구분</th>
@@ -19,14 +25,20 @@
 			<c:forEach var="list" items="${ProgressList}">
 				<tbody onclick="location.href='${pageContext.request.contextPath}/progress/detail/${list.srNo}'">
 				<tr>
-					<th>${list.srNo}</th>
-					<th>${list.sysNm}</th>
-					<th>${list.srTypeNm}</th>
-					<th>${list.srTtl}</th>
-					<th>${list.userNm}</th>
-					<th>${list.srDdlnDate}</th>
-					<th>${list.sttsNm}</th>
-					<th>${list.srPry}</th>
+					<td class="pr-0">
+                       <div class="custom-control custom-checkbox">
+                  			<input type="checkbox" class="custom-control-input" id="customCheck${list.srNo}">
+                  			<label class="custom-control-label" for="customCheck${list.srNo}"></label>
+                		</div>
+					</td>
+					<td>${list.srNo}</td>
+					<td>${list.sysNm}</td>
+					<td>${list.srTypeNm}</td>
+					<td>${list.srTtl}</td>
+					<td>${list.userNm}</td>
+					<td>${list.srDdlnDate}</td>
+					<td>${list.sttsNm}</td>
+					<td>${list.srPry}</td>
 				</tr>
 				</tbody>
 			</c:forEach>

@@ -3,7 +3,18 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<style>
+#prog_tabs .nav-link{
+background-color:#EFEFEF;
+border-top-left-radius: 10px; 
+border-top-right-radius: 10px;
 
+}
+#prog_tabs .nav-link.active{
+background-color:#406882;
+color:white;
+}
+</style>
 <head>
 	<%@include file="/WEB-INF/views/common/head.jsp"%>
 </head>
@@ -22,88 +33,105 @@
 				<!-- 메인 컨테이너 Container Fluid-->
 				<div class="container-fluid" id="container-wrapper">
 
-					<div class="d-sm-flex align-items-end justify-content-between">
-						<div class="bg-primary px-3 py-2"
-							style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
-							<h6 class="mb-0 text-white">SR 진척관리</h6>
-						</div>
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item">SR 관리</li>
-							<li class="breadcrumb-item active" aria-current="page">SR
-								진척관리</li>
-						</ol>
-					</div>
+					
+					
 
 					<!-- Row -->
 					<div class="row">
 						<div class="col-lg-5">
-							<div class="card mb-4">
-								<div
-									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-									<h6 class="m-0 font-weight-bold text-primary">SR 검토 상세</h6>
+							<div class="d-sm-flex align-items-end justify-content-between">
+								<div class="bg-primary px-3 py-2"
+									style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+									<h6 class="mb-0 text-white">SR 진척관리</h6>
 								</div>
-								<hr />
+
+							</div>
+							<div class="card mb-4">
+								<div class="card-header mt-2">
+									<h6 class="m-0 font-weight-bold text-primary"> <i class="fab fa-fw fa-wpforms"></i> SR 검토 상세</h6>
+								</div>
 								<div class="card-body">
 									<!-- 진척 상세 -->
 									<div class="container-fluid">
 										<!-- 번호/구분 -->
 										<div class="row">
-											<div class="col-6">
-												<span class="font-weight-bold text-primary">SR 번호 : ${progressDetail.srNo} </span>
+											<div class="col-2">
+												<span class="font-weight-bold">SR 번호 : </span>
 											</div>
-											<div class="col-6">
-												<span class="font-weight-bold text-primary">요청 구분 : ${progressDetail.srTypeNm}</span>
+											<div class="col-4">
+												<span> ${progressDetail.srNo}</span>
 											</div>
-										</div>
-										<br/>
-										<!-- SR 제목 -->
-										<div class="row">
-											<div class="col-12">
-												<span class="font-weight-bold text-primary">SR 제목 : ${progressDetail.srTtl}</span>
+											<div class="col-2">
+												<span class="font-weight-bold">요청 구분 : </span>
 											</div>
-										</div>
-										<br/>
-										<!-- 관련 근거(목적) -->
-										<div class="row">
-											<div class="col-12">
-												<span class="font-weight-bold text-primary">관련근거(목적) : ${progressDetail.srStd}</span>
+											<div class="col-4">
+												<span> ${progressDetail.srTypeNm}</span>
 											</div>
 										</div>
-										<br/>
+										<hr/>
 										<!-- 시스템 구분/업무 구분 -->
 										<div class="row">
-											<div class="col-6">
-												<span class="font-weight-bold text-primary">시스템 구분 : ${progressDetail.sysNm}</span>
+											<div class="col-2">
+												<span class="font-weight-bold">시스템 구분 : </span>
 											</div>
-											<div class="col-6">
-												<span class="font-weight-bold text-primary">업무 구분 : ${progressDetail.sttsNm}</span>
+											<div class="col-4">
+												<span class="pl-4"> ${progressDetail.sysNm}</span>
+											</div>
+											<div class="col-2">
+												<span class="font-weight-bold">진행 상태 : </span>
+											</div>
+											<div class="col-4">
+												<span class="pl-1">  ${progressDetail.sttsNm}</span>
 											</div>
 										</div>
 										<br/>
 										<!-- 요청팀/요청자 -->
 										<div class="row">
 											<div class="col-6">
-												<span class="font-weight-bold text-primary">요청 팀 : ${progressDetail.userDpNm}</span>
+												<span class="font-weight-bold ">요청 팀 : </span><span>${progressDetail.userDpNm}</span>
 											</div>
 											<div class="col-6">
-												<span class="font-weight-bold text-primary">요청자 : ${progressDetail.requesterNm}</span>
+												<span class="font-weight-bold ">요청자 : </span><span>${progressDetail.requesterNm}</span>
 											</div>
 										</div>
 										<br/>
 										<!-- 등록일/ 완료 예정 일 -->
 										<div class="row">
 											<div class="col-6">
-												<span class="font-weight-bold text-primary">등록일 : ${progressDetail.srRegDate}</span>
+												<span class="font-weight-bold ">등록일 : </span><span>${progressDetail.srRegDate}</span>
 											</div>
 											<div class="col-6">
-												<span class="font-weight-bold text-primary">완료 예정 일 : ${progressDetail.srDdlnDate}</span>
+												<span class="font-weight-bold ">완료 예정일 : </span><span>${progressDetail.srDdlnDate}</span>
 											</div>
 										</div>
 										<br/>
-										<!-- SR 내용 -->
+										<!-- SR 제목 -->
 										<div class="row">
-											<div class="col-12">
-												<span class="font-weight-bold text-primary">SR 내용 : ${progressDetail.srCn}</span>
+											<div class="col-2">
+												<span class="font-weight-bold">SR 제목 : </span>
+											</div>
+											<div class="col-10">
+												<span> ${progressDetail.srTtl}</span>
+											</div>
+										</div>
+										<br>
+										<!-- 관련 근거(목적) -->
+										<div class="row">
+											<div class="col-2">
+												<span class="font-weight-bold">관련근거(목적) : </span>
+											</div>
+											<div class="col-10">
+												<span>${progressDetail.srStd}</span>
+											</div>
+										</div>
+										<br>
+										<!-- SR 내용 -->
+										<div class="row mb-1">
+											<div class="col-2">
+												<span class="font-weight-bold ">SR 내용 </span>
+											</div>
+											<div class="col-10 border" style="min-height:100px;">
+												<span>${progressDetail.srCn}~~~~~~~~~~~~~~~~</span>
 											</div>
 										</div>
 										<br/>
@@ -111,11 +139,11 @@
 										<c:if test="${progressDetail.srFile[0].srFileNo != null}">
 											<div class="row">
 												<div class="col-12">
-													<span class="font-weight-bold text-primary">첨부 파일</span>
+													<span class="font-weight-bold ">첨부 파일</span>
 													<div>
 													<c:forEach var="filelist" items="${progressDetail.srFile}">
 														<a href="filedownload?srFileNo=${filelist.srFileNo}">
-															<span class="font-weight-bold text-primary">${filelist.srFileActlNm}.${filelist.srFileExtnNm}</span>
+															<span class="font-weight-bold ">${filelist.srFileActlNm}.${filelist.srFileExtnNm}</span>
 															<br/>
 														</a>
 													</c:forEach>
@@ -127,40 +155,46 @@
 										<!-- 처리팀/담당자 -->
 										<div class="row">
 											<div class="col-6">
-												<span class="font-weight-bold text-primary">처리 팀 : ${progressDetail.dpNm}</span>
+												<span class="font-weight-bold ">처리 팀 : </span><span>${progressDetail.dpNm}</span>
 											</div>
 											<div class="col-6">
-												<span class="font-weight-bold text-primary">담당자 : ${progressDetail.developerNm}</span>
+												<span class="font-weight-bold ">담당자 : </span><span>${progressDetail.developerNm}</span>
 											</div>
 										</div>
 										<br/>
 										<!-- 계획시작일/계획 종료일 -->
-										<div class="row">
+										<div class="row mb-3">
 											<div class="col-6">
-												<span class="font-weight-bold text-primary">계획 시작일 : ${progressDetail.srStartDate}</span>
+												<span class="font-weight-bold ">계획 시작일 : </span><span>${progressDetail.srStartDate}</span>
 											</div>
 											<div class="col-6">
-												<span class="font-weight-bold text-primary">계획 종료일 : ${progressDetail.srEndDate}</span>
+												<span class="font-weight-bold ">계획 종료일 : </span><span>${progressDetail.srEndDate}</span>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+						
 						<div class="col-lg-7">
+						<div class="d-flex justify-content-between flex-lg-nowrap" id="prog_tabs">
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+								</li>
+							</ul>
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item">SR 관리</li>
+								<li class="breadcrumb-item active" aria-current="page">SR 진척관리</li>
+							</ol>
+						</div>
 							<div class="card mb-4" style="text-align:center">
-								<ul class="nav nav-pills" role="tablist">
-									<li class="nav-item col-4">
-										<a class="nav-link active" data-toggle="pill" onclick="progressDetail(1)">SR 인적 자원 관리</a>
-									</li>
-									<li class="nav-item col-4">
-										<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
-									</li>
-									<li class="nav-item col-4">
-										<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
-									</li>
-								</ul>
-								<hr/>
 								<script>
 									$(document).ready(function () {
 										var srNo = '${progressDetail.srNo}';
@@ -201,7 +235,7 @@
 								</script>
 								<div class="card-body">
 									<!-- ajax 변경 부분-->
-									<div class="container-fluid">
+									<div class="container-fluid mb-5">
 										<div id="progressDetailView" style="width:100%"></div>
 									</div>
 								</div>
