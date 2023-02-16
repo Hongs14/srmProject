@@ -12,4 +12,8 @@ public interface IQnaboardRepository {
 	public QSTN getDetail(int qstnNo);
 	public void writeComment(QSTNComment qComment);
 	
+	public int countComment(int qstnNo);
+	
+	public List<QSTNComment> getCommentList(int qstnNo);
+	
 }

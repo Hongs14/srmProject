@@ -4,6 +4,53 @@
 <html>
 	<head>
 	  	<%@include file="/WEB-INF/views/common/head.jsp" %>
+	  	
+	  	<script>
+	  		$(document).ready(function(){
+	  			console.log("시작할때")
+	  			radComment(qstnNo);
+	  			
+	  		});
+	  		
+	  		function readComment(qstnNo){
+	  			console.log("qna페이지 시작");
+	  			console.log(qstnNo)
+
+	  			$.ajax({
+	  				url: "read/comment",
+	  				method: "get",
+	  				data: JSON.stringify(data),
+	  				contentType: "application/json; charset=UTF-8"
+	  			}).done((data) => {
+	  				console.log(data);
+	  				console.log("ajax성공");
+	  			});
+	  		}
+	  		
+			function writeComment(){
+				console.log("댓글달기 실행");
+				let content = $('#qnaCmntCn').val();
+				let qcwriterNo = '${sessionScope.loginUser.userNo}';
+				let qcwriter = '${sessionScope.loginUser.userNm}';
+				let qstnNo = '${qstn.qstnNo}';
+				
+				let data = {userNo: qcwriterNo, qstnNo: qstnNo, qstnCmntCn: content};
+				
+				$.ajax({
+					url: "write/comment",
+					method: "post",
+					data: JSON.stringify(data),
+					contentType: "application/json; charset=UTF-8"
+				}).done((data) => {
+					console.log(data);
+					
+				});
+			}
+			
+			function getdetail(){
+				
+			}
+		</script>
 	</head>
 
 	<body id="page-top">
@@ -98,38 +145,10 @@
 		                        				<textarea style="width: 100%" id="qnaCmntCn"></textarea>
 		                        			</div>
 		                        			<div class="col-sm-1">
-		                        				<button onclick="writeComment();">등록하기</button>
+		                        				<button type="button" onclick="writeComment();">등록하기</button>
 		                        			</div>
 				                        </div>
 		                        	</div>
-		                        	<script>
-										function writeComment(){
-											console.log("댓글달기 실행");
-											let content = $('#qnaCmntCn').val();
-											let qcwriterNo = '${sessionScope.loginUser.userNo}';
-											let qcwriter = '${sessionScope.loginUser.userNm}';
-											let qstnNo = '${qstn.qstnNo}';
-											console.log(qcwriter);
-											console.log("내용"+content);
-											
-											
-											let data = {userNo: qcwriterNo, qstnNo: qstnNo, userNm: qcwriter, qstnCmntCn: content};
-
-											$.ajax({
-												url: "comment/write",
-												method: "post",
-												data: JSON.stringify(data),
-												contentType: "application/json; charset=UTF-8"
-											}).done((data) => {
-												console.log(data);
-												
-												/* data.name */
-												/* let img = "";
-												$('#div3').html(img); */
-											});
-										}
-									</script>
-	                        	
 		                        	<div>
 		                        		<hr/>
 		                        		<div class="d-flex px-2 flex-row align-items-center justify-content-between">

@@ -12,6 +12,7 @@ public interface IQnaboardService {
 	public QSTN getDetail(int qstnNo);
 
 	public void writeComment(QSTNComment qComment);
+//	public void readComment(QSTNComment qComment);
 
 	
 }

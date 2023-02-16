@@ -40,7 +40,22 @@
 		WHERE QSTN.USER_NO = USERS.USER_NO AND QSTN.QSTN_NO =#{qstnNo}
 	</select>
 	
-	<insert id="writeComment" parameterType="qstn">
-		INSERT INTO QSTN_COMMENT VALUES(QSTNCMNTNO_SEQ.NEXTVAL, #{, 27, '안됩니다.', SYSDATE);
+	<select id="getCommentList" parameterType="int" resultType="qstnComment">
+		SELECT QSTN_CMNT_NO AS qstnCmentNo, 
+				QSTN_NO AS qstnNo, 
+				QC.USER_NO AS userNo, 
+				QSTN_CMNT_CN AS qstnCmntCn, 
+   			 	QSTN_CMNT_DATE AS qstnCmntDate, 
+   			 	USER_NM AS userNm
+		FROM QSTN_COMMENT QC, USERS U
+		WHERE QC.USER_NO = U.USER_NO AND QC.USER_NO = #{qstnNo}
+	</select>
+	
+	<select id="countComment" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM QSTN_COMMENT WHERE QSTN_NO = #{qstnNo}
+	</select>
+	
+	<insert id="writeComment" parameterType="qstnComment">
+		INSERT INTO QSTN_COMMENT VALUES(QSTNCMNTNO_SEQ.NEXTVAL, #{qstnNo}, #{userNo}, #{qstnCmntCn}, SYSDATE)
 	</insert>
 </mapper>
