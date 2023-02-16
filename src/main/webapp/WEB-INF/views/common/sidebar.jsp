@@ -24,8 +24,8 @@
           <span>SR 요청 관리</span>
         </a>
       </li>
+      <c:if test="sessionScope.loginUser.userType != '고객사'">
       <li class="nav-item">
-
         <a class="nav-link" href="${pageContext.request.contextPath}/examine/list">
           <i class="fab fa-fw fa-wpforms"></i>
 
@@ -44,6 +44,7 @@
           <span>SR 진척 관리</span>
         </a>
       </li>
+      </c:if>
       <hr class="sidebar-divider">
       <div class="sidebar-heading">
         게시판 

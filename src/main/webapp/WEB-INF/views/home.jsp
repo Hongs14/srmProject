@@ -45,7 +45,7 @@ background-color: white;
               <div class="card">
                <div class="card-header align-items-center">
 					<a href="${pageContext.request.contextPath}/request/list">
-					<i class="far fa-fw fa-window-maximize"></i> 
+					<i class="fas fa-tasks fa-fw"></i> 
 					<span class="m-0 font-weight-bold text-primary">My SR </span>
 					</a>
 				</div>
@@ -198,9 +198,12 @@ background-color: white;
             </div>
             <div class="col-xl-4 col-lg-5 ">
               <div class="card">
-                <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-light"> 나의 시스템 </h6>
-                </div>
+              	<div class="card-header align-items-center">
+					<a href="${pageContext.request.contextPath}/request/list">
+					<i class="far fa-fw fa-window-maximize"></i> 
+					<span class="m-0 font-weight-bold text-primary">My System </span>
+					</a>
+				</div>
                 <div>
                   <div class="customer-message align-items-center">
                     <a class="font-weight-bold" href="#">
