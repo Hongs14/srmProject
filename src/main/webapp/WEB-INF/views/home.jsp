@@ -45,7 +45,7 @@ background-color: white;
               <div class="card">
                <div class="card-header align-items-center">
 					<a href="${pageContext.request.contextPath}/request/list">
-					<i class="far fa-fw fa-window-maximize"></i> 
+					<i class="fas fa-tasks fa-fw"></i> 
 					<span class="m-0 font-weight-bold text-primary">My SR </span>
 					</a>
 				</div>
@@ -198,9 +198,12 @@ background-color: white;
             </div>
             <div class="col-xl-4 col-lg-5 ">
               <div class="card">
-                 <div class="card-header align-items-center">
-                  <h6 class="m-0 font-weight-bold text-primary"> 나의 시스템 </h6>
-                </div>
+              	<div class="card-header align-items-center">
+					<a href="${pageContext.request.contextPath}/request/list">
+					<i class="far fa-fw fa-window-maximize"></i> 
+					<span class="m-0 font-weight-bold text-primary">My System </span>
+					</a>
+				</div>
                 <div>
                   <div class="customer-message align-items-center">
                     <a class="font-weight-bold" href="#">
@@ -217,14 +220,14 @@ background-color: white;
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row mb-5">
           <div class="col-xl-6 col-lg-6 ">
               <div class="card">
                 <div class="card-header align-items-center">
-                  <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-fw fa-columns"></i>공지사항 </h6>
+                  <h6 class="font-weight-bold text-primary"><i class="fas fa-fw fa-columns"></i> Notice </h6>
                 </div>
                 <div class="table-responsive">
-                  <table class="table align-items-center table-flush  m-3">
+                  <table class="table table-flush  mx-3 mb-3" style="max-width:550px;">
                     <thead class="thead-light">
                       <tr>
                         <th>글번호 </th>
@@ -242,6 +245,20 @@ background-color: white;
                         <td>2023/04/14 </td>
                         <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=114" class="btn btn-sm btn-primary">상세</a></td>
                       </tr>
+                      <tr>
+                        <td><a href="#">0002</a></td>
+                        <td>공지사항2 </td>
+                        <td>관리자</td>
+                        <td>2023/04/14 </td>
+                        <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=114" class="btn btn-sm btn-primary">상세</a></td>
+                      </tr>
+                      <tr>
+                        <td><a href="#">0003</a></td>
+                        <td>공지사항3 </td>
+                        <td>관리자</td>
+                        <td>2023/04/14 </td>
+                        <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=114" class="btn btn-sm btn-primary">상세</a></td>
+                      </tr>
                       </tbody>
                       </table>
 	              </div>
@@ -249,12 +266,12 @@ background-color: white;
             
           	</div>
           	<div class="col-xl-6 col-lg-6 ">
-              <div class="card">
-               <div class="card-header align-items-center">
-                  <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-fw fa-sticky-note"></i>QnA </h6>
+          	<div class="card">
+                <div class="card-header align-items-center">
+                  <h6 class="font-weight-bold text-primary"><i class="fas fa-fw fa-sticky-note"></i>QnA </h6>
                 </div>
                 <div class="table-responsive">
-                  <table class="table align-items-center table-flush m-3">
+                  <table class="table table-flush  mx-3 mb-3" style="max-width:550px;">
                     <thead class="thead-light">
                       <tr>
                         <th>글번호 </th>
@@ -270,7 +287,21 @@ background-color: white;
                         <td>QnA1 </td>
                         <td>관리자</td>
                         <td>2023/04/14 </td>
-                        <td><a href="#" class="btn btn-sm btn-primary">상세</a></td>
+                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
+                      </tr>
+                      <tr>
+                        <td><a href="#">0002</a></td>
+                        <td>QnA2 </td>
+                        <td>관리자</td>
+                        <td>2023/04/14 </td>
+                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
+                      </tr>
+                      <tr>
+                        <td><a href="#">0003</a></td>
+                        <td>QnA3 </td>
+                        <td>관리자</td>
+                        <td>2023/04/14 </td>
+                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
                       </tr>
                       </tbody>
                       </table>
