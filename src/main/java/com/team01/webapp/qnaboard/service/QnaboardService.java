@@ -20,10 +20,13 @@ public class QnaboardService implements IQnaboardService {
 	public IQnaboardRepository qnaboardRepository;
 
 	@Override
-	public List<QSTN> getList() {
+	public int countTotalRow() {
 		int totalrow = qnaboardRepository.totalRow();
-		System.out.println("totalrow: "+totalrow);
-		Pager pager = new Pager(10, 5, totalrow, totalrow/5+1);
+		return totalrow;
+	}
+	
+	@Override
+	public List<QSTN> getList(Pager pager) {
 		List<QSTN> list = qnaboardRepository.selectQnaboardList(pager);
 		return list;
 	}
@@ -47,6 +50,8 @@ public class QnaboardService implements IQnaboardService {
 	public void writeComment(QSTNComment qComment) {
 		qnaboardRepository.writeComment(qComment);
 	}
+
 	
+
 	
 }

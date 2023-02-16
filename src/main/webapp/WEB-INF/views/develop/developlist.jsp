@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -120,7 +122,7 @@
 						                		</div>
 						                		<div class="col-sm-1">
 						                			<div class="input-group-append float-right">
-														<button class="btn btn-primary btn-sm" type="button" onclick="progressList()">
+														<button class="btn btn-primary btn-sm" type="button">
 															조회 <i class="fas fa-search fa-sm"></i>
 														</button>
 													</div>
@@ -184,28 +186,40 @@
 						                     	</c:forEach>
 			                 				</tbody>
 						            	</table>
+						            	<!-- 테이블 -->
 						            </div>
-                                 		<!-- 테이블 -->
-                                   	<div class="text-center mb-4">
-	                                	<a class="btn btn-outline-primary btn-sm" href="list?pageNo=1">처음</a>
-											<c:if test="${pager.groupNo>1}">
-												<a class="btn btn-outline-info btn-sm" href="list?pageNo=${pager.startPageNo-1}">이전</a>
-											</c:if>
 
-										<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
-											<c:if test="${pager.pageNo != i}">
-												<a class="btn btn-outline-secondary btn-sm" href="list?pageNo=${i}">${i}</a>
-											</c:if>
-											<c:if test="${pager.pageNo == i}">
-												<a class="btn btn-warning btn-sm" href="list?pageNo=${i}">${i}</a>
-											</c:if>
-										</c:forEach>
+                                 		
+                                   	<c:if test="${pager.totalRows != 0}">
+										<div class="pager d-flex justify-content-center my-3">
+											<div class="pagingButtonSet d-flex justify-content-center">
+												<c:if test="${pager.pageNo > 1}">
+													<a href='<c:url value="/develop/list/1"/>' type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
+												</c:if>
+												<c:if test="${pager.groupNo > 1}">
+													<a href='<c:url value="/develop/list/${pager.startPageNo-1}"/>' type="button" class="btn btn-outline-info btn-sm m-1">이전</a>
+												</c:if>
+								
+												<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+													<c:if test="${pager.pageNo != i}">
+														<a href='<c:url value="/develop/list/${i}"/>' type="button" class="btn btn-outline-success btn-sm m-1">${i}</a>
+													</c:if>
+													<c:if test="${pager.pageNo == i}">
+														<a href='<c:url value="/develop/list/${i}"/>' type="button" class="btn btn-primary btn-sm m-1">${i}</a>
+													</c:if>
+												</c:forEach>
+								
+												<c:if test="${pager.groupNo < pager.totalGroupNo }">
+													<a href='<c:url value="/develop/list/${pager.endPageNo+1}"/>' type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
+								
+												</c:if>
+												<c:if test="${pager.pageNo < pager.totalPageNo }">
+													<a href='<c:url value="/develop/list/${pager.totalPageNo}"/>' type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
+												</c:if>
+											</div>
+										</div>
+									</c:if>
 
-										<c:if test="${pager.groupNo<pager.totalGroupNo}">
-											<a class="btn btn-outline-info btn-sm" href="list?pageNo=${pager.endPageNo+1}">다음</a>
-										</c:if>
-										<a class="btn btn-outline-primary btn-sm" href="list?pageNo=${pager.totalPageNo}">맨끝</a>
-                                	</div>
                          		</div>
                          	</div>
            				</div>
