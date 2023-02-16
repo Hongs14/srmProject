@@ -33,7 +33,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/develop/list">
+        <a class="nav-link" href="${pageContext.request.contextPath}/develop/list/1">
           <i class="fas fa-fw fa-file-code"></i>
           <span>SR 개발 관리</span>
         </a>
