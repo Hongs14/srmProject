@@ -29,6 +29,7 @@
 	<typeAlias type="com.team01.webapp.model.ProgressDetail" alias="progressDetail"/>
 	<typeAlias type="com.team01.webapp.model.Examine" alias="examine"/>
 	<typeAlias type="com.team01.webapp.model.ExamineList" alias="examineList"/>
-  
+	<typeAlias type="com.team01.webapp.model.DeveloperSR" alias="developerSr"/>
+	<typeAlias type="com.team01.webapp.model.ThArr" alias="thArr"/>
 </typeAliases>
 </configuration>

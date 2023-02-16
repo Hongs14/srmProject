@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,14 +53,32 @@ public class QnaController {
 		return "qnaboard/qnaupdate";
 	}
 	
-	@PostMapping(value="/comment/write", produces="application/json; charset=UTF-8")
-	//서버->브라우저로 보낼때  "application/json; charset=UTF-8" 타입으로 이용하겠다.
+//	@PostMapping("/write/comment")
+//	public String writeComment(QSTNComment qComment, RedirectAttributes redirectAttrs) {
+//		qnaboardService.writeComment(qComment);
+//		log.info("Qna댓글달기");
+//		return "redirect:/qna/view?qnaNo="+qComment.getQstnNo();
+//	}
+	
+	@GetMapping(value="/write/comment", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public  QSTNComment ajax3(@RequestBody QSTNComment qComment){
+	public QSTNComment readComment(@RequestBody QSTNComment qComment, int qstnNo) {
+		log.info("QSTN댓글 읽기");
+		return qComment;
+	}
+	
+	@PostMapping(value="/write/comment", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public QSTNComment writeComment(@RequestBody QSTNComment qComment){
 		//RequestBody안에는 json타입으로 있어야 함.
 		log.info("QSTN댓글달기");
-		return qComment;
+		log.info(qComment);
 		
+		qnaboardService.writeComment(qComment);
+		return qComment;
 	}
+	
+	
+	
 	
 }

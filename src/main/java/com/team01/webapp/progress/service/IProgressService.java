@@ -8,6 +8,8 @@ import com.team01.webapp.model.ProgressFilter;
 import com.team01.webapp.model.SRFile;
 import com.team01.webapp.model.SrProgressAjax;
 import com.team01.webapp.model.SrProgressList;
+import com.team01.webapp.model.Task;
+import com.team01.webapp.model.ThArr;
 import com.team01.webapp.util.Pager;
 
 public interface IProgressService {
@@ -17,4 +19,7 @@ public interface IProgressService {
 	public ProgressDetail selectDetail(String srNo);
 	public SRFile getSrFile(int srFileNo);
 	public List<HR> humanResourceList(String srNo);
+	public List<HR> developerList(String userDpNm, String srNo);
+	public List<Task> taskList();
+	public void developerInsert(ThArr thArr);
 }

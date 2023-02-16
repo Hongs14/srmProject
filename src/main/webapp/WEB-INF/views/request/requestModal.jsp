@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelRequest" aria-hidden="true">
    <div class="modal-lg modal-dialog" id="requestModal-dialog" role="document">
      <div class="modal-content">
@@ -11,8 +12,8 @@
          </button>
        </div>
        <div class="modal-body">
-		<form>
-			<div class="row mb-2" >
+		<form method="post" action="<c:url value='/request/write/'/>" method="post" enctype="multipart/form-data">
+			<div class="row mb-2 mr-0" >
 				<div class="col-sm-2">
 					<span class="font-weight-bold">등록자: </span> 
 				</div>
@@ -27,7 +28,7 @@
 				</div>
 			</div>
 			
-			<div class="row mb-2">
+			<div class="row mb-2 mr-0">
 				<div class="col-sm-2">
 					<span class=" font-weight-bold">등록일: </span> 
 				</div>
@@ -94,6 +95,27 @@
 				</div>
 				</div>
 			</div>
+			<!-- <div class="row mb-2">
+				<div class="col-sm-2">
+					<span class=" font-weight-bold">다중파일업로드: </span> 
+				</div>
+				<div class="col-sm-10">
+					<input type="hidden" name="atchPosblFileNumber" value="5" />
+					<input type="hidden" name="savePath" value="Globals.fileTest1Path"/>
+				</div>
+			</div> -->
+			<!-- <table>
+				<tr>
+					<td><input name="file_1" id="egovComFileUploader" type="file">
+						<div id="egovComFileList"></div>
+					</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<input type="submit" value="저장">
+					</td>
+				</tr>
+			</table> -->
 				
 		</form>
 			</div>
@@ -118,16 +140,17 @@
      });
  });
 
-	$(document).ready(function() {
+	 /* $(document).ready(function() {
 	    $("#customFile").on('change',function(){
 	        if(window.FileReader){
 	        	var files = $(this)[0].files;
-	            var filename = files[0].name+"<a href='#' class='btn btn-danger btn-sm' >X</a>" ;
+	        	let hi = "!";
+	            var filename = files[0].name + "<button type='button' onclick='function1()' class='btn btn-danger btn-sm m-1'  >X</button>";
 	            
 	            for(var i=1; i<files.length; i++){
 	            	filename += "<br>" +
 	            	 files[i].name +
-	            	 "<a href='#' class='btn btn-danger btn-sm' >X</a>" ;
+	            	 "<a href='#' class='btn btn-danger btn-sm m-1' >X</a>" ;
 	            }
 	        } else {
 	            var filename = $(this).val.split('/').pop().split('\\').pop();
@@ -136,7 +159,40 @@
 	        //filename insert
 	        $('#userfile').html(filename);
 	    });
-	});
+	}); */
+	 $(document).ready(function() {
+		    $("#customFile").on('change',function(){
+		    	let formData = new FormData();
+		    	bet
+		        if(window.FileReader){
+		        	var files = $(this)[0].files;
+		        	var filename;
+		        	for(var i=0; i<files.length; i++){
+		             	filename = files[i].name;
+		             	console.log(filename);
+		             	
+		            }
+		        } else {
+		            var filename = $(this).val.split('/').pop().split('\\').pop();
+		        }
+
+		        //filename insert
+		        $('#userfile').html(filename);
+		    });
+		});
+	 
+	function function1() {
+		console.log("여기옴!");
+/* 		console.log(i); */
+		
+	}
+		/* var maxFileNum = document.getElementById('atchPosblFileNumber').value;
+		if(maxFileNum==null || maxFileNum==""){
+			maxFileNum = 5;
+		}     
+		var multi_selector = new MultiSelector( document.getElementById( 'egovComFileList' ), maxFileNum );
+		multi_selector.addElement( document.getElementById( 'egovComFileUploader' ) );			 */
+	
 	
 	
  </script>

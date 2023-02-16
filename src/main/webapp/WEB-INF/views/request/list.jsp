@@ -2,9 +2,19 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
-
+<style>
+.requsetTtl{
+width: 190px;
+overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 1;
+-webkit-box-orient: vertical;
+}	
+</style>
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
+  	
 </head>
 
 <body id="page-top">
@@ -145,6 +155,12 @@
                   <table class="table align-items-center table-flush table-hover border" id="dataTableHover">
                     <thead class="thead-light">
                       <tr>
+                        <th class="pr-0">
+	                        <div class="custom-control custom-checkbox">
+	                   			<input type="checkbox" class="custom-control-input" id="customCheck1">
+	                   			<label class="custom-control-label" for="customCheck1"></label>
+	                 		</div>
+                        </th>
                         <th>요청번호 </th>
                         <th>제목 </th>
                         <th>관련시스템 </th>
@@ -155,14 +171,19 @@
                         <th>등록일 </th>
                         <th>완료예정일 </th>
                         <th>중요도 </th>
-                        <th>상세보기 </th>
                       </tr>
                     </thead>
                     
                     <tbody>
                     <tr>
+                    	<td class="pr-0">
+	                        <div class="custom-control custom-checkbox">
+	                   			<input type="checkbox" class="custom-control-input" id="customCheck5">
+	                   			<label class="custom-control-label" for="customCheck5"></label>
+	                 		</div>
+                        </td>
                         <td>JHJ-SR-0001</td>
-                        <td>댓글 기능 추가 부탁드립니다.</td>
+                        <td class="requsetTtl"><a href="detail/1">댓글 기능 추가 부탁드립니다.~~~~~~~~~~~~~~~~~~`</a></td>
                         <td>JHJ쇼핑몰</td>
                         <td>정홍주 </td>
                         <td>관리팀 </td>
@@ -171,9 +192,14 @@
                         <td>2023/02/09 </td>
                         <td>2023/04/08 </td>
                         <td>상 </td>
-                        <td><a class="btn btn-sm btn-primary text-white" id="RequestDetail">상세보기</a></td>
                       </tr>
                       <tr>
+                      	<td class="pr-0">
+	                        <div class="custom-control custom-checkbox">
+	                   			<input type="checkbox" class="custom-control-input" id="customCheck2">
+	                   			<label class="custom-control-label" for="customCheck2"></label>
+	                 		</div>
+                        </td>
                         <td>JHJ-SR-0002</td>
                         <td>게시 기능 추가 부탁드립니다.</td>
                         <td>JHJ쇼핑몰</td>
@@ -184,9 +210,14 @@
                         <td>2023/02/09 </td>
                         <td>2023/04/08 </td>
                         <td>하 </td>
-                        <td><a class="btn btn-sm btn-primary text-white" id="RequestDetail">상세보기</a></td>
                       </tr>
                       <tr>
+                      	<td class="pr-0">
+	                        <div class="custom-control custom-checkbox">
+	                   			<input type="checkbox" class="custom-control-input" id="customCheck3">
+	                   			<label class="custom-control-label" for="customCheck3"></label>
+	                 		</div>
+                        </td>
                         <td>JHJ-SR-0003</td>
                         <td>알림 기능 추가 부탁드립니다.</td>
                         <td>JHJ쇼핑몰</td>
@@ -197,9 +228,14 @@
                         <td>2023/02/01 </td>
                         <td>2023/04/11 </td>
                         <td>중 </td>
-                        <td><a class="btn btn-sm btn-primary text-white" id="RequestDetail">상세보기</a></td>
                       </tr>
                       <tr>
+                      	<td class="pr-0">
+	                        <div class="custom-control custom-checkbox">
+	                   			<input type="checkbox" class="custom-control-input" id="customCheck4">
+	                   			<label class="custom-control-label" for="customCheck4"></label>
+	                 		</div>
+                        </td>
                         <td>JHJ-SR-0004</td>
                         <td>댓글/검색 기능 보완 부탁드립니다.</td>
                         <td>JHJ쇼핑몰</td>
@@ -210,7 +246,6 @@
                         <td>2023/02/09 </td>
                         <td>2023/04/08 </td>
                         <td>상 </td>
-                        <td><a class="btn btn-sm btn-primary text-white" id="RequestDetail">상세보기</a></td>
                       </tr>
                     </tbody>
                   </table>

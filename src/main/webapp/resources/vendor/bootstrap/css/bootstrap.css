@@ -4816,11 +4816,13 @@ input[type="button"].btn-block {
   border: 1px solid transparent;
   border-top-left-radius: 0.35rem;
   border-top-right-radius: 0.35rem;
+  background-color:#1A374D;
+  color: #fff;
 }
 
 .nav-tabs .nav-link:hover,
 .nav-tabs .nav-link:focus {
-  border-color: #eaecf4 #eaecf4 #dddfeb;
+ /*  border-color: #eaecf4 #eaecf4 #dddfeb; */
 }
 
 .nav-tabs .nav-link.disabled {
@@ -5044,10 +5046,15 @@ input[type="button"].btn-block {
 @media (max-width: 767.98px) {
 
   .navbar-expand-md>.container,
-  .navbar-expand-md>.container-fluid {
+  .navbar-expand-md>.container-fluid{
     padding-right: 0;
     padding-left: 0;
   }
+}
+@media (max-width: 767.98px) {
+	.breadcrumb{
+	display:none !important;
+	}
 }
 
 @media (min-width: 768px) {

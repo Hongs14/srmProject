@@ -40,7 +40,7 @@
                   <h6 class="m-0 font-weight-bold text-light">나의 정보 </h6>
                 </div>
                 <div class="card-body">
-					<table class="table center" style="width: 400px;">
+					<table class="table center m-3" style="width: 600px;">
 						<tr>
 							<th class="text-primary">성명 </th>
 							<td>${sessionScope.loginUser.userNm}</td>
@@ -51,7 +51,9 @@
 						</tr>
 						<tr>
 							<th class="text-primary">비밀번호 </th>
-							<td><input type="password" disabled placeholder="password"><a class="btn btn-info btn-sm">수정하기</a></td>
+							<td><input type="password" disabled placeholder="password">
+								<a class="btn btn-outline-warning btn-sm mx-1" data-toggle="modal" data-target="#updatePswd">수정하기</a>
+							</td>
 						</tr>
 						<tr>
 							<th class="text-primary">소속</th>
@@ -82,10 +84,58 @@
               </div>
             </div>
           </div>
-          
-          
           <!-- Row -->
-
+          
+			<!-- Modal -->
+			<div class="modal fade" id="updatePswd" tabindex="-1" aria-labelledby="updatePswdFunLabel" aria-hidden="true">
+			  <div class="modal-dialog" style="width:400px">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="updatePswdFunLabel">비밀번호 변경</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			      <form>
+			      	<div class="row">
+			      		<div class="col-sm-4">
+			      			<span>현재 비밀번호</span>
+			      		</div>
+			      		<div class="col-sm-8">
+			      			<input type="password" required/>
+			      			<div class="invalid-feedback">
+			      				현재 비밀번호를 입력해주세요.
+			      			</div>
+			      		</div>
+			      	</div>
+			      	<br>
+			      	<div class="row">
+			      		<div class="col-sm-4">
+			      			<span>새로운 비밀번호</span>
+			      		</div>
+			      		<div class="col-sm-8">
+			      			<input type="password" class="mb-1"required/>
+			      			<div class="invalid-feedback">
+			      				비밀번호를 입력해주세요.
+			      			</div>
+			      			<br>
+			      			<input type="password" class="mb-1" required/>
+			      			<div class="invalid-feedback">
+			      				비밀번호를 입력해주세요.
+			      			</div>
+			      		</div>
+			      	</div>
+			      </form>
+			      	
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+			        <a type="button" class="btn btn-primary" href= '<c:url value="/user/updatepswd/userno"/>'>수정</a>
+			      </div>
+			    </div>
+			  </div>
+			</div>
           
 
           <!-- 로그아웃 모달 -->

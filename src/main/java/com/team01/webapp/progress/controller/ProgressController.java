@@ -25,6 +25,8 @@ import com.team01.webapp.model.ProgressFilter;
 import com.team01.webapp.model.SRFile;
 import com.team01.webapp.model.SrProgressAjax;
 import com.team01.webapp.model.SrProgressList;
+import com.team01.webapp.model.Task;
+import com.team01.webapp.model.ThArr;
 import com.team01.webapp.progress.service.IProgressService;
 import com.team01.webapp.util.Pager;
 
@@ -115,15 +117,29 @@ public class ProgressController {
 	@RequestMapping(value="progress/detail/progressajax/1", produces="application/json; charset=UTF-8")
 	public String humanResourceAjax(@RequestBody HR hr, Model model) {
 		
+		List<Task> taskList = progressService.taskList();
+		model.addAttribute("taskList", taskList);
+		
 		String srNo = hr.getSrNo();
+		model.addAttribute("srNo", srNo);
 		
 		List<HR> hrList = progressService.humanResourceList(srNo);
-		
-		log.info(hrList);
-		
 		model.addAttribute("hrList", hrList);
 		
+		List<HR> developerList = progressService.developerList(hrList.get(0).getUserDpNm(), srNo);
+		model.addAttribute("developerList", developerList);
+		
 		return "progress/humanResourceList";
+	}
+	
+	@RequestMapping(value="progress/detail/developerinsert/{srNo}", produces="application/json; charset=UTF-8")
+	public String developerinsert(@PathVariable String srNo, @RequestBody ThArr thArr) {
+		
+		log.info(thArr.getThArr().size());
+		
+		progressService.developerInsert(thArr);
+		
+		return "redirect:/progress/detail/" + srNo;
 	}
 
 }
