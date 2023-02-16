@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.team01.webapp.model.DeveloperSR;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFilter;
@@ -15,6 +16,8 @@ import com.team01.webapp.model.SRType;
 import com.team01.webapp.model.SrProgressAjax;
 import com.team01.webapp.model.SrProgressList;
 import com.team01.webapp.model.System;
+import com.team01.webapp.model.Task;
+import com.team01.webapp.model.ThArr;
 import com.team01.webapp.progress.dao.IProgressRepository;
 import com.team01.webapp.util.Pager;
 
@@ -98,6 +101,31 @@ public class ProgressService implements IProgressService {
 	@Override
 	public List<HR> humanResourceList(String srNo) {
 		return progressRepository.selectHumanResourceList(srNo);
+	}
+
+	@Override
+	public List<HR> developerList(String userDpNm, String srNo) {
+		
+		List<HR> developerList = progressRepository.selectDeveloperList(userDpNm, srNo);
+		
+		for(int i=0; i<developerList.size(); i++) {
+			List<DeveloperSR> srList = progressRepository.selectDeveloperSR(developerList.get(i).getUserNo());
+			log.info(srList);
+			
+			developerList.get(i).setSrList(srList);
+		}
+		
+		return developerList;
+	}
+
+	@Override
+	public List<Task> taskList() {
+		return progressRepository.selectTaskList();
+	}
+
+	@Override
+	public void developerInsert(ThArr thArr) {
+		progressRepository.insertDeveloper(thArr);
 	}
 
 
