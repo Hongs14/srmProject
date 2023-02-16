@@ -198,8 +198,8 @@ background-color: white;
             </div>
             <div class="col-xl-4 col-lg-5 ">
               <div class="card">
-                <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-light"> 나의 시스템 </h6>
+                 <div class="card-header align-items-center">
+                  <h6 class="m-0 font-weight-bold text-primary"> 나의 시스템 </h6>
                 </div>
                 <div>
                   <div class="customer-message align-items-center">
@@ -220,11 +220,11 @@ background-color: white;
           <div class="row">
           <div class="col-xl-6 col-lg-6 ">
               <div class="card">
-                <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-light">공지사항 </h6>
+                <div class="card-header align-items-center">
+                  <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-fw fa-columns"></i>공지사항 </h6>
                 </div>
                 <div class="table-responsive">
-                  <table class="table align-items-center table-flush">
+                  <table class="table align-items-center table-flush  m-3">
                     <thead class="thead-light">
                       <tr>
                         <th>글번호 </th>
@@ -250,11 +250,11 @@ background-color: white;
           	</div>
           	<div class="col-xl-6 col-lg-6 ">
               <div class="card">
-                <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-light">QnA </h6>
+               <div class="card-header align-items-center">
+                  <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-fw fa-sticky-note"></i>QnA </h6>
                 </div>
                 <div class="table-responsive">
-                  <table class="table align-items-center table-flush">
+                  <table class="table align-items-center table-flush m-3">
                     <thead class="thead-light">
                       <tr>
                         <th>글번호 </th>
