@@ -110,7 +110,7 @@
 													var sysNoSelect = document.getElementById("sysNo");
 													var srTypeNoSelect = document.getElementById("srTypeNo");
 													var srSttsNoSelect = document.getElementById("srSttsNo");
-													
+												
 													var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
 													var srTypeNo = srTypeNoSelect.options[document.getElementById("srTypeNo").selectedIndex].value;
 													var srSttsNo = srSttsNoSelect.options[document.getElementById("srSttsNo").selectedIndex].value;

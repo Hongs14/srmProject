@@ -5,7 +5,7 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class SR {
+public class Examine {
 	private String srNo;
 	private int srCustId;
 	private String sysNo;
@@ -22,5 +22,18 @@ public class SR {
 	private Date srStartDate;
 	private Date srEndDate;
 	private String srViewYn;
-
+	
+	//시스템
+	private String sysNm;
+	
+	//USERS
+	private String userNm;
+	private String userOgdp;
+	private String userDpNm;
+	
+	//SR Stauts
+	private String sttsNm;
+	
+	//seq
+	private int seq;
 }
