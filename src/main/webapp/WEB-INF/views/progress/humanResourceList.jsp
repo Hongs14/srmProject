@@ -155,7 +155,7 @@
 							var thArr = new Array();
 							var checkbox = $("input[name=developerCheckBox]:checked");
 							
-							// 체트된 체크박스의 값을 가져옴
+							// 체크된 체크박스의 값을 가져옴
 							checkbox.each(function(i) {
 								var tr = checkbox.parent().parent().eq(i);
 								var th = tr.children();

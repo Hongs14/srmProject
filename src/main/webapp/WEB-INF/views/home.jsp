@@ -240,7 +240,7 @@ background-color: white;
                         <td>공지사항1 </td>
                         <td>관리자</td>
                         <td>2023/04/14 </td>
-                        <td><a href="#" class="btn btn-sm btn-primary">상세</a></td>
+                        <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=114" class="btn btn-sm btn-primary">상세</a></td>
                       </tr>
                       </tbody>
                       </table>
