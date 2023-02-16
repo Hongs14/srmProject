@@ -114,7 +114,7 @@
 		                            		<div class="form-group col-sm-3 ">
 		                            			<label class="col-form-label">내용</label>
 		                            		</div>
-		                            		<div class="col-sm-9">
+		                            		<div class="col-sm-9" style="border: 1px solid black">
 		                            			${qstn.qstnCn}
 		                            			<!-- <textarea rows="5" cols="80" readonly>지금 한달째 검토중입니다. 빨리 접수해주세요</textarea> -->
 		                            		</div>
@@ -136,7 +136,7 @@
 	                        	
 	                        	<!-- 댓글 -->
 	                        	<div class="mx-3 mb-2">댓글(2)</div>
-		                        	<div class="mx-3">
+		                        	<div class="mx-3 p-1" style="border: 1px solid black">
 		                        		<div class="row">
 		                        			<div class="col-sm-1 form-group" id="qnaComentWriter">
 		                        				${sessionScope.loginUser.userNm}
@@ -149,7 +149,7 @@
 		                        			</div>
 				                        </div>
 		                        	</div>
-		                        	<div>
+		                        	<div class="px-4" id="qComment">
 		                        		<hr/>
 		                        		<div class="d-flex px-2 flex-row align-items-center justify-content-between">
 		                        			<div class="row">

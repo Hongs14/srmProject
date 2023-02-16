@@ -32,120 +32,122 @@
           			<!-- Row -->
 					<div class="row">
                     	<div class="col-lg-12">
-                        	<div class="card mb-4">
-                        	
-                           		<div class="mb-1 mt-5 px-5">
-                    				<div class="d-flex flex-row align-items-center justify-content-between">
-                             			<div class="col-6">
-                             				<div class="row">
-                                           		<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">등록자</h6></div>
-                                           		<div class="col-sm-10">김지율</div>
-                                        	</div>
-                                        	<div class="row">
-                                           		<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">등록일</h6></div>
-                                          		<div class="col-sm-10">2023-02-03</div>
-                                        	</div>
-                                    	</div>
-                                    	<div class="col-6">
-                                    		<div class="row">
-                                        		<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">소속</h6></div>
-                                            	<div class="col-sm-10">JHJ시스템</div>
-                                        	</div>
-                                        	<div class="row">
-                                        		<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">관련시스템</h6></div>
-                                            	<div class="col-sm-10">JHJ시스템</div>
-                                        	</div>
+                        	<div class="card mb-4 px-5">
+                           		<div class="mb-1 mt-5">
+                    				<div class="align-items-center justify-content-between">
+                    					<div class="row">
+	                             			<div class="col-6">
+	                             				<div class="row">
+	                                           		<div class="col-sm-4"><h6 class="m-0 font-weight-bold text-primary">등록자</h6></div>
+	                                           		<div class="col-sm-8">김지율</div>
+	                                        	</div>
+	                                        	<div class="row">
+	                                           		<div class="col-sm-4"><h6 class="m-0 font-weight-bold text-primary">등록일</h6></div>
+	                                          		<div class="col-sm-8">2023-02-03</div>
+	                                        	</div>
+	                                    	</div>
+	                                    	<div class="col-6">
+	                                    		<div class="row">
+	                                        		<div class="col-sm-4"><h6 class="m-0 font-weight-bold text-primary">소속</h6></div>
+	                                            	<div class="col-sm-8">JHJ시스템</div>
+	                                        	</div>
+	                                        	<div class="row">
+	                                        		<div class="col-sm-4"><h6 class="m-0 font-weight-bold text-primary">관련시스템</h6></div>
+	                                            	<div class="col-sm-8">JHJ시스템</div>
+	                                        	</div>
+	                                   		</div>
                                    		</div>
                                   	</div>
                                  	<hr/>
                                	</div> 
                                  
                                  <!-- 개발단계 관련 내용 -->
-                               	<div class="mx-3 p-3 d-flex flex-column">
+                               	<div class="d-flex flex-column">
                                 	<form>
-                                    	<div class="d-flex flex-row align-items-center justify-content-between">
-                                        	<div class="col-6">
-                                           		<div class="form-group row">
-                                              		<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">개발담당자</h6></div>
-                                              		<div class="col-sm-9">
-		                                                 <select class="form-control">
-		                                                    <option></option>
-		                                                    <option>김태희</option>
-		                                                 </select>
-                                             		 </div>
-                                          		</div>
-	                                           	<div class="form-group row">
-	                                            	<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">개발부서</h6></div>
-	                                            	<div class="col-sm-9">
-		                                            	<select class="form-control">
-		                                                	<option></option>
-		                                                    <option>개발1팀</option>
-		                                                    <option>개발2팀</option>
-		                                                </select>
-	                                              	</div>
-                                           		</div>
-	                                           	<div class="form-group row">
-	                                            	<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">진행상태</h6></div>
-	                                              	<div class="col-sm-9">
-		                                            	<select class="form-control">
-		                                                	<option></option>
-		                                                    <option>개발중</option>
-		                                                    <option>개발완료</option>
-		                                            	</select>
+                                    	<div class="align-items-center justify-content-between">
+                                    		<div class="row">
+	                                        	<div class="col-6">
+	                                           		<div class="form-group row">
+	                                              		<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">개발담당자</h6></div>
+	                                              		<div class="col-sm-9">
+			                                                 <select class="form-control">
+			                                                    <option></option>
+			                                                    <option>김태희</option>
+			                                                 </select>
+	                                             		 </div>
+	                                          		</div>
+		                                           	<div class="form-group row">
+		                                            	<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">개발부서</h6></div>
+		                                            	<div class="col-sm-9">
+			                                            	<select class="form-control">
+			                                                	<option></option>
+			                                                    <option>개발1팀</option>
+			                                                    <option>개발2팀</option>
+			                                                </select>
+		                                              	</div>
+	                                           		</div>
+		                                           	<div class="form-group row">
+		                                            	<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">진행상태</h6></div>
+		                                              	<div class="col-sm-9">
+			                                            	<select class="form-control">
+			                                                	<option></option>
+			                                                    <option>개발중</option>
+			                                                    <option>개발완료</option>
+			                                            	</select>
+			                                           	</div>
+		                                          	</div>
+	                                           
+	                                           		<div class="form-group row mb-2">
+	                                              		<div class="col-sm-3 col-form-control pr-0"><h6 class="m-0 font-weight-bold text-primary">개발 내용</h6></div>
+		                                           		<div class="col-sm-9 p-2">
+		                                            		<textarea style="width: 100%"></textarea>
+		                                          		</div>                                 
+	                                    			</div>
+	                                     		</div>
+	                                        
+												<div class="col-6">
+	                                           		<div class="form-group row">
+	                                            		<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">완료(예정)일</h6></div>
+	                                            		<div class="col-sm-9">
+	                                                 		<input type="date" class="form-control"/>
+	                                              		</div>
+	                                           		</div>
+		                                           	<div class="form-group row">
+		                                            	<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">소요예산</h6></div>
+		                                            	<div class="col-sm-9">
+		                                                	<input type="text" class="form-control"/>
+		                                              	</div>
+		                                          	</div>
+		                                        	<div class="form-group row">
+		                                     			<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">계획 시작일</h6></div>
+		                                              	<div class="col-sm-9">
+		                                                	<input type="date" class="form-control"/>
+		                                             	 </div>
 		                                           	</div>
-	                                          	</div>
-                                           
-                                           		<div class="form-group row mb-2">
-                                              		<div class="col-sm-3 col-form-control pr-0"><h6 class="m-0 font-weight-bold text-primary">개발 내용</h6></div>
-	                                           		<div class="col-sm-9 p-2">
-	                                            		<textarea style="width: 100%"></textarea>
-	                                          		</div>                                 
-                                    			</div>
-                                     		</div>
-                                        
-											<div class="col-6">
-                                           		<div class="form-group row">
-                                            		<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">완료(예정)일</h6></div>
-                                            		<div class="col-sm-9">
-                                                 		<input type="date" class="form-control"/>
-                                              		</div>
-                                           		</div>
-	                                           	<div class="form-group row">
-	                                            	<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">소요예산</h6></div>
-	                                            	<div class="col-sm-9">
-	                                                	<input type="text" class="form-control"/>
-	                                              	</div>
-	                                          	</div>
-	                                        	<div class="form-group row">
-	                                     			<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">계획 시작일</h6></div>
-	                                              	<div class="col-sm-9">
-	                                                	<input type="date" class="form-control"/>
-	                                             	 </div>
-	                                           	</div>
-	                                    		<div class="form-group row">
-	                                            	<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">계획 종료일</h6></div>
-	                                            	<div class="col-sm-9">
-	                                                	<input type="date" class="form-control"/>
-	                                              	</div>
-	                                           	</div>
-	                                           	<div class="text-right">
-	                                           		<input type="button" class="btn btn-sm btn-primary" value="등록"/>
-	                                           	</div>
+		                                    		<div class="form-group row">
+		                                            	<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">계획 종료일</h6></div>
+		                                            	<div class="col-sm-9">
+		                                                	<input type="date" class="form-control"/>
+		                                              	</div>
+		                                           	</div>
+		                                           	<div class="text-right">
+		                                           		<input type="button" class="btn btn-sm btn-primary" value="등록"/>
+		                                           	</div>
+	                                        	</div>
                                         	</div>
-                                        	
                                      	</div>
                                      	<hr/>
                                      </form>
                                     
                                     <!-- 모달 시작-->	
-                                    <div class="px-4">
+                                    <div>
                                     	<div class="row" style="white-space:normal;">
                                     		<div class="col-2"><h6 class="text-primary font-weight-bold">투입인력</h6></div>
                                     		<div class="col-10"><button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModalScrollable" id="#modalScroll">추가하기</button></div>
                                     	</div>
                                     	<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
 								            aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-								        	<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+								        	<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
 								            	<div class="modal-content">
 								                	<div class="modal-header">
 								                  		<h5 class="modal-title" id="exampleModalScrollableTitle">개발자 등록하기</h5>
@@ -171,13 +173,15 @@
 								                 				<div class="row">
 								                 					<div>2023.03.01</div>
 								                 					 ~<div>2023.03.09 </div>
-								                 					 <div>테스트</div>
+								                 					&nbsp;<div>SR제목</div>
+								                 					&nbsp;-&nbsp;<div>테스트</div>
 								                 				</div>
 								                 			
 								                 				<div class="row">
 								                 					<div>2023.03.01</div>
 								                 					 ~<div>2023.03.09 </div>
-								                 					 <div>설계</div>
+								                 					 &nbsp;<div>SR제목</div>
+								                 					&nbsp;-&nbsp;<div>구현</div>
 								                 				</div>
 								                 				
 								                 				<div class="row">
@@ -197,14 +201,16 @@
 								                 			<div class="col-5">
 								                 				<div class="row">
 								                 					<div>2023.03.06</div>
-								                 					 ~<div>2023.03.020 </div>
-								                 					 <div>테스트</div>
+								                 					~<div>2023.03.020 </div>
+								                 					 &nbsp;<div>SR제목</div>
+								                 					&nbsp;-&nbsp;<div>테스트</div>
 								                 				</div>
 								                 			
 								                 				<div class="row">
 								                 					<div>2023.03.01</div>
 								                 					 ~<div>2023.03.09 </div>
-								                 					 <div>설계</div>
+								                 					 &nbsp;<div>SR제목</div>
+								                 					&nbsp;-&nbsp;<div>테스트</div>
 								                 				</div>
 								                 				
 								                 			</div>
@@ -230,64 +236,60 @@
 								            </div>
 								      	</div>
 								      	<!-- 모달 끝-->
-								      	
-								      	<div id="HrList" class="p-2 mt-3" style="border: 1px solid gray">
-								      		<div class="row">
-								      			<div class="col-sm-2 col-form-label">
-								      				정희희
-								      			</div>
-								      			<div class="col-10">
-								      				<div class="row">
-								      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
-	                                              		<div class="col-sm-4">
-	                                                		<input type="date" class="form-control"/>
+								      	<form>
+									      	<div id="HrList" class="p-2 mt-3" style="border: 1px solid gray">
+									      		<div class="row mb-1">
+									      			<div class="col-sm-2 col-form-label">
+									      				정희희
+									      			</div>
+									      			<div class="col-sm-2">
+									      				<select class="form-control">
+									      					<option>작업구분</option>
+									      					<option>설계</option>
+									      					<option>구현</option>
+									      					<option>테스트</option>
+									      				</select>
+									      			</div>
+									      			<div class="col-8">
+									      				<div class="row">
+									      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
+		                                              		<div class="col-sm-4">
+		                                                		<input type="date" class="form-control"/>
+		                                             	 	</div>
+		                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
+		                                              		<div class="col-sm-4">
+		                                                		<input type="date" class="form-control"/>
+		                                             	 	</div>
 	                                             	 	</div>
-	                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
-	                                              		<div class="col-sm-4">
-	                                                		<input type="date" class="form-control"/>
+	                                             	 </div>
+									      		</div>
+									      		<div class="row mb-1">
+									      			<div class="col-sm-2 col-form-label">
+									      				황태률
+									      			</div>
+									      			<div class="col-sm-2">
+									      				<select class="form-control">
+									      					<option>작업구분</option>
+									      					<option>설계</option>
+									      					<option>구현</option>
+									      					<option>테스트</option>
+									      				</select>
+									      			</div>
+									      			<div class="col-8">
+									      				<div class="row">
+									      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
+		                                              		<div class="col-sm-4">
+		                                                		<input type="date" class="form-control"/>
+		                                             	 	</div>
+		                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
+		                                              		<div class="col-sm-4">
+		                                                		<input type="date" class="form-control"/>
+		                                             	 	</div>
 	                                             	 	</div>
-                                             	 	</div>
-                                             	 </div>
-								      		</div>
-								      		
-								      		<div class="row">
-								      			<div class="col-sm-2 col-form-label">
-								      				정희희
-								      			</div>
-								      			<div class="col-10">
-								      				<div class="row">
-								      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
-	                                              		<div class="col-sm-4">
-	                                                		<input type="date" class="form-control"/>
-	                                             	 	</div>
-	                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
-	                                              		<div class="col-sm-4">
-	                                                		<input type="date" class="form-control"/>
-	                                             	 	</div>
-                                             	 	</div>
-                                             	 </div>
-								      		</div>
-								      		<div class="row">
-								      			<div class="col-sm-2 col-form-label">
-								      				황태률
-								      			</div>
-								      			<div class="col-10">
-								      				<div class="row">
-								      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
-	                                              		<div class="col-sm-4">
-	                                                		<input type="date" class="form-control"/>
-	                                             	 	</div>
-	                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
-	                                              		<div class="col-sm-4">
-	                                                		<input type="date" class="form-control"/>
-	                                             	 	</div>
-                                             	 	</div>
-                                             	 </div>
-								      		</div>
-								      		
-								      		
-								      	</div>
-								      	
+	                                             	 </div>
+									      		</div>
+									      	</div>
+								      	</form>
                                     </div>
                                     	
                                     
@@ -310,7 +312,7 @@
 	                                       	<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">첨부파일</h6></div>
 	                                       	<div class="col-sm-10">  화면캡처.png</div>
 	                                   	</div>
-	                                    <div class="text-right"> 
+	                                    <div class="text-right mb-3"> 
 	                                    	<input type="button" class="btn btn-primary" value="저장"/>
 	                                        <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/list'">목록</button>
 	                                    </div>
