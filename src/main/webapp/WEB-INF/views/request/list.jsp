@@ -249,33 +249,34 @@ display: -webkit-box;
                       </tr>
                     </tbody>
                   </table>
+					<div class="pager d-flex justify-content-center my-4">
+						<div class="pagingButtonSet d-flex justify-content-center">
+							<c:if test="${pager.pageNo > 1}">
+								<a onclick="requestList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
+							</c:if>
+							<c:if test="${pager.groupNo > 1}">
+								<a onclick="requestList(${pager.startPageNo-1})" type="button" class="btn btn-outline-info btn-sm m-1">이전</a>
+							</c:if>
+			
+							<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+								<c:if test="${pager.pageNo != i}">
+									<a onclick="requestList(${i})" type="button" class="btn btn-outline-success btn-sm m-1">${i}</a>
+								</c:if>
+								<c:if test="${pager.pageNo == i}">
+									<a onclick="requestList(${i})" type="button" class="btn btn-primary btn-sm m-1 text-white">${i}</a>
+								</c:if>
+							</c:forEach>
+			
+							<c:if test="${pager.groupNo < pager.totalGroupNo }">
+								<a onclick="requestList(${pager.endPageNo+1})" type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
+			
+							</c:if>
+							<c:if test="${pager.pageNo < pager.totalPageNo }">
+								<a onclick="requestList(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
+							</c:if>
+						</div>
+					</div>
                 </div>
-                
-                <div class="pagingButtonSet d-flex justify-content-center m-3">
-					<c:if test="${pager.pageNo > 1}">
-						<a href="1" type="button" class="btn btn-muted shadow">◀◀</a>
-					</c:if>
-
-					<c:if test="${pager.groupNo > 1}">
-						<a href="${pager.startPageNo-1}" type="button" class="btn btn-muted shadow">◀</a>
-					</c:if>
-
-					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
-						<c:if test="${pager.pageNo != i}">
-							<a href="${i}" type="button" class="btn btn-white shadow">${i}</a>
-						</c:if>
-						<c:if test="${pager.pageNo == i}">
-							<a href="${i}" type="button" class="btn btn-dark shadow">${i}</a>
-						</c:if>
-					</c:forEach>
-
-					<c:if test="${pager.groupNo < pager.totalGroupNo }">
-						<a href="${pager.endPageNo+1}" type="button" class="btn btn-muted shadow">▶</a>
-					</c:if>
-					<c:if test="${pager.pageNo < pager.totalPageNo}">
-                  		<a href="${pager.totalPageNo}" type="button" class="btn btn-muted shadow">▶▶</a>
-               		</c:if>
-				</div>
               </div>
           </div>
           </div>
