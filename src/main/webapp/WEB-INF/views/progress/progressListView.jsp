@@ -34,33 +34,31 @@
 		
 		<c:if test="${pager.totalRows != 0}">
 			<div class="pager d-flex justify-content-center my-3">
-				<div class="flex-fulfill"></div>
 				<div class="pagingButtonSet d-flex justify-content-center">
 					<c:if test="${pager.pageNo > 1}">
-						<a onclick="progressList(1)" type="button" class="btn btn-muted shadow">◀◀</a>
+						<a onclick="progressList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
 					</c:if>
 					<c:if test="${pager.groupNo > 1}">
-						<a onclick="progressList(${pager.startPageNo-1})" type="button" class="btn btn-muted shadow">◀</a>
+						<a onclick="progressList(${pager.startPageNo-1})" type="button" class="btn btn-outline-info btn-sm m-1">이전</a>
 					</c:if>
 	
 					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
 						<c:if test="${pager.pageNo != i}">
-							<a onclick="progressList(${i})" type="button" class="btn btn-white shadow">${i}</a>
+							<a onclick="progressList(${i})" type="button" class="btn btn-outline-success btn-sm m-1">${i}</a>
 						</c:if>
 						<c:if test="${pager.pageNo == i}">
-							<a onclick="progressList(${i})" type="button" class="btn btn-dark shadow">${i}</a>
+							<a onclick="progressList(${i})" type="button" class="btn btn-primary btn-sm m-1">${i}</a>
 						</c:if>
 					</c:forEach>
 	
 					<c:if test="${pager.groupNo < pager.totalGroupNo }">
-						<a onclick="progressList(${pager.endPageNo+1})" type="button" class="btn btn-muted shadow">▶</a>
+						<a onclick="progressList(${pager.endPageNo+1})" type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
 	
 					</c:if>
 					<c:if test="${pager.pageNo < pager.totalPageNo }">
-						<a onclick="progressList(${pager.totalPageNo})" type="button" class="btn btn-muted shadow">▶▶</a>
+						<a onclick="progressList(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
 					</c:if>
 				</div>
-				<div class="flex-fulfill"></div>
 			</div>
 		</c:if>
 	</div>
