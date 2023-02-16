@@ -6,17 +6,26 @@
 	<head>
 	  	<%@include file="/WEB-INF/views/common/head.jsp" %>
 	  	
-	  	<script>
+		<script>
 	  		$(document).ready(function(){
 	  			console.log("시작할때");
+	  			readComment();
 	  			
 	  		});
 	  		
-	  		function readComment(qstnNo){
-	  			console.log("qna페이지 시작");
-	  			console.log(qstnNo)
-
+	  		function readComment(){
+	  			console.log("aa");
 	  			$.ajax({
+			    	url:"read/comment"
+			        ,type:"get"
+			        ,success:function(data){
+			        	console.log(data);
+			         }
+			    })
+	  		};
+	  		
+		  	
+	  			/* $.ajax({
 	  				url: "read/comment",
 	  				method: "get",
 	  				data: JSON.stringify(data),
@@ -24,8 +33,8 @@
 	  			}).done((data) => {
 	  				console.log(data);
 	  				console.log("ajax성공");
-	  			});
-	  		}
+	  			}); */
+	  		
 	  		
 			function writeComment(){
 				console.log("댓글달기 실행");
