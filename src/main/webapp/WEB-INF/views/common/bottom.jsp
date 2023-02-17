@@ -11,17 +11,7 @@
   <script src="${pageContext.request.contextPath}/resources/vendor/chart.js/Chart.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/demo/chart-area-demo.js"></script> 
   <script src="${pageContext.request.contextPath}/resources/js/EgovMultiFile.js"></script>
-  <%-- <!-- Page level plugins -->
-  <script src="${pageContext.request.contextPath}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script> --%>
 
-  <!-- Page level custom scripts -->
-  <script>
-    $(document).ready(function () {
-      $('#dataTable').DataTable(); // ID From dataTable 
-      $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-    });
-  </script>
 
   <!-- Select2 -->
   <script src="${pageContext.request.contextPath}/resources/vendor/select2/dist/js/select2.min.js"></script>
