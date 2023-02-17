@@ -27,7 +27,7 @@
 				</tr>
 			</thead>
 			<tbody style="text-align: center;">
-				<c:forEach var="examine" items="${examineList}">
+				<c:forEach var="examine" items="${list}">
 					<tr>
 						<td>${examine.seq}</td>
 						<td>

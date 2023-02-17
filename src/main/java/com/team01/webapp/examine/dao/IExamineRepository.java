@@ -13,9 +13,10 @@ import com.team01.webapp.model.Users;
 public interface IExamineRepository {
 
 	public int count();
-	public List<Examine> list(@Param("startRowNo")int startRowNo,@Param("endRowNo")int endRowNo,@Param("sttsNo") int sttsNo);
+	public List<Examine> list(ExamineList examineList);
 	public List<SRStts> selectSrSttsList();
 	public List<System> selectSysNmList();
 	public List<Users> selectUserOgdpList();
 	public List<Users> selectUserDpList();
+	public int selectTotalExamineCount(ExamineList examineList);
 }

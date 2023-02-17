@@ -33,13 +33,13 @@ public class ExamineService implements IExamineService {
 	}
 
 	@Override
-	public List<Examine> getExamineList(Pager pager,int sttsNo) {
+	public List<Examine> getExamineList(Pager pager,ExamineList examinelist) {
 		log.info("실행");
 		
-		int startRowNo = pager.getStartRowNo();
-		int endRowNo = pager.getEndRowNo();
+		examinelist.setStartRowNo(pager.getStartRowNo());
+		examinelist.setEndRowNo(pager.getEndRowNo());
 		
-		List<Examine> examineList = examineRepository.list(startRowNo,endRowNo,sttsNo);
+		List<Examine> examineList = examineRepository.list(examinelist);
 		
 		return examineList;
 	}
@@ -69,6 +69,16 @@ public class ExamineService implements IExamineService {
 		examineFilter.setUserDpList(userDpList);
 		
 		return examineFilter;
+	}
+
+	@Override
+	public Pager returnPage(int pageNo, Pager pager, ExamineList examinelist) {
+		
+		int totalListNum = (int) examineRepository.selectTotalExamineCount(examinelist);
+		
+		pager = new Pager(10,5,totalListNum,pageNo);
+		
+		return pager;
 	}
 
 }

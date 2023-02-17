@@ -73,19 +73,20 @@
 		                				</div>
 		                				<div class="col-3">
 		                					<div class="form-group row">
-		                						<label class="col-sm-3 col-form-label-sm">진행상태</label>
-				                    			<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1" id="srSttsNo">
-				                        			<option value="0">전체</option>
-				                        			<c:forEach var="status" items="${examineFilter.srSttsList}">		                        	
-					                        			<option value="${status.sttsNo}">${status.sttsNm}</option>
-				                        			</c:forEach>
+		                						<label class="col-sm-3 col-form-label-sm" for="sttsNo">진행상태</label>
+				                    			<select class="form-control form-control-sm col-sm-9" id="sttsNo">
+				                        			<option value="0" selected="selected">전체</option>
+				                        			<option value="1">요청</option>
+				                        			<option value="2">검토중</option>
+				                        			<option value="3">반려</option>
+				                        			<option value="7">재검토</option>
 				                    			</select>
 				                			</div>
 		                				</div>
 		                				<div class="col-4">
 		                					<div class="form-group row">
 		                						<label for="exampleFormControlSelect1 sysNo" class="col-sm-3 col-form-label-sm">관련시스템</label>
-				                    			<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1" id="sysNo">
+				                    			<select class="form-control form-control-sm col-sm-9" id="sysNo">
 				                        			<option value="0">전체</option>
 				                        			<c:forEach var="system" items="${examineFilter.sysNmList}">		                        	
 					                        			<option value="${system.sysNo}">${system.sysNm}</option>
@@ -101,10 +102,10 @@
 		                				<div class="col-4">
 		                					<div class="form-group row">
 		                						<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">등록자 소속</label>
-				                    			<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1" id="userOgdp">
+				                    			<select class="form-control form-control-sm col-sm-9" id="userOgdp">
 				                        			<option value="0">전체</option>
 				                        			<c:forEach var="users" items="${examineFilter.userOgdpList}">		                        	
-					                        			<option value="${users.userNo}">${users.userOgdp}</option>
+					                        			<option>${users.userOgdp}</option>
 				                        			</c:forEach>
 				                    			</select>
 				                			</div>
@@ -112,10 +113,10 @@
 		                				<div class="col-3">
 		                					<div class="form-group row">
 		                						<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">부서</label>
-				                    			<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1" id="userDp">
+				                    			<select class="form-control form-control-sm col-sm-9" id="userDp">
 				                        			<option value="0">전체</option>
 				                        			<c:forEach var="users" items="${examineFilter.userDpList}">		                        	
-					                        			<option  value="${users.userNo}">${users.userDpNm}</option>
+					                        			<option>${users.userDpNm}</option>
 				                        			</c:forEach>
 				                    			</select>
 				                			</div>
@@ -133,25 +134,63 @@
 											</div>
 		                				</div>
 		                				<script>
-											$(document).ready(function () {
+			                				$(document).ready(function () {
 												console.log("시작");
+												var sysNoSelect = document.getElementById("sysNo");
+												var sttsNoSelect = document.getElementById("sttsNo");
+												var userOgdpSelect = document.getElementById("userOgdp");
+												var userDpSelect = document.getElementById("userDp");
+												
+												var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+												var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
+												var userDp = userDpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
+												
+												console.log(sysNo);
+												console.log(sttsNo);
+												console.log(userOgdp);
+												console.log(userDp);
+												
+												let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDp : userDp};
+												
+												console.log(data);
 												
 												$.ajax({
-													url : "filter?pageNo=${pageNo}",
-													method : "get",
-													success : function(result){ 
-														console.log(result);
-														$("#examineAjaxList tbody").append(
-																"<tr>" +
-																"	<td>"+result.srNo+"</td>" +
-																"	<td>"+result.srTtl+"</td>" +
-																"	<td>"+result.sysNm+"</td>" +
-																"</tr>"
-														);
-														
-													}
-												})
+													url : "filter",
+													method : "post",
+													data : JSON.stringify(data),
+													contentType: "application/json; charset=UTF-8"
+												}).done((data) => {
+													$("#ajaxList").html(data)
+												});
 											});
+										
+											function examineList() {
+												
+												var sysNoSelect = document.getElementById("sysNo");
+												var sttsNoSelect = document.getElementById("sttsNo");
+												var userOgdpSelect = document.getElementById("userOgdp");
+												var userDpSelect = document.getElementById("userDp");
+												
+												var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+												var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
+												var userDp = userDpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
+												
+												
+												let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDp : userDp};
+												
+												console.log(data);
+												
+												$.ajax({
+													url : "filter",
+													method : "post",
+													data : JSON.stringify(data),
+													contentType: "application/json; charset=UTF-8"
+												}).done((data) => {
+													$("#ajaxList").html(data)
+												});
+											}
 										</script>
 	                				</div>
 	               				</form>
@@ -170,8 +209,9 @@
 								<table class="table align-items-center table-flush table-hover">
 									<thead class="thead-light" style="text-align: center;">
 										<tr>
+											<th>No.</th>
 											<th class="pr-0">
-						                        <div class="custom-control custom-checkbox">
+						                        <div class="custom-control custom-checkbox" id="check">
 						                   			<input type="checkbox" class="custom-control-input" id="customCheck1">
 						                   			<label class="custom-control-label" for="customCheck1"></label>
 						                 		</div>

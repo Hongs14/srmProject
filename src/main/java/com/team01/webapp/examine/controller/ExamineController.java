@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -35,25 +36,21 @@ public class ExamineController {
 		
 		examineFilter = examineService.filterList(examineFilter);
 		model.addAttribute("examineFilter",examineFilter);
+		
 		return "examine/list";
 	}
 	
-	@GetMapping(value="/filter")
-	@ResponseBody
-	public List<Examine> getExamineFilter(@RequestParam(defaultValue="1")int pageNo,@RequestParam(defaultValue="1") int sttsNo) {
-		log.info("실행");
-		int totalRows = examineService.getTotalRows();
-		Pager pager = new Pager(5,5, totalRows, pageNo);
-		List<Examine> examineList = examineService.getExamineList(pager,sttsNo);
-		log.info(examineList);
-		
-		return examineList;
-	}
-	
 	@PostMapping(value="/filter", produces="application/json; charset=UTF-8")
-	@ResponseBody
-	public String getExamineFilter(int pageNo,@RequestParam(defaultValue="1") int sttsNo, Model model) {
+	public String getExamineFilter(@RequestParam(defaultValue="1")int pageNo,@RequestBody ExamineList examineList, Model model, Pager pager) {
 		log.info("실행");
+		
+		pager = examineService.returnPage(pageNo,pager,examineList);
+		
+		List<Examine> list = examineService.getExamineList(pager, examineList);
+		System.out.println(list.toString());
+		model.addAttribute("examine",list);
+		model.addAttribute("pager",pager);
+		
 		return "examine/ajaxList";
 	}
 	
