@@ -34,4 +34,6 @@ public interface IProgressRepository {
 	List<DeveloperSR> selectDeveloperSR(int userNo);
 	List<Task> selectTaskList();
 	void insertDeveloper(ThArr thArr);
+	HR selectDeveloper(@Param("srNo") String srNo, @Param("userNo") int userNo);
+	void updateDeveloper(HR hr);
 }

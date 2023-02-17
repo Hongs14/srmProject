@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -132,6 +133,7 @@ public class ProgressController {
 		return "progress/humanResourceList";
 	}
 	
+	// 개발자 추가
 	@RequestMapping(value="progress/detail/developerinsert/{srNo}", produces="application/json; charset=UTF-8")
 	public String developerinsert(@PathVariable String srNo, @RequestBody ThArr thArr) {
 		
@@ -140,6 +142,39 @@ public class ProgressController {
 		progressService.developerInsert(thArr);
 		
 		return "redirect:/progress/detail/" + srNo;
+	}
+	
+	// 개발자 일정 수정
+	@RequestMapping(value="progress/detail/developerUpdateView", produces="application/json; charset=UTF-8")
+	public String developerUpdateView(@RequestBody HR hr, Model model) {
+		Date sysdate = new Date();
+		
+		HR developer = progressService.developer(hr.getSrNo(), hr.getUserNo());
+		
+		boolean startresult = developer.getHrStartDate().after(sysdate);
+		boolean endresult = developer.getHrEndDate().after(sysdate);
+		
+		model.addAttribute("developer", developer);
+		model.addAttribute("startresult", startresult);
+		model.addAttribute("endresult", endresult);
+		
+		return "progress/humanResourceUpdateView";
+	}
+	
+	@RequestMapping(value="progress/detail/developerUpdate", produces="application/json; charset=UTF-8")
+	public String developerUpdate(@RequestBody HR hr) {
+		
+		progressService.developerUpdate(hr);
+		
+		return "redirect:/progress/detail/" + hr.getSrNo();
+	}
+	
+	
+	// Detail SR 진척율
+	@RequestMapping(value="progress/detail/progressajax/2", produces="application/json; charset=UTF-8")
+	public String Progressrate(@RequestBody HR hr, Model model) {
+		
+		return "progress/list";
 	}
 
 }
