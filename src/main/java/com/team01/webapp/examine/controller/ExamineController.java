@@ -43,11 +43,11 @@ public class ExamineController {
 	@PostMapping(value="/filter", produces="application/json; charset=UTF-8")
 	public String getExamineFilter(@RequestParam(defaultValue="1")int pageNo,@RequestBody ExamineList examineList, Model model, Pager pager) {
 		log.info("실행");
-		
+		log.info("pageNo"+pageNo);
 		pager = examineService.returnPage(pageNo,pager,examineList);
 		
 		List<Examine> list = examineService.getExamineList(pager, examineList);
-		System.out.println(list.toString());
+		
 		model.addAttribute("examine",list);
 		model.addAttribute("pager",pager);
 		
