@@ -50,8 +50,7 @@
 		                            			<label class="col-form-label">작성자</label>
 		                            		</div>
 		                            		<div class="col-sm-9">
-		                            			<!-- <input type="text" class="form-control" id="qqnaWriter" value="정홍주"/> -->
-		                            			정홍주
+		                            			${sessionScope.loginUser.userNm}
 		                            		</div>
 	                            		</div>	
 	                            		<div class="row mb-2">
@@ -83,17 +82,26 @@
 	                            		</div>
 	                            		<div class="text-right"> 
 	                            			<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/qna/list'">목록</button>
-	                            			<button type="button" class="btn btn-primary" onclick="writeComment()">댓글</button>
 	                            			<input type="button" class="btn btn-primary" value="수정" onclick="location.href='${pageContext.request.contextPath}/qna/update'"/>
 	                            			<button class="btn btn-primary">삭제</button>
 	                            		</div>
 		                            </form>
 		                        </div>
-	                        	
+	                        	<hr/>
 	                        	<!-- 댓글 -->
 	                        	<div class="mb-2">댓글(2)</div>
+	                        	
+	                        	<div class="mx-5 px-3" style="border: 1px solid black">
+	                        		<div>${sessionScope.loginUser.userNm}</div>
+	                        		<div class="row">
+	                        			<textarea cols="80%" name="commentContent"></textarea>
+	                        			<button>댓글등록</button>
+	                        		</div>
+	                        		
+	                        		
+	                        	</div>
 	                        	<div>
-	                        		<hr/>
+	                        		
 	                        		<div class="d-flex px-2 flex-row align-items-center justify-content-between">
 	                        			<div class="row">
 	                        				<h6 style="color: #406882"><b>김희률</b></h6>
@@ -125,9 +133,7 @@
 										}
 									</script>
 	                        		
-	                        	</div>
-	                        	
-	                        	</div>
+	                        	</div> 
                         	</div>
                        	</div>
                     </div> 
@@ -136,7 +142,7 @@
        			</div>
        		<!---Container Fluid-->
       		</div>
-     		<%@include file="/WEB-INF/views/common/footer.jsp" %>
+     		
       	</div>
      	<!-- Footer -->
    	 	</div>
