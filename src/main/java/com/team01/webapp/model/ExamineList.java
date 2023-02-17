@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class ExamineList {
 	private String srNo;
-	private int srCustId;
+	private int srCustNo;
 	private String sysNo;
 	private int sttsNo;
 	private String srTtl;
