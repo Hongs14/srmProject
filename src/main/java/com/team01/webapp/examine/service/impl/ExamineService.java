@@ -46,6 +46,7 @@ public class ExamineService implements IExamineService {
 
 	@Override
 	public ExamineFilter filterList(ExamineFilter examineFilter) {
+		log.info("실행");
 		
 		List<SRStts> srSttsList = new ArrayList<>();
 		List<System> sysNmList = new ArrayList<>();
@@ -73,9 +74,9 @@ public class ExamineService implements IExamineService {
 
 	@Override
 	public Pager returnPage(int pageNo, Pager pager, ExamineList examinelist) {
-		
+		log.info("실행");
 		int totalListNum = (int) examineRepository.selectTotalExamineCount(examinelist);
-		
+		log.info(totalListNum);
 		pager = new Pager(10,5,totalListNum,pageNo);
 		
 		return pager;
