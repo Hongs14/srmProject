@@ -73,4 +73,10 @@
 		    and s.sr_type = sr_type.sr_type_no and s.sr_no = #{srNo}
 	</select>
 	
+	<select id="devList" resultType="hr">
+		SELECT USER_NO AS userNo, USER_NM AS userNm, USER_OGDP AS userOgdp, USER_DP_NM AS userDpNm 
+ 		FROM USERS
+ 		WHERE USER_TYPE = '개발자'
+	</select>
+	
 </mapper>
