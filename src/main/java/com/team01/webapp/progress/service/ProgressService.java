@@ -127,6 +127,17 @@ public class ProgressService implements IProgressService {
 	public void developerInsert(ThArr thArr) {
 		progressRepository.insertDeveloper(thArr);
 	}
+	
+	// 개발자 1명의 행 select
+	@Override
+	public HR developer(String srNo, int userNo) {
+		return progressRepository.selectDeveloper(srNo, userNo);
+	}
+
+	@Override
+	public void developerUpdate(HR hr) {
+		progressRepository.updateDeveloper(hr);
+	}
 
 
 }

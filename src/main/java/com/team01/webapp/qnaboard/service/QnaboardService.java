@@ -51,6 +51,12 @@ public class QnaboardService implements IQnaboardService {
 		qnaboardRepository.writeComment(qComment);
 	}
 
+	@Override
+	public List<QSTNComment> getCommentList(int qstnNo) {
+		List<QSTNComment> list = qnaboardRepository.getCommentList(qstnNo);
+		return list;
+	}
+
 	
 
 	

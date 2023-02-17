@@ -26,21 +26,20 @@
 				<!-- 메인 컨테이너 Container Fluid-->
 				<div class="container-fluid" id="container-wrapper">
 
-					<div class="d-sm-flex align-items-end justify-content-between">
-						<div class="bg-primary px-3 py-2"
-							style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
-							<h6 class="mb-0 text-white">SR 요청관리</h6>
-						</div>
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><b>SR 관리</b></li>
-							<li class="breadcrumb-item active" aria-current="page">SR
-								요청관리</li>
-						</ol>
-					</div>
-
 					<!-- Row -->
-					<div class="row">
-						<div class="col-lg-12">
+					<div class="row justify-content-md-center">
+						<div class="col-lg-10">
+							<div class="d-sm-flex align-items-end justify-content-between">
+								<div class="bg-primary px-3 py-2"
+									style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+									<h6 class="mb-0 text-white">SR 요청관리</h6>
+								</div>
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><b>SR 관리</b></li>
+									<li class="breadcrumb-item active" aria-current="page">SR
+										요청관리</li>
+								</ol>
+							</div>
 							<div class="card mb-4">
 							<div class="ml-5">
 								<div class="mb-1 mt-5 px-5" style="max-width:850px">
@@ -80,7 +79,7 @@
 										</div>
 									</div>
 									<hr>
-									<div class="row mb-2">
+									<div class="row mb-4">
 										<div class="col-sm-2">
 											<span class=" font-weight-bold">SR 제목: </span> 
 										</div>
@@ -88,7 +87,7 @@
 											<span>댓글기능 추가 부탁드립니다.</span> 
 										</div>
 									</div>
-									<div class="row mb-3">
+									<div class="row mb-4">
 										<div class="col-sm-2">
 											<span class="font-weight-bold">관련 근거(목적): </span> 
 										</div>
@@ -96,7 +95,7 @@
 											<span>전자정부프레임워크 지침 참조</span> 
 										</div>
 									</div>
-									<div class="row mb-3">
+									<div class="row mb-4">
 										<div class="col-sm-2">
 											<span class=" font-weight-bold">SR 내용: </span> 
 										</div>

@@ -97,7 +97,7 @@ background-color: white;
 							<div class="tab-pane active" id="all" role="tabpanel"
 								aria-labelledby="home-tab">
 								<div class="table-responsive">
-				                  <table class="table align-items-center table-flush">
+				                  <table class="table border p-1">
 				                    <thead class="thead-light">
 				                      <tr>
 				                        <th>SR번호 </th>
@@ -196,28 +196,8 @@ background-color: white;
                 <div class="card-footer"></div>
               </div>
             </div>
-            <div class="col-xl-4 col-lg-5 ">
-              <div class="card">
-              	<div class="card-header align-items-center">
-					<a href="${pageContext.request.contextPath}/request/list">
-					<i class="far fa-fw fa-window-maximize"></i> 
-					<span class="m-0 font-weight-bold text-primary">My System </span>
-					</a>
-				</div>
-                <div>
-                  <div class="customer-message align-items-center">
-                    <a class="font-weight-bold" href="#">
-                      <div class="text-truncate message-title">JHJ 시스템</div>
-                      <div class="small text-gray-500 message-time font-weight-bold">Udin Cilok · 58m</div>
-                    </a>
-                  </div>
-                  
-                  <div class="card-footer text-center">
-                    <a class="m-0 small text-primary card-link" href="#">View More <i
-                        class="fas fa-chevron-right"></i></a>
-                  </div>
-                </div>
-              </div>
+            <div class="col-xl-4 col-lg-5 " id="systemMiniView">
+              
             </div>
           </div>
           <div class="row mb-5">
@@ -227,7 +207,7 @@ background-color: white;
                   <h6 class="font-weight-bold text-primary"><i class="fas fa-fw fa-columns"></i> Notice </h6>
                 </div>
                 <div class="table-responsive">
-                  <table class="table table-flush  mx-3 mb-3" style="max-width:550px;">
+                  <table class="table border mx-3 mb-3" style="max-width:550px;">
                     <thead class="thead-light">
                       <tr>
                         <th>글번호 </th>
@@ -271,7 +251,7 @@ background-color: white;
                   <h6 class="font-weight-bold text-primary"><i class="fas fa-fw fa-sticky-note"></i>QnA </h6>
                 </div>
                 <div class="table-responsive">
-                  <table class="table table-flush  mx-3 mb-3" style="max-width:550px;">
+                  <table class="table border mx-3 mb-3" style="max-width:550px;">
                     <thead class="thead-light">
                       <tr>
                         <th>글번호 </th>
@@ -325,6 +305,7 @@ background-color: white;
       <!-- Footer -->
     </div>
  <%@include file="/WEB-INF/views/common/bottom.jsp" %>
+ <script src="${pageContext.request.contextPath}/resources/js/home.js"></script>
 </body>
 
 </html>

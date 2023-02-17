@@ -22,4 +22,6 @@ public interface IProgressService {
 	public List<HR> developerList(String userDpNm, String srNo);
 	public List<Task> taskList();
 	public void developerInsert(ThArr thArr);
+	public HR developer(String srNo, int userNo);
+	public void developerUpdate(HR hr);
 }
