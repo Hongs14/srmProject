@@ -2,8 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team01.webapp.home.dao.IHomeRepository">
 	
-	<select id="count" resultType="int">
-		SELECT COUNT(*) FROM NOTICE
+	<select id="selectSysInfo" parameterType="int" resultType="system">
+		select 
+			s.sys_no as "sysNo", 
+			u.user_nm as "managerNm", 
+			sys_nm as "sysNm", 
+			sys_updt_date as "sysUpdtDate"
+		from system s, user_system us, users u
+		where s.sys_no = us.sys_no and u.user_no = s.manager_no
+		and us.cust_no = 7
 	</select>
 	
 	

@@ -11,5 +11,5 @@ public class System {
 	private int ManagerNo;
 	private String sysNm;
 	private Date sysUpdtDate;
-	
+	private String ManagerNm;
 }
