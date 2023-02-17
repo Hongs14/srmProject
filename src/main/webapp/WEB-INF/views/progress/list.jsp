@@ -106,7 +106,6 @@
 											</div>
 											<script>
 												$(document).ready(function () {
-													console.log("시작");
 													var sysNoSelect = document.getElementById("sysNo");
 													var srTypeNoSelect = document.getElementById("srTypeNo");
 													var srSttsNoSelect = document.getElementById("srSttsNo");
@@ -127,8 +126,6 @@
 													}
 													
 													let data = {sysNo : sysNo, srTypeNo : srTypeNo, srSttsNo : srSttsNo, srName : srName, srNo : srNo};
-													
-													console.log(data);
 													
 													$.ajax({
 														url : "progressajax/" + ${pageNo},

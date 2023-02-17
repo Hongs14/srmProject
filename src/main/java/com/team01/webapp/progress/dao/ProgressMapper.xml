@@ -243,4 +243,31 @@
 		</foreach>
 		SELECT * FROM DUAL
 	</insert>
+	
+	<select id="selectDeveloper" parameterType="map" resultType="hr">
+		SELECT
+		    SR_NO AS "srNo",
+		    HR.USER_NO AS "userNo",
+		    HR.TASK_NO AS "taskNo",
+		    TASK_NM AS "taskNm",
+		    HR_START_DATE AS "hrStartDate",
+		    HR_END_DATE AS "hrEndDate",
+		    HR_LEADER AS "hrLeader",
+		    USER_NM AS "userNm",
+		    USER_JBPS AS "userJbps"
+		FROM HR hr, USERS users, TASK task
+		WHERE hr.user_no = users.user_no
+		AND hr.task_no = task.task_no
+		AND SR_NO = #{srNo}
+		AND hr.USER_NO = #{userNo}
+	</select>
+	
+	<update id="updateDeveloper" parameterType="hr">
+		UPDATE HR
+		SET 
+		    HR_START_DATE = #{hrStartDate},
+		    HR_END_DATE = #{hrEndDate}
+		WHERE SR_NO = #{srNo}
+		AND USER_NO = #{userNo}
+	</update>
 </mapper>

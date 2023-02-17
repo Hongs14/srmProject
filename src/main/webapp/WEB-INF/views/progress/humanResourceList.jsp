@@ -42,7 +42,7 @@
 				<tr>
 					<th>
 						<div class="custom-control custom-radio">
-							<input type="radio" id="SR+${list.userNo}" name="customRadio" class="custom-control-input">
+							<input type="radio" id="SR+${list.userNo}" name="customRadio" class="custom-control-input" value="${list.userNo}">
 							<label class="custom-control-label" for="SR+${list.userNo}"></label>
 						</div>
 					</th>
@@ -57,7 +57,8 @@
 				</tr>
 			</c:forEach>
 		</table>
-		
+	
+	<!-- 수정 모달 창 -->
 	<div class="modal fade" id="HumanResourceUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
@@ -68,12 +69,13 @@
 					</button>
 				</div>
 				<div class="modal-body" style="white-space: normal;">
-					<div></div>
+					<div id="developerUpdateView" style="width:100%"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-		
+	
+	<!-- 추가 모달 창 -->
 	<div class="modal fade" id="HumanResourceAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
@@ -146,8 +148,7 @@
 					<hr/>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-primary"
-						data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
 					<button type="button" class="btn btn-primary" id="selectDeveloper">등록</button>
 					<script>
 						$("#selectDeveloper").click(function(){
@@ -185,12 +186,28 @@
 						});
 						
 						function developerUpdate() {
-							console.log('개발자 수정');
-							
-							
-						
-						
-						}
+								console.log("실행");
+								const customRadioNodeList = document.getElementsByName('customRadio');
+								let userNo = null;
+								customRadioNodeList.forEach((node) => {
+									if(node.checked) {
+										userNo = node.value;
+									}
+								});
+								
+								var srNo = '${srNo}';
+								
+								let data = {srNo : srNo, userNo : userNo};
+								
+								$.ajax({
+									url : "developerUpdateView",
+									method : "post",
+									data : JSON.stringify(data),
+									contentType : "application/json; charset=UTF-8"
+								}).done((data) => {
+									$("#developerUpdateView").html(data)
+								});
+							}
 					</script>
 				</div>
 			</div>
