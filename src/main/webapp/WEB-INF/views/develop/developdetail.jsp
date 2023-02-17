@@ -5,6 +5,16 @@
    <head>
         <%@include file="/WEB-INF/views/common/head.jsp" %>
         <link href="${pageContext.request.contextPath}/resources/vendor/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css">
+   		
+   		<script>
+   			function selectDev(obj){
+   				console.log(obj.value)
+   				let pickDp = obj.value;
+   				console.log(pickDp);
+   				$('#userDp').val(pickDp);
+   			}
+   		</script>
+   
    </head>
 
    	<body id="page-top">
@@ -70,20 +80,19 @@
 	                                           		<div class="form-group row">
 	                                              		<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">개발담당자</h6></div>
 	                                              		<div class="col-sm-9">
-			                                                 <select class="form-control">
-			                                                    <option></option>
-			                                                    <option>김태희</option>
+			                                                 <select onchange="selectDev(this);" class="form-control" name="devLeader">
+			                                                 	<option></option>
+			                                                 	<c:forEach var="hr" items="${devlist}">
+				                                                    <option value="${hr.userDpNm}">${hr.userNm}</option>
+				                                             	</c:forEach>
 			                                                 </select>
 	                                             		 </div>
 	                                          		</div>
 		                                           	<div class="form-group row">
 		                                            	<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">개발부서</h6></div>
 		                                            	<div class="col-sm-9">
-			                                            	<select class="form-control">
-			                                                	<option></option>
-			                                                    <option>개발1팀</option>
-			                                                    <option>개발2팀</option>
-			                                                </select>
+		                                            	
+			                                            	<input id="userDp" class="form-control" type="text" value="" readonly/>
 		                                              	</div>
 	                                           		</div>
 		                                           	<div class="form-group row">
@@ -127,7 +136,7 @@
 		                                    		<div class="form-group row">
 		                                            	<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">계획 종료일</h6></div>
 		                                            	<div class="col-sm-9">
-		                                                	<input type="date" class="form-control"/>
+		                                                	<input type="date" class="form-control" required/>
 		                                              	</div>
 		                                           	</div>
 		                                           	<div class="text-right">

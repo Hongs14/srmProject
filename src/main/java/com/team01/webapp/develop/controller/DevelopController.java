@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team01.webapp.develop.service.IDevelopService;
+import com.team01.webapp.model.HR;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrDevelopDto;
 import com.team01.webapp.util.Pager;
@@ -45,9 +47,13 @@ public class DevelopController {
 	@GetMapping("/view/{pageNo}")
 	public String getDevelopDetail(@PathVariable int pageNo, @RequestParam String srNo, Model model) {
 		SrDevelopDto srDetail = developService.getDetail(srNo);
+		List<HR> devList = developService.getDevelopList();
+		
 		model.addAttribute("dlist", srDetail);
+		model.addAttribute("devlist", devList);
 		log.info("SR개발관리 상세보기");
-		log.info(srDetail);
+		log.info(devList.size());
 		return "develop/developdetail";
 	}
+
 }
