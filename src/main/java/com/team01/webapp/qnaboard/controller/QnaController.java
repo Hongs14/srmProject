@@ -73,10 +73,11 @@ public class QnaController {
 	//Qna댓글읽기
 	@GetMapping(value="/read/comment", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public int readComment(@RequestParam int qstnNo) {
-		
+	public List<QSTNComment> readComment(@RequestParam int qstnNo) {
+		List<QSTNComment> list = qnaboardService.getCommentList(qstnNo);
 		log.info("QSTN댓글 읽기" );
-		return 1 ;
+		log.info(qstnNo);
+		return list ;
 	}
 	
 	//Qna댓글작성

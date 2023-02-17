@@ -48,7 +48,7 @@
    			 	QSTN_CMNT_DATE AS qstnCmntDate, 
    			 	USER_NM AS userNm
 		FROM QSTN_COMMENT QC, USERS U
-		WHERE QC.USER_NO = U.USER_NO AND QC.USER_NO = #{qstnNo}
+		WHERE QC.USER_NO = U.USER_NO AND QC.QSTN_NO = #{qstnNo}
 	</select>
 	
 	<select id="countComment" parameterType="int" resultType="int">

@@ -18,22 +18,24 @@
 	  			$.ajax({
 			    	url:"read/comment"
 			        ,type:"get"
+			        ,data: JSON.stringify(data)
+	  				,contentType: "application/json; charset=UTF-8"
 			        ,success:function(data){
+			        	console.log(data.size());
 			        	console.log(data);
 			         }
 			    })
+			    
+				/* $.ajax({
+  				url: "read/comment",
+  				method: "get",
+  				data: JSON.stringify(data),
+  				contentType: "application/json; charset=UTF-8"
+  				}).done((data) => {
+  					console.log(data);
+  					console.log("ajax성공");
+  				}); */
 	  		};
-	  		
-		  	
-	  			/* $.ajax({
-	  				url: "read/comment",
-	  				method: "get",
-	  				data: JSON.stringify(data),
-	  				contentType: "application/json; charset=UTF-8"
-	  			}).done((data) => {
-	  				console.log(data);
-	  				console.log("ajax성공");
-	  			}); */
 	  		
 	  		
 			function writeComment(){
@@ -56,9 +58,6 @@
 				});
 			}
 			
-			function getdetail(){
-				
-			}
 		</script>
 	</head>
 
@@ -141,7 +140,6 @@
 	                            		</div>
 		                            </form>
 		                        </div>
-		                        <input type="hidden"/>
 	                        	
 	                        	<!-- 댓글 -->
 	                        	<div class="mx-3 mb-2">댓글(2)</div>

@@ -39,21 +39,21 @@
 	                             			<div class="col-6">
 	                             				<div class="row">
 	                                           		<div class="col-sm-4"><h6 class="m-0 font-weight-bold text-primary">등록자</h6></div>
-	                                           		<div class="col-sm-8">김지율</div>
+	                                           		<div class="col-sm-8">${dlist.userNm}</div>
 	                                        	</div>
 	                                        	<div class="row">
 	                                           		<div class="col-sm-4"><h6 class="m-0 font-weight-bold text-primary">등록일</h6></div>
-	                                          		<div class="col-sm-8">2023-02-03</div>
+	                                          		<div class="col-sm-8">${dlist.srRegDate}</div>
 	                                        	</div>
 	                                    	</div>
 	                                    	<div class="col-6">
 	                                    		<div class="row">
 	                                        		<div class="col-sm-4"><h6 class="m-0 font-weight-bold text-primary">소속</h6></div>
-	                                            	<div class="col-sm-8">JHJ시스템</div>
+	                                            	<div class="col-sm-8">${dlist.userOgdp}</div>
 	                                        	</div>
 	                                        	<div class="row">
 	                                        		<div class="col-sm-4"><h6 class="m-0 font-weight-bold text-primary">관련시스템</h6></div>
-	                                            	<div class="col-sm-8">JHJ시스템</div>
+	                                            	<div class="col-sm-8">${dlist.sysNm}</div>
 	                                        	</div>
 	                                   		</div>
                                    		</div>
@@ -298,15 +298,15 @@
                                			<hr/>
 	                                   	<div class="row mb-2">
 	                                      	<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">SR제목</h6></div>
-	                                      	<div class="col-sm-10">1</div>
+	                                      	<div class="col-sm-10">${dlist.srTtl}</div>
 	                                   	</div>   
 	                                    <div class="row mb-2">
 	                                    	<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">관련근거(목적)</h6></div>
-	                                        <div class="col-sm-10"> 첨부파일 참고 </div>
+	                                        <div class="col-sm-10">${dlist.srStd}</div>
 	                                    </div>
 	                                   	<div class="row mb-2">
 	                                       	<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">SR내용</h6></div>
-	                                       	<div class="col-sm-10">  버튼을 누르면 다른 링크로 넘어갑니다. </div>
+	                                       	<div class="col-sm-10">${dlist.srCn}</div>
 	                                    </div>
 	                                    <div class="row mb-2">
 	                                       	<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">첨부파일</h6></div>
