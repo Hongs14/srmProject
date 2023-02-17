@@ -20,7 +20,7 @@
 		<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#HumanResourceUpdate" id="#modalScroll" onclick="developerUpdate()">
 			변경
 		</button>
-		<button class="btn btn-primary btn-sm" type="button" onclick="developerDelete()">
+		<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#HumanResourceDelete" id="#modalScroll" onclick="developerDelete()">
 			삭제
 		</button>
 	</div>
@@ -60,6 +60,23 @@
 	
 	<!-- 수정 모달 창 -->
 	<div class="modal fade" id="HumanResourceUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalScrollableTitle">수정</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" style="white-space: normal;">
+					<div id="developerUpdateView" style="width:100%"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 삭제 모달 창 -->
+	<div class="modal fade" id="HumanResourceDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
 				<div class="modal-header">

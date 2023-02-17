@@ -178,7 +178,7 @@ public class ProgressController {
 		
 		
 		
-		return null;
+		return "redirect:/progress/detail/" + hr.getSrNo();
 	}
 	
 	
