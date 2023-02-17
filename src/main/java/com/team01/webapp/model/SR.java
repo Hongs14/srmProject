@@ -22,4 +22,6 @@ public class SR {
 	private Date srStartDate;
 	private Date srEndDate;
 	private String srViewYn;
+	private String srStd;
+
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team01.webapp.home.dao.IHomeRepository">
+	
+	<select id="selectSysInfo" parameterType="int" resultType="system">
+		select 
+			s.sys_no as "sysNo", 
+			u.user_nm as "managerNm", 
+			sys_nm as "sysNm", 
+			sys_updt_date as "sysUpdtDate"
+		from system s, user_system us, users u
+		where s.sys_no = us.sys_no and u.user_no = s.manager_no
+		and us.cust_no = 7
+	</select>
+	
+	
+	<!-- 요청 진행 상태 리스트 -->
+	<select id="selectSrSttsList" resultType="srstts">
+		SELECT 
+		    STTS_NO AS "sttsNo",
+		    STTS_NM AS "sttsNm"
+		FROM SR_STTS
+	</select>
+
+	<!-- 관련 시스템 리스트 -->
+	<select id="selectSysNmList" resultType="system">
+		SELECT 
+			SYS_NO AS "sysNo",
+			SYS_NM AS "sysNm"
+		FROM SYSTEM
+	</select>
+	
+	<!-- 등록자 소속 및 부서 리스트 -->
+	<select id="selectUserOgdpList" resultType="users">
+		SELECT 
+		    DISTINCT(USER_OGDP) AS "userOgdp"
+		FROM USERS
+		WHERE USER_TYPE='고객사'
+	</select>
+	
+	<select id="selectUserDpList" resultType="users">
+		SELECT 
+		    DISTINCT(USER_DP_NM) AS "userDpNm"
+		FROM USERS
+		WHERE USER_TYPE='고객사'
+	</select>
+
+</mapper>

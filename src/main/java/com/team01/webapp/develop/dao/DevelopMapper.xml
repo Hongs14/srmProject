@@ -6,42 +6,77 @@
 		select count(*) from sr where stts_no = 4 or stts_no = 5 or stts_no=6
 	</select>
 	
-	<select id="selectDevelopList" parameterType="pager" resultType="com.team01.webapp.model.SrDevelopDto">
+	<select id="selectDevelopList" parameterType="pager" resultType="developDto">
 		<![CDATA[
 			select rnum, 
-					sr_no AS srNo, 
-					sr_cust_no AS srCustId, 
-					sys_no AS sysNo, 
-					stts_no AS sttsNo, 
-					sr_ttl AS srTtl, 
-					sr_cn AS srCn, 
-					sr_reg_date AS srRegDate, 
-					sr_pry AS srPry, 
-					sr_opnn AS srOppn, 
-					sr_bgt AS srBgt, 
-	            	sr_dev_cn AS srDevCn, 
-	            	sr_ddln_date AS srDdlnDate, 
-	            	sr_start_date AS srStartDate, 
-	            	sr_end_date AS srEndDate, 
-	            	sr_view_yn AS srViewYn, 
-	            	sr_type AS srType,
-	            	user_nm AS userNm, 
-	            	user_ogdp AS userOgdp, 
-	            	user_dp_nm AS userDpNm
+			        sr_no AS srNo, 
+			        sr_cust_no AS srCustId, 
+			        sys_no AS sysNo, 
+			        sys_nm as sysNm,
+			        stts_no AS sttsNo, 
+			        stts_nm AS sttsNm,
+			        sr_ttl AS srTtl, 
+			        sr_cn AS srCn, 
+			        sr_reg_date AS srRegDate, 
+			        sr_pry AS srPry, 
+			        sr_opnn AS srOppn, 
+			        sr_bgt AS srBgt, 
+			        sr_dev_cn AS srDevCn, 
+			        sr_ddln_date AS srDdlnDate, 
+			        sr_start_date AS srStartDate, 
+			        sr_end_date AS srEndDate, 
+			        sr_view_yn AS srViewYn, 
+			        sr_type AS srType,
+			        user_nm AS userNm, 
+			        user_ogdp AS userOgdp, 
+			        user_dp_nm AS userDpNm
 			from(
-			   	select rownum as rnum, sr_no, sr_cust_no, sys_no, aa.stts_no, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
-		            sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_view_yn, aa.sr_type,  user_nm, user_ogdp, user_dp_nm
-			   	from(
-			      select  sr_no, sr_cust_no, sys_no, sr.stts_no, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
-		            sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_view_yn, sr.sr_type, user_nm, user_ogdp, user_dp_nm
-			      from sr, sr_type, sr_stts, users
-		          where sr.stts_no = sr_stts.stts_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no and sr.stts_no = 4 or sr.stts_no = 5 or sr.stts_no=6
+			    select rownum as rnum, sr_no, sr_cust_no, aa.sys_no, aa.sys_nm, aa.stts_no, aa.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
+			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_view_yn, aa.sr_type,  user_nm, user_ogdp, user_dp_nm
+			    from(
+			      select  sr_no, sr_cust_no, sr.sys_no, system.sys_nm, sr.stts_no, sr_stts.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
+			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_view_yn, sr.sr_type, user_nm, user_ogdp, user_dp_nm
+			      from sr, sr_type, sr_stts, users, system
+			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no and sr.stts_no = 4 or sr.stts_no = 5 or sr.stts_no=6
 			      order by sr_no desc
 			    ) aa
-		    where rownum <= #{endRowNo}
+			where rownum <= #{endRowNo}
 			)
 			where rnum >= #{startRowNo}
 		]]>
+	</select>
+	
+	<select id="selectDevelopContent" parameterType="string" resultType="developDto">
+		select  sr_no AS srNo, 
+		        sr_cust_no AS srCustId, 
+		        s.sys_no AS sysNo, 
+		        sys_nm as sysNm,
+		        s.stts_no AS sttsNo, 
+		        stts_nm AS sttsNm,
+		        sr_ttl AS srTtl, 
+		        sr_cn AS srCn, 
+		        sr_reg_date AS srRegDate, 
+		        sr_pry AS srPry, 
+		        sr_opnn AS srOppn, 
+		        sr_bgt AS srBgt, 
+		        sr_dev_cn AS srDevCn, 
+		        sr_ddln_date AS srDdlnDate, 
+		        sr_start_date AS srStartDate, 
+		        sr_end_date AS srEndDate, 
+		        sr_view_yn AS srViewYn, 
+		        sr_type AS srType,
+		        user_nm AS userNm, 
+		        user_ogdp AS userOgdp, 
+		        user_dp_nm AS userDpNm
+		 from sr s, sr_type, sr_stts, users, system
+		 where s.stts_no = sr_stts.stts_no and system.sys_no = s.sys_no and s.sr_cust_no = users.user_no 
+		    and s.sr_type = sr_type.sr_type_no and s.sr_no = #{srNo}
+	</select>
+	
+	<select id="devList" resultType="hr">
+		SELECT USER_NO AS userNo, USER_NM AS userNm, USER_OGDP AS userOgdp, USER_DP_NM AS userDpNm 
+ 		FROM USERS
+ 		WHERE USER_TYPE = '개발자'
 	</select>
 	
 </mapper>

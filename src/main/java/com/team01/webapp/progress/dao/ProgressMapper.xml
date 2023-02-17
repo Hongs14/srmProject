@@ -126,4 +126,148 @@
 		WHERE rnum >= #{start}
 		]]>
 	</select>
+	
+	<!-- 상세 뷰 SR 상세 정보 select (requester 정보) -->
+	<select id="selectProgressRequester" parameterType="string" resultType="progressDetail">
+		SELECT
+		    SR_NO AS "srNo",
+		    SR_TYPE_NM AS "srTypeNm",
+		    SR_TTL AS "srTtl",
+		    SR_STD AS "srStd",
+		    SYS_NM AS "sysNm",
+		    STTS_NM AS "sttsNm",
+		    USER_DP_NM AS "userDpNm",
+		    USER_NM AS "requesterNm",
+		    SR_REG_DATE AS "srRegDate",
+		    SR_DDLN_DATE AS "srDdlnDate",
+		    SR_CN AS "srCn"
+		FROM SR sr, SR_TYPE type ,SYSTEM system, SR_STTS stts, USERS users
+		WHERE sr.sr_type = type.sr_type_no
+		AND sr.sys_no = system.sys_no
+		AND sr.stts_no = stts.stts_no
+		AND sr.sr_cust_no = users.user_no
+		AND sr_no = #{srNo}
+	</select>
+	
+	<!-- 상세 뷰 SR 상세 정보 select (developer 정보) -->
+	<select id="selectProgessdeveloper" parameterType="string" resultType="progressDetail">
+		SELECT
+		    USER_DP_NM AS "dpNm",
+		    USER_NM AS "developerNm",
+		    SR_START_DATE AS "srStartDate",
+		    SR_END_DATE AS "srEndDate"
+		FROM SR sr, HR hr, USERS users
+		WHERE sr.sr_no = hr.sr_no
+		AND hr.user_no = users.user_no
+		AND hr_leader = 'Y'
+		AND sr.SR_NO = #{srNo}
+	</select>
+	<!-- 상세 뷰 첨부파일 List select -->
+	<select id="selectSrFileList" parameterType="string" resultType="srFile">
+		SELECT
+		    SR_FILE_NO AS "srFileNo",
+		    SR_FILE_PHYS_NM AS "srFilePhysNm",
+		    SR_FILE_EXTN_NM AS "srFileExtnNm",
+		    SR_FILE_ACTL_NM AS "srFileActlNm"
+		FROM SR_FILE
+		WHERE SR_NO = #{srNo}
+	</select>
+	
+	<!-- 상세 뷰 첨부파일 select -->	
+	<select id="selectSrFile" parameterType="int" resultType="srFile">
+		SELECT
+		    SR_FILE_PHYS_NM AS "srFilePhysNm",
+		    SR_FILE_EXTN_NM AS "srFileExtnNm",
+		    SR_FILE_ACTL_NM AS "srFileActlNm"
+		FROM SR_FILE
+		WHERE SR_FILE_NO = #{srFileNo}
+	</select>
+	
+	<select id="selectHumanResourceList" parameterType="string" resultType="hr">
+		SELECT
+			hr.USER_NO AS "userNo",
+		    USER_NM AS "userNm",
+		    USER_DP_NM AS "userDpNm",
+		    USER_JBPS AS "userJbps",
+		    USER_TELNO AS "userTelNo",
+		    TASK_NM AS "taskNm",
+		    HR_START_DATE AS "hrStartDate",
+		    HR_END_DATE AS "hrEndDate",
+		    HR_LEADER AS "hrLeader"
+		FROM HR hr, USERS users, TASK task
+		WHERE hr.user_no = users.user_no
+		AND hr.task_no = task.task_no
+		AND sr_no = #{srNo}
+		ORDER BY hr_leader DESC
+	</select>
+	
+	<select id="selectDeveloperList" parameterType="map" resultType="hr">
+		SELECT 
+		    USERS.USER_NO AS "userNo",
+		    USER_NM AS "userNM",
+		    USER_JBPS AS "userJbps",
+		    USER_TELNO AS "userTelNo"
+		FROM USERS users
+		LEFT JOIN (
+		SELECT
+		    SR_NO, USER_NO
+		FROM HR hr
+		WHERE SR_NO = #{srNo}) hr
+		ON users.user_no = hr.user_no
+		WHERE hr.user_no IS NULL
+		AND USER_DP_NM = #{userDpNm}
+	</select>
+	
+	<select id="selectDeveloperSR" parameterType="int" resultType="developerSr">
+		SELECT
+		    SR_TTL AS "srTtl",
+		    HR_START_DATE AS "hrStartDate",
+		    HR_END_DATE AS "hrEndDate"
+		FROM SR sr, HR hr
+		WHERE sr.sr_no = hr.sr_No
+		AND user_no = #{userNo}
+	</select>
+	
+	<select id="selectTaskList" resultType="task">
+		SELECT
+			TASK_NO AS "taskNo",
+			TASK_NM AS "taskNm"
+		FROM TASK
+	</select>
+	
+	<insert id="insertDeveloper" parameterType="thArr">
+		INSERT ALL
+		<foreach collection="thArr" item="thArr">
+		INTO HR (SR_NO, USER_NO, TASK_NO, HR_START_DATE, HR_END_DATE, HR_LEADER)
+			VALUES (#{thArr.srNo}, #{thArr.userNo}, #{thArr.taskNo}, #{thArr.hrStartDate}, #{thArr.hrEndDate}, 'N')
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<select id="selectDeveloper" parameterType="map" resultType="hr">
+		SELECT
+		    SR_NO AS "srNo",
+		    HR.USER_NO AS "userNo",
+		    HR.TASK_NO AS "taskNo",
+		    TASK_NM AS "taskNm",
+		    HR_START_DATE AS "hrStartDate",
+		    HR_END_DATE AS "hrEndDate",
+		    HR_LEADER AS "hrLeader",
+		    USER_NM AS "userNm",
+		    USER_JBPS AS "userJbps"
+		FROM HR hr, USERS users, TASK task
+		WHERE hr.user_no = users.user_no
+		AND hr.task_no = task.task_no
+		AND SR_NO = #{srNo}
+		AND hr.USER_NO = #{userNo}
+	</select>
+	
+	<update id="updateDeveloper" parameterType="hr">
+		UPDATE HR
+		SET 
+		    HR_START_DATE = #{hrStartDate},
+		    HR_END_DATE = #{hrEndDate}
+		WHERE SR_NO = #{srNo}
+		AND USER_NO = #{userNo}
+	</update>
 </mapper>

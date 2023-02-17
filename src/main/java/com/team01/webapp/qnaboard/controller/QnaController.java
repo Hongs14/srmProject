@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team01.webapp.model.QSTN;
 import com.team01.webapp.model.QSTNComment;
 import com.team01.webapp.qnaboard.service.IQnaboardService;
+import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -25,40 +27,72 @@ public class QnaController {
 	@Autowired
 	private IQnaboardService qnaboardService;
 	
+	//QNA목록보기
 	@GetMapping("/list")
-	public String getQnaList(Model model) {
-		List<QSTN> list = qnaboardService.getList();
+	public String getQnaList(@RequestParam(defaultValue="1") int pageNo, Model model) {
+		int totalRow = qnaboardService.countTotalRow();
+		Pager pager = new Pager(10, 5, totalRow, pageNo);
+		List<QSTN> list = qnaboardService.getList(pager);
 		model.addAttribute("qnalist", list);
+		model.addAttribute("pager", pager);
 		log.info("qna목록보기");
 		return "qnaboard/qnalist";
 	}
 	
-	@GetMapping("/detail")
-	public String getQnaDetail(Model model) {
+	//QNA상세보기
+	@GetMapping("/view")
+	public String getQnaDetail(Model model, int qstnNo) {
+		QSTN qstn = qnaboardService.getDetail(qstnNo);
+		model.addAttribute("qstn", qstn);
 		log.info("qna상세보기");
 		return "qnaboard/qnadetail";
 	}
 	
+	//QNA작성하기
 	@GetMapping("/write")
 	public String writeQna() {
 		log.info("Qna작성하기");
 		return "qnaboard/qnawrite";
 	}
 	
+	//QNA수정하기
 	@GetMapping("/update")
 	public String updateQna() {
 		log.info("Qna수정하기");
 		return "qnaboard/qnaupdate";
 	}
 	
-	@PostMapping(value="/comment/write", produces="application/json; charset=UTF-8")
-	//서버->브라우저로 보낼때  "application/json; charset=UTF-8" 타입으로 이용하겠다.
+//	@PostMapping("/write/comment")
+//	public String writeComment(QSTNComment qComment, RedirectAttributes redirectAttrs) {
+//		qnaboardService.writeComment(qComment);
+//		log.info("Qna댓글달기");
+//		return "redirect:/qna/view?qnaNo="+qComment.getQstnNo();
+//	}
+	
+	
+	//Qna댓글읽기
+	@GetMapping(value="/read/comment", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public  QSTNComment ajax3(@RequestBody QSTNComment qComment){
+	public List<QSTNComment> readComment(@RequestParam int qstnNo) {
+		List<QSTNComment> list = qnaboardService.getCommentList(qstnNo);
+		log.info("QSTN댓글 읽기" );
+		log.info(qstnNo);
+		return list ;
+	}
+	
+	//Qna댓글작성
+	@PostMapping(value="/write/comment", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public QSTNComment writeComment(@RequestBody QSTNComment qComment){
 		//RequestBody안에는 json타입으로 있어야 함.
 		log.info("QSTN댓글달기");
-		return qComment;
+		log.info(qComment);
 		
+		qnaboardService.writeComment(qComment);
+		return qComment;
 	}
+	
+	
+	
 	
 }

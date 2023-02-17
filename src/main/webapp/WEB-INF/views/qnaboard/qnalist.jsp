@@ -110,7 +110,7 @@
 					                   		</thead>
 					                   		<tbody>
 					                   			<c:forEach var="QnaboardDto" items="${qnalist}">
-						                   			<tr onclick="location.href='${pageContext.request.contextPath}/qna/detail'">
+						                   			<tr onclick="location.href='${pageContext.request.contextPath}/qna/view?qstnNo=${QnaboardDto.qstnNo}'">
 						                        		<td>1</td>
 								                        <td>${QnaboardDto.qstnTtl}</td>
 								                        <td>${QnaboardDto.userNm}</td>
@@ -121,9 +121,39 @@
 					                     		</c:forEach>
 					                 		</tbody>
 					                  	</table>
+					                  	<!-- table -->
 						           	</div>
-						            <!-- table -->
-					         		<div class="text-center"><button class="btn btn-secondary">1</button></div>
+						            
+						            <c:if test="${pager.totalRows != 0}">
+										<div class="pager d-flex justify-content-center my-3">
+											<div class="pagingButtonSet d-flex justify-content-center">
+												<c:if test="${pager.pageNo > 1}">
+													<a href='<c:url value="/qna/list?pageNo=1"/>' type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
+												</c:if>
+												<c:if test="${pager.groupNo > 1}">
+													<a href='<c:url value="/qna/list?pageNo=${pager.startPageNo-1}"/>' type="button" class="btn btn-outline-info btn-sm m-1">이전</a>
+												</c:if>
+								
+												<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
+													<c:if test="${pager.pageNo != i}">
+														<a href='<c:url value="/qna/list?pageNo=${i}"/>' type="button" class="btn btn-outline-success btn-sm m-1">${i}</a>
+													</c:if>
+													<c:if test="${pager.pageNo == i}">
+														<a href='<c:url value="/qna/list?pageNo=${i}"/>' type="button" class="btn btn-primary btn-sm m-1">${i}</a>
+													</c:if>
+												</c:forEach>
+								
+												<c:if test="${pager.groupNo < pager.totalGroupNo }">
+													<a href='<c:url value="/qna/list?pageNo=${pager.endPageNo+1}"/>' type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
+								
+												</c:if>
+												<c:if test="${pager.pageNo < pager.totalPageNo }">
+													<a href='<c:url value="/qna/list?pageNo=${pager.totalPageNo}"/>' type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
+												</c:if>
+											</div>
+										</div>
+									</c:if>
+						            
 					            </div>
 					    	</div>  
 			        	</div> 

@@ -26,6 +26,11 @@
  	<typeAlias type="com.team01.webapp.model.UserSystem" alias="userSystem"/>
  	<typeAlias type="com.team01.webapp.model.SrProgressAjax" alias="progressAjax"/>
  	<typeAlias type="com.team01.webapp.model.SrProgressList" alias="progressList"/>
- 	
+	<typeAlias type="com.team01.webapp.model.ProgressDetail" alias="progressDetail"/>
+	<typeAlias type="com.team01.webapp.model.Examine" alias="examine"/>
+	<typeAlias type="com.team01.webapp.model.ExamineList" alias="examineList"/>
+	<typeAlias type="com.team01.webapp.model.DeveloperSR" alias="developerSr"/>
+	<typeAlias type="com.team01.webapp.model.ThArr" alias="thArr"/>
+	<typeAlias type="com.team01.webapp.model.SrDevelopDto" alias="developDto"/>
 </typeAliases>
 </configuration>

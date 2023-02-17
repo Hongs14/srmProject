@@ -1,6 +1,7 @@
 package com.team01.webapp.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -12,4 +13,11 @@ public class HR {
 	private Date hrStartDate;
 	private Date hrEndDate;
 	private String hrLeader;
+	
+	private String userNm;
+	private String userDpNm;
+	private String userJbps;
+	private String userTelNo;
+	private String taskNm;
+	private List<DeveloperSR> srList;
 }

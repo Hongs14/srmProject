@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.team01.webapp.model.Notice;
 import com.team01.webapp.model.NoticeFile;
@@ -46,21 +47,66 @@ public class NoticeService implements INoticeService{
 	}
 	//첨부파일
 	@Override
-	public NoticeFile noticeFileUpload(Notice notice) {
+	public void noticeFileUpload(NoticeFile noticeFile) {
 		log.info("실행");
-		NoticeFile fileUpload = noticeRepository.noticeFileUpload(notice);
+		noticeRepository.noticeFileUpload(noticeFile);
 		
-		return fileUpload;
 	}
 	
 	//게시글 상세조회
 	@Override
 	public Notice noticeDetail(int ntcNo) {
 		log.info("실행");
-		Notice notice =(Notice) noticeRepository.detail(ntcNo);
-		
+		Notice notice = noticeRepository.detail(ntcNo);
 		return notice;
 	}
+	
+	//게시글 조회수
+	@Transactional
+	public void inqCnt(int ntcNo) {
+		log.info("실행");
+		noticeRepository.inqCnt(ntcNo);
+	}
+	
+	//게시글 수정
+	@Override
+	public void noticeUpdate(Notice notice) {
+		log.info("실행");
+		int ntcNo = notice.getNtcNo();
+		String ntcCn = notice.getNtcCn();
+		noticeRepository.update(ntcNo,ntcCn);
+		
+	}
+	@Override
+	public void noticeUpdate(Notice notice,NoticeFile noticeFile) {
+		log.info("실행");
+		int ntcNo = notice.getNtcNo();
+		String ntcCn = notice.getNtcCn();
+		noticeRepository.update(ntcNo,ntcCn);
+		System.out.println(noticeFile.getNtcFileActlNm());
+		//첨부파일 수정
+		if(noticeFile.getNtcFileActlNm() != null && !noticeFile.getNtcFileActlNm().equals("")) {
+			if(noticeFile.getNtcFileNo()>0) {
+				noticeFile.setNtcNo(ntcNo);
+				System.out.println("첨수:"+ntcNo);
+				noticeRepository.updateFile(noticeFile);
+				System.out.println("첨부파일 수정  실행" );
+			}else {
+				noticeFile.setNtcNo(ntcNo);
+				noticeFile.setNtcFileNo(noticeRepository.selectMaxFileNo()+1);
+				noticeRepository.noticeFileUpdateUpload(noticeFile);
+				System.out.println("첨부파일 수정 업로드  실행" );
+			}
+		}
+		
+		
+	}
 
+	//게시글 삭제
+	@Override
+	public void noticeDelete(int ntcNo) {
+		log.info("실행");
+		noticeRepository.delete(ntcNo);
+	}
 
 }

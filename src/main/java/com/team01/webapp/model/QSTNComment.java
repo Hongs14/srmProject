@@ -13,5 +13,6 @@ public class QSTNComment {
 	private String userId;
 	private String qstnCmntCn;
 	private Date qstnCmntDate;
+	private String userNm;
 	
 }

@@ -8,7 +8,6 @@
         </div>
         <div class="sidebar-brand-text mx-2 mt-1">SRM SYSTEM</div>
       </a>
-      <hr class="sidebar-divider my-0">
       <li class="nav-item active">
         <a class="nav-link" href="${pageContext.request.contextPath}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -24,16 +23,15 @@
           <span>SR 요청 관리</span>
         </a>
       </li>
+      <c:if test="${sessionScope.loginUser.userType != '고객사'}">
       <li class="nav-item">
-
         <a class="nav-link" href="${pageContext.request.contextPath}/examine/list">
           <i class="fab fa-fw fa-wpforms"></i>
-
           <span>SR 검토 관리 </span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/develop/list">
+        <a class="nav-link" href="${pageContext.request.contextPath}/develop/list/1">
           <i class="fas fa-fw fa-file-code"></i>
           <span>SR 개발 관리</span>
         </a>
@@ -44,6 +42,7 @@
           <span>SR 진척 관리</span>
         </a>
       </li>
+      </c:if>
       <hr class="sidebar-divider">
       <div class="sidebar-heading">
         게시판 
@@ -60,6 +59,5 @@
           <span>QnA게시판</span>
         </a>
       </li>
-      <hr class="sidebar-divider">
-      <div class="version" id="version-ruangadmin"></div>
+      <li class="version my-5" id="version-ruangadmin"></li>
     </ul>
