@@ -156,7 +156,7 @@
 												console.log(data);
 												
 												$.ajax({
-													url : "filter",
+													url : "filter/1",
 													method : "post",
 													data : JSON.stringify(data),
 													contentType: "application/json; charset=UTF-8"

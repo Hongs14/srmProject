@@ -40,8 +40,8 @@ public class ExamineController {
 		return "examine/list";
 	}
 	
-	@PostMapping(value="/filter", produces="application/json; charset=UTF-8")
-	public String getExamineFilter(@RequestParam(defaultValue="1")int pageNo,@RequestBody ExamineList examineList, Model model, Pager pager) {
+	@PostMapping(value="/filter/{pageNo}", produces="application/json; charset=UTF-8")
+	public String getExamineFilter(@PathVariable int pageNo,@RequestBody ExamineList examineList, Model model, Pager pager) {
 		log.info("실행");
 		log.info("pageNo"+pageNo);
 		pager = examineService.returnPage(pageNo,pager,examineList);
