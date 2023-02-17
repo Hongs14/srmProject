@@ -105,6 +105,8 @@
 												</div>
 											</div>
 											<script>
+												
+												// 화면이 처음 켜질 때 1번 페이지를 긁어오는 부분
 												$(document).ready(function () {
 													var sysNoSelect = document.getElementById("sysNo");
 													var srTypeNoSelect = document.getElementById("srTypeNo");
@@ -137,8 +139,8 @@
 													});
 												});
 											
+												// 검색 버튼을 누르면 값을 긁어오는 부분
 												function progressList(pageNo) {
-													console.log(pageNo);
 													var sysNoSelect = document.getElementById("sysNo");
 													var srTypeNoSelect = document.getElementById("srTypeNo");
 													var srSttsNoSelect = document.getElementById("srSttsNo");

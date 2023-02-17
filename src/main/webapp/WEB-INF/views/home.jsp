@@ -2,17 +2,17 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-<style>
-.nav-tabs .nav-link{
-background-color: blue;
-}
-.nav-tabs .nav-link:active{
-background-color: white;
-}
-</style>
 
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
+	<style>
+		.nav-tabs .nav-link{
+		background-color: blue;
+		}
+		.nav-tabs .nav-link:active{
+		background-color: white;
+		}
+	</style>
 </head>
 
 <body id="page-top">
