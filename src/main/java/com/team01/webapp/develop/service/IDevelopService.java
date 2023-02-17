@@ -13,5 +13,6 @@ public interface IDevelopService {
 	public List<SR> getDevelopList(Pager pager);
 	public SrDevelopDto getDetail(String srNo);
 	public List<HR> getDevelopList();
+	public void updateSR(SrDevelopDto srDevelop);
 
 }

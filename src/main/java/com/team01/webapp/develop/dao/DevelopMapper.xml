@@ -79,4 +79,8 @@
  		WHERE USER_TYPE = '개발자'
 	</select>
 	
+	<update id="updateSr" parameterType="developDto">
+		
+	</update>
+	
 </mapper>

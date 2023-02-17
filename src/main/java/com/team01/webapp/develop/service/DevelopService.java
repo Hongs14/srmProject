@@ -42,6 +42,11 @@ public class DevelopService implements IDevelopService{
 		return devlist;
 	}
 
+	@Override
+	public void updateSR(SrDevelopDto srDevelop) {
+		developRepository.updateSr(srDevelop);
+	}
+
 
 
 }
