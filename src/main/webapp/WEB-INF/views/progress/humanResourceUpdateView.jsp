@@ -82,7 +82,7 @@
 					data : JSON.stringify(data),
 					contentType : "application/json; charset=UTF-8"
 				}).done((data) => {
-					windows.location.href = "${developer.srNo}";
+					window.location.href = "${developer.srNo}";
 				});
 			});
 		</script>

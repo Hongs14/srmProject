@@ -186,28 +186,48 @@
 						});
 						
 						function developerUpdate() {
-								console.log("실행");
-								const customRadioNodeList = document.getElementsByName('customRadio');
-								let userNo = null;
-								customRadioNodeList.forEach((node) => {
-									if(node.checked) {
-										userNo = node.value;
-									}
-								});
-								
-								var srNo = '${srNo}';
-								
-								let data = {srNo : srNo, userNo : userNo};
-								
-								$.ajax({
-									url : "developerUpdateView",
-									method : "post",
-									data : JSON.stringify(data),
-									contentType : "application/json; charset=UTF-8"
-								}).done((data) => {
-									$("#developerUpdateView").html(data)
-								});
-							}
+							const customRadioNodeList = document.getElementsByName('customRadio');
+							let userNo = null;
+							customRadioNodeList.forEach((node) => {
+								if(node.checked) {
+									userNo = node.value;
+								}
+							});
+							
+							var srNo = '${srNo}';
+							let data = {srNo : srNo, userNo : userNo};
+							
+							$.ajax({
+								url : "developerUpdateView",
+								method : "post",
+								data : JSON.stringify(data),
+								contentType : "application/json; charset=UTF-8"
+							}).done((data) => {
+								$("#developerUpdateView").html(data)
+							});
+						}
+							
+						function developerDelete() {
+							const customRadioNodeList = document.getElementsByName('customRadio');
+							let userNo = null;
+							customRadioNodeList.forEach((node) => {
+								if(node.checked) {
+									userNo = node.value;
+								}
+							});
+							
+							var srNo = '${srNo}';
+							let data = {srNo : srNo, userNo : userNo};
+							
+							$.ajax({
+								url : "developerDelete",
+								method : "post",
+								data : JSON.stringify(data),
+								contentType : "application/json; charset=UTF-8"
+							}).done((data) => {
+								window.location.href ='${srNo}';
+							})
+						}
 					</script>
 				</div>
 			</div>

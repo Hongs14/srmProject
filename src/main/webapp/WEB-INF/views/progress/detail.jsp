@@ -32,10 +32,6 @@ color:white;
 
 				<!-- 메인 컨테이너 Container Fluid-->
 				<div class="container-fluid" id="container-wrapper">
-
-					
-					
-
 					<!-- Row -->
 					<div class="row">
 						<div class="col-lg-5">
@@ -117,10 +113,10 @@ color:white;
 										<br>
 										<!-- 관련 근거(목적) -->
 										<div class="row">
-											<div class="col-2">
+											<div class="col-3">
 												<span class="font-weight-bold">관련근거(목적) : </span>
 											</div>
-											<div class="col-10">
+											<div class="col-9">
 												<span>${progressDetail.srStd}</span>
 											</div>
 										</div>

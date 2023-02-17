@@ -169,6 +169,16 @@ public class ProgressController {
 		return "redirect:/progress/detail/" + hr.getSrNo();
 	}
 	
+	@RequestMapping(value="progress/detail/developerDelete", produces="application/json; charset=UTF-8")
+	public String developerDelete(@RequestBody HR hr) {
+		
+		log.info(hr.getSrNo());
+		log.info(hr.getUserNo());
+		
+		
+		return null;
+	}
+	
 	
 	// Detail SR 진척율
 	@RequestMapping(value="progress/detail/progressajax/2", produces="application/json; charset=UTF-8")
@@ -176,5 +186,4 @@ public class ProgressController {
 		
 		return "progress/list";
 	}
-
 }
