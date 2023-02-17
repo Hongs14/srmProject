@@ -53,7 +53,7 @@
 			AND u.user_ogdp = #{userOgdp}
 		</if>
 		<if test="!userOgdp.equals('전체')">
-			AND u.user_dp = #{userDp}
+			AND u.user_dp_nm = #{userDpNm}
 		</if>
 		
 	</select>
