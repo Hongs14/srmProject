@@ -188,10 +188,10 @@ display: -webkit-box;
                         <td>정홍주 </td>
                         <td>관리팀 </td>
                         <td>미배정 </td>
-                        <td>미검토 </td>
+                        <td><span  class="badge badge-danger" style="font-size:100%">미검토</span></td>
                         <td>2023/02/09 </td>
                         <td>2023/04/08 </td>
-                        <td>상 </td>
+                        <td><span  class="badge badge-danger" style="font-size:100%">상</span></td>
                       </tr>
                       <tr>
                       	<td class="pr-0">
@@ -206,10 +206,10 @@ display: -webkit-box;
                         <td>문지연</td>
                         <td>관리팀 </td>
                         <td>미배정 </td>
-                        <td>미검토 </td>
+                        <td><span  class="badge badge-danger" style="font-size:100%">미검토</span></td>
                         <td>2023/02/09 </td>
                         <td>2023/04/08 </td>
-                        <td>하 </td>
+                        <td><span  class="badge badge-secondary" style="font-size:100%">하</span></td>
                       </tr>
                       <tr>
                       	<td class="pr-0">
@@ -224,10 +224,10 @@ display: -webkit-box;
                         <td>김주하 </td>
                         <td>관리팀 </td>
                         <td>미배정 </td>
-                        <td>미검토 </td>
+                        <td><span  class="badge badge-danger" style="font-size:100%">미검토</span></td>
                         <td>2023/02/01 </td>
                         <td>2023/04/11 </td>
-                        <td>중 </td>
+                        <td><span  class="badge badge-secondary" style="font-size:100%">하</span></td>
                       </tr>
                       <tr>
                       	<td class="pr-0">
@@ -242,10 +242,10 @@ display: -webkit-box;
                         <td>정지혜 </td>
                         <td>관리팀 </td>
                         <td>미배정 </td>
-                        <td>미검토 </td>
+                        <td><span class="badge badge-primary" style="font-size:100%" >개발중</span></td>
                         <td>2023/02/09 </td>
                         <td>2023/04/08 </td>
-                        <td>상 </td>
+                        <td><span  class="badge badge-primary" style="font-size:100%">중</span></td>
                       </tr>
                     </tbody>
                   </table>

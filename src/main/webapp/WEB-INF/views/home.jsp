@@ -207,7 +207,7 @@ background-color: white;
                   <h6 class="font-weight-bold text-primary"><i class="fas fa-fw fa-columns"></i> Notice </h6>
                 </div>
                 <div class="table-responsive">
-                  <table class="table border mx-3 mb-3" style="max-width:550px;">
+                  <table class="table border mx-3 mb-3">
                     <thead class="thead-light">
                       <tr>
                         <th>글번호 </th>
@@ -251,7 +251,7 @@ background-color: white;
                   <h6 class="font-weight-bold text-primary"><i class="fas fa-fw fa-sticky-note"></i>QnA </h6>
                 </div>
                 <div class="table-responsive">
-                  <table class="table border mx-3 mb-3" style="max-width:550px;">
+                  <table class="table border mx-3 mb-3">
                     <thead class="thead-light">
                       <tr>
                         <th>글번호 </th>

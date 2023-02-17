@@ -8,7 +8,6 @@
         </div>
         <div class="sidebar-brand-text mx-2 mt-1">SRM SYSTEM</div>
       </a>
-      <hr class="sidebar-divider my-0">
       <li class="nav-item active">
         <a class="nav-link" href="${pageContext.request.contextPath}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -60,6 +59,5 @@
           <span>QnA게시판</span>
         </a>
       </li>
-      <hr class="sidebar-divider">
-      <div class="version" id="version-ruangadmin"></div>
+      <li class="version my-5" id="version-ruangadmin"></li>
     </ul>

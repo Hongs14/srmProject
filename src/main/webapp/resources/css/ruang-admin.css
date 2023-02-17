@@ -612,7 +612,7 @@ a:focus {
 .sidebar {
   min-height: 100vh;
   width: 12rem !important;
-  background-color: #fff !important;
+  background-color: #214763 !important;
   -webkit-box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15) !important;
   box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15) !important;
   z-index: 0
@@ -1107,7 +1107,7 @@ a:focus {
 }
 
 .sidebar-light hr.sidebar-divider {
-  border-top: 1px solid #eaecf4
+  border-top: 1px solid #1A374D
 }
 
 .sidebar-light .sidebar-heading {
@@ -1115,24 +1115,24 @@ a:focus {
 }
 
 .sidebar-light .nav-item .nav-link {
-  color: #858796
+  color: white;
 }
 
 .sidebar-light .nav-item .nav-link i {
-  color: #9e9e9e
+  color: white;
 }
 
 .sidebar-light .nav-item .nav-link:active,
 .sidebar-light .nav-item .nav-link:focus,
 .sidebar-light .nav-item .nav-link:hover {
-  color: #6e707e;
+  color: black;
   background-color: #eee
 }
 
 .sidebar-light .nav-item .nav-link:active i,
 .sidebar-light .nav-item .nav-link:focus i,
 .sidebar-light .nav-item .nav-link:hover i {
-  color: #6e707e
+  color: black;
 }
 
 .sidebar-light .nav-item .nav-link[data-toggle=collapse]::after {
@@ -1140,11 +1140,20 @@ a:focus {
 }
 
 .sidebar-light .nav-item.active .nav-link {
-  color: #6e707e
+  color: white;
 }
-
+.sidebar-light .nav-item.active .nav-link:active i,
+.sidebar-light .nav-item.active .nav-link:focus i,
+.sidebar-light .nav-item.active .nav-link:hover i {
+  color: black;
+}
+.sidebar-light .nav-item.active .nav-link:active ,
+.sidebar-light .nav-item.active .nav-link:focus ,
+.sidebar-light .nav-item.active .nav-link:hover  {
+  color: black;
+}
 .sidebar-light .nav-item.active .nav-link i {
-  color: #6e707e
+  color: white;
 }
 
 .sidebar-light #sidebarToggle {
@@ -1164,7 +1173,7 @@ a:focus {
 }
 
 .sidebar-dark hr.sidebar-divider {
-  border-top: 1px solid rgba(255, 255, 255, .15)
+  border-top: 1px solid #1A374D
 }
 
 .sidebar-dark .sidebar-heading {
@@ -1813,7 +1822,7 @@ a:focus {
 }
 
 footer.sticky-footer {
-  padding: 2rem 0;
+  padding: 1rem 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
   -webkit-box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15);
