@@ -69,12 +69,15 @@ public class QnaController {
 //		return "redirect:/qna/view?qnaNo="+qComment.getQstnNo();
 //	}
 	
+	
 	//Qna댓글읽기
-	@GetMapping(value="/write/comment", produces="application/json; charset=UTF-8")
+	@GetMapping(value="/read/comment", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public QSTNComment readComment(@RequestBody QSTNComment qComment, int qstnNo) {
-		log.info("QSTN댓글 읽기");
-		return qComment;
+	public List<QSTNComment> readComment(@RequestParam int qstnNo) {
+		List<QSTNComment> list = qnaboardService.getCommentList(qstnNo);
+		log.info("QSTN댓글 읽기" );
+		log.info(qstnNo);
+		return list ;
 	}
 	
 	//Qna댓글작성

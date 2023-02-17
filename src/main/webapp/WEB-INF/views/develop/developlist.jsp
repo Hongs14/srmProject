@@ -165,20 +165,20 @@
 						                 	</thead>
 						                   	<tbody>
 					                   			<c:forEach items="${developlist}" var="SrDevelopDto">
-						                   			<tr onclick="location.href='${pageContext.request.contextPath}/develop/view'">
+						                   			<tr onclick="location.href='${pageContext.request.contextPath}/develop/view/${pageNo}?srNo=${SrDevelopDto.srNo}'">
 						                   				<td class="pr-0">
 								                        <div class="custom-control custom-checkbox">
-								                   			<input type="checkbox" class="custom-control-input" id="customCheck${srNo}">
-								                   			<label class="custom-control-label" for="customCheck${srNo}"></label>
+								                   			<input type="checkbox" class="custom-control-input" id="customCheck${SrDevelopDto.srNo}">
+								                   			<label class="custom-control-label" for="customCheck${SrDevelopDto.srNo}"></label>
 								                 		</div>
 								                 		</td>
 						                        		<td>${SrDevelopDto.srNo}</td>
 								                        <td>${SrDevelopDto.srTtl}</td>
-								                        <td>${SrDevelopDto.sysNo}</td>
+								                        <td>${SrDevelopDto.sysNm}</td>
 								                        <td>${SrDevelopDto.userNm}</td>
 								                        <td>${SrDevelopDto.userOgdp}</td>
 								                        <td>${SrDevelopDto.userDpNm }</td>
-								                        <td>${SrDevelopDto.sttsNo}</td>
+								                        <td>${SrDevelopDto.sttsNm}</td>
 								                        <td>${SrDevelopDto.srRegDate}</td>
 								                        <td>${SrDevelopDto.srDdlnDate}</td>
 								                        <td>${SrDevelopDto.srPry}</td>

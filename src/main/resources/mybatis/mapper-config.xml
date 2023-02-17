@@ -31,5 +31,6 @@
 	<typeAlias type="com.team01.webapp.model.ExamineList" alias="examineList"/>
 	<typeAlias type="com.team01.webapp.model.DeveloperSR" alias="developerSr"/>
 	<typeAlias type="com.team01.webapp.model.ThArr" alias="thArr"/>
+	<typeAlias type="com.team01.webapp.model.SrDevelopDto" alias="developDto"/>
 </typeAliases>
 </configuration>
