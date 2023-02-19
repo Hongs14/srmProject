@@ -20,9 +20,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class HomeController {
 	
-//	@Autowired
-//	IHomeService homeService;
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		log.info("정보 로그 실행");
@@ -32,13 +30,7 @@ public class HomeController {
 	}
 	@RequestMapping(value = "/home/systemMiniView", method = RequestMethod.GET)
 	public String getSystemMiniView(HttpSession session, Model model) {
-//		log.info("실행");
-//		User user = (User) session.getAttribute("loginUser");
-//		int userNo = user.getUserNo();
-//		
-//		System system = homeService.getSystemMiniView(userNo);
-//		model.addAttribute("sysInfo", system);
-//		log.info(system);
+
 		return "home/systemMiniView";
 	}
 	
