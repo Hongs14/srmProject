@@ -86,6 +86,7 @@
 			function updateCButton(i){
 				console.log(i);
 				$('#commentContent'+i).removeAttr("disabled");
+				console.log("here");
 				$('#updateToggle'+i).html("변경");
 				$('#updateToggle'+i).attr('onclick', 'udpateComplete('+i+')');
 				

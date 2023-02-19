@@ -17,7 +17,7 @@ public interface IQnaboardRepository {
 	public List<QSTNComment> getCommentList(int qstnNo);
 	public QSTNComment getComment();
 	
-	public QSTNComment updateComment(QSTNComment qComment);
+	public void updateComment(QSTNComment qComment);
 	public void deleteComment(int qstnCmntNo);
 	
 }
