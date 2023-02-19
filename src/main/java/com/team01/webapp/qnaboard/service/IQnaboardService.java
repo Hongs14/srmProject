@@ -14,8 +14,10 @@ public interface IQnaboardService {
 	
 	public QSTN getDetail(int qstnNo);
 
-	public void writeComment(QSTNComment qComment);
+	public QSTNComment writeComment(QSTNComment qComment);
 	public List<QSTNComment> getCommentList(int qstnNo);
+	public void updateComment(QSTNComment qComment);
+	public void deleteComment(int qstnCmntNo);
 	
 
 	

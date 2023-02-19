@@ -41,7 +41,7 @@
 	</select>
 	
 	<select id="getCommentList" parameterType="int" resultType="qstnComment">
-		SELECT QSTN_CMNT_NO AS qstnCmentNo, 
+		SELECT QSTN_CMNT_NO AS qstnCmntNo, 
 				QSTN_NO AS qstnNo, 
 				QC.USER_NO AS userNo, 
 				QSTN_CMNT_CN AS qstnCmntCn, 
@@ -49,6 +49,21 @@
    			 	USER_NM AS userNm
 		FROM QSTN_COMMENT QC, USERS U
 		WHERE QC.USER_NO = U.USER_NO AND QC.QSTN_NO = #{qstnNo}
+		ORDER BY QSTN_CMNT_NO 
+	</select>
+	
+	<select id="getComment" resultType="qstnComment">
+		select rownum, QSTN_CMNT_NO AS qstnCmntNo, 
+				QSTN_NO AS qstnNo, 
+				aa.USER_NO AS userNo, 
+				QSTN_CMNT_CN AS qstnCmntCn, 
+   			 	QSTN_CMNT_DATE AS qstnCmntDate, 
+   			 	USER_NM AS userNm
+   		 from(SELECT rownum, QSTN_CMNT_NO , QSTN_NO,  QC.USER_NO, QSTN_CMNT_CN, QSTN_CMNT_DATE, USER_NM
+			FROM QSTN_COMMENT QC, USERS U
+			WHERE QC.USER_NO = U.USER_NO
+            order by qstn_cmnt_no desc)aa
+            where rownum = 1
 	</select>
 	
 	<select id="countComment" parameterType="int" resultType="int">
@@ -58,4 +73,13 @@
 	<insert id="writeComment" parameterType="qstnComment">
 		INSERT INTO QSTN_COMMENT VALUES(QSTNCMNTNO_SEQ.NEXTVAL, #{qstnNo}, #{userNo}, #{qstnCmntCn}, SYSDATE)
 	</insert>
+	
+	<update id="updateComment" parameterType="qstnComment">
+		UPDATE QSTN_COMMENT set QSTN_CMNT_CN = #{qstnCmntCn}, QSTN_CMNT_DATE = SYSDATE
+		WHERE QSTN_CMNT_NO = #{qstnCmntNo}
+	</update>
+	
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM QSTN_COMMENT WHERE QSTN_CMNT_NO = #{qstnCmntNp}
+	</delete>
 </mapper>

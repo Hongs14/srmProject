@@ -62,21 +62,12 @@ public class QnaController {
 		return "qnaboard/qnaupdate";
 	}
 	
-//	@PostMapping("/write/comment")
-//	public String writeComment(QSTNComment qComment, RedirectAttributes redirectAttrs) {
-//		qnaboardService.writeComment(qComment);
-//		log.info("Qna댓글달기");
-//		return "redirect:/qna/view?qnaNo="+qComment.getQstnNo();
-//	}
-	
-	
 	//Qna댓글읽기
-	@GetMapping(value="/read/comment", produces="application/json; charset=UTF-8")
+	@GetMapping(value="/read/comment")
 	@ResponseBody
 	public List<QSTNComment> readComment(@RequestParam int qstnNo) {
 		List<QSTNComment> list = qnaboardService.getCommentList(qstnNo);
 		log.info("QSTN댓글 읽기" );
-		log.info(qstnNo);
 		return list ;
 	}
 	
@@ -88,11 +79,27 @@ public class QnaController {
 		log.info("QSTN댓글달기");
 		log.info(qComment);
 		
-		qnaboardService.writeComment(qComment);
+		qComment = qnaboardService.writeComment(qComment);
 		return qComment;
 	}
 	
+	//Qna댓글 수정
+	@PostMapping(value="/update/comment", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public QSTNComment updateComment(@RequestBody QSTNComment qComment) {
+		log.info("QSTN댓글 수정");
+		log.info(qComment);
+		qnaboardService.updateComment(qComment);
+		return qComment;
+	}
 	
-	
+	//Qna댓글삭제
+	@GetMapping(value="/delete/comment")
+	@ResponseBody
+	public int deleteComment(@RequestParam int qstnCmntNo) {
+		log.info("QSTN댓글 삭제");
+		qnaboardService.deleteComment(qstnCmntNo);
+		return qstnCmntNo;
+	}
 	
 }
