@@ -14,5 +14,6 @@ public interface IDevelopRepository {
 	public SrDevelopDto selectDevelopContent(String srNo);
 	
 	public List<HR> devList();
+	public void updateSr(SrDevelopDto srDevelop);
 	
 }
