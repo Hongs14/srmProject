@@ -21,60 +21,92 @@ public class NoticeService implements INoticeService{
 	@Autowired
 	INoticeRepository noticeRepository;
 	
-	//게시글 수
+	/**
+	 * 공지사항 리스트 수
+	 * @author : 황건희
+	 * @return
+	 */
 	@Override
 	public int getTotalRows() {
 		log.info("실행");
-		int rows = noticeRepository.count();
+		int rows = noticeRepository.selectTotalNoticeListCount();
 		return rows;
 	}
 	
-	//게시글 목록 가져오기
+	/**
+	 * 공지사항 리스트
+	 * @author : 황건희
+	 * @param pager 공지사항 페이징 처리
+	 * @return
+	 */
 	@Override
 	public List<Notice> getNoticeList(Pager pager) {
 		log.info("실행");
 		
-		List<Notice> list = noticeRepository.list(pager);
+		List<Notice> list = noticeRepository.selectNoticeList(pager);
 		
 		return list;
 	}
 	
-	//게시글 작성
+	/**
+	 * 공지사항 작성
+	 * @author : 황건희
+	 * @param notice 공지사항 정보
+	 */
 	@Override
 	public void noticeWrite(Notice notice) {
 		log.info("실행");
-		int noticeWrite = noticeRepository.write(notice);
+		int noticeWrite = noticeRepository.insertNoticeWrite(notice);
 	}
-	//첨부파일
+	
+	/**
+	 * 공지사항 첨부파일
+	 * @author : 황건희
+	 * @param noticeFile 공지사항 작성 시 첨부한 파일
+	 */
 	@Override
 	public void noticeFileUpload(NoticeFile noticeFile) {
 		log.info("실행");
-		noticeRepository.noticeFileUpload(noticeFile);
+		noticeRepository.insertNoticeFileUpload(noticeFile);
 		
 	}
 	
-	//게시글 상세조회
+	/**
+	 * 공지사항 상세 조회
+	 * @author : 황건희
+	 * @param ntcNo 해당 공지사항의 No
+	 * @return
+	 */
 	@Override
 	public Notice noticeDetail(int ntcNo) {
 		log.info("실행");
-		Notice notice = noticeRepository.detail(ntcNo);
+		Notice notice = noticeRepository.selectNoticeDetail(ntcNo);
 		return notice;
 	}
 	
-	//게시글 조회수
+	/**
+	 * 공지사항 조회수
+	 * @author : 황건희
+	 * @param ntcNo	해당 공지사항의 조회수
+	 */
 	@Transactional
 	public void inqCnt(int ntcNo) {
 		log.info("실행");
-		noticeRepository.inqCnt(ntcNo);
+		noticeRepository.selectInqCnt(ntcNo);
 	}
 	
-	//게시글 수정
+	/**
+	 * 공지사항 수정
+	 * @author : 황건희
+	 * @param notice		수정된 공지사항 정보
+	 * @param noticeFile	수정된 공지사항 첨부파일
+	 */
 	@Override
 	public void noticeUpdate(Notice notice) {
 		log.info("실행");
 		int ntcNo = notice.getNtcNo();
 		String ntcCn = notice.getNtcCn();
-		noticeRepository.update(ntcNo,ntcCn);
+		noticeRepository.updateNotice(ntcNo,ntcCn);
 		
 	}
 	@Override
@@ -82,7 +114,7 @@ public class NoticeService implements INoticeService{
 		log.info("실행");
 		int ntcNo = notice.getNtcNo();
 		String ntcCn = notice.getNtcCn();
-		noticeRepository.update(ntcNo,ntcCn);
+		noticeRepository.updateNotice(ntcNo,ntcCn);
 		System.out.println(noticeFile.getNtcFileActlNm());
 		//첨부파일 수정
 		if(noticeFile.getNtcFileActlNm() != null && !noticeFile.getNtcFileActlNm().equals("")) {
@@ -94,7 +126,7 @@ public class NoticeService implements INoticeService{
 			}else {
 				noticeFile.setNtcNo(ntcNo);
 				noticeFile.setNtcFileNo(noticeRepository.selectMaxFileNo()+1);
-				noticeRepository.noticeFileUpdateUpload(noticeFile);
+				noticeRepository.updateNoticeFileUpload(noticeFile);
 				System.out.println("첨부파일 수정 업로드  실행" );
 			}
 		}
@@ -102,7 +134,11 @@ public class NoticeService implements INoticeService{
 		
 	}
 
-	//게시글 삭제
+	/**
+	 * 공지사항 삭제
+	 * @author : 황건희
+	 * @param ntcNo	삭제하려는 공지사항 No
+	 */
 	@Override
 	public void noticeDelete(int ntcNo) {
 		log.info("실행");

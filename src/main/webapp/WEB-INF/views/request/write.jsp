@@ -11,23 +11,20 @@
 <style>
 	.requsetTtl{
 	width: 190px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display:block;
+	text-overflow:ellipsis; 
+	overflow: hidden; 
+	display: block;
 	}	
 </style>
 </head>
 
 <body id="page-top">
-
 	<div id="wrapper">
-	
 		<!-- Sidebar -->
 		<%@include file="/WEB-INF/views/common/sidebar.jsp"%>
 
 
 		<div id="content-wrapper" class="d-flex flex-column">
-			
 			<div id="content">
 
 				<!-- TopBar -->
@@ -40,46 +37,24 @@
 					<!-- Row -->
 					<div class="row justify-content-md-center">
 						<div class="col-lg-7">
-							<!-- 리스트 요약본 출력 -->
 							<%@include file="/WEB-INF/views/request/summaryList.jsp" %>
 						</div>
-						
-						<div class="col-lg-5" id="detailView">
-							<%@include file="/WEB-INF/views/request/detailView.jsp" %>
+						<div class="col-lg-5">
+							<%@include file="/WEB-INF/views/request/writeForm.jsp" %>
 						</div>
 					</div>
 				</div>
-				<!-- Row -->
-				
-				<!-- 로그아웃 모달 -->
-				<%@include file="/WEB-INF/views/common/logout.jsp"%>
-				
 			</div>
-
-
+			<!-- Row -->
+			<!-- 로그아웃 모달 -->
+			<%@include file="/WEB-INF/views/common/logout.jsp"%>
 			<!-- Footer -->
 			<%@include file="/WEB-INF/views/common/footer.jsp"%>
+			</div>
+			<!---Container Fluid-->
 		</div>
-		
-	</div>
-	
 	<%@include file="/WEB-INF/views/common/bottom.jsp"%>
-	<script>
-	
-/* 	function writeSR() {
-		$.ajax({
-			url : "/webapp/request/write",
-			type : "GET",
-			datatype : "html",
-			success : function(data) {
-				$("#detailView").html(data);
-				console.log(data);
-			}
-		});
-	}; */
-	
-	</script>
-	
+	 <script src="${pageContext.request.contextPath}/resources/js/writeRequest.js"></script>
 </body>
 
 </html>

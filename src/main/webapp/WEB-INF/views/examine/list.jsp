@@ -89,7 +89,7 @@
 				                    			<select class="form-control form-control-sm col-sm-9" id="sysNo">
 				                        			<option value="0">전체</option>
 				                        			<c:forEach var="system" items="${examineFilter.sysNmList}">		                        	
-					                        			<option value="${system.sysNo}">${system.sysNm}</option>
+					                        			<option value="${system.sysNo }">${system.sysNm}</option>
 				                        			</c:forEach>
 				                    			</select>
 				                			</div>
@@ -141,7 +141,7 @@
 												var userOgdpSelect = document.getElementById("userOgdp");
 												var userDpSelect = document.getElementById("userDpNm");
 												
-												var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+												var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].text;
 												var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
 												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 												var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
@@ -172,7 +172,7 @@
 												var userOgdpSelect = document.getElementById("userOgdp");
 												var userDpSelect = document.getElementById("userDpNm");
 												
-												var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+												var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].text;
 												var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
 												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 												var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
@@ -200,12 +200,24 @@
 			               	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		                  		<h6 class="m-0 font-weight-bold text-primary">SR 검토 목록</h6>
 			                  	<div class="d-sm-flex justify-content-end">
-			                		<button class="btn btn-sm btn-secondary mr-1">일괄 처리 (검토중)</button>
+			                		<button class="btn btn-sm btn-secondary mr-1" onclick='selectUnderReview()'>일괄 처리 (검토중)</button>
 			                		<button class="btn btn-sm btn-secondary mr-1">일괄 처리 (접수)</button>
 			                		<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
 			                  	</div>
-			                </div>
-				           		<div id="ajaxList" style="width:100%"></div>
+			                </div>     
+			                <form>
+					           	<div id="ajaxList" style="width:100%"></div>
+					           	<script>
+									function selectAll(selectAll) {
+										const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+									  
+									  checkboxes.forEach((checkbox) => {
+									    checkbox.checked = selectAll.checked
+									  })
+										
+									}
+								</script>
+			                </form>           
 						</div>
 					</div>
 				</div>

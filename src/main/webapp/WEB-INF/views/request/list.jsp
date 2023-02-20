@@ -2,17 +2,16 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
-<style>
-.requsetTtl{
-width: 190px;
-overflow: hidden;
-text-overflow: ellipsis;
-display: -webkit-box;
--webkit-line-clamp: 1;
--webkit-box-orient: vertical;
-}	
-</style>
+
 <head>
+	<style>
+	.requsetTtl{
+	width: 190px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display:block;
+	}	
+	</style>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
   	
 </head>
@@ -143,13 +142,10 @@ display: -webkit-box;
                   <h6 class="m-0 font-weight-bold text-primary">SR 요청 목록</h6>
 					<div class="d-sm-flex justify-content-end">
 						<a class="btn btn-sm btn-secondary mr-1"
-							href="javascript:void(0);" data-toggle="modal"
-							data-target="#requestModal"> 요청등록 </a>
+							href="<c:url value='/request/write/'/>"> 요청등록 </a>
 						<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
 					</div>
 				</div>
-	            <!--요청 모달 -->
-	           <%@include file="/WEB-INF/views/request/requestModal.jsp" %>
                 
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush table-hover border" id="dataTableHover">
@@ -183,7 +179,7 @@ display: -webkit-box;
 	                 		</div>
                         </td>
                         <td>JHJ-SR-0001</td>
-                        <td class="requsetTtl"><a href="detail/1">댓글 기능 추가 부탁드립니다.~~~~~~~~~~~~~~~~~~`</a></td>
+                        <td><a href="detail/1" class="requsetTtl">댓글 기능 추가 부탁드립니다.~~~~~~~~~~~~~~~~~~`</a></td>
                         <td>JHJ쇼핑몰</td>
                         <td>정홍주 </td>
                         <td>관리팀 </td>
@@ -219,7 +215,7 @@ display: -webkit-box;
 	                 		</div>
                         </td>
                         <td>JHJ-SR-0003</td>
-                        <td>알림 기능 추가 부탁드립니다.</td>
+                        <td >알림 기능 추가 부탁드립니다.</td>
                         <td>JHJ쇼핑몰</td>
                         <td>김주하 </td>
                         <td>관리팀 </td>

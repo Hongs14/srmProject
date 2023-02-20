@@ -2,11 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team01.webapp.examine.dao.IExamineRepository">
 	
-	<select id="count" resultType="int">
+	<!-- SR 검토 리스트 카운트 
+		@author : 황건희
+	-->
+	
+	<select id="selectExamineListAllCount" resultType="int">
 		SELECT COUNT(*) FROM NOTICE
 	</select>
 	
-	<!-- 요청 진행 상태 리스트 -->
+	<!-- 요청 진행 상태 리스트 
+		 @author : 황건희
+	-->
 	<select id="selectSrSttsList" resultType="srstts">
 		SELECT 
 		    STTS_NO AS "sttsNo",
@@ -14,15 +20,19 @@
 		FROM SR_STTS
 	</select>
 
-	<!-- 관련 시스템 리스트 -->
+	<!-- 관련 시스템 리스트 
+		 @author : 황건희
+	 -->
 	<select id="selectSysNmList" resultType="system">
-		SELECT 
-			SYS_NO AS "sysNo",
-			SYS_NM AS "sysNm"
+		SELECT
+		    DISTINCT(SYS_NM) AS "sysNm",
+		    SYS_NO AS "sysNo"
 		FROM SYSTEM
 	</select>
 	
-	<!-- 등록자 소속 및 부서 리스트 -->
+	<!-- 등록자 소속 및 부서 리스트 
+		 @author : 황건희
+	-->
 	<select id="selectUserOgdpList" resultType="users">
 		SELECT 
 		    DISTINCT(USER_OGDP) AS "userOgdp"
@@ -37,14 +47,17 @@
 		WHERE USER_TYPE='고객사'
 	</select>
 	
+	<!-- SR 검색 조건에 대한 행수 
+		@author : 황건희
+	-->
 	<select id="selectTotalExamineCount" resultType="int">
 		SELECT COUNT(SR_NO)
 		FROM SR sr, SYSTEM sys, SR_STTS st, USERS u 
 		WHERE sr.sys_no = sys.sys_no
 		AND sr.stts_no = st.stts_no
 		AND sr.sr_cust_no = u.user_no
-		<if test="sysNo !=0">
-			AND sr.sys_no = #{sysNo}
+		<if test="!sysNo.equals('전체')">
+			AND sys.sys_no = #{sysNo}
 		</if>
 		<if test="sttsNo != 0">
 			AND st.stts_no = #{sttsNo}
@@ -58,8 +71,10 @@
 		
 	</select>
 	
-	<!-- 필터링  후 리스트 -->
-	<select id="list" parameterType="examineList" resultType="examine">
+	<!-- 필터링  후 리스트 
+		@author : 황건희
+	-->
+	<select id="selectExaminelist" parameterType="examineList" resultType="examine">
 	
 			SELECT
 			    SR_NO AS "srNo",
@@ -98,17 +113,22 @@
 			            u.USER_DP_NM,
 			            st.STTS_NM,
 			            SYS_NM
-			        FROM SR s
-			        LEFT OUTER JOIN USERS u
-			        ON s.SR_CUST_NO = u.USER_NO
-			        LEFT OUTER JOIN SR_STTS st
-			        ON s.STTS_NO = st.STTS_NO
-			        LEFT OUTER JOIN SYSTEM sys
-			        ON s.SYS_NO = sys.SYS_NO
+			        FROM SR s ,USERS u,  SR_STTS st, SYSTEM sys
+       			 	WHERE SR_CUST_NO = u.USER_NO
+        			AND s.STTS_NO = st.STTS_NO
+        			AND s.SYS_NO = sys.SYS_NO
 			       	<if test="sttsNo != 0">
-						WHERE st.stts_no = #{sttsNo}
+						AND st.stts_no = #{sttsNo}
 					</if>
-			       	
+			       	<if test="!sysNo.equals('전체')">
+			       		AND sys.sys_nm = #{sysNo}
+			       	</if>
+			       	<if test="!userOgdp.equals('전체')">
+			       		AND u.user_ogdp = #{userOgdp} 
+			       	</if>
+			       	<if test="!userDpNm.equals('전체')">
+			       		AND u.user_dp_nm = #{userDpNm}
+			       	</if>
 			        ORDER BY s.SR_NO
 			    )
 			    <![CDATA[
@@ -116,7 +136,7 @@
 			    ]]>
 			)
 			<![CDATA[
-				WHERE ROWNUM >=#{startRowNo}
+				WHERE RNUM >=#{startRowNo}
 			]]>
 	
 	</select>
