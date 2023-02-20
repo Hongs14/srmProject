@@ -94,7 +94,7 @@
 	         </form>
            </div>
            <hr/>
-	<!-- SR 검토 목록 -->
+	<!-- SR 요청 목록 -->
 	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		<h6 class="m-0 font-weight-bold text-primary">SR 요청 목록</h6>
 		<div class="d-sm-flex justify-content-end">
@@ -218,6 +218,7 @@
 <script>
 function getDetail(i){
 	$.ajax({
+		console.log("안녕!");
 		url : "/myapp/request/detail/sr/"+i,
 		type : "GET",
 		datatype : "html",
