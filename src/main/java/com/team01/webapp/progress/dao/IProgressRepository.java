@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.team01.webapp.model.DeveloperSR;
 import com.team01.webapp.model.HR;
+import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SRFile;
 import com.team01.webapp.model.SRStts;
@@ -36,4 +37,6 @@ public interface IProgressRepository {
 	void insertDeveloper(ThArr thArr);
 	HR selectDeveloper(@Param("srNo") String srNo, @Param("userNo") int userNo);
 	void updateDeveloper(HR hr);
+	void deleteDeveloper(@Param("srNo") String srNo, @Param("userNo") int userNo);
+	List<Progress> selectProgressRateList(String srNo);
 }

@@ -270,4 +270,25 @@
 		WHERE SR_NO = #{srNo}
 		AND USER_NO = #{userNo}
 	</update>
+	
+	<delete id="deleteDeveloper" parameterType="map">
+		DELETE HR
+		WHERE SR_NO = #{srNo}
+		AND USER_NO = #{userNo}
+	</delete>
+	
+	<select id="selectProgressRateList" parameterType="string" resultType="progress">
+		SELECT
+		    PROG_NO AS "progNo",
+		    SR_NO AS "srNo",
+		    PROG_TYPE_NM AS "progTypeNm",
+		    PROG_TYPE AS "progType",
+		    PROG_START_DATE AS "progStartDate",
+		    PROG_END_DATE AS "progEndDate",
+		    PROG_RATE "progRate"
+		FROM PROGRESS progress, PROG_TYPE type
+		WHERE progress.prog_type = type.prog_type_no
+		AND sr_no = #{srNo}
+		ORDER BY PROG_TYPE
+	</select>
 </mapper>

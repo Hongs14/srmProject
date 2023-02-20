@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.team01.webapp.model.DeveloperSR;
 import com.team01.webapp.model.HR;
+import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFilter;
 import com.team01.webapp.model.SRFile;
@@ -137,6 +138,16 @@ public class ProgressService implements IProgressService {
 	@Override
 	public void developerUpdate(HR hr) {
 		progressRepository.updateDeveloper(hr);
+	}
+
+	@Override
+	public void developerDelete(String srNo, int userNo) {
+		progressRepository.deleteDeveloper(srNo, userNo);
+	}
+
+	@Override
+	public List<Progress> progressRateList(String srNo) {
+		return progressRepository.selectProgressRateList(srNo);
 	}
 
 

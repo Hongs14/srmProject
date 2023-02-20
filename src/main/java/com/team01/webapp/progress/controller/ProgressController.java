@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.team01.webapp.model.HR;
+import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFilter;
 import com.team01.webapp.model.SRFile;
@@ -169,14 +170,14 @@ public class ProgressController {
 		return "redirect:/progress/detail/" + hr.getSrNo();
 	}
 	
+	// 인적 자원 삭제
 	@RequestMapping(value="progress/detail/developerDelete", produces="application/json; charset=UTF-8")
 	public String developerDelete(@RequestBody HR hr) {
 		
 		log.info(hr.getSrNo());
 		log.info(hr.getUserNo());
-		
-		
-		
+
+		progressService.developerDelete(hr.getSrNo(), hr.getUserNo());
 		
 		return "redirect:/progress/detail/" + hr.getSrNo();
 	}
@@ -186,6 +187,9 @@ public class ProgressController {
 	@RequestMapping(value="progress/detail/progressajax/2", produces="application/json; charset=UTF-8")
 	public String Progressrate(@RequestBody HR hr, Model model) {
 		
-		return "progress/list";
+		List<Progress> progressRateList = progressService.progressRateList(hr.getSrNo());
+		model.addAttribute("progressRateList", progressRateList);
+		
+		return "progress/progressRateList";
 	}
 }
