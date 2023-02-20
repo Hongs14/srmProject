@@ -23,13 +23,30 @@ public class UserController {
 	@Autowired
 	IUserService userService;
 	
-	//로그인하기 
+	/**
+	 * 로그인 메서드
+	 * 
+	 * @author			김희률
+	 * @param session	HttpSession 객체 주입
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			로그인폼으로 이동
+	 */
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public String login(HttpSession session, Model model) {
 		log.info("실행");
 		return "user/loginForm";
 	}
 	
+
+	/**
+	 * 로그인 메서드
+	 * 
+	 * @author			김희률
+	 * @param user		클라이언트가 보낸 사용자 정보 저장
+	 * @param session	HttpSession 객체 주입
+	 * @param model 	View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			홈으로 리다이렉트
+	 */
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public String login(User user, HttpSession session, Model model) {
 		log.info(user+" post 실행");
@@ -50,19 +67,38 @@ public class UserController {
 		}
 	}
 	
-	 // 로그아웃
+	/**
+	 * 로그아웃 메서드 
+	 * 
+	 * @author			김희률
+	 * @param session	HttpSession 객체 주입, 세션 초기화
+	 * @return 			로그인폼으로 이동
+	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "user/loginForm";
 	}
 	
-	//회원가입 
+	/**
+	 * 회원가입 메서드
+	 * 
+	 * @author	김희률
+	 * @return	로그인폼으로 이동
+	 */
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String join() {
 		return "user/joinForm";
 	}
 	
+	/**
+	 * 회원가입 메서드
+	 * 
+	 * @author		김희률
+	 * @param user	클라이언트가 보낸 사용자 정보 저장
+	 * @param model	View로 데이터 전달을 위한 Model 객체 주입
+	 * @return		뷰로 이동
+	 */
 	@RequestMapping(value="/join", method = RequestMethod.POST)
 	public String join(User user, Model model) {
 		log.info(user.getUserPswd()+"실행");
@@ -76,7 +112,12 @@ public class UserController {
 		}
 	}
 	
-	//나의 정보 확인
+	/**
+	 * 나의 정보 확인 메서드
+	 * 
+	 * @author	김희률
+	 * @return	나의 정보 뷰로 이동
+	 */
 	@RequestMapping(value = "/myinfo", method = RequestMethod.GET)
 	public String myinfo() {
 		log.info("실행");

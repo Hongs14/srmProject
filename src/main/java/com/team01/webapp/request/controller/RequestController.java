@@ -21,17 +21,26 @@ import lombok.extern.log4j.Log4j2;
 public class RequestController {
 	
 	@Autowired
-	IRequestService RequestService;
+	IRequestService requestService;
 	
-	//모든 리스트 가져오기 
+	/**
+	 * 모든 SR리스트 조회
+	 * 
+	 * @author			김희률
+	 * @param session	HttpSession 객체 주입
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @param pager		paging처리를 위한 pager객체 주입
+	 * @return			list뷰로 이동
+	 */
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public String getListAll(HttpSession session, Model model, Pager pager) {
 		log.info("정보 로그 실행");
+		
 		return "request/list";
 		
 	}
+	 
 	
-	//상세 가져오기 
 	@RequestMapping(value="/detail/{no}", method = RequestMethod.GET)
 	public String getDetail(@PathVariable String no, HttpSession session, Model model, Pager pager) {
 		log.info("정보 로그 실행");
@@ -39,6 +48,20 @@ public class RequestController {
 		
 	}
 	
+	@RequestMapping(value="/detail/sr/{no}", method = RequestMethod.GET)
+	public String getSrDetail(@PathVariable String no, HttpSession session, Model model, Pager pager) {
+		log.info("정보 로그 실행");
+		return "request/detailView";
+		
+	}
 	
+	
+	@RequestMapping(value="/write", method = RequestMethod.GET)
+	public String writeRequest(HttpSession session, Model model, Pager pager) {
+		log.info("정보 로그 실행");
+		
+		return "request/write";
+		
+	}
 
 }
