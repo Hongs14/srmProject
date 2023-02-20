@@ -17,114 +17,91 @@
 <div class="card mb-4">
 	<div>
 		<div class="mb-1 mt-5 px-5" style="max-width:1050px">
- 			<div class="my-2" id="sr_no">
-	  			<span class="text-primary font-weight-bold">SR N0.</span> 
-	  			<span>${examine.srNo}</span>
- 			</div>
-   			<hr>
-                			
-       		<div class="row mb-2 mr-0" >
-				<div class="col-sm-2">
-					<span class="font-weight-bold">등록자: </span> 
+ 			<form method="post" action="detailView">
+	 			<div class="my-2">
+		  			<span class="text-primary font-weight-bold">SR N0.</span> 
+		  			<span>${examine.srNo}</span>
+		  			<input type="hidden" id="srNo" name="srNo" value="${examine.srNo}">
+	 			</div>
+	   			<hr>
+	                			
+	       		<div class="row mb-2 mr-0" >
+					<div class="col-sm-2">
+						<span class="font-weight-bold">등록자: </span> 
+					</div>
+					<div class="col-sm-4">
+						<span>${examine.userNm}</span> 
+					</div>
+					<div class="col-sm-2">
+						<span class="font-weight-bold">소속: </span> 
+					</div>
+					<div class="col-sm-4">
+						<span>${examine.userOgdp}</span> 
+					</div>
 				</div>
-				<div class="col-sm-4">
-					<span>${examine.userNm}</span> 
+				
+				<div class="row mb-2 mr-0">
+					<div class="col-sm-2">
+						<span class=" font-weight-bold">등록일: </span> 
+					</div>
+					<div class="col-sm-4">
+						<span>${examine.srRegDate}</span> 
+					</div>
+					<div class="col-sm-2">
+						<span class=" font-weight-bold">관련시스템: </span> 
+					</div>
+					<div class="col-sm-4">
+						<span>${examine.sysNm}</span> 
+					</div>
 				</div>
-				<div class="col-sm-2">
-					<span class="font-weight-bold">소속: </span> 
+				<hr/>
+
+				<div class="row mb-2 mr-0">
+					<div class="col-sm-2">
+						<span><b>SR 검토</b></span>
+					</div>
 				</div>
-				<div class="col-sm-4">
-					<span>${examine.userOgdp}</span> 
+				<hr>
+				<div class="row mb-2 mr-0">
+					<div class="col-6">
+			   			<span>요청구분</span>
+			   			<select class="form-control" id="srReqSe" name="srReqSe">
+			   				<option>개발(신규)</option>
+			   				<option>개발(개선)</option>
+			   			</select>
+					</div>
+					<div class="col-6">
+						<span>중요 여부</span>
+						<select class="form-control" id="srPry" name="srPry">
+		   					<option>상</option>
+			   				<option>중</option>
+			   				<option>하</option>
+			   			</select>
+					</div>
 				</div>
-			</div>
-			
-			<div class="row mb-2 mr-0">
-				<div class="col-sm-2">
-					<span class=" font-weight-bold">등록일: </span> 
+	   			<div class="row mb-2 mr-0">
+	   				<div class="col-12">
+				   		<span>검토 상태</span>
+				   		<select class="form-control" id="sttsNm" name="sttsNm">
+				   			<option>검토중</option>
+				   			<option>반려</option>
+				   			<option>재검토</option>
+				   		</select>
+	   				</div>
+	   			</div>
+	   			<div class="row mb-2 mr-0">
+	   				<div class="col-12">
+				   		<span>검토 의견</span>
+				   		<textarea class="form-control" rows="3" id="srOpnn" name="srOpnn"></textarea>
+	   				</div>
+	   			</div>
+				<!-- 하단 버튼들 -->
+				<div id="buttons" class="m-3 text-right">
+					<button type="submit" class="btn btn-primary">저장</button>
 				</div>
-				<div class="col-sm-4">
-					<span>${examine.srRegDate}</span> 
-				</div>
-				<div class="col-sm-2">
-					<span class=" font-weight-bold">관련시스템: </span> 
-				</div>
-				<div class="col-sm-4">
-					<span>${examine.sysNm}</span> 
-				</div>
-			</div>
-			<hr/>
-			
-			
-			<div class="row mb-2 mr-0">
-				<div class="col-sm-2">
-					<span><b>SR 검토</b></span>
-				</div>
-			</div>
-			<hr>
-			<div class="row mb-2 mr-0">
-				<div class="col-6">
-		   			<span>요청구분</span>
-		   			<select class="form-control">
-		   				<option>개발(신규)</option>
-		   				<option>개발(개선)</option>
-		   			</select>
-				</div>
-				<div class="col-6">
-					<span>중요 여부</span>
-					<select class="form-control">
-	   					<option>상</option>
-		   				<option>중</option>
-		   				<option>하</option>
-		   			</select>
-				</div>
-			</div>
-   			<div class="row mb-2 mr-0">
-   				<div class="col-12">
-			   		<span>검토 상태</span>
-			   		<select class="form-control">
-			   			<option>검토중</option>
-			   			<option>반려</option>
-			   			<option>재검토</option>
-			   		</select>
-   				</div>
-   			</div>
-   			<div class="row mb-2 mr-0">
-   				<div class="col-12">
-			   		<span>검토 의견</span>
-			   		<textarea class="form-control" rows="3"></textarea>
-   				</div>
-   			</div>
+			</form>
    		
    		
-			<!-- 하단 버튼들 -->
-			<div id="buttons" class="m-3 text-right">
-				
-				<button type="submit" class="btn btn-primary">저장</button>
-				<!-- Button trigger modal -->
-				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#deleteFun">삭제</button>
-			
-				
-				<!-- Modal -->
-				<div class="modal fade" id="deleteFun" tabindex="-1" aria-labelledby="deleteFunLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title" id="deleteFunLabel">요청 삭제</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-				      </div>
-				      <div class="modal-body text-left">
-				      	 정말 삭제하시겠습니까? 
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-				        <a type="button" class="btn btn-warning" href= '<c:url value="/examine/delete/${srno}"/>'>삭제</a>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-			</div>
    			<hr>
 			<div class="row mb-4">
 				<div class="col-sm-2">

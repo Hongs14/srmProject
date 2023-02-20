@@ -112,4 +112,12 @@ public class ExamineService implements IExamineService {
 		return examine;
 	}
 
+
+	@Override
+	public void updateExamine(Examine examine) {
+		
+		examineRepository.updateExamine(examine);
+		
+	}
+
 }

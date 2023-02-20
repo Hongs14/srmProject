@@ -117,4 +117,15 @@ public class ExamineController {
 		return "examine/detailView";
 	}
 	
+	@PostMapping(value="/detailView")
+	public String updateExamine(Examine examine) {
+		log.info("실행");
+		log.info(examine);
+		
+		examineService.updateExamine(examine);
+		
+		
+		return "examine/detail";
+	}
+	
 }

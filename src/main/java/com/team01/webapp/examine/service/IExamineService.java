@@ -46,6 +46,15 @@ public interface IExamineService {
 	 */
 	public Pager returnPage(int pageNo, Pager pager, ExamineList examinelist);
 	
+	
+	/**
+	 * SR 검토 상세 조회
+	 * @author : 황건희
+	 * @param srNo 상세조회를 위한 srNo
+	 * @return
+	 */
 	public Examine getExamine(String srNo);
+	
+	public void updateExamine(Examine examine);
 	
 }

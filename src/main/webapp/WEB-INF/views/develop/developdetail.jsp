@@ -34,10 +34,15 @@
    					url: '<c:url value="/develop/register"/>',
    					method: "post",
    					data: JSON.stringify(data),
-   					contentType: "application/json; charset=UTF-8"
-   				}).done((data) => {
-   					console.log("성공");
-   				});
+   					contentType: "application/json; charset=UTF-8",
+   					success:function(result){
+						console.log("성공");
+						console.log(result.message);
+   					},
+   					error : function() {
+						console.log("실패");
+					}
+   				})
    			};
    		</script>
    
