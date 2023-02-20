@@ -51,9 +51,9 @@
 					<th>${list.userJbps}</th>
 					<th>${list.userTelNo}</th>
 					<th>${list.taskNm}</th>
-					<th>${list.hrStartDate}</th>
-					<th>${list.hrEndDate}</th>
-					<th>${list.hrLeader}</th>
+					<th id="startDate+${list.userNo}">${list.hrStartDate}</th>
+					<th id="endDate+${list.userNo}">${list.hrEndDate}</th>
+					<th id="leader+${list.userNo}">${list.hrLeader}</th>
 				</tr>
 			</c:forEach>
 		</table>
@@ -80,13 +80,16 @@
 		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalScrollableTitle">수정</h5>
+					<h5 class="modal-title" id="exampleModalScrollableTitle">삭제</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body" style="white-space: normal;">
-					<div id="developerUpdateView" style="width:100%"></div>
+					<h5 id="message"></h5>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
 				</div>
 			</div>
 		</div>
@@ -227,23 +230,41 @@
 						function developerDelete() {
 							const customRadioNodeList = document.getElementsByName('customRadio');
 							let userNo = null;
+							
 							customRadioNodeList.forEach((node) => {
 								if(node.checked) {
 									userNo = node.value;
 								}
 							});
 							
-							var srNo = '${srNo}';
-							let data = {srNo : srNo, userNo : userNo};
+							console.log(userNo);
+							var start = document.getElementById("startDate+"+userNo).innerText;
+							var end = document.getElementById("endDate+"+userNo).innerText;
+							var leader = document.getElementById("leader+"+userNo).innerText;
 							
-							$.ajax({
-								url : "developerDelete",
-								method : "post",
-								data : JSON.stringify(data),
-								contentType : "application/json; charset=UTF-8"
-							}).done((data) => {
-								window.location.href ='${srNo}';
-							})
+							var startDate = new Date(start);
+							var endDate = new Date(end);
+							var today = new Date();
+							
+							if(leader == 'Y') {
+								$("#message").text("리더라서 삭제할수 없습니다.");
+							} else {
+								if(startDate <= today) {
+									$("#message").text("이미 일을 시작했기 떄문에 삭제할 수 없습니다.");
+								} else {
+									var srNo = '${srNo}';
+									let data = {srNo : srNo, userNo : userNo};
+									
+									$.ajax({
+										url : "developerDelete",
+										method : "post",
+										data : JSON.stringify(data),
+										contentType : "application/json; charset=UTF-8"
+									}).done((data) => {
+										window.location.href ='${srNo}';
+									})
+								}
+							}							
 						}
 					</script>
 				</div>

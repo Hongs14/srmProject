@@ -14,4 +14,6 @@ public class Progress {
 	private Date progEndDate;
 	private int progRate;
 	
+	private String progTypeNm;
+	
 }

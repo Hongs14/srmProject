@@ -3,6 +3,7 @@ package com.team01.webapp.progress.service;
 import java.util.List;
 
 import com.team01.webapp.model.HR;
+import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFilter;
 import com.team01.webapp.model.SRFile;
@@ -24,4 +25,6 @@ public interface IProgressService {
 	public void developerInsert(ThArr thArr);
 	public HR developer(String srNo, int userNo);
 	public void developerUpdate(HR hr);
+	public void developerDelete(String srNo, int userNo);
+	public List<Progress> progressRateList(String srNo);
 }
