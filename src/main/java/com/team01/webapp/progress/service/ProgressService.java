@@ -31,6 +31,13 @@ public class ProgressService implements IProgressService {
 	@Autowired
 	private IProgressRepository progressRepository;
 	
+	/**
+	 * 필터링 하기 위한 데이터 저장
+	 * 
+	 * @author					김태희
+	 * @param progressfilter 	클라이언트가 보낸 필터링 하기 위한 데이터 정보 저장
+	 * @return					ProgressFilter 객체 return
+	 */
 	@Override
 	public ProgressFilter filterList(ProgressFilter progressfilter) {
 		// 사용할 리스트 선언
@@ -53,6 +60,15 @@ public class ProgressService implements IProgressService {
 		return progressfilter;
 	}
 	
+	/**
+	 * 페이지 정보 저장
+	 * 
+	 * @author					김태희
+	 * @param pageNo			클라이언트가 보낸 Page 번호 정보 저장
+	 * @param pager				클라이언트가 보낸 pager 데이터 정보 저장
+	 * @param srProgressAjax	클라이언트가 보낸 필터링 후 데이터 정보 저장
+	 * @return					Pager 객체 return
+	 */
 	@Override
 	public Pager returnPage(String pageNo, Pager pager, SrProgressAjax srProgressAjax) {
 		// Pager
@@ -63,7 +79,15 @@ public class ProgressService implements IProgressService {
 		
 		return pager;
 	}
-
+	
+	/**
+	 * 페이징 처리된 SrProgress 리스트 정보 저장
+	 * 
+	 * @author					김태희
+	 * @param pager				클라이언트가 보낸 pager 객체 정보 저장
+	 * @param srProgressAjax	클라이언트가 보낸 필터링 후 데이터 정보 저장
+	 * @return					List<SrProgressList> 리스트 return
+	 */
 	@Override
 	public List<SrProgressList> ProgressList(Pager pager, SrProgressAjax srProgressAjax) {
 		int end = pager.getPageNo() * pager.getRowsPerPage();
@@ -74,7 +98,14 @@ public class ProgressService implements IProgressService {
 		
 		return progressRepository.selectProgressList(srProgressAjax);
 	}
-
+	
+	/**
+	 * Progress 세부 정보 저장
+	 * 
+	 * @author			김태희
+	 * @param srNo		클라이언트가 보낸 sr 번호 정보 저장
+	 * @return			ProgressDetail 객체 return
+	 */
 	@Override
 	public ProgressDetail selectDetail(String srNo) {
 		
@@ -93,17 +124,39 @@ public class ProgressService implements IProgressService {
 		
 		return progressDetail;
 	}
-
+	
+	/**
+	 * 파일 데이터 정보 저장
+	 * 
+	 * @author				김태희
+	 * @param srFileNo		클라이언트가 보낸 srFile 번호 정보 저장
+	 * @return				SRFile 객체 return
+	 */
 	@Override
 	public SRFile getSrFile(int srFileNo) {
 		return progressRepository.selectSrFile(srFileNo);
 	}
-
+	
+	/**
+	 * SR 인적 자원 정보 리스트 저장
+	 * 
+	 * @author			김태희
+	 * @param srNo		클라이언트가 보낸 sr 번호 정보 저장
+	 * @return			List<HR> 리스트 return
+	 */
 	@Override
 	public List<HR> humanResourceList(String srNo) {
 		return progressRepository.selectHumanResourceList(srNo);
 	}
 
+	/**
+	 * SR 개발자 리스트 저장
+	 * 
+	 * @author				김태희
+	 * @param userDpNm		클라이언트가 보낸 userDpNm 유저 부서 이름 정보 저장
+	 * @param srNo			클라이언트가 보낸 sr 번호 정보 저장
+	 * @return				List<HR> 리스트 return
+	 */
 	@Override
 	public List<HR> developerList(String userDpNm, String srNo) {
 		
@@ -118,36 +171,80 @@ public class ProgressService implements IProgressService {
 		
 		return developerList;
 	}
-
+	
+	/**
+	 * 담당업무 리스트 저장
+	 * 
+	 * @author		김태희
+	 * @return		List<Task> 리스트 return
+	 */
 	@Override
 	public List<Task> taskList() {
 		return progressRepository.selectTaskList();
 	}
-
+	
+	/**
+	 * SR인적 자원 추가
+	 * 
+	 * @author			김태희
+	 * @param thArr		클라이언트가 보낸 ThArr 정보 저장
+	 */
 	@Override
 	public void developerInsert(ThArr thArr) {
 		progressRepository.insertDeveloper(thArr);
 	}
 	
-	// 개발자 1명의 행 select
+	/**
+	 * SR인적 자원 수정뷰 저장
+	 * 
+	 * @author			김태희
+	 * @param srNo		클라이언트가 보낸 sr 번호 정보 저장
+	 * @param userNo	클라이언트가 보낸 user 번호 정보 저장
+	 * @return			
+	 */
 	@Override
 	public HR developer(String srNo, int userNo) {
 		return progressRepository.selectDeveloper(srNo, userNo);
 	}
-
+	
+	/**
+	 * SR인적 자원 수정
+	 * 
+	 * @author			김태희
+	 * @param hr		클라이언트가 보낸 hr 정보 저장
+	 */
 	@Override
 	public void developerUpdate(HR hr) {
 		progressRepository.updateDeveloper(hr);
 	}
-
+	
+	/**
+	 * SR인적 자원 삭제
+	 * 
+	 * @author			김태희
+	 * @param srNo		클라이언트가 보낸 sr 번호 정보 저장
+	 * @param userNo	클라이언트가 보낸 user 번호 정보 저장
+	 */
 	@Override
 	public void developerDelete(String srNo, int userNo) {
 		progressRepository.deleteDeveloper(srNo, userNo);
 	}
 
+	/**
+	 * SR진척율 리스트 저장
+	 * 
+	 * @author			김태희
+	 * @param srNo		클라이언트가 보낸 sr 번호 정보 저장
+	 * @return			List<Progress> 리스트 return
+	 */
 	@Override
 	public List<Progress> progressRateList(String srNo) {
 		return progressRepository.selectProgressRateList(srNo);
+	}
+
+	@Override
+	public Progress progressRate(int progNo) {
+		return progressRepository.selectProgressRate(progNo);
 	}
 
 
