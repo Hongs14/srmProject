@@ -25,4 +25,6 @@ public interface IUserRepository {
 	 */
 	public int insert(User user);
 
+	public void insertUserSystem(User user);
+
 }

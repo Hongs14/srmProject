@@ -23,6 +23,7 @@ public class SrDevelopDto {
 	private Date srEndDate;
 	private String srViewYn;
 	private String srStd;
+	private String srDevDp;
 	
 	//등록자 , 소속, 개발부서
 	private String userNm;

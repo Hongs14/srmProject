@@ -27,7 +27,13 @@ public class QnaController {
 	@Autowired
 	private IQnaboardService qnaboardService;
 	
-	//QNA목록보기
+
+	/**
+	 * @author 			 정홍주
+	 * @param pageNo
+	 * @param model		
+	 * @return
+	 */
 	@GetMapping("/list")
 	public String getQnaList(@RequestParam(defaultValue="1") int pageNo, Model model) {
 		int totalRow = qnaboardService.countTotalRow();

@@ -18,7 +18,7 @@
  	<typeAlias type="com.team01.webapp.model.QSTNComment" alias="qstnComment"/>
  	<typeAlias type="com.team01.webapp.model.QSTNFile" alias="qstnFile"/>
  	<typeAlias type="com.team01.webapp.model.SR" alias="sr"/>
- 	<typeAlias type="com.team01.webapp.model.SRFile" alias="srFile"/>
+ 	<typeAlias type="com.team01.webapp.model.SrFile" alias="srFile"/>
  	<typeAlias type="com.team01.webapp.model.SRStts" alias="srstts"/>
  	<typeAlias type="com.team01.webapp.model.SRType" alias="srtype"/>
  	<typeAlias type="com.team01.webapp.model.System" alias="system"/>

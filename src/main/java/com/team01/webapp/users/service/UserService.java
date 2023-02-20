@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.team01.webapp.users.dao.IUserRepository;
 import com.team01.webapp.users.model.User;
@@ -57,8 +58,10 @@ public class UserService implements IUserService {
 		log.info(userId+ "실행 ");
 		return userRepository.selectByUserId(userId);
 	}
+	
 
 	@Override
+	@Transactional
 	public int join(User user) {
 		log.info(user.getUserPswd());
 		try {
@@ -66,8 +69,10 @@ public class UserService implements IUserService {
 		
 		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		user.setUserPswd(pe.encode(user.getUserPswd()));
-		
-		int rows= userRepository.insert(user);
+		userRepository.insert(user);
+		String userId = user.getUserId();
+		user = userRepository.selectByUserId(userId);
+		userRepository.insertUserSystem(user);
 		return JOIN_SUCCESS;
 		}catch(Exception e){
 			log.info(e.toString());
