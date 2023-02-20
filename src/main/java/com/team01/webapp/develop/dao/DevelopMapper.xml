@@ -38,7 +38,7 @@
 			      select  sr_no, sr_cust_no, sr.sys_no, system.sys_nm, sr.stts_no, sr_stts.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
 			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_view_yn, sr.sr_type,  sr.sr_dev_dp, user_nm, user_ogdp, user_dp_nm
 			      from sr, sr_type, sr_stts, users, system
-			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no and sr.stts_no = 4 or sr.stts_no = 5 or sr.stts_no=6
+			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no and sr.stts_no in(4, 5, 6)
 			      order by sr_no desc
 			    ) aa
 			where rownum <= #{endRowNo}

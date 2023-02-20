@@ -167,10 +167,10 @@
 					                   			<c:forEach items="${developlist}" var="SrDevelopDto">
 						                   			<tr onclick="location.href='${pageContext.request.contextPath}/develop/view/${pageNo}?srNo=${SrDevelopDto.srNo}'">
 						                   				<td class="pr-0">
-								                        <div class="custom-control custom-checkbox">
-								                   			<input type="checkbox" class="custom-control-input" id="customCheck${SrDevelopDto.srNo}">
-								                   			<label class="custom-control-label" for="customCheck${SrDevelopDto.srNo}"></label>
-								                 		</div>
+									                        <div class="custom-control custom-checkbox">
+									                   			<input type="checkbox" class="custom-control-input" id="customCheck${SrDevelopDto.srNo}">
+									                   			<label class="custom-control-label" for="customCheck${SrDevelopDto.srNo}"></label>
+									                 		</div>
 								                 		</td>
 						                        		<td>${SrDevelopDto.srNo}</td>
 								                        <td>${SrDevelopDto.srTtl}</td>
