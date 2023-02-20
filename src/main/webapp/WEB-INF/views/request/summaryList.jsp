@@ -12,7 +12,7 @@
 	     	<div class="row">
 	     		<div class="col-4">
 	     			<div class="form-group row" id="simple-date4" >
-		        		<div class="input-daterange input-group input-group-sm">
+		        		<div class="input-daterange input-group input-group-sm ">
 			        		<label for="startDate" class="col-sm-4 col-form-label-sm">조회기간</label>
 			            	<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="startDate"/>
 			            	<div class="input-group-prepend">
@@ -24,8 +24,8 @@
 	     		</div>
 	     		<div class="col-3">
 	     			<div class="form-group row">
-	     				<label class="col-sm-4 col-form-label-sm" for="srStts">진행상태</label>
-			           	<select class="form-control form-control-sm col-sm-8" id="srStts">
+	     				<label class="col-sm-5 col-form-label-sm" for="srStts">진행상태</label>
+			           	<select class="form-control form-control-sm col-sm-7" id="srStts">
 			               	<option selected>전체</option>
 			               	<option>요청</option>
 			               	<option>검토중</option>
@@ -54,8 +54,8 @@
 	     	<div class="row">
 	     		<div class="col-4">
 	     			<div class="form-group row">
-	     				<label for="srOgdp" class="col-sm-4 col-form-label-sm">등록자 소속</label>
-			           	<select class="form-control form-control-sm col-sm-8" id="srOgdp">
+	     				<label for="srOgdp" class="col-sm-5 col-form-label-sm">등록자 소속</label>
+			           	<select class="form-control form-control-sm col-sm-7" id="srOgdp">
 			               	<option selected>전체</option>
 			               	<option>KHR시스템</option>
 			               	<option>KTH시스템</option>
@@ -66,8 +66,7 @@
 	     		</div>
 	     		<div class="col-3">
 	     			<div class="form-group row">
-	     			<label for="srDept" class="col-sm-4 col-form-label-sm">개발부서</label>
-			           	<select class="form-control form-control-sm col-sm-8" id="srDept">
+			           	<select class="form-control form-control-sm col-sm-12" id="srDept">
 			               	<option selected>전체</option>
 			               	<option>한국소프트웨어 개발1팀</option>
 			               	<option>한국소프트웨어 개발2팀</option>
@@ -78,12 +77,12 @@
      			</div>
 	     		<div class="col-4">
 			       	<div class="form-group row">
-			       		<label for="srKeyWord" class="col-sm-3 col-form-label-sm pr-3">키워드</label>
+			       		<label for="srKeyWord" class="col-sm-3 col-form-label-sm">키워드</label>
 			           	<input type="text" id="srKeyWord" class="form-control form-control-sm col-sm-9 bg-light" 
 			          		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
 			        </div>
 	        	</div>
-        		<div class="col-1">
+        		<div class="col-1 px-2">
         			<div class="input-group-append float-right">
 						<button class="btn btn-primary btn-sm" type="button" onclick="progressList()">
 							조회<i class="fas fa-search fa-sm"></i>
@@ -117,7 +116,6 @@
              <th>제목 </th>
              <th>관련시스템 </th>
              <th>상태 </th>
-             <th>등록일 </th>
              <th>완료예정일 </th>
              <th>중요도 </th>
            </tr>
@@ -135,7 +133,6 @@
              <td><button  onclick="getDetail(1)"  class="requsetTtl">댓글 기능 추가ddddddddddddddddddd </button></td>
              <td>JHJ쇼핑몰</td>
              <td><span  class="badge badge-danger" style="font-size:100%">미검토</span></td>
-             <td>2023/02/09 </td>
              <td>2023/04/08 </td>
              <td><span  class="badge badge-danger" style="font-size:100%">상</span></td>
            </tr>
@@ -150,7 +147,6 @@
              <td>게시 기능 추가 부탁드립니다.</td>
              <td>JHJ쇼핑몰</td>
              <td><span  class="badge badge-danger" style="font-size:100%">미검토</span></td>
-             <td>2023/02/09 </td>
              <td>2023/04/08 </td>
              <td><span  class="badge badge-secondary" style="font-size:100%">하</span></td>
            </tr>
@@ -165,7 +161,6 @@
              <td >알림 기능 추가 부탁드립니다.</td>
              <td>JHJ쇼핑몰</td>
              <td><span  class="badge badge-danger" style="font-size:100%">미검토</span></td>
-             <td>2023/02/01 </td>
              <td>2023/04/11 </td>
              <td><span  class="badge badge-secondary" style="font-size:100%">하</span></td>
            </tr>
@@ -180,7 +175,6 @@
              <td>댓글/검색 기능 보완 부탁드립니다.</td>
              <td>JHJ쇼핑몰</td>
              <td><span class="badge badge-primary" style="font-size:100%" >개발중</span></td>
-             <td>2023/02/09 </td>
              <td>2023/04/08 </td>
              <td><span  class="badge badge-primary" style="font-size:100%">중</span></td>
            </tr>
