@@ -11,9 +11,9 @@ import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFilter;
-import com.team01.webapp.model.SRFile;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SRType;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.SrProgressAjax;
 import com.team01.webapp.model.SrProgressList;
 import com.team01.webapp.model.System;
@@ -119,7 +119,7 @@ public class ProgressService implements IProgressService {
 		progressDetail.setSrEndDate(progressDetailDeveloper.getSrEndDate());
 		
 		// 파일 정보 담아주기
-		List<SRFile> srFile = progressRepository.selectSrFileList(srNo);
+		List<SrFile> srFile = progressRepository.selectSrFileList(srNo);
 		progressDetail.setSrFile(srFile);
 		
 		return progressDetail;
@@ -133,7 +133,7 @@ public class ProgressService implements IProgressService {
 	 * @return				SRFile 객체 return
 	 */
 	@Override
-	public SRFile getSrFile(int srFileNo) {
+	public SrFile getSrFile(int srFileNo) {
 		return progressRepository.selectSrFile(srFileNo);
 	}
 	

@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team01.webapp.develop.dao.IDevelopRepository;
-import com.team01.webapp.model.HR;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrDevelopDto;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
 
 @Service
@@ -37,14 +37,15 @@ public class DevelopService implements IDevelopService{
 	}
 
 	@Override
-	public List<HR> getDevelopList() {
-		List<HR> devlist = developRepository.devList();
+	public List<Users> getDevelopList() {
+		List<Users> devlist = developRepository.devList();
 		return devlist;
 	}
 
 	@Override
-	public void updateSR(SrDevelopDto srDevelop) {
-		developRepository.updateSr(srDevelop);
+	public int updateDevelop(SrDevelopDto srDevelop) {
+		 int result = developRepository.updateSr(srDevelop);
+		 return result;
 	}
 
 

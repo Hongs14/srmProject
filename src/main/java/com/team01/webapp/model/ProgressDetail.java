@@ -24,5 +24,5 @@ public class ProgressDetail {
 	private Date srEndDate;
 	
 	// 멀티 파일
-	private List<SRFile> srFile;
+	private List<SrFile> srFile;
 }

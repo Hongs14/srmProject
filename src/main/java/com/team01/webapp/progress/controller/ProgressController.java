@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -25,7 +24,7 @@ import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFilter;
-import com.team01.webapp.model.SRFile;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.SrProgressAjax;
 import com.team01.webapp.model.SrProgressList;
 import com.team01.webapp.model.Task;
@@ -118,7 +117,7 @@ public class ProgressController {
 	 */
 	@RequestMapping(value="progress/detail/filedownload", method = RequestMethod.GET)
 	public void filedownload(int srFileNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception {
-		SRFile srFile = progressService.getSrFile(srFileNo);
+		SrFile srFile = progressService.getSrFile(srFileNo);
 		
 		String originalName = srFile.getSrFileActlNm();
 		String savedName = srFile.getSrFilePhysNm();
