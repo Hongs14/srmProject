@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -10,31 +9,39 @@
 	  		$(document).ready(function(){
 	  			console.log("시작할때");
 	  			readComment();
-	  			
 	  		});
 	  		
 	  		function readComment(){
 	  			console.log("aa");
+	  			let qstnNo ='${qstn.qstnNo}';
+	  			console.log(qstnNo);
 	  			$.ajax({
 			    	url:"read/comment"
 			        ,type:"get"
-			        ,data: JSON.stringify(data)
-	  				,contentType: "application/json; charset=UTF-8"
+			        ,data: 'qstnNo='+qstnNo
 			        ,success:function(data){
-			        	console.log(data.size());
 			        	console.log(data);
+			        	$.each(data, function(index, item){
+			        		let comment = '<hr/>';
+			        		comment += '<div id="readCmnt">';
+			        		comment += 	'<div class="d-flex px-2 flex-row align-items-center justify-content-between">';
+			        		comment += 		'<div>';
+							comment += 			'<h6 style="color: #406882"><b>'+item.userNm+'</b></h6>';
+							comment += 			'<h6>'+item.qstnCmntDate+'</h6>';
+							comment +=		'</div>';
+							comment += 		'<div>';
+							comment += 			'<input type="hidden" id="qstnCmntNo" value="'+item.qstnCmntNo+'"/>';
+							comment += 			'<a id="updateToggle'+item.qstnCmntNo+'" onclick="updateCButton('+item.qstnCmntNo+')">수정</a> | <a onclick="deleteComment('+item.qstnCmntNo+')">삭제</a> |';
+							comment += 		'</div>';
+							comment += 	'</div>';
+							comment += 	'<textarea id="commentContent'+item.qstnCmntNo+'" disabled="disabled" style="border: none; resize:none; width:90%">'+item.qstnCmntCn+'</textarea>';
+							comment +='</div>'; 
+			        		$('#qComment').append(comment); 
+			        	});
+			        	
 			         }
 			    })
-			    
-				/* $.ajax({
-  				url: "read/comment",
-  				method: "get",
-  				data: JSON.stringify(data),
-  				contentType: "application/json; charset=UTF-8"
-  				}).done((data) => {
-  					console.log(data);
-  					console.log("ajax성공");
-  				}); */
+			
 	  		};
 	  		
 	  		
@@ -46,18 +53,80 @@
 				let qstnNo = '${qstn.qstnNo}';
 				
 				let data = {userNo: qcwriterNo, qstnNo: qstnNo, qstnCmntCn: content};
-				
+				console.log(data);
 				$.ajax({
 					url: "write/comment",
 					method: "post",
 					data: JSON.stringify(data),
 					contentType: "application/json; charset=UTF-8"
-				}).done((data) => {
-					console.log(data);
+				}).done((item) => {
+					console.log(item);
+					
+					let comment = '<hr/>';
+	        		comment += '<div class="d-flex px-2 flex-row align-items-center justify-content-between">';
+	        		comment += 	'<div>'
+					comment += 		'<h6 style="color: #406882"><b>'+item.userNm+'</b></h6>';
+					comment += 		'<h6>'+item.qstnCmntDate+'</h6>';
+					comment +=	'</div>'
+					comment += 	'<div>'
+					comment += 		'<input type="hidden" id="qstnCmntNo" value="'+item.qstnCmntNo+'"/>'
+					comment += 		'<a id="updateToggle'+data.qstnCmntNo+'" onclick="updateCButton('+item.qstnCmntNo+')">수정</a> | <a onclick="deleteComment('+item.qstnCmntNo+')">삭제</a> |';
+					comment += 	'</div>';
+					comment +='</div>';
+					comment += '<textarea id="commentContent'+item.qstnCmntNo+'" disabled="disabled" style="border: none; resize:none; width:90%">'+item.qstnCmntCn+'</textarea>';
+					
+	        		$('#qComment').append(comment); 
+	        		$('#cmntCount').empty();
+	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt}+1)+')');
+	        		$('#qnaCmntCn').val('');
 					
 				});
 			}
 			
+			function updateCButton(i){
+				console.log(i);
+				$('#commentContent'+i).removeAttr("disabled");
+				console.log("here");
+				$('#updateToggle'+i).html("변경");
+				$('#updateToggle'+i).attr('onclick', 'udpateComplete('+i+')');
+				
+			};
+
+			function udpateComplete(i){
+				console.log("댓글수정 ajax");
+				console.log(i);
+				let content = $('#commentContent'+i).val();
+			 	let qstnCmntNo = i;
+				let data = {qstnCmntNo: qstnCmntNo, qstnCmntCn: content};  
+				$.ajax({
+					url: "update/comment",
+					method: "post",
+					data: JSON.stringify(data),
+					contentType: "application/json; charset=UTF-8"
+				}).done((data) => {
+					$('#commentContent'+i).attr('disabled','disabled');
+					$('#updateToggle'+i).html("수정");
+					$('#updateToggle'+i).attr('onclick', 'updateCButton('+i+')');
+					console.log(data);
+				}); 
+			};
+			
+			function deleteComment(i){
+				console.log("댓글삭제"+i);
+				let qstnCmntNo = i;
+				$.ajax({
+					url: "delete/comment",
+					method: "get",
+					data: 'qstnCmntNo='+qstnCmntNo,
+				}).done((data) => {
+					console.log("성공");
+					$('#cmntCount').empty();
+	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt}-1)+')');
+					$('#qComment').empty(); 
+					readComment();
+					
+				});
+			};
 		</script>
 	</head>
 
@@ -140,46 +209,36 @@
 	                            		</div>
 		                            </form>
 		                        </div>
-	                        	
+	                        	<hr/>
 	                        	<!-- 댓글 -->
-	                        	<div class="mx-3 mb-2">댓글(2)</div>
-		                        	<div class="mx-3 p-1" style="border: 1px solid black">
-		                        		<div class="row">
-		                        			<div class="col-sm-1 form-group" id="qnaComentWriter">
-		                        				${sessionScope.loginUser.userNm}
-		                        			</div>
-		                        			<div class="col-sm-10 form-group">
-		                        				<textarea style="width: 100%" id="qnaCmntCn"></textarea>
-		                        			</div>
-		                        			<div class="col-sm-1">
-		                        				<button type="button" onclick="writeComment();">등록하기</button>
-		                        			</div>
-				                        </div>
-		                        	</div>
-		                        	<div class="px-4" id="qComment">
-		                        		<hr/>
-		                        		<div class="d-flex px-2 flex-row align-items-center justify-content-between">
-		                        			<div class="row">
-		                        				<h6 style="color: #406882"><b>김희률</b></h6>
-		                        				<h6 class="ml-3">2023.02.13</h6>
-		                        			</div>
-		                        			<div>| <a href="#">수정</a> | <a href="#">삭제</a> |</div>
-		                        		</div>
-		                        		
-		                        		<div id="commentContent">
-		                        			한 번 확인해보겠습니다.
-		                        		</div>
-		                        	</div>
-                        		</div>
-                       		</div>
-                    	</div> 
-          				<!-- 로그아웃 모달 -->
-           				<%@include file="/WEB-INF/views/common/logout.jsp" %>
-       				</div>
-       			<!---Container Fluid-->
-      			</div>
-     			<%@include file="/WEB-INF/views/common/footer.jsp" %>
+                        		<div id="cmntCount" class="mx-3 mb-2">댓글(${qstn.countCmnt})</div>
+                        		<div class="mx-3 p-1" style="border: 1px solid black">
+	                        		<div class="row">
+	                        			<div class="col-sm-1 form-group" id="qnaComentWriter">
+	                        				${sessionScope.loginUser.userNm}
+	                        			</div>
+	                        			<div class="col-sm-10 form-group">
+	                        				<textarea style="width: 100%" id="qnaCmntCn"></textarea>
+	                        			</div>
+	                        			<div class="col-sm-1">
+	                        				<button type="button" onclick="writeComment();">등록하기</button>
+	                        			</div>
+			                        </div>
+                      			</div>
+                      			<div class="px-4" id="qComment">
+	                        		
+		                        </div>
+                      			
+                      			</div>
+                      		</div>
+                    	</div>
+          			<!-- 로그아웃 모달 -->
+           			<%@include file="/WEB-INF/views/common/logout.jsp" %>
+       			</div>
+       		<!---Container Fluid-->
       		</div>
+     		
+      	</div>
      	<!-- Footer -->
    	 	</div>
  		<%@include file="/WEB-INF/views/common/bottom.jsp" %>

@@ -36,9 +36,6 @@ public class QnaboardService implements IQnaboardService {
 		//게시물 상세
 		QSTN qstn = qnaboardRepository.getDetail(qstnNo);
 		
-//		//댓글 리스트
-//		List<QSTNComment> qComment = qnaboardRepository.getCommentList(qstnNo);
-		
 		//댓글 개수
 		int countCmnt = qnaboardRepository.countComment(qstnNo);
 		
@@ -47,14 +44,27 @@ public class QnaboardService implements IQnaboardService {
 	}
 
 	@Override
-	public void writeComment(QSTNComment qComment) {
+	public QSTNComment writeComment(QSTNComment qComment) {
 		qnaboardRepository.writeComment(qComment);
+		qComment = qnaboardRepository.getComment();
+		return qComment;
 	}
 
 	@Override
 	public List<QSTNComment> getCommentList(int qstnNo) {
 		List<QSTNComment> list = qnaboardRepository.getCommentList(qstnNo);
 		return list;
+	}
+
+	@Override
+	public void updateComment(QSTNComment qComment) {
+		qnaboardRepository.updateComment(qComment);
+	}
+
+	@Override
+	public void deleteComment(int qstnCmntNo) {
+		qnaboardRepository.deleteComment(qstnCmntNo);
+		
 	}
 
 	
