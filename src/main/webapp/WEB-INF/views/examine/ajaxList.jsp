@@ -8,10 +8,7 @@
 				<tr>
 					<th>No</th>	
 					<th>
-						<div class="custom-control custom-checkbox m-0">
-							<input type="checkbox" class="custom-control-input" id="customCheck1">
-							<label class="custom-control-label" for="customCheck1"></label>
-						</div>
+						<input type="checkbox" onclick='selectAll(this)' name="examineCheck">
 					</th>
 					<th>요청번호</th>
 					<th>제목</th>
@@ -31,10 +28,7 @@
 					<tr>
 						<td>${examine.seq}</td>
 						<td>
-							<div class="custom-control custom-checkbox m-0">
-								<input type="checkbox" class="custom-control-input" id="customCheck2">
-								<label class="custom-control-label" for="customCheck2"></label>
-							</div>
+							<input type="checkbox" name="examineCheck">
 						</td>
 						<td>${examine.srNo}</td>
 						<td>${examine.srTtl}</td>
@@ -51,6 +45,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		
 		<c:if test="${pager.totalRows != 0}">
 			<div class="pager d-flex justify-content-center my-3">
 				<div class="pagingButtonSet d-flex justify-content-center">

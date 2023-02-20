@@ -22,6 +22,7 @@ import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
 
+
 @Controller
 @RequestMapping("/examine")
 @Log4j2
@@ -30,6 +31,14 @@ public class ExamineController {
 	@Autowired
 	IExamineService examineService;
 	
+	
+	/**
+	 * SR요청에 대한 필터링 
+	 * @author : 황건희
+	 * @param examineFilter SR요청에 대한 검색 조건
+	 * @param model	View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
+	 */
 	@GetMapping(value="/list")
 	public String getExamineList(ExamineFilter examineFilter , Model model) {
 		log.info("실행");
@@ -40,6 +49,15 @@ public class ExamineController {
 		return "examine/list";
 	}
 	
+	/**
+	 * SR 요청에 대한 필터링 후 리스트 가져오기
+	 * @author : 황건희
+	 * @param pageNo		SR검토 목록 페이지 위치
+	 * @param examineList	SR검토 리스트
+	 * @param pager			페이지 처리	
+	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
+	 */
 	@PostMapping(value="/filter/{pageNo}", produces="application/json; charset=UTF-8")
 	public String getExamineFilter(@PathVariable int pageNo,@RequestBody ExamineList examineList, Model model, Pager pager) {
 		log.info("실행");

@@ -37,6 +37,13 @@ public class NoticeController {
 	@Autowired
 	INoticeService noticeService;
 
+	/**
+	 * 공지사항 리스트 가져오기
+	 * @author : 황건희
+	 * @param pageNo	공지사항 목록 페이지 위치
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
+	 */
 	@GetMapping("/list")
 	public String getNoticeList(@RequestParam(defaultValue="1") int pageNo, Model model) {
 		log.info("실행");
@@ -51,7 +58,16 @@ public class NoticeController {
 		return "notice/list";
 	}
 	
-	
+
+	/**
+	 * 공지사항 작성
+	 * @author : 황건희
+	 * @param notice		공지사항 작성 내용
+	 * @param noticeFile	공지사항 첨부파일
+	 * @return
+	 * @throws IOException
+	 */
+
 	@GetMapping("/write")
 	public String getNoticeWrite() {
 		log.info("실행");
@@ -93,6 +109,14 @@ public class NoticeController {
 		return "redirect:/notice/list";
 	}
 	
+	
+	/**
+	 * 공지사항 상세조회
+	 * @author : 황건희
+	 * @param ntcNo		조회하려는 공지사항 No.
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
+	 */
 	@GetMapping("/detail")
 	public String getNoticeDetail(int ntcNo, Model model) {
 		log.info("실행");
@@ -108,7 +132,14 @@ public class NoticeController {
 		return "notice/detail";
 	}
 	
-	//게시글 수정
+
+	/**
+	 * 공지사항 수정
+	 * @author : 황건희
+	 * @param ntcNo		수정하려는 공지사항No.
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
+	 */
 	@GetMapping("/update")
 	public String noticeUpdate(int ntcNo, Model model) {
 		log.info("실행");
@@ -119,6 +150,13 @@ public class NoticeController {
 		return "notice/update";
 	}
 	
+	/**
+	 * 공지사항 수정
+	 * @author : 황건희
+	 * @param notice	수정한 공지사항 내용	
+	 * @return
+	 * @throws IOException
+	 */
 	@PostMapping("/update")
 	public String noticeUpdate(Notice notice) throws IOException {
 		log.info("실행");
@@ -155,7 +193,13 @@ public class NoticeController {
 		return "redirect:/notice/list";
 	}
 	
-	//게시글 삭제
+	
+	/**
+	 * 공지사항 삭제
+	 * @author : 황건희
+	 * @param ntcNo		삭제하려는 공지사항 No
+	 * @return
+	 */
 	@PostMapping("/delete")
 	public String noticeDelete(int ntcNo) {
 		log.info("실행");
@@ -164,7 +208,15 @@ public class NoticeController {
 		return "redirect:/notice/list";
 	}
 	
-	//파일 다운로드
+
+	/**
+	 * 공지사항 첨부파일 다운로드
+	 * @author : 황건희
+	 * @param ntcNo			첨부파일을 받으려는 공지사항 No
+	 * @param userAgent		사용자가 이용하는 브라우저 타입
+	 * @param response		응답 정보를 전송
+	 * @throws Exception	예외 발생
+	 */
 	@GetMapping("/fileDownload")
 	public void download(int ntcNo,@RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
 		log.info("실행");
