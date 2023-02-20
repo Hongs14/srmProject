@@ -35,8 +35,8 @@
 						<input type="text" class="form-control" value="" id="dateInput"  style="height:30px;">
 					</div>
 				</div>
-				<span class=" font-weight-bold col-sm-2">관련시스템: </span> 
-				<input class="col-sm-4" disabled value="${sessionScope.loginUser.userOgdp}" style="height:30px;"/>
+				<span class=" font-weight-bold col-sm-3">관련시스템: </span> 
+				<input class="col-sm-3" disabled value="${sessionScope.loginUser.userOgdp}" style="height:30px;"/>
 			</div>
 			<hr>
 			<div class="row mb-2 align-items-center">

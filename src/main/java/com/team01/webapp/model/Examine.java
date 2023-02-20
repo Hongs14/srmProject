@@ -22,6 +22,7 @@ public class Examine {
 	private Date srStartDate;
 	private Date srEndDate;
 	private String srViewYn;
+	private String srStd;
 	
 	//시스템
 	private String sysNm;

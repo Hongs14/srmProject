@@ -1,11 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.team01.webapp.request.dao.RequestMapper">
+<mapper namespace="com.team01.webapp.request.dao.IRequestRepository">
+	
+	<select id="selectSysNo" resultType="string" parameterType="int">
+		select sys_no as "sysNo" 
+		from user_system where cust_no = #{userNo}
+	</select>
+	
 
-	<insert id="insert">
-		INSERT INTO PROGRESS (PROG_NO, PROG_TYPE, PROG_START_DATE, PROG_END_DATE, PROG_RATE, SR_NO)
-		VALUES(13, '임시', sysdate, sysdate, 10, 1);
-	</insert>
+	<select id="selectSysNmList" resultType="system">
+		SELECT 
+			SYS_NO AS "sysNo",
+			SYS_NM AS "sysNm"
+		FROM SYSTEM
+	</select>
+
+
+	<select id="selectSrType" resultType="srtype">
+		SELECT 
+		    SR_TYPE_NO AS "srTypeNo",
+		    SR_TYPE_NM AS "srTypeNm"
+		FROM SR_TYPE
+	</select>
+	
+
+	<select id="selectSttsNmList" resultType="srstts">
+		SELECT 
+		    STTS_NO AS "sttsNo",
+		    STTS_NM AS "sttsNm"
+		FROM SR_STTS
+	</select>
+	
+
+	<select id="selectTotalRequestCount" parameterType="requestList" resultType="int">
+		SELECT
+		    COUNT(SR_NO)
+		FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, SR_TYPE type
+		where sr.sys_no = system.sys_no
+		AND sr.stts_no = stts.stts_no
+		AND sr.sr_cust_no = users.user_no
+		AND sr.sr_type = type.sr_type_no
+		<if test="sysNo != 0">s
+			AND sr.sys_no = #{sysNo}
+		</if>
+		<if test="srTypeNo != 0">
+			AND sr.sr_type = #{srTypeNo}
+		</if>
+		<if test="srSttsNo != 0">
+			AND sr.stts_no = #{srSttsNo}
+		</if>
+		<if test="srName != ''">
+			AND sr.sr_ttl LIKE #{srName}
+		</if>
+		<if test="srNo != ''">
+			AND sr.sr_no LIKE #{srNo}
+		</if>
+	</select>
+
+
+	<select id="selectRequestList" parameterType="map" resultType="requestList">
+		SELECT
+			    SR_NO AS "srNo",
+			    SR_TTL AS "srTtl",
+			    SYS_NM "sysNm",
+			    USER_NM AS "userNm",
+			    USER_DP_NM AS "userDpNm",
+			    SR_DEV_DP AS "srDevDp",
+			    SR_TYPE_NM AS "srTypeNm",
+			    STTS_NM AS "sttsNm",
+			    SR_REG_DATE AS "srRegDate",
+			    SR_DDLN_DATE AS "srDdlnDate",
+			    SR_PRY AS "srPry",
+			    RNUM AS "seq"
+			FROM(
+			    SELECT
+			        SR_NO,
+			        SR_TTL,
+			        SYS_NM,
+			        USER_NM,
+			        USER_DP_NM,
+			        SR_DEV_DP,
+			        SR_TYPE_NM,
+			        STTS_NM,
+			        SR_REG_DATE,
+			        SR_DDLN_DATE,
+			        SR_PRY,
+			        ROWNUM AS RNUM
+			    FROM(
+			        SELECT 
+			            s.SR_NO,
+			            s.SR_TTL,
+			            SYS_NM,
+			            u.USER_NM,
+			            u.USER_DP_NM,
+			            s.SR_DEV_DP,
+			            stp.SR_TYPE_NM,
+			            st.STTS_NM,
+			            s.SR_REG_DATE,
+			            s.SR_DDLN_DATE,
+			            s.SR_PRY
+			        FROM SR s ,USERS u,  SR_STTS st, SYSTEM sys, SR_TYPE stp
+       			 	WHERE SR_CUST_NO = u.USER_NO
+        			AND s.STTS_NO = st.STTS_NO
+        			AND s.SYS_NO = sys.SYS_NO
+        			AND stp.SR_TYPE_NO = s.SR_TYPE_NO
+			       	<if test="sttsNo != 0">
+						AND st.stts_no = #{sttsNo}
+					</if>
+			       	<if test="!sysNo.equals('전체')">
+			       		AND sys.sys_nm = #{sysNo}
+			       	</if>
+			       
+			       	<if test="!userDpNm.equals('전체')">
+			       		AND u.user_dp_nm = #{userDpNm}
+			       	</if>
+			        ORDER BY s.SR_NO
+			    )
+			    <![CDATA[
+				    WHERE ROWNUM <=#{endRowNo}
+			    ]]>
+			)
+			<![CDATA[
+				WHERE RNUM >=#{startRowNo}
+			]]>
+	</select>
 
 
 </mapper>

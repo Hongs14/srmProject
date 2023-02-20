@@ -6,7 +6,7 @@ import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFilter;
-import com.team01.webapp.model.SRFile;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.SrProgressAjax;
 import com.team01.webapp.model.SrProgressList;
 import com.team01.webapp.model.Task;
@@ -60,7 +60,7 @@ public interface IProgressService {
 	 * @param srFileNo		클라이언트가 보낸 srFile 번호 정보 저장
 	 * @return				SRFile 객체 return
 	 */
-	public SRFile getSrFile(int srFileNo);
+	public SrFile getSrFile(int srFileNo);
 	
 	/**
 	 * SR 인적 자원 정보 리스트 저장
