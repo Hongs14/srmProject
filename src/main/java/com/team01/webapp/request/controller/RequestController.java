@@ -2,6 +2,7 @@ package com.team01.webapp.request.controller;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,10 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team01.webapp.model.Examine;
+import com.team01.webapp.model.RequestFilter;
+import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.request.service.IRequestService;
@@ -33,19 +39,36 @@ public class RequestController {
 	/**
 	 * 모든 SR리스트 조회
 	 * 
-	 * @author			김희률
-	 * @param session	HttpSession 객체 주입
-	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
-	 * @param pager		paging처리를 위한 pager객체 주입
-	 * @return			list뷰로 이동
+	 * @author				김희률
+	 * @param session		HttpSession 객체 주입
+	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
+	 * @param pager			paging처리를 위한 pager객체 주입
+	 * @param requestFilter	검색을 위한 필터 불러오기
+	 * @return				list뷰로 이동
 	 */
-	@RequestMapping(value="/list", method = RequestMethod.GET)
-	public String getListAll(HttpSession session, Model model, Pager pager) {
+	@RequestMapping(value="/list/{pageNo}", method = RequestMethod.GET)
+	public String getListAll(@PathVariable int pageNo, HttpSession session, RequestFilter requestFilter, Model model, Pager pager) {
 		log.info("정보 로그 실행");
-		
+		requestFilter = requestService.getFilterList(requestFilter);
+		model.addAttribute("requestfilter", requestFilter);
 		return "request/list";
 		
 	}
+	
+	@PostMapping(value="/list/filter/{pageNo}", produces="application/json; charset=UTF-8")
+	public String getExamineFilter(@PathVariable int pageNo,@RequestBody RequestList requestList, Model model, Pager pager) {
+		log.info("실행");	
+		log.info("pageNo"+pageNo);
+		pager = requestService.returnPage(pageNo,pager,requestList);
+		
+		List<RequestList> list = requestService.getRequestList(pager, requestList);
+		
+		model.addAttribute("requestList",list);
+		model.addAttribute("pager",pager);
+		
+		return "request/list";
+	}
+	
 	 
 	
 	@RequestMapping(value="/detail/{no}", method = RequestMethod.GET)
