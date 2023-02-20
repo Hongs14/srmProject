@@ -3,12 +3,12 @@ package com.team01.webapp.model;
 import lombok.Data;
 
 @Data
-public class SRFile {
+public class SrFile {
 
 	private int srFileNo;
 	private String srNo;
 	private String srFilePhysNm;
-	private String srFileExtnNm;
 	private String srFileActlNm;
+	private String srFileExtnNm;
 	
 }

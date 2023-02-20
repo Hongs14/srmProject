@@ -1,15 +1,22 @@
 package com.team01.webapp.request.controller;
 
+import java.io.File;
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.team01.webapp.model.SR;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.request.service.IRequestService;
 import com.team01.webapp.util.Pager;
 
@@ -54,14 +61,57 @@ public class RequestController {
 		return "request/detailView";
 		
 	}
-	
-	
 	@RequestMapping(value="/write", method = RequestMethod.GET)
 	public String writeRequest(HttpSession session, Model model, Pager pager) {
-		log.info("정보 로그 실행");
-		
 		return "request/write";
+	}
+	
+	
+	/**
+	 * SR 요청 작성
+	 * 
+	 * @author			김희률
+	 * @param sr		요청 정보를 담은 sr객체 주입
+	 * @param session	HttpSession 객체 주입
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
+	 */
+	@RequestMapping(value="/write", method = RequestMethod.POST)
+	public String writeRequest(SR sr, HttpSession session, Model model) {
 		
+		try {
+			sr.setSrTtl(Jsoup.clean(sr.getSrTtl(), Whitelist.basic()));
+			String content = sr.getSrCn();
+			content = content.replace("\r\n", "<br>");
+			content = content.replace("\r", "<br>");
+			content = content.replace("\n", "<br>");
+			sr.setSrCn(Jsoup.clean(content, Whitelist.basic()));
+			int userNo = (int) session.getAttribute("userNo");
+			sr.setSrCustId(userNo); 
+			sr.setSysNo(requestService.getSysNo(userNo));
+			sr.setSttsNo(1);
+			
+			
+			MultipartFile mfile = sr.getFile();
+			if(mfile!=null&& !mfile.isEmpty()) {
+				log.info(mfile.getOriginalFilename());
+				SrFile srFile = new SrFile();
+				srFile.setSrFileActlNm(mfile.getOriginalFilename());
+				srFile.setSrFileExtnNm(mfile.getContentType());
+				String physNm = new Date().getTime()+"_"+mfile.getOriginalFilename();
+				srFile.setSrFilePhysNm(physNm);
+				
+				File file = new File("C:/Temp/uploadfiles/"+physNm);
+				mfile.transferTo(file);
+				
+				requestService.writeRequest(sr, file);
+			}else {
+				requestService.writeRequest(sr);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/write";
 	}
 
 }

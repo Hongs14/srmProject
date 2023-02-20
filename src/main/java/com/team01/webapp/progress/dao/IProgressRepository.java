@@ -9,7 +9,7 @@ import com.team01.webapp.model.DeveloperSR;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
-import com.team01.webapp.model.SRFile;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SRType;
 import com.team01.webapp.model.SrProgressAjax;
@@ -88,7 +88,7 @@ public interface IProgressRepository {
 	 * @param srNo				클라이언트가 보낸 sr 번호 정보 저장
 	 * @return					뷰 첨부파일 경로 정보 리스트 return
 	 */
-	List<SRFile> selectSrFileList(String srNo);
+	List<SrFile> selectSrFileList(String srNo);
 	
 	/**
 	 * 상세 뷰 첨부파일 조회
@@ -97,7 +97,7 @@ public interface IProgressRepository {
 	 * @param srFileNo			클라이언트가 보낸 sr 파일 번호 정보 저장
 	 * @return					뷰 첨부파일 경로 정보 return
 	 */
-	SRFile selectSrFile(int srFileNo);
+	SrFile selectSrFile(int srFileNo);
 	
 	/**
 	 * SR 인적자원 리스트 조회
