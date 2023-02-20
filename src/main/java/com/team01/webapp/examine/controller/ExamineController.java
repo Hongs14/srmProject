@@ -72,6 +72,20 @@ public class ExamineController {
 		return "examine/ajaxList";
 	}
 	
+	@PostMapping(value="/summary/{pageNo}", produces="application/json; charset=UTF-8")
+	public String getExamineSummaryFilter(@PathVariable int pageNo,@RequestBody ExamineList examineList, Model model, Pager pager) {
+		log.info("실행");
+		log.info("pageNo"+pageNo);
+		pager = examineService.returnPage(pageNo,pager,examineList);
+		
+		List<Examine> list = examineService.getExamineList(pager, examineList);
+		
+		model.addAttribute("examine",list);
+		model.addAttribute("pager",pager);
+		
+		return "examine/summaryAjax";
+	}
+	
 	@GetMapping(value="/detail")
 	public String getExamineDetail() {
 		log.info("실행");
