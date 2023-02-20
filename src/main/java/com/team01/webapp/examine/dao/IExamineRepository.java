@@ -59,4 +59,6 @@ public interface IExamineRepository {
 	 * @return
 	 */
 	public int selectTotalExamineCount(ExamineList examineList);
+	
+	public Examine selectExamine(String srNo);
 }

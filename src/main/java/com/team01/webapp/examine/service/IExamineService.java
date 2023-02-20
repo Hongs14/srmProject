@@ -44,6 +44,8 @@ public interface IExamineService {
 	 * @param pager			페이징 처리
 	 * @return
 	 */
-	public  Pager returnPage(int pageNo, Pager pager, ExamineList examinelist);
+	public Pager returnPage(int pageNo, Pager pager, ExamineList examinelist);
+	
+	public Examine getExamine(String srNo);
 	
 }
