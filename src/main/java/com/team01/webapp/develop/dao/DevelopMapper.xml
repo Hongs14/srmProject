@@ -27,15 +27,16 @@
 			        sr_end_date AS srEndDate, 
 			        sr_view_yn AS srViewYn, 
 			        sr_type AS srType,
+			        sr_dev_dp as srDevDp,
 			        user_nm AS userNm, 
 			        user_ogdp AS userOgdp, 
 			        user_dp_nm AS userDpNm
 			from(
 			    select rownum as rnum, sr_no, sr_cust_no, aa.sys_no, aa.sys_nm, aa.stts_no, aa.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
-			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_view_yn, aa.sr_type,  user_nm, user_ogdp, user_dp_nm
+			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_view_yn, aa.sr_type, sr_dev_dp, user_nm, user_ogdp, user_dp_nm
 			    from(
 			      select  sr_no, sr_cust_no, sr.sys_no, system.sys_nm, sr.stts_no, sr_stts.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
-			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_view_yn, sr.sr_type, user_nm, user_ogdp, user_dp_nm
+			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_view_yn, sr.sr_type,  sr.sr_dev_dp, user_nm, user_ogdp, user_dp_nm
 			      from sr, sr_type, sr_stts, users, system
 			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no and sr.stts_no = 4 or sr.stts_no = 5 or sr.stts_no=6
 			      order by sr_no desc
@@ -65,6 +66,7 @@
 		        sr_end_date AS srEndDate, 
 		        sr_view_yn AS srViewYn, 
 		        sr_type AS srType,
+		        sr_dev_dp as srDevDp,
 		        user_nm AS userNm, 
 		        user_ogdp AS userOgdp, 
 		        user_dp_nm AS userDpNm
@@ -73,14 +75,18 @@
 		    and s.sr_type = sr_type.sr_type_no and s.sr_no = #{srNo}
 	</select>
 	
-	<select id="devList" resultType="hr">
+	<select id="devList" resultType="users">
 		SELECT USER_NO AS userNo, USER_NM AS userNm, USER_OGDP AS userOgdp, USER_DP_NM AS userDpNm 
  		FROM USERS
  		WHERE USER_TYPE = '개발자'
 	</select>
 	
 	<update id="updateSr" parameterType="developDto">
-		
+		UPDATE SR SET SR_DEV_CN=#{srDevCn}, SR_BGT=#{srBgt}, STTS_NO = #{sttsNo}, SR_DDLN_DATE=#{srDdlnDate}, SR_START_DATE=#{srStartDate},
+    			SR_END_DATE=#{srEndDate}
+		WHERE SR_NO=#{srNo};
 	</update>
+	
+	
 	
 </mapper>
