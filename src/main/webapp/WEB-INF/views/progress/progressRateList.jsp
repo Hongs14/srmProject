@@ -34,7 +34,7 @@
 					<th>${list.progStartDate}</th>
 					<th>${list.progEndDate}</th>
 					<th>${list.progRate}</th>
-					<th> 산출물 들어가는 부분 </th>
+					<th></th>
 				</tr>
 			</c:forEach>
 		</table>

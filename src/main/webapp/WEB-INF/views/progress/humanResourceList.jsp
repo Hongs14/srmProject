@@ -88,6 +88,9 @@
 				<div class="modal-body" style="white-space: normal;">
 					<h5 id="message"></h5>
 				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
+				</div>
 			</div>
 		</div>
 	</div>
