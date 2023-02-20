@@ -2,12 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team01.webapp.notice.dao.INoticeRepository">
 	
-	<select id="count" resultType="int">
+	<!-- 전체 공지사항 행수 
+		 @author : 황건희
+	-->
+	<select id="selectTotalNoticeListCount" resultType="int">
 		SELECT COUNT(*) FROM NOTICE
 	</select>
 	
-	<!-- 게시글 목록 -->
-	<select id="list" parameterType="pager" resultType="notice">
+	<!-- 게시글 목록 
+		@author : 황건희
+	-->
+	<select id="selectNoticeList" parameterType="pager" resultType="notice">
 		<![CDATA[
 			SELECT 
 			    RNUM AS "seq",
@@ -44,8 +49,10 @@
 		]]>
 	</select>
 	
-	<!-- 게시글 작성 -->
-	<insert id="write" parameterType="notice">
+	<!-- 게시글 작성
+		@author : 황건희
+	 -->
+	<insert id="insertNoticeWrite" parameterType="notice">
 		<selectKey keyProperty="ntcNo" resultType="int" order="BEFORE">
 			SELECT ntcno_seq.nextval FROM dual
 		</selectKey>
@@ -56,8 +63,10 @@
 		
 	</insert>
 	
-	<!-- 첨부파일 -->
-	<insert id="noticeFileUpload" parameterType="noticeFile">
+	<!-- 첨부파일 
+		 @author : 황건희
+	-->
+	<insert id="insertNoticeFileUpload" parameterType="noticeFile">
 		<![CDATA[
 			INSERT INTO NTC_FILE( NTC_FILE_NO, NTC_NO, NTC_FILE_PHYS_NM, NTC_FILE_ACTL_NM, NTC_FILE_EXTN_NM)
 			VALUES(ntcFileNo_seq.nextval, #{ntcNo}+1, #{ntcFilePhysNm}, #{ntcFileActlNm}, #{ntcFileExtnNm})
@@ -65,8 +74,10 @@
 	</insert>
 	
 
-	<!-- 게시글 상세조회 -->
-	<select id="detail" parameterType="int" resultType="notice">
+	<!-- 게시글 상세조회 
+		@author : 황건희	
+	-->
+	<select id="selectNoticeDetail" parameterType="int" resultType="notice">
 		SELECT 
 		    n.NTC_TTL AS ntcTtl,
 		    n.NTC_NO AS ntcNo,
@@ -85,28 +96,36 @@
 		WHERE n.NTC_NO = #{ntcNo}
 	</select>
 	
-	<!-- 게시글 조회수 -->
-	<update id="inqCnt" parameterType="int">
+	<!-- 게시글 조회수
+		@author : 황건희	
+	 -->
+	<update id="selectInqCnt" parameterType="int">
 		UPDATE NOTICE
 		SET NTC_INQ_CNT = NTC_INQ_CNT+1
 		WHERE NTC_NO = #{ntcNo} 
 		
 	</update>
 	
-	<!-- 게시글 수정 -->
-	<update id="update" parameterType="notice">
+	<!-- 게시글 수정 
+		@author : 황건희	
+	-->
+	<update id="updateNotice" parameterType="notice">
 		UPDATE NOTICE
 		SET NTC_CN = #{ntcCn}
 		WHERE NTC_NO = #{ntcNo}
 	</update>
 	
-	<!-- 게시글 삭제 -->
+	<!-- 게시글 삭제 
+		@author : 황건희	
+	-->
 	<delete id="delete" parameterType="int">
 		DELETE FROM NOTICE
 		WHERE NTC_NO = #{ntcNo}
 	</delete>
 	
-	<!-- 첨부파일 수정 -->
+	<!-- 첨부파일 수정
+		@author : 황건희	
+	 -->
 	<update id="updateFile" parameterType="noticeFile">
 		UPDATE NTC_FILE
 		SET 
@@ -117,11 +136,14 @@
 			
 	</update>	
 	
+	<!-- DB의 최신 첨부파일 No 
+		@author : 황건희	
+	-->
 	<select id="selectMaxFileNo" resultType="int">
 		SELECT COUNT(*) FROM NTC_FILE
 	</select>
 	
-	<insert id="noticeFileUpdateUpload" parameterType="noticeFile">
+	<insert id="updateNoticeFileUpload" parameterType="noticeFile">
 		<![CDATA[
 			INSERT INTO NTC_FILE( NTC_FILE_NO, NTC_NO, NTC_FILE_PHYS_NM, NTC_FILE_ACTL_NM, NTC_FILE_EXTN_NM)
 			VALUES(#{ntcFileNo}, #{ntcNo}, #{ntcFilePhysNm}, #{ntcFileActlNm}, #{ntcFileExtnNm})

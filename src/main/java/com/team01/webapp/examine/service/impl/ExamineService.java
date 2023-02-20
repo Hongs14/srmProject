@@ -28,22 +28,35 @@ public class ExamineService implements IExamineService {
 	@Override
 	public int getTotalRows() {
 		log.info("실행");
-		int rows = examineRepository.count();
+		int rows = examineRepository.selectExamineListAllCount();
 		return 0;
 	}
 
+
+	/**
+	 * SR 검토 리스트 가져오기
+	 * @author : 황건희
+	 * @param examinelist	SR 검토 리스트 가져오기
+	 * @param pager			페이징 처리
+	 * @return
+	 */
 	@Override
 	public List<Examine> getExamineList(Pager pager,ExamineList examinelist) {
 		log.info("실행");
 		
 		examinelist.setStartRowNo(pager.getStartRowNo());
 		examinelist.setEndRowNo(pager.getEndRowNo());
-		
-		List<Examine> examineList = examineRepository.list(examinelist);
+		List<Examine> examineList = examineRepository.selectExaminelist(examinelist);
 		
 		return examineList;
 	}
 
+	/**
+	 * SR 검토 검색 조건에 대한 리스트 
+	 * @author : 황건희
+	 * @param examineFilter	SR 검토 검색 조건에 대해 해당 리스트 가져오기
+	 * @return
+	 */
 	@Override
 	public ExamineFilter filterList(ExamineFilter examineFilter) {
 		log.info("실행");
@@ -71,10 +84,19 @@ public class ExamineService implements IExamineService {
 		
 		return examineFilter;
 	}
-
+	
+	/**
+	 * SR 검토 목록 페이지 처리
+	 * @author : 황건희
+	 * @param examinelist	SR 검토 목록 페이지에 따른 리스트 가져오기
+	 * @param pageNo		SR 검토 목록 페이지 위치
+	 * @param pager			페이징 처리
+	 * @return
+	 */
 	@Override
 	public Pager returnPage(int pageNo, Pager pager, ExamineList examinelist) {
 		log.info("실행");
+		log.info(examinelist);
 		int totalListNum = (int) examineRepository.selectTotalExamineCount(examinelist);
 		log.info(totalListNum);
 		pager = new Pager(10,5,totalListNum,pageNo);
