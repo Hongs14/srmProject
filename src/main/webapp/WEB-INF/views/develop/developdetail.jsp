@@ -16,11 +16,19 @@
    			
    			function registerDevelop(){
    				console.log("개발계획 등록");
-   				let data = $('#devleopForm').serialize(); 
+   				let srDevCn = $('#srDevCn').val();
+   				let srDdlnDate = $('#srDdlnDate').val();
+   				let srStartDate = $('#srStartDate').val();
+   				let srEndDate =  $('#srEndDate').val();
+   				let srDevDp = $('#srDevDp').val();
+   				let sttsNo = $('#sttsNo').val();
+   				let srBgt = $('#srBgt').val();
+   				let srNo = $('#srNo').val();
+   				
+   				let data = {srDevCn: srDevCn, srBgt: srBgt, sttsNo: sttsNo, srDdlnDate: srDdlnDate, srStartDate: srStartDate, 
+   						srEndDate: srEndDate, srDevDp: srDevDp, srNo: srNo};
    				console.log(data);
-   			 	/* let dp = $('#srDevDp').val();
-   			 	console.log(dp); 
-   			 	let data = {srDevDep:dp};  */
+				
    			 
    				$.ajax({
    					url: '<c:url value="/develop/register"/>',
@@ -28,7 +36,7 @@
    					data: JSON.stringify(data),
    					contentType: "application/json; charset=UTF-8"
    				}).done((data) => {
-   					console.log(data);
+   					console.log("성공");
    				});
    			};
    		</script>
@@ -98,7 +106,7 @@
 	                                           		<div class="form-group row">
 	                                              		<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">개발담당자</h6></div>
 	                                              		<div class="col-sm-9">
-			                                                 <select onchange="selectDev(this);" class="form-control">
+			                                                 <select onchange="selectDev(this);" id="srDLeader" class="form-control">
 			                                                 	<option></option>
 			                                                 	<c:forEach var="users" items="${devlist}">
 				                                                    <option value="${users.userDpNm}">${users.userNm}</option>
@@ -115,7 +123,7 @@
 		                                           	<div class="form-group row">
 		                                            	<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">진행상태</h6></div>
 		                                              	<div class="col-sm-9">
-			                                            	<select name="sttsNo" class="form-control">
+			                                            	<select id="sttsNo" name="sttsNo" class="form-control">
 			                                                	<option></option>
 			                                                    <option value="5">개발중</option>
 			                                                    <option value="6">개발완료</option>
@@ -126,7 +134,7 @@
 	                                           		<div class="form-group row mb-2">
 	                                              		<div class="col-sm-3 col-form-control pr-0"><h6 class="m-0 font-weight-bold text-primary">개발 내용</h6></div>
 		                                           		<div class="col-sm-9 p-2">
-		                                            		<textarea name="srDevCn" style="width: 100%"></textarea>
+		                                            		<textarea name="srDevCn" id="srDevCn" style="width: 100%"></textarea>
 		                                          		</div>                                 
 	                                    			</div>
 	                                     		</div>
@@ -135,30 +143,30 @@
 	                                           		<div class="form-group row">
 	                                            		<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">완료(예정)일</h6></div>
 	                                            		<div class="col-sm-9">
-	                                                 		<input type="date" name="srDdlnDate" class="form-control"/>
+	                                                 		<input type="date" id="srDdlnDate" name="srDdlnDate" class="form-control"/>
 	                                              		</div>
 	                                           		</div>
 		                                           	<div class="form-group row">
 		                                            	<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">소요예산</h6></div>
 		                                            	<div class="col-sm-9">
-		                                                	<input type="text" name="srBgt" class="form-control"/>
+		                                                	<input type="text" id ="srBgt" name="srBgt" class="form-control" value=""/>
 		                                              	</div>
 		                                          	</div>
 		                                        	<div class="form-group row">
 		                                     			<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">계획 시작일</h6></div>
 		                                              	<div class="col-sm-9">
-		                                                	<input type="date" name="srStartDate" class="form-control"/>
+		                                                	<input type="date" id="srStartDate" name="srStartDate" class="form-control"/>
 		                                             	 </div>
 		                                           	</div>
 		                                    		<div class="form-group row">
 		                                            	<div class="col-sm-3 col-form-label"><h6 class="m-0 font-weight-bold text-primary">계획 종료일</h6></div>
 		                                            	<div class="col-sm-9">
-		                                                	<input type="date" name="srEndDate" class="form-control" required/>
+		                                                	<input type="date" id="srEndDate" name="srEndDate" class="form-control" required/>
 		                                              	</div>
 		                                           	</div>
 		                                           	<div class="text-right">
-		                                           		<input type="hidden" name="srNo" value="${dlist.srNo}"/>
-		                                           		<button type="button" class="btn btn-sm btn-primary" onclick="registerDevelop()">버튼</button>
+		                                           		<input type="hidden" id="srNo" value="${dlist.srNo}"/>
+		                                           		<button type="button" id="button" class="btn btn-sm btn-primary" onclick="registerDevelop()">저장</button>
 		                                           	</div>
 	                                        	</div>
                                         	</div>
