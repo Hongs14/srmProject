@@ -50,9 +50,48 @@
 				</tbody>
 			</table>
 		</div>
-		<div>
-			<h5>산출물</h5>
+		<div class="p-3">
+			<div class="row mb-2">
+				<span class=" font-weight-bold col-sm-2">첨부파일: </span> 
+				<div class="custom-file col-sm-9">
+					<input type="file" class="custom-file-input form-control" onchange="addProgressRateFile(this)" multiple/> 
+					<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
+				</div>
+			</div>
+			<div class="row mb-2">
+				<span class=" font-weight-bold col-sm-2">파일목록: </span> 
+				<div class="col-sm-9" id="userfile"></div>
+			</div>
 		</div>
+		<script>
+			var fileNo = 0;
+			var fileArr = new Array();
+			
+			/* 첨부파일 추가 */
+			function addProgressRateFile(obj) {
+				var maxFileCnt = 3; // 첨부파일의 최대 개수
+				var attFileCnt = document.querySelectorAll('.filebox').length; // 기존 추가된 첨부파일 개수
+				var remainFileCnt = maxFileCnt - attFileCnt;    // 추가로 첨부가능한 개수
+				var curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
+				
+				// 첨부파일 개수 확인
+				if(curFileCnt > remainFileCnt) {
+					alert("첨부파일은 최대 " + maxFileCnt + "개 까지 첨부 가능합니다.");
+				} else {
+					 for (const file of obj.files) {
+					 	// 첨부파일 검증
+					 	if (validation(file)) {
+					 		// 파일 배열에 담기
+					 		var reader = new FileReader();
+					 		reader.onload = function () {
+					 			fileArr.push(file);
+					 		};
+					 		reader.readAsDataURL(file);
+					 	}
+					 }
+				}
+			}
+		</script>
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
