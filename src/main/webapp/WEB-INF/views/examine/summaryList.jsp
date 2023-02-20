@@ -14,8 +14,8 @@
 				<div class="col-4">
 					<div class="form-group row" id="simple-date4" >
 			 			<div class="input-daterange input-group input-group-sm">
-			 				<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
-			     			<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" id="dateStart"/>
+			 				<label for="start" class="col-sm-4 col-form-label-sm">조회기간</label>
+			     			<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart"/>
 			     			<div class="input-group-prepend">
 			     				<span class="input-group-text" style="height:31px;">~</span>
 			     			</div>
@@ -25,8 +25,8 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group row">
-						<label class="col-sm-3 col-form-label-sm" for="sttsNo">진행상태</label>
-		    			<select class="form-control form-control-sm col-sm-9" id="sttsNo">
+						<label class="col-sm-4 col-form-label-sm" for="sttsNo">진행상태</label>
+		    			<select class="form-control form-control-sm col-sm-8" id="sttsNo">
 		        			<option value="0" selected="selected">전체</option>
 		        			<option value="1">요청</option>
 		        			<option value="2">검토중</option>
@@ -37,8 +37,8 @@
 				</div>
 				<div class="col-4">
 					<div class="form-group row">
-						<label for="exampleFormControlSelect1 sysNo" class="col-sm-3 col-form-label-sm">관련시스템</label>
-		    			<select class="form-control form-control-sm col-sm-9" id="sysNo">
+						<label for="exampleFormControlSelect1 sysNo" class="col-sm-4 col-form-label-sm">관련시스템</label>
+		    			<select class="form-control form-control-sm col-sm-8" id="sysNo">
 		        			<option value="0">전체</option>
 		        			<c:forEach var="system" items="${examineFilter.sysNmList}">		                        	
 		  						<option value="${system.sysNo }">${system.sysNm}</option>
@@ -51,8 +51,8 @@
 			<div class="row">
 				<div class="col-4">
 					<div class="form-group row">
-						<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">등록자 소속</label>
-			   			<select class="form-control form-control-sm col-sm-9" id="userOgdp">
+						<label for="exampleFormControlSelect1" class="col-sm-4 col-form-label-sm">등록자 소속</label>
+			   			<select class="form-control form-control-sm col-sm-8" id="userOgdp">
 			       			<option value="0">전체</option>
 			       			<c:forEach var="users" items="${examineFilter.userOgdpList}">		                        	
 			  					<option>${users.userOgdp}</option>
@@ -62,8 +62,8 @@
 				</div>
 				<div class="col-3">
 					<div class="form-group row">
-						<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">부서</label>
-			  			<select class="form-control form-control-sm col-sm-9" id="userDpNm">
+						<label for="exampleFormControlSelect1" class="col-sm-4 col-form-label-sm">부서</label>
+			  			<select class="form-control form-control-sm col-sm-8" id="userDpNm">
 			      			<option value="0">전체</option>
 			      			<c:forEach var="users" items="${examineFilter.userDpList}">		                        	
 			  					<option>${users.userDpNm}</option>
@@ -80,7 +80,7 @@
    				</div>
    				<div class="col-1">
 					<div class="input-group-append float-right">
-						<button class="btn btn-primary btn-sm" type="button" onclick="examineList(1)" >조회 <i class="fas fa-search fa-sm"></i></button>
+						<button class="btn btn-primary btn-sm" type="button" onclick="examineSummaryList(1)" >조회 <i class="fas fa-search fa-sm"></i></button>
 					</div>
    				</div>
   				<script>
@@ -115,7 +115,7 @@
 						});
 					});
 					
-					function examineList(pageNo) {
+					function examineSummaryList(pageNo) {
 						console.log(pageNo);
 						var sysNoSelect = document.getElementById("sysNo");
 						var sttsNoSelect = document.getElementById("sttsNo");
@@ -156,7 +156,7 @@
   		</div>
     </div> 
 	<form>
-		<div id="ajaxList" style="width:100%"></div>
+		<div id="summaryAjax" style="width:100%"></div>
 		<script>
 			function selectAll(selectAll) {
 				const checkboxes = document.querySelectorAll('input[type="checkbox"]');

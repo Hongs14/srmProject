@@ -49,6 +49,7 @@ public class ExamineController {
 		return "examine/list";
 	}
 	
+	
 	/**
 	 * SR 요청에 대한 필터링 후 리스트 가져오기
 	 * @author : 황건희
@@ -86,9 +87,44 @@ public class ExamineController {
 		return "examine/summaryAjax";
 	}
 	
+	/**
+	 * SR 검토 상세 조회
+	 * @author : 황건희
+	 * @param examineFilter 필터링 후 SR 검토 리스트 가져오기
+	 * @param model
+	 * @return
+	 */
 	@GetMapping(value="/detail")
-	public String getExamineDetail() {
+	public String getExamineDetail(String srNo,ExamineFilter examineFilter , Model model) {
 		log.info("실행");
+
+		examineFilter = examineService.filterList(examineFilter);
+		model.addAttribute("examineFilter",examineFilter);
+		
+		getExamineDetailView(srNo,model);
+		
+		return "examine/detail";
+	}
+	
+	@GetMapping(value="/detailView")
+	public String getExamineDetailView(String srNo,Model model) {
+		log.info("실행");
+		log.info(srNo);
+		
+		Examine examine = examineService.getExamine(srNo);
+		model.addAttribute("examine",examine);
+		
+		return "examine/detailView";
+	}
+	
+	@PostMapping(value="/detailView")
+	public String updateExamine(Examine examine) {
+		log.info("실행");
+		log.info(examine);
+		
+		examineService.updateExamine(examine);
+		
+		
 		return "examine/detail";
 	}
 	
