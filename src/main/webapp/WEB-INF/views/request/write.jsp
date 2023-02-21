@@ -55,6 +55,61 @@
 		</div>
 	<%@include file="/WEB-INF/views/common/bottom.jsp"%>
 	 <script src="${pageContext.request.contextPath}/resources/js/writeRequest.js"></script>
+	 <script>
+	$(document).ready(function () {
+		console.log("시작");
+		var sysNoSelect = document.getElementById("sysNo");
+		var sttsNoSelect = document.getElementById("sttsNo");
+		var userOgdpSelect = document.getElementById("userOgdp");
+		var srDevDpSelect = document.getElementById("srDevDp");
+		
+	
+		var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+		var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+		var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].value;
+ 		var srDevDp = srDevDpSelect.options[document.getElementById("srDevDp").selectedIndex].value;  
+		
+		let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp};
+		
+		console.log(data);
+		
+		$.ajax({
+			url : "summarylist/1",
+			method : "post",
+			data : JSON.stringify(data),
+			contentType: "application/json; charset=UTF-8"
+		}).done((data) => {
+			$("#ajaxList").html(data);
+		});
+	});
+
+	function requestList(pageNo) {
+		console.log(pageNo);
+		var sysNoSelect = document.getElementById("sysNo");
+		var sttsNoSelect = document.getElementById("sttsNo");
+		var userOgdpSelect = document.getElementById("userOgdp");
+		var srDevDpSelect = document.getElementById("srDevDp");
+		
+		var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+		var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+		var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].value;
+ 		var srDevDp = srDevDpSelect.options[document.getElementById("srDevDp").selectedIndex].value;  
+		
+		
+ 		let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp};
+		
+		console.log(data);
+		
+		$.ajax({
+			url : "summarylist/"+pageNo,
+			method : "post",
+			data : JSON.stringify(data),
+			contentType: "application/json; charset=UTF-8"
+		}).done((data) => {
+			$("#ajaxList").html(data);
+		});
+	}
+</script>
 </body>
 
 </html>
