@@ -6,16 +6,7 @@
 
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
-  	<script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-	<!-- Bootstrap Datepicker -->
-  	<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-  	<!-- RuangAdmin Javascript -->
-  	<script src="${pageContext.request.contextPath}/resources/js/ruang-admin.min.js"></script>
-  	
-  	
   	<script>
 	  	$(document).ready(function () {
 		    $('#simple-date4 .input-daterange').datepicker({        
@@ -145,13 +136,18 @@
 												var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
 												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 												var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
+
+												var srRegStartDate = document.getElementById("dateStart").value;
+												var srRegEndDate = document.getElementById("dateEnd").value;
 												
 												console.log(sysNo);
 												console.log(sttsNo);
 												console.log(userOgdp);
 												console.log(userDpNm);
+												console.log(srRegStartDate);
+												console.log(srRegEndDate);
 												
-												let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm};
+												let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate};
 												
 												console.log(data);
 												
@@ -177,8 +173,17 @@
 												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 												var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
 												
+												var srRegStartDate = document.getElementById("dateStart").value;
+												var srRegEndDate = document.getElementById("dateEnd").value;
 												
-												let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm};
+												console.log(sysNo);
+												console.log(sttsNo);
+												console.log(userOgdp);
+												console.log(userDpNm);
+												console.log(srRegStartDate);
+												console.log(srRegEndDate);
+												
+												let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate};
 												
 												console.log(data);
 												
@@ -211,11 +216,35 @@
 									function selectAll(selectAll) {
 										const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 									  
-									  checkboxes.forEach((checkbox) => {
-									    checkbox.checked = selectAll.checked
-									  })
+									  	checkboxes.forEach((checkbox) => {
+									    	checkbox.checked = selectAll.checked
+									  	})
 										
 									}
+									
+									function selectUnderReview() {
+										
+										
+										const query = 'input[name="examineCheck"]:checked';
+									  	const selectedEls = 
+										      document.querySelectorAll(query);
+										  
+								  		let data = '';
+								  		
+									  	selectedEls.forEach((el) => {
+									  		data = {srNo : el.value , sttsNm : '검토중', srPry : '상', srReqSe : '개발(신규)', srOpnn : ''};
+										  	$.ajax({
+												url : "processing",
+												method : "post",
+												data : JSON.stringify(data),
+												contentType: "application/json; charset=UTF-8"
+											}).done((data) => {
+												$("#ajaxList").html(data);
+											});
+									  	});
+
+									}
+									
 								</script>
 			                </form>           
 						</div>

@@ -96,12 +96,17 @@
 						var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 						var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
 						
+						var srRegStartDate = document.getElementById("dateStart").value;
+						var srRegEndDate = document.getElementById("dateEnd").value;
+						
 						console.log(sysNo);
 						console.log(sttsNo);
 						console.log(userOgdp);
 						console.log(userDpNm);
+						console.log(srRegStartDate);
+						console.log(srRegEndDate);
 						
-						let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm};
+						let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate};
 						
 						console.log(data);
 						
@@ -127,8 +132,17 @@
 						var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 						var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
 						
+						var srRegStartDate = document.getElementById("dateStart").value;
+						var srRegEndDate = document.getElementById("dateEnd").value;
 						
-						let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm};
+						console.log(sysNo);
+						console.log(sttsNo);
+						console.log(userOgdp);
+						console.log(userDpNm);
+						console.log(srRegStartDate);
+						console.log(srRegEndDate);
+						
+						let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate};
 						
 						console.log(data);
 						
@@ -165,6 +179,28 @@
     				checkbox.checked = selectAll.checked
 				})
 	
+			}
+			function selectUnderReview() {
+				
+				
+				const query = 'input[name="examineCheck"]:checked';
+			  	const selectedEls = 
+				      document.querySelectorAll(query);
+				  
+		  		let data = '';
+		  		
+			  	selectedEls.forEach((el) => {
+			  		data = {srNo : el.value , sttsNm : '검토중', srPry : '상', srReqSe : '개발(신규)', srOpnn : ''};
+				  	$.ajax({
+						url : "detailView",
+						method : "post",
+						data : JSON.stringify(data),
+						contentType: "application/json; charset=UTF-8"
+					}).done((data) => {
+						$("#summaryAjax").html(data);
+					});
+			  	});
+
 			}
 		</script>
 	</form>

@@ -16,6 +16,16 @@
 	display:block;
 	}	
 </style>
+<script>
+	$(document).ready(function () {
+  		$('#simple-date4 .input-daterange').datepicker({        
+	      format: 'yyyy/mm/dd',        
+	      autoclose: true,     
+	      todayHighlight: true,   
+	      todayBtn: 'linked',
+	    });  
+	});
+</script>
 </head>
 
 <body id="page-top">
