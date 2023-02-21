@@ -41,10 +41,13 @@
 			                      <input type="password" class="form-control" id="userPswd" name="userPswd" placeholder="Password">
 			                    </div>
 			                    <div class="form-group">
+			                    <div class="row">
 			                      <button type="submit" class="btn btn-primary btn-block">로그인 </button>
+			                    </div>
 			                    </div>
 			                     <div class="text-center">
 			                    <a class="font-weight-bold small" href="${pageContext.request.contextPath}/user/join">회원가입</a>
+			                    <a class="font-weight-bold small" href="${pageContext.request.contextPath}/user/join">비밀번호 찾기</a>
 			                  </div>
 			                  </form>
 			                  </div> 
