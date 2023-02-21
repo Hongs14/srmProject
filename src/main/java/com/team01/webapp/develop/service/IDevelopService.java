@@ -12,7 +12,9 @@ public interface IDevelopService {
 	public int totalRow();
 	public List<SR> getDevelopList(Pager pager);
 	public SrDevelopDto getDetail(String srNo);
+	
 	public List<Users> getDevelopList();
 	public int updateDevelop(SrDevelopDto srDevelop);
+	public List<Users> selectDeveloperList(String userDpNm);
 
 }

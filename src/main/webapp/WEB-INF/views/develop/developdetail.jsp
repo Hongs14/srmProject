@@ -44,8 +44,8 @@
                  		modal += 	'<div class="col-3">전화번호</div>';
                  		modal += 	'<div class="col-5">업무사항</div>';
                  		modal += '</div>';
-                 	
                  		
+                 	
    						$('.modal-body').append(modal);
    					}  
    				 }); 

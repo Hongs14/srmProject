@@ -81,11 +81,12 @@ public class DevelopController {
 		return result;
 	}
 	
+	
 	@GetMapping(value="/devlist", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public List<Users> getDevList(@RequestParam String userDp) {
-//		List<Users> list = developService.selectDevList();
-//		컨트롤러부터 로직 짜기
+		List<Users> list = developService.selectDeveloperList(userDp);
+		log.info("팀별 개발자 조회");
 		return list;
 	}
 
