@@ -59,4 +59,14 @@ public interface IExamineRepository {
 	 * @return
 	 */
 	public int selectTotalExamineCount(ExamineList examineList);
+	
+	/**
+	 * SR 검토 상세 조회
+	 * @author : 황건희
+	 * @param srNo
+	 * @return
+	 */
+	public Examine selectExamine(String srNo);
+	
+	public void updateExamine(Examine examine);
 }

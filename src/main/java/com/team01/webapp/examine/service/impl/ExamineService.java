@@ -96,12 +96,28 @@ public class ExamineService implements IExamineService {
 	@Override
 	public Pager returnPage(int pageNo, Pager pager, ExamineList examinelist) {
 		log.info("실행");
-		log.info(examinelist);
 		int totalListNum = (int) examineRepository.selectTotalExamineCount(examinelist);
 		log.info(totalListNum);
 		pager = new Pager(10,5,totalListNum,pageNo);
 		
 		return pager;
+	}
+
+
+	@Override
+	public Examine getExamine(String srNo) {
+		
+		Examine examine = examineRepository.selectExamine(srNo);
+		
+		return examine;
+	}
+
+
+	@Override
+	public void updateExamine(Examine examine) {
+		
+		examineRepository.updateExamine(examine);
+		
 	}
 
 }
