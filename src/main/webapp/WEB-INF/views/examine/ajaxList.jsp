@@ -38,7 +38,7 @@
 						<td>${examine.sttsNm}</td>
 						<td>${examine.srRegDate}</td>
 						<td>${examine.srPry}</td>
-						<td><a href="${pageContext.request.contextPath}/examine/detail?srNo=${examine.srNo}" class="btn btn-sm btn-info">상세보기</a></td>
+						<td><a href="${pageContext.request.contextPath}/examine/detail?srNo=${examine.srNo}" class="btn btn-sm btn-primary">상세보기</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

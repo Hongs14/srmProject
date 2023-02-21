@@ -69,7 +69,7 @@ public class ExamineController {
 		
 		model.addAttribute("examine",list);
 		model.addAttribute("pager",pager);
-		
+
 		return "examine/ajaxList";
 	}
 	
@@ -124,7 +124,7 @@ public class ExamineController {
 	 * @return
 	 */
 	@PostMapping(value="/detailView")
-	public String updateExamine1(Examine examine) {
+	public String updateExamine(Examine examine) {
 		log.info("실행");
 		log.info(examine);
 		
@@ -134,13 +134,36 @@ public class ExamineController {
 	}
 	
 	@PostMapping(value="/processing")
-	public String updateExamine2(@RequestBody Examine examine) {
+	public String updateExamineProcessing(@RequestBody ExamineList examineList,Model model, Pager pager) {
 		log.info("실행");
-		log.info(examine);
+
+		examineService.updateExamineProcessing(examineList);
 		
-		examineService.updateExamine(examine);
+		pager = examineService.returnPage(1,pager,examineList);
 		
-		return "examine/list";
+		List<Examine> list = examineService.getExamineList(pager, examineList);
+		
+		model.addAttribute("examine",list);
+		model.addAttribute("pager",pager);
+		
+		return "examine/ajaxList";
 	}
+	
+	@PostMapping(value="/summaryProcessing")
+	public String updateExamineSummaryProcessing(@RequestBody ExamineList examineList,Model model, Pager pager) {
+		log.info("실행");
+
+		examineService.updateExamineProcessing(examineList);
+		
+		pager = examineService.returnPage(1,pager,examineList);
+		
+		List<Examine> list = examineService.getExamineList(pager, examineList);
+		
+		model.addAttribute("examine",list);
+		model.addAttribute("pager",pager);
+		
+		return "examine/summaryAjax";
+	}
+	
 	
 }

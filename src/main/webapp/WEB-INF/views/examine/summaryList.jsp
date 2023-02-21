@@ -98,15 +98,22 @@
 						
 						var srRegStartDate = document.getElementById("dateStart").value;
 						var srRegEndDate = document.getElementById("dateEnd").value;
+						var srTtl = document.getElementById("keyword").value;
+						
+						if(srTtl !== "") {
+							srTtl = "%" + srTtl + "%";
+						}
 						
 						console.log(sysNo);
 						console.log(sttsNo);
+						console.log(srTtl);
 						console.log(userOgdp);
 						console.log(userDpNm);
 						console.log(srRegStartDate);
 						console.log(srRegEndDate);
 						
-						let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate};
+						let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
+								srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 						
 						console.log(data);
 						
@@ -134,15 +141,22 @@
 						
 						var srRegStartDate = document.getElementById("dateStart").value;
 						var srRegEndDate = document.getElementById("dateEnd").value;
+						var srTtl = document.getElementById("keyword").value;
+						
+						if(srTtl !== "") {
+							srTtl = "%" + srTtl + "%";
+						}
 						
 						console.log(sysNo);
 						console.log(sttsNo);
+						console.log(srTtl);
 						console.log(userOgdp);
 						console.log(userDpNm);
 						console.log(srRegStartDate);
 						console.log(srRegEndDate);
 						
-						let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate};
+						let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
+								srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 						
 						console.log(data);
 						
@@ -165,7 +179,7 @@
 		<h6 class="m-0 font-weight-bold text-primary">SR 검토 목록</h6>
        	<div class="d-sm-flex justify-content-end">
      		<button class="btn btn-sm btn-secondary mr-1" onclick='selectUnderReview()'>일괄 처리 (검토중)</button>
-     		<button class="btn btn-sm btn-secondary mr-1">일괄 처리 (접수)</button>
+     		<button class="btn btn-sm btn-secondary mr-1" onclick='selectreception()'>일괄 처리 (접수)</button>
      		<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
   		</div>
     </div> 
@@ -182,7 +196,23 @@
 			}
 			function selectUnderReview() {
 				
+				var sysNoSelect = document.getElementById("sysNo");
+				var sttsNoSelect = document.getElementById("sttsNo");
+				var userOgdpSelect = document.getElementById("userOgdp");
+				var userDpSelect = document.getElementById("userDpNm");
 				
+				var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].text;
+				var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+				var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
+				var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
+				
+				var srRegStartDate = document.getElementById("dateStart").value;
+				var srRegEndDate = document.getElementById("dateEnd").value;
+				var srTtl = document.getElementById("keyword").value;
+				
+				if(srTtl !== "") {
+					srTtl = "%" + srTtl + "%";
+				}
 				const query = 'input[name="examineCheck"]:checked';
 			  	const selectedEls = 
 				      document.querySelectorAll(query);
@@ -190,9 +220,59 @@
 		  		let data = '';
 		  		
 			  	selectedEls.forEach((el) => {
-			  		data = {srNo : el.value , sttsNm : '검토중', srPry : '상', srReqSe : '개발(신규)', srOpnn : ''};
+			  		data = {srNo : el.value , sttsNm : '검토중', srPry : '상', srReqSe : '개발(신규)', srOpnn : '',
+			  				sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm, 
+			  				srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl			
+			  		};
+			  		
+			  		console.log(data);
+			  		
 				  	$.ajax({
-						url : "detailView",
+				  		url : "summaryProcessing",
+						method : "post",
+						data : JSON.stringify(data),
+						contentType: "application/json; charset=UTF-8"
+					}).done((data) => {
+						$("#summaryAjax").html(data);
+					});
+			  	});
+
+			}
+			
+			function selectreception() {
+				var sysNoSelect = document.getElementById("sysNo");
+				var sttsNoSelect = document.getElementById("sttsNo");
+				var userOgdpSelect = document.getElementById("userOgdp");
+				var userDpSelect = document.getElementById("userDpNm");
+				
+				var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].text;
+				var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+				var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
+				var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
+				
+				var srRegStartDate = document.getElementById("dateStart").value;
+				var srRegEndDate = document.getElementById("dateEnd").value;
+				var srTtl = document.getElementById("keyword").value;
+				
+				if(srTtl !== "") {
+					srTtl = "%" + srTtl + "%";
+				}
+				const query = 'input[name="examineCheck"]:checked';
+			  	const selectedEls = 
+				      document.querySelectorAll(query);
+				  
+		  		let data = '';
+		  		
+			  	selectedEls.forEach((el) => {
+			  		data = {srNo : el.value , sttsNm : '접수', srPry : '상', srReqSe : '개발(신규)', srOpnn : '',
+			  				sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm, 
+			  				srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl			
+			  		};
+			  		
+			  		console.log(data);
+			  		
+				  	$.ajax({
+				  		url : "summaryProcessing",
 						method : "post",
 						data : JSON.stringify(data),
 						contentType: "application/json; charset=UTF-8"
