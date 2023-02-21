@@ -15,6 +15,7 @@ import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SRType;
 import com.team01.webapp.model.System;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.request.dao.IRequestRepository;
 import com.team01.webapp.util.Pager;
 
@@ -59,6 +60,8 @@ public class RequestService implements IRequestService{
 		List<System> systemList = new ArrayList<>();
 		List<SRType> srTypeList = new ArrayList<>();
 		List<SRStts> srSttsList = new ArrayList<>();
+		List<Users> userOgdpList = new ArrayList<>();
+		List<SR> srDevDpList = new ArrayList<>();
 		
 		// 시스템 구분 리스트
 		systemList = requestRepository.selectSysNmList();
@@ -71,6 +74,14 @@ public class RequestService implements IRequestService{
 		// 진행 상태 리스트
 		srSttsList = requestRepository.selectSttsNmList();
 		requestFilter.setSrSttsList(srSttsList);
+		
+		//요청자 소속사 리스트
+		userOgdpList = requestRepository.selectUserOgdpList();
+		requestFilter.setUserOgdpList(userOgdpList);
+		
+		//개발 부서 리스트
+		srDevDpList = requestRepository.selectSrDevDpList();
+		requestFilter.setSrDevDpList(srDevDpList);
 		
 		return requestFilter;
 	}

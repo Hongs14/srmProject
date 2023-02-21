@@ -9,6 +9,6 @@ public class RequestFilter {
 	private List<System> SysNmList;
 	private List<SRType> SrTypeList;
 	private List<SRStts> SrSttsList;
-	private List<String> UserOgdpList;
-	private List<String> SrDevDpList;
+	private List<Users> UserOgdpList;
+	private List<SR> SrDevDpList;
 }

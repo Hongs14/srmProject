@@ -13,6 +13,7 @@
 			SYS_NO AS "sysNo",
 			SYS_NM AS "sysNm"
 		FROM SYSTEM
+         WHERE SYS_NM != '한국소프트SRM'
 	</select>
 
 
@@ -29,6 +30,20 @@
 		    STTS_NO AS "sttsNo",
 		    STTS_NM AS "sttsNm"
 		FROM SR_STTS
+	</select>
+	
+	<select id="selectUserOgdpList" resultType="users">
+		SELECT
+			DISTINCT USER_OGDP 
+		FROM users
+        WHERE USER_OGDP != '한국소프트SRM'
+	</select>
+	
+	<select id="selectSrDevDpList" resultType="sr">
+		SELECT
+			DISTINCT SR_DEV_DP
+		FROM SR
+        WHERE SR_DEV_DP IS NOT NULL
 	</select>
 	
 
