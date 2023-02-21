@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
 import com.team01.webapp.model.RequestList;
@@ -55,12 +56,21 @@ public class RequestController {
 		
 	}
 	
+	/**
+	 * 필터링한 리스트 조회
+	 * 
+	 * @author				김희률
+	 * @param pageNo		페이지정보를 저장
+	 * @param requestAjax	필터링에 필요한 정보를 저장
+	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
+	 * @param pager			paging처리를 위한 
+	 * @return
+	 */
 	@PostMapping(value="/list/filter/{pageNo}", produces="application/json; charset=UTF-8")
-	public String getExamineFilter(@PathVariable int pageNo,@RequestBody RequestAjax requestAjax, Model model, Pager pager) {
+	public String getFilteredList(@PathVariable String pageNo,@RequestBody RequestAjax requestAjax, Model model, Pager pager) {
 		log.info("pageNo"+pageNo);
-		
-		pager = requestService.returnPage(pageNo,pager,requestAjax);
-		log.info("페이저1: " + pager);
+		log.info("requestAjax", requestAjax);
+		pager = requestService.returnPage(pageNo, pager, requestAjax);
 		List<RequestList> list = requestService.getRequestList(pager, requestAjax);
 		
 		log.info("페이저2: " + pager);
@@ -72,9 +82,13 @@ public class RequestController {
 	
 	 
 	
-	@RequestMapping(value="/detail/{no}", method = RequestMethod.GET)
-	public String getDetail(@PathVariable String no, HttpSession session, Model model, Pager pager) {
+	@RequestMapping(value="/detail/{srNo}", method = RequestMethod.GET)
+	public String getDetail(@PathVariable String srNo, HttpSession session, Model model, Pager pager) {
 		log.info("정보 로그 실행");
+
+		SR sr = requestService.getRequestDetail(srNo);
+		model.addAttribute("sr", sr);
+		
 		return "request/detail";
 		
 	}

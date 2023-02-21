@@ -39,7 +39,6 @@ public interface IRequestRepository {
 	
 	int selectTotalRequestCount(RequestAjax requestAjax);
 	
-
 	List<RequestList> selectRequestList(RequestAjax requestAjax);
 	
 	

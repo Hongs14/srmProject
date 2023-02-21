@@ -122,7 +122,7 @@
                 		</div>
                 		<div class="col-1">
                 			<div class="input-group-append float-right">
-								<button class="btn btn-primary btn-sm" type="button" onclick="requestList()" >
+								<button class="btn btn-primary btn-sm" type="button" onclick="requestList(1)" >
 									조회 <i class="fas fa-search fa-sm"></i>
 								</button>
 							</div>
@@ -157,7 +157,6 @@
 		
 	
 		var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
-		/* var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].text; */
 		var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
 		var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].value;
  		var srDevDp = srDevDpSelect.options[document.getElementById("srDevDp").selectedIndex].value;  
@@ -173,7 +172,6 @@
 			contentType: "application/json; charset=UTF-8"
 		}).done((data) => {
 			$("#ajaxList").html(data);
-			console.log(data);
 		});
 	});
 
@@ -181,12 +179,16 @@
 		console.log(pageNo);
 		var sysNoSelect = document.getElementById("sysNo");
 		var sttsNoSelect = document.getElementById("sttsNo");
+		var userOgdpSelect = document.getElementById("userOgdp");
+		var srDevDpSelect = document.getElementById("srDevDp");
 		
-		var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].text;
-		var srSttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+		var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+		var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+		var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].value;
+ 		var srDevDp = srDevDpSelect.options[document.getElementById("srDevDp").selectedIndex].value;  
 		
 		
-		let data = {sysNo : sysNo, srSttsNo : srSttsNo};
+ 		let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp};
 		
 		console.log(data);
 		
