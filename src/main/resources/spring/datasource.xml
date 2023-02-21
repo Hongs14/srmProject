@@ -18,7 +18,7 @@
 		<constructor-arg ref="configurationEncryptor"/>
 		<property name="locations">
 			<list>
-				<value>classpath:com/team01/webapp/database/jdbc.properties</value>
+				<value>classpath:database/jdbc.properties</value>
 			</list>
 		</property>
 	</bean>	
