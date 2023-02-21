@@ -25,7 +25,6 @@ public class DevelopService implements IDevelopService{
 	
 	@Override
 	public List<SR> getDevelopList(Pager pager) {
-		
 		List<SR> list = developRepository.selectDevelopList(pager);
 		return list;
 	}
@@ -46,6 +45,12 @@ public class DevelopService implements IDevelopService{
 	public int updateDevelop(SrDevelopDto srDevelop) {
 		 int result = developRepository.updateSr(srDevelop);
 		 return result;
+	}
+
+	@Override
+	public List<Users> selectDeveloperList(String userDpNm) {
+		List<Users> list = developRepository.selectDeveloperByDp(userDpNm);
+		return list;
 	}
 
 

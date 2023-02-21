@@ -29,20 +29,26 @@
    						srEndDate: srEndDate, srDevDp: srDevDp, srNo: srNo};
    				console.log(data);
 				
-   			 
    				$.ajax({
    					url: '<c:url value="/develop/register"/>',
    					method: "post",
    					data: JSON.stringify(data),
+   					
    					contentType: "application/json; charset=UTF-8",
-   					success:function(result){
-						console.log("성공");
-						console.log(result.message);
-   					},
-   					error : function() {
-						console.log("실패");
-					}
-   				})
+   					success: function(result){
+   						console.log("성공");
+   						let modal = '<div><h5>'+$('#srDevDp').val()+'</h5></div>';
+   						modal += 	'<div class="row"><div class="col-1">선택</div>';
+                 		modal += 	'<div class="col-1">직책</div>';
+                 		modal += 	'<div class="col-2">성명</div>';
+                 		modal += 	'<div class="col-3">전화번호</div>';
+                 		modal += 	'<div class="col-5">업무사항</div>';
+                 		modal += '</div>';
+                 		
+                 	
+   						$('.modal-body').append(modal);
+   					}  
+   				 }); 
    			};
    		</script>
    
@@ -196,7 +202,7 @@
 								                  		</button>
 								                	</div>
 								                	<div class="modal-body" style="white-space:normal;"> 
-								                  		<div><h5>개발1팀</h5></div>
+								                  		<!-- <div><h5>개발1팀</h5></div>
 								                 		<div class="row">
 								                 			<div class="col-1">선택</div>
 								                 			<div class="col-1">직책</div>
@@ -233,29 +239,8 @@
 								                 		</div>
 								                 		<hr/>
 								                 		
-								                 		<div class="row">
-								                 			<div class="col-1"><input type="checkbox"></div>
-								                 			<div class="col-1">부장</div>
-								                 			<div class="col-2">정건희</div>
-								                 			<div class="col-md-3">010-1234-9876</div>
-								                 			<div class="col-5">
-								                 				<div class="row">
-								                 					<div>2023.03.06</div>
-								                 					~<div>2023.03.020 </div>
-								                 					 &nbsp;<div>SR제목</div>
-								                 					&nbsp;-&nbsp;<div>테스트</div>
-								                 				</div>
-								                 			
-								                 				<div class="row">
-								                 					<div>2023.03.01</div>
-								                 					 ~<div>2023.03.09 </div>
-								                 					 &nbsp;<div>SR제목</div>
-								                 					&nbsp;-&nbsp;<div>테스트</div>
-								                 				</div>
-								                 				
-								                 			</div>
-								                 		</div>
-								                 		<hr/>
+								                 		
+								                 
 								                 		
 								                 		<div class="row">
 								                 			<div class="col-1"><input type="checkbox"></div>
@@ -266,7 +251,7 @@
 								                 				
 								                 			</div>
 								                 		</div>
-								                 		<hr/>
+								                 		<hr/> -->
 								                	</div>
 									                <div class="modal-footer">
 									                	<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>

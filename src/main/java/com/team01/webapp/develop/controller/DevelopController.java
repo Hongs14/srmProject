@@ -38,16 +38,13 @@ public class DevelopController {
 	 */
 	@GetMapping("/list/{pageNo}")
 	public String getDevelopList(@PathVariable int pageNo, Model model, Pager pager) {
-		
 		int totalRow = developService.totalRow();
 		pager = new Pager(10, 5, totalRow, pageNo);
 		List<SR> list = developService.getDevelopList(pager);
-		
 		model.addAttribute("pager", pager);
 		model.addAttribute("developlist",list);
 		model.addAttribute("pageNo", pageNo);
 		log.info("SR개발관리 리스트 목록");
-		log.info(pager);
 		return "develop/developlist";
 	}
 	
@@ -63,12 +60,9 @@ public class DevelopController {
 	public String getDevelopDetail(@PathVariable int pageNo, @RequestParam String srNo, Model model) {
 		SrDevelopDto srDetail = developService.getDetail(srNo);
 		List<Users> devList = developService.getDevelopList();
-		
 		model.addAttribute("dlist", srDetail);
-		log.info(srDetail);
 		model.addAttribute("devlist", devList);
 		log.info("SR개발관리 상세보기");
-		log.info(devList.size());
 		return "develop/developdetail";
 	}
 	
@@ -81,17 +75,19 @@ public class DevelopController {
 	 */
 	@PostMapping(value="/register", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public String developPlan(@RequestBody SrDevelopDto srDevelop) {
-		String message ="";
+	public	int developPlan(@RequestBody SrDevelopDto srDevelop) {
 		int result = developService.updateDevelop(srDevelop);
-		
 		log.info("SR개발관리 계획 등록");
-		if(result == 1) {
-			message = "sucess";
-		} else {
-			message = "fail";
-		}
-		return message;
+		return result;
+	}
+	
+	
+	@GetMapping(value="/devlist", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public List<Users> getDevList(@RequestParam String userDp) {
+		List<Users> list = developService.selectDeveloperList(userDp);
+		log.info("팀별 개발자 조회");
+		return list;
 	}
 
 }
