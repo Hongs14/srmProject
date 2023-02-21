@@ -106,7 +106,7 @@ public class ExamineService implements IExamineService {
 
 	@Override
 	public Examine getExamine(String srNo) {
-		
+		log.info("실행");
 		Examine examine = examineRepository.selectExamine(srNo);
 		
 		return examine;
@@ -115,8 +115,18 @@ public class ExamineService implements IExamineService {
 
 	@Override
 	public void updateExamine(Examine examine) {
-		
+		log.info("실행");
 		examineRepository.updateExamine(examine);
+		
+	}
+
+
+	@Override
+	public void updateExamineProcessing(ExamineList examinelist) {
+		log.info("실행");
+		if(examinelist.getSrNo() != null) {			
+			examineRepository.updateExamineProcessing(examinelist);
+		}
 		
 	}
 

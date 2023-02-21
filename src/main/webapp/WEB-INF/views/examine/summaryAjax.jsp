@@ -25,7 +25,7 @@
 					<tr>
 						<td>${examine.seq}</td>
 						<td>
-							<input type="checkbox" name="examineCheck">
+							<input type="checkbox" name="examineCheck" value="${examine.srNo}">
 						</td>
 						<td>${examine.srNo}</td>
 						<td>${examine.srTtl}</td>
