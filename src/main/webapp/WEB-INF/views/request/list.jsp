@@ -67,7 +67,7 @@
                 			<div class="form-group row">
                 				<label for="sttsNo" class="col-sm-3 col-form-label-sm" >진행상태</label>
                 				<select id="sttsNo" class="form-control form-control-sm col-sm-9" >
-									<option value="0" selected>전체</option>
+									<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.srSttsList}">
 										<option value="${item.sttsNo}">${item.sttsNm}</option>
 									</c:forEach>
@@ -78,7 +78,7 @@
                 			<div class="form-group row">
                 				<label for="sysNo" class="col-sm-3 col-form-label-sm">관련시스템</label>
                 				<select  id="sysNo" class="form-control form-control-sm col-sm-9">
-									<option value="0" selected>전체</option>
+									<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.sysNmList}">
 										<option value="${item.sysNo}">${item.sysNm}</option>
 									</c:forEach>
@@ -95,7 +95,7 @@
                 			<div class="form-group row">
                 				<label for="userOgdp" class="col-sm-3 col-form-label-sm">등록자 소속</label>
 		                    	<select id="userOgdp" class="form-control form-control-sm col-sm-9">
-		                        	<option value="0" selected>전체</option>
+		                        	<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.userOgdpList}">
 										<option value="${item.userOgdp}">${item.userOgdp}</option>
 									</c:forEach>
@@ -106,7 +106,7 @@
                 			<div class="form-group row">
                 			<label for="srDevDp" class="col-sm-3 col-form-label-sm">개발부서</label>
 		                    	<select id="srDevDp" class="form-control form-control-sm col-sm-9" >
-		                        	<option value="0" selected>전체</option>
+		                        	<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.srDevDpList}">
 										<option value="${item.srDevDp}">${item.srDevDp}</option>
 									</c:forEach>

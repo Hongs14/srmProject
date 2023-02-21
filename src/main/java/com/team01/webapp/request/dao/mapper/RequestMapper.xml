@@ -32,20 +32,20 @@
 	</select>
 	
 
-	<select id="selectTotalRequestCount" parameterType="requestList" resultType="int">
+	<select id="selectTotalRequestCount" parameterType="requestAjax" resultType="int">
 		SELECT
 		    COUNT(SR_NO)
 		FROM SR sr, SYSTEM system, SR_STTS stts, USERS users
 		where sr.sys_no = system.sys_no
 		AND sr.stts_no = stts.stts_no
 		AND sr.sr_cust_no = users.user_no
-		<if test="srDevDp != '0'">
+		<if test="srDevDp != '전체'">
 			AND sr.sr_dev_dp = #{srDevDp}
 		</if>
-		<if test="sysNo != '0'">
+		<if test="sysNo !='전체'">
 			AND sr.sys_no = #{sysNo}
 		</if>
-		<if test="sttsNo != 0">
+		<if test="sttsNo != '전체'">
 			AND sr.stts_no = #{sttsNo}
 		</if>
 	</select>
@@ -96,13 +96,13 @@
        			 	WHERE SR_CUST_NO = u.USER_NO
         			AND s.STTS_NO = st.STTS_NO
         			AND s.SYS_NO = sys.SYS_NO
-			       	<if test="sttsNo != 0">
+			       	<if test="sttsNo != '전체'">
 						AND st.stts_no = #{sttsNo}
 					</if>
-			       <if test="sysNo != 0">
+			       <if test="sysNo != '전체'">
 						AND s.sys_no = #{sysNo}
 					</if>
-			       	<if test="srDevDp != 0">
+			       	<if test="srDevDp != '전체'">
 			       		AND s.sr_deb_dp LIKE #{srDevDp}
 			       	</if>
 			        ORDER BY s.SR_NO

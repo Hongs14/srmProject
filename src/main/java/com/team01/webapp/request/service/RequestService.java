@@ -78,13 +78,17 @@ public class RequestService implements IRequestService{
 	
 	@Override
 	public Pager returnPage(String pageNo, Pager pager, RequestAjax requestAjax) {
-		log.info("실행");
+		log.info("pageNo: "+pageNo + "실행");
+		log.info(pager);
+		log.info("requestAjax: "+requestAjax);
 		int totalListNum = requestRepository.selectTotalRequestCount(requestAjax);
-		log.info(totalListNum);
+		log.info("totalListNum: "+ totalListNum);
 		int pagerNo = Integer.parseInt(pageNo);
 		pager = new Pager(10, 5, totalListNum, pagerNo);
 		return pager;
 	}
+	
+	
 	@Override
 	@Transactional
 	public List<RequestList> getRequestList(Pager pager, RequestAjax requestAjax) {
