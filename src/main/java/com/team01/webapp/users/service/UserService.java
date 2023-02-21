@@ -6,8 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.team01.webapp.model.Users;
 import com.team01.webapp.users.dao.IUserRepository;
-import com.team01.webapp.users.model.User;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -25,10 +25,10 @@ public class UserService implements IUserService {
 	IUserRepository userRepository;
 	
 	@Override
-	public LoginResult login(User user) {
+	public LoginResult login(Users user) {
 		log.info("userId: "+ user.getUserId()+ "실행");
 		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		User dbUser = getUser(user.getUserId());
+		Users dbUser = getUser(user.getUserId());
 		log.info("dbUser"+ dbUser);
 		log.info("ViewUser: "+ user);
 		
@@ -48,13 +48,17 @@ public class UserService implements IUserService {
 		user.setUserType(dbUser.getUserType());
 		user.setUserOgdp(dbUser.getUserOgdp());
 		user.setUserEml(dbUser.getUserEml());
-		user.setUserTelno(dbUser.getUserTelno());
+		user.setUserTelNo(dbUser.getUserTelNo());
 		user.setUserDpNm(dbUser.getUserDpNm());
+		String sysNm = userRepository.selectSysNmByUserNo(user.getUserNo());
+		user.setSysNm(sysNm);
+		
 		return LoginResult.SUCCESS;
 	}
 	
+
 	@Override
-	public User getUser(String userId) {
+	public Users getUser(String userId) {
 		log.info(userId+ "실행 ");
 		return userRepository.selectByUserId(userId);
 	}
@@ -62,7 +66,7 @@ public class UserService implements IUserService {
 
 	@Override
 	@Transactional
-	public int join(User user) {
+	public int join(Users user) {
 		log.info(user.getUserPswd());
 		try {
 		user.setUserDelYn('N');
