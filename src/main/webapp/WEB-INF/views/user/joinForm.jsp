@@ -52,34 +52,34 @@
 		                  <form action="join" method="post">
 		                    <div class="form-group">
 		                      <label>이름 </label>
-		                      <input type="text" class="form-control" id="userNm" name="userNm" placeholder="Enter Name">
+		                      <input type="text" class="form-control" id="userNm" name="userNm" placeholder="Enter Name" required>
 		                    </div>
 		                    
 		                    <div class="form-group">
 		                      <label>이메일 </label>
 		                      <input type="email" class="form-control" id="userEml" name="userEml" aria-describedby="emailHelp"
-		                        placeholder="Enter Email Address">
+		                        placeholder="Enter Email Address" required>
 		                    </div>
 		                    <div class="form-group">
 		                      <label>전화번호 </label>
-		                      <input type="tel" class="form-control" id="userTelno" name="userTelno" >
+		                      <input type="tel" class="form-control" id="userTelno" name="userTelno" required>
 		                    </div>
 		                    <div class="form-group">
 		                      <label>아이디 </label>
-		                      <input type="text" class="form-control" id="userId" name="userId" placeholder="Enter Name">
+		                      <input type="text" class="form-control" id="userId" name="userId" placeholder="Enter Name" required>
 		                    </div>
 		                    <div class="form-group">
 		                      <label>비밀번호 </label>
-		                      <input type="password" class="form-control" id="userPswd" name="userPswd" placeholder="Password">
+		                      <input type="password" class="form-control" id="userPswd" name="userPswd" placeholder="Password" required>
 		                    </div>
 		                    <div class="form-group">
 		                      <label>비밀번호 재입력 </label>
 		                      <input type="password" class="form-control" id="userPswdRepeat" name="userPswdRepeat"
-		                        placeholder="Repeat Password"> 
+		                        placeholder="Repeat Password" required> 
 		                    </div>
 		                    <div class="form-group">
-		                      <label>타입 </label>
-		                      <select class="form-control" id="userType" name="userType" onchange="optionChange1();">
+		                      <label for="userType">타입 </label>
+		                      <select class="form-control" id="userType" name="userType" onchange="optionChange1();" required>
 		                      	<option value="" disabled selected>가입 타입 선택</option>
 		                      	<option value="고객사">고객사</option>
 		                      	<option value="개발자">개발자</option>
@@ -89,19 +89,31 @@
 		                    
 		                    <div class="form-group">
 		                      <label for="userOgdp">소속 </label>
-		                      <select type="text" class="form-control" id="userOgdp" name="userOgdp" >
+		                      <select type="text" class="form-control" id="userOgdp" name="userOgdp" required>
 		                      	<option value="" disabled selected>소속 회사 선택</option>
 		                      </select>
 		                    </div>
 		                    
 		                    <div class="form-group">
-		                      <label>직급 </label>
-		                      <input type="text" class="form-control" id="userJbps" name="userJbps">
+		                      <label for="userJbps">직급 </label>
+		                      <select type="text" class="form-control" id="userJbps" name="userJbps" required>
+		                      	<option value="" disabled selected>직급 선택</option>
+		                      	<option>사원</option>
+		                      	<option>주임</option>
+		                      	<option>대리</option>
+		                      	<option>과장</option>
+		                      	<option>차장</option>
+		                      	<option>부장</option>
+		                      	<option>이사</option>
+		                      	<option>상무</option>
+		                      	<option>전무</option>
+		                      	<option>사장</option>
+		                      </select>
 		                    </div>
 		                    
 		                    <div class="form-group">
 		                      <label for="userDpNm">부서 </label>
-		                      <select type="text" class="form-control" id="userDpNm" name="userDpNm" >
+		                      <select type="text" class="form-control" id="userDpNm" name="userDpNm" required>
 		                      	<option value="" disabled selected>소속 부서 선택</option>
 		                      </select>
 		                    </div>
