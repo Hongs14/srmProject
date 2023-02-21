@@ -101,6 +101,8 @@ public class ProgressController {
 		
 		pager = progressService.returnPage(pageNo, pager, srProgressAjax);
 		
+		log.info(pager);
+		
 		List<SrProgressList> list = progressService.ProgressList(pager, srProgressAjax);
 		
 		model.addAttribute("ProgressList", list);

@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class SrProgressAjax {
-	private int sysNo;
+	private String sysNo;
 	private int srTypeNo;
 	private int srSttsNo;
 	private String srName;
