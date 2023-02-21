@@ -47,7 +47,7 @@
 		AND sr.stts_no = stts.stts_no
 		AND sr.sr_cust_no = users.user_no
 		AND sr.sr_type = type.sr_type_no
-		<if test="sysNo != 0">
+		<if test="sysNo != ''">
 			AND sr.sys_no = #{sysNo}
 		</if>
 		<if test="srTypeNo != 0">
@@ -115,7 +115,7 @@
 							AND sr.stts_no = stts.stts_no
 							AND sr.sr_cust_no = users.user_no
 							AND sr.sr_type = type.sr_type_no
-							<if test="sysNo != 0">
+							<if test="sysNo != ''">
 								AND sr.sys_no = #{sysNo}
 							</if>
 							<if test="srTypeNo != 0">
