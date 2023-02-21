@@ -136,7 +136,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">SR 요청 목록</h6>
 					<div class="d-sm-flex justify-content-end">
 						<a class="btn btn-sm btn-secondary mr-1"
-							href="<c:url value='/request/write/'/>"> 요청등록 </a>
+							href="<c:url value='/request/write/${pager.pageNo}'/>"> 요청등록 </a>
 						<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
 					</div>
 				</div>
