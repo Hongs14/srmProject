@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.team01.webapp.model.Examine;
+import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
 import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
@@ -56,17 +56,18 @@ public class RequestController {
 	}
 	
 	@PostMapping(value="/list/filter/{pageNo}", produces="application/json; charset=UTF-8")
-	public String getExamineFilter(@PathVariable int pageNo,@RequestBody RequestList requestList, Model model, Pager pager) {
-		log.info("실행");	
+	public String getExamineFilter(@PathVariable int pageNo,@RequestBody RequestAjax requestAjax, Model model, Pager pager) {
 		log.info("pageNo"+pageNo);
-		pager = requestService.returnPage(pageNo,pager,requestList);
 		
-		List<RequestList> list = requestService.getRequestList(pager, requestList);
+		pager = requestService.returnPage(pageNo,pager,requestAjax);
+		log.info("페이저1: " + pager);
+		List<RequestList> list = requestService.getRequestList(pager, requestAjax);
 		
-		model.addAttribute("requestList",list);
+		log.info("페이저2: " + pager);
+		model.addAttribute("requestLists",list);
 		model.addAttribute("pager",pager);
 		
-		return "request/list";
+		return "request/ajaxList";
 	}
 	
 	 

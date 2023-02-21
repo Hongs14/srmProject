@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.team01.webapp.model.Examine;
+import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
 import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
@@ -75,21 +75,25 @@ public class RequestService implements IRequestService{
 		return requestFilter;
 	}
 	@Override
-	public Pager returnPage(int pageNo, Pager pager, RequestList requestList) {
+	public Pager returnPage(int pageNo, Pager pager, RequestAjax requestAjax) {
 		log.info("실행");
-		log.info(requestList);
-		int totalListNum = (int) requestRepository.selectTotalRequestCount(requestList);
+		log.info(requestAjax);
+		int totalListNum = (int) requestRepository.selectTotalRequestCount(requestAjax);
 		log.info(totalListNum);
 		pager = new Pager(10,5,totalListNum,pageNo);
 		
 		return pager;
 	}
 	@Override
-	public List<RequestList> getRequestList(Pager pager, RequestList requestList) {
+	public List<RequestList> getRequestList(Pager pager, RequestAjax requestAjax) {
 		log.info("실행");
-		int startRowNo = pager.getStartRowNo();
-		int endRowNo = pager.getEndRowNo();
-		List<RequestList> requestLists = requestRepository.selectRequestList(startRowNo, endRowNo, requestList);
+		int start = (pager.getPageNo()-1)* pager.getRowsPerPage()+1;
+		int end = pager.getPageNo() * pager.getRowsPerPage();
+		
+		requestAjax.setStart(start);
+		requestAjax.setEnd(end);
+		
+		List<RequestList> requestLists = requestRepository.selectRequestList(requestAjax);
 		return requestLists;
 	}
 	

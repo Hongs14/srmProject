@@ -2,8 +2,6 @@ package com.team01.webapp.model;
 
 import java.sql.Date;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.Data;
 
 @Data
@@ -20,4 +18,9 @@ public class RequestList {
 	private Date srDdlnDate;
 	private String srPry;
 	private String sysNo;
+	private String sttsNo;
+	private String userOgdp;
+	//seq
+	private int seq;
+	
 }

@@ -35,38 +35,31 @@
 	<select id="selectTotalRequestCount" parameterType="requestList" resultType="int">
 		SELECT
 		    COUNT(SR_NO)
-		FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, SR_TYPE type
+		FROM SR sr, SYSTEM system, SR_STTS stts, USERS users
 		where sr.sys_no = system.sys_no
 		AND sr.stts_no = stts.stts_no
 		AND sr.sr_cust_no = users.user_no
-		AND sr.sr_type = type.sr_type_no
-		<if test="sysNo != 0">s
+		<if test="srDevDp != 0">
+			AND sr.sr_dev_dp LIKE #{srDevDp}
+		</if>
+		<if test="sysNo != 0">
 			AND sr.sys_no = #{sysNo}
 		</if>
-		<if test="srTypeNo != 0">
-			AND sr.sr_type = #{srTypeNo}
-		</if>
-		<if test="srSttsNo != 0">
-			AND sr.stts_no = #{srSttsNo}
-		</if>
-		<if test="srName != ''">
-			AND sr.sr_ttl LIKE #{srName}
-		</if>
-		<if test="srNo != ''">
-			AND sr.sr_no LIKE #{srNo}
+		<if test="sttsNo != 0">
+			AND sr.stts_no = #{sttsNo}
 		</if>
 	</select>
 
 
-	<select id="selectRequestList" parameterType="map" resultType="requestList">
+	<select id="selectRequestList" parameterType="requestAjax" resultType="requestList">
 		SELECT
 			    SR_NO AS "srNo",
 			    SR_TTL AS "srTtl",
 			    SYS_NM "sysNm",
 			    USER_NM AS "userNm",
 			    USER_DP_NM AS "userDpNm",
+			    USER_OGDP AS "userOgdp",
 			    SR_DEV_DP AS "srDevDp",
-			    SR_TYPE_NM AS "srTypeNm",
 			    STTS_NM AS "sttsNm",
 			    SR_REG_DATE AS "srRegDate",
 			    SR_DDLN_DATE AS "srDdlnDate",
@@ -79,8 +72,8 @@
 			        SYS_NM,
 			        USER_NM,
 			        USER_DP_NM,
+			        USER_OGDP,
 			        SR_DEV_DP,
-			        SR_TYPE_NM,
 			        STTS_NM,
 			        SR_REG_DATE,
 			        SR_DDLN_DATE,
@@ -93,35 +86,34 @@
 			            SYS_NM,
 			            u.USER_NM,
 			            u.USER_DP_NM,
+			            u.USER_OGDP,
 			            s.SR_DEV_DP,
-			            stp.SR_TYPE_NM,
 			            st.STTS_NM,
 			            s.SR_REG_DATE,
 			            s.SR_DDLN_DATE,
 			            s.SR_PRY
-			        FROM SR s ,USERS u,  SR_STTS st, SYSTEM sys, SR_TYPE stp
+			        FROM SR s ,USERS u,  SR_STTS st, SYSTEM sys
        			 	WHERE SR_CUST_NO = u.USER_NO
         			AND s.STTS_NO = st.STTS_NO
         			AND s.SYS_NO = sys.SYS_NO
-        			AND stp.SR_TYPE_NO = s.SR_TYPE_NO
 			       	<if test="sttsNo != 0">
 						AND st.stts_no = #{sttsNo}
 					</if>
-			       	<if test="!sysNo.equals('전체')">
+			       	<if test="sysNo != 0">
 			       		AND sys.sys_nm = #{sysNo}
 			       	</if>
 			       
-			       	<if test="!userDpNm.equals('전체')">
-			       		AND u.user_dp_nm = #{userDpNm}
+			       	<if test="srDevDp != 0">
+			       		AND u.user_dp_nm LIKE #{srDevDp}
 			       	</if>
 			        ORDER BY s.SR_NO
 			    )
 			    <![CDATA[
-				    WHERE ROWNUM <=#{endRowNo}
+				    WHERE ROWNUM <=#{end}
 			    ]]>
 			)
 			<![CDATA[
-				WHERE RNUM >=#{startRowNo}
+				WHERE RNUM >=#{start}
 			]]>
 	</select>
 
