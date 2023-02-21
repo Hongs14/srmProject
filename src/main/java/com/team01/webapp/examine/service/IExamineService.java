@@ -56,5 +56,6 @@ public interface IExamineService {
 	public Examine getExamine(String srNo);
 	
 	public void updateExamine(Examine examine);
+	public void updateExamineProcessing(ExamineList examinelist);
 	
 }

@@ -3,16 +3,14 @@ package com.team01.webapp.request.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SRType;
-import com.team01.webapp.model.SrProgressAjax;
-import com.team01.webapp.model.SrProgressList;
 import com.team01.webapp.model.System;
+import com.team01.webapp.model.Users;
 
 @Mapper
 public interface IRequestRepository {
@@ -36,10 +34,15 @@ public interface IRequestRepository {
 	
 	List<SRStts> selectSttsNmList();
 	
+	List<Users> selectUserOgdpList();
 	
+	List<SR> selectSrDevDpList();
+
 	int selectTotalRequestCount(RequestAjax requestAjax);
 	
 	List<RequestList> selectRequestList(RequestAjax requestAjax);
+
+
 	
 	
 }

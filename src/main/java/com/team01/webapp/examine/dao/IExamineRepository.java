@@ -69,4 +69,7 @@ public interface IExamineRepository {
 	public Examine selectExamine(String srNo);
 	
 	public void updateExamine(Examine examine);
+	
+	public void updateExamineProcessing(ExamineList examineList);
+	
 }

@@ -67,7 +67,7 @@ public class RequestController {
 	 * @return
 	 */
 	@PostMapping(value="/list/filter/{pageNo}", produces="application/json; charset=UTF-8")
-	public String getFilteredList(@PathVariable String pageNo,@RequestBody RequestAjax requestAjax, Model model, Pager pager) {
+	public String getFilteredList(@PathVariable String pageNo, @RequestBody RequestAjax requestAjax, Model model, Pager pager) {
 		log.info("pageNo"+pageNo);
 		log.info("requestAjax", requestAjax);
 		pager = requestService.returnPage(pageNo, pager, requestAjax);
@@ -80,7 +80,16 @@ public class RequestController {
 		return "request/ajaxList";
 	}
 	
-	 
+	
+	@RequestMapping(value="/write/{pageNo}", method = RequestMethod.GET)
+	public String writeRequest(@PathVariable int pageNo, HttpSession session, RequestFilter requestFilter,  Model model, Pager pager) {
+		log.info("정보 로그 실행");
+		requestFilter = requestService.getFilterList(requestFilter);
+		model.addAttribute("requestfilter", requestFilter);
+		model.addAttribute("pager", pager);
+		return "request/write";
+	}
+	
 	
 	@RequestMapping(value="/detail/{srNo}", method = RequestMethod.GET)
 	public String getDetail(@PathVariable String srNo, HttpSession session, Model model, Pager pager) {
@@ -99,10 +108,7 @@ public class RequestController {
 		return "request/detailView";
 		
 	}
-	@RequestMapping(value="/write", method = RequestMethod.GET)
-	public String writeRequest(HttpSession session, Model model, Pager pager) {
-		return "request/write";
-	}
+	
 	
 	
 	/**
