@@ -161,11 +161,12 @@
 							                        <th>등록일</th>
 							                        <th>완료예정일</th>
 							                        <th>중요도</th>
+							                        <th>상세보기</th>
 							                    </tr>
 						                 	</thead>
 						                   	<tbody>
 					                   			<c:forEach items="${developlist}" var="SrDevelopDto">
-						                   			<tr onclick="location.href='${pageContext.request.contextPath}/develop/view/${pageNo}?srNo=${SrDevelopDto.srNo}'">
+						                   			<tr>
 						                   				<td class="pr-0">
 									                        <div class="custom-control custom-checkbox">
 									                   			<input type="checkbox" class="custom-control-input" id="customCheck${SrDevelopDto.srNo}">
@@ -182,6 +183,7 @@
 								                        <td>${SrDevelopDto.srRegDate}</td>
 								                        <td>${SrDevelopDto.srDdlnDate}</td>
 								                        <td>${SrDevelopDto.srPry}</td>
+								                        <td><button class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/view/${pageNo}?srNo=${SrDevelopDto.srNo}'">상세보기</button></td>
 								                   	</tr>
 						                     	</c:forEach>
 			                 				</tbody>

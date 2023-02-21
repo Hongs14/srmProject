@@ -16,10 +16,10 @@
 	  			let qstnNo ='${qstn.qstnNo}';
 	  			console.log(qstnNo);
 	  			$.ajax({
-			    	url:"read/comment"
-			        ,type:"get"
-			        ,data: 'qstnNo='+qstnNo
-			        ,success:function(data){
+			    	url:"read/comment",
+			        type:"get",
+			        data: 'qstnNo='+qstnNo,
+			        success:function(data){
 			        	console.log(data);
 			        	$.each(data, function(index, item){
 			        		let comment = '<hr/>';

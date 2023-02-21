@@ -19,5 +19,7 @@ public class HR {
 	private String userJbps;
 	private String userTelNo;
 	private String taskNm;
+	
 	private List<DeveloperSR> srList;
+	
 }

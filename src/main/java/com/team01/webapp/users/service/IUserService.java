@@ -1,13 +1,13 @@
 package com.team01.webapp.users.service;
 
-import com.team01.webapp.users.model.User;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.users.service.UserService.LoginResult;
 
 public interface IUserService {
 
-	LoginResult login(User user);
+	LoginResult login(Users user);
 
-	User getUser(String userId);
+	Users getUser(String userId);
 
-	int join(User user);
+	int join(Users user);
 }

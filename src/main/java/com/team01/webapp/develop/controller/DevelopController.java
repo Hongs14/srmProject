@@ -1,6 +1,7 @@
 package com.team01.webapp.develop.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,7 +68,6 @@ public class DevelopController {
 	}
 	
 	
-	//개발관리 등록
 	/**
 	 * @author				 정홍주
 	 * @param srDevelop		서비스에 보내줄 DTO객체 주입
@@ -82,11 +82,13 @@ public class DevelopController {
 	}
 	
 	
-	@GetMapping(value="/devlist", produces="application/json; charset=UTF-8")
+	@PostMapping(value="/devlist", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public List<Users> getDevList(@RequestParam String userDp) {
-		List<Users> list = developService.selectDeveloperList(userDp);
-		log.info("팀별 개발자 조회");
+	public List<Users> getDevList(@RequestBody Map<String, String> userDpNmMap) {
+		String userDpNm = userDpNmMap.get("userDpNm");
+		List<Users> list = developService.selectDeveloperList(userDpNm);
+		log.info(userDpNm+"팀별 개발자 조회");
+		log.info(list);
 		return list;
 	}
 
