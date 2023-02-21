@@ -6,7 +6,7 @@
 <div class="d-sm-flex align-items-end justify-content-between">
 	<div class="bg-primary px-3 py-2"
 		style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
-		<h6 class="mb-0 text-white">SR 요청상세</h6>
+		<h6 class="mb-0 text-white">SR 검토 상세</h6>
 	</div>
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><b>SR 관리</b></li>
@@ -86,6 +86,7 @@
 				   			<option>검토중</option>
 				   			<option>반려</option>
 				   			<option>재검토</option>
+				   			<option>접수</option>
 				   		</select>
 	   				</div>
 	   			</div>

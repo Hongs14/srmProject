@@ -56,6 +56,10 @@
 		WHERE sr.sys_no = sys.sys_no
 		AND sr.stts_no = st.stts_no
 		AND sr.sr_cust_no = u.user_no
+		AND sr.stts_no !=3
+        AND sr.stts_no !=4
+        AND sr.stts_no !=5
+        AND sr.stts_no !=6
 		<if test="!sysNo.equals('전체')">
 			AND sys.sys_no = #{sysNo}
 		</if>
@@ -67,6 +71,11 @@
 		</if>
 		<if test="!userOgdp.equals('전체')">
 			AND u.user_dp_nm = #{userDpNm}
+		</if>
+		<if test="!srRegStartDate.equals('')">
+			 AND sr.SR_REG_DATE BETWEEN 
+                TO_DATE(#{srRegStartDate},'YY-MM-DD') 
+                AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+0.9
 		</if>
 		
 	</select>
@@ -117,6 +126,10 @@
        			 	WHERE SR_CUST_NO = u.USER_NO
         			AND s.STTS_NO = st.STTS_NO
         			AND s.SYS_NO = sys.SYS_NO
+        			AND s.stts_no !=3
+		            AND s.stts_no !=4
+		            AND s.stts_no !=5
+		            AND s.stts_no !=6
 			       	<if test="sttsNo != 0">
 						AND st.stts_no = #{sttsNo}
 					</if>
@@ -129,6 +142,11 @@
 			       	<if test="!userDpNm.equals('전체')">
 			       		AND u.user_dp_nm = #{userDpNm}
 			       	</if>
+			       	<if test="!srRegStartDate.equals('')">
+						AND s.SR_REG_DATE BETWEEN 
+			                TO_DATE(#{srRegStartDate},'YY-MM-DD') 
+			                AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+0.9
+					</if>
 			        ORDER BY s.SR_NO
 			    )
 			    <![CDATA[

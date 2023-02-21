@@ -23,6 +23,9 @@ public class ExamineList {
 	private Date srEndDate;
 	private String srViewYn;
 	
+	private String srRegStartDate;
+	private String srRegEndDate;
+	
 	//시스템
 	private String sysNm;
 	

@@ -117,15 +117,30 @@ public class ExamineController {
 		return "examine/detailView";
 	}
 	
+	/**
+	 * SR 검토 상태 변경
+	 * @author : 황건희
+	 * @param examine	detailView.jsp에서 요청 검토 처리
+	 * @return
+	 */
 	@PostMapping(value="/detailView")
-	public String updateExamine(Examine examine) {
+	public String updateExamine1(Examine examine) {
 		log.info("실행");
 		log.info(examine);
 		
 		examineService.updateExamine(examine);
 		
-		
 		return "examine/detail";
+	}
+	
+	@PostMapping(value="/processing")
+	public String updateExamine2(@RequestBody Examine examine) {
+		log.info("실행");
+		log.info(examine);
+		
+		examineService.updateExamine(examine);
+		
+		return "examine/list";
 	}
 	
 }
