@@ -2,6 +2,7 @@ package com.team01.webapp.progress.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
@@ -276,5 +278,13 @@ public class ProgressController {
 		model.addAttribute("progress", progress);
 		
 		return "progress/progressRateAdd";
+	}
+	
+	@RequestMapping(value="progressRate/update", method=RequestMethod.POST)
+	public String ProgressRateUpdate(Progress progress) throws IOException {
+		log.info(progress);
+		log.info("업데이트 중");
+		
+		return "null";
 	}
 }

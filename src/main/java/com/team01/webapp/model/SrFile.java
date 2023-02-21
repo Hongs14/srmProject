@@ -10,4 +10,5 @@ public class SrFile {
 	private String srFilePhysNm;
 	private String srFileActlNm;
 	private String srFileExtnNm;
+	
 }
