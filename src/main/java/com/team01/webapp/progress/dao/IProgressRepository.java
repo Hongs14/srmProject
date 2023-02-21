@@ -9,6 +9,7 @@ import com.team01.webapp.model.DeveloperSR;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
+import com.team01.webapp.model.ProgressFile;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SRType;
@@ -180,6 +181,14 @@ public interface IProgressRepository {
 	List<Progress> selectProgressRateList(String srNo);
 
 	Progress selectProgressRate(int progNo);
+
+	void insertProgressRateFile(Progress progress);
+
+	void updateProgressRate(Progress progress);
+
+	List<ProgressFile> selectProgressRateFile(String progNo);
+
+	ProgressFile selectProgressFile(String progFileNo);
 	
 	
 }

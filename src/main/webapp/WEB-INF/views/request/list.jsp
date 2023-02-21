@@ -67,7 +67,7 @@
                 			<div class="form-group row">
                 				<label for="sttsNo" class="col-sm-3 col-form-label-sm" >진행상태</label>
                 				<select id="sttsNo" class="form-control form-control-sm col-sm-9" >
-									<option value="0" selected>전체</option>
+									<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.srSttsList}">
 										<option value="${item.sttsNo}">${item.sttsNm}</option>
 									</c:forEach>
@@ -78,7 +78,7 @@
                 			<div class="form-group row">
                 				<label for="sysNo" class="col-sm-3 col-form-label-sm">관련시스템</label>
                 				<select  id="sysNo" class="form-control form-control-sm col-sm-9">
-									<option value="0" selected>전체</option>
+									<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.sysNmList}">
 										<option value="${item.sysNo}">${item.sysNm}</option>
 									</c:forEach>
@@ -95,7 +95,7 @@
                 			<div class="form-group row">
                 				<label for="userOgdp" class="col-sm-3 col-form-label-sm">등록자 소속</label>
 		                    	<select id="userOgdp" class="form-control form-control-sm col-sm-9">
-		                        	<option value="0" selected>전체</option>
+		                        	<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.userOgdpList}">
 										<option value="${item.userOgdp}">${item.userOgdp}</option>
 									</c:forEach>
@@ -106,7 +106,7 @@
                 			<div class="form-group row">
                 			<label for="srDevDp" class="col-sm-3 col-form-label-sm">개발부서</label>
 		                    	<select id="srDevDp" class="form-control form-control-sm col-sm-9" >
-		                        	<option value="0" selected>전체</option>
+		                        	<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.srDevDpList}">
 										<option value="${item.srDevDp}">${item.srDevDp}</option>
 									</c:forEach>
@@ -122,7 +122,7 @@
                 		</div>
                 		<div class="col-1">
                 			<div class="input-group-append float-right">
-								<button class="btn btn-primary btn-sm" type="button" onclick="requestList()" >
+								<button class="btn btn-primary btn-sm" type="button" onclick="requestList(1)" >
 									조회 <i class="fas fa-search fa-sm"></i>
 								</button>
 							</div>
@@ -136,7 +136,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">SR 요청 목록</h6>
 					<div class="d-sm-flex justify-content-end">
 						<a class="btn btn-sm btn-secondary mr-1"
-							href="<c:url value='/request/write/'/>"> 요청등록 </a>
+							href="<c:url value='/request/write/${pager.pageNo}'/>"> 요청등록 </a>
 						<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
 					</div>
 				</div>
@@ -157,7 +157,6 @@
 		
 	
 		var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
-		/* var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].text; */
 		var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
 		var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].value;
  		var srDevDp = srDevDpSelect.options[document.getElementById("srDevDp").selectedIndex].value;  
@@ -173,7 +172,6 @@
 			contentType: "application/json; charset=UTF-8"
 		}).done((data) => {
 			$("#ajaxList").html(data);
-			console.log(data);
 		});
 	});
 
@@ -181,12 +179,16 @@
 		console.log(pageNo);
 		var sysNoSelect = document.getElementById("sysNo");
 		var sttsNoSelect = document.getElementById("sttsNo");
+		var userOgdpSelect = document.getElementById("userOgdp");
+		var srDevDpSelect = document.getElementById("srDevDp");
 		
-		var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].text;
-		var srSttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+		var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+		var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+		var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].value;
+ 		var srDevDp = srDevDpSelect.options[document.getElementById("srDevDp").selectedIndex].value;  
 		
 		
-		let data = {sysNo : sysNo, srSttsNo : srSttsNo};
+ 		let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp};
 		
 		console.log(data);
 		

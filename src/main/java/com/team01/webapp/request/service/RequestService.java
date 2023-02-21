@@ -15,6 +15,7 @@ import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SRType;
 import com.team01.webapp.model.System;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.request.dao.IRequestRepository;
 import com.team01.webapp.util.Pager;
 
@@ -59,6 +60,8 @@ public class RequestService implements IRequestService{
 		List<System> systemList = new ArrayList<>();
 		List<SRType> srTypeList = new ArrayList<>();
 		List<SRStts> srSttsList = new ArrayList<>();
+		List<Users> userOgdpList = new ArrayList<>();
+		List<SR> srDevDpList = new ArrayList<>();
 		
 		// 시스템 구분 리스트
 		systemList = requestRepository.selectSysNmList();
@@ -72,19 +75,33 @@ public class RequestService implements IRequestService{
 		srSttsList = requestRepository.selectSttsNmList();
 		requestFilter.setSrSttsList(srSttsList);
 		
+		//요청자 소속사 리스트
+		userOgdpList = requestRepository.selectUserOgdpList();
+		requestFilter.setUserOgdpList(userOgdpList);
+		
+		//개발 부서 리스트
+		srDevDpList = requestRepository.selectSrDevDpList();
+		requestFilter.setSrDevDpList(srDevDpList);
+		
 		return requestFilter;
 	}
+	
+	
 	@Override
-	public Pager returnPage(int pageNo, Pager pager, RequestAjax requestAjax) {
-		log.info("실행");
-		log.info(requestAjax);
-		int totalListNum = (int) requestRepository.selectTotalRequestCount(requestAjax);
-		log.info(totalListNum);
-		pager = new Pager(10,5,totalListNum,pageNo);
-		
+	public Pager returnPage(String pageNo, Pager pager, RequestAjax requestAjax) {
+		log.info("pageNo: "+pageNo + "실행");
+		log.info(pager);
+		log.info("requestAjax: "+requestAjax);
+		int totalListNum = requestRepository.selectTotalRequestCount(requestAjax);
+		log.info("totalListNum: "+ totalListNum);
+		int pagerNo = Integer.parseInt(pageNo);
+		pager = new Pager(10, 5, totalListNum, pagerNo);
 		return pager;
 	}
+	
+	
 	@Override
+	@Transactional
 	public List<RequestList> getRequestList(Pager pager, RequestAjax requestAjax) {
 		log.info("실행");
 		int start = (pager.getPageNo()-1)* pager.getRowsPerPage()+1;
@@ -96,5 +113,11 @@ public class RequestService implements IRequestService{
 		List<RequestList> requestLists = requestRepository.selectRequestList(requestAjax);
 		return requestLists;
 	}
+	@Override
+	public SR getRequestDetail(String srNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 }

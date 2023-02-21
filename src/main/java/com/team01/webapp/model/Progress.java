@@ -24,4 +24,6 @@ public class Progress {
 	private String progFileExtnNm;
 	private List<MultipartFile> progressattach;
 	
+	private List<ProgressFile> progressFile;
+	
 }

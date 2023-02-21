@@ -35,13 +35,12 @@
 						<td><span class="badge badge-danger" style="font-size:100%">${request.sttsNm}</span></td>
 						<td>${request.srRegDate}</td>
 						<td><span class="badge badge-danger" style="font-size:100%">${request.srPry}</span></td>
-						<td><a href="${pageContext.request.contextPath}/request/detail/${request.srNo}" class="btn btn-sm btn-primary">상세보기</a></td>
+						<td><a href="${pageContext.request.contextPath}/request/detail?srno=${request.srNo}" class="btn btn-sm btn-primary">상세보기</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 		
-		<c:if test="${pager.totalRows != 0}">
 			<div class="pager d-flex justify-content-center my-3">
 				<div class="pagingButtonSet d-flex justify-content-center">
 					<c:if test="${pager.pageNo > 1}">
@@ -69,5 +68,4 @@
 					</c:if>
 				</div>
 			</div>
-		</c:if>
 	</div>

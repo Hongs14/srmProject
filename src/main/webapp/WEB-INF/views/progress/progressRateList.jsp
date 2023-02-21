@@ -31,7 +31,17 @@
 					<th>${list.progStartDate}</th>
 					<th>${list.progEndDate}</th>
 					<th>${list.progRate}</th>
-					<th></th>
+					<th>
+						<c:if test="${list.progressFile[0].progFileNo != null}">
+							<div class="row">
+								<c:forEach var="fileList" items="${list.progressFile}">
+									<a href="progressFiledownload/${list.srNo}/?progFileNo=${fileList.progFileNo}">
+										<span>[${fileList.progFileActlNm}]</span>
+									</a>
+								</c:forEach>
+							</div>
+						</c:if>
+					</th>
 					<th id="progType-${list.progNo}" style="display:none">${list.progType}</th>
 				</tr>
 			</c:forEach>

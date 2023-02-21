@@ -13,6 +13,7 @@
 			SYS_NO AS "sysNo",
 			SYS_NM AS "sysNm"
 		FROM SYSTEM
+         WHERE SYS_NM != '한국소프트SRM'
 	</select>
 
 
@@ -31,21 +32,35 @@
 		FROM SR_STTS
 	</select>
 	
+	<select id="selectUserOgdpList" resultType="users">
+		SELECT
+			DISTINCT USER_OGDP 
+		FROM users
+        WHERE USER_OGDP != '한국소프트SRM'
+	</select>
+	
+	<select id="selectSrDevDpList" resultType="sr">
+		SELECT
+			DISTINCT SR_DEV_DP
+		FROM SR
+        WHERE SR_DEV_DP IS NOT NULL
+	</select>
+	
 
-	<select id="selectTotalRequestCount" parameterType="requestList" resultType="int">
+	<select id="selectTotalRequestCount" parameterType="requestAjax" resultType="int">
 		SELECT
 		    COUNT(SR_NO)
 		FROM SR sr, SYSTEM system, SR_STTS stts, USERS users
 		where sr.sys_no = system.sys_no
 		AND sr.stts_no = stts.stts_no
 		AND sr.sr_cust_no = users.user_no
-		<if test="srDevDp != 0">
-			AND sr.sr_dev_dp LIKE #{srDevDp}
+		<if test="srDevDp != '전체'">
+			AND sr.sr_dev_dp = #{srDevDp}
 		</if>
-		<if test="sysNo != 0">
+		<if test="sysNo !='전체'">
 			AND sr.sys_no = #{sysNo}
 		</if>
-		<if test="sttsNo != 0">
+		<if test="sttsNo != '전체'">
 			AND sr.stts_no = #{sttsNo}
 		</if>
 	</select>
@@ -96,15 +111,14 @@
        			 	WHERE SR_CUST_NO = u.USER_NO
         			AND s.STTS_NO = st.STTS_NO
         			AND s.SYS_NO = sys.SYS_NO
-			       	<if test="sttsNo != 0">
+			       	<if test="sttsNo != '전체'">
 						AND st.stts_no = #{sttsNo}
 					</if>
-			       	<if test="sysNo != 0">
-			       		AND sys.sys_nm = #{sysNo}
-			       	</if>
-			       
-			       	<if test="srDevDp != 0">
-			       		AND u.user_dp_nm LIKE #{srDevDp}
+			       <if test="sysNo != '전체'">
+						AND s.sys_no = #{sysNo}
+					</if>
+			       	<if test="srDevDp != '전체'">
+			       		AND s.sr_deb_dp LIKE #{srDevDp}
 			       	</if>
 			        ORDER BY s.SR_NO
 			    )

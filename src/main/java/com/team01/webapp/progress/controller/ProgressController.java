@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -20,11 +22,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
+import com.team01.webapp.model.ProgressFile;
 import com.team01.webapp.model.ProgressFilter;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.SrProgressAjax;
@@ -267,6 +270,8 @@ public class ProgressController {
 		
 		model.addAttribute("progressRateList", progressRateList);
 		
+		log.info(progressRateList);
+		
 		return "progress/progressRateList";
 	}
 	
@@ -279,12 +284,80 @@ public class ProgressController {
 		
 		return "progress/progressRateAdd";
 	}
-	
-	@RequestMapping(value="progressRate/update", method=RequestMethod.POST)
+
+	@RequestMapping(value="progress/detail/progressRate/update", method=RequestMethod.POST)
 	public String ProgressRateUpdate(Progress progress) throws IOException {
-		log.info(progress);
-		log.info("업데이트 중");
+		// 첨부 파일이 있는지 확인
+		List<MultipartFile> mfList = progress.getProgressattach();
+		if(!mfList.isEmpty()) {
+			for(int i=0; i<mfList.size(); i++) {
+				// 파일의 원래 이름
+				progress.setProgFileActlNm(mfList.get(i).getOriginalFilename());
+				
+				// 파일의 저장 이름
+				String progFilePhysNm = new Date().getTime() + "-" + mfList.get(i).getOriginalFilename();
+				progress.setProgFilePhysNm(progFilePhysNm);
+				
+				// 파일의 타입 설정
+				progress.setProgFileExtnNm(mfList.get(i).getContentType());
+				
+				// 서버 파일 시스템에 파일로 저장
+				String filePath = "C:/OTI/uploadfiles/" + progress.getSrNo() + "/" + progFilePhysNm;
+				File dir = new File(filePath);
+				
+				// 폴더가 없다면 생성한다
+				if(!dir.exists()) {
+					try {
+						Files.createDirectories(Paths.get(filePath));
+						log.info("폴더 생성 완료");
+						mfList.get(i).transferTo(dir);
+					} catch (Exception e) {
+						log.info("생성 실패 : " + filePath);
+					}
+				} else {
+					mfList.get(i).transferTo(dir);
+				}
+				
+				progressService.writeProgressRateFile(progress);
+			}
+		}
 		
-		return "null";
+		progressService.updateProgressRate(progress);
+		
+		return "redirect:/progress/detail/" + progress.getSrNo();
+	}
+	
+	@RequestMapping(value="progress/detail/progressFiledownload/{srNo}", method = RequestMethod.GET)
+	public void progressFiledownload(String progFileNo, @PathVariable String srNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception {
+		ProgressFile progressFile = progressService.getProgressFile(progFileNo);
+		
+		String originalName = progressFile.getProgFileActlNm();
+		String savedName = progressFile.getProgFilePhysNm();
+		String contentType = progressFile.getProgFileExtnNm();
+		
+		// originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩
+		if(userAgent.contains("Trident") || userAgent.contains("MSIE")) {
+			originalName = URLEncoder.encode(originalName, "UTF-8");
+		} else {
+			originalName = new String(originalName.getBytes("UTF-8"), "ISO-8859-1");
+		}
+		
+		// 응답 헤더 설정
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + originalName + "\"");
+		response.setContentType(contentType);
+		
+		// 응답 바디에 파일 데이터 싣기
+		String filePath = "C:/OTI/uploadfiles/" + srNo + "/" + savedName;
+		
+		File file = new File(filePath);
+		
+		if(file.exists()) {
+			InputStream is = new FileInputStream(file);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			os.flush();
+			os.close();
+			is.close();
+		}
 	}
 }

@@ -35,16 +35,16 @@
 						<td>${progress.progTypeNm}</td>
 						<td>
 							<div class="input-daterange input-group input-group-sm justify-content-center">
-								<input type="text" value="${progress.progStartDate}" class="a input-sm form-control form-control-sm col-sm-9" name="progStartDate" id="start"/>
+								<input type="text" value="${progress.progStartDate}" class="a input-sm form-control form-control-sm col-sm-9" id="start"/>
 							</div>
 						</td>
 						<td>
 							<div class="input-daterange input-group input-group-sm justify-content-center">
-								<input type="text" value="${progress.progEndDate}" class="a input-sm form-control form-control-sm col-sm-9" name="progEndDate" id="end"/>
+								<input type="text" value="${progress.progEndDate}" class="a input-sm form-control form-control-sm col-sm-9" id="end"/>
 							</div>
 						</td>
 						<td>
-							<input type="number" value="${progress.progRate}" min="0" name="progRate"/>
+							<input type="number" value="${progress.progRate}" min="0" id="progRate"/>
 						</td>
 					</tr>
 				</tbody>
@@ -72,7 +72,7 @@
 	</div>
 	
 	<input type="hidden" name="progNo" value="${progress.progNo}"/>
-	
+	<input type="hidden" name="srNo" value="${progress.srNo}"/>
 	<script>
 		var fileNo = 0;
 		var filesArr = new Array();
@@ -92,8 +92,8 @@
 	               // 목록 추가
 	               let htmlData = '';
 	               htmlData += '<div id="file' + fileNo + '" class="filebox row">';
-	               htmlData += '   <p class="name col-1">' + file.name + '</p>';
-	               htmlData += '   <a class="delete col-2" onclick="deleteFile(' + fileNo + ');"><i class="far fa-minus-square"></i></a>';
+	               htmlData += '   <a class="delete col-1" onclick="deleteFile(' + fileNo + ');"><i class="far fa-minus-square"></i></a>';
+	               htmlData += '   <p class="name col-11 text-left">' + file.name + '</p>';
 	               htmlData += '</div>';
 	               $('#userfile').append(htmlData);
 	               fileNo++;
@@ -123,16 +123,29 @@
 		        }
 		    }
 		    
+		    formData.append("progNo", ${progress.progNo});
+		    
+		    formData.append("srNo", "${progress.srNo}");
+		    
+		    var progStartDate = document.getElementById("start").value;
+		    formData.append("progStartDate", progStartDate);
+		    
+		    var progEndDate = document.getElementById("end").value;
+		    formData.append("progEndDate", progEndDate);
+		    
+		    var progRate = document.getElementById("progRate").value;
+		    formData.append("progRate", progRate);
+		    
 		    $.ajax({
 				type: "POST",
 				enctype: 'multipart/form-data',	// 필수
-				url: '/progressRate/update',
+				url: 'progressRate/update',
 				data: formData,		// 필수
 				processData: false,	// 필수
 				contentType: false	// 필수
-		    })
-			
-			
+		    }).done((data) => {
+		    	window.location.href = "${progress.srNo}";
+		    });
 		    
 		}
 	</script>

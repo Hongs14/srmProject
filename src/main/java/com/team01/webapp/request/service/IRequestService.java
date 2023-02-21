@@ -33,7 +33,9 @@ public interface IRequestService {
 		
 		RequestFilter getFilterList(RequestFilter requestFilter);
 		
-		Pager returnPage(int pageNo, Pager pager, RequestAjax requestAjax);
+		Pager returnPage(String pageNo, Pager pager, RequestAjax requestAjax);
 		List<RequestList> getRequestList(Pager pager, RequestAjax requestAjax);
+
+		SR getRequestDetail(String srNo);
 
 }
