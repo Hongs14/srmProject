@@ -8,9 +8,7 @@
    		
    		<script>
    			function selectDev(obj){
-   				console.log(obj.value);
    				let pickDp = obj.value.toString();
-   				console.log(pickDp);
    				$('#srDevDp').val(pickDp);
    			};
    			
@@ -33,12 +31,12 @@
    					url: '<c:url value="/develop/register"/>',
    					method: "post",
    					data: JSON.stringify(data),
-   					
    					contentType: "application/json; charset=UTF-8",
    					success: function(result){
    						console.log("성공");
    						let modal = '<div><h5>'+$('#srDevDp').val()+'</h5></div>';
-   						modal += 	'<div class="row"><div class="col-1">선택</div>';
+   						modal += '<div class="row">';
+   						modal += 	'<div class="col-1">선택</div>';
                  		modal += 	'<div class="col-1">직책</div>';
                  		modal += 	'<div class="col-2">성명</div>';
                  		modal += 	'<div class="col-3">전화번호</div>';
@@ -47,8 +45,49 @@
                  		
                  	
    						$('.modal-body').append(modal);
+   						selectList();
    					}  
    				 }); 
+   			};
+   			
+   			function selectList(){
+   				let userDp = $('#srDevDp').val();
+   				console.log(userDp);
+   			 	let data = {userDpNm : userDp}; 
+   				
+   				$.ajax({
+   					url: '<c:url value="/develop/devlist"/>',
+   					method: "post",
+   					data: JSON.stringify(data),
+   					contentType: "application/json; charset=UTF-8",
+   					success: function(data){
+   						console.log(data);
+   						$.each(data, function(index, item){
+   							let row = '<div class="row">';
+   							row += 		'<div class="col-1"><input type="checkbox"></div>';
+                 			row += 		'<div class="col-1">'+item.userJbps+'</div>';
+                 			row += 		'<div class="col-2">'+item.userNm+'</div>';
+                 			row += 		'<div class="col-3">'+item.userTelNo+'</div>';
+                 			row +=		'<div class="col-5">';
+                 			row +=			'<div class="row">';
+                 			row +=				'<div></div>';
+                 			
+         					row += 			'</div>';
+         					row +=		 '</div>';
+         					row += '</div>';
+         					/*  ~<div>2023.03.09 </div>
+         					&nbsp;<div>SR제목</div>
+         					&nbsp;-&nbsp;<div>테스트</div></div> */
+         					$('.modal-body').append(row);
+         			
+                 			
+   						});
+   						
+   					},
+   					error: function(data){
+   						console.log("실패");
+   					}
+   				});
    			};
    		</script>
    
@@ -189,7 +228,7 @@
                                     <div>
                                     	<div class="row" style="white-space:normal;">
                                     		<div class="col-2"><h6 class="text-primary font-weight-bold">투입인력</h6></div>
-                                    		<div class="col-10"><button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModalScrollable" id="#modalScroll">추가하기</button></div>
+                                    		<div class="col-10"><button class="btn btn-secondary btn-sm addlist" data-toggle="modal" data-target="#exampleModalScrollable" id="#modalScroll">추가하기</button></div>
                                     	</div>
                                     	<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
 								            aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">

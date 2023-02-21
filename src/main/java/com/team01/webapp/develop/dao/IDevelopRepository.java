@@ -2,6 +2,7 @@ package com.team01.webapp.develop.dao;
 
 import java.util.List;
 
+import com.team01.webapp.model.HR;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrDevelopDto;
 import com.team01.webapp.model.Users;
@@ -49,5 +50,5 @@ public interface IDevelopRepository {
 	 */
 	public List<Users> selectDeveloperByDp(String userDpNm);
 	
-	
+	public List<HR> hrlist(int UserNo);
 }
