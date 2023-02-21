@@ -369,4 +369,41 @@
 		WHERE progress.prog_type = type.prog_type_no
 		AND PROG_NO = #{progNo}
 	</select>
+	
+	<insert id="insertProgressRateFile" parameterType="progress">
+		INSERT INTO PROG_FILE
+			(PROG_FILE_NO, PROG_NO, PROG_FILE_PHYS_NM, PROG_FILE_ACTL_NM, PROG_FILE_EXTN_NM)
+    		VALUES (progfileno_seq.nextval, #{progNo}, #{progFilePhysNm}, #{progFileActlNm}, #{progFileExtnNm})
+	</insert>
+	
+	<update id="updateProgressRate" parameterType="progress">
+		UPDATE PROGRESS
+		SET
+		    PROG_START_DATE = #{progStartDate},
+		    PROG_END_DATE = #{progEndDate},
+		    PROG_RATE = #{progRate}
+		WHERE PROG_NO = #{progNo}
+	</update>
+	
+	<select id="selectProgressRateFile" parameterType="string" resultType="progressFile">
+		SELECT
+		    PROG_FILE_NO AS "progFileNo",
+		    PROG_NO AS "progNo",
+		    PROG_FILE_PHYS_NM AS "progFilePhysNm",
+		    PROG_FILE_ACTL_NM AS "progFileActlNm",
+		    PROG_FILE_EXTN_NM AS "progFileExtnNm"
+		FROM PROG_FILE
+		WHERE PROG_NO = #{progNo}
+	</select>
+	
+	<select id="selectProgressFile" parameterType="string" resultType="progressFile">
+		SELECT
+		    PROG_FILE_NO AS "progFileNo",
+		    PROG_NO AS "progNo",
+		    PROG_FILE_PHYS_NM AS "progFilePhysNm",
+		    PROG_FILE_ACTL_NM AS "progFileActlNm",
+		    PROG_FILE_EXTN_NM AS "progFileExtnNm"
+		FROM PROG_FILE
+		WHERE PROG_FILE_NO = #{progFileNo}
+	</select>
 </mapper>

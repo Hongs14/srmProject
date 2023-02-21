@@ -5,6 +5,7 @@ import java.util.List;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
+import com.team01.webapp.model.ProgressFile;
 import com.team01.webapp.model.ProgressFilter;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.SrProgressAjax;
@@ -134,4 +135,10 @@ public interface IProgressService {
 	public List<Progress> progressRateList(String srNo);
 
 	public Progress progressRate(int progNo);
+
+	public void writeProgressRateFile(Progress progress);
+
+	public void updateProgressRate(Progress progress);
+
+	public ProgressFile getProgressFile(String progFileNo);
 }

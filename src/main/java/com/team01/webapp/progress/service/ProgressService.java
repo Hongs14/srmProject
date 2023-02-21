@@ -10,6 +10,7 @@ import com.team01.webapp.model.DeveloperSR;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
+import com.team01.webapp.model.ProgressFile;
 import com.team01.webapp.model.ProgressFilter;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SRType;
@@ -239,7 +240,13 @@ public class ProgressService implements IProgressService {
 	 */
 	@Override
 	public List<Progress> progressRateList(String srNo) {
-		return progressRepository.selectProgressRateList(srNo);
+		List<Progress> progressList = progressRepository.selectProgressRateList(srNo);
+		
+		for(int i=0; i<progressList.size(); i++) {
+			progressList.get(i).setProgressFile(progressRepository.selectProgressRateFile(progressList.get(i).getProgNo()));
+		}
+		
+		return progressList;
 	}
 
 	@Override
@@ -247,5 +254,19 @@ public class ProgressService implements IProgressService {
 		return progressRepository.selectProgressRate(progNo);
 	}
 
+	@Override
+	public void writeProgressRateFile(Progress progress) {
+		progressRepository.insertProgressRateFile(progress);
+	}
+
+	@Override
+	public void updateProgressRate(Progress progress) {
+		progressRepository.updateProgressRate(progress);
+	}
+
+	@Override
+	public ProgressFile getProgressFile(String progFileNo) {
+		return progressRepository.selectProgressFile(progFileNo);
+	}
 
 }
