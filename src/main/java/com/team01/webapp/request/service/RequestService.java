@@ -74,17 +74,19 @@ public class RequestService implements IRequestService{
 		
 		return requestFilter;
 	}
+	
+	
 	@Override
-	public Pager returnPage(int pageNo, Pager pager, RequestAjax requestAjax) {
+	public Pager returnPage(String pageNo, Pager pager, RequestAjax requestAjax) {
 		log.info("실행");
-		log.info(requestAjax);
-		int totalListNum = (int) requestRepository.selectTotalRequestCount(requestAjax);
+		int totalListNum = requestRepository.selectTotalRequestCount(requestAjax);
 		log.info(totalListNum);
-		pager = new Pager(10,5,totalListNum,pageNo);
-		
+		int pagerNo = Integer.parseInt(pageNo);
+		pager = new Pager(10, 5, totalListNum, pagerNo);
 		return pager;
 	}
 	@Override
+	@Transactional
 	public List<RequestList> getRequestList(Pager pager, RequestAjax requestAjax) {
 		log.info("실행");
 		int start = (pager.getPageNo()-1)* pager.getRowsPerPage()+1;
@@ -96,5 +98,11 @@ public class RequestService implements IRequestService{
 		List<RequestList> requestLists = requestRepository.selectRequestList(requestAjax);
 		return requestLists;
 	}
+	@Override
+	public SR getRequestDetail(String srNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 }

@@ -39,10 +39,10 @@
 		where sr.sys_no = system.sys_no
 		AND sr.stts_no = stts.stts_no
 		AND sr.sr_cust_no = users.user_no
-		<if test="srDevDp != 0">
-			AND sr.sr_dev_dp LIKE #{srDevDp}
+		<if test="srDevDp != '0'">
+			AND sr.sr_dev_dp = #{srDevDp}
 		</if>
-		<if test="sysNo != 0">
+		<if test="sysNo != '0'">
 			AND sr.sys_no = #{sysNo}
 		</if>
 		<if test="sttsNo != 0">
@@ -99,12 +99,11 @@
 			       	<if test="sttsNo != 0">
 						AND st.stts_no = #{sttsNo}
 					</if>
-			       	<if test="sysNo != 0">
-			       		AND sys.sys_nm = #{sysNo}
-			       	</if>
-			       
+			       <if test="sysNo != 0">
+						AND s.sys_no = #{sysNo}
+					</if>
 			       	<if test="srDevDp != 0">
-			       		AND u.user_dp_nm LIKE #{srDevDp}
+			       		AND s.sr_deb_dp LIKE #{srDevDp}
 			       	</if>
 			        ORDER BY s.SR_NO
 			    )
