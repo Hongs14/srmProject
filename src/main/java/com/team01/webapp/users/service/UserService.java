@@ -50,9 +50,13 @@ public class UserService implements IUserService {
 		user.setUserEml(dbUser.getUserEml());
 		user.setUserTelno(dbUser.getUserTelno());
 		user.setUserDpNm(dbUser.getUserDpNm());
+		String sysNm = userRepository.selectSysNmByUserNo(user.getUserNo());
+		user.setSysNm(sysNm);
+		
 		return LoginResult.SUCCESS;
 	}
 	
+
 	@Override
 	public User getUser(String userId) {
 		log.info(userId+ "실행 ");

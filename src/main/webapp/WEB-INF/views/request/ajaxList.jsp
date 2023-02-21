@@ -23,10 +23,10 @@
 			<tbody style="text-align: center;">
 				<c:forEach var="request" items="${requestLists}">
 					<tr>
-						<td>${request.seq}</td>
 						<td>
 							<input type="checkbox" name="requestCheck">
 						</td>
+						<td>${request.srNo}</td>
 						<td><span class="requsetTtl">${request.srTtl}</span></td>
 						<td>${request.sysNm}</td>
 						<td>${request.userNm}</td>

@@ -17,4 +17,6 @@ public class Users {
 	private String userDelYn;
 	private String userDpNm;
 	
+	private String sysNm;
+	
 }
