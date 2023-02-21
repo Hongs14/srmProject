@@ -84,12 +84,13 @@ public class DevelopController {
 	
 	@PostMapping(value="/devlist", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public List<Users> getDevList(@RequestBody Map<String, String> userDpNmMap) {
+	public String getDevList(@RequestBody Map<String, String> userDpNmMap, Model model) {
 		String userDpNm = userDpNmMap.get("userDpNm");
 		List<Users> list = developService.selectDeveloperList(userDpNm);
 		log.info(userDpNm+"팀별 개발자 조회");
 		log.info(list);
-		return list;
+		model.addAttribute("data",list);
+		return "develop/temp";
 	}
 
 }

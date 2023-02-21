@@ -60,33 +60,9 @@
    					method: "post",
    					data: JSON.stringify(data),
    					contentType: "application/json; charset=UTF-8",
-   					success: function(data){
-   						console.log(data);
-   						$.each(data, function(index, item){
-   							let row = '<div class="row">';
-   							row += 		'<div class="col-1"><input type="checkbox"></div>';
-                 			row += 		'<div class="col-1">'+item.userJbps+'</div>';
-                 			row += 		'<div class="col-2">'+item.userNm+'</div>';
-                 			row += 		'<div class="col-3">'+item.userTelNo+'</div>';
-                 			row +=		'<div class="col-5">';
-                 			row +=			'<div class="row">';
-                 			row +=				'<div></div>';
-                 			
-         					row += 			'</div>';
-         					row +=		 '</div>';
-         					row += '</div>';
-         					/*  ~<div>2023.03.09 </div>
-         					&nbsp;<div>SR제목</div>
-         					&nbsp;-&nbsp;<div>테스트</div></div> */
-         					$('.modal-body').append(row);
-         			
-                 			
-   						});
-   						
-   					},
-   					error: function(data){
-   						console.log("실패");
-   					}
+   				
+   				}).done((data)=>{
+   					$(".modal-body").html(data);
    				});
    			};
    		</script>
@@ -241,7 +217,7 @@
 								                  		</button>
 								                	</div>
 								                	<div class="modal-body" style="white-space:normal;"> 
-								                  		<!-- <div><h5>개발1팀</h5></div>
+								                  		 <%-- <div><h5>개발1팀</h5></div>
 								                 		<div class="row">
 								                 			<div class="col-1">선택</div>
 								                 			<div class="col-1">직책</div>
@@ -251,9 +227,9 @@
 								                 		</div>
 								                 		<div class="row">
 								                 			<div class="col-1"><input type="checkbox"></div>
-								                 			<div class="col-1">사원</div>
-								                 			<div class="col-2">황태률</div>
-								                 			<div class="col-3">010-1234-9876</div>
+								                 			<div class="col-1">${list.userJbps}</div>
+								                 			<div class="col-2">${list.userNm}</div>
+								                 			<div class="col-3">${list.userTelNo }</div>
 								                 			<div class="col-5">
 								                 				<div class="row">
 								                 					<div>2023.03.01</div>
@@ -262,35 +238,11 @@
 								                 					&nbsp;-&nbsp;<div>테스트</div>
 								                 				</div>
 								                 			
-								                 				<div class="row">
-								                 					<div>2023.03.01</div>
-								                 					 ~<div>2023.03.09 </div>
-								                 					 &nbsp;<div>SR제목</div>
-								                 					&nbsp;-&nbsp;<div>구현</div>
-								                 				</div>
-								                 				
-								                 				<div class="row">
-								                 					<div>2023.03.01</div>
-								                 					 ~<div>2023.03.09 </div>
-								                 					 <div>테스트</div>
-								                 				</div>
 								                 			</div>
 								                 		</div>
 								                 		<hr/>
 								                 		
-								                 		
-								                 
-								                 		
-								                 		<div class="row">
-								                 			<div class="col-1"><input type="checkbox"></div>
-								                 			<div class="col-1">차장</div>
-								                 			<div class="col-2">정희희</div>
-								                 			<div class="col-3">010-1234-9876</div>
-								                 			<div class="col-5">
-								                 				
-								                 			</div>
-								                 		</div>
-								                 		<hr/> -->
+								                 		 --%>
 								                	</div>
 									                <div class="modal-footer">
 									                	<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>

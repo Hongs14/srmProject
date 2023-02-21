@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.team01.webapp.develop.dao.IDevelopRepository;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.SR;
@@ -51,11 +49,10 @@ public class DevelopService implements IDevelopService{
 
 	@Override
 	public List<Users> selectDeveloperList(String userDpNm) {
-		System.out.println(userDpNm);
 		List<Users> list = developRepository.selectDeveloperByDp(userDpNm);
-		System.out.println("DEV서비스"+list);
+		
 		for(int i=0; i<list.size();i++) {
-			List<HR> worklist = developRepository.hrlist(list.get(i).getUserNo());
+			List<HR> worklist = developRepository.hrlist(userDpNm, list.get(i).getUserNo());
 			list.get(i).setDevList(worklist);
 		}
 		return list;
