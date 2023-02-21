@@ -35,26 +35,105 @@
 						<td>${progress.progTypeNm}</td>
 						<td>
 							<div class="input-daterange input-group input-group-sm justify-content-center">
-								<input type="text" value="${progress.progStartDate}" class="a input-sm form-control form-control-sm col-sm-9" name="start" id="start"/>
+								<input type="text" value="${progress.progStartDate}" class="a input-sm form-control form-control-sm col-sm-9" name="progStartDate" id="start"/>
 							</div>
 						</td>
 						<td>
 							<div class="input-daterange input-group input-group-sm justify-content-center">
-								<input type="text" value="${progress.progEndDate}" class="a input-sm form-control form-control-sm col-sm-9" name="start" id="start"/>
+								<input type="text" value="${progress.progEndDate}" class="a input-sm form-control form-control-sm col-sm-9" name="progEndDate" id="end"/>
 							</div>
 						</td>
 						<td>
-							<input type="number" value="${progress.progRate}" min="0"/>
+							<input type="number" value="${progress.progRate}" min="0" name="progRate"/>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div>
-			<h5>산출물</h5>
+		<div class="p-3">
+			<form method="POST" onsubmit="return false;" enctype="multipart/form-data">
+				<div class="row mb-2">
+					<span class=" font-weight-bold col-sm-2">첨부파일: </span> 
+					<div class="custom-file col-sm-9">
+						<input type="file" name="progressattach" class="custom-file-input form-control" onchange="addProgressRateFile(this);" multiple/> 
+						<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
+					</div>
+				</div>
+				<div class="row mb-2">
+					<span class=" font-weight-bold col-sm-2">파일목록: </span> 
+					<div class="col-sm-9" id="userfile"></div>
+				</div>
+			</form>
 		</div>
 	</div>
 	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" onclick="progressRateUpdate()">등록</button>
 		<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
-		<button type="button" class="btn btn-primary" id="selectDeveloper">등록</button>
 	</div>
+	
+	<input type="hidden" name="progNo" value="${progress.progNo}"/>
+	
+	<script>
+		var fileNo = 0;
+		var filesArr = new Array();
+		
+		/* 첨부파일 추가 */
+		function addProgressRateFile(obj){
+			var maxFileCnt = 5; // 첨부파일 최대 개수
+			var curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
+			
+			for (const file of obj.files) {
+				var reader = new FileReader();
+				reader.onload = function() {
+					filesArr.push(file);
+				};
+				reader.readAsDataURL(file);
+				
+	               // 목록 추가
+	               let htmlData = '';
+	               htmlData += '<div id="file' + fileNo + '" class="filebox row">';
+	               htmlData += '   <p class="name col-1">' + file.name + '</p>';
+	               htmlData += '   <a class="delete col-2" onclick="deleteFile(' + fileNo + ');"><i class="far fa-minus-square"></i></a>';
+	               htmlData += '</div>';
+	               $('#userfile').append(htmlData);
+	               fileNo++;
+			}
+			
+			// 초기화
+		    document.querySelector("input[type=file]").value = "";
+		}
+		
+		/* 첨부파일 삭제 */
+		function deleteFile(num) {
+			document.querySelector("#file" + num).remove();
+			filesArr[num].is_delete = true;
+		}
+		
+		/* ajax 처리 */
+		function progressRateUpdate() {
+			// 폼 데이터 담기
+			var form = document.querySelector("form");
+		    var formData = new FormData(form);
+		    for (var i = 0; i < filesArr.length; i++) {
+		        // 삭제되지 않은 파일만 폼데이터에 담기
+		        if (!filesArr[i].is_delete) {
+		        	console.log("돌아감");
+		        	console.log(filesArr[i]);
+		            formData.append("progressattach", filesArr[i]);
+		        }
+		    }
+		    
+		    $.ajax({
+				type: "POST",
+				enctype: 'multipart/form-data',	// 필수
+				url: '/progressRate/update',
+				data: formData,		// 필수
+				processData: false,	// 필수
+				contentType: false	// 필수
+		    })
+			
+			
+		    
+		}
+	</script>
+	
