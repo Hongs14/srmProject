@@ -5,6 +5,11 @@
 
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
+  	 <style>
+        select option[value=""][disabled] {
+	        display: none;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -74,7 +79,8 @@
 		                    </div>
 		                    <div class="form-group">
 		                      <label>타입 </label>
-		                      <select class="form-control" id="userType" name="userType">
+		                      <select class="form-control" id="userType" name="userType" onchange="optionChange1();">
+		                      	<option value="" disabled selected>가입 타입 선택</option>
 		                      	<option value="고객사">고객사</option>
 		                      	<option value="개발자">개발자</option>
 		                      	<option value="관리자">관리자</option>
@@ -82,8 +88,10 @@
 		                    </div>
 		                    
 		                    <div class="form-group">
-		                      <label>소속 </label>
-		                      <input type="text" class="form-control" id="userOgdp" name="userOgdp" >
+		                      <label for="userOgdp">소속 </label>
+		                      <select type="text" class="form-control" id="userOgdp" name="userOgdp" >
+		                      	<option value="" disabled selected>소속 회사 선택</option>
+		                      </select>
 		                    </div>
 		                    
 		                    <div class="form-group">
@@ -92,8 +100,10 @@
 		                    </div>
 		                    
 		                    <div class="form-group">
-		                      <label>부서 </label>
-		                      <input type="text" class="form-control" id="userDpNm" name="userDpNm">
+		                      <label for="userDpNm">부서 </label>
+		                      <select type="text" class="form-control" id="userDpNm" name="userDpNm" >
+		                      	<option value="" disabled selected>소속 부서 선택</option>
+		                      </select>
 		                    </div>
 		                    
 		                    
@@ -128,6 +138,44 @@
       </div>
       <!-- Footer -->
      	 <%@include file="/WEB-INF/views/common/footer.jsp" %>
+     	 <script>
+     	function optionChange1() {
+            let a = ['티에이치컴퍼니','레드주컴퍼니','에이치알컴퍼니','지에이치컴퍼니'];
+            let b = ['한국소프트SRM'];
+            
+            let a2 = ['전산팀','마케팅팀','기획팀','인사팀','회계팀','총무팀','영업팀','판매팀'];
+            let b2 = ['개발1팀','개발2팀','개발3팀'];
+            let c2 = ['관리1팀','관리2팀','관리3팀'];
+            
+            let userType = $( '#userType' ).val();
+            let userOgdpOptions;
+            let userDpNmOptions;
+            if ( userType == '고객사' ) {
+            	userOgdpOptions = a;
+            	userDpNmOptions = a2;
+            }  else if ( userType == '개발자' ) {
+            	userOgdpOptions = b;
+            	userDpNmOptions = b2;
+            }	else {
+            	userOgdpOptions = b;
+            	userDpNmOptions = c2;
+            	
+            }
+            $( '#userOgdp' ).empty();
+            $( '#userOgdp' ).append( '<option value="" disabled selected>소속 회사 선택</option>' );
+            for ( let i = 0; i < userOgdpOptions.length; i++ ) {
+              $( '#userOgdp' ).append( '<option>' + userOgdpOptions[ i ] + '</option>' );
+            }
+            
+            $( '#userDpNm' ).empty();
+            $( '#userDpNm' ).append( '<option value="" disabled selected>소속 부서 선택</option>' );
+            for ( var i = 0; i < userDpNmOptions.length; i++ ) {
+              $( '#userDpNm' ).append( '<option>' + userDpNmOptions[ i ] + '</option>' );
+            }
+          }
+     	
+     	
+     	 </script>
      <!-- Footer -->
     </div>
   </div>

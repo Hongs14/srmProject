@@ -5,7 +5,6 @@
 		<table class="table align-items-center table-flush table-hover">
 			<thead class="thead-light" style="text-align: center;">
 				<tr>
-					<th>No</th>	
 					<th>
 						<input type="checkbox" onclick='selectAll(this)' name="examineCheck">
 					</th>
@@ -13,8 +12,8 @@
 					<th>제목</th>
 					<th>관련시스템</th>
 					<th>등록자</th>
-					<th>소속</th>
-					<th>부서</th>
+					<th>소속회사</th>
+					<th>개발부서</th>
 					<th>상태</th>
 					<th>등록일</th>
 					<th>중요</th>
@@ -28,16 +27,15 @@
 						<td>
 							<input type="checkbox" name="requestCheck">
 						</td>
-						<td>${request.srNo}</td>
 						<td><span class="requsetTtl">${request.srTtl}</span></td>
 						<td>${request.sysNm}</td>
 						<td>${request.userNm}</td>
 						<td>${request.userOgdp}</td>
-						<td>${request.userDpNm}</td>
+						<td>${request.srDevDp}</td>
 						<td><span class="badge badge-danger" style="font-size:100%">${request.sttsNm}</span></td>
 						<td>${request.srRegDate}</td>
 						<td><span class="badge badge-danger" style="font-size:100%">${request.srPry}</span></td>
-						<td><a href="${pageContext.request.contextPath}/request/detail/${request.srNo}" class="btn btn-sm btn-info">상세보기</a></td>
+						<td><a href="${pageContext.request.contextPath}/request/detail/${request.srNo}" class="btn btn-sm btn-primary">상세보기</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

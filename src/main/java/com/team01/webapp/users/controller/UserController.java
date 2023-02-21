@@ -5,9 +5,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.team01.webapp.model.RequestFilter;
 import com.team01.webapp.users.model.User;
 import com.team01.webapp.users.service.IUserService;
 import com.team01.webapp.users.service.UserService;
@@ -88,9 +90,11 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String join() {
+		log.info("정보 로그 실행");
+		
 		return "user/joinForm";
 	}
-	
+
 	/**
 	 * 회원가입 메서드
 	 * 

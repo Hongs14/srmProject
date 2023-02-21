@@ -19,6 +19,7 @@
  	<typeAlias type="com.team01.webapp.model.QSTNFile" alias="qstnFile"/>
  	<typeAlias type="com.team01.webapp.model.SR" alias="sr"/>
  	<typeAlias type="com.team01.webapp.model.RequestList" alias="requestList"/>
+ 	<typeAlias type="com.team01.webapp.model.RequestAjax" alias="requestAjax"/>
  	<typeAlias type="com.team01.webapp.model.SrFile" alias="srFile"/>
  	<typeAlias type="com.team01.webapp.model.SRStts" alias="srstts"/>
  	<typeAlias type="com.team01.webapp.model.SRType" alias="srtype"/>

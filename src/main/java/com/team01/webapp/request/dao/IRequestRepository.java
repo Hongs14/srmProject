@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SRStts;
@@ -36,10 +37,10 @@ public interface IRequestRepository {
 	List<SRStts> selectSttsNmList();
 	
 	
-	int selectTotalRequestCount(RequestList requestList);
+	int selectTotalRequestCount(RequestAjax requestAjax);
 	
 
-	List<RequestList> selectRequestList(@Param("startRowNo") int startRowNo, @Param("endRowNo")int endRowNo, @Param("requestList")RequestList requestList);
+	List<RequestList> selectRequestList(RequestAjax requestAjax);
 	
 	
 }

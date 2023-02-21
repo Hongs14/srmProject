@@ -3,6 +3,7 @@ package com.team01.webapp.request.service;
 import java.io.File;
 import java.util.List;
 
+import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
 import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
@@ -32,7 +33,7 @@ public interface IRequestService {
 		
 		RequestFilter getFilterList(RequestFilter requestFilter);
 		
-		Pager returnPage(int pageNo, Pager pager, RequestList requestList);
-		List<RequestList> getRequestList(Pager pager, RequestList requestList);
+		Pager returnPage(int pageNo, Pager pager, RequestAjax requestAjax);
+		List<RequestList> getRequestList(Pager pager, RequestAjax requestAjax);
 
 }
