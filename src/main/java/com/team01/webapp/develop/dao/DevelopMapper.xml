@@ -102,16 +102,21 @@
 		작성자: 정홍주
 	 -->
 	<select id="selectDeveloperByDp" parameterType="string" resultType="users">
-		<![CDATA[
-			SELECT USER_JBPS AS "userJbps", 
-					USER_NM AS "userNm", 
-					USER_TELNO AS "userTelNo", 
-					HR_START_DATE AS "hrStartDate", 
-					HR_END_DATE AS "hrEndDate"
-					TASK_NM
-			FROM USERS, HR, TASK
-			WHERE USERS.USER_TYPE='개발자' AND USERS.USER_DP_NM=#{userDpNm} AND USERS.USER_NO = HR.USER_NO(+) AND HR.TASK_NO = TASK.TASK_NO(+);
-		]]>
+		SELECT USER_NO AS "userNo",
+				USER_JBPS AS "userJbps", 
+				USER_NM AS "userNm", 
+				USER_TELNO AS "userTelNo"
+		FROM USERS
+		WHERE USER_TYPE='개발자' AND USER_DP_NM=#{userDpNm}
+	</select>
+	
+	<select id="hrlist" parameterType="int" resultType="hr">
+		SELECT USERS_No AS "userNo", 
+				HR_START_DATE AS "hrStartDate", 
+				HR_END_DATE AS "hrEndDate", 
+				TASK_NM AS "taskNm"
+		FROM HR, TASK, USERS
+		WHERE USERS.USER_TYPE = '개발자' AND USERS.USER_DP_NM = #{userNo} AND USERS.USER_NO = HR.USER_NO AND HR.TASK_NO = TASK.TASK_NO
 	</select>
 	
 	<!-- 

@@ -1,5 +1,7 @@
 package com.team01.webapp.model;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -17,4 +19,5 @@ public class Users {
 	private String userDelYn;
 	private String userDpNm;
 	
+	private List<HR> devList;
 }
