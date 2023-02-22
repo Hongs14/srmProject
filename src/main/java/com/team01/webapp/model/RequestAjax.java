@@ -1,5 +1,7 @@
 package com.team01.webapp.model;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
@@ -10,7 +12,10 @@ public class RequestAjax {
 	private String userOgdp;
 	private String srNo;
 	private String srTtl;
-
+	
+	private String srRegStartDate;
+	private String srRegEndDate;
+	
 	// pageing 이용
 	private int start;
 	private int end;

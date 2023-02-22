@@ -212,7 +212,6 @@
 <script>
 function getDetail(i){
 	$.ajax({
-		console.log("안녕!");
 		url : "/myapp/request/detail/sr/"+i,
 		type : "GET",
 		datatype : "html",

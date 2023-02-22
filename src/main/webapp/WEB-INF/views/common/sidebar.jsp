@@ -18,7 +18,7 @@
         SR 관리 
       </div>
       <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/request/list/1">
+        <a class="nav-link" href="${pageContext.request.contextPath}/request/list">
           <i class="far fa-fw fa-window-maximize"></i>
           <span>SR 요청 관리</span>
         </a>

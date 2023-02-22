@@ -48,9 +48,19 @@ public class RequestService implements IRequestService{
 	 */
 	@Override
 	@Transactional
-	public void writeRequest(SR sr) {
-		sr.setSysNo(requestRepository.selectSysNo(sr.getSrCustId()));
-		sr.setSrNo(requestRepository.selectMaxSrNo()+1);
+	public int writeRequest(SR sr) {
+		log.info("실행"+sr);
+		String srSysNo = sr.getSysNo(); 
+		String sysNo = "%"+srSysNo+"%";
+		int srSeq = Integer.parseInt(requestRepository.selectMaxSrNo(sysNo))+1;
+		String number = String.format("%05d", srSeq);
+		String srNo = srSysNo+"-SR-"+number;
+		sr.setSrNo(srNo);
+		log.info("SR NO: "+srNo);
+		
+		int rows = requestRepository.insertRequest(sr);
+		return rows;
+		
 	}
 	
 	@Override
@@ -82,6 +92,7 @@ public class RequestService implements IRequestService{
 		//개발 부서 리스트
 		srDevDpList = requestRepository.selectSrDevDpList();
 		requestFilter.setSrDevDpList(srDevDpList);
+		log.info("srDevDpList: "+srDevDpList);
 		
 		return requestFilter;
 	}

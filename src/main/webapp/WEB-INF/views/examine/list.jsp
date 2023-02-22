@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
@@ -10,7 +10,7 @@
   	<script>
 	  	$(document).ready(function () {
 		    $('#simple-date4 .input-daterange').datepicker({        
-		        format: 'yyyy/mm/dd',        
+		        format: 'yyyy-mm-dd',        
 		        autoclose: true,     
 		        todayHighlight: true,   
 		        todayBtn: 'linked',
