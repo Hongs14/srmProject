@@ -66,26 +66,19 @@
    			};
    			
    			function submitDev(){
-   				var checkBoxArr = new Array();
+   				var checkBoxArr = [];
    		  		$("input:checkbox[name='devName']:checked").each(function(i) {
    		 	 		//체크박스값 배열에 넣기
-   		  			var userNo = checkBoxArr.push($(this).val());
-   		 	 		
-   		 	 		let data = {userNo : userNo};
-   		 	 		
-   		 	 		checkBoxArr.push(data);
+   		  			checkBoxArr.push($(this).val());
    		  		});
-   		  		
-   		  		console.log(checkBoxArr);
-   		  		
-   		  		data = {checkBoxArr : checkBoxArr};
-   		  		
 
    		  		$.ajax({
    		  			url: '<c:url value="/develop/selectNm"/>',
-   		  			method : "post",
-   		  			data : JSON.stringify(data),
-   		  			contentType : "application/json; charset=UTF-8",
+   		  			type : 'post',
+   		  			traditional : true,
+   		  			data : {
+   		  				checkBoxArr : checkBoxArr
+   		  			},
    		  			success: function(data){
    		  				console.log(data);
    		  				$('#HrList').html(data);
