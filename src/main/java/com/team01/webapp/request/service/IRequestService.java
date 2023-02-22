@@ -28,7 +28,7 @@ public interface IRequestService {
 		 * @param file	첨부파일
 		 */
 		void writeRequest(SR sr, File file);
-		void writeRequest(SR sr);
+		int writeRequest(SR sr);
 		
 		
 		RequestFilter getFilterList(RequestFilter requestFilter);

@@ -24,7 +24,7 @@ public interface IRequestRepository {
 	 */
 	String selectSysNo(int userNo);
 
-	String selectMaxSrNo();
+	String selectMaxSrNo(String sysNo);
 	
 	List<System> selectSysNmList();
 	
@@ -41,6 +41,8 @@ public interface IRequestRepository {
 	int selectTotalRequestCount(RequestAjax requestAjax);
 	
 	List<RequestList> selectRequestList(RequestAjax requestAjax);
+
+	int insertRequest(SR sr);
 
 
 	

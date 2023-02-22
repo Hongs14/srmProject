@@ -2,6 +2,8 @@ package com.team01.webapp.develop.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrDevelopDto;
@@ -50,5 +52,7 @@ public interface IDevelopRepository {
 	 */
 	public List<Users> selectDeveloperByDp(String userDpNm);
 	
-	public List<HR> hrlist(int UserNo);
+	public List<HR> hrlist(@Param("userDpNm")String userDpNm, @Param("userNo")int userNo);
+
+	public Users selecNameByNo(int userNo);
 }

@@ -9,12 +9,13 @@ import lombok.Data;
 @Data
 public class SR {
 	private String srNo;
-	private int srCustId;
+	private int srCustNo;
 	private String sysNo;
 	private int sttsNo;
 	private String srTtl;
 	private String srCn;
 	private Date srRegDate;
+	private String srDevDp;
 	private String srPry;
 	private String srOpnn;
 	private int srBgt;

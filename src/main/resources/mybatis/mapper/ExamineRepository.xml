@@ -72,7 +72,7 @@
 		<if test="!userOgdp.equals('전체')">
 			AND u.user_dp_nm = #{userDpNm}
 		</if>
-		<if test="!srRegStartDate.equals('')">
+		<if test="!srRegStartDate.equals('')" >
 			 AND sr.SR_REG_DATE BETWEEN 
                 TO_DATE(#{srRegStartDate},'YY-MM-DD') 
                 AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+0.9

@@ -8,11 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-<<<<<<< HEAD
-import com.team01.webapp.users.model.User;
-=======
+
 import com.team01.webapp.model.Users;
->>>>>>> branch 'master' of https://github.com/SRM-TEAM01/srmProject.git
 import com.team01.webapp.users.service.IUserService;
 import com.team01.webapp.users.service.UserService;
 
@@ -64,7 +61,11 @@ public class UserController {
 			return "user/loginForm";
 		}else {
 			session.setAttribute("loginUser", user);
+
 			session.setAttribute("userType", user.getUserType());
+
+			session.setAttribute("userNo", user.getUserNo());
+
 			log.info(user);
 			return "home";
 		}

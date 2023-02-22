@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.team01.webapp.model.Notice;
+import com.team01.webapp.model.NoticeComment;
 import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.notice.dao.INoticeRepository;
 import com.team01.webapp.notice.service.INoticeService;
@@ -84,6 +85,24 @@ public class NoticeService implements INoticeService{
 		return notice;
 	}
 	
+	//공지사항 상세조회 첨부파일 읽어오기
+	@Override
+	public List<NoticeFile> selectNoticeFileDetail(int ntcNo) {
+		log.info("실행");
+		List<NoticeFile> noticeFile = noticeRepository.selectNoticeFileDetail(ntcNo);
+		return noticeFile;
+	}
+	
+	//공지사항 상세조회 첨부파일 다운로드
+	@Override
+	public NoticeFile selectFiledownload(int ntcFileNo) {
+		log.info("실행");
+		NoticeFile noticeFile = noticeRepository.selectFileDownload(ntcFileNo);
+		
+		return noticeFile;
+	}
+	
+	
 	/**
 	 * 공지사항 조회수
 	 * @author : 황건희
@@ -144,5 +163,49 @@ public class NoticeService implements INoticeService{
 		log.info("실행");
 		noticeRepository.delete(ntcNo);
 	}
+	
+	//공지사항 첨부파일 삭제
+	@Override
+	public int noticeFileDelete(int ntcFileNo) {
+		log.info("실행");
+		int ntcNo = noticeRepository.deleteFile(ntcFileNo);
+		return ntcNo;
+	}
+	
+	
+	//댓글 읽기
+	@Override
+	public List<NoticeComment> getCommentList(int ntcNo) {
+		log.info("실행");
+		List<NoticeComment> list = noticeRepository.selectNoticeCommentList(ntcNo);
+		return list;
+	}
+	
+	//댓글 작성
+	@Override
+	public NoticeComment writeComment(NoticeComment ntcComment) {
+		log.info("실행");
+		noticeRepository.insertComment(ntcComment);
+		ntcComment = noticeRepository.selectComment();
+		return ntcComment;
+	}
+
+	//댓글 수정
+	@Override
+	public void updateComment(NoticeComment ntcComment) {
+		log.info("실행");
+		noticeRepository.updateComment(ntcComment);
+	}
+
+	//댓글 삭제
+	@Override
+	public void deleteComment(int ntcCmntNo) {
+		log.info("실행");
+		noticeRepository.deleteComment(ntcCmntNo);
+	}
+	
+
+	
+	
 
 }

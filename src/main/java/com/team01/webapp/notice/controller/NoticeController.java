@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -16,13 +18,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.model.Notice;
+import com.team01.webapp.model.NoticeComment;
 import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.notice.service.INoticeService;
 import com.team01.webapp.util.Pager;
@@ -79,33 +85,44 @@ public class NoticeController {
 		log.info("실행");
 
 		noticeService.noticeWrite(notice);
-		
 		//첨부 파일 유무 조사
-		MultipartFile mf = noticeFile.getNtcMFile();
+		List<MultipartFile> mf = noticeFile.getNtcMFile();
 		if(mf!=null &&!mf.isEmpty()) {
-			//파일 원래 이름 저장
-			noticeFile.setNtcFileActlNm(mf.getOriginalFilename());
-			//파일의 저장 이름 설정
-			String ntcFilePhysNm = new Date().getTime()+"-"+mf.getOriginalFilename();
-			noticeFile.setNtcFilePhysNm(ntcFilePhysNm);
-			//파일 타입 설정
-			String str = mf.getContentType();
-			int beginIndex = str.indexOf("/");
-			int endIndex = str.length();
-			String type = str.substring(beginIndex,endIndex);
-			noticeFile.setNtcFileExtnNm(type);
-			noticeFile.setNtcNo(notice.getNtcNo());		
+			for(int i=0; i<mf.size(); i++) {		
+				
+				//파일 원래 이름 저장
+				noticeFile.setNtcFileActlNm(mf.get(i).getOriginalFilename());
+				//파일의 저장 이름 설정
+				String ntcFilePhysNm = new Date().getTime()+"-"+mf.get(i).getOriginalFilename();
+				noticeFile.setNtcFilePhysNm(ntcFilePhysNm);
+				//파일 타입 설정
+				String str = mf.get(i).getContentType();
+				int beginIndex = str.indexOf("/");
+				int endIndex = str.length();
+				String type = str.substring(beginIndex,endIndex);
+				noticeFile.setNtcFileExtnNm(type);
+				noticeFile.setNtcNo(notice.getNtcNo());		
+
+				log.info(noticeFile);
+				//서버 파일 시스템에 파일로 저장
+				String filePath = "C:/OTI/uploadfiles/notice/"+ntcFilePhysNm;
+				File file = new File(filePath);
+				// 폴더가 없다면 생성한다
+				if(!file.exists()) {
+					try {
+						Files.createDirectories(Paths.get(filePath));
+						log.info("폴더 생성 완료");
+						mf.get(i).transferTo(file);
+					} catch (Exception e) {
+						log.info("생성 실패 : " + filePath);
+					}
+				} else {
+					mf.get(i).transferTo(file);
+				}
+				noticeService.noticeFileUpload(noticeFile);
+			}
 			
-			if((noticeFile.getNtcNo()) == notice.getNtcNo()) {
-				noticeService.noticeFileUpload(noticeFile);			
-			}			
-			//서버 파일 시스템에 파일로 저장
-			File file = new File("C:/Temp/uploadfiles/"+ntcFilePhysNm);
-			mf.transferTo(file);
 		}
-		
-		
-		
 		return "redirect:/notice/list";
 	}
 	
@@ -122,13 +139,14 @@ public class NoticeController {
 		log.info("실행");
 		
 		Notice notice = noticeService.noticeDetail(ntcNo);
+		List<NoticeFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
 		
 		model.addAttribute("notice",notice);
+		model.addAttribute("noticeFile",noticeFile);
 		
 		//조회수 카운트
 		noticeService.inqCnt(ntcNo);
 
-		
 		return "notice/detail";
 	}
 	
@@ -140,15 +158,27 @@ public class NoticeController {
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
-	@GetMapping("/update")
+	@GetMapping(value="/update")
 	public String noticeUpdate(int ntcNo, Model model) {
 		log.info("실행");
 		Notice notice = noticeService.noticeDetail(ntcNo);
+		List<NoticeFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
 		
 		model.addAttribute("notice",notice);
+		model.addAttribute("noticeFile",noticeFile);
 		
 		return "notice/update";
 	}
+	
+	//updateAjax
+	@PostMapping(value="/updateAjax/{ntcNo}",produces="application/json; charset=UTF-8")
+	public String updateAjax(@PathVariable int ntcNo, Model model) {
+		log.info("실행");
+		List<NoticeFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
+		model.addAttribute("noticeFile",noticeFile);
+		return "notice/updateAjax";
+	}
+	
 	
 	/**
 	 * 공지사항 수정
@@ -157,38 +187,38 @@ public class NoticeController {
 	 * @return
 	 * @throws IOException
 	 */
-	@PostMapping("/update")
-	public String noticeUpdate(Notice notice) throws IOException {
+	@PostMapping(value="/update",produces="application/json; charset=UTF-8")
+	public String noticeUpdate(Notice notice, NoticeFile noticeFile) throws IOException {
 		log.info("실행");
 		
 		//첨부 파일 유무 조사
-		MultipartFile mf = notice.getNtcMFile();
+		List<MultipartFile> mf = noticeFile.getNtcMFile();
 		if(mf!=null &&!mf.isEmpty()) {
-			//파일 원래 이름 저장
-			notice.setNtcFileActlNm(mf.getOriginalFilename());
-			//파일의 저장 이름 설정
-			String ntcFilePhysNm = new Date().getTime()+"-"+mf.getOriginalFilename();
-			notice.setNtcFilePhysNm(ntcFilePhysNm);
-			//파일 타입 설정
-			String str = mf.getContentType();
-			int beginIndex = str.indexOf("/");
-			int endIndex = str.length();
-			String type = str.substring(beginIndex,endIndex);
-			notice.setNtcFileExtnNm(type);
-			notice.setNtcNo(notice.getNtcNo());		
-			
-			NoticeFile noticeFile = new NoticeFile();
-			noticeFile.setNtcFileActlNm(notice.getNtcFileActlNm());
-			noticeFile.setNtcFilePhysNm(notice.getNtcFilePhysNm());
-			noticeFile.setNtcFileExtnNm(notice.getNtcFileExtnNm());
-			noticeFile.setNtcNo(notice.getNtcNo());
-			
-			noticeService.noticeUpdate(notice,noticeFile);
-			
+			for(int i=0; i<mf.size(); i++) {				
+				//파일 원래 이름 저장
+				noticeFile.setNtcFileActlNm(mf.get(i).getOriginalFilename());
+				//파일의 저장 이름 설정
+				String ntcFilePhysNm = new Date().getTime()+"-"+mf.get(i).getOriginalFilename();
+				noticeFile.setNtcFilePhysNm(ntcFilePhysNm);
+				//파일 타입 설정
+				String str = mf.get(i).getContentType();
+				int beginIndex = str.indexOf("/");
+				int endIndex = str.length();
+				String type = str.substring(beginIndex,endIndex);
+				noticeFile.setNtcFileExtnNm(type);
+				noticeFile.setNtcNo(noticeFile.getNtcNo());		
+
+				NoticeFile noticeFileList = new NoticeFile();
+				noticeFile.setNtcFileActlNm(noticeFile.getNtcFileActlNm());
+				noticeFile.setNtcFilePhysNm(noticeFile.getNtcFilePhysNm());
+				noticeFile.setNtcFileExtnNm(noticeFile.getNtcFileExtnNm());
+				noticeFile.setNtcNo(noticeFile.getNtcNo());
+
+				noticeService.noticeUpdate(notice,noticeFile);
+			}
 		}else {			
 			noticeService.noticeUpdate(notice);
 		}
-		
 		
 		return "redirect:/notice/list";
 	}
@@ -208,6 +238,14 @@ public class NoticeController {
 		return "redirect:/notice/list";
 	}
 	
+	//공지사항 첨부파일 삭제
+	@PostMapping(value="/deleteFile/{ntcFileNo}",produces="application/json; charset=UTF-8")
+	public String noticeFileDelete(@PathVariable int ntcFileNo,Model model) {
+		log.info("실행");
+		int ntcNo = noticeService.noticeFileDelete(ntcFileNo);
+		
+		return "notice/updateAjax";
+	}
 
 	/**
 	 * 공지사항 첨부파일 다운로드
@@ -218,14 +256,14 @@ public class NoticeController {
 	 * @throws Exception	예외 발생
 	 */
 	@GetMapping("/fileDownload")
-	public void download(int ntcNo,@RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
+	public void download(int ntcFileNo,@RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
 		log.info("실행");
 		
-		Notice notice = noticeService.noticeDetail(ntcNo);
+		NoticeFile noticeFile = noticeService.selectFiledownload(ntcFileNo);
 		
-		String originalName = notice.getNtcFileActlNm();
-		String savedName = notice.getNtcFilePhysNm();
-		String contentType = notice.getNtcFileExtnNm();
+		String originalName = noticeFile.getNtcFileActlNm();
+		String savedName = noticeFile.getNtcFilePhysNm();
+		String contentType = noticeFile.getNtcFileExtnNm();
 		log.info(userAgent);
 		
 		//originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩하는 방법
@@ -253,8 +291,50 @@ public class NoticeController {
 			os.close();
 			is.close();
 		}
-		
-		
 	}
+	
+	//댓글 
+	//댓글 읽기
+	@GetMapping(value="/read/comment")
+	@ResponseBody
+	public List<NoticeComment> readComment(@RequestParam int ntcNo){
+		log.info("실행");
+		List<NoticeComment> list = noticeService.getCommentList(ntcNo);
+		return list;
+	}
+	
+	//댓글 작성
+	@PostMapping(value="/write/comment", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public NoticeComment writeComment(@RequestBody NoticeComment ntcComment) {
+		log.info("실행");
+		
+		ntcComment = noticeService.writeComment(ntcComment);
+		
+		return ntcComment;
+	}
+	
+	//댓글 수정
+	@PostMapping(value="/update/comment", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public NoticeComment updateComment(@RequestBody NoticeComment ntcComment) {
+		log.info("실행");
+		
+		noticeService.updateComment(ntcComment);
+		
+		return ntcComment;
+	}
+	
+	//댓글 삭제
+	@GetMapping(value="/delete/comment", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public int deleteComment(@RequestParam int ntcCmntNo) {
+		log.info("실행");
+		
+		noticeService.deleteComment(ntcCmntNo);
+		
+		return ntcCmntNo;
+	}
+	
 	
 }

@@ -52,7 +52,7 @@
 	                            		<form method="post" action="update" enctype="multipart/form-data">	
 	                            			<div><input type="hidden" id="ntcNo" name="ntcNo" value="${notice.ntcNo}"></div>
 	                            			<div class="row mb-2">
-		                            			<div class="form-group col-sm-3 ">
+		                            			<div class="form-group col-2 ">
 		                            				<label class="col-form-label">작성자</label>
 			                            		</div>
 			                            		<div class="col-sm-9">
@@ -60,7 +60,7 @@
 			                            		</div>
 		                            		</div>	
 		                            		<div class="row mb-2">
-		                            			<div class="form-group col-sm-3 ">
+		                            			<div class="form-group col-2 ">
 		                            				<label class="col-form-label">작성일</label>
 			                            		</div>
 			                            		<div class="col-sm-9">
@@ -68,24 +68,30 @@
 				                            	</div>
 			                            	</div>
 			                            	<div class="row mb-2">
-				                            	<div class="form-group col-sm-3 ">
+				                            	<div class="form-group col-2 ">
 				                            		<label class="col-form-label">내용</label>
 				                            	</div>
 				                            	<div class="col-sm-9">
 				                            		<textarea class="form-control" rows="10" id="ntcCn" name="ntcCn"></textarea>
 				                            	</div>
 			                            	</div>
-			                            	<div class="row mb-2">
-				                            	<div class="form-group col-sm-3 ">
-				                            		<label class="col-form-label">첨부파일</label>
-				                            	</div>
-				                            	<div class="col-sm-9">	                            		
-													<span><input type="file" id="ntcMFile" name="ntcMFile"></span>
-			                            		</div>
-			                            	</div>
+			                            	<!-- 첨부파일 -->
+											<div class="row mt-2">
+												<div class="col-2">첨부파일 : </div>
+												<div class="col-2 ml-3">
+													<input type="file" class="custom-file-input form-control" id="ntcMFile" name="ntcMFile" onclick="addNoticeFile(this)" multiple> 
+													<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
+												</div>
+											</div>
+											<div class="row mt-2">
+												<span class="font-weight-bold col-2">파일목록 : </span>
+												<div class="col-2 ml-3" id="userfile">												
+													<div id="updateAjax" style="width:100%;"></div>
+												</div>
+											</div>
 			                            	<div class="text-right">
 			                            		<a href="${pageContext.request.contextPath}/notice/list" class="btn btn-primary">목록</a>
-			                            		<button  type="submit" class="btn btn-primary">수정 완료</button>
+			                            		<button  type="submit" class="btn btn-primary" >수정 완료</button>
 			                            	</div>	
 			                            </form>
 		                            </div>
@@ -106,6 +112,68 @@
 							</div>
 	                    </div> 
 	        		</div>
+	        		<script>
+	        		$(document).ready(function () {
+	        			var ntcNo = document.getElementById('ntcNo').value;
+	        			
+	        			let data = {ntcNo : ntcNo};
+	        			console.log(data);
+	        			
+	        			$.ajax({
+							type: "post",
+							url: 'updateAjax/'+ntcNo,
+							data : JSON.stringify(data),
+							contentType: "application/json; charset=UTF-8"
+					    }).done((data) => {
+					    	$("#updateAjax").html(data)
+					    });
+	        		});
+     					var fileNo = 0;
+						var filesArr = new Array();
+
+						/* 첨부파일 추가 */
+						function addNoticeFile(obj){
+							var maxFileCnt = 5; // 첨부파일 최대 개수
+							var curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
+							console.log(curFileCnt);
+							for (const file of obj.files) {
+								var reader = new FileReader();
+								reader.onload = function() {
+									filesArr.push(file);
+								};
+								reader.readAsDataURL(file);
+								
+								// 목록 추가
+								let htmlData = '';
+				               	htmlData += '<div id="file' + fileNo + '" class="filebox row">';
+				               	htmlData += '   <a class="delete col-1" onclick="deleteFile(' + fileNo + ');"><i class="far fa-minus-square"></i></a>';
+				               	htmlData += '   <p class="name col-11 text-left">' + file.name + '</p>';
+				               	htmlData += '</div>';
+				               	$('#userfile').append(htmlData);
+				               	fileNo++;
+							}
+							
+						}
+						
+						/* 첨부파일 삭제 */
+						function deleteFile(num) {
+							var ntcFileNo = num;
+							
+							let data = {ntcFileNo : ntcFileNo};
+							
+							$.ajax({
+								type: "post",
+								url: 'deleteFile/'+ntcFileNo,
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+						    }).done((data) => {
+						    	$("#updateAjax").html(data)
+						    });
+						}
+						
+						
+						
+					</script>
 	          		<!-- 로그아웃 모달 -->
 	           		<%@include file="/WEB-INF/views/common/logout.jsp" %>
 	       		</div>
