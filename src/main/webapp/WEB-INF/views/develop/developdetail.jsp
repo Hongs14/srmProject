@@ -34,36 +34,53 @@
    					contentType: "application/json; charset=UTF-8",
    					success: function(result){
    						console.log("성공");
-   						let modal = '<div><h5>'+$('#srDevDp').val()+'</h5></div>';
-   						modal += '<div class="row">';
-   						modal += 	'<div class="col-1">선택</div>';
-                 		modal += 	'<div class="col-1">직책</div>';
-                 		modal += 	'<div class="col-2">성명</div>';
-                 		modal += 	'<div class="col-3">전화번호</div>';
-                 		modal += 	'<div class="col-5">업무사항</div>';
-                 		modal += '</div>';
-                 		
-                 	
-   						$('.modal-body').append(modal);
+   						$('#modalBody')
+   						$('#modalBody').append('<div><h5>['+$('#srDevDp').val()+']</h5></div>');
    						selectList();
+   						
    					}  
    				 }); 
    			};
    			
    			function selectList(){
-   				let userDp = $('#srDevDp').val();
-   				console.log(userDp);
-   			 	let data = {userDpNm : userDp}; 
+   				let userDpNm = $('#srDevDp').val();
+   				console.log(userDpNm);	
+   				
+   				let data = {userDpNm: userDpNm};
    				
    				$.ajax({
-   					url: '<c:url value="/develop/devlist"/>',
-   					method: "post",
+   					url: '<c:url value="/develop/devlist"/>',	
+   					type: "post",
+   					dataType : "html",
    					data: JSON.stringify(data),
    					contentType: "application/json; charset=UTF-8",
-   				
-   				}).done((data)=>{
-   					$(".modal-body").html(data);
+   					success: function(data){
+   						console.log(data);
+   						$("#modalContent").html(data);
+   					},
+   					error: function(request, status, error){
+   						console.log("실패");
+   					  	alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+   					}
    				});
+   			};
+   			
+   			function submitDev(){
+   				var checkBoxArr = []; 
+   		  		$("input:checkbox[name='devName']:checked").each(function() {
+   		 	 		checkBoxArr.push($(this).val());  
+   		  			console.log(checkBoxArr);
+   		  		});
+   				for(var i=0; i<checkBoxArr.length; i++){
+	   		  		$.ajax({
+	   		  			url: '<c:url value="/develop/selectNm/'+checkBoxArr[i]+'"/>',
+	   		  			type: "get"
+	   		  		}).done((data) => {
+	   		  			console.log(data);
+	   		  		
+	   		  		})
+   				};
+   		  		
    			};
    		</script>
    
@@ -217,36 +234,16 @@
 								                  		</button>
 								                	</div>
 								                	<div class="modal-body" style="white-space:normal;"> 
-								                  		 <%-- <div><h5>개발1팀</h5></div>
-								                 		<div class="row">
-								                 			<div class="col-1">선택</div>
-								                 			<div class="col-1">직책</div>
-								                 			<div class="col-2">성명</div>
-								                 			<div class="col-3">전화번호</div>
-								                 			<div class="col-5">업무사항</div>
-								                 		</div>
-								                 		<div class="row">
-								                 			<div class="col-1"><input type="checkbox"></div>
-								                 			<div class="col-1">${list.userJbps}</div>
-								                 			<div class="col-2">${list.userNm}</div>
-								                 			<div class="col-3">${list.userTelNo }</div>
-								                 			<div class="col-5">
-								                 				<div class="row">
-								                 					<div>2023.03.01</div>
-								                 					 ~<div>2023.03.09 </div>
-								                 					&nbsp;<div>SR제목</div>
-								                 					&nbsp;-&nbsp;<div>테스트</div>
-								                 				</div>
-								                 			
-								                 			</div>
-								                 		</div>
-								                 		<hr/>
-								                 		
-								                 		 --%>
+								                  		<div id="modalBody">
+								                  		
+								                  		</div>
+								                  		<div id="modalContent">
+								                  		
+								                  		</div>
 								                	</div>
 									                <div class="modal-footer">
 									                	<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
-									                	<button type="button" class="btn btn-primary">등록</button>
+									                	<button type="button" onclick="submitDev()" class="btn btn-primary">등록</button>
 									                </div>
 								             	</div>
 								            </div>
@@ -254,56 +251,34 @@
 								      	<!-- 모달 끝-->
 								      	<form>
 									      	<div id="HrList" class="p-2 mt-3" style="border: 1px solid gray">
-									      		<div class="row mb-1">
-									      			<div class="col-sm-2 col-form-label">
-									      				정희희
-									      			</div>
-									      			<div class="col-sm-2">
-									      				<select class="form-control">
-									      					<option>작업구분</option>
-									      					<option>설계</option>
-									      					<option>구현</option>
-									      					<option>테스트</option>
-									      				</select>
-									      			</div>
-									      			<div class="col-8">
-									      				<div class="row">
-									      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
-		                                              		<div class="col-sm-4">
-		                                                		<input type="date" class="form-control"/>
+									      		<c:forEach var="users" items="${pickName}">
+										      		<div class="row mb-1">
+										      			<div id="devNameInput" class="col-sm-2 col-form-label">
+										      				<input name="userNo" type="hidden" value="${users.userNo}"/>
+										      				<div id="pickDevNm">${users.userNm}</div>
+										      			</div>
+										      			<div class="col-sm-2">
+										      				<select class="form-control">
+										      					<option>작업구분</option>
+										      					<option>설계</option>
+										      					<option>구현</option>
+										      					<option>테스트</option>
+										      				</select>
+										      			</div>
+										      			<div class="col-8">
+										      				<div class="row">
+										      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
+			                                              		<div class="col-sm-4">
+			                                                		<input type="date" class="form-control"/>
+			                                             	 	</div>
+			                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
+			                                              		<div class="col-sm-4">
+			                                                		<input type="date" class="form-control"/>
+			                                             	 	</div>
 		                                             	 	</div>
-		                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
-		                                              		<div class="col-sm-4">
-		                                                		<input type="date" class="form-control"/>
-		                                             	 	</div>
-	                                             	 	</div>
-	                                             	 </div>
-									      		</div>
-									      		<div class="row mb-1">
-									      			<div class="col-sm-2 col-form-label">
-									      				황태률
-									      			</div>
-									      			<div class="col-sm-2">
-									      				<select class="form-control">
-									      					<option>작업구분</option>
-									      					<option>설계</option>
-									      					<option>구현</option>
-									      					<option>테스트</option>
-									      				</select>
-									      			</div>
-									      			<div class="col-8">
-									      				<div class="row">
-									      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
-		                                              		<div class="col-sm-4">
-		                                                		<input type="date" class="form-control"/>
-		                                             	 	</div>
-		                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
-		                                              		<div class="col-sm-4">
-		                                                		<input type="date" class="form-control"/>
-		                                             	 	</div>
-	                                             	 	</div>
-	                                             	 </div>
-									      		</div>
+		                                             	 </div>
+										      		</div>
+									      		</c:forEach>
 									      	</div>
 								      	</form>
                                     </div>

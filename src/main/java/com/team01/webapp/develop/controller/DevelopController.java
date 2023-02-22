@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -75,22 +76,31 @@ public class DevelopController {
 	 */
 	@PostMapping(value="/register", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public	int developPlan(@RequestBody SrDevelopDto srDevelop) {
+	public int developPlan(@RequestBody SrDevelopDto srDevelop) {
 		int result = developService.updateDevelop(srDevelop);
 		log.info("SR개발관리 계획 등록");
 		return result;
 	}
 	
 	
-	@PostMapping(value="/devlist", produces="application/json; charset=UTF-8")
-	@ResponseBody
+	@PostMapping(value="/devlist")
 	public String getDevList(@RequestBody Map<String, String> userDpNmMap, Model model) {
 		String userDpNm = userDpNmMap.get("userDpNm");
 		List<Users> list = developService.selectDeveloperList(userDpNm);
-		log.info(userDpNm+"팀별 개발자 조회");
+		log.info("팀별 개발자 조회: " + userDpNm);
 		log.info(list);
-		model.addAttribute("data",list);
-		return "develop/temp";
+		model.addAttribute("devlistByDp", list);
+		return "develop/devlistView";
+	}
+	
+	@GetMapping(value="/selectNm/{userNo}")
+	@ResponseBody
+	public Users getName(@PathVariable int userNo, Model model) {
+		Users user = developService.selectDevName(userNo);
+		log.info("HR등록 인력");
+		log.info(user);
+		model.addAttribute("pickName", user);
+		return user;
 	}
 
 }

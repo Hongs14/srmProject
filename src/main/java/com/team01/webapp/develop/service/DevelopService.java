@@ -58,6 +58,12 @@ public class DevelopService implements IDevelopService{
 		return list;
 	}
 
+	@Override
+	public Users selectDevName(int userNo) {
+		Users user = developRepository.selecNameByNo(userNo);
+		return user;
+	}
+
 
 
 }

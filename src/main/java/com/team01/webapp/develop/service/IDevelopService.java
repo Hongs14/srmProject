@@ -16,5 +16,7 @@ public interface IDevelopService {
 	public List<Users> getDevelopList();
 	public int updateDevelop(SrDevelopDto srDevelop);
 	public List<Users> selectDeveloperList(String userDpNm);
+	
+	public Users selectDevName(int userNo);
 
 }

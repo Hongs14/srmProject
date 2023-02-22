@@ -112,11 +112,12 @@
 	
 	<select id="hrlist" parameterType="map" resultType="hr">
 		SELECT 	USERS.USER_NO AS "userNo", 
+				SR.SR_TTL AS "srTtl",
 				HR_START_DATE AS "hrStartDate", 
 				HR_END_DATE AS "hrEndDate", 
 				TASK_NM AS "taskNm"
-		FROM HR, TASK, USERS
-		WHERE USERS.USER_TYPE = '개발자' AND USERS.USER_DP_NM = #{userDpNm} AND USERS.USER_NO=#{userNo} AND USERS.USER_NO = HR.USER_NO AND HR.TASK_NO = TASK.TASK_NO
+		FROM HR, TASK, USERS, SR
+		WHERE USERS.USER_TYPE = '개발자' AND SR.SR_NO = HR.SR_NO AND USERS.USER_DP_NM = #{userDpNm} AND USERS.USER_NO=#{userNo} AND USERS.USER_NO = HR.USER_NO AND HR.TASK_NO = TASK.TASK_NO
 	</select>
 	
 	<!-- 
@@ -128,5 +129,11 @@
     			SR_END_DATE=#{srEndDate}, SR_DEV_DP=#{srDevDp}
 		WHERE SR_NO=#{srNo}
 	</update>
+	
+	<select id="selecNameByNo" parameterType="int" resultType="users">
+		SELECT USER_NO AS userNo, USER_NM AS userNm, USER_DP_NM AS userDpNm
+		FROM USERS
+		WHERE USER_NO = #{userNo}
+	</select>
 	
 </mapper>

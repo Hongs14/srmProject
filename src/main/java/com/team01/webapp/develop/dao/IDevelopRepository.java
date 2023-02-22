@@ -53,4 +53,6 @@ public interface IDevelopRepository {
 	public List<Users> selectDeveloperByDp(String userDpNm);
 	
 	public List<HR> hrlist(@Param("userDpNm")String userDpNm, @Param("userNo")int userNo);
+
+	public Users selecNameByNo(int userNo);
 }
