@@ -94,20 +94,20 @@ public class DevelopController {
 		return "develop/devlistView";
 	}
 	
-	@PostMapping(value="/selectNm")
-	@ResponseBody
-	public String getName(HttpServletRequest request, Model model) {
-		String[] arr = request.getParameterValues("checkBoxArr");
-		
-		for(int i=0; i<arr.length; i++) {
-			log.info(arr[i]);
-		}
-		
-//		List<Users> user = developService.selectDevName(userNo);
-//		log.info("HR등록 인력");
-//		log.info(user);
-//		model.addAttribute("pickName", user);
-		return "develop/selectHr";
-	}
+   @PostMapping(value="/selectNm")
+   @ResponseBody
+   public String getName(HttpServletRequest request, Model model) {
+      String[] arr = request.getParameterValues("checkBoxArr");
+      
+      for(int i=0; i<arr.length; i++) {
+         log.info(arr[i]);
+      }
+      
+//	      List<Users> user = developService.selectDevName(userNo);
+//	      log.info("HR등록 인력");
+//	      log.info(user);
+//	      model.addAttribute("pickName", user);
+      return "develop/selectHr";
+   }
 
 }
