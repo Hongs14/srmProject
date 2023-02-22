@@ -84,17 +84,35 @@
 		    u.USER_ID AS userId,
 		    n.NTC_INQ_CNT AS ntcInqCnt,
 		    n.NTC_WRT_DATE AS ntcWrtDate,
-		    n.NTC_CN AS ntcCn,
-		    nf.NTC_FILE_ACTL_NM AS ntcFileActlNm,
-		    nf.NTC_FILE_PHYS_NM AS ntcFilePhysNm,
-		    nf.NTC_FILE_EXTN_NM AS ntcFileExtnNm
+		    n.NTC_CN AS ntcCn
 		FROM NOTICE n
-		LEFT OUTER JOIN NTC_FILE nf
-		ON n.NTC_NO = nf.NTC_NO
 		LEFT OUTER JOIN USERS u
 		ON n.USER_NO = u.USER_NO
 		WHERE n.NTC_NO = #{ntcNo}
 	</select>
+	
+	<select id="selectNoticeFileDetail" parameterType="int" resultType="noticeFile">
+		SELECT
+			NTC_FILE_NO AS "ntcFileNo",
+			NTC_NO AS "ntcNo",
+			NTC_FILE_PHYS_NM AS "ntcFilePhysNm",
+			NTC_FILE_ACTL_NM AS "ntcFileActlNm",
+			NTC_FILE_EXTN_NM AS "ntcFileExtnNm"
+		FROM NTC_FILE
+		WHERE NTC_NO = #{ntcNo}
+	</select>
+	
+	<select id="selectFileDownload" parameterType="int" resultType="noticeFile">
+		SELECT
+			NTC_FILE_NO AS "ntcFileNo",
+			NTC_NO AS "ntcNo",
+			NTC_FILE_PHYS_NM AS "ntcFilePhysNm",
+			NTC_FILE_ACTL_NM AS "ntcFileActlNm",
+			NTC_FILE_EXTN_NM AS "ntcFileExtnNm"
+		FROM NTC_FILE
+		WHERE NTC_FILE_NO = #{ntcFileNo}
+	</select>
+	
 	
 	<!-- 게시글 조회수
 		@author : 황건희	
@@ -121,6 +139,12 @@
 	<delete id="delete" parameterType="int">
 		DELETE FROM NOTICE
 		WHERE NTC_NO = #{ntcNo}
+	</delete>
+	
+	<!-- 공지사항 첨부파일 삭제 -->
+	<delete id="deleteFile" parameterType="int">
+		DELETE FROM NTC_FILE
+		WHERE NTC_FILE_NO = #{ntcFileNo}
 	</delete>
 	
 	<!-- 첨부파일 수정
@@ -150,5 +174,65 @@
 		]]>
 	</insert>
 	
+	<!-- 댓글 -->
+	<!-- 댓글 읽기 -->
+	<select id="selectNoticeCommentList" parameterType="int" resultType="noticeComment">
+		SELECT 
+		    nc.NTC_CMNT_NO AS "ntcCmntNo",
+		    nc.NTC_NO AS "ntcNo",
+		    u.USER_ID AS "userId",
+		    nc.NTC_CMNT_CN AS "ntcCmntCn",
+		    nc.NTC_CMNT_DATE AS "ntcCmntDate"
+		FROM NOTICE ntc, NTC_COMMENT nc, USERS u
+		WHERE ntc.NTC_NO = nc.NTC_NO
+		AND ntc.USER_NO = u.USER_NO
+		AND nc.NTC_No = #{ntcNo}
+		ORDER BY NTC_CMNT_NO DESC
+	</select>	
+	
+	<!-- 댓글 작성 -->
+	<insert id="insertComment" parameterType="noticeComment">
+		INSERT INTO NTC_COMMENT(NTC_CMNT_NO, NTC_NO, USER_NO, NTC_CMNT_CN, NTC_CMNT_DATE)
+		VALUES(NTCCMNTNO_SEQ.NEXTVAL,#{ntcNo},#{userNo},#{ntcCmntCn},sysdate)
+	</insert>
+	
+	<select id="selectComment" resultType="noticeComment">
+		SELECT 
+		    ROWNUM,
+		    NTC_CMNT_NO AS "ntcCmntNo",
+		    NTC_NO AS "ntcNo",
+		    USER_NO AS "userNo",
+		    NTC_CMNT_CN AS "ntcCmntCn",
+		    NTC_CMNT_DATE AS "ntcCmntDate"
+		FROM(
+		    SELECT
+		        ROWNUM,
+		        nc.NTC_CMNT_NO,
+		        nc.NTC_NO,
+		        u.USER_NO,
+		        nc.NTC_CMNT_CN,
+		        nc.NTC_CMNT_DATE
+		    FROM NTC_COMMENT nc, NOTICE ntc, USERS u
+		    WHERE ntc.NTC_NO = nc.NTC_NO
+		    AND ntc.USER_NO = u.USER_NO
+		    ORDER BY NTC_CMNT_NO DESC
+		)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateComment" parameterType="noticeComment">
+		UPDATE NTC_COMMENT 
+		SET NTC_CMNT_CN = #{ntcCmntCn},
+		    NTC_CMNT_DATE = sysdate
+		WHERE NTC_NO = #{ntcNo}
+		AND NTC_CMNT_NO = #{ntcCmntNo}
+	</update>	
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM NTC_COMMENT 
+		WHERE NTC_CMNT_NO = #{ntcCmntNo}
+	</delete>
 	
 </mapper>
