@@ -66,21 +66,31 @@
    			};
    			
    			function submitDev(){
-   				var checkBoxArr = []; 
-   		  		$("input:checkbox[name='devName']:checked").each(function() {
-   		 	 		checkBoxArr.push($(this).val());  
-   		  			console.log(checkBoxArr);
+   				var checkBoxArr = new Array();
+   		  		$("input:checkbox[name='devName']:checked").each(function(i) {
+   		 	 		//체크박스값 배열에 넣기
+   		  			var userNo = checkBoxArr.push($(this).val());
+   		 	 		
+   		 	 		let data = {userNo : userNo};
+   		 	 		
+   		 	 		checkBoxArr.push(data);
    		  		});
-   				for(var i=0; i<checkBoxArr.length; i++){
-	   		  		$.ajax({
-	   		  			url: '<c:url value="/develop/selectNm/'+checkBoxArr[i]+'"/>',
-	   		  			type: "get"
-	   		  		}).done((data) => {
-	   		  			console.log(data);
-	   		  		
-	   		  		})
-   				};
    		  		
+   		  		console.log(checkBoxArr);
+   		  		
+   		  		data = {checkBoxArr : checkBoxArr};
+   		  		
+
+   		  		$.ajax({
+   		  			url: '<c:url value="/develop/selectNm"/>',
+   		  			method : "post",
+   		  			data : JSON.stringify(data),
+   		  			contentType : "application/json; charset=UTF-8",
+   		  			success: function(data){
+   		  				console.log(data);
+   		  				$('#HrList').html(data);
+   		  			}
+   		  		});
    			};
    		</script>
    
@@ -251,7 +261,7 @@
 								      	<!-- 모달 끝-->
 								      	<form>
 									      	<div id="HrList" class="p-2 mt-3" style="border: 1px solid gray">
-									      		<c:forEach var="users" items="${pickName}">
+									      		<%-- <c:forEach var="users" items="${pickName}">
 										      		<div class="row mb-1">
 										      			<div id="devNameInput" class="col-sm-2 col-form-label">
 										      				<input name="userNo" type="hidden" value="${users.userNo}"/>
@@ -278,9 +288,9 @@
 		                                             	 	</div>
 		                                             	 </div>
 										      		</div>
-									      		</c:forEach>
+									      		</c:forEach> --%>
 									      	</div>
-								      	</form>
+								      	</form> 
                                     </div>
                                     	
                                     

@@ -59,8 +59,8 @@ public class DevelopService implements IDevelopService{
 	}
 
 	@Override
-	public Users selectDevName(int userNo) {
-		Users user = developRepository.selecNameByNo(userNo);
+	public List<Users> selectDevName(List<Integer> userNo) {
+		List<Users> user = developRepository.selecNameByNo(userNo);
 		return user;
 	}
 

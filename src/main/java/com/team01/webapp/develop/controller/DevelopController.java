@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team01.webapp.develop.service.IDevelopService;
+import com.team01.webapp.model.CheckBoxArr;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrDevelopDto;
 import com.team01.webapp.model.Users;
@@ -93,14 +93,17 @@ public class DevelopController {
 		return "develop/devlistView";
 	}
 	
-	@GetMapping(value="/selectNm/{userNo}")
-	@ResponseBody
-	public Users getName(@PathVariable int userNo, Model model) {
-		Users user = developService.selectDevName(userNo);
-		log.info("HR등록 인력");
-		log.info(user);
-		model.addAttribute("pickName", user);
-		return user;
+	@PostMapping(value="/selectNm")
+	public String getName(@RequestBody CheckBoxArr checkBoxArr, Model model) {
+		log.info(checkBoxArr.getCheckBoxArr().get(0));
+		log.info(checkBoxArr.getCheckBoxArr().get(2));
+		
+		
+//		List<Users> user = developService.selectDevName(userNo);
+//		log.info("HR등록 인력");
+//		log.info(user);
+//		model.addAttribute("pickName", user);
+		return "develop/selectHr";
 	}
 
 }
