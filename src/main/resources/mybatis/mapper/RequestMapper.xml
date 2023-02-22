@@ -163,5 +163,23 @@
 		INSERT INTO sr (sr_no, sr_cust_no, sys_no, stts_no, sr_ttl, sr_cn, sr_reg_date) 
 		VALUES (#{srNo}, #{srCustNo}, #{sysNo}, #{sttsNo}, #{srTtl}, #{srCn}, SYSDATE)
 	</insert>
+	
+	<select id="selectRequestDetail" parameterType="string" resultType="request">
+		SELECT
+	        sr_no as "srNo", 
+	        user_nm as "userNm",
+	        user_ogdp as "userOgdp",
+	        sr_reg_date as "srRegDate", 
+	        sys_nm as "sysNm",
+	        sr_ttl as "srTtl",
+	        sr_std as "srStd",
+	        sr_cn as "srCn"
+		FROM
+	        SR s, USERS u, SYSTEM sys
+		WHERE 
+	        s.sr_cust_no = u.user_no and
+	        sys.sys_no = s.sys_no
+	        and sr_no = #{srNo}
+	</select>
 
 </mapper>

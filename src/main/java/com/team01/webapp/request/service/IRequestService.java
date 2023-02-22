@@ -3,6 +3,7 @@ package com.team01.webapp.request.service;
 import java.io.File;
 import java.util.List;
 
+import com.team01.webapp.model.Request;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
 import com.team01.webapp.model.RequestList;
@@ -36,6 +37,6 @@ public interface IRequestService {
 		Pager returnPage(String pageNo, Pager pager, RequestAjax requestAjax);
 		List<RequestList> getRequestList(Pager pager, RequestAjax requestAjax);
 
-		SR getRequestDetail(String srNo);
+		Request getRequestDetail(String srNo);
 
 }

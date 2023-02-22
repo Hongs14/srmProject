@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.team01.webapp.model.Request;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
 import com.team01.webapp.model.RequestList;
@@ -125,9 +126,9 @@ public class RequestService implements IRequestService{
 		return requestLists;
 	}
 	@Override
-	public SR getRequestDetail(String srNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public Request getRequestDetail(String srNo) {
+		log.info("실행");
+		return requestRepository.selectRequestDetail(srNo);
 	}
 	
 	

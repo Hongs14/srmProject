@@ -35,7 +35,7 @@
 						<td><span class="badge badge-danger" style="font-size:100%">${request.sttsNm}</span></td>
 						<td>${request.srRegDate}</td>
 						<td><span class="badge badge-danger" style="font-size:100%">${request.srPry}</span></td>
-						<td><a href="${pageContext.request.contextPath}/request/detail/${request.srNo}" class="btn btn-sm btn-primary" id="SrDetailBtn">상세보기</a></td>
+						<td><a href="${pageContext.request.contextPath}/request/detail/${request.srNo}" class="btn btn-sm btn-primary text-white SrDetailBtn" id="${request.srNo}">상세보기</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
