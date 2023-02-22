@@ -3,6 +3,8 @@ package com.team01.webapp.develop.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team01.webapp.develop.service.IDevelopService;
-import com.team01.webapp.model.CheckBoxArr;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrDevelopDto;
 import com.team01.webapp.model.Users;
@@ -94,10 +95,13 @@ public class DevelopController {
 	}
 	
 	@PostMapping(value="/selectNm")
-	public String getName(@RequestBody CheckBoxArr checkBoxArr, Model model) {
-		log.info(checkBoxArr.getCheckBoxArr().get(0));
-		log.info(checkBoxArr.getCheckBoxArr().get(2));
+	@ResponseBody
+	public String getName(HttpServletRequest request, Model model) {
+		String[] arr = request.getParameterValues("checkBoxArr");
 		
+		for(int i=0; i<arr.length; i++) {
+			log.info(arr[i]);
+		}
 		
 //		List<Users> user = developService.selectDevName(userNo);
 //		log.info("HR등록 인력");
