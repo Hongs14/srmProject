@@ -30,7 +30,7 @@
 								<!-- 게시글 작성 -->
 								<div class="card-body">
 									<!-- 글 제목 -->
-									<form method="post" action="write" enctype="multipart/form-data">
+									<form method="post" onsubmit="return false;" enctype="multipart/form-data">
 										<div class="row">
 											<div class="col-1">글제목 : </div>
 											<div class="col-9">
@@ -58,7 +58,8 @@
 										<div class="row mt-2">
 											<div class="col-1">첨부파일 : </div>
 											<div class="col-10 ml-1">
-												<input type="file" class="form-control" id="ntcMFile" name="ntcMFile" onclick="addNoticeFile(this)" multiple> 
+												<input type="file" class="custom-file-input form-control" id="ntcMFile" name="ntcMFile" onclick="addNoticeFile(this)" multiple> 
+												<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
 											</div>
 										</div>
 										<div class="row mt-2">
@@ -73,7 +74,7 @@
 					                	<div class="row mt-2">
 						                	<div class="col-12">
 						                		<div class="d-sm-flex justify-content-end">
-						                			<button  type="submit" class="btn btn-sm btn-primary mr-1">작성완료</button>
+						                			<button class="btn btn-sm btn-primary mr-1" onclick="noticeWrite()">작성완료</button>
 						                			<button class="btn btn-sm btn-danger mr-1">닫기</button>
 												</div>	                	
 						                	</div>
@@ -108,13 +109,48 @@
 								$('#userfile').append(htmlData);
 								fileNo++;
 							}
-							
 						}
 						
 						/* 첨부파일 삭제 */
 						function deleteFile(num) {
 							document.querySelector("#file" + num).remove();
 							filesArr[num].is_delete = true;
+						}
+						
+						/* ajax 처리 */
+						function noticeWrite() {
+							// 폼 데이터 담기
+							var form = document.querySelector("form");
+						    var formData = new FormData(form);
+						    for (var i = 0; i < filesArr.length; i++) {
+						        // 삭제되지 않은 파일만 폼데이터에 담기
+						        if (!filesArr[i].is_delete) {
+						        	console.log("돌아감");
+						        	console.log(filesArr[i]);
+						            formData.append("ntcMFile", filesArr[i]);
+						        }
+						    }
+						    
+						    var ntcTtl = document.getElementById('ntcTtl').value;
+						    formData.append("ntcTtl",ntcTtl);
+						    
+						    var ntcPry = document.getElementById('ntcPry').value;
+						    formData.append("ntcPry",ntcPry);
+						    
+						    var ntcCn = document.getElementById('ntcCn').value;
+						    formData.append("ntcCn",ntcCn);
+						    
+						    $.ajax({
+								type: "POST",
+								enctype: 'multipart/form-data',	// 필수
+								url: 'write',
+								data: formData,		// 필수
+								processData: false,	// 필수
+								contentType: false	// 필수
+						    }).done((data) => {
+						    	$("#updateAjax").html(data);
+						    });
+						    
 						}
 						
 						

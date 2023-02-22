@@ -81,29 +81,28 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/write")
-	public String getNoticeWrite(Notice notice, NoticeFile noticeFile) throws IOException  {
+	public String getNoticeWrite(Notice notice) throws IOException  {
 		log.info("실행");
-
+		System.out.println(notice.toString());
 		noticeService.noticeWrite(notice);
 		//첨부 파일 유무 조사
-		List<MultipartFile> mf = noticeFile.getNtcMFile();
+		List<MultipartFile> mf = notice.getNtcMFile();
 		if(mf!=null &&!mf.isEmpty()) {
 			for(int i=0; i<mf.size(); i++) {		
 				
 				//파일 원래 이름 저장
-				noticeFile.setNtcFileActlNm(mf.get(i).getOriginalFilename());
+				notice.setNtcFileActlNm(mf.get(i).getOriginalFilename());
 				//파일의 저장 이름 설정
 				String ntcFilePhysNm = new Date().getTime()+"-"+mf.get(i).getOriginalFilename();
-				noticeFile.setNtcFilePhysNm(ntcFilePhysNm);
+				notice.setNtcFilePhysNm(ntcFilePhysNm);
 				//파일 타입 설정
 				String str = mf.get(i).getContentType();
 				int beginIndex = str.indexOf("/");
 				int endIndex = str.length();
 				String type = str.substring(beginIndex,endIndex);
-				noticeFile.setNtcFileExtnNm(type);
-				noticeFile.setNtcNo(notice.getNtcNo());		
+				notice.setNtcFileExtnNm(type);
+				notice.setNtcNo(notice.getNtcNo());		
 
-				log.info(noticeFile);
 				//서버 파일 시스템에 파일로 저장
 				String filePath = "C:/OTI/uploadfiles/notice/"+ntcFilePhysNm;
 				File file = new File(filePath);
@@ -119,7 +118,7 @@ public class NoticeController {
 				} else {
 					mf.get(i).transferTo(file);
 				}
-				noticeService.noticeFileUpload(noticeFile);
+				noticeService.noticeFileUpload(notice);
 			}
 			
 		}
@@ -239,11 +238,13 @@ public class NoticeController {
 	}
 	
 	//공지사항 첨부파일 삭제
-	@PostMapping(value="/deleteFile/{ntcFileNo}",produces="application/json; charset=UTF-8")
-	public String noticeFileDelete(@PathVariable int ntcFileNo,Model model) {
+	@PostMapping(value="/deleteFile/{ntcFileNo}/{ntcNo}",produces="application/json; charset=UTF-8")
+	public String noticeFileDelete(@PathVariable int ntcFileNo, @PathVariable int ntcNo,Model model) {
 		log.info("실행");
-		int ntcNo = noticeService.noticeFileDelete(ntcFileNo);
+		noticeService.noticeFileDelete(ntcFileNo);
 		
+		List<NoticeFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
+		model.addAttribute("noticeFile",noticeFile);
 		return "notice/updateAjax";
 	}
 
