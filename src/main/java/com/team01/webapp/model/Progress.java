@@ -18,6 +18,7 @@ public class Progress {
 	private int progRate;
 	
 	private String progTypeNm;
+	private int progTypeNo;
 	
 	private String progFilePhysNm;
 	private String progFileActlNm;

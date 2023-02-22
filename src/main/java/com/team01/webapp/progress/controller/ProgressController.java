@@ -29,6 +29,7 @@ import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFile;
 import com.team01.webapp.model.ProgressFilter;
+import com.team01.webapp.model.ProgressType;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.SrProgressAjax;
 import com.team01.webapp.model.SrProgressList;
@@ -291,7 +292,9 @@ public class ProgressController {
 	public String ProgressRateUpdate(Progress progress) throws IOException {
 		// 첨부 파일이 있는지 확인
 		List<MultipartFile> mfList = progress.getProgressattach();
-		if(!mfList.isEmpty()) {
+		
+		log.info(mfList);
+		if(mfList != null && !mfList.isEmpty()) {
 			for(int i=0; i<mfList.size(); i++) {
 				// 파일의 원래 이름
 				progress.setProgFileActlNm(mfList.get(i).getOriginalFilename());
@@ -361,5 +364,98 @@ public class ProgressController {
 			os.close();
 			is.close();
 		}
+	}
+	
+	
+	@RequestMapping(value="progress/detail/progressajax/3", produces="application/json; charset=UTF-8")
+	public String ProgresssFileList(@RequestBody HR hr, Model model) {
+		
+		List<ProgressFile> progressFileList = progressService.progressfileList(hr.getSrNo());
+		
+		model.addAttribute("progressFileList", progressFileList);
+		model.addAttribute("srNo", hr.getSrNo());
+		
+		log.info(progressFileList);
+		
+		return "progress/progressFileList";
+	}
+	
+	@RequestMapping(value="progress/detail/progressFileAdd/{srNo}", method=RequestMethod.GET)
+	public String ProgressFileAdd(@PathVariable String srNo, Model model) {
+		List<ProgressType> progressTypeList = progressService.getProgressTypeList();
+		
+		model.addAttribute("srNo", srNo);
+		model.addAttribute("progressTypeList", progressTypeList);
+		
+		return "progress/progressFileAdd";
+	}
+	
+	@RequestMapping(value="progress/detail/progressFile/add", method=RequestMethod.POST)
+	public String ProgressFileAdd(Progress progress) throws IOException {
+		// 첨부 파일이 있는지 확인
+		List<MultipartFile> mfList = progress.getProgressattach();
+		
+		Progress progNo = progressService.getProgNo(progress.getProgTypeNo(), progress.getSrNo());
+		
+		progress.setProgNo(progNo.getProgNo());
+		
+		log.info(progress);
+		
+		if(mfList != null && !mfList.isEmpty()) {
+			for(int i=0; i<mfList.size(); i++) {
+				// 파일의 원래 이름
+				progress.setProgFileActlNm(mfList.get(i).getOriginalFilename());
+				
+				// 파일의 저장 이름
+				String progFilePhysNm = new Date().getTime() + "-" + mfList.get(i).getOriginalFilename();
+				progress.setProgFilePhysNm(progFilePhysNm);
+				
+				// 파일의 타입 설정
+				progress.setProgFileExtnNm(mfList.get(i).getContentType());
+				
+				// 서버 파일 시스템에 파일로 저장
+				String filePath = "C:/OTI/uploadfiles/" + progress.getSrNo() + "/" + progFilePhysNm;
+				File dir = new File(filePath);
+				
+				// 폴더가 없다면 생성한다
+				if(!dir.exists()) {
+					try {
+						Files.createDirectories(Paths.get(filePath));
+						log.info("폴더 생성 완료");
+						mfList.get(i).transferTo(dir);
+					} catch (Exception e) {
+						log.info("생성 실패 : " + filePath);
+					}
+				} else {
+					mfList.get(i).transferTo(dir);
+				}
+				
+				progressService.writeProgressRateFile(progress);
+			}
+		}
+		
+		return "redirect:/progress/detail/" + progress.getSrNo();
+	}
+	
+	@RequestMapping(value="progress/detail/progressFileRemove", produces="application/json; charset=UTF-8")
+	public String ProgressFileRemove(@RequestBody Progress progress) {
+		
+		for(int i=0; i<progress.getProgressFile().size(); i++) {
+			String filePath = "C:/OTI/uploadfiles/" + progress.getSrNo() + "/" + progress.getProgressFile().get(i).getProgFilePhysNm();
+			
+			File file = new File(filePath);
+			
+			if(file.exists()) {
+				if(file.delete()) {
+					log.info("파일 삭제 성공");
+					progressService.removeProgressFiles(progress.getProgressFile().get(i).getProgFileNo());
+				} else {
+					log.info("파일 삭제 실패");
+				}
+			}
+		}
+		
+		
+		return "redirect:/progress/detail/" + progress.getSrNo();
 	}
 }

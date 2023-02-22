@@ -10,6 +10,7 @@ import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFile;
+import com.team01.webapp.model.ProgressType;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SRType;
@@ -189,6 +190,13 @@ public interface IProgressRepository {
 	List<ProgressFile> selectProgressRateFile(String progNo);
 
 	ProgressFile selectProgressFile(String progFileNo);
-	
+
+	List<ProgressFile> selectProgressFileList(String srNo);
+
+	List<ProgressType> selectProgressTypeList();
+
+	Progress selectProgNo(@Param("progTypeNo") int progTypeNo, @Param("srNo") String srNo);
+
+	void deleteProgressFiles(int progFileNo);
 	
 }
