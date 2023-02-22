@@ -12,6 +12,7 @@ import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFile;
 import com.team01.webapp.model.ProgressFilter;
+import com.team01.webapp.model.ProgressType;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SRType;
 import com.team01.webapp.model.SrFile;
@@ -267,6 +268,26 @@ public class ProgressService implements IProgressService {
 	@Override
 	public ProgressFile getProgressFile(String progFileNo) {
 		return progressRepository.selectProgressFile(progFileNo);
+	}
+
+	@Override
+	public List<ProgressFile> progressfileList(String srNo) {
+		return progressRepository.selectProgressFileList(srNo);
+	}
+
+	@Override
+	public List<ProgressType> getProgressTypeList() {
+		return progressRepository.selectProgressTypeList();
+	}
+
+	@Override
+	public Progress getProgNo(int progTypeNo, String srNo) {
+		return progressRepository.selectProgNo(progTypeNo, srNo);
+	}
+
+	@Override
+	public void removeProgressFiles(int progFileNo) {
+		progressRepository.deleteProgressFiles(progFileNo);
 	}
 
 }

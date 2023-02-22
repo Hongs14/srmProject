@@ -7,6 +7,7 @@ import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFile;
 import com.team01.webapp.model.ProgressFilter;
+import com.team01.webapp.model.ProgressType;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.SrProgressAjax;
 import com.team01.webapp.model.SrProgressList;
@@ -141,4 +142,13 @@ public interface IProgressService {
 	public void updateProgressRate(Progress progress);
 
 	public ProgressFile getProgressFile(String progFileNo);
+
+	public List<ProgressFile> progressfileList(String srNo);
+
+	public List<ProgressType> getProgressTypeList();
+
+	public Progress getProgNo(int progTypeNo, String srNo);
+
+	public void removeProgressFiles(int progFileNo);
+
 }

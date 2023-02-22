@@ -8,9 +8,10 @@
 	-->
 	<select id="selectSysNmList" resultType="system">
 		SELECT 
-			SYS_NO AS "sysNo",
-			SYS_NM AS "sysNm"
+		    SYS_NO AS "sysNo",
+		    SYS_NM AS "sysNm"
 		FROM SYSTEM
+		WHERE SYS_NM != '한국소프트SRM'
 	</select>
 
 	<!--
@@ -33,6 +34,7 @@
 		    STTS_NO AS "sttsNo",
 		    STTS_NM AS "sttsNm"
 		FROM SR_STTS
+		WHERE STTS_NO = 5 OR STTS_NO = 6
 	</select>
 	
 	<!--
@@ -62,6 +64,7 @@
 		<if test="srNo != ''">
 			AND sr.sr_no LIKE #{srNo}
 		</if>
+		AND sr.stts_no = 5 or sr.stts_no = 6
 	</select>
 	
 	<!--
@@ -130,6 +133,7 @@
 							<if test="srNo != ''">
 								AND sr.sr_no LIKE #{srNo}
 							</if>
+							AND sr.stts_no = 5 or sr.stts_no = 6
 						)
 					ORDER BY SR_PRY
 				)
@@ -371,9 +375,11 @@
 	</select>
 	
 	<insert id="insertProgressRateFile" parameterType="progress">
-		INSERT INTO PROG_FILE
-			(PROG_FILE_NO, PROG_NO, PROG_FILE_PHYS_NM, PROG_FILE_ACTL_NM, PROG_FILE_EXTN_NM)
-    		VALUES (progfileno_seq.nextval, #{progNo}, #{progFilePhysNm}, #{progFileActlNm}, #{progFileExtnNm})
+		<![CDATA[
+			INSERT INTO PROG_FILE
+				(PROG_FILE_NO, PROG_NO, PROG_FILE_PHYS_NM, PROG_FILE_ACTL_NM, PROG_FILE_EXTN_NM, PROG_REG_DATE)
+		 		VALUES (progfileno_seq.nextval, #{progNo}, #{progFilePhysNm}, #{progFileActlNm}, #{progFileExtnNm}, sysdate)
+    	]]>
 	</insert>
 	
 	<update id="updateProgressRate" parameterType="progress">
@@ -406,5 +412,40 @@
 		FROM PROG_FILE
 		WHERE PROG_FILE_NO = #{progFileNo}
 	</select>
-
+	
+	<select id="selectProgressFileList" parameterType="string" resultType="progressFile">
+		SELECT
+		    PROG_FILE_NO AS "progFileNo",
+		    progfile.PROG_NO "progNo",
+		    PROG_TYPE_NM "progTypeNm",
+		    PROG_FILE_PHYS_NM "progFilePhysNm",
+		    PROG_FILE_ACTL_NM "progFileActlNm",
+		    PROG_FILE_EXTN_NM "progFileExtnNm",
+		    PROG_REG_DATE "progRegDate"
+		FROM PROG_FILE progfile, PROGRESS progress, PROG_TYPE type
+		WHERE progfile.prog_no = progress.prog_no
+		AND progress.prog_type = type.prog_type_no
+		AND SR_NO = #{srNo}
+		ORDER BY PROG_REG_DATE DESC
+	</select>
+	
+	<select id="selectProgressTypeList" resultType="progressType">
+		SELECT
+		    PROG_TYPE_NO AS "progTypeNo",
+		    PROG_TYPE_NM AS "progTypeNm"
+		FROM PROG_TYPE
+	</select>
+	
+	<select id="selectProgNo" parameterType="map" resultType="progress">
+		SELECT
+		    PROG_NO AS "progNo"
+		FROM PROGRESS
+		WHERE SR_NO = #{srNo}
+		AND PROG_TYPE = #{progTypeNo}
+	</select>
+	
+	<delete id="deleteProgressFiles" parameterType="int">
+		DELETE PROG_FILE
+		WHERE PROG_FILE_NO = #{progFileNo}
+	</delete>
 </mapper>

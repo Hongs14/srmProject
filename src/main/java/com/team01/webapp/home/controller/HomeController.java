@@ -25,7 +25,7 @@ public class HomeController {
 	public String home() {
 		log.info("정보 로그 실행");
 		
-		return "home";
+		return "user/loginForm";
 		
 	}
 	@RequestMapping(value = "/home/systemMiniView", method = RequestMethod.GET)
