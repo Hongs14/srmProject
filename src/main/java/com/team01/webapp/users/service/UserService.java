@@ -53,6 +53,7 @@ public class UserService implements IUserService {
 		String sysNm = userRepository.selectSysNmByUserNo(user.getUserNo());
 		user.setSysNm(sysNm);
 		
+		
 		return LoginResult.SUCCESS;
 	}
 	

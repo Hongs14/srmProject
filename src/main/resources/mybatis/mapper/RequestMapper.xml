@@ -34,18 +34,24 @@
 	
 	<select id="selectUserOgdpList" resultType="users">
 		SELECT
-			DISTINCT USER_OGDP 
-		FROM users
-        WHERE USER_OGDP != '한국소프트SRM'
+			DISTINCT USER_OGDP AS "userOgdp"
+		FROM users 
+        WHERE user_ogdp !='한국소프트SRM'
 	</select>
 	
 	<select id="selectSrDevDpList" resultType="sr">
 		SELECT
-			DISTINCT SR_DEV_DP
+			DISTINCT SR_DEV_DP AS "srDevDp"
 		FROM SR
         WHERE SR_DEV_DP IS NOT NULL
 	</select>
 	
+	<select id="selectMaxSrNo" parameterType="string" resultType="string">
+		 SELECT  MAX(SUBSTR(sr_no,INSTR(sr_no,'-',6)+1))
+         from sr
+         where sr_no LIKE #{sysNo}
+         order by sr_no desc
+	</select>
 
 	<select id="selectTotalRequestCount" parameterType="requestAjax" resultType="int">
 		SELECT
@@ -62,6 +68,17 @@
 		</if>
 		<if test="sttsNo != '전체'">
 			AND sr.stts_no = #{sttsNo}
+		</if>
+		<if test="userOgdp != '전체'">
+			AND users.user_ogdp = #{userOgdp}
+		</if>
+		<if test="srRegStartDate neq null and srRegStartDate neq ''">
+			 AND sr.SR_REG_DATE BETWEEN 
+                TO_DATE(#{srRegStartDate},'YY-MM-DD') 
+                AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+0.9
+		</if>
+		<if test="srTtl != ''">
+			AND  sr.SR_TTL like #{srTtl}
 		</if>
 	</select>
 
@@ -118,8 +135,19 @@
 						AND s.sys_no = #{sysNo}
 					</if>
 			       	<if test="srDevDp != '전체'">
-			       		AND s.sr_deb_dp LIKE #{srDevDp}
+			       		AND s.sr_dev_dp LIKE #{srDevDp}
 			       	</if>
+			       	<if test="userOgdp != '전체'">
+						AND u.user_ogdp = #{userOgdp}
+					</if>
+					<if test="srRegStartDate neq null and srRegStartDate neq ''">
+						AND s.SR_REG_DATE BETWEEN 
+			                TO_DATE(#{srRegStartDate},'YY-MM-DD') 
+			                AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+0.9
+					</if>
+					<if test="srTtl != ''">
+						AND  s.SR_TTL like #{srTtl}
+					</if>
 			        ORDER BY s.SR_NO
 			    )
 			    <![CDATA[
@@ -130,6 +158,10 @@
 				WHERE RNUM >=#{start}
 			]]>
 	</select>
-
+	
+	<insert id="insertRequest" parameterType="sr">
+		INSERT INTO sr (sr_no, sr_cust_no, sys_no, stts_no, sr_ttl, sr_cn, sr_reg_date) 
+		VALUES (#{srNo}, #{srCustNo}, #{sysNo}, #{sttsNo}, #{srTtl}, #{srCn}, SYSDATE)
+	</insert>
 
 </mapper>

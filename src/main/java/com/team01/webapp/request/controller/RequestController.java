@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
 import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrFile;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.request.service.IRequestService;
 import com.team01.webapp.util.Pager;
 
@@ -43,13 +43,12 @@ public class RequestController {
 	 * @author				김희률
 	 * @param session		HttpSession 객체 주입
 	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
-	 * @param pager			paging처리를 위한 pager객체 주입
 	 * @param requestFilter	검색을 위한 필터 불러오기
 	 * @return				list뷰로 이동
 	 */
-	@RequestMapping(value="/list/{pageNo}", method = RequestMethod.GET)
-	public String getListAll(@PathVariable int pageNo, HttpSession session, RequestFilter requestFilter, Model model, Pager pager) {
-		log.info("정보 로그 실행");
+	@RequestMapping(value="/list", method = RequestMethod.GET)
+	public String getRequestFilter( HttpSession session, RequestFilter requestFilter, Model model) {
+		log.info("실행");
 		requestFilter = requestService.getFilterList(requestFilter);
 		model.addAttribute("requestfilter", requestFilter);
 		return "request/list";
@@ -66,14 +65,11 @@ public class RequestController {
 	 * @param pager			paging처리를 위한 
 	 * @return
 	 */
-	@PostMapping(value="/list/filter/{pageNo}", produces="application/json; charset=UTF-8")
+	@PostMapping(value="/filter/{pageNo}")
 	public String getFilteredList(@PathVariable String pageNo, @RequestBody RequestAjax requestAjax, Model model, Pager pager) {
-		log.info("pageNo"+pageNo);
-		log.info("requestAjax", requestAjax);
 		pager = requestService.returnPage(pageNo, pager, requestAjax);
 		List<RequestList> list = requestService.getRequestList(pager, requestAjax);
 		
-		log.info("페이저2: " + pager);
 		model.addAttribute("requestLists",list);
 		model.addAttribute("pager",pager);
 		
@@ -81,8 +77,16 @@ public class RequestController {
 	}
 	
 	
-	@RequestMapping(value="/write/{pageNo}", method = RequestMethod.GET)
-	public String writeRequest(@PathVariable int pageNo, HttpSession session, RequestFilter requestFilter,  Model model, Pager pager) {
+	/**
+	 * @author					김희률
+	 * @param session			
+	 * @param requestFilter		필터 유지하기
+	 * @param model
+	 * @param pager
+	 * @return
+	 */
+	@RequestMapping(value="/write", method = RequestMethod.GET)
+	public String writeRequest(HttpSession session, RequestFilter requestFilter,  Model model, Pager pager) {
 		log.info("정보 로그 실행");
 		requestFilter = requestService.getFilterList(requestFilter);
 		model.addAttribute("requestfilter", requestFilter);
@@ -90,21 +94,32 @@ public class RequestController {
 		return "request/write";
 	}
 	
-	
+	/**
+	 * SR 상세 확인 하기
+	 * 
+	 * @author	김희률
+	 * @param srNo
+	 * @param requestFilter
+	 * @param session
+	 * @param model
+	 * @param pager
+	 * @return
+	 */
 	@RequestMapping(value="/detail/{srNo}", method = RequestMethod.GET)
-	public String getDetail(@PathVariable String srNo, HttpSession session, Model model, Pager pager) {
-		log.info("정보 로그 실행");
+	public String getDetail(@PathVariable String srNo, RequestFilter requestFilter, HttpSession session, Model model, Pager pager) {
+		log.info("실행"+srNo);
 
 		SR sr = requestService.getRequestDetail(srNo);
 		model.addAttribute("sr", sr);
-		
+		model.addAttribute("srNo", srNo);
 		return "request/detail";
 		
 	}
 	
-	@RequestMapping(value="/detail/sr/{no}", method = RequestMethod.GET)
-	public String getSrDetail(@PathVariable String no, HttpSession session, Model model, Pager pager) {
-		log.info("정보 로그 실행");
+	@RequestMapping(value="/detail/sr/{srNo}", method = RequestMethod.GET)
+	public String getSrDetail(@PathVariable String srNo, HttpSession session, Model model, Pager pager) {
+		log.info("srNo: "+srNo);
+		
 		return "request/detailView";
 		
 	}
@@ -122,7 +137,7 @@ public class RequestController {
 	 */
 	@RequestMapping(value="/write", method = RequestMethod.POST)
 	public String writeRequest(SR sr, HttpSession session, Model model) {
-		
+		int rows =0;
 		try {
 			sr.setSrTtl(Jsoup.clean(sr.getSrTtl(), Whitelist.basic()));
 			String content = sr.getSrCn();
@@ -131,7 +146,8 @@ public class RequestController {
 			content = content.replace("\n", "<br>");
 			sr.setSrCn(Jsoup.clean(content, Whitelist.basic()));
 			int userNo = (int) session.getAttribute("userNo");
-			sr.setSrCustId(userNo); 
+			log.info("loginUser:"+ userNo);
+			sr.setSrCustNo(userNo); 
 			sr.setSysNo(requestService.getSysNo(userNo));
 			sr.setSttsNo(1);
 			
@@ -150,12 +166,13 @@ public class RequestController {
 				
 				requestService.writeRequest(sr, file);
 			}else {
-				requestService.writeRequest(sr);
+				rows = requestService.writeRequest(sr);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/write";
+		log.info("변경 행수 : "+ rows);
+		return "redirect:/request/write/1";
 	}
 
 }

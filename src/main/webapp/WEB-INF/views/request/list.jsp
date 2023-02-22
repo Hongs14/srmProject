@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
+  	<%@include file="/WEB-INF/views/common/head.jsp" %>
+  	
 	<style>
 	.requsetTtl{
 	width: 190px;
@@ -12,7 +16,17 @@
 	display:block;
 	}	
 	</style>
-  	<%@include file="/WEB-INF/views/common/head.jsp" %>
+  	
+	<script>
+	  	$(document).ready(function () {
+		    $('#simple-date4 .input-daterange').datepicker({        
+		        format: 'yyyy/mm/dd',        
+		        autoclose: true,     
+		        todayHighlight: true,   
+		        todayBtn: 'linked',
+		      });  
+	  	});
+  	</script>
   	
 </head>
 
@@ -52,15 +66,15 @@
                 	<div class="row">
                 		<div class="col-4">
                 			<div class="form-group row" id="simple-date4" >
-			                	<div class="input-daterange input-group input-group-sm">
-			                		<label for="startDate" class="col-sm-3 col-form-label-sm">조회기간</label>
-			                    	<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" id="startDate"/>
-			                    	<div class="input-group-prepend">
-			                    		<span class="input-group-text" style="height:31px;">~</span>
-			                    	</div>
-			                    	<input type="text" class="input-sm form-control form-control-sm" name="end" />
-			                    </div>
-			            	</div>
+	                			<div class="input-daterange input-group input-group-sm">
+	                				<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
+	                    			<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" id="dateStart"/>
+	                    			<div class="input-group-prepend">
+	                    				<span class="input-group-text" style="height:31px;">~</span>
+	                    			</div>
+	                    			<input type="text" class="input-sm form-control form-control-sm" name="end" id="dateEnd"/>
+	                    		</div>
+	            			</div>
                 		</div>
                 		
                 		<div class="col-3">
@@ -97,7 +111,7 @@
 		                    	<select id="userOgdp" class="form-control form-control-sm col-sm-9">
 		                        	<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.userOgdpList}">
-										<option value="${item.userOgdp}">${item.userOgdp}</option>
+										<option class="text-black" value="${item.userOgdp}">${item.userOgdp}</option>
 									</c:forEach>
 		                    	</select>
 		                	</div>
@@ -116,7 +130,7 @@
                 		<div class="col-4">
 		                	<div class="form-group row">
 		                		<label for="srKeyWord" class="col-sm-3 col-form-label-sm">키워드</label>
-		                    	<input type="text" id="srKeyWord" class="form-control form-control-sm col-sm-9 bg-light" 
+		                    	<input type="text" id="keyword" class="form-control form-control-sm col-sm-9 bg-light" 
 		                   		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
 		                  	</div>
                 		</div>
@@ -136,7 +150,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">SR 요청 목록</h6>
 					<div class="d-sm-flex justify-content-end">
 						<a class="btn btn-sm btn-secondary mr-1"
-							href="<c:url value='/request/write/${pager.pageNo}'/>"> 요청등록 </a>
+							href="<c:url value='/request/write'/>"> 요청등록 </a>
 						<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
 					</div>
 				</div>
@@ -147,61 +161,74 @@
           </div>
           </div>
           <!-- Row -->
-<script>
-	$(document).ready(function () {
-		console.log("시작");
-		var sysNoSelect = document.getElementById("sysNo");
-		var sttsNoSelect = document.getElementById("sttsNo");
-		var userOgdpSelect = document.getElementById("userOgdp");
-		var srDevDpSelect = document.getElementById("srDevDp");
-		
-	
-		var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
-		var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
-		var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].value;
- 		var srDevDp = srDevDpSelect.options[document.getElementById("srDevDp").selectedIndex].value;  
-		
-		let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp};
-		
-		console.log(data);
-		
-		$.ajax({
-			url : "filter/1",
-			method : "post",
-			data : JSON.stringify(data),
-			contentType: "application/json; charset=UTF-8"
-		}).done((data) => {
-			$("#ajaxList").html(data);
-		});
-	});
-
-	function requestList(pageNo) {
-		console.log(pageNo);
-		var sysNoSelect = document.getElementById("sysNo");
-		var sttsNoSelect = document.getElementById("sttsNo");
-		var userOgdpSelect = document.getElementById("userOgdp");
-		var srDevDpSelect = document.getElementById("srDevDp");
-		
-		var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
-		var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
-		var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].value;
- 		var srDevDp = srDevDpSelect.options[document.getElementById("srDevDp").selectedIndex].value;  
-		
-		
- 		let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp};
-		
-		console.log(data);
-		
-		$.ajax({
-			url : "filter/"+pageNo,
-			method : "post",
-			data : JSON.stringify(data),
-			contentType: "application/json; charset=UTF-8"
-		}).done((data) => {
-			$("#ajaxList").html(data);
-		});
-	}
-</script>
+			<script>
+				$(document).ready(function () {
+					console.log("시작");
+					var sysNoSelect = document.getElementById("sysNo");
+					var sttsNoSelect = document.getElementById("sttsNo");
+					var userOgdpSelect = document.getElementById("userOgdp");
+					var srDevDpSelect = document.getElementById("srDevDp");
+					
+					var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+					var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+					var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].value;
+			 		var srDevDp = srDevDpSelect.options[document.getElementById("srDevDp").selectedIndex].value;  
+			 		
+			 		var srRegStartDate = document.getElementById("dateStart").value;
+					var srRegEndDate = document.getElementById("dateEnd").value;
+					var srTtl = document.getElementById("keyword").value;
+					if(srTtl !== "") {
+						srTtl = "%" + srTtl + "%";
+					}
+			 		
+					let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
+					
+					console.log(data);
+					
+					$.ajax({
+						url : "filter/1",
+						method : "post",
+						data : JSON.stringify(data),
+						contentType: "application/json; charset=UTF-8"
+					}).done((data) => {
+						$("#ajaxList").html(data)
+					});
+					
+					
+				});
+			
+				function requestList(pageNo) {
+					console.log(pageNo);
+					var sysNoSelect = document.getElementById("sysNo");
+					var sttsNoSelect = document.getElementById("sttsNo");
+					var userOgdpSelect = document.getElementById("userOgdp");
+					var srDevDpSelect = document.getElementById("srDevDp");
+					
+					var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+					var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+					var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].value;
+			 		var srDevDp = srDevDpSelect.options[document.getElementById("srDevDp").selectedIndex].value;  
+					
+			 		var srRegStartDate = document.getElementById("dateStart").value;
+					var srRegEndDate = document.getElementById("dateEnd").value;
+					var srTtl = document.getElementById("keyword").value;
+					if(srTtl !== "") {
+						srTtl = "%" + srTtl + "%";
+					}
+					
+					let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
+					console.log(data);
+					
+					$.ajax({
+						url : "filter/"+pageNo,
+						method : "post",
+						data : JSON.stringify(data),
+						contentType: "application/json; charset=UTF-8"
+					}).done((data) => {
+						$("#ajaxList").html(data);
+					});
+				}
+			</script>
           
 
           <!-- 로그아웃 모달 -->

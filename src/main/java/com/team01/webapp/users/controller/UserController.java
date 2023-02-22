@@ -61,6 +61,7 @@ public class UserController {
 			return "user/loginForm";
 		}else {
 			session.setAttribute("loginUser", user);
+			session.setAttribute("userNo", user.getUserNo());
 			log.info(user);
 			return "redirect:/";
 		}
