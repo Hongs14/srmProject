@@ -79,8 +79,7 @@
 											<div class="row mt-2">
 												<div class="col-2">첨부파일 : </div>
 												<div class="col-2 ml-3">
-													<input type="file" class="custom-file-input form-control" id="ntcMFile" name="ntcMFile" onclick="addNoticeFile(this)" multiple> 
-													<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
+													<input type="file" class="form-control" id="ntcMFile" name="ntcMFile" onclick="addNoticeFile(this)" multiple> 
 												</div>
 											</div>
 											<div class="row mt-2">
@@ -113,21 +112,21 @@
 	                    </div> 
 	        		</div>
 	        		<script>
-	        		$(document).ready(function () {
-	        			var ntcNo = document.getElementById('ntcNo').value;
-	        			
-	        			let data = {ntcNo : ntcNo};
-	        			console.log(data);
-	        			
-	        			$.ajax({
-							type: "post",
-							url: 'updateAjax/'+ntcNo,
-							data : JSON.stringify(data),
-							contentType: "application/json; charset=UTF-8"
-					    }).done((data) => {
-					    	$("#updateAjax").html(data)
-					    });
-	        		});
+		        		$(document).ready(function () {
+		        			var ntcNo = document.getElementById('ntcNo').value;
+		        			
+		        			let data = {ntcNo : ntcNo};
+		        			console.log(data);
+		        			
+		        			$.ajax({
+								type: "post",
+								url: 'updateAjax/'+ntcNo,
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+						    }).done((data) => {
+						    	$("#updateAjax").html(data)
+						    });
+		        		});
      					var fileNo = 0;
 						var filesArr = new Array();
 
@@ -158,12 +157,13 @@
 						/* 첨부파일 삭제 */
 						function deleteFile(num) {
 							var ntcFileNo = num;
+							var ntcNo = document.getElementById('ntcNo').value;
 							
-							let data = {ntcFileNo : ntcFileNo};
+							let data = {ntcFileNo : ntcFileNo, ntcNo : ntcNo};
 							
 							$.ajax({
 								type: "post",
-								url: 'deleteFile/'+ntcFileNo,
+								url: 'deleteFile/'+ntcFileNo+'/'+ntcNo,
 								data : JSON.stringify(data),
 								contentType: "application/json; charset=UTF-8"
 						    }).done((data) => {

@@ -50,7 +50,7 @@ public interface INoticeRepository {
 	 * @author : 황건희
 	 * @param noticeFile 공지사항 첨부파일 업로드
 	 */
-	public void insertNoticeFileUpload(NoticeFile noticeFile);
+	public void insertNoticeFileUpload(Notice notice);
 	
 	
 	/** 

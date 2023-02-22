@@ -36,7 +36,7 @@ public interface INoticeService {
 	 * @author : 황건희
 	 * @param noticeFile 공지사항 작성 시 첨부한 파일
 	 */
-	public void noticeFileUpload(NoticeFile noticeFile);
+	public void noticeFileUpload(Notice notice);
 	
 	
 	/**

@@ -66,9 +66,9 @@ public class NoticeService implements INoticeService{
 	 * @param noticeFile 공지사항 작성 시 첨부한 파일
 	 */
 	@Override
-	public void noticeFileUpload(NoticeFile noticeFile) {
+	public void noticeFileUpload(Notice notice) {
 		log.info("실행");
-		noticeRepository.insertNoticeFileUpload(noticeFile);
+		noticeRepository.insertNoticeFileUpload(notice);
 		
 	}
 	

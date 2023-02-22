@@ -24,5 +24,8 @@ public class Notice {
 	private String ntcFileExtnNm; //파일 확장명
 	
 	private List<NoticeComment> ntcCmnt;
-
+	
+	//공지사항 첨부파일
+	private int ntcFileNo;
+	private List<MultipartFile> ntcMFile;
 }
