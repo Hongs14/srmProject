@@ -8,7 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+<<<<<<< HEAD
 import com.team01.webapp.users.model.User;
+=======
+import com.team01.webapp.model.Users;
+>>>>>>> branch 'master' of https://github.com/SRM-TEAM01/srmProject.git
 import com.team01.webapp.users.service.IUserService;
 import com.team01.webapp.users.service.UserService;
 
@@ -46,7 +50,7 @@ public class UserController {
 	 * @return			홈으로 리다이렉트
 	 */
 	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String login(User user, HttpSession session, Model model) {
+	public String login(Users user, HttpSession session, Model model) {
 		log.info(user+" post 실행");
 		UserService.LoginResult loginResult = userService.login(user);
 		
@@ -101,7 +105,7 @@ public class UserController {
 	 * @return		뷰로 이동
 	 */
 	@RequestMapping(value="/join", method = RequestMethod.POST)
-	public String join(User user, Model model) {
+	public String join(Users user, Model model) {
 		log.info(user.getUserPswd()+"실행");
 		
 		int result = userService.join(user);
