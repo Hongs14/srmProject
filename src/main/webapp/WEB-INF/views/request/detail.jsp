@@ -206,11 +206,17 @@
 				}).done((data) => {
 					$("#ajaxList").html(data);
 					$(".ex_info").hide();
-					$("#SrDetailBtn").removeAttr('href');
-					$("#SrDetailBtn").attr('onclick','getSrDetail(${request.srNo})');
+					$(".SrDetailBtn").removeAttr('href');
+					$(".SrDetailBtn").each(function(index, item){
+						let srNo = $(this).attr('id');
+						let funNm = 'getSrDetail("'+srNo+'")';
+						console.log(funNm);
+						$(".SrDetailBtn").attr('onclick',funNm);
+						console.log($(this).attr('onclick'));
+					});
 				});
 				
-				
+					
 			});
 		
 			function requestList(pageNo) {
@@ -235,6 +241,7 @@
 				let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 				console.log(data);
 				
+				let idArr = [];
 				$.ajax({
 					url : "<c:url value='/request/filter/"+pageNo+"'/>",
 					method : "post",
@@ -243,6 +250,14 @@
 				}).done((data) => {
 					$("#ajaxList").html(data);
 					$(".ex_info").hide();
+					$(".SrDetailBtn").removeAttr('href');
+					$(".SrDetailBtn").each(function(index, item){
+						let srNo = $(this).attr('id');
+						let funNm = 'getSrDetail("'+srNo+'")';
+						console.log(funNm);
+						$(".SrDetailBtn").attr('onclick',funNm);
+						console.log($(this).attr('onclick'));
+					});
 				});
 			}
 			
@@ -252,7 +267,7 @@
 					method : "get",
 					dataType : "html"
 				}).done((data)=>{
-					console.log(data);
+					console.log("getSrDetail실행: "+ data);
 					$("#detailMiniView").html(data);
 				});
 			}

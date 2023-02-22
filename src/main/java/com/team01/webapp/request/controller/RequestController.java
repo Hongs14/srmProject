@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team01.webapp.model.Request;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
 import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrFile;
-import com.team01.webapp.model.Users;
 import com.team01.webapp.request.service.IRequestService;
 import com.team01.webapp.util.Pager;
 
@@ -109,8 +109,8 @@ public class RequestController {
 	public String getDetail(@PathVariable String srNo, RequestFilter requestFilter, HttpSession session, Model model, Pager pager) {
 		log.info("실행"+srNo);
 
-		SR sr = requestService.getRequestDetail(srNo);
-		model.addAttribute("sr", sr);
+		Request request = requestService.getRequestDetail(srNo);
+		model.addAttribute("sr", request);
 		model.addAttribute("srNo", srNo);
 		return "request/detail";
 		
@@ -119,7 +119,8 @@ public class RequestController {
 	@RequestMapping(value="/detail/sr/{srNo}", method = RequestMethod.GET)
 	public String getSrDetail(@PathVariable String srNo, HttpSession session, Model model, Pager pager) {
 		log.info("srNo: "+srNo);
-		
+		Request request = requestService.getRequestDetail(srNo);
+		model.addAttribute("sr", request);
 		return "request/detailView";
 		
 	}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.team01.webapp.model.Request;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
@@ -44,7 +45,6 @@ public interface IRequestRepository {
 
 	int insertRequest(SR sr);
 
+	Request selectRequestDetail(String srNo);
 
-	
-	
 }
