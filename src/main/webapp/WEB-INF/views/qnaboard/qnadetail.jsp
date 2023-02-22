@@ -49,7 +49,7 @@
 				console.log("댓글달기 실행");
 				let content = $('#qnaCmntCn').val();
 				let qcwriterNo = '${sessionScope.loginUser.userNo}';
-				let qcwriter = '${sessionScope.loginUser.userNm}';
+				/* let qcwriter = '${sessionScope.loginUser.userNm}'; */
 				let qstnNo = '${qstn.qstnNo}';
 				
 				let data = {userNo: qcwriterNo, qstnNo: qstnNo, qstnCmntCn: content};
@@ -77,7 +77,7 @@
 					
 	        		$('#qComment').append(comment); 
 	        		$('#cmntCount').empty();
-	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt}+1)+')');
+	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt+1})+')');
 	        		$('#qnaCmntCn').val('');
 					
 				});
@@ -121,7 +121,7 @@
 				}).done((data) => {
 					console.log("성공");
 					$('#cmntCount').empty();
-	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt}-1)+')');
+	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt-11)+')');
 					$('#qComment').empty(); 
 					readComment();
 					
