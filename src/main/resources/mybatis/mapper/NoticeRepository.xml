@@ -9,7 +9,22 @@
 		SELECT COUNT(*) FROM NOTICE
 	</select>
 	
-	<!-- 게시글 목록 
+	<!-- 필터링 된 공지사항 행수 -->
+	<select id="selectTotalNoticeCount" parameterType="notice" resultType="int">
+		SELECT COUNT(ntc.NTC_NO)
+		FROM NOTICE ntc, NTC_COMMENT nc
+		WHERE ntc.NTC_NO = nc.NTC_NO
+		<if test="!startDate.equals('')">
+			AND ntc.NTC_WRT_DATE BETWEEN
+				TO_DATE(#{startDate},'YY-MM-DD')
+				AND TO_DATE(#{endDate},'YY-MM-DD')+0.9
+		</if>
+		<if test="ntcTtl != ''">
+			AND ntc.NTC_TTL like #{ntcTtl}
+		</if>
+	</select>
+	
+	<!-- 공지사항 게시글 목록 
 		@author : 황건희
 	-->
 	<select id="selectNoticeList" parameterType="pager" resultType="notice">
@@ -45,6 +60,53 @@
 			    )
 			    WHERE ROWNUM <=#{endRowNo}
 			)
+			WHERE rnum >=#{startRowNo}
+		]]>
+	</select>
+	
+	<select id="selectFilterNoticeList" parameterType="notice" resultType="notice">
+		SELECT 
+		    RNUM AS "seq",
+		    NTC_NO AS "ntcNo",
+		    USER_ID AS "userId",
+		    NTC_TTL AS "ntcTtl",
+		    NTC_INQ_CNT AS "ntcInqCnt",
+	    	NTC_WRT_DATE AS "ntcWrtDate"
+		FROM(
+		    SELECT 
+		        NTC_NO,
+		        NTC_TTL,
+		        NTC_INQ_CNT,
+		        NTC_WRT_DATE,
+		        NTC_PRY,
+		        USER_ID,
+		        ROWNUM as RNUM
+
+		    FROM(
+		        SELECT 
+		            n.NTC_NO,
+		            n.NTC_TTL,
+		            n.NTC_INQ_CNT,
+		            n.NTC_WRT_DATE,
+		            n.NTC_PRY,
+		            u.USER_ID
+		        FROM NOTICE n, USERS u
+		        WHERE n.user_no = u.user_no
+		        <if test="!startDate.equals('')">
+					AND n.NTC_WRT_DATE BETWEEN
+						TO_DATE(#{startDate},'YY-MM-DD')
+						AND TO_DATE(#{endDate},'YY-MM-DD')+0.9
+				</if>
+				<if test="ntcTtl != ''">
+					AND n.NTC_TTL like #{ntcTtl}
+				</if>
+		        ORDER BY n.ntc_pry desc
+		    )
+		    <![CDATA[
+		    	WHERE ROWNUM <=#{endRowNo}
+		   	]]>
+		)
+		<![CDATA[
 			WHERE rnum >=#{startRowNo}
 		]]>
 	</select>
@@ -170,7 +232,7 @@
 	<insert id="updateNoticeFileUpload" parameterType="noticeFile">
 		<![CDATA[
 			INSERT INTO NTC_FILE( NTC_FILE_NO, NTC_NO, NTC_FILE_PHYS_NM, NTC_FILE_ACTL_NM, NTC_FILE_EXTN_NM)
-			VALUES(#{ntcFileNo}, #{ntcNo}, #{ntcFilePhysNm}, #{ntcFileActlNm}, #{ntcFileExtnNm})
+			VALUES(ntcFileNo_seq.nextval, #{ntcNo}, #{ntcFilePhysNm}, #{ntcFileActlNm}, #{ntcFileExtnNm})
 		]]>
 	</insert>
 	

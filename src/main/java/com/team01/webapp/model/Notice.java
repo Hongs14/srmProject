@@ -23,9 +23,16 @@ public class Notice {
 	private String ntcFileActlNm; //원본 파일 이름
 	private String ntcFileExtnNm; //파일 확장명
 	
+	private String startDate;
+	private String endDate;
+	
 	private List<NoticeComment> ntcCmnt;
 	
 	//공지사항 첨부파일
 	private int ntcFileNo;
 	private List<MultipartFile> ntcMFile;
+	
+	//paging
+	private int startRowNo;
+	private int endRowNo;
 }
