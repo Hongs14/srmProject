@@ -130,10 +130,16 @@
 		WHERE SR_NO=#{srNo}
 	</update>
 	
-	<select id="selecNameByNo" parameterType="int" resultType="users">
+	<select id="selectNameByNo" parameterType="int" resultType="users">
 		SELECT USER_NO AS userNo, USER_NM AS userNm, USER_DP_NM AS userDpNm
 		FROM USERS
 		WHERE USER_NO = #{userNo}
 	</select>
 	
-</mapper>
+	<insert id="insertHrRow" parameterType="hr">
+		INSERT INTO HR(SR_NO, USER_NO, TASK_NO, HR_START_DATE, HR_END_DATE, HR_LEADER) 
+		VALUES (#{srNo}, #{userNo}, #{taskNo}, #{hrStartDate}, #{hrEndDate}, 'N')
+	
+	</insert>
+	
+	</mapper>

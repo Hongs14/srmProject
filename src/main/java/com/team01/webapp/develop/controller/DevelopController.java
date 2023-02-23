@@ -1,9 +1,8 @@
 package com.team01.webapp.develop.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team01.webapp.develop.service.IDevelopService;
+import com.team01.webapp.model.CheckBoxArr;
+import com.team01.webapp.model.HR;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrDevelopDto;
 import com.team01.webapp.model.Users;
@@ -94,20 +95,42 @@ public class DevelopController {
 		return "develop/devlistView";
 	}
 	
-	@PostMapping(value="/selectNm")
-	@ResponseBody
-	public String getName(HttpServletRequest request, Model model) {
-		String[] arr = request.getParameterValues("checkBoxArr");
-		
-		for(int i=0; i<arr.length; i++) {
-			log.info(arr[i]);
-		}
-		
-//		List<Users> user = developService.selectDevName(userNo);
-//		log.info("HR등록 인력");
-//		log.info(user);
-//		model.addAttribute("pickName", user);
-		return "develop/selectHr";
-	}
+  /* @PostMapping(value="/selectNm")
+   @ResponseBody
+   public List<Users> getName(HttpServletRequest request, Model model) {
+	   String[] arr = request.getParameterValues("checkBoxArr");
+	   List<Users> user = new ArrayList<Users>();
+	   for(int i=0; i<arr.length; i++) {
+		   log.info(arr[i]);
+		   int userNo = Integer.parseInt(arr[i]);
+		   user.addAll(developService.selectDevName(userNo));
+      }
+	   
+      log.info(user);
+      model.addAttribute("pickName", user);    
+      return user;
+   }*/
+	
+	 @PostMapping(value="/selectNm")
+	 public String getName(@RequestBody List<CheckBoxArr> checkBoxArr, Model model) {
+		 List<Users> user = new ArrayList<Users>();    
+		 
+		 for(int i=0; i<checkBoxArr.size(); i++) {
+//		      log.info(checkBoxArr.get(i).getUserNo());
+		      user.addAll(developService.selectDevName(checkBoxArr.get(i).getUserNo()));
+		 }
+	 
+	     log.info("HR등록 인력");
+	     log.info(user);
+	     model.addAttribute("pickName", user);  
+
+	     return "develop/selectHr";
+	  }
+	 
+	 @PostMapping(value="/updateHr")
+	 public int insertHrList(HR hr) {
+		 int result = developService.insertHrList(hr);
+		 return result;
+	 }
 
 }

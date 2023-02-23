@@ -59,9 +59,15 @@ public class DevelopService implements IDevelopService{
 	}
 
 	@Override
-	public List<Users> selectDevName(List<Integer> userNo) {
-		List<Users> user = developRepository.selecNameByNo(userNo);
+	public List<Users> selectDevName(int userNo) {
+		List<Users> user = developRepository.selectNameByNo(userNo);
 		return user;
+	}
+
+	@Override
+	public int insertHrList(HR hr) {
+		int row =developRepository.insertHrRow(hr);
+		return row;
 	}
 
 
