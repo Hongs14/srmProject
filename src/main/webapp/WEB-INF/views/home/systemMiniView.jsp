@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div class="card">
-	<div class="card-header align-items-center">
-		<i class="far fa-fw fa-window-maximize"></i> 
-		<span class="m-0 font-weight-bold text-primary">My System </span>
-	</div>
-	<div>
-	<div class="customer-message align-items-center">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<div class="px-3">
         <div class="card shadow mb-4">
           <div class="card-header py-3">
@@ -14,7 +8,10 @@
 			    <table class="table" >
 					<thead class="thead-light">
 						  <tr>
-						    <th>${system.sysNm} </th>
+						    <th>
+						    	<i class="far fa-fw fa-window-maximize"></i>
+						    	${system.sysNm} 
+						    </th>
 						  </tr>
 					</thead>
 				    <tbody>
@@ -30,14 +27,55 @@
           </div>
           <div class="card-body">
             <div class="chart-pie">
-              <canvas id="myPieChart"></canvas>
+              <canvas id="myPieChart" style="height:100px; weight:100px"></canvas>
             </div>
-            <hr>
           </div>
         </div>
 	</div>
-	</div>
-	</div>
-</div>
  <script src="${pageContext.request.contextPath}/resources/vendor/chart.js/Chart.js"></script>
  <script src="${pageContext.request.contextPath}/resources/js/demo/chart-pie-demo.js"></script>
+             <script>
+             	labelse = [];
+             	data = [];
+             	<c:forEach var="list" items="${donutList}">
+             		labelse.push('${list.sttsNm}');
+             		data.push(${list.count});
+             	</c:forEach>
+             	console.log(labelse);
+             	console.log(data);
+             	
+             
+				var ctx = document.getElementById("myPieChart");
+				var myPieChart = new Chart(ctx, {
+				  type: 'doughnut',
+				  data: {
+				    labels: labelse,
+				    datasets: [{
+				      data: data,
+				      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#4e73df', '#1cc88a', '#36b9cc'],
+				      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#4e73df', '#1cc88a', '#36b9cc'],
+				      hoverBorderColor: "rgba(234, 236, 244, 1)",
+				    }],
+				  },
+				  options: {
+				    maintainAspectRatio: false,
+				    tooltips: {
+				      backgroundColor: "rgb(255,255,255)",
+				      bodyFontColor: "#858796",
+				      borderColor: '#dddfeb',
+				      borderWidth: 1,
+				      xPadding: 15,
+				      yPadding: 15,
+				      displayColors: false,
+				      caretPadding: 10,
+				    },
+				    legend: {
+				    	position : 'bottom',
+				    	labels : {
+				    		boxWidth : 10
+				    	}
+				    },
+				    cutoutPercentage: 60,
+				  },
+				});
+            </script>
