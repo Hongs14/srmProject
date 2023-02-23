@@ -13,5 +13,16 @@
 		and us.cust_no = #{userNo}
 	</select>
 	
+	<select id="selectDonutList" parameterType="string" resultType="donut">
+		SELECT
+		    stts.STTS_NO AS "sttsNo",
+		    stts_NM AS "sttsNm", 
+		    COUNT(SR_NO) AS "count"
+		FROM SR sr, SR_STTS stts
+		WHERE sr.stts_no = stts.stts_no
+		AND SYS_NO = #{sysNo}
+		GROUP BY stts.STTS_NO, STTS_NM
+		ORDER BY stts.STTS_NO ASC
+	</select>
 
 </mapper>

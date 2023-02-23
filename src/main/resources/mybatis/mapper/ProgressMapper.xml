@@ -64,7 +64,7 @@
 		<if test="srNo != ''">
 			AND sr.sr_no LIKE #{srNo}
 		</if>
-		AND sr.stts_no = 5 or sr.stts_no = 6
+		AND (sr.stts_no = 5 or sr.stts_no = 6)
 	</select>
 	
 	<!--
@@ -133,7 +133,7 @@
 							<if test="srNo != ''">
 								AND sr.sr_no LIKE #{srNo}
 							</if>
-							AND sr.stts_no = 5 or sr.stts_no = 6
+							AND (sr.stts_no = 5 or sr.stts_no = 6)
 						)
 					ORDER BY SR_PRY
 				)
