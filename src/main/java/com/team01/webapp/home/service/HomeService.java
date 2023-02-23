@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team01.webapp.home.dao.IHomeRepository;
+import com.team01.webapp.model.SystemInfo;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -15,9 +16,10 @@ public class HomeService implements IHomeService{
 	IHomeRepository homeRepository;
 
 	@Override
-	public System getSystemMiniView(int userNo) {
+	public SystemInfo getSystemMiniView(int userNo) {
 		log.info("실행");
-		return homeRepository.selectSysInfo(userNo);
+		SystemInfo system = homeRepository.selectSysInfo(userNo);
+		return system;
 	}
 
 }
