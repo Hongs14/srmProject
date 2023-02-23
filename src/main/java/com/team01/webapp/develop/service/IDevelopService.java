@@ -2,6 +2,7 @@ package com.team01.webapp.develop.service;
 
 import java.util.List;
 
+import com.team01.webapp.model.HR;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrDevelopDto;
 import com.team01.webapp.model.Users;
@@ -17,6 +18,8 @@ public interface IDevelopService {
 	public int updateDevelop(SrDevelopDto srDevelop);
 	public List<Users> selectDeveloperList(String userDpNm);
 	
-	public List<Users> selectDevName(List<Integer> userNo);
+	public List<Users> selectDevName(int userNo);
+	
+	public int insertHrList(HR hr);
 
 }

@@ -36,8 +36,9 @@
    						console.log("성공");
    						$('#modalBody')
    						$('#modalBody').append('<div><h5>['+$('#srDevDp').val()+']</h5></div>');
-   						selectList();
+   					/* 	$('#pickDevNm').append($('#srDLeader option:selected').text()); */
    						
+   						selectList();
    					}  
    				 }); 
    			};
@@ -65,7 +66,7 @@
    				});
    			};
    			
-   			function submitDev(){
+   			/* function submitDev(){
    				var checkBoxArr = [];
    		  		$("input:checkbox[name='devName']:checked").each(function(i) {
    		 	 		//체크박스값 배열에 넣기
@@ -81,9 +82,31 @@
    		  			},
    		  			success: function(data){
    		  				console.log(data);
-   		  				$('#HrList').html(data);
+   		  				
    		  			}
-   		  		});
+   		  		}); */
+		  function submitDev(){
+              var checkBoxArr = [];
+                $("input:checkbox[name='devName']:checked").each(function(i) {
+                   //체크박스값 배열에 넣기
+                   var userNo = $(this).val();
+                   var data = {userNo : userNo};
+                   checkBoxArr.push(data);
+                });
+                
+                console.log(checkBoxArr);
+
+                $.ajax({
+                   url: '<c:url value="/develop/selectNm"/>',
+                   type : 'post',
+                   data: JSON.stringify(checkBoxArr),
+                   contentType: "application/json; charset=UTF-8",
+                   success: function(data){
+                      console.log(data);
+                      $('#HrList').html(data);
+                   }
+                });
+          
    			};
    		</script>
    
@@ -246,42 +269,69 @@
 								                	</div>
 									                <div class="modal-footer">
 									                	<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
-									                	<button type="button" onclick="submitDev()" class="btn btn-primary">등록</button>
+									                	<button type="button" onclick="submitDev()" class="btn btn-primary" data-dismiss="modal">등록</button>
 									                </div>
 								             	</div>
 								            </div>
 								      	</div>
 								      	<!-- 모달 끝-->
-								      	<form>
-									      	<div id="HrList" class="p-2 mt-3" style="border: 1px solid gray">
-									      		<%-- <c:forEach var="users" items="${pickName}">
-										      		<div class="row mb-1">
-										      			<div id="devNameInput" class="col-sm-2 col-form-label">
-										      				<input name="userNo" type="hidden" value="${users.userNo}"/>
-										      				<div id="pickDevNm">${users.userNm}</div>
-										      			</div>
-										      			<div class="col-sm-2">
-										      				<select class="form-control">
-										      					<option>작업구분</option>
-										      					<option>설계</option>
-										      					<option>구현</option>
-										      					<option>테스트</option>
-										      				</select>
-										      			</div>
-										      			<div class="col-8">
-										      				<div class="row">
-										      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
-			                                              		<div class="col-sm-4">
-			                                                		<input type="date" class="form-control"/>
-			                                             	 	</div>
-			                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
-			                                              		<div class="col-sm-4">
-			                                                		<input type="date" class="form-control"/>
-			                                             	 	</div>
+								      	<form action="insertU">
+								      		<div class="p-2 mt-3" style="border: 1px solid gray">
+									      		<%-- <div class="row mb-1" id="dvleaderHr">
+									      			<div id="devNameInput" class="col-sm-2 col-form-label">
+									      				<input name="userNo" type="hidden" value="${users.userNo}"/>
+									      				<div id="pickDevNm"></div>
+									      			</div>
+									      			<div class="col-sm-2">
+									      				<select class="form-control">
+									      					<option>작업구분</option>
+									      					<option>설계</option>
+									      					<option>구현</option>
+									      					<option>테스트</option>
+									      				</select>
+									      			</div>
+									      			<div class="col-8">
+									      				<div class="row">
+									      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
+		                                              		<div class="col-sm-4">
+		                                                		<input type="date" class="form-control"/>
 		                                             	 	</div>
-		                                             	 </div>
-										      		</div>
-									      		</c:forEach> --%>
+		                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
+		                                              		<div class="col-sm-4">
+		                                                		<input type="date" class="form-control"/>
+		                                             	 	</div>
+	                                             	 	</div>
+	                                             	 </div>
+									      		</div> --%>
+										      	<div id="HrList">
+										      		<div class="row mb-1" id="dvleaderHr">
+									      			<div id="devNameInput" class="col-sm-2 col-form-label">
+									      				<input name="userNo" type="hidden" value="${users.userNo}"/>
+									      				<div id="pickDevNm"></div>
+									      			</div>
+									      			<div class="col-sm-2">
+									      				<select class="form-control">
+									      					<option>작업구분</option>
+									      					<option>설계</option>
+									      					<option>구현</option>
+									      					<option>테스트</option>
+									      				</select>
+									      			</div>
+									      			<div class="col-8">
+									      				<div class="row">
+									      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
+		                                              		<div class="col-sm-4">
+		                                                		<input type="date" class="form-control"/>
+		                                             	 	</div>
+		                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
+		                                              		<div class="col-sm-4">
+		                                                		<input type="date" class="form-control"/>
+		                                             	 	</div>
+	                                             	 	</div>
+	                                             	 </div>
+										      	
+									      		</div>
+										      	</div>
 									      	</div>
 								      	</form> 
                                     </div>

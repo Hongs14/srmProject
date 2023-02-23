@@ -64,6 +64,12 @@ public class DevelopService implements IDevelopService{
 		return user;
 	}
 
+	@Override
+	public int insertHrList(HR hr) {
+		int row =developRepository.insertHrRow(hr);
+		return row;
+	}
+
 
 
 }

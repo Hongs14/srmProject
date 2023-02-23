@@ -54,5 +54,7 @@ public interface IDevelopRepository {
 	
 	public List<HR> hrlist(@Param("userDpNm")String userDpNm, @Param("userNo")int userNo);
 
-	public List<Users> selecNameByNo(int userNo);
+	public List<Users> selectNameByNo(int userNo);
+	
+	public int insertHrRow(HR hr);
 }
