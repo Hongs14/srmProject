@@ -360,6 +360,10 @@
 		ORDER BY PROG_TYPE
 	</select>
 	
+	<!-- 
+		진척율 정보 저장
+		작성자 : 김태희
+	-->
 	<select id="selectProgressRate" parameterType="int" resultType="progress">
 		SELECT
 		    PROG_NO AS "progNo",
@@ -374,6 +378,10 @@
 		AND PROG_NO = #{progNo}
 	</select>
 	
+	<!-- 
+		진척율 파일 저장
+		작성자 : 김태희
+	-->
 	<insert id="insertProgressRateFile" parameterType="progress">
 		<![CDATA[
 			INSERT INTO PROG_FILE
@@ -382,6 +390,10 @@
     	]]>
 	</insert>
 	
+	<!-- 
+		진척율 정보 수정
+		작성자 : 김태희
+	-->
 	<update id="updateProgressRate" parameterType="progress">
 		UPDATE PROGRESS
 		SET
@@ -391,6 +403,10 @@
 		WHERE PROG_NO = #{progNo}
 	</update>
 	
+	<!-- 
+		진척율 파일 정보 조회
+		작성자 : 김태희
+	-->
 	<select id="selectProgressRateFile" parameterType="string" resultType="progressFile">
 		SELECT
 		    PROG_FILE_NO AS "progFileNo",
@@ -402,6 +418,10 @@
 		WHERE PROG_NO = #{progNo}
 	</select>
 	
+	<!-- 
+		진척율 파일 정보 조회
+		작성자 : 김태희
+	-->
 	<select id="selectProgressFile" parameterType="string" resultType="progressFile">
 		SELECT
 		    PROG_FILE_NO AS "progFileNo",
@@ -413,6 +433,10 @@
 		WHERE PROG_FILE_NO = #{progFileNo}
 	</select>
 	
+	<!-- 
+		진척율 파일 리스트 조회
+		작성자 : 김태희
+	-->
 	<select id="selectProgressFileList" parameterType="string" resultType="progressFile">
 		SELECT
 		    PROG_FILE_NO AS "progFileNo",
@@ -429,6 +453,10 @@
 		ORDER BY PROG_REG_DATE DESC
 	</select>
 	
+	<!-- 
+		진척율 파일 타입 리스트 조회
+		작성자 : 김태희
+	-->
 	<select id="selectProgressTypeList" resultType="progressType">
 		SELECT
 		    PROG_TYPE_NO AS "progTypeNo",
@@ -436,6 +464,10 @@
 		FROM PROG_TYPE
 	</select>
 	
+	<!-- 
+		진척율 파일 progNo 조회
+		작성자 : 김태희
+	-->
 	<select id="selectProgNo" parameterType="map" resultType="progress">
 		SELECT
 		    PROG_NO AS "progNo"
@@ -444,6 +476,10 @@
 		AND PROG_TYPE = #{progTypeNo}
 	</select>
 	
+	<!-- 
+		진척율 파일 삭제
+		작성자 : 김태희
+	-->
 	<delete id="deleteProgressFiles" parameterType="int">
 		DELETE PROG_FILE
 		WHERE PROG_FILE_NO = #{progFileNo}
