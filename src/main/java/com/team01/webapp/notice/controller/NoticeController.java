@@ -51,19 +51,27 @@ public class NoticeController {
 	 * @return
 	 */
 	@GetMapping("/list")
-	public String getNoticeList(@RequestParam(defaultValue="1") int pageNo, Model model) {
+	public String getNoticeList(Model model) {
 		log.info("실행");
-		int totalRows = noticeService.getTotalRows();
-		Pager pager = new Pager(5,5, totalRows, pageNo);
-		
-		List<Notice> noticeList = noticeService.getNoticeList(pager);
-		
-		model.addAttribute("noticeList",noticeList);
-		model.addAttribute("pager",pager);
 		
 		return "notice/list";
 	}
 	
+	@PostMapping(value="filter/{pageNo}",produces="application/json; charset=UTF-8")
+	public String noticeListAjax(@PathVariable int pageNo, @RequestBody Notice notice, Model model,Pager pager) {
+		log.info("실행");
+		
+		log.info(pageNo);
+		log.info(notice);
+		pager = noticeService.returnPage(pageNo,pager,notice);
+		
+		List<Notice> noticeListAjax = noticeService.getNoticeListAjax(pager,notice);
+		
+		model.addAttribute("noticeListAjax",noticeListAjax);
+		model.addAttribute("pager",pager);
+		
+		return "notice/ajaxList";
+	}
 
 	/**
 	 * 공지사항 작성
@@ -187,13 +195,14 @@ public class NoticeController {
 	 * @throws IOException
 	 */
 	@PostMapping(value="/update",produces="application/json; charset=UTF-8")
-	public String noticeUpdate(Notice notice, NoticeFile noticeFile) throws IOException {
+	public String noticeUpdate(Notice notice) throws IOException {
 		log.info("실행");
 		
 		//첨부 파일 유무 조사
-		List<MultipartFile> mf = noticeFile.getNtcMFile();
+		List<MultipartFile> mf = notice.getNtcMFile();
 		if(mf!=null &&!mf.isEmpty()) {
-			for(int i=0; i<mf.size(); i++) {				
+			for(int i=0; i<mf.size(); i++) {
+				NoticeFile noticeFile = new NoticeFile();
 				//파일 원래 이름 저장
 				noticeFile.setNtcFileActlNm(mf.get(i).getOriginalFilename());
 				//파일의 저장 이름 설정
@@ -205,13 +214,9 @@ public class NoticeController {
 				int endIndex = str.length();
 				String type = str.substring(beginIndex,endIndex);
 				noticeFile.setNtcFileExtnNm(type);
-				noticeFile.setNtcNo(noticeFile.getNtcNo());		
+				noticeFile.setNtcNo(notice.getNtcNo());		
 
-				NoticeFile noticeFileList = new NoticeFile();
-				noticeFile.setNtcFileActlNm(noticeFile.getNtcFileActlNm());
-				noticeFile.setNtcFilePhysNm(noticeFile.getNtcFilePhysNm());
-				noticeFile.setNtcFileExtnNm(noticeFile.getNtcFileExtnNm());
-				noticeFile.setNtcNo(noticeFile.getNtcNo());
+				
 
 				noticeService.noticeUpdate(notice,noticeFile);
 			}

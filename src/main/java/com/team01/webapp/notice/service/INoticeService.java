@@ -14,6 +14,8 @@ public interface INoticeService {
 	 * @return
 	 */
 	public int getTotalRows();
+	
+	public Pager returnPage(int pageNo, Pager pager, Notice notice);
 
 	/**
 	 * 공지사항 리스트
@@ -22,6 +24,10 @@ public interface INoticeService {
 	 * @return
 	 */
 	public List<Notice> getNoticeList(Pager pager);
+	
+	//필터링된 공지사항 리스트
+	public List<Notice> getNoticeListAjax(Pager pager, Notice notice);
+	
 	
 	/**
 	 * 공지사항 작성

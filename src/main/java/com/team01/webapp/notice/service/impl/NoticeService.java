@@ -34,6 +34,14 @@ public class NoticeService implements INoticeService{
 		return rows;
 	}
 	
+	@Override
+	public Pager returnPage(int pageNo, Pager pager, Notice notice) {
+		log.info("실행");
+		int totalListNum = (int) noticeRepository.selectTotalNoticeCount(notice);
+		pager = new Pager(10,5,totalListNum,pageNo);
+		return pager;
+	}
+	
 	/**
 	 * 공지사항 리스트
 	 * @author : 황건희
@@ -48,6 +56,18 @@ public class NoticeService implements INoticeService{
 		
 		return list;
 	}
+	
+	// 필터링 된 공지사항 리스트
+	@Override
+	public List<Notice> getNoticeListAjax(Pager pager, Notice notice){
+		log.info("실행");
+		notice.setStartRowNo(pager.getStartRowNo());
+		notice.setEndRowNo(pager.getEndRowNo());
+		List<Notice> list = noticeRepository.selectFilterNoticeList(notice);
+		
+		return list;
+	}
+	
 	
 	/**
 	 * 공지사항 작성
@@ -136,20 +156,9 @@ public class NoticeService implements INoticeService{
 		noticeRepository.updateNotice(ntcNo,ntcCn);
 		System.out.println(noticeFile.getNtcFileActlNm());
 		//첨부파일 수정
-		if(noticeFile.getNtcFileActlNm() != null && !noticeFile.getNtcFileActlNm().equals("")) {
-			if(noticeFile.getNtcFileNo()>0) {
-				noticeFile.setNtcNo(ntcNo);
-				System.out.println("첨수:"+ntcNo);
-				noticeRepository.updateFile(noticeFile);
-				System.out.println("첨부파일 수정  실행" );
-			}else {
-				noticeFile.setNtcNo(ntcNo);
-				noticeFile.setNtcFileNo(noticeRepository.selectMaxFileNo()+1);
-				noticeRepository.updateNoticeFileUpload(noticeFile);
-				System.out.println("첨부파일 수정 업로드  실행" );
-			}
-		}
-		
+		noticeFile.setNtcNo(ntcNo);
+		System.out.println(noticeFile.getNtcFileExtnNm());
+		noticeRepository.updateNoticeFileUpload(noticeFile);
 		
 	}
 

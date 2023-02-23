@@ -14,6 +14,9 @@ public interface INoticeRepository {
 	/*전체 공지사항 행수*/
 	public int selectTotalNoticeListCount();
 	
+	/*필터링된 공지사항 행수*/
+	public int selectTotalNoticeCount(Notice notice);
+	
 	/**
 	 * 공지사항 목록
 	 * @author : 황건희
@@ -21,6 +24,9 @@ public interface INoticeRepository {
 	 * @return 공지사항 정보 return
 	 */
 	public List<Notice> selectNoticeList(Pager pager);
+	
+	//필터링 된 공지사항 목록
+	public List<Notice> selectFilterNoticeList(Notice notice);
 	
 	/**
 	 * 공지사항 작성

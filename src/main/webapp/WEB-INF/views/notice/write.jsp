@@ -40,7 +40,6 @@
 											<div class="col-1">
 												<div class="form-group">
 													<select class="form-control" id="exampleFormControlSelect1" id="ntcPry" name="ntcPry">
-														<option></option>
 														<option>Yes</option>
 														<option>No</option>
 													</select>
@@ -58,7 +57,7 @@
 										<div class="row mt-2">
 											<div class="col-1">첨부파일 : </div>
 											<div class="col-10 ml-1">
-												<input type="file" class="custom-file-input form-control" id="ntcMFile" name="ntcMFile" onclick="addNoticeFile(this)" multiple> 
+												<input type="file" class="custom-file-input form-control" id="ntcMFile" name="ntcMFile" onchange="addNoticeFile(this)" multiple> 
 												<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
 											</div>
 										</div>
@@ -109,6 +108,8 @@
 								$('#userfile').append(htmlData);
 								fileNo++;
 							}
+							// 초기화
+						    document.querySelector("input[type=file]").value = "";
 						}
 						
 						/* 첨부파일 삭제 */
@@ -134,11 +135,15 @@
 						    var ntcTtl = document.getElementById('ntcTtl').value;
 						    formData.append("ntcTtl",ntcTtl);
 						    
-						    var ntcPry = document.getElementById('ntcPry').value;
+						   
+						    var ntcPry = 'Yes';
 						    formData.append("ntcPry",ntcPry);
 						    
 						    var ntcCn = document.getElementById('ntcCn').value;
 						    formData.append("ntcCn",ntcCn);
+						    
+						    var userNo = document.getElementById('userNo').value;
+						    formData.append("userNo",userNo);
 						    
 						    $.ajax({
 								type: "POST",
@@ -148,7 +153,7 @@
 								processData: false,	// 필수
 								contentType: false	// 필수
 						    }).done((data) => {
-						    	$("#updateAjax").html(data);
+						    	window.location.href = "/webapp/notice/list";
 						    });
 						    
 						}
