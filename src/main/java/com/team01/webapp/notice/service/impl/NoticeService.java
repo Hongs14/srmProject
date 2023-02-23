@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.model.Notice;
 import com.team01.webapp.model.NoticeComment;
@@ -38,7 +39,8 @@ public class NoticeService implements INoticeService{
 	public Pager returnPage(int pageNo, Pager pager, Notice notice) {
 		log.info("실행");
 		int totalListNum = (int) noticeRepository.selectTotalNoticeCount(notice);
-		pager = new Pager(10,5,totalListNum,pageNo);
+		log.info(totalListNum);
+		pager = new Pager(5,5,totalListNum,pageNo);
 		return pager;
 	}
 	
@@ -107,9 +109,9 @@ public class NoticeService implements INoticeService{
 	
 	//공지사항 상세조회 첨부파일 읽어오기
 	@Override
-	public List<NoticeFile> selectNoticeFileDetail(int ntcNo) {
+	public List<MultipartFile> selectNoticeFileDetail(int ntcNo) {
 		log.info("실행");
-		List<NoticeFile> noticeFile = noticeRepository.selectNoticeFileDetail(ntcNo);
+		List<MultipartFile> noticeFile = noticeRepository.selectNoticeFileDetail(ntcNo);
 		return noticeFile;
 	}
 	
@@ -154,10 +156,10 @@ public class NoticeService implements INoticeService{
 		int ntcNo = notice.getNtcNo();
 		String ntcCn = notice.getNtcCn();
 		noticeRepository.updateNotice(ntcNo,ntcCn);
-		System.out.println(noticeFile.getNtcFileActlNm());
+		
 		//첨부파일 수정
 		noticeFile.setNtcNo(ntcNo);
-		System.out.println(noticeFile.getNtcFileExtnNm());
+		log.info(noticeFile);
 		noticeRepository.updateNoticeFileUpload(noticeFile);
 		
 	}

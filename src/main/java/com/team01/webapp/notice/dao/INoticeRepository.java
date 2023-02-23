@@ -3,6 +3,7 @@ package com.team01.webapp.notice.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.model.Notice;
 import com.team01.webapp.model.NoticeComment;
@@ -45,7 +46,7 @@ public interface INoticeRepository {
 	public Notice selectNoticeDetail(int ntcNo);
 	
 	//공지사항 상세조회 첨부파일 읽어오기
-	public List<NoticeFile> selectNoticeFileDetail(int ntcNo);
+	public List<MultipartFile> selectNoticeFileDetail(int ntcNo);
 	
 	//공지사항 상세조회 첨부파일 다운로드
 	public NoticeFile selectFileDownload(int ntcFileNo);

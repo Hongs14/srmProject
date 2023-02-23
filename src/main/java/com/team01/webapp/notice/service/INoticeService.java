@@ -2,6 +2,8 @@ package com.team01.webapp.notice.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.team01.webapp.model.Notice;
 import com.team01.webapp.model.NoticeComment;
 import com.team01.webapp.model.NoticeFile;
@@ -54,7 +56,7 @@ public interface INoticeService {
 	public Notice noticeDetail(int ntcNo);
 	
 	//공지사항 상세 조회 첨부파일 읽어오기
-	public List<NoticeFile> selectNoticeFileDetail(int ntcNo);
+	public List<MultipartFile> selectNoticeFileDetail(int ntcNo);
 	
 	//공지사항 상세 조회 첨부파일 다운로드
 	public NoticeFile selectFiledownload(int ntcFileNo);
