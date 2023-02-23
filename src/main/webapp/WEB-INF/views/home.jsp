@@ -22,14 +22,16 @@
 
         <!-- 메인 컨테이너 Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
-        
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">${sessionScope.loginUser.userNm} 님 환영합니다.</h1>
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">나의 업무 </li>
-            </ol>
-          </div>
+	        <div class="card mb-4 p-3">
+	        	<div class="d-sm-flex align-items-center justify-content-between">
+	            <h4 class="mb-0 text-gray-800 m-1 "><b>${sessionScope.loginUser.userNm} 님 환영합니다.</b></h4>
+	            <ol class="breadcrumb">
+	              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}">Home</a></li>
+	              <li class="breadcrumb-item active" aria-current="page">나의 업무 </li>
+	            </ol>
+	          </div>
+	        </div>
+          
 		
           <!-- Row -->
           <div class="row">

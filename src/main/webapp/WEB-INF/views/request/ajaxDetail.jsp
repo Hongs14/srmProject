@@ -73,7 +73,7 @@
 				<div class="col-sm-2">
 					<span class=" font-weight-bold">SR 내용: </span> 
 				</div>
-				<div class="col-sm-10 border border-light p-2">
+				<div class="col-sm-10 border border-light p-2" style="min-height: 320px;">
 					<span class="sr_content" > 
 						${fn: replace(sr.srCn, replaceChar, "") } 
 					</span> 

@@ -225,7 +225,7 @@
 						data : JSON.stringify(data),
 						contentType: "application/json; charset=UTF-8"
 					}).done((data) => {
-						$("#ajaxList").html(data);
+						$("#ajaxList").html(data)
 					});
 				}
 			</script>

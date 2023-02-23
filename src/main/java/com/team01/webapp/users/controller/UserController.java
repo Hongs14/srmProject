@@ -67,7 +67,7 @@ public class UserController {
 			session.setAttribute("userNo", user.getUserNo());
 
 			log.info(user);
-			return "home";
+			return "redirect:/home";
 		}
 	}
 	
@@ -81,7 +81,7 @@ public class UserController {
 	@RequestMapping(value = "user/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "user/loginForm";
+		return "redirect:/";
 	}
 	
 	/**
