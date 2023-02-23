@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +37,7 @@
 			                    <h3 class="text-gray-900 mb-4">LOGIN</h3>
 			                  </div>
 			                  
-			                  <form class="user d-flex flex-column m-5" method="post" action="user/login">
+			                  <form class="user d-flex flex-column m-5" method="post" action="<c:url value='/user/login'/>">
 			                    <div class="form-group mb-4">
 			                      <input type="text" class="form-control" id="userId" name="userId" placeholder="ID" >
 			                    </div>

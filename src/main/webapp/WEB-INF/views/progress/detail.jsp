@@ -6,6 +6,7 @@
 <style>
 #prog_tabs .nav-link{
 background-color:#EFEFEF;
+color: black;
 border-top-left-radius: 10px; 
 border-top-right-radius: 10px;
 

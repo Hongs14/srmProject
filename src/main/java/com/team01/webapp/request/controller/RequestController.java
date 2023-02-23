@@ -91,7 +91,7 @@ public class RequestController {
 		requestFilter = requestService.getFilterList(requestFilter);
 		model.addAttribute("requestfilter", requestFilter);
 		model.addAttribute("pager", pager);
-		return "request/write";
+		return "request/writeForm";
 	}
 	
 	/**
@@ -106,27 +106,15 @@ public class RequestController {
 	 * @return
 	 */
 	@RequestMapping(value="/detail/{srNo}", method = RequestMethod.GET)
-	public String getDetail(@PathVariable String srNo, RequestFilter requestFilter, HttpSession session, Model model, Pager pager) {
+	public String getDetail(@PathVariable String srNo, HttpSession session, Model model, Pager pager) {
 		log.info("실행"+srNo);
-		requestFilter = requestService.getFilterList(requestFilter);
 		Request request = requestService.getRequestDetail(srNo);
 		model.addAttribute("sr", request);
-		model.addAttribute("srNo", srNo);
-		return "request/detail";
+		log.info(request);
+		return "request/ajaxDetail";
 		
 	}
 	
-	@RequestMapping(value="/detail/sr/{srNo}", method = RequestMethod.GET)
-	public String getSrDetail(@PathVariable String srNo, RequestFilter requestFilter, HttpSession session, Model model, Pager pager) {
-		log.info("실행");
-		requestFilter = requestService.getFilterList(requestFilter);
-		Request request = requestService.getRequestDetail(srNo);
-		model.addAttribute("sr", request);
-		model.addAttribute("requestfilter", requestFilter);
-		log.info("sr"+request);
-		return "request/detailView";
-		
-	}
 	
 	
 	
