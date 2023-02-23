@@ -130,7 +130,7 @@ public class ExamineController {
 		
 		examineService.updateExamine(examine);
 		
-		return "examine/detail";
+		return "examine/list";
 	}
 	
 	@PostMapping(value="/processing")

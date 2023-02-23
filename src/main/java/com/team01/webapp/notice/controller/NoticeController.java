@@ -66,7 +66,7 @@ public class NoticeController {
 		pager = noticeService.returnPage(pageNo,pager,notice);
 		
 		List<Notice> noticeListAjax = noticeService.getNoticeListAjax(pager,notice);
-		
+		log.info(pager);
 		model.addAttribute("noticeListAjax",noticeListAjax);
 		model.addAttribute("pager",pager);
 		
@@ -146,7 +146,7 @@ public class NoticeController {
 		log.info("실행");
 		
 		Notice notice = noticeService.noticeDetail(ntcNo);
-		List<NoticeFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
+		List<MultipartFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
 		
 		model.addAttribute("notice",notice);
 		model.addAttribute("noticeFile",noticeFile);
@@ -169,7 +169,7 @@ public class NoticeController {
 	public String noticeUpdate(int ntcNo, Model model) {
 		log.info("실행");
 		Notice notice = noticeService.noticeDetail(ntcNo);
-		List<NoticeFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
+		List<MultipartFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
 		
 		model.addAttribute("notice",notice);
 		model.addAttribute("noticeFile",noticeFile);
@@ -181,7 +181,8 @@ public class NoticeController {
 	@PostMapping(value="/updateAjax/{ntcNo}",produces="application/json; charset=UTF-8")
 	public String updateAjax(@PathVariable int ntcNo, Model model) {
 		log.info("실행");
-		List<NoticeFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
+		List<MultipartFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
+		log.info(noticeFile);
 		model.addAttribute("noticeFile",noticeFile);
 		return "notice/updateAjax";
 	}
@@ -215,13 +216,10 @@ public class NoticeController {
 				String type = str.substring(beginIndex,endIndex);
 				noticeFile.setNtcFileExtnNm(type);
 				noticeFile.setNtcNo(notice.getNtcNo());		
-
 				
-
+				log.info(noticeFile);
 				noticeService.noticeUpdate(notice,noticeFile);
 			}
-		}else {			
-			noticeService.noticeUpdate(notice);
 		}
 		
 		return "redirect:/notice/list";
@@ -248,7 +246,7 @@ public class NoticeController {
 		log.info("실행");
 		noticeService.noticeFileDelete(ntcFileNo);
 		
-		List<NoticeFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
+		List<MultipartFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
 		model.addAttribute("noticeFile",noticeFile);
 		return "notice/updateAjax";
 	}
@@ -287,7 +285,7 @@ public class NoticeController {
 		response.setContentType(contentType);
 		
 		//응답 바디에 파일 데이터 실기
-		String filePath = "C:/Temp/uploadfiles/"+savedName;
+		String filePath = "C:/OTI/uploadfiles/notice/"+savedName;
 		File file = new File(filePath);
 		if(file.exists()) {
 			InputStream is = new FileInputStream(file);
