@@ -19,7 +19,6 @@ public interface IDevelopService {
 	public List<Users> selectDeveloperList(String userDpNm);
 	
 	public List<Users> selectDevName(int userNo);
-	
 	public int insertHrList(HR hr);
 
 }
