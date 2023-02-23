@@ -104,68 +104,96 @@
 				                      </tr>
 				                    </thead>
 				                    <tbody>
-				                      <tr>
-				                        <td><a href="#">JHJ-SR-0001</a></td>
-				                        <td>댓글기능추가</td>
-				                        <td>JHJ시스템</td>
-				                        <td><span class="badge badge-success">검토중</span></td>
-				                        <td>2023/04/14 </td>
-				                        <td>상</td>
-				                        <td>
-			                        	<div class="progress">
-										  <div class="progress-bar bg-danger" role="progressbar" 
-										  style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-										  </div>
-										</div>
+					                      <tr>
+					                        <td><a href="#">JHJ-SR-0001</a></td>
+					                        <td>댓글기능추가</td>
+					                        <td>JHJ시스템</td>
+					                        <td><span class="badge badge-success">검토중</span></td>
+					                        <td>2023/04/14 </td>
+					                        <td>상</td>
+					                        <td>
+				                        	<div class="progress">
+											  <div class="progress-bar bg-danger" role="progressbar" 
+											  style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+											  </div>
+											</div>
+											</td>
+					                      </tr>
+					                      <tr>
+						                      <td><a href="#">JHJ-SR-0002</a></td>
+						                        <td>첨부기능 보완</td>
+						                        <td>JHJ시스템</td>
+						                        <td><span class="badge badge-warning">개발중 </span></td>
+						                        <td>2023/04/14 </td>
+						                        <td>상</td>
+						                        <td>
+												<div class="progress">
+												  <div class="progress-bar" role="progressbar" 
+												  style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+												  </div>
+												</div>			
+												</td>
+					                      </tr>
+					                      <tr>
+					                        <td><a href="#">JHJ-SR-0003</a></td>
+					                        <td>조회 기능 보완</td>
+					                        <td>JHJ시스템</td>
+					                        <td><span class="badge badge-warning">반려</span></td>
+					                        <td>2023/04/14 </td>
+					                        <td>하 </td>
+					                        <td>
+					                        <div class="progress">
+											  <div class="progress-bar bg-info" role="progressbar" 
+											  style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+											  </div>
+											</div>
+											</td>
+					                      </tr>
+					                      <tr>
+					                      	<td><a href="#">JHJ-SR-0002</a></td>
+					                        <td>첨부기능 보완</td>
+					                        <td>JHJ시스템</td>
+					                        <td><span class="badge badge-warning">개발중 </span></td>
+					                        <td>2023/04/14 </td>
+					                        <td>상</td>
+					                        <td>
+					                        <div class="progress">
+											  <div class="progress-bar bg-warning" role="progressbar" 
+											  style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+											  </div>
+											</div>
+											</td>
+					                      </tr>
+					                      <tr>
+					                      	<td><a href="#">JHJ-SR-0002</a></td>
+					                        <td>첨부기능 보완</td>
+					                        <td>JHJ시스템</td>
+					                        <td><span class="badge badge-warning">개발중 </span></td>
+					                        <td>2023/04/14 </td>
+					                        <td>상</td>
+					                        <td>
+					                        <div class="progress">
+											  <div class="progress-bar bg-warning" role="progressbar" 
+											  style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+											  </div>
+											</div>
+											</td>
+					                      </tr>
+					                      <tr>
+					                      	<td><a href="#">JHJ-SR-0002</a></td>
+					                        <td>첨부기능 보완</td>
+					                        <td>JHJ시스템</td>
+					                        <td><span class="badge badge-warning">개발중 </span></td>
+					                        <td>2023/04/14 </td>
+					                        <td>상</td>
+					                        <td>
+					                        <div class="progress">
+											  <div class="progress-bar bg-warning" role="progressbar" 
+											  style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+											  </div>
+											</div>
 										</td>
 				                      </tr>
-				                      <tr>
-				                      <td><a href="#">JHJ-SR-0002</a></td>
-				                        <td>첨부기능 보완</td>
-				                        <td>JHJ시스템</td>
-				                        <td><span class="badge badge-warning">개발중 </span></td>
-				                        <td>2023/04/14 </td>
-				                        <td>상</td>
-				                        <td>
-										<div class="progress">
-										  <div class="progress-bar" role="progressbar" 
-										  style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-										  </div>
-										</div>			
-										</td>
-				                      </tr>
-				                      <tr>
-				                        <td><a href="#">JHJ-SR-0003</a></td>
-				                        <td>조회 기능 보완</td>
-				                        <td>JHJ시스템</td>
-				                        <td><span class="badge badge-warning">반려</span></td>
-				                        <td>2023/04/14 </td>
-				                        <td>하 </td>
-				                        <td>
-				                        <div class="progress">
-										  <div class="progress-bar bg-info" role="progressbar" 
-										  style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-										  </div>
-										</div>
-										</td>
-				                      </tr>
-				                      <tr>
-				                      <td><a href="#">JHJ-SR-0002</a></td>
-				                        <td>첨부기능 보완</td>
-				                        <td>JHJ시스템</td>
-				                        <td><span class="badge badge-warning">개발중 </span></td>
-				                        <td>2023/04/14 </td>
-				                        <td>상</td>
-				                        <td>
-				                        <div class="progress">
-										  <div class="progress-bar bg-warning" role="progressbar" 
-										  style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-										  </div>
-										</div>
-												
-										</td>
-				                      </tr>
-				                      
 				                    </tbody>
 				                  </table>
 				                </div>
@@ -196,12 +224,12 @@
           </div>
           <div class="row mb-5">
           <div class="col-xl-6 col-lg-6 ">
-              <div class="card">
+              <div class="card p-3">
                 <div class="card-header align-items-center">
                   <h6 class="font-weight-bold text-primary"><i class="fas fa-fw fa-columns"></i> Notice </h6>
                 </div>
                 <div class="table-responsive">
-                  <table class="table border mx-3 mb-3">
+                  <table class="table border mb-3">
                     <thead class="thead-light">
                       <tr>
                         <th>글번호 </th>
@@ -233,19 +261,26 @@
                         <td>2023/04/14 </td>
                         <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=114" class="btn btn-sm btn-primary">상세</a></td>
                       </tr>
+                       <tr>
+                        <td><a href="#">0003</a></td>
+                        <td>공지사항3 </td>
+                        <td>관리자</td>
+                        <td>2023/04/14 </td>
+                        <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=114" class="btn btn-sm btn-primary">상세</a></td>
+                      </tr>
                       </tbody>
-                      </table>
+                    </table>
 	              </div>
 	            </div>
             
           	</div>
           	<div class="col-xl-6 col-lg-6 ">
-          	<div class="card">
+          	<div class="card p-3">
                 <div class="card-header align-items-center">
                   <h6 class="font-weight-bold text-primary"><i class="fas fa-fw fa-sticky-note"></i>QnA </h6>
                 </div>
                 <div class="table-responsive">
-                  <table class="table border mx-3 mb-3">
+                  <table class="table border mb-3">
                     <thead class="thead-light">
                       <tr>
                         <th>글번호 </th>
@@ -277,8 +312,15 @@
                         <td>2023/04/14 </td>
                         <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
                       </tr>
+                      <tr>
+                        <td><a href="#">0003</a></td>
+                        <td>QnA3 </td>
+                        <td>관리자</td>
+                        <td>2023/04/14 </td>
+                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
+                      </tr>
                       </tbody>
-                      </table>
+                    </table>
 	              </div>
 	            </div>
             
