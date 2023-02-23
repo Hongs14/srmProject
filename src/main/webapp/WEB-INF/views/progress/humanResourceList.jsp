@@ -24,7 +24,7 @@
 			삭제
 		</button>
 	</div>
-		<table class="table align-items-center table-flush table-hover">
+		<table class="table align-items-center table-flush table-hover p-2">
 			<thead class="thead-light">
 				<tr>
 					<th></th>

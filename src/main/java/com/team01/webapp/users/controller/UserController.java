@@ -81,7 +81,7 @@ public class UserController {
 	@RequestMapping(value = "user/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/";
+		return "user/loginForm";
 	}
 	
 	/**

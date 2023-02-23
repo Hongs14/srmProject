@@ -47,7 +47,7 @@
 							<c:if test="${request.srPry eq '중'}"><span class="badge badge-primary" style="font-size:100%">${request.srPry}</span></c:if>
 							<c:if test="${request.srPry eq '하'}"><span class="badge badge-secondary" style="font-size:100%">${request.srPry}</span></c:if>
 						</td>
-						<td><a href="${pageContext.request.contextPath}/request/detail/${request.srNo}" class="btn btn-sm btn-primary text-white SrDetailBtn" id="${request.srNo}">상세보기</a></td>
+						<td><a onclick="getSrDetail('${request.srNo}')" class="btn btn-sm btn-primary text-white SrDetailBtn">상세보기</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

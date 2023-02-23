@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <% pageContext.setAttribute("replaceChar", "\n"); %>
 
 <div class="d-sm-flex align-items-end justify-content-between">
@@ -19,14 +20,14 @@
 	<div class="p-5">
 		<form method="post" action="<c:url value='/request/write'/>" method="post" enctype="multipart/form-data">
 			<div class="row mb-2 mr-0" >
-					<label class="font-weight-bold col-sm-2">등록자: </label> 
+					<label class="col-sm-2">등록자 </label> 
 					<input  class="col-sm-4" disabled value="${sessionScope.loginUser.userNm}" />
-					<span class="font-weight-bold col-sm-2">소속: </span> 
+					<span class="col-sm-2">소속 </span> 
 					<input class="col-sm-4" disabled value="${sessionScope.loginUser.userDpNm}" />
 			</div>
 			
 			<div class="row mb-2 mr-0">
-				<span class=" font-weight-bold col-sm-2">등록일: </span> 
+				<span class="col-sm-2">등록일 </span> 
 				<div class="form-group col-sm-4 px-0" id="simple-date1" >
 					<div class="input-group date" >
 						<div class="input-group-prepend">
@@ -35,31 +36,36 @@
 						<input type="text" class="form-control" value="" id="dateInput"  style="height:30px;" disabled>
 					</div>
 				</div>
-				<span class=" font-weight-bold col-sm-3">관련시스템: </span> 
-				<input name="sysNm" class="col-sm-3" disabled value="${sessionScope.loginUser.sysNm}" style="height:30px;"/>
+				<span class="col-sm-2">관련시스템 </span> 
+				<input name="sysNm" class="col-sm-4" disabled value="${sessionScope.loginUser.sysNm}" style="height:30px;"/>
 			</div>
 			<hr>
 			<div class="row mb-2 align-items-center">
-				<span class=" font-weight-bold col-sm-2">SR 제목: </span> 
+				<span class=" font-weight-bold col-sm-2">SR 제목 </span> 
 				<input name="srTtl" class="col-sm-10" type="text" class="form-control form-control-sm"/>
 			</div>
 			<div class="row mb-2 align-items-center">
-				<label class=" font-weight-bold col-sm-2">관련근거: </label> 
+				<label class=" font-weight-bold col-sm-2">관련근거 </label> 
 				<input name="srStd" class="col-sm-10" type="text" class="form-control form-control-sm"/>
 			</div>
 			<div class="row mb-2">
-					<label class=" font-weight-bold col-sm-2">SR 내용: </label> 
-					<textarea name="srCn" rows="10" class="form-control form-control-sm col-sm-10"></textarea>
+					<label class=" font-weight-bold col-sm-2">SR 내용 </label> 
+					<div class="col-sm-10" id="smartEditor">
+						<textarea name="srCn" rows="10" class="form-control form-control-sm" id="editor" name="editor">
+						
+						</textarea>
+					</div>
+					
 			</div>
 			<div class="row mb-2">
-				<span class=" font-weight-bold col-sm-2">첨부파일: </span> 
+				<span class=" font-weight-bold col-sm-2">첨부파일 </span> 
 				<div class="custom-file col-sm-10">
 					<input type="file" class="custom-file-input form-control" id="customFile" multiple> 
 					<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
 				</div>
 			</div>
 			<div class="row mb-2">
-				<span class=" font-weight-bold col-sm-2">파일목록: </span> 
+				<span class=" font-weight-bold col-sm-2">파일목록 </span> 
 				<div class="col-sm-10" id="userfile"></div>
 			</div>
 			<div class="modal-footer justify-content-center">
