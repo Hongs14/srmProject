@@ -250,41 +250,95 @@ public class ProgressService implements IProgressService {
 		return progressList;
 	}
 
+	
+	/**
+	 * 진척율 정보 저장
+	 * 
+	 * @author			김태희
+	 * @param progNo	클라이언트가 보낸 progNo 정보 저장
+	 * @return			Progress 객체 return
+	 */
 	@Override
 	public Progress progressRate(int progNo) {
 		return progressRepository.selectProgressRate(progNo);
 	}
-
+	
+	/**
+	 * 진척율 파일 저장
+	 * 
+	 * @author			김태희
+	 * @param progress	클라이언트가 보낸 progress 정보 저장
+	 */
 	@Override
 	public void writeProgressRateFile(Progress progress) {
 		progressRepository.insertProgressRateFile(progress);
 	}
 
+	/**
+	 * 진척율 정보 업데이트
+	 * 
+	 * @author			김태희
+	 * @param progress	클라이언트가 보낸 progress 정보 저장
+	 */
 	@Override
 	public void updateProgressRate(Progress progress) {
 		progressRepository.updateProgressRate(progress);
 	}
 
+	/**
+	 *	진척율 파일 다운로드 하기위한 DB 정보 저장
+	 * 
+	 * @author				김태희
+	 * @param progFileNo	클라이언트가 보낸 progFileNo 정보 저장
+	 * @return
+	 */
 	@Override
 	public ProgressFile getProgressFile(String progFileNo) {
 		return progressRepository.selectProgressFile(progFileNo);
 	}
 
+	/**
+	 * 프로그램파일 리스트 정보 저장
+	 * 
+	 * @author			김태희
+	 * @param srNo		클라이언트가 보낸 srNo 정보 저장
+	 * @return			List<ProgressFile> 리스트 return
+	 */
 	@Override
 	public List<ProgressFile> progressfileList(String srNo) {
 		return progressRepository.selectProgressFileList(srNo);
 	}
 
+	/**
+	 * 프로그램 타입 리스트 정보 저장
+	 * 
+	 * @author			김태희
+	 * @return			List<ProgressType> 리스트 return
+	 */
 	@Override
 	public List<ProgressType> getProgressTypeList() {
 		return progressRepository.selectProgressTypeList();
 	}
 
+	/**
+	 * 파일 저장을 위한 progress 정보 저장
+	 * 
+	 * @author				김태희
+	 * @param progTypeNo	클라이언트가 보낸 progTypeNo 정보 저장
+	 * @param srNo			클라이언트가 보낸 srNo 정보 저장
+	 * @return				Progress 객체 return
+	 */
 	@Override
 	public Progress getProgNo(int progTypeNo, String srNo) {
 		return progressRepository.selectProgNo(progTypeNo, srNo);
 	}
 
+	/**
+	 * 산출물 파일 삭제
+	 * 
+	 * @author				김태희
+	 * @param progFileNo	클라이언트가 보낸 progFileNo 정보 저장
+	 */
 	@Override
 	public void removeProgressFiles(int progFileNo) {
 		progressRepository.deleteProgressFiles(progFileNo);
