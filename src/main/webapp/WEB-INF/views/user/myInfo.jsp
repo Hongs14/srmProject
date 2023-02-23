@@ -65,7 +65,7 @@
 						</tr>
 						<tr>
 							<th class="text-primary">연락처</th>
-							<td>${sessionScope.loginUser.userTelno}</td>
+							<td>${sessionScope.loginUser.userTelNo}</td>
 						</tr>
 						<tr>
 							<th class="text-primary">부서</th>

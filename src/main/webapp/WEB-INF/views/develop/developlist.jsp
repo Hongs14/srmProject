@@ -179,10 +179,18 @@
 								                        <td>${SrDevelopDto.userNm}</td>
 								                        <td>${SrDevelopDto.userOgdp}</td>
 								                        <td>${SrDevelopDto.userDpNm }</td>
-								                        <td>${SrDevelopDto.sttsNm}</td>
+								                        <td>
+								                        	<c:if test="${SrDevelopDto.sttsNm eq '접수'}"><span class="badge badge-outline-primary" style="font-size:100%; border: 1px solid black;">${SrDevelopDto.sttsNm}</span></c:if>
+															<c:if test="${SrDevelopDto.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${SrDevelopDto.sttsNm}</span></c:if>
+															<c:if test="${SrDevelopDto.sttsNm eq '개발 완료'}"><span class="badge badge-success" style="font-size:100%">${SrDevelopDto.sttsNm}</span></c:if>
+								                        </td>
 								                        <td>${SrDevelopDto.srRegDate}</td>
 								                        <td>${SrDevelopDto.srDdlnDate}</td>
-								                        <td>${SrDevelopDto.srPry}</td>
+								                        <td>
+								                        	<c:if test="${SrDevelopDto.srPry eq '상'}"><span class="badge badge-danger" style="font-size:100%">${SrDevelopDto.srPry}</span></c:if>
+															<c:if test="${SrDevelopDto.srPry eq '중'}"><span class="badge badge-primary" style="font-size:100%">${SrDevelopDto.srPry}</span></c:if>
+															<c:if test="${SrDevelopDto.srPry eq '하'}"><span class="badge badge-secondary" style="font-size:100%">${SrDevelopDto.srPry}</span></c:if>
+								                        </td>
 								                        <td><button class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/view/${pageNo}?srNo=${SrDevelopDto.srNo}'">상세보기</button></td>
 								                   	</tr>
 						                     	</c:forEach>
@@ -204,7 +212,7 @@
 								
 												<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
 													<c:if test="${pager.pageNo != i}">
-														<a href='<c:url value="/develop/list/${i}"/>' type="button" class="btn btn-outline-success btn-sm m-1">${i}</a>
+														<a href='<c:url value="/develop/list/${i}"/>' type="button" class="btn btn-outline-info btn-sm m-1">${i}</a>
 													</c:if>
 													<c:if test="${pager.pageNo == i}">
 														<a href='<c:url value="/develop/list/${i}"/>' type="button" class="btn btn-primary btn-sm m-1">${i}</a>

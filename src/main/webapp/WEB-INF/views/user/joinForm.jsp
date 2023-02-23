@@ -49,7 +49,7 @@
 		                  <div class="text-center">
 		                    <h1 class="h4 text-gray-900 mb-4">Register</h1>
 		                  </div>
-		                  <form action="join" method="post">
+		                  <form action="user/join" method="post">
 		                    <div class="form-group">
 		                      <label>이름 </label>
 		                      <input type="text" class="form-control" id="userNm" name="userNm" placeholder="Enter Name" required>
