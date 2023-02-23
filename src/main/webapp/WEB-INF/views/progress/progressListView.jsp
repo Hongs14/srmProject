@@ -20,26 +20,35 @@
 					<th>완료 예정일</th>
 					<th>진행 상태</th>
 					<th>중요도</th>
+					<th>상세</th>
 				</tr>
 			</thead>
 			<c:forEach var="list" items="${ProgressList}">
-				<tbody onclick="location.href='${pageContext.request.contextPath}/progress/detail/${list.srNo}'">
-				<tr>
-					<td class="pr-0">
-                       <div class="custom-control custom-checkbox">
-                  			<input type="checkbox" class="custom-control-input" id="customCheck${list.srNo}">
-                  			<label class="custom-control-label" for="customCheck${list.srNo}"></label>
-                		</div>
-					</td>
-					<td>${list.srNo}</td>
-					<td>${list.sysNm}</td>
-					<td>${list.srTypeNm}</td>
-					<td>${list.srTtl}</td>
-					<td>${list.userNm}</td>
-					<td>${list.srDdlnDate}</td>
-					<td>${list.sttsNm}</td>
-					<td>${list.srPry}</td>
-				</tr>
+				<tbody>
+					<tr>
+						<td class="pr-0">
+	                       <div class="custom-control custom-checkbox">
+	                  			<input type="checkbox" class="custom-control-input" id="customCheck${list.srNo}">
+	                  			<label class="custom-control-label" for="customCheck${list.srNo}"></label>
+	                		</div>
+						</td>
+						<td>${list.srNo}</td>
+						<td>${list.sysNm}</td>
+						<td>${list.srTypeNm}</td>
+						<td>${list.srTtl}</td>
+						<td>${list.userNm}</td>
+						<td>${list.srDdlnDate}</td>
+						<td>
+							<c:if test="${list.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${list.sttsNm}</span></c:if>
+							<c:if test="${list.sttsNm eq '개발 완료'}"><span class="badge badge-success" style="font-size:100%">${list.sttsNm}</span></c:if>
+						</td>
+						<td>
+							<c:if test="${list.srPry eq '상'}"><span class="badge badge-danger" style="font-size:100%">${list.srPry}</span></c:if>
+							<c:if test="${list.srPry eq '중'}"><span class="badge badge-primary" style="font-size:100%">${list.srPry}</span></c:if>
+							<c:if test="${list.srPry eq '하'}"><span class="badge badge-secondary" style="font-size:100%">${list.srPry}</span></c:if>
+						</td>
+						<td><a href="${pageContext.request.contextPath}/progress/detail/${list.srNo}" class="btn btn-sm btn-primary">상세보기</a></td>
+					</tr>
 				</tbody>
 			</c:forEach>
 		</table>
@@ -56,7 +65,7 @@
 	
 					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
 						<c:if test="${pager.pageNo != i}">
-							<a onclick="progressList(${i})" type="button" class="btn btn-outline-success btn-sm m-1">${i}</a>
+							<a onclick="progressList(${i})" type="button" class="btn btn-outline-info btn-sm m-1">${i}</a>
 						</c:if>
 						<c:if test="${pager.pageNo == i}">
 							<a onclick="progressList(${i})" type="button" class="btn btn-primary btn-sm m-1">${i}</a>

@@ -35,9 +35,18 @@
 						<td>${examine.userNm}</td>
 						<td>${examine.userOgdp}</td>
 						<td>${examine.userDpNm}</td>
-						<td>${examine.sttsNm}</td>
+						<td>
+							<c:if test="${examine.sttsNm eq '요청'}"><span class="badge badge-dark" style="font-size:100%">${examine.sttsNm}</span></c:if>
+							<c:if test="${examine.sttsNm eq '검토중'}"><span class="badge badge-dark" style="font-size:100%">${examine.sttsNm}</span></c:if>
+							<c:if test="${examine.sttsNm eq '반려'}"><span class="badge badge-danger" style="font-size:100%">${examine.sttsNm}</span></c:if>
+							<c:if test="${examine.sttsNm eq '재검토'}"><span class="badge badge-warning" style="font-size:100%">${examine.sttsNm}</span></c:if>
+						</td>
 						<td>${examine.srRegDate}</td>
-						<td>${examine.srPry}</td>
+						<td>
+							<c:if test="${examine.srPry eq '상'}"><span class="badge badge-danger" style="font-size:100%">${examine.srPry}</span></c:if>
+							<c:if test="${examine.srPry eq '중'}"><span class="badge badge-primary" style="font-size:100%">${examine.srPry}</span></c:if>
+							<c:if test="${examine.srPry eq '하'}"><span class="badge badge-secondary" style="font-size:100%">${examine.srPry}</span></c:if>
+						</td>
 						<td><a href="${pageContext.request.contextPath}/examine/detail?srNo=${examine.srNo}" class="btn btn-sm btn-primary">상세보기</a></td>
 					</tr>
 				</c:forEach>
@@ -56,7 +65,7 @@
 	
 					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
 						<c:if test="${pager.pageNo != i}">
-							<a onclick="examineList(${i})" type="button" class="btn btn-outline-success btn-sm m-1">${i}</a>
+							<a onclick="examineList(${i})" type="button" class="btn btn-outline-info btn-sm m-1">${i}</a>
 						</c:if>
 						<c:if test="${pager.pageNo == i}">
 							<a onclick="examineList(${i})" type="button" class="btn btn-primary btn-sm m-1">${i}</a>
