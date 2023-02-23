@@ -32,9 +32,21 @@
 						<td class="ex_info">${request.userNm}</td>
 						<td class="ex_info">${request.userOgdp}</td>
 						<td class="ex_info">${request.srDevDp}</td>
-						<td><span class="badge badge-danger" style="font-size:100%">${request.sttsNm}</span></td>
+						<td>
+							<c:if test="${request.sttsNm eq '요청'}"><span class="badge badge-dark" style="font-size:100%">${request.sttsNm}</span></c:if>
+							<c:if test="${request.sttsNm eq '검토중'}"><span class="badge badge-dark" style="font-size:100%">${request.sttsNm}</span></c:if>
+							<c:if test="${request.sttsNm eq '접수'}"><span class="badge badge-outline-primary" style="font-size:100%; border: 1px solid black;">${request.sttsNm}</span></c:if>
+							<c:if test="${request.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${request.sttsNm}</span></c:if>
+							<c:if test="${request.sttsNm eq '개발 완료'}"><span class="badge badge-success" style="font-size:100%">${request.sttsNm}</span></c:if>
+							<c:if test="${request.sttsNm eq '반려'}"><span class="badge badge-danger" style="font-size:100%">${request.sttsNm}</span></c:if>
+							<c:if test="${request.sttsNm eq '재검토'}"><span class="badge badge-warning" style="font-size:100%">${request.sttsNm}</span></c:if>
+						</td>
 						<td>${request.srRegDate}</td>
-						<td><span class="badge badge-danger" style="font-size:100%">${request.srPry}</span></td>
+						<td>
+							<c:if test="${request.srPry eq '상'}"><span class="badge badge-danger" style="font-size:100%">${request.srPry}</span></c:if>
+							<c:if test="${request.srPry eq '중'}"><span class="badge badge-primary" style="font-size:100%">${request.srPry}</span></c:if>
+							<c:if test="${request.srPry eq '하'}"><span class="badge badge-secondary" style="font-size:100%">${request.srPry}</span></c:if>
+						</td>
 						<td><a href="${pageContext.request.contextPath}/request/detail/${request.srNo}" class="btn btn-sm btn-primary text-white SrDetailBtn" id="${request.srNo}">상세보기</a></td>
 					</tr>
 				</c:forEach>
@@ -58,7 +70,7 @@
 		
 						<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
 							<c:if test="${pager.pageNo != i}">
-								<a onclick="requestList(${i})" type="button" class="btn btn-outline-success btn-sm m-1">${i}</a>
+								<a onclick="requestList(${i})" type="button" class="btn btn-outline-info btn-sm m-1">${i}</a>
 							</c:if>
 							<c:if test="${pager.pageNo == i}">
 								<a onclick="requestList(${i})" type="button" class="btn btn-primary btn-sm m-1">${i}</a>

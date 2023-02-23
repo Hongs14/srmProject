@@ -30,7 +30,7 @@ public class UserController {
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return			로그인폼으로 이동
 	 */
-	@RequestMapping(value="/login", method = RequestMethod.GET)
+	@RequestMapping(value="user/login", method = RequestMethod.GET)
 	public String login(HttpSession session, Model model) {
 		log.info("실행");
 		return "user/loginForm";
@@ -46,7 +46,7 @@ public class UserController {
 	 * @param model 	View로 데이터 전달을 위한 Model 객체 주입
 	 * @return			홈으로 리다이렉트
 	 */
-	@RequestMapping(value="/login", method = RequestMethod.POST)
+	@RequestMapping(value="user/login", method = RequestMethod.POST)
 	public String login(Users user, HttpSession session, Model model) {
 		log.info(user+" post 실행");
 		UserService.LoginResult loginResult = userService.login(user);
@@ -67,7 +67,7 @@ public class UserController {
 			session.setAttribute("userNo", user.getUserNo());
 
 			log.info(user);
-			return "home";
+			return "redirect:/home";
 		}
 	}
 	
@@ -81,7 +81,7 @@ public class UserController {
 	@RequestMapping(value = "user/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "user/loginForm";
+		return "redirect:/";
 	}
 	
 	/**
@@ -90,7 +90,7 @@ public class UserController {
 	 * @author	김희률
 	 * @return	로그인폼으로 이동
 	 */
-	@RequestMapping(value = "/join", method = RequestMethod.GET)
+	@RequestMapping(value = "user/join", method = RequestMethod.GET)
 	public String join() {
 		log.info("정보 로그 실행");
 		
@@ -105,7 +105,7 @@ public class UserController {
 	 * @param model	View로 데이터 전달을 위한 Model 객체 주입
 	 * @return		뷰로 이동
 	 */
-	@RequestMapping(value="/join", method = RequestMethod.POST)
+	@RequestMapping(value="user/join", method = RequestMethod.POST)
 	public String join(Users user, Model model) {
 		log.info(user.getUserPswd()+"실행");
 		
@@ -124,7 +124,7 @@ public class UserController {
 	 * @author	김희률
 	 * @return	나의 정보 뷰로 이동
 	 */
-	@RequestMapping(value = "/myinfo", method = RequestMethod.GET)
+	@RequestMapping(value = "user/myinfo", method = RequestMethod.GET)
 	public String myinfo() {
 		log.info("실행");
 		return "user/myInfo";

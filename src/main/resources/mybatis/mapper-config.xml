@@ -25,6 +25,7 @@
  	<typeAlias type="com.team01.webapp.model.SRStts" alias="srstts"/>
  	<typeAlias type="com.team01.webapp.model.SRType" alias="srtype"/>
  	<typeAlias type="com.team01.webapp.model.System" alias="system"/>
+ 	<typeAlias type="com.team01.webapp.model.SystemInfo" alias="systemInfo"/>
  	<typeAlias type="com.team01.webapp.model.Task" alias="task"/>
  	<typeAlias type="com.team01.webapp.model.UserSystem" alias="userSystem"/>
  	<typeAlias type="com.team01.webapp.model.SrProgressAjax" alias="progressAjax"/>
@@ -35,5 +36,6 @@
 	<typeAlias type="com.team01.webapp.model.DeveloperSR" alias="developerSr"/>
 	<typeAlias type="com.team01.webapp.model.ThArr" alias="thArr"/>
 	<typeAlias type="com.team01.webapp.model.SrDevelopDto" alias="developDto"/>
+	<typeAlias type="com.team01.webapp.model.Donut" alias="donut"/>
 </typeAliases>
 </configuration>

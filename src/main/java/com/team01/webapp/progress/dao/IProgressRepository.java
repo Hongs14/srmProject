@@ -181,22 +181,82 @@ public interface IProgressRepository {
 	 */
 	List<Progress> selectProgressRateList(String srNo);
 
+	/**
+	 * 진척율 정보 저장
+	 * 
+	 * @author			김태희
+	 * @param progNo	클라이언트가 보낸 progNo 정보 저장
+	 * @return			Progress 객체 return
+	 */
 	Progress selectProgressRate(int progNo);
 
+	/**
+	 * 진척율 파일 저장
+	 * 
+	 * @author			김태희
+	 * @param progress	클라이언트가 보낸 progress 정보 저장
+	 */
 	void insertProgressRateFile(Progress progress);
 
-	void updateProgressRate(Progress progress);
+	/**
+	 * 진척율 정보 업데이트
+	 * 
+	 * @author			김태희
+	 * @param progress	클라이언트가 보낸 progress 정보 저장
+	 */
+	void updateProgressRate (Progress progress);
 
+	/**
+	 * ProgressFile 정보 리스트로 저장
+	 * 
+	 * @author : 김태희
+	 * @param progNo
+	 * @return
+	 */
 	List<ProgressFile> selectProgressRateFile(String progNo);
 
+	/**
+	 *	진척율 파일 다운로드 하기위한 DB 정보 저장
+	 * 
+	 * @author				김태희
+	 * @param progFileNo	클라이언트가 보낸 progFileNo 정보 저장
+	 * @return
+	 */
 	ProgressFile selectProgressFile(String progFileNo);
 
+	/**
+	 * 프로그램파일 리스트 정보 저장
+	 * 
+	 * @author			김태희
+	 * @param srNo		클라이언트가 보낸 srNo 정보 저장
+	 * @return			List<ProgressFile> 리스트 return
+	 */
 	List<ProgressFile> selectProgressFileList(String srNo);
 
+	/**
+	 * 프로그램 타입 리스트 정보 저장
+	 * 
+	 * @author			김태희
+	 * @return			List<ProgressType> 리스트 return
+	 */
 	List<ProgressType> selectProgressTypeList();
 
+	/**
+	 * 파일 저장을 위한 progress 정보 저장
+	 * 
+	 * @author				김태희
+	 * @param progTypeNo	클라이언트가 보낸 progTypeNo 정보 저장
+	 * @param srNo			클라이언트가 보낸 srNo 정보 저장
+	 * @return				Progress 객체 return
+	 */
 	Progress selectProgNo(@Param("progTypeNo") int progTypeNo, @Param("srNo") String srNo);
 
+	/**
+	 * 산출물 파일 삭제
+	 * 
+	 * @author				김태희
+	 * @param progFileNo	클라이언트가 보낸 progFileNo 정보 저장
+	 */
 	void deleteProgressFiles(int progFileNo);
 	
 }

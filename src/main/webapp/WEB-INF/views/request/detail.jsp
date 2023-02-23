@@ -206,14 +206,6 @@
 				}).done((data) => {
 					$("#ajaxList").html(data);
 					$(".ex_info").hide();
-					$(".SrDetailBtn").removeAttr('href');
-					$(".SrDetailBtn").each(function(index, item){
-						let srNo = $(this).attr('id');
-						let funNm = 'getSrDetail("'+srNo+'")';
-						console.log(funNm);
-						$(".SrDetailBtn").attr('onclick',funNm);
-						console.log($(this).attr('onclick'));
-					});
 				});
 				
 					
@@ -250,27 +242,9 @@
 				}).done((data) => {
 					$("#ajaxList").html(data);
 					$(".ex_info").hide();
-					$(".SrDetailBtn").removeAttr('href');
-					$(".SrDetailBtn").each(function(index, item){
-						let srNo = $(this).attr('id');
-						let funNm = 'getSrDetail("'+srNo+'")';
-						console.log(funNm);
-						$(".SrDetailBtn").attr('onclick',funNm);
-						console.log($(this).attr('onclick'));
-					});
 				});
 			}
 			
-			function getSrDetail(i){
-				$.ajax({
-					url : "<c:url value='/request/detail/sr/"+i+"'/>" ,
-					method : "get",
-					dataType : "html"
-				}).done((data)=>{
-					console.log("getSrDetail실행: "+ data);
-					$("#detailMiniView").html(data);
-				});
-			}
 		</script>
    
 	

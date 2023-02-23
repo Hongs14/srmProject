@@ -108,7 +108,7 @@ public class RequestController {
 	@RequestMapping(value="/detail/{srNo}", method = RequestMethod.GET)
 	public String getDetail(@PathVariable String srNo, RequestFilter requestFilter, HttpSession session, Model model, Pager pager) {
 		log.info("실행"+srNo);
-
+		requestFilter = requestService.getFilterList(requestFilter);
 		Request request = requestService.getRequestDetail(srNo);
 		model.addAttribute("sr", request);
 		model.addAttribute("srNo", srNo);
@@ -117,10 +117,13 @@ public class RequestController {
 	}
 	
 	@RequestMapping(value="/detail/sr/{srNo}", method = RequestMethod.GET)
-	public String getSrDetail(@PathVariable String srNo, HttpSession session, Model model, Pager pager) {
-		log.info("srNo: "+srNo);
+	public String getSrDetail(@PathVariable String srNo, RequestFilter requestFilter, HttpSession session, Model model, Pager pager) {
+		log.info("실행");
+		requestFilter = requestService.getFilterList(requestFilter);
 		Request request = requestService.getRequestDetail(srNo);
 		model.addAttribute("sr", request);
+		model.addAttribute("requestfilter", requestFilter);
+		log.info("sr"+request);
 		return "request/detailView";
 		
 	}

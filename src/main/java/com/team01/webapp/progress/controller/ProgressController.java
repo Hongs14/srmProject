@@ -278,6 +278,14 @@ public class ProgressController {
 		return "progress/progressRateList";
 	}
 	
+	/**
+	 * 진척율 추가 페이지로 이동
+	 * 
+	 * @author			김태희
+	 * @param progNo	클라이언트가 보낸 progNo 정보 저장
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			progress/progressRateAdd 로 return
+	 */
 	@RequestMapping(value="progress/detail/progressRateAdd/{progNo}", method=RequestMethod.POST)
 	public String ProgressRateAdd(@PathVariable int progNo, Model model) {
 		
@@ -288,6 +296,14 @@ public class ProgressController {
 		return "progress/progressRateAdd";
 	}
 
+	/**
+	 * 진척율 업데이트
+	 * 
+	 * @author					김태희
+	 * @param progress			클라이언트가 보낸 progress 정보 저장
+	 * @return					progress/detail/{srNo} 로 리다이렉트
+	 * @throws IOException
+	 */
 	@RequestMapping(value="progress/detail/progressRate/update", method=RequestMethod.POST)
 	public String ProgressRateUpdate(Progress progress) throws IOException {
 		// 첨부 파일이 있는지 확인
@@ -332,6 +348,16 @@ public class ProgressController {
 		return "redirect:/progress/detail/" + progress.getSrNo();
 	}
 	
+	/**
+	 * 진척율 파일 다운로드
+	 * 
+	 * @author				김태희
+	 * @param progFileNo	클라이언트가 보낸 progFileNo 정보 저장
+	 * @param srNo			클라이언트가 보낸 srNo 정보 저장
+	 * @param userAgent		@RequestHeader("user-Agent") 정보 저장
+	 * @param response		HttpServletResponse 객체 주입
+	 * @throws Exception
+	 */
 	@RequestMapping(value="progress/detail/progressFiledownload/{srNo}", method = RequestMethod.GET)
 	public void progressFiledownload(String progFileNo, @PathVariable String srNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception {
 		ProgressFile progressFile = progressService.getProgressFile(progFileNo);
@@ -367,6 +393,14 @@ public class ProgressController {
 	}
 	
 	
+	/**
+	 * 산출물 파일 리스트 출력
+	 * 
+	 * @author			김태희
+	 * @param hr		클라이언트가 보낸 hr 정보 저장
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			progress/progressFileAdd 로 리턴
+	 */
 	@RequestMapping(value="progress/detail/progressajax/3", produces="application/json; charset=UTF-8")
 	public String ProgresssFileList(@RequestBody HR hr, Model model) {
 		
@@ -380,6 +414,14 @@ public class ProgressController {
 		return "progress/progressFileList";
 	}
 	
+	/**
+	 *	산출물 추가 페이지 이동
+	 * 
+	 * @author			김태희
+	 * @param srNo		클라이언트가 보낸 srNo 정보 저장
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			progress/progressFileAdd 로 리턴
+	 */
 	@RequestMapping(value="progress/detail/progressFileAdd/{srNo}", method=RequestMethod.GET)
 	public String ProgressFileAdd(@PathVariable String srNo, Model model) {
 		List<ProgressType> progressTypeList = progressService.getProgressTypeList();
@@ -390,6 +432,14 @@ public class ProgressController {
 		return "progress/progressFileAdd";
 	}
 	
+	/**
+	 * 산출물 추가
+	 * 
+	 * @author					김태희
+	 * @param progress			클라이언트가 보낸 progress 정보 저장
+	 * @return					progress/detail/{srNo} 로 리다이렉트
+	 * @throws IOException
+	 */
 	@RequestMapping(value="progress/detail/progressFile/add", method=RequestMethod.POST)
 	public String ProgressFileAdd(Progress progress) throws IOException {
 		// 첨부 파일이 있는지 확인
@@ -437,6 +487,13 @@ public class ProgressController {
 		return "redirect:/progress/detail/" + progress.getSrNo();
 	}
 	
+	/**
+	 * 산출물 삭제
+	 * 
+	 * @author				김태희
+	 * @param progress		클라이언트가 보낸 progress 정보 저장
+	 * @return				progress/detail/{srNo} 로 리다이렉트
+	 */
 	@RequestMapping(value="progress/detail/progressFileRemove", produces="application/json; charset=UTF-8")
 	public String ProgressFileRemove(@RequestBody Progress progress) {
 		

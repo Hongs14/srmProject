@@ -15,7 +15,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 		try {
 			String userType = (String) request.getSession().getAttribute("userType");
 			if(userType == null || userType.equals("")) {
-				response.sendRedirect(request.getContextPath() + "/login");
+				response.sendRedirect(request.getContextPath() + "/user/login");
 				return false;
 			}
 			

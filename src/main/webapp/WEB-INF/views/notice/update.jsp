@@ -49,7 +49,7 @@
 		                                 <hr/>
 	                           		</div>   
 		                            <div class="mx-3 p-3 d-flex flex-column">
-	                            		<form method="post" action="update" enctype="multipart/form-data">	
+	                            		<form method="post" onsubmit="" enctype="multipart/form-data">	
 	                            			<div><input type="hidden" id="ntcNo" name="ntcNo" value="${notice.ntcNo}"></div>
 	                            			<div class="row mb-2">
 		                            			<div class="form-group col-2 ">
@@ -72,14 +72,14 @@
 				                            		<label class="col-form-label">내용</label>
 				                            	</div>
 				                            	<div class="col-sm-9">
-				                            		<textarea class="form-control" rows="10" id="ntcCn" name="ntcCn"></textarea>
+				                            		<textarea class="form-control" rows="10" id="ntcCn" name="ntcCn">${notice.ntcCn }</textarea>
 				                            	</div>
 			                            	</div>
 			                            	<!-- 첨부파일 -->
 											<div class="row mt-2">
 												<div class="col-2">첨부파일 : </div>
 												<div class="col-2 ml-3">
-													<input type="file" class="form-control" id="ntcMFile" name="ntcMFile" onclick="addNoticeFile(this)" multiple> 
+													<input type="file" class="form-control" id="ntcMFile" name="ntcMFile" onchange="addNoticeFile(this)" multiple> 
 												</div>
 											</div>
 											<div class="row mt-2">
@@ -90,7 +90,7 @@
 											</div>
 			                            	<div class="text-right">
 			                            		<a href="${pageContext.request.contextPath}/notice/list" class="btn btn-primary">목록</a>
-			                            		<button  type="submit" class="btn btn-primary" >수정 완료</button>
+			                            		<button class="btn btn-primary" onclick="noticeUpdate()">수정 완료</button>
 			                            	</div>	
 			                            </form>
 		                            </div>
@@ -151,7 +151,8 @@
 				               	$('#userfile').append(htmlData);
 				               	fileNo++;
 							}
-							
+							// 초기화
+						    document.querySelector("input[type=file]").value = "";
 						}
 						
 						/* 첨부파일 삭제 */
@@ -160,7 +161,8 @@
 							var ntcNo = document.getElementById('ntcNo').value;
 							
 							let data = {ntcFileNo : ntcFileNo, ntcNo : ntcNo};
-							
+							document.querySelector("#file" + num).remove();
+							filesArr[num].is_delete = true;
 							$.ajax({
 								type: "post",
 								url: 'deleteFile/'+ntcFileNo+'/'+ntcNo,
@@ -171,6 +173,38 @@
 						    });
 						}
 						
+						/* ajax 처리 */
+						function noticeUpdate() {
+							// 폼 데이터 담기
+							var form = document.querySelector("form");
+						    var formData = new FormData(form);
+						    for (var i = 0; i < filesArr.length; i++) {
+						        // 삭제되지 않은 파일만 폼데이터에 담기
+						        if (!filesArr[i].is_delete) {
+						        	console.log("돌아감");
+						        	console.log(filesArr[i]);
+						            formData.append("ntcMFile", filesArr[i]);
+						        }
+						    }
+						    
+						    var ntcCn = document.getElementById('ntcCn').value;
+						    formData.append("ntcCn",ntcCn);
+						    
+						    var ntcNo = document.getElementById('ntcNo').value;
+						    formData.append("ntcNo",ntcNo);
+						    
+						    $.ajax({
+								type: "POST",
+								enctype: 'multipart/form-data',	// 필수
+								url: 'update',
+								data: formData,		// 필수
+								processData: false,	// 필수
+								contentType: false	// 필수
+						    }).done((data) => {
+						    	window.location.href = "/webapp/notice/list";
+						    });
+						    
+						}
 						
 						
 					</script>

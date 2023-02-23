@@ -1,7 +1,14 @@
 package com.team01.webapp.home.service;
 
+import java.util.List;
+
+import com.team01.webapp.model.Donut;
+import com.team01.webapp.model.SystemInfo;
+
 public interface IHomeService {
 
-	System getSystemMiniView(int userNo);
+	SystemInfo getSystemMiniView(int userNo);
+
+	List<Donut> getDonutList(String sysNo);
 
 }
