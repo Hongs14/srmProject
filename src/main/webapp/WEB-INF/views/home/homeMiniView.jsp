@@ -5,7 +5,7 @@
 		<div class="tab-pane active" id="all" role="tabpanel"
 			aria-labelledby="home-tab">
 			<div class="table-responsive">
-				<table class="table border p-1">
+				<table class="table table-hover border p-1">
 					<thead class="thead-light">
 						<tr>
 							<th>SR번호</th>
@@ -19,7 +19,7 @@
 					</thead>
 					<tbody>
 						<c:forEach var="list" items="${srList}">
-						<tr>
+						<tr >
 							<td><a href="#">${list.srNo}</a></td>
 							<td>${list.srTtl}</td>
 							<td>${list.sysNm}</td>
