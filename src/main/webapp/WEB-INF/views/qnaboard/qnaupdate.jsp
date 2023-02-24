@@ -19,17 +19,20 @@
 		         <%@include file="/WEB-INF/views/common/topbar.jsp" %>
        				<!-- 메인 컨테이너 Container Fluid-->
         			<div class="container-fluid" id="container-wrapper">
-        				<div class="d-sm-flex align-items-center justify-content-between mb-4">
-            				<h1 class="h3 mb-0 text-gray-800">Q&A 게시판</h1>
-           					<ol class="breadcrumb">
-              					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}">Home</a></li>
-              					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/qna/list">목록으로</a></li>
-            				</ol>
-          				</div>
+        				<div class="d-sm-flex align-items-center justify-content-between">
+	            			<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px;">
+	            				<h6 class="mb-0 text-white">QnA 수정</h6>
+	          				</div>
+	            			<ol class="breadcrumb">
+	              				<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/qnaboard/qnalist">Qna게시판</a></li>
+	              				<li class="breadcrumb-item">QnA수정</li>
+	            			</ol>
+	          			</div>
 	
           				<!-- Row -->
-          				<div class="col-lg-12">
-              				<div class="card mb-4">   
+          				<div class="row">
+		       			<div class="col-lg-8">
+	                    	<div class="card mb-4 p-4">
 			             		<div class="card-header d-flex flex-row align-items-center justify-content-between">
                         			<div><h6 class="m-0 font-weight-bold text-primary">QNA 수정</h6></div>
 	                            </div> 
@@ -71,6 +74,7 @@
 	               					</form>
                 				</div>
              				</div>
+           				</div>
            				</div>
          			</div>
 		          	<!-- 로그아웃 모달 -->
