@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
@@ -44,178 +45,69 @@
 					</a>
 				</div>
              		<div id="tabs" class="mx-3">
-						<ul class="nav nav-tabs" id="myTab" role="tablist">
+						<ul class="nav nav-tabs" role="tablist">
 							<li class="nav-item" role="presentation">
-								<button class="nav-link small active" id="home-tab"
-									data-toggle="tab" data-target="#all" type="button"
-									role="tab" aria-controls="all" aria-selected="true">전체</button>
+								<a class="nav-link active" data-toggle="pill" onclick="homeMiniViewChange(0, 1)">전체</a>
 							</li>
 							<li class="nav-item" role="presentation">
-								<button class="nav-link small" id="home-tab"
-									data-toggle="tab" data-target="#request" type="button"
-									role="tab" aria-controls="request" aria-selected="true">요청</button>
+								<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(1, 1)">요청</a>
 							</li>
 							<li class="nav-item" role="presentation">
-								<button class="nav-link small" id="profile-tab" data-toggle="tab"
-									data-target="#examine" type="button" role="tab"
-									aria-controls="examine" aria-selected="false">검토중</button>
+								<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(2, 1)">검토중</a>
 							</li>
 							<li class="nav-item" role="presentation">
-								<button class="nav-link small" id="messages-tab" data-toggle="tab"
-									data-target="#receive" type="button" role="tab"
-									aria-controls="receive" aria-selected="false">접수</button>
+								<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(4, 1)">접수</a>
 							</li>
 							<li class="nav-item" role="presentation">
-								<button class="nav-link small" id="settings-tab" data-toggle="tab"
-									data-target="#developing" type="button" role="tab"
-									aria-controls="developing" aria-selected="false">개발중</button>
+								<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(5, 1)">개발중</a>
 							</li>
 							<li class="nav-item" role="presentation">
-								<button class="nav-link small" id="settings-tab" data-toggle="tab"
-									data-target="#done" type="button" role="tab"
-									aria-controls="done" aria-selected="false">개발완료</button>
+								<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(6, 1)">개발완료</a>
 							</li>
 							<li class="nav-item" role="presentation">
-								<button class="nav-link small" id="settings-tab" data-toggle="tab"
-									data-target="#reject" type="button" role="tab"
-									aria-controls="reject" aria-selected="false">반려</button>
+								<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(3, 1)">반려</a>
 							</li>
 							<li class="nav-item" role="presentation">
-								<button class="nav-link small" id="settings-tab" data-toggle="tab"
-									data-target="#reexamine" type="button" role="tab"
-									aria-controls="reexamine" aria-selected="false">재검토</button>
+								<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(7, 1)">재검토</a>
 							</li>
 						</ul>
-
-						<div class="tab-content">
-							<div class="tab-pane active" id="all" role="tabpanel"
-								aria-labelledby="home-tab">
-								<div class="table-responsive">
-				                  <table class="table border p-1">
-				                    <thead class="thead-light">
-				                      <tr>
-				                        <th>SR번호 </th>
-				                        <th>제목 </th>
-				                        <th>관련 시스템 </th>
-				                        <th>상태 </th>
-				                        <th>완료예정일 </th>
-				                        <th>중요 </th>
-				                        <th>진척도 </th>
-				                      </tr>
-				                    </thead>
-				                    <tbody>
-					                      <tr>
-					                        <td><a href="#">JHJ-SR-0001</a></td>
-					                        <td>댓글기능추가</td>
-					                        <td>JHJ시스템</td>
-					                        <td><span class="badge badge-success">검토중</span></td>
-					                        <td>2023/04/14 </td>
-					                        <td>상</td>
-					                        <td>
-				                        	<div class="progress">
-											  <div class="progress-bar bg-danger" role="progressbar" 
-											  style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-											  </div>
-											</div>
-											</td>
-					                      </tr>
-					                      <tr>
-						                      <td><a href="#">JHJ-SR-0002</a></td>
-						                        <td>첨부기능 보완</td>
-						                        <td>JHJ시스템</td>
-						                        <td><span class="badge badge-warning">개발중 </span></td>
-						                        <td>2023/04/14 </td>
-						                        <td>상</td>
-						                        <td>
-												<div class="progress">
-												  <div class="progress-bar" role="progressbar" 
-												  style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-												  </div>
-												</div>			
-												</td>
-					                      </tr>
-					                      <tr>
-					                        <td><a href="#">JHJ-SR-0003</a></td>
-					                        <td>조회 기능 보완</td>
-					                        <td>JHJ시스템</td>
-					                        <td><span class="badge badge-warning">반려</span></td>
-					                        <td>2023/04/14 </td>
-					                        <td>하 </td>
-					                        <td>
-					                        <div class="progress">
-											  <div class="progress-bar bg-info" role="progressbar" 
-											  style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-											  </div>
-											</div>
-											</td>
-					                      </tr>
-					                      <tr>
-					                      	<td><a href="#">JHJ-SR-0002</a></td>
-					                        <td>첨부기능 보완</td>
-					                        <td>JHJ시스템</td>
-					                        <td><span class="badge badge-warning">개발중 </span></td>
-					                        <td>2023/04/14 </td>
-					                        <td>상</td>
-					                        <td>
-					                        <div class="progress">
-											  <div class="progress-bar bg-warning" role="progressbar" 
-											  style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-											  </div>
-											</div>
-											</td>
-					                      </tr>
-					                      <tr>
-					                      	<td><a href="#">JHJ-SR-0002</a></td>
-					                        <td>첨부기능 보완</td>
-					                        <td>JHJ시스템</td>
-					                        <td><span class="badge badge-warning">개발중 </span></td>
-					                        <td>2023/04/14 </td>
-					                        <td>상</td>
-					                        <td>
-					                        <div class="progress">
-											  <div class="progress-bar bg-warning" role="progressbar" 
-											  style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-											  </div>
-											</div>
-											</td>
-					                      </tr>
-					                      <tr>
-					                      	<td><a href="#">JHJ-SR-0002</a></td>
-					                        <td>첨부기능 보완</td>
-					                        <td>JHJ시스템</td>
-					                        <td><span class="badge badge-warning">개발중 </span></td>
-					                        <td>2023/04/14 </td>
-					                        <td>상</td>
-					                        <td>
-					                        <div class="progress">
-											  <div class="progress-bar bg-warning" role="progressbar" 
-											  style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-											  </div>
-											</div>
-										</td>
-				                      </tr>
-				                    </tbody>
-				                  </table>
-				                </div>
-							</div>
-							<div class="tab-pane" id="request" role="tabpanel"
-								aria-labelledby="profile-tab">요청</div>
-							<div class="tab-pane" id="examine" role="tabpanel"
-								aria-labelledby="profile-tab">검토</div>
-							<div class="tab-pane" id="receive" role="tabpanel"
-								aria-labelledby="messages-tab">접수</div>
-							<div class="tab-pane" id="developing" role="tabpanel"
-								aria-labelledby="settings-tab">개발중</div>
-							<div class="tab-pane" id="done" role="tabpanel"
-								aria-labelledby="settings-tab">개발완료</div>
-							<div class="tab-pane" id="reject" role="tabpanel"
-								aria-labelledby="settings-tab">반려</div>
-							<div class="tab-pane" id="reexamine" role="tabpanel"
-								aria-labelledby="settings-tab">재검토</div>
+						
+						<script>
+							$(document).ready(function (){
+								var sttsNo = 0;
+								var pageNo = 1;
+								
+								let data = {stssNo : sttsNo, pageNo : pageNo};
+								
+								$.ajax({
+									url : "homeMiniView",
+									method : "post",
+									data : JSON.stringify(data),
+									contentType: "application/json; charset=UTF-8"
+								}).done((data) => {
+									$("#homeMiniView").html(data)
+								});
+							});
+							
+							function homeMiniViewChange(sttsNo, pageNo) {
+								let data = {sttsNo : sttsNo, pageNo : pageNo};
+								
+								$.ajax({
+									url : "homeMiniView",
+									method : "post",
+									data : JSON.stringify(data),
+									contentType: "application/json; charset=UTF-8"
+								}).done((data) => {
+									$("#homeMiniView").html(data)
+								});
+							};
+						</script>
+						
+						<div id="homeMiniView">
+						
 						</div>
 
 					</div>
-                <div class="card-footer"></div>
               </div>
             </div>
             <div class="col-xl-4 col-lg-5 " id="systemMiniView">

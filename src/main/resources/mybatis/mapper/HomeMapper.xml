@@ -25,4 +25,81 @@
 		ORDER BY stts.STTS_NO ASC
 	</select>
 
+	<select id="selectSysInfo2" parameterType="int" resultType="systemInfo">
+		select 
+		    s.sys_no as "sysNo", 
+		    u.user_nm as "managerNm", 
+		    sys_nm as "sysNm", 
+		    sys_updt_date as "sysUpdtDate"
+		from system s, users u
+		WHERE s.manager_no = u.user_no
+		AND u.user_no = #{userNo}
+	</select>
+	
+	<select id="selectTotalCount" parameterType="sr" resultType="int">
+	    SELECT
+		    COUNT(sr.SR_NO)
+		FROM SR sr, SYSTEM system, SR_STTS stts
+		WHERE sr.sys_no = system.sys_no
+		AND stts.stts_no = sr.stts_no
+	    AND SR_CUST_NO = #{srCustNo}
+	    AND sr.sys_no = #{sysNo}
+	    <if test="sttsNo != 0">
+	    	AND SR.STTS_NO = #{sttsNo}
+	    </if>
+	</select>
+	
+	<select id="selectHomeList" parameterType="sr" resultType="sr">
+	SELECT
+		rownum,
+		SR_NO AS "srNo",
+        SR_TTL AS "srTtl",
+        SYS_NM AS "sysNm",
+        stts_NM AS "sttsNm",
+        SR_REG_DATE AS "srRegDate",
+        SR_PRY AS "srPry"
+	FROM (
+		SELECT
+			rownum as rnum,
+			SR_NO,
+			SR_TTL,
+			SYS_NM,
+			STTS_NM,
+			SR_REG_DATE,
+			SR_PRY
+			FROM (
+				SELECT
+					SR_NO,
+					SR_TTL,
+					SYS_NM,
+					STTS_NM,
+					SR_REG_DATE,
+					SR_PRY
+					FROM (
+						SELECT
+					        sr.SR_NO AS "SR_NO",
+					        SR_TTL AS,
+					        SYS_NM AS,
+					        stts_NM AS,
+					        SR_REG_DATE AS,
+					        SR_PRY AS
+					    FROM SR sr, SYSTEM system, SR_STTS stts
+					    WHERE sr.sys_no = system.sys_no
+					    AND stts.stts_no = sr.stts_no
+					    AND SR_CUST_NO = #{srCustNo}
+					   	AND sr.sys_no = #{sysNo}
+					    <if test="sttsNo != 0">
+					    	AND SR.STTS_NO = #{sttsNo}
+					    </if>
+				    )
+				ORDER BY SR_PRY
+			)
+			<![CDATA[
+				WHERE rownum <= #{end}
+			]]>
+		)
+		<![CDATA[
+		WHERE rnum >= #{start}
+		]]>
+	</select>
 </mapper>
