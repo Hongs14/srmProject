@@ -105,7 +105,7 @@
 		SELECT USER_NO AS "userNo",
 				USER_JBPS AS "userJbps", 
 				USER_NM AS "userNm", 
-				USER_TELNO AS "userTelNo"
+				USER_TELNO AS "userTelno"
 		FROM USERS
 		WHERE USER_TYPE='개발자' AND USER_DP_NM=#{userDpNm}
 	</select>
