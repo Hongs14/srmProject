@@ -32,7 +32,7 @@
 	
 	        <!-- 메인 컨테이너 Container Fluid-->
 	        <div class="container-fluid" id="container-wrapper">
-	        	<div class="d-sm-flex align-items-end justify-content-between">
+	        	<div class="d-sm-flex align-items-end justify-content-between" id="srMainMenu">
 	          		<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px;">
 	            		<h6 class="mb-0 text-white">SR 검토관리</h6>
 	          		</div>
@@ -45,11 +45,14 @@
 	        	<!-- Row -->
 	          	<div class="row">
 	          		<div id="mainExamine" class="col-lg-12">
+	            		<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:121px; display:none;" id="srSubMenu">
+			 				<h6 class="mb-0 text-white">SR 요청관리</h6>
+						</div>
 	            		<div class="card mb-4">
 	                		<!-- 검색 -->
 	                		<div class="mb-1 mt-5 px-5">
 		                		<form class="navbar-search">
-		                			<div class="row">
+		                			<div class="row text-right">
 		                				<div class="col-4">
 		                					<div class="form-group row" id="simple-date4" >
 					                			<div class="input-daterange input-group input-group-sm">
@@ -328,54 +331,40 @@
 
 									}
 									
-									function checkBtn() {
-										
-										var str = ""
-										var tdArr = new Array();
-										var checkBtn = $(this);
-										
-										var tr = checkBtn.parent().parent();
-										var td = tr.children();
-										
-										var srNo = td.eq(3).text();
-										var srTtl = td.eq(4).text();
-										var sysNm = td.eq(5).text();
-										var userNm = td.eq(6).text();
-										var userOgdp = td.eq(7).text();
-										var userDpnm = td.eq(8).text();
-										var srRegDate = td.eq(9).text();
-										
-										$('#subExamineDetailView').addClass('d-sm-inline-block');
-										$('#mainExamine').removeClass('col-lg-12');
-										$('#mainExamine').addClass('col-lg-7');
-										let data = {
-												srNo : srNo, srTtl : srTtl, sysNm : sysNm, userNm : userNm, 
-												userOgdp : userOgdp, userDpnm : userDpnm, srRegDate : srRegDate
-										}
-										
-										console.log("상세보기 버튼 클릭"+data);
-										
-										$.ajax({
-											url : "detailView",
-											method : "post",
-											data : JSON.stringify(data),
-											contentType: "application/json; charset=UTF-8"
-										}).done((data) => {
-											$("#ajaxList").html(data);
-										});
-										
-									};
-									
 								</script>
 			                </form>           
 						</div>
 					</div>
-					<div id="subExamineDetailView" class="col-5 d-none">
-						<%@include file="/WEB-INF/views/examine/detailView.jsp" %>
+					<div id="subExamineDetailView">
+						
 					</div>
 					
 				</div>
 			</div>
+			<script>
+				function getSrDetail(i) {
+					
+					let srNo = i;
+					$(".ex_info").hide();
+					console.log(srNo);
+					$("#srMainMenu").removeClass("d-sm-flex");
+					$("#srMainMenu").hide();
+					$("#srSubMenu").show();
+					$("#mainExamine").attr("class","col-lg-7");
+					$("#subExamineDetailView").attr("class","col-lg-5");
+					
+					$.ajax({
+						url : "detail/"+srNo,
+						method : "get",
+						dataType : "html",
+						success : function(data) {
+							$("#subExamineDetailView").html(data);
+						}
+					});
+					
+				}
+			</script>
+			
 			<!-- 로그아웃 모달 -->
 			<%@include file="/WEB-INF/views/common/logout.jsp" %>
 			</div>

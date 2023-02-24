@@ -14,8 +14,8 @@
 					<th>제목</th>
 					<th>관련시스템</th>
 					<th>등록자</th>
-					<th>소속</th>
-					<th>부서</th>
+					<th class="ex_info">소속</th>
+					<th class="ex_info">부서</th>
 					<th>상태</th>
 					<th>등록일</th>
 					<th>중요</th>
@@ -33,8 +33,8 @@
 						<td>${examine.srTtl}</td>
 						<td>${examine.sysNm}</td>
 						<td>${examine.userNm}</td>
-						<td>${examine.userOgdp}</td>
-						<td>${examine.userDpNm}</td>
+						<td class="ex_info">${examine.userOgdp}</td>
+						<td class="ex_info">${examine.userDpNm}</td>
 						<td>
 							<c:if test="${examine.sttsNm eq '요청'}"><span class="badge badge-dark" style="font-size:100%">${examine.sttsNm}</span></c:if>
 							<c:if test="${examine.sttsNm eq '검토중'}"><span class="badge badge-dark" style="font-size:100%">${examine.sttsNm}</span></c:if>
@@ -47,8 +47,9 @@
 							<c:if test="${examine.srPry eq '중'}"><span class="badge badge-primary" style="font-size:100%">${examine.srPry}</span></c:if>
 							<c:if test="${examine.srPry eq '하'}"><span class="badge badge-secondary" style="font-size:100%">${examine.srPry}</span></c:if>
 						</td>
-						<td><button class="btn btn-sm btn-primary" onclick ="checkBtn()">상세보기</button></td>
+						<td><a class="btn btn-sm btn-primary" onclick ="getSrDetail('${examine.srNo}')">상세보기</a></td>
 					</tr>
+					
 				</c:forEach>
 			</tbody>
 		</table>

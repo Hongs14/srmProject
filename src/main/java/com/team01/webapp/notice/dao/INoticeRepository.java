@@ -117,7 +117,7 @@ public interface INoticeRepository {
 	public NoticeComment selectComment();
 	
 	//댓글 수정
-	public void updateComment(NoticeComment ntcComment);
+	public int updateComment(NoticeComment ntcComment);
 	
 	//댓글 삭제
 	public void deleteComment(int ntcCmntNo);
