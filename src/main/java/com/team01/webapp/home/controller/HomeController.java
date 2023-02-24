@@ -72,6 +72,7 @@ public class HomeController {
 		int userNo = (int) session.getAttribute("userNo");
 		sr.setSrCustNo(userNo);
 		String userType = (String) session.getAttribute("userType");
+		sr.setUserType(userType);
 		List<SystemInfo> system = null;
 		
 		if(userType.equals("고객사")) {
