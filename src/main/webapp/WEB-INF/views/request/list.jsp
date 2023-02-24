@@ -7,7 +7,7 @@
 
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
-  	
+	<script src="${pageContext.request.contextPath}/resources/js/smarteditor/HuskyEZCreator.js" charset="utf-8"></script>	
 	<style>
 	.requsetTtl{
 	width: 190px;
@@ -46,10 +46,10 @@
         <!-- 메인 컨테이너 Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
         
-          <div class="d-sm-flex align-items-end justify-content-between">
-          <div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px;">
-            <h6 class="mb-0 text-white">SR 요청관리</h6>
-          </div>
+          <div class="d-sm-flex align-items-end justify-content-between"  id="srMenu">
+          	<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:121px;">
+			 	<h6 class="mb-0 text-white">SR 요청관리</h6>
+			</div>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><b>SR 관리</b></li>
               <li class="breadcrumb-item active" aria-current="page">SR 요청관리</li>
@@ -58,17 +58,20 @@
 		
           <!-- Row -->
         <div class="row">
-     	<div class="col-lg-12">
+     	<div class="col-lg-12" id="colNo1">
+	     	<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:121px; display:none;" id="srMiniMenu">
+			 	<h6 class="mb-0 text-white">SR 요청관리</h6>
+			</div>
          	<div class="card mb-4 ">
          		<!-- 검색 -->
                 <div class="mb-1 mt-5 px-5">
                 <form class="navbar-search">
-                	<div class="row">
+                	<div class="row text-right">
                 		<div class="col-4">
                 			<div class="form-group row" id="simple-date4" >
 	                			<div class="input-daterange input-group input-group-sm">
-	                				<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
-	                    			<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" id="dateStart"/>
+	                				<label for="start" class="col-sm-4 col-form-label-sm ">조회기간</label>
+	                    			<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart"/>
 	                    			<div class="input-group-prepend">
 	                    				<span class="input-group-text" style="height:31px;">~</span>
 	                    			</div>
@@ -79,8 +82,8 @@
                 		
                 		<div class="col-3">
                 			<div class="form-group row">
-                				<label for="sttsNo" class="col-sm-3 col-form-label-sm" >진행상태</label>
-                				<select id="sttsNo" class="form-control form-control-sm col-sm-9" >
+                				<label for="sttsNo" class="col-sm-4 col-form-label-sm" >진행상태</label>
+                				<select id="sttsNo" class="form-control form-control-sm col-sm-8" >
 									<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.srSttsList}">
 										<option value="${item.sttsNo}">${item.sttsNm}</option>
@@ -90,8 +93,8 @@
                 		</div>
                 		<div class="col-4">
                 			<div class="form-group row">
-                				<label for="sysNo" class="col-sm-3 col-form-label-sm">관련시스템</label>
-                				<select  id="sysNo" class="form-control form-control-sm col-sm-9">
+                				<label for="sysNo" class="col-sm-4 col-form-label-sm">관련시스템</label>
+                				<select  id="sysNo" class="form-control form-control-sm col-sm-8">
 									<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.sysNmList}">
 										<option value="${item.sysNo}">${item.sysNm}</option>
@@ -104,11 +107,11 @@
                 		</div>
                 		
                 	</div>
-                	<div class="row">
+                	<div class="row text-right">
                 		<div class="col-4">
                 			<div class="form-group row">
-                				<label for="userOgdp" class="col-sm-3 col-form-label-sm">등록자 소속</label>
-		                    	<select id="userOgdp" class="form-control form-control-sm col-sm-9">
+                				<label for="userOgdp" class="col-sm-4 col-form-label-sm">등록자 소속</label>
+		                    	<select id="userOgdp" class="form-control form-control-sm col-sm-8">
 		                        	<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.userOgdpList}">
 										<option class="text-black" value="${item.userOgdp}">${item.userOgdp}</option>
@@ -118,8 +121,8 @@
                 		</div>
                 		<div class="col-3">
                 			<div class="form-group row">
-                			<label for="srDevDp" class="col-sm-3 col-form-label-sm">개발부서</label>
-		                    	<select id="srDevDp" class="form-control form-control-sm col-sm-9" >
+                			<label for="srDevDp" class="col-sm-4 col-form-label-sm">개발부서</label>
+		                    	<select id="srDevDp" class="form-control form-control-sm col-sm-8" >
 		                        	<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.srDevDpList}">
 										<option value="${item.srDevDp}">${item.srDevDp}</option>
@@ -129,8 +132,8 @@
                 		</div>
                 		<div class="col-4">
 		                	<div class="form-group row">
-		                		<label for="srKeyWord" class="col-sm-3 col-form-label-sm">키워드</label>
-		                    	<input type="text" id="keyword" class="form-control form-control-sm col-sm-9 bg-light" 
+		                		<label for="srKeyWord" class="col-sm-4 col-form-label-sm">키워드</label>
+		                    	<input type="text" id="keyword" class="form-control form-control-sm col-sm-8 bg-light" 
 		                   		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
 		                  	</div>
                 		</div>
@@ -150,7 +153,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">SR 요청 목록</h6>
 					<div class="d-sm-flex justify-content-end">
 						<a class="btn btn-sm btn-secondary mr-1"
-							href="<c:url value='/request/write'/>"> 요청등록 </a>
+							onclick="getWriteForm()"> 요청등록 </a>
 						<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
 					</div>
 				</div>
@@ -159,6 +162,11 @@
                 </div>
               </div>
           </div>
+          
+          <div id="colNo2">
+          
+          </div>
+          
           </div>
           <!-- Row -->
 			<script>
@@ -183,7 +191,6 @@
 			 		
 					let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 					
-					console.log(data);
 					
 					$.ajax({
 						url : "filter/1",
@@ -217,7 +224,6 @@
 					}
 					
 					let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
-					console.log(data);
 					
 					$.ajax({
 						url : "filter/"+pageNo,
@@ -227,6 +233,47 @@
 					}).done((data) => {
 						$("#ajaxList").html(data)
 					});
+				}
+				
+				
+				function getSrDetail(i){
+					let srNo = i;
+					$(".ex_info").hide();
+					console.log(srNo);
+					$("#srMenu").removeClass("d-sm-flex");
+					$("#srMenu").hide();
+					$("#srMiniMenu").show();
+					$("#colNo1").attr("class","col-lg-7");
+					$("#colNo2").attr("class","col-lg-5");
+					
+					$.ajax({
+						url : "detail/"+srNo,
+						type : "GET",
+						dataType : "html",
+						success : function(data) {
+							$('#colNo2').html(data);
+						}
+					});
+					
+				}
+				
+				function getWriteForm(){
+					$(".ex_info").hide();
+					$("#srMenu").removeClass("d-sm-flex");
+					$("#srMenu").hide();
+					$("#srMiniMenu").show();
+					$("#colNo1").attr("class","col-lg-7");
+					$("#colNo2").attr("class","col-lg-5");
+					
+					$.ajax({
+						url :"write",
+						type : "GET",
+						dataType : "html",
+						success : function(data) {
+							$('#colNo2').html(data);
+						}
+					});
+					
 				}
 			</script>
           

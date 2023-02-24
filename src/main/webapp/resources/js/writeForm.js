@@ -46,6 +46,7 @@ function leadingZeros(n, digits) {
 
  //파일 선택
 $(document).ready(function() {
+	
     $("#customFile").on('change',function(){
         if(window.FileReader){
         	var files = $(this)[0].files;
@@ -68,7 +69,6 @@ $(document).ready(function() {
 $(document).ready(function() {
     $("#customFile").on('change',function(){
     	let formData = new FormData();
-    	bet
         if(window.FileReader){
         	var files = $(this)[0].files;
         	var filename;
@@ -85,4 +85,5 @@ $(document).ready(function() {
         $('#userfile').html(filename);
     });
 });
+
 	 

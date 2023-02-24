@@ -11,16 +11,15 @@
 	
 	<!-- 필터링 된 공지사항 행수 -->
 	<select id="selectTotalNoticeCount" parameterType="notice" resultType="int">
-		SELECT COUNT(ntc.NTC_NO)
-		FROM NOTICE ntc, NTC_COMMENT nc
-		WHERE ntc.NTC_NO = nc.NTC_NO
+		SELECT COUNT(NTC_NO)
+		FROM NOTICE
 		<if test="!startDate.equals('')">
-			AND ntc.NTC_WRT_DATE BETWEEN
-				TO_DATE(#{startDate},'YY-MM-DD')
-				AND TO_DATE(#{endDate},'YY-MM-DD')+0.9
-		</if>
-		<if test="ntcTtl != ''">
-			AND ntc.NTC_TTL like #{ntcTtl}
+			WHERE NTC_WRT_DATE BETWEEN
+			TO_DATE(#{startDate},'YY-MM-DD')
+			AND TO_DATE(#{endDate},'YY-MM-DD')+0.9
+			<if test="ntcTtl != ''">
+				AND ntc.NTC_TTL like #{ntcTtl}
+			</if>
 		</if>
 	</select>
 	

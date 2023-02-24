@@ -44,7 +44,7 @@
 	        	
 	        	<!-- Row -->
 	          	<div class="row">
-	          		<div class="col-lg-12">
+	          		<div id="mainExamine" class="col-lg-12">
 	            		<div class="card mb-4">
 	                		<!-- 검색 -->
 	                		<div class="mb-1 mt-5 px-5">
@@ -328,10 +328,52 @@
 
 									}
 									
+									function checkBtn() {
+										
+										var str = ""
+										var tdArr = new Array();
+										var checkBtn = $(this);
+										
+										var tr = checkBtn.parent().parent();
+										var td = tr.children();
+										
+										var srNo = td.eq(3).text();
+										var srTtl = td.eq(4).text();
+										var sysNm = td.eq(5).text();
+										var userNm = td.eq(6).text();
+										var userOgdp = td.eq(7).text();
+										var userDpnm = td.eq(8).text();
+										var srRegDate = td.eq(9).text();
+										
+										$('#subExamineDetailView').addClass('d-sm-inline-block');
+										$('#mainExamine').removeClass('col-lg-12');
+										$('#mainExamine').addClass('col-lg-7');
+										let data = {
+												srNo : srNo, srTtl : srTtl, sysNm : sysNm, userNm : userNm, 
+												userOgdp : userOgdp, userDpnm : userDpnm, srRegDate : srRegDate
+										}
+										
+										console.log("상세보기 버튼 클릭"+data);
+										
+										$.ajax({
+											url : "detailView",
+											method : "post",
+											data : JSON.stringify(data),
+											contentType: "application/json; charset=UTF-8"
+										}).done((data) => {
+											$("#ajaxList").html(data);
+										});
+										
+									};
+									
 								</script>
 			                </form>           
 						</div>
 					</div>
+					<div id="subExamineDetailView" class="col-5 d-none">
+						<%@include file="/WEB-INF/views/examine/detailView.jsp" %>
+					</div>
+					
 				</div>
 			</div>
 			<!-- 로그아웃 모달 -->

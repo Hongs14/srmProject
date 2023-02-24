@@ -5,6 +5,89 @@
 
 	<head>
   		<%@include file="/WEB-INF/views/common/head.jsp" %>
+  		<script>
+	  		$(document).ready(function(){
+	  			console.log("시작");
+	  			readComment();
+	  		});
+	  		
+	  		function readComment(){
+	  			let noticeNo ='${notice.ntcNo}';
+	  			console.log(noticeNo);
+	  			$.ajax({
+			    	url:"read/comment"
+			        ,type:"get"
+			        ,data: 'ntcNo='+noticeNo
+			        ,success:function(data){
+			        	console.log(data);
+			        	$.each(data, function(index, item){
+			        		let comment = '<hr/>';
+			        		comment += '<div id="readCmnt">';
+			        		comment += 	'<div class="d-flex px-2 flex-row align-items-center justify-content-between">';
+			        		comment += 		'<div>';
+							comment += 			'<h6 style="color: #406882"><b>'+item.userId+'</b></h6>';
+							comment += 			'<h6>'+item.ntcCmntDate+'</h6>';
+							comment +=		'</div>';
+							comment += 		'<div>';
+							comment += 			'<input type="hidden" id="ntcCmntNo" value="'+item.ntcCmntNo+'"/>';
+							comment += 			'<a id="updateToggle'+item.ntcCmntNo+'" onclick="updateCButton('+item.ntcCmntNo+')">수정</a> | <a onclick="deleteComment('+item.ntcCmntNo+')">삭제</a> |';
+							comment += 		'</div>';
+							comment += 	'</div>';
+							comment += 	'<textarea id="commentContent'+item.ntcCmntNo+'" disabled="disabled" style="border: none; resize:none; width:90%">'+item.ntcCmntCn+'</textarea>';
+							comment +='</div>'; 
+			        		$('#ntcComment').append(comment); 
+			        	});
+			        	
+			         }
+			    })
+			
+	  		};
+	  		
+			function updateCButton(i){
+				console.log(i);
+				$('#commentContent'+i).removeAttr("disabled");
+				console.log("수정 버튼 실행");
+				$('#updateToggle'+i).html("변경");
+				$('#updateToggle'+i).attr('onclick', 'udpateComplete('+i+')');
+				
+			};
+
+			function udpateComplete(i){
+				console.log("댓글수정 ajax");
+				console.log(i);
+				let content = $('#commentContent'+i).val();
+			 	let ntcCmntNo = i;
+				let data = {ntcCmntNo: ntcCmntNo, ntcCmntCn: content};  
+				$.ajax({
+					url: "update/comment",
+					method: "post",
+					data: JSON.stringify(data),
+					contentType: "application/json; charset=UTF-8"
+				}).done((data) => {
+					$('#commentContent'+i).attr('disabled','disabled');
+					$('#updateToggle'+i).html("수정");
+					$('#updateToggle'+i).attr('onclick', 'updateCButton('+i+')');
+					console.log(data);
+				}); 
+			};
+			
+			function deleteComment(i){
+				console.log("댓글삭제"+i);
+				let ntcCmntNo = i;
+				$.ajax({
+					url: "delete/comment",
+					method: "get",
+					data: 'ntcCmntNo='+ntcCmntNo,
+				}).done((data) => {
+					console.log("성공");
+					$('#cmntCount').empty();
+	        		$('#cmntCount').append('댓글('+(${notice.countCmnt}-1)+')');
+					$('#ntcComment').empty(); 
+					readComment();
+					
+				});
+			};
+		</script>
 	</head>
 
 	<body id="page-top">
@@ -95,19 +178,24 @@
 			                            </form>
 		                            </div>
 		                        </div>
-		                     	<!-- 댓글 -->
-		                        <div class="card mb-4 p-3">
-		                        	<div class="d-flex px-2 flex-row align-items-center justify-content-between">
-		                        		<div class="row">
-		                        			<h6 style="color: #406882"><b>김희률</b></h6>
-		                        			<h6 class="ml-3">2023.02.13</h6>
-		                        		</div>
-		                        		<div>| <a href="#">수정</a> | <a href="#">삭제</a> |</div>
-		                        	</div>
-		                        	<div id="commentContent">
-		                        		한 번 확인해보겠습니다.
-		                        	</div>
-		                        </div>    	
+								<!-- 댓글 -->
+                        		<div id="cmntCount" class="mx-3 mb-2">댓글(${notice.countCmnt})</div>
+                        		<div class="mx-3 p-1" style="border: 1px solid black">
+	                        		<div class="row">
+	                        			<div class="col-sm-1 form-group">
+	                        				${sessionScope.loginUser.userId}
+	                        			</div>
+	                        			<div class="col-sm-10 form-group">
+	                        				<textarea style="width: 100%" id="ntcCmntCn"></textarea>
+	                        			</div>
+	                        			<div class="col-sm-1">
+	                        				<button type="button" onclick="writeComment();">등록하기</button>
+	                        			</div>
+			                        </div>
+                      			</div>
+                      			<div class="px-4" id="ntcComment">
+	                        		
+		                        </div>  	
 							</div>
 	                    </div> 
 	        		</div>
@@ -161,8 +249,7 @@
 							var ntcNo = document.getElementById('ntcNo').value;
 							
 							let data = {ntcFileNo : ntcFileNo, ntcNo : ntcNo};
-							document.querySelector("#file" + num).remove();
-							filesArr[num].is_delete = true;
+	
 							$.ajax({
 								type: "post",
 								url: 'deleteFile/'+ntcFileNo+'/'+ntcNo,
