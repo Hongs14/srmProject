@@ -28,9 +28,28 @@
 							<td>${list.srPry}</td>
 							<td>
 								<div class="progress">
-									<div class="progress-bar bg-danger" role="progressbar"
-										style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
-										aria-valuemax="100"></div>
+									<c:choose>
+										<c:when test="${list.sttsNm eq '검토중'}">
+											<div class="progress-bar bg-danger" role="progressbar" 
+											style="width:25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:when>
+										<c:when test="${list.sttsNm eq '접수'}">
+											<div class="progress-bar bg-waring" role="progressbar" 
+											style="width:50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:when>
+										<c:when test="${list.sttsNm eq '개발중'}">
+											<div class="progress-bar bg-info" role="progressbar" 
+											style="width:75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:when>
+										<c:when test="${list.sttsNm eq '개발 완료'}">
+											<div class="progress-bar bg-success" role="progressbar" 
+											style="width:100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:when>
+										<c:otherwise>
+											<div class="progress-bar bg-danger" role="progressbar" 
+											style="width:0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</td>
 						</tr>

@@ -132,34 +132,15 @@
                       </tr>
                     </thead>
                     <tbody>
+                    	<c:forEach var="list" items="${noticeList}" end="4">
                       <tr>
-                        <td><a href="#">0001</a></td>
-                        <td>공지사항1 </td>
-                        <td>관리자</td>
-                        <td>2023/04/14 </td>
-                        <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=114" class="btn btn-sm btn-primary">상세</a></td>
+                        <td>${list.seq}</td>
+                        <td>${list.ntcTtl} </td>
+                        <td>${list.userId}</td>
+                        <td>${list.ntcWrtDate}</td>
+                        <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=${list.ntcNo}" class="btn btn-sm btn-primary">상세</a></td>
                       </tr>
-                      <tr>
-                        <td><a href="#">0002</a></td>
-                        <td>공지사항2 </td>
-                        <td>관리자</td>
-                        <td>2023/04/14 </td>
-                        <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=114" class="btn btn-sm btn-primary">상세</a></td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">0003</a></td>
-                        <td>공지사항3 </td>
-                        <td>관리자</td>
-                        <td>2023/04/14 </td>
-                        <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=114" class="btn btn-sm btn-primary">상세</a></td>
-                      </tr>
-                       <tr>
-                        <td><a href="#">0003</a></td>
-                        <td>공지사항3 </td>
-                        <td>관리자</td>
-                        <td>2023/04/14 </td>
-                        <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=114" class="btn btn-sm btn-primary">상세</a></td>
-                      </tr>
+                      </c:forEach>
                       </tbody>
                     </table>
 	              </div>
@@ -206,6 +187,13 @@
                       </tr>
                       <tr>
                         <td><a href="#">0003</a></td>
+                        <td>QnA3 </td>
+                        <td>관리자</td>
+                        <td>2023/04/14 </td>
+                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
+                      </tr>
+                      <tr>
+                        <td><a href="#">0004</a></td>
                         <td>QnA3 </td>
                         <td>관리자</td>
                         <td>2023/04/14 </td>
