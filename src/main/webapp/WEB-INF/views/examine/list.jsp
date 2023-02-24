@@ -224,9 +224,9 @@
 			               	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		                  		<h6 class="m-0 font-weight-bold text-primary">SR 검토 목록</h6>
 			                  	<div class="d-sm-flex justify-content-end">
-			                		<button class="btn btn-sm btn-secondary mr-1" onclick='selectUnderReview()'>일괄 처리 (검토중)</button>
-			                		<button class="btn btn-sm btn-secondary mr-1" onclick='selectreception()'>일괄 처리 (접수)</button>
-			                		<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
+			                		<button class="btn btn-sm btn-primary mr-1" onclick='selectUnderReview()'>일괄 처리 (검토중)</button>
+			                		<button class="btn btn-sm btn-primary mr-1" onclick='selectreception()'>일괄 처리 (접수)</button>
+			                		<button class="btn btn-sm btn-primary ">엑셀 다운로드</button>
 			                  	</div>
 			                </div>     
 			                <form>
