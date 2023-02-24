@@ -39,9 +39,9 @@
 											<div class="col-1 my-2">중요 여부</div>
 											<div class="col-1">
 												<div class="form-group">
-													<select class="form-control" id="exampleFormControlSelect1" id="ntcPry" name="ntcPry">
-														<option>Yes</option>
-														<option>No</option>
+													<select class="form-control" id="ntcPry" name="ntcPry">
+														<option value="Yes">Yes</option>
+														<option value="No">No</option>
 													</select>
 												</div>
 											</div>
@@ -136,8 +136,10 @@
 						    formData.append("ntcTtl",ntcTtl);
 						    
 						   
-						    var ntcPry = document.getElementById("ntcPry");
-						    var ntcPry = ntcPry.options[document.getElementById("ntcPry").selectedIndex].value;
+						    var ntcPrySelect = document.getElementById("ntcPry");
+						    console.log(ntcPrySelect);
+						    var ntcPry = ntcPrySelect.options[document.getElementById("ntcPry").selectedIndex].value;
+						    console.log(ntcPry);
 						    formData.append("ntcPry",ntcPry);
 						    
 						    var ntcCn = document.getElementById('ntcCn').value;
