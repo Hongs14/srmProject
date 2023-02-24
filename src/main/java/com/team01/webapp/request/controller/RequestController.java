@@ -164,7 +164,7 @@ public class RequestController {
 			e.printStackTrace();
 		}
 		log.info("변경 행수 : "+ rows);
-		return "redirect:/request/write/1";
+		return "redirect:/request/list";
 	}
 
 }

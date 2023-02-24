@@ -15,12 +15,13 @@ public class Users {
 	private String userType;
 	private String userOgdp;
 	private String userEml;
-	private String userTelNo;
+	private String userTelno;
 	private char userDelYn;
 	private String userDpNm;
 	
 	private String sysNm;
 	private List<HR> devList;
+	private String sysNo;
 	
 	
 }

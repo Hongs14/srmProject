@@ -48,7 +48,7 @@ public class UserService implements IUserService {
 		user.setUserType(dbUser.getUserType());
 		user.setUserOgdp(dbUser.getUserOgdp());
 		user.setUserEml(dbUser.getUserEml());
-		user.setUserTelNo(dbUser.getUserTelNo());
+		user.setUserTelno(dbUser.getUserTelno());
 		user.setUserDpNm(dbUser.getUserDpNm());
 		String sysNm = userRepository.selectSysNmByUserNo(user.getUserNo());
 		user.setSysNm(sysNm);
@@ -74,9 +74,33 @@ public class UserService implements IUserService {
 		
 		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		user.setUserPswd(pe.encode(user.getUserPswd()));
+		
+		String sysNo = "";
+		switch(user.getUserOgdp()) {
+			case "레드주컴퍼니": 
+				sysNo="JHJ";
+				break;
+			case "한국소프트SRM":
+				sysNo="KOREASOFT_SRM";
+				break;
+			case "에이치알컴퍼니":
+				sysNo="KHR";
+				break;
+			case "티에이치컴퍼니":
+				sysNo="KTH";
+				break;
+			case "지에이치컴퍼니":
+				sysNo="HGH";
+				break;
+				
+		}
+		log.info("sysNo: "+sysNo);
 		userRepository.insert(user);
 		String userId = user.getUserId();
 		user = userRepository.selectByUserId(userId);
+		user.setSysNo(sysNo);
+		log.info("sysNo: "+user.getSysNo());
+		log.info("custNo: "+user.getUserNo());
 		userRepository.insertUserSystem(user);
 		return JOIN_SUCCESS;
 		}catch(Exception e){
