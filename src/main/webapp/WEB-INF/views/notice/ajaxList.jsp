@@ -29,7 +29,7 @@
 					<td>
 						<c:choose>
 							<c:when test="${notice.seq <= 5 }">
-								<span class="badge text-danger" style="font-size:100%; border:1px solid red;">${notice.seq}</span>
+								<span class="badge text-danger" style="font-size:100%; ">${notice.seq}</span>
 							</c:when>
 							<c:otherwise>
 								${notice.seq}
