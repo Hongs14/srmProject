@@ -135,7 +135,7 @@
 							</if>
 							AND (sr.stts_no = 5 or sr.stts_no = 6)
 						)
-					ORDER BY SR_PRY
+					ORDER BY SR_PRY, SR_DDLN_DATE DESC
 				)
 			<![CDATA[
 			WHERE rownum <= #{end}
