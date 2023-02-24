@@ -46,7 +46,7 @@
 	          	<div class="row">
 	          		<div id="mainExamine" class="col-lg-12">
 	            		<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:121px; display:none;" id="srSubMenu">
-			 				<h6 class="mb-0 text-white">SR 요청관리</h6>
+			 				<h6 class="mb-0 text-white">SR 검토관리</h6>
 						</div>
 	            		<div class="card mb-4">
 	                		<!-- 검색 -->
@@ -56,8 +56,8 @@
 		                				<div class="col-4">
 		                					<div class="form-group row" id="simple-date4" >
 					                			<div class="input-daterange input-group input-group-sm">
-					                				<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
-					                    			<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" id="dateStart"/>
+					                				<label for="start" class="col-sm-4 col-form-label-sm">조회기간</label>
+					                    			<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart"/>
 					                    			<div class="input-group-prepend">
 					                    				<span class="input-group-text" style="height:31px;">~</span>
 					                    			</div>
@@ -67,8 +67,8 @@
 		                				</div>
 		                				<div class="col-3">
 		                					<div class="form-group row">
-		                						<label class="col-sm-3 col-form-label-sm" for="sttsNo">진행상태</label>
-				                    			<select class="form-control form-control-sm col-sm-9" id="sttsNo">
+		                						<label class="col-sm-4 col-form-label-sm" for="sttsNo">진행상태</label>
+				                    			<select class="form-control form-control-sm col-sm-8" id="sttsNo">
 				                        			<option value="0" selected="selected">전체</option>
 				                        			<option value="1">요청</option>
 				                        			<option value="2">검토중</option>
@@ -79,8 +79,8 @@
 		                				</div>
 		                				<div class="col-4">
 		                					<div class="form-group row">
-		                						<label for="exampleFormControlSelect1 sysNo" class="col-sm-3 col-form-label-sm">관련시스템</label>
-				                    			<select class="form-control form-control-sm col-sm-9" id="sysNo">
+		                						<label for="exampleFormControlSelect1 sysNo" class="col-sm-4 col-form-label-sm">관련시스템</label>
+				                    			<select class="form-control form-control-sm col-sm-8" id="sysNo">
 				                        			<option value="0">전체</option>
 				                        			<c:forEach var="system" items="${examineFilter.sysNmList}">		                        	
 					                        			<option value="${system.sysNo }">${system.sysNm}</option>
@@ -92,11 +92,11 @@
 		                			
 		                				</div>
 		                			</div>
-		                			<div class="row">
+		                			<div class="row text-right">
 		                				<div class="col-4">
 		                					<div class="form-group row">
-		                						<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">등록자 소속</label>
-				                    			<select class="form-control form-control-sm col-sm-9" id="userOgdp">
+		                						<label for="exampleFormControlSelect1" class="col-sm-4 col-form-label-sm">등록자 소속</label>
+				                    			<select class="form-control form-control-sm col-sm-8" id="userOgdp">
 				                        			<option value="0">전체</option>
 				                        			<c:forEach var="users" items="${examineFilter.userOgdpList}">		                        	
 					                        			<option>${users.userOgdp}</option>
@@ -106,8 +106,8 @@
 		                				</div>
 		                				<div class="col-3">
 		                					<div class="form-group row">
-		                						<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">부서</label>
-				                    			<select class="form-control form-control-sm col-sm-9" id="userDpNm">
+		                						<label for="exampleFormControlSelect1" class="col-sm-4 col-form-label-sm">부서</label>
+				                    			<select class="form-control form-control-sm col-sm-8" id="userDpNm">
 				                        			<option value="0">전체</option>
 				                        			<c:forEach var="users" items="${examineFilter.userDpList}">		                        	
 					                        			<option>${users.userDpNm}</option>
@@ -117,8 +117,8 @@
 		                				</div>
 		                				<div class="col-4">
 				                			<div class="form-group row">
-				                				<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">키워드</label>
-				                    			<input type="text" class="form-control form-control-sm col-sm-9 bg-light" 
+				                				<label for="exampleFormControlSelect1" class="col-sm-4 col-form-label-sm">키워드</label>
+				                    			<input type="text" class="form-control form-control-sm col-sm-8 bg-light" 
 				                   				aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;" id="keyword">
 				                  			</div>
 		                				</div>

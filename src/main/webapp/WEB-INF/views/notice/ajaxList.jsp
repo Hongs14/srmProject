@@ -18,11 +18,18 @@
     	</thead>
 		<tbody>
 			<c:forEach var="notice" items="${noticeListAjax}">
-				<tr onclick="location.href='${pageContext.request.contextPath}/notice/detail?ntcNo=${notice.ntcNo}'" style="cursor:pointer;">
+				<c:choose>
+					<c:when test="${notice.seq <= 5 }">
+						<tr onclick="location.href='${pageContext.request.contextPath}/notice/detail?ntcNo=${notice.ntcNo}'" style="cursor:pointer; background-color: RGB(239 240 240);">
+					</c:when>
+					<c:otherwise>
+						<tr onclick="location.href='${pageContext.request.contextPath}/notice/detail?ntcNo=${notice.ntcNo}'" style="cursor:pointer;">
+					</c:otherwise>
+				</c:choose>
 					<td>
 						<c:choose>
 							<c:when test="${notice.seq <= 5 }">
-								<span class="badge badge-warning" style="font-size:100%">${notice.seq}</span>
+								<span class="badge text-danger" style="font-size:100%; border:1px solid red;">${notice.seq}</span>
 							</c:when>
 							<c:otherwise>
 								${notice.seq}
@@ -33,7 +40,7 @@
 					<td>
 						<c:choose>
 							<c:when test="${notice.seq <= 5 }">
-								<span class="badge badge-warning" style="font-size:100%">공지사항</span>
+								<span class="badge text-danger" style="font-size:100%; border:1px solid red;">공지사항</span>
 							</c:when>
 							<c:otherwise>
 								공지사항
@@ -43,7 +50,7 @@
 					<td>
 						<c:choose>
 							<c:when test="${notice.seq <= 5 }">
-								<span class="badge badge-warning" style="font-size:100%">${notice.ntcTtl}</span>
+								<span style="color:red;">${notice.ntcTtl}</span>
 							</c:when>
 							<c:otherwise>
 								${notice.ntcTtl}

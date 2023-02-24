@@ -11,7 +11,7 @@
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><b>SR 관리</b></li>
 		<li class="breadcrumb-item active" aria-current="page">SR
-			요청상세</li>
+			검토상세</li>
 	</ol>
 </div>
 <div class="card mb-4">

@@ -63,7 +63,7 @@
 					
 					let comment = '<hr/>';
 	        		comment += '<div class="d-flex px-2 flex-row align-items-center justify-content-between">';
-	        		comment += 	'<div>'
+	        		comment += 	'<div class="card">'
 					comment += 		'<h6 style="color: #406882"><b>'+ntcwriter+'</b></h6>';
 					comment += 		'<h6>'+item.ntcCmntDate+'</h6>';
 					comment +=	'</div>'
@@ -141,17 +141,19 @@
 	         		
 	         		<!-- 메인 컨테이너 Container Fluid-->
 	        		<div class="container-fluid" id="container-wrapper">
-	        			<div class="d-sm-flex align-items-center justify-content-between mb-4">
-	            			<h1 class="h3 mb-0 text-gray-800">공지사항</h1>
+	        			<div class="d-sm-flex align-items-center justify-content-between">
+	            			<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px;">
+	            				<h6 class="mb-0 text-white">공지사항</h6>
+	          				</div>
 	            			<ol class="breadcrumb">
 	              				<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}">Home</a></li>
 	              				<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/notice/list">공지사항</a></li>
 	            			</ol>
 	          			</div>
 						<!-- Row -->
-						<div class="noticeContent mx-3 my-0">
+						<div class="noticeContent row">
 							<div class="col-lg-12">
-								<div class="card mb-4  p-3">
+								<div class="card mb-4">
 	                        		<div class="card-header">
 	                            		<div class="d-flex flex-row align-items-center justify-content-between">
 		                            		<div>
