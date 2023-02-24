@@ -78,6 +78,7 @@
 	        		$('#cmntCount').empty();
 	        		$('#cmntCount').append('댓글('+(${notice.countCmnt}+1)+')');
 	        		$('#ntcCmntCn').val('');
+	        
 					
 				});
 			}

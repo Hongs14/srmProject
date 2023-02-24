@@ -23,6 +23,8 @@ public class Notice {
 	private String ntcFileActlNm; //원본 파일 이름
 	private String ntcFileExtnNm; //파일 확장명
 	
+	private int seq;
+	
 	private String startDate;
 	private String endDate;
 	

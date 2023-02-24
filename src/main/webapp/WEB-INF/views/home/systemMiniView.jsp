@@ -5,24 +5,26 @@
         <div class="card shadow mb-4">
           <div class="card-header py-3">
            	<div class="table-responsive">
-			    <table class="table" >
-					<thead class="thead-light">
-						  <tr>
-						    <th>
-						    	<i class="far fa-fw fa-window-maximize"></i>
-						    	${system.sysNm} 
-						    </th>
-						  </tr>
-					</thead>
-				    <tbody>
-					      <tr>
-					        <td><b>시스템 담당자 :  ${system.managerNm}</b></td>
-					      </tr>
-					      <tr>
-					        <td style="border:0;"><b>시스템 업데이트일자 :   ${system.sysUpdtDate}</b></td>
-					      </tr>
-				     </tbody>
-			     </table>
+          	 	<c:forEach var="list" items="${system}">
+				    <table class="table" >
+						<thead class="thead-light">
+							  <tr>
+							    <th>
+							    	<i class="far fa-fw fa-window-maximize"></i>
+							    	${list.sysNm} 
+							    </th>
+							  </tr>
+						</thead>
+					    <tbody>
+						      <tr>
+						        <td><b>시스템 담당자 :  ${list.managerNm}</b></td>
+						      </tr>
+						      <tr>
+						        <td style="border:0;"><b>시스템 업데이트일자 : ${list.sysUpdtDate}</b></td>
+						      </tr>
+					     </tbody>
+				     </table>
+			     </c:forEach>
 	    	 </div>
           </div>
           <div class="card-body">
@@ -34,6 +36,7 @@
 	</div>
  <script src="${pageContext.request.contextPath}/resources/vendor/chart.js/Chart.js"></script>
  <script src="${pageContext.request.contextPath}/resources/js/demo/chart-pie-demo.js"></script>
+ <script src="${pageContext.request.contextPath}/resources/vendor/chart.js/chartjs-plugin-datalabels.js"></script>
              <script>
              	labelse = [];
              	data = [];
@@ -47,6 +50,7 @@
              
 				var ctx = document.getElementById("myPieChart");
 				var myPieChart = new Chart(ctx, {
+				  plugins : [ChartDataLabels],
 				  type: 'doughnut',
 				  data: {
 				    labels: labelse,
@@ -76,6 +80,20 @@
 				    	}
 				    },
 				    cutoutPercentage: 60,
+				    plugins : {
+				    	datalabels : {
+				    		formatter : function (value, context) {
+				    			var idx = context.dataIndex; // 각 데이터 인덱스
+				    			
+				    			// 출력 텍스트
+				    			return context.chart.data.labels[idx];
+				    		},
+				    		font : {
+				    			size : '15',
+				    		},
+				    		color : '#000',
+				    	},
+				    },
 				  },
 				});
             </script>

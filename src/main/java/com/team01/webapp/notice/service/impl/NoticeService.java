@@ -40,7 +40,7 @@ public class NoticeService implements INoticeService{
 		log.info("실행");
 		int totalListNum = (int) noticeRepository.selectTotalNoticeCount(notice);
 		log.info(totalListNum);
-		pager = new Pager(5,5,totalListNum,pageNo);
+		pager = new Pager(10,5,totalListNum,pageNo);
 		return pager;
 	}
 	
@@ -205,7 +205,8 @@ public class NoticeService implements INoticeService{
 	@Override
 	public void updateComment(NoticeComment ntcComment) {
 		log.info("실행");
-		noticeRepository.updateComment(ntcComment);
+		int a = noticeRepository.updateComment(ntcComment);
+		log.info(a);
 	}
 
 	//댓글 삭제
