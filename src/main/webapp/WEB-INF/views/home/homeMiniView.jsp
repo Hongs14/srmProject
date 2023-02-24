@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-	<div class="tab-content">
+	<div class="tab-content" style="min-height: 400px;">
 		<div class="tab-pane active" id="all" role="tabpanel"
 			aria-labelledby="home-tab">
 			<div class="table-responsive">
-				<table class="table table-hover border p-1">
+				<table class="table table-hover border p-1" >
 					<thead class="thead-light">
 						<tr>
 							<th>SR번호</th>
@@ -87,5 +87,11 @@
 				</c:if>
 			</div>
 		</div>
+		<c:if test="${empty srList}">
+			<div class="alert alert-secondary m-3 p-2" role="alert">
+                  <h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+                  	조건에 맞는 SR건이 존재하지 않습니다.
+                </div>
+		</c:if>
 	</div>
 <div class="card-footer"></div>
