@@ -17,7 +17,7 @@
 <div class="card mb-4">
 	<div>
 		<div class="mb-1 mt-5 px-5" style="max-width:1050px">
- 			<form method="post" action="detailView">
+ 			<form method="post" action="detail">
 	 			<div class="my-2">
 		  			<span class="text-primary font-weight-bold">SR N0.</span> 
 		  			<span>${examine.srNo}</span>

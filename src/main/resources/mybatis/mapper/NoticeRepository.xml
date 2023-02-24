@@ -286,8 +286,7 @@
 		UPDATE NTC_COMMENT 
 		SET NTC_CMNT_CN = #{ntcCmntCn},
 		    NTC_CMNT_DATE = sysdate
-		WHERE NTC_NO = #{ntcNo}
-		AND NTC_CMNT_NO = #{ntcCmntNo}
+		WHERE NTC_CMNT_NO = #{ntcCmntNo}
 	</update>	
 	
 	<!-- 댓글 삭제 -->

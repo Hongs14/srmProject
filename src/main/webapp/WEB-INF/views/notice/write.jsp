@@ -136,7 +136,8 @@
 						    formData.append("ntcTtl",ntcTtl);
 						    
 						   
-						    var ntcPry = 'Yes';
+						    var ntcPry = document.getElementById("ntcPry");
+						    var ntcPry = ntcPry.options[document.getElementById("ntcPry").selectedIndex].value;
 						    formData.append("ntcPry",ntcPry);
 						    
 						    var ntcCn = document.getElementById('ntcCn').value;
