@@ -91,7 +91,7 @@
 						            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 			                			<h6 class="m-0 font-weight-bold text-primary">질문 목록</h6>
 			                			<div class="d-sm-flex justify-content-end">
-			                				<button class="btn btn-sm btn-secondary ">Q&A 등록하기</button>
+			                				<button class="btn btn-sm btn-secondary">Q&A 등록하기</button>
 			                  			</div>
 			                		</div> 
 			                		
@@ -100,23 +100,23 @@
 					               		<table class="table align-items-center table-flush">
 					                    	<thead class="thead-light">
 							                	<tr>
-							                    	<th>번호</th>
-							                        <th>글제목</th>
-							                        <th>작성자</th>
-							                        <th>작성일</th>
-							                        <th>조회수</th>
-							                        <th>댓글수</th>
+							                    	<th class="1">번호</th>
+							                        <th class="3">글제목</th>
+							                        <th class="2">작성자</th>
+							                        <th class="2">작성일</th>
+							                        <th class="1">조회수</th>
+							                        <th class="1">댓글수</th>
 							                    </tr>
 					                   		</thead>
 					                   		<tbody>
 					                   			<c:forEach var="QnaboardDto" items="${qnalist}">
 						                   			<tr onclick="location.href='${pageContext.request.contextPath}/qna/view?qstnNo=${QnaboardDto.qstnNo}'">
-						                        		<td>1</td>
-								                        <td>${QnaboardDto.qstnTtl}</td>
-								                        <td>${QnaboardDto.userNm}</td>
-								                        <td>${QnaboardDto.qstnWrtDate}</td>
-								                        <td>${QnaboardDto.qstnInqCnt}</td>
-								                        <td>2</td>
+						                        		<td class="1">${QnaboardDto.qstnNo}</td>
+								                        <td class="3">${QnaboardDto.qstnTtl}</td>
+								                        <td class="2">${QnaboardDto.userNm}</td>
+								                        <td class="2">${QnaboardDto.qstnWrtDate}</td>
+								                        <td class="1">${QnaboardDto.qstnInqCnt}</td>
+								                        <td class="1">${QnaboardDto.countCmnt}</td>
 						                     		</tr>
 					                     		</c:forEach>
 					                 		</tbody>

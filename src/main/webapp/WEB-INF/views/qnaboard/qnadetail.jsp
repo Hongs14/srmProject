@@ -183,7 +183,6 @@
 		                            			<label class="col-form-label">작성일</label>
 		                            		</div>
 		                            		<div class="col-sm-9">
-		                            			<!-- <input type="text" class="form-control" id="qqnaWriter" value="정홍주"/> -->
 		                            			${qstn.qstnWrtDate}
 		                            		</div>
 	                            		</div>
@@ -191,9 +190,8 @@
 		                            		<div class="form-group col-sm-3 ">
 		                            			<label class="col-form-label">내용</label>
 		                            		</div>
-		                            		<div class="col-sm-9" style="border: 1px solid black">
+		                            		<div class="col-sm-9">
 		                            			${qstn.qstnCn}
-		                            			<!-- <textarea rows="5" cols="80" readonly>지금 한달째 검토중입니다. 빨리 접수해주세요</textarea> -->
 		                            		</div>
 	                            		</div>
 	                            		<div class="row mb-2">
