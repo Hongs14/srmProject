@@ -7,7 +7,6 @@
 
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
-	<script src="${pageContext.request.contextPath}/resources/js/smarteditor/HuskyEZCreator.js" charset="utf-8"></script>	
 	<style>
 	.requsetTtl{
 	width: 190px;
@@ -198,7 +197,7 @@
 						data : JSON.stringify(data),
 						contentType: "application/json; charset=UTF-8"
 					}).done((data) => {
-						$("#ajaxList").html(data)
+						$("#ajaxList").html(data);
 					});
 					
 					
@@ -231,7 +230,7 @@
 						data : JSON.stringify(data),
 						contentType: "application/json; charset=UTF-8"
 					}).done((data) => {
-						$("#ajaxList").html(data)
+						$("#ajaxList").html(data);
 					});
 				}
 				

@@ -121,7 +121,7 @@
 				}).done((data) => {
 					console.log("성공");
 					$('#cmntCount').empty();
-	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt-11)+')');
+	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt-1})+')');
 					$('#qComment').empty(); 
 					readComment();
 					

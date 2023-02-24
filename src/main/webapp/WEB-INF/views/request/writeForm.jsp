@@ -50,11 +50,9 @@
 			</div>
 			<div class="row mb-2">
 					<label class=" font-weight-bold col-sm-2">SR 내용 </label> 
-					<div class="col-sm-10" id="smartEditor">
-						<textarea name="srCn" rows="10" class="form-control form-control-sm" id="editor" name="editor">
-						
-						</textarea>
-					</div>
+					<textarea name="srCn" rows="10" class="form-control form-control-sm col-sm-10" id="editor" name="editor">
+					
+					</textarea>
 					
 			</div>
 			<div class="row mb-2">
