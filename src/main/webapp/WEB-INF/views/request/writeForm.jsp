@@ -18,7 +18,7 @@
 </div>
 <div class="card">
 	<div class="p-5">
-		<form method="post" action="<c:url value='/request/write'/>" method="post" enctype="multipart/form-data">
+		<form method="post" action="${pageContext.request.contextPath}/request/write" method="post" enctype="multipart/form-data">
 			<div class="row mb-2 mr-0" >
 					<label class="col-sm-2">등록자 </label> 
 					<input  class="col-sm-4" disabled value="${sessionScope.loginUser.userNm}" />

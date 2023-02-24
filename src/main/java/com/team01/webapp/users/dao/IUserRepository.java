@@ -29,4 +29,6 @@ public interface IUserRepository {
 	
 	public String selectSysNmByUserNo(int userNo);
 
+	public String getSysNoByUserOgdp(String userOgdp);
+
 }
