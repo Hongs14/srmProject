@@ -96,7 +96,7 @@ public class DevelopController {
 		String userDpNm = userDpNmMap.get("userDpNm");
 		List<Users> list = developService.selectDeveloperList(userDpNm);
 		log.info("팀별 개발자 조회: " + userDpNm);
-		log.info(list);
+//		log.info(list);
 		model.addAttribute("devlistByDp", list);
 		return "develop/devlistView";
 	}

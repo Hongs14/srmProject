@@ -219,7 +219,7 @@
 	                        				<textarea style="width: 100%" id="qnaCmntCn"></textarea>
 	                        			</div>
 	                        			<div class="col-sm-1">
-	                        				<button type="button" onclick="writeComment();">등록하기</button>
+	                        				<button type="button" class="btn btn-primary" onclick="writeComment();">등록하기</button>
 	                        			</div>
 			                        </div>
                       			</div>
