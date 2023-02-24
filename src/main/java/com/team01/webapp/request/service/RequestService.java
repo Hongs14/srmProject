@@ -53,7 +53,13 @@ public class RequestService implements IRequestService{
 		log.info("실행"+sr);
 		String srSysNo = sr.getSysNo(); 
 		String sysNo = "%"+srSysNo+"%";
-		int srSeq = Integer.parseInt(requestRepository.selectMaxSrNo(sysNo))+1;
+		log.info("sysNo"+sysNo);
+		int srSeq =0;
+		try {
+			srSeq = Integer.parseInt(requestRepository.selectMaxSrNo(sysNo))+1;
+		}catch(Exception e){
+			srSeq = 1;
+		}
 		String number = String.format("%05d", srSeq);
 		String srNo = srSysNo+"-SR-"+number;
 		sr.setSrNo(srNo);
