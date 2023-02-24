@@ -171,6 +171,7 @@ public class NoticeController {
 		Notice notice = noticeService.noticeDetail(ntcNo);
 		List<MultipartFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
 		
+		
 		model.addAttribute("notice",notice);
 		model.addAttribute("noticeFile",noticeFile);
 		
@@ -326,6 +327,7 @@ public class NoticeController {
 		
 		noticeService.updateComment(ntcComment);
 		
+		log.info(ntcComment);
 		return ntcComment;
 	}
 	
