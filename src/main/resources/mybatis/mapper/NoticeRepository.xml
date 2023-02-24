@@ -26,43 +26,6 @@
 	<!-- 공지사항 게시글 목록 
 		@author : 황건희
 	-->
-	<select id="selectNoticeList" parameterType="pager" resultType="notice">
-		<![CDATA[
-			SELECT 
-			    RNUM AS "seq",
-			    NTC_NO AS "ntcNo",
-			    USER_ID AS "userId",
-			    NTC_TTL AS "ntcTtl",
-			    NTC_INQ_CNT AS "ntcInqCnt",
-			    NTC_WRT_DATE AS "ntcWrtDate"
-			FROM(
-			    SELECT 
-			        NTC_NO,
-			        NTC_TTL,
-			        NTC_INQ_CNT,
-			        NTC_WRT_DATE,
-			        NTC_PRY,
-			        USER_ID,
-			        ROWNUM as RNUM
-
-			    FROM(
-			        SELECT 
-			            n.NTC_NO,
-			            n.NTC_TTL,
-			            n.NTC_INQ_CNT,
-			            n.NTC_WRT_DATE,
-			            n.NTC_PRY,
-			            u.USER_ID
-			        FROM NOTICE n, USERS u
-			        WHERE n.user_no = u.user_no
-			        ORDER BY n.ntc_pry desc
-			    )
-			    WHERE ROWNUM <=#{endRowNo}
-			)
-			WHERE rnum >=#{startRowNo}
-		]]>
-	</select>
-	
 	<select id="selectFilterNoticeList" parameterType="notice" resultType="notice">
 		SELECT 
 		    RNUM AS "seq",
