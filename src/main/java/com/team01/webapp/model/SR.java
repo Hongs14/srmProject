@@ -31,6 +31,7 @@ public class SR {
 	private int pageNo;
 	private String sysNm;
 	private String sttsNm;
+	private String userType;
 
 	// pageing 이용
 	private int start;

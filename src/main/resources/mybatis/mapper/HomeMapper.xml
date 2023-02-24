@@ -42,7 +42,9 @@
 		FROM SR sr, SYSTEM system, SR_STTS stts
 		WHERE sr.sys_no = system.sys_no
 		AND stts.stts_no = sr.stts_no
-	    AND SR_CUST_NO = #{srCustNo}
+	    <if test="userType.equals('고객사')">
+	    	AND SR_CUST_NO = #{srCustNo}
+	   	</if>
 	    AND sr.sys_no = #{sysNo}
 	    <if test="sttsNo != 0">
 	    	AND SR.STTS_NO = #{sttsNo}
@@ -86,7 +88,9 @@
 					    FROM SR sr, SYSTEM system, SR_STTS stts
 					    WHERE sr.sys_no = system.sys_no
 					    AND stts.stts_no = sr.stts_no
-					    AND SR_CUST_NO = #{srCustNo}
+					    <if test="userType.equals('고객사')">
+					    	AND SR_CUST_NO = #{srCustNo}
+					   	</if>
 					   	AND sr.sys_no = #{sysNo}
 					    <if test="sttsNo != 0">
 					    	AND SR.STTS_NO = #{sttsNo}
