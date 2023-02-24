@@ -63,10 +63,10 @@ public class NoticeController {
 		
 		log.info(pageNo);
 		log.info(notice);
+		log.info(pager);
 		pager = noticeService.returnPage(pageNo,pager,notice);
 		
 		List<Notice> noticeListAjax = noticeService.getNoticeListAjax(pager,notice);
-		log.info(pager);
 		model.addAttribute("noticeListAjax",noticeListAjax);
 		model.addAttribute("pager",pager);
 		

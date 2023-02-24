@@ -26,7 +26,7 @@
 
 
         <!-- 메인 컨테이너 Container Fluid-->
-        <div class="container-fluid" id="container-wrapper">
+        <div class="container-fluid " id="container-wrapper">
 			<div class="d-sm-flex align-items-center justify-content-between">
 				<div></div>
 				<ol class="breadcrumb">
@@ -47,8 +47,8 @@
                 <div class="card-body">
 					<table class="table center m-3" style="width: 800px;">
 						<tr>
-							<th class="text-primary">성명 </th>
-							<td>${sessionScope.loginUser.userNm}</td>
+							<th class="text-primary" style="border-top:0;">성명 </th>
+							<td style="border-top:0;">${sessionScope.loginUser.userNm}</td>
 						</tr>
 						<tr>
 							<th class="text-primary ">ID</th>
@@ -70,7 +70,7 @@
 						</tr>
 						<tr>
 							<th class="text-primary ">연락처</th>
-							<td><h6>${sessionScope.loginUser.userTelNo}</h6></td>
+							<td><h6>${sessionScope.loginUser.userTelno}</h6></td>
 						</tr>
 						<tr>
 							<th class="text-primary">부서</th>
@@ -81,7 +81,7 @@
 							<td>${sessionScope.loginUser.userJbps}</td>
 						</tr>
 					</table>
-					<div class="mx-5 px-5">
+					<div class="text-center">
 						<a href="update?userNo=${sessionScope.loginUser.userNo}" class="btn btn-info btn-sm">수정하기</a>
 	
 					</div>

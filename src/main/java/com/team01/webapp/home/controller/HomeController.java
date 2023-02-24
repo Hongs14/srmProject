@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.team01.webapp.home.service.IHomeService;
 import com.team01.webapp.model.Donut;
+import com.team01.webapp.model.Notice;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SystemInfo;
+import com.team01.webapp.notice.service.INoticeService;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -29,16 +31,35 @@ public class HomeController {
 	@Autowired
 	IHomeService homeService;
 	
+	@Autowired
+	INoticeService noticeService;
+	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
+	public String home(Pager pager, Notice notice, Model model) {
 		log.info("정보 로그 실행");
 		
 		return "user/loginForm";
 		
 	}
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String getHomeGrid(HttpSession session, Model model) {
+	public String getHomeGrid(HttpSession session, Pager pager, Notice notice, Model model) {
+		// 공지사항 메인 페이징 처리
+		int pageNo = 1;
+		notice.setNtcTtl("");
+		notice.setStartDate("");
+		notice.setEndDate("");
+		
+		pager = noticeService.returnPage(pageNo,pager,notice);
+		
+		List<Notice> noticeList = noticeService.getNoticeListAjax(pager,notice);
+		log.info(pager);
+		model.addAttribute("noticeList",noticeList);
+		log.info(noticeList);
+		
+		// Q n A 페이징 처리
+		
+		
 		
 		return "home";
 	}
@@ -62,8 +83,6 @@ public class HomeController {
 		
 		model.addAttribute("donutList", donutList);
 		
-		log.info(donutList);
-		
 		return "home/systemMiniView";
 	}
 	
@@ -85,8 +104,6 @@ public class HomeController {
 		pager = homeService.returnPage(sr.getPageNo(), pager, sr);
 		
 		List<SR> srList = homeService.homeList(pager, sr);
-		
-		log.info(srList);
 		
 		model.addAttribute("srList", srList);
 		model.addAttribute("pager", pager);

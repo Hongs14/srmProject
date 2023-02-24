@@ -101,17 +101,19 @@
 	         		
 	         		<!-- 메인 컨테이너 Container Fluid-->
 	        		<div class="container-fluid" id="container-wrapper">
-	        			<div class="d-sm-flex align-items-center justify-content-between mb-4">
-	            			<h1 class="h3 mb-0 text-gray-800">공지사항</h1>
+	        			<div class="d-sm-flex align-items-center justify-content-between">
+	            			<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px;">
+	            				<h6 class="mb-0 text-white">공지사항</h6>
+	          				</div>
 	            			<ol class="breadcrumb">
 	              				<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}">Home</a></li>
 	              				<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/notice/list">공지사항</a></li>
 	            			</ol>
 	          			</div>
 						<!-- Row -->
-						<div class="qnacontent mx-3 my-0">
-							<div class="col-lg-12">
-								<div class="card mb-4  p-3">
+							<div class="noticeContent row">
+							<div class="col-lg-8">
+								<div class="card mb-4 p-4">
 	                        		<div class="card-header">
 	                            		<div class="d-flex flex-row align-items-center justify-content-between">
 		                            		<!-- 카테고리 -->
@@ -127,7 +129,7 @@
 		                                 <!-- 글 제목 -->
 		                                 <div>
 		                                 	
-		                                 	<h2 class="m-0 font-weight-bold text-primary">제목 : ${notice.ntcTtl}</h2>
+		                                 	<h4 class="m-0 font-weight-bold text-primary">제목 : ${notice.ntcTtl}</h4>
 		                                 </div>
 		                                 <hr/>
 	                           		</div>   
@@ -179,23 +181,25 @@
 		                            </div>
 		                        </div>
 								<!-- 댓글 -->
+		                        <div class="card  p-4">
                         		<div id="cmntCount" class="mx-3 mb-2">댓글(${notice.countCmnt})</div>
-                        		<div class="mx-3 p-1" style="border: 1px solid black">
-	                        		<div class="row">
-	                        			<div class="col-sm-1 form-group">
-	                        				${sessionScope.loginUser.userId}
-	                        			</div>
-	                        			<div class="col-sm-10 form-group">
-	                        				<textarea style="width: 100%" id="ntcCmntCn"></textarea>
-	                        			</div>
-	                        			<div class="col-sm-1">
-	                        				<button type="button" onclick="writeComment();">등록하기</button>
-	                        			</div>
-			                        </div>
+                        		<div class="mx-3 p-1" >
+	                        		<div class="row  justify-content-between">
+		                        			<div class="col-sm-2 form-group">
+		                        				${sessionScope.loginUser.userId}
+		                        			</div>
+		                        			<div class="col-sm-8 ">
+		                        				<textarea  class="form-control" id="ntcCmntCn"></textarea>
+		                        			</div>
+		                        			<div class="col-sm-2 text-right">
+		                        				<button type="button" class="btn btn-primary btn-sm" onclick="writeComment();">등록하기</button>
+		                        			</div>
+				                        </div>
                       			</div>
                       			<div class="px-4" id="ntcComment">
 	                        		
-		                        </div>  	
+		                        </div>  
+		                        </div> 	
 							</div>
 	                    </div> 
 	        		</div>
