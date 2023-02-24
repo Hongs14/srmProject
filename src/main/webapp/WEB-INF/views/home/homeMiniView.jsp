@@ -23,7 +23,28 @@
 							<td><a href="#">${list.srNo}</a></td>
 							<td>${list.srTtl}</td>
 							<td>${list.sysNm}</td>
-							<td><span class="badge badge-success">${list.sttsNm}</span></td>
+							<td>
+								<c:choose>
+										<c:when test="${list.sttsNm eq '요청'}">
+											<span class="badge badge-outline-secondary" style="border: 1px solid gray;">${list.sttsNm}</span>
+										</c:when>
+										<c:when test="${list.sttsNm eq '검토중'}">
+											<span class="badge badge-secondary">${list.sttsNm}</span>
+										</c:when>
+										<c:when test="${list.sttsNm eq '접수'}">
+											<span class="badge badge-warning">${list.sttsNm}</span>
+										</c:when>
+										<c:when test="${list.sttsNm eq '개발중'}">
+											<span class="badge badge-info">${list.sttsNm}</span>
+										</c:when>
+										<c:when test="${list.sttsNm eq '개발 완료'}">
+											<span class="badge badge-success">${list.sttsNm}</span>
+										</c:when>
+										<c:otherwise>
+											<span class="badge badge-danger">${list.sttsNm}</span>
+										</c:otherwise>
+									</c:choose>
+							</td>
 							<td>${list.srRegDate}</td>
 							<td>${list.srPry}</td>
 							<td>
