@@ -7,9 +7,27 @@
         <link href="${pageContext.request.contextPath}/resources/vendor/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css">
    		
    		<script>
+	   		
    			function selectDev(obj){
    				let pickDp = obj.value.toString();
-   				$('#srDevDp').val(pickDp);
+   				
+   				$.ajax({
+   					url: '<c:url value="/develop/devLeader?userNo='+pickDp+'"/>',
+   					method: "get",
+   					dataType: "json",
+   					success: function(data){
+   						console.log(data);
+   						console.log(data[0].userDpNm);
+   						$('#srDevDp').val(data[0].userDpNm);
+   						$('#pickDevNm').empty();
+   						$('#leaderNo').val(data[0].userNo);
+   						$('#pickDevNm').append(data[0].userNm);
+   					},
+   					error: function(request, status, error){
+   						console.log("실패");
+   					  	alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+   					}
+   				});
    			};
    			
    			function registerDevelop(){
@@ -34,11 +52,14 @@
    					contentType: "application/json; charset=UTF-8",
    					success: function(result){
    						console.log("성공");
-   						$('#modalBody')
+   						$('#modalBody').empty();
    						$('#modalBody').append('<div><h5>['+$('#srDevDp').val()+']</h5></div>');
-   					/* 	$('#pickDevNm').append($('#srDLeader option:selected').text()); */
+   						$('#leaderSdate').val(data.srStartDate);
+   						$('#leaderEdate').val(data.srEndDate);
    						
    						selectList();
+   						
+   					
    					}  
    				 }); 
    			};
@@ -66,25 +87,6 @@
    				});
    			};
    			
-   			/* function submitDev(){
-   				var checkBoxArr = [];
-   		  		$("input:checkbox[name='devName']:checked").each(function(i) {
-   		 	 		//체크박스값 배열에 넣기
-   		  			checkBoxArr.push($(this).val());
-   		  		});
-
-   		  		$.ajax({
-   		  			url: '<c:url value="/develop/selectNm"/>',
-   		  			type : 'post',
-   		  			traditional : true,
-   		  			data : {
-   		  				checkBoxArr : checkBoxArr
-   		  			},
-   		  			success: function(data){
-   		  				console.log(data);
-   		  				
-   		  			}
-   		  		}); */
 		  function submitDev(){
               var checkBoxArr = [];
                 $("input:checkbox[name='devName']:checked").each(function(i) {
@@ -163,9 +165,30 @@
 	                                   		</div>
                                    		</div>
                                   	</div>
-                                 	<hr/>
+                                  	
+                                  	<div id="srContent">	
+                               			<hr/>
+	                                   	<div class="row mb-2">
+	                                      	<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">SR제목</h6></div>
+	                                      	<div class="col-sm-10">${dlist.srTtl}</div>
+	                                   	</div>   
+	                                    <div class="row mb-2">
+	                                    	<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">관련근거(목적)</h6></div>
+	                                        <div class="col-sm-10">${dlist.srStd}</div>
+	                                    </div>
+	                                   	<div class="row mb-2">
+	                                       	<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">SR내용</h6></div>
+	                                       	<div class="col-sm-10">${dlist.srCn}</div>
+	                                    </div>
+	                                    <div class="row mb-2">
+	                                       	<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">첨부파일</h6></div>
+	                                       	<div class="col-sm-10">  화면캡처.png</div>
+	                                   	</div>
+                                    </div>
                                	</div> 
-                                 
+                               	<hr/>
+                               	 <!-- SR내용 -->
+                               		
                                  <!-- 개발단계 관련 내용 -->
                                	<div class="d-flex flex-column">
                                 	<form  id="devleopForm" name="developForm">
@@ -178,7 +201,7 @@
 			                                                 <select onchange="selectDev(this);" id="srDLeader" class="form-control">
 			                                                 	<option></option>
 			                                                 	<c:forEach var="users" items="${devlist}">
-				                                                    <option value="${users.userDpNm}">${users.userNm}</option>
+				                                                    <option value="${users.userNo}">${users.userNm}</option>
 				                                             	</c:forEach>
 			                                                 </select>
 	                                             		 </div>
@@ -241,7 +264,7 @@
                                         	</div>
                                      	</div>
                                      	<hr/>
-                                     </form>
+                                    </form>
                                     
                                     <!-- 모달 시작-->	
                                     <div>
@@ -275,12 +298,16 @@
 								            </div>
 								      	</div>
 								      	<!-- 모달 끝-->
-								      	<form action="insertU">
-								      		<div class="p-2 mt-3" style="border: 1px solid gray">
-									      		<%-- <div class="row mb-1" id="dvleaderHr">
-									      			<div id="devNameInput" class="col-sm-2 col-form-label">
-									      				<input name="userNo" type="hidden" value="${users.userNo}"/>
-									      				<div id="pickDevNm"></div>
+								      	<form id="" action='<c:url value="/develop/updateHr"/>' method="post">
+								      		<div class="row mt-2 align-items-center">
+								      				<div class="col-sm-2">
+								      					<div class="row  align-items-center">
+									      					<div class="col-sm-6">[담당자]</div>
+										      				<div id="devNameInput" class="col-sm-6">
+											      				<input id="leaderNo" name="leaderNo" type="hidden" value=""/>
+											      				<div id="pickDevNm"></div>
+										      				</div>
+										      			</div>
 									      			</div>
 									      			<div class="col-sm-2">
 									      				<select class="form-control">
@@ -292,75 +319,55 @@
 									      			</div>
 									      			<div class="col-8">
 									      				<div class="row">
-									      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
+									      					<div class="col-sm-2 col-form-label"><h6 class="font-weight-bold text-primary">시작일</h6></div>
 		                                              		<div class="col-sm-4">
-		                                                		<input type="date" class="form-control"/>
+		                                                		<input id="leaderSdate" type="date" class="form-control" readonly/>
 		                                             	 	</div>
-		                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
+		                                             	 	<div class="col-sm-2 col-form-label"><h6 class="font-weight-bold text-primary">종료일</h6></div>
 		                                              		<div class="col-sm-4">
-		                                                		<input type="date" class="form-control"/>
+		                                                		<input id="leaderEdate" type="date" class="form-control" readonly/>
 		                                             	 	</div>
 	                                             	 	</div>
 	                                             	 </div>
-									      		</div> --%>
+								      			</div>
+								      		<div class="p-2 mt-3" style="border: 1px solid gray">
+								      		
 										      	<div id="HrList">
 										      		<div class="row mb-1" id="dvleaderHr">
-									      			<div id="devNameInput" class="col-sm-2 col-form-label">
-									      				<input name="userNo" type="hidden" value="${users.userNo}"/>
-									      				<div id="pickDevNm"></div>
-									      			</div>
-									      			<div class="col-sm-2">
-									      				<select class="form-control">
-									      					<option>작업구분</option>
-									      					<option>설계</option>
-									      					<option>구현</option>
-									      					<option>테스트</option>
-									      				</select>
-									      			</div>
-									      			<div class="col-8">
-									      				<div class="row">
-									      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
-		                                              		<div class="col-sm-4">
-		                                                		<input type="date" class="form-control"/>
+										      			<div id="devNameInput" class="col-sm-2 col-form-label">
+										      				<input name="userNo" type="hidden" value=""/>
+										      				<div id="pickDevNm"></div>
+										      			</div>
+										      			<div class="col-sm-2">
+										      				<select class="form-control">
+										      					<option>작업구분</option>
+										      					<option>설계</option>
+										      					<option>구현</option>
+										      					<option>테스트</option>
+										      				</select>
+										      			</div>
+										      			<div class="col-8">
+										      				<div class="row">
+										      					<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">시작일</h6></div>
+			                                              		<div class="col-sm-4">
+			                                                		<input type="date" class="form-control"/>
+			                                             	 	</div>
+			                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
+			                                              		<div class="col-sm-4">
+			                                                		<input type="date" class="form-control"/>
+			                                             	 	</div>
 		                                             	 	</div>
-		                                             	 	<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">종료일</h6></div>
-		                                              		<div class="col-sm-4">
-		                                                		<input type="date" class="form-control"/>
-		                                             	 	</div>
-	                                             	 	</div>
-	                                             	 </div>
-										      	
-									      		</div>
+		                                            	</div>
+									      			</div>
 										      	</div>
 									      	</div>
+									      	<div class="text-right my-3"> 
+										      	<button class="btn btn-primary">저장</button>
+		                                        <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/list'">목록</button>
+	                                  		</div>
 								      	</form> 
                                     </div>
                                     	
-                                    
-                                    <!-- SR내용 -->
-                               		<div id="srContent">	
-                               			<hr/>
-	                                   	<div class="row mb-2">
-	                                      	<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">SR제목</h6></div>
-	                                      	<div class="col-sm-10">${dlist.srTtl}</div>
-	                                   	</div>   
-	                                    <div class="row mb-2">
-	                                    	<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">관련근거(목적)</h6></div>
-	                                        <div class="col-sm-10">${dlist.srStd}</div>
-	                                    </div>
-	                                   	<div class="row mb-2">
-	                                       	<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">SR내용</h6></div>
-	                                       	<div class="col-sm-10">${dlist.srCn}</div>
-	                                    </div>
-	                                    <div class="row mb-2">
-	                                       	<div class="col-sm-2"><h6 class="m-0 font-weight-bold text-primary">첨부파일</h6></div>
-	                                       	<div class="col-sm-10">  화면캡처.png</div>
-	                                   	</div>
-	                                    <div class="text-right mb-3"> 
-	                                    	<input type="button" class="btn btn-primary" value="저장"/>
-	                                        <button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/list'">목록</button>
-	                                    </div>
-                                    </div>
                                	</div>
                                	<!-- 개발단계 관련 내용 -->
                                	

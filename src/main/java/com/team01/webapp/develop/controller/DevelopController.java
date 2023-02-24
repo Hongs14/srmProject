@@ -85,6 +85,12 @@ public class DevelopController {
 	}
 	
 	
+	/**
+	 * @author				정홍주
+	 * @param userDpNmMap	
+	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
+	 * @return				develop/devlistView jsp 파일
+	 */
 	@PostMapping(value="/devlist")
 	public String getDevList(@RequestBody Map<String, String> userDpNmMap, Model model) {
 		String userDpNm = userDpNmMap.get("userDpNm");
@@ -95,42 +101,42 @@ public class DevelopController {
 		return "develop/devlistView";
 	}
 	
-  /* @PostMapping(value="/selectNm")
-   @ResponseBody
-   public List<Users> getName(HttpServletRequest request, Model model) {
-	   String[] arr = request.getParameterValues("checkBoxArr");
-	   List<Users> user = new ArrayList<Users>();
-	   for(int i=0; i<arr.length; i++) {
-		   log.info(arr[i]);
-		   int userNo = Integer.parseInt(arr[i]);
-		   user.addAll(developService.selectDevName(userNo));
-      }
-	   
-      log.info(user);
-      model.addAttribute("pickName", user);    
-      return user;
-   }*/
+	@GetMapping(value="/devLeader")
+	@ResponseBody
+	public List<Users> updateDevLeader(@RequestParam int userNo) {
+		List<Users> user = developService.selectDevName(userNo);
+		log.info("개발담당자 선택");
+		log.info(user);
+		return user;
+	}
 	
-	 @PostMapping(value="/selectNm")
+	 /**
+	 * @author 				김태희, 정홍주
+	 * @param checkBoxArr	선택된 값을 배열로 받음
+	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
+	 * @return				develop/selectHr jsp 반환
+	 */
+	@PostMapping(value="/selectNm")
 	 public String getName(@RequestBody List<CheckBoxArr> checkBoxArr, Model model) {
 		 List<Users> user = new ArrayList<Users>();    
-		 
 		 for(int i=0; i<checkBoxArr.size(); i++) {
-//		      log.info(checkBoxArr.get(i).getUserNo());
 		      user.addAll(developService.selectDevName(checkBoxArr.get(i).getUserNo()));
 		 }
 	 
-	     log.info("HR등록 인력");
+	     log.info("HR등록 인력리스트");
 	     log.info(user);
 	     model.addAttribute("pickName", user);  
-
+	     
 	     return "develop/selectHr";
 	  }
 	 
 	 @PostMapping(value="/updateHr")
-	 public int insertHrList(HR hr) {
+	 public String insertHrList(HR hr){
+		 log.info(hr);
 		 int result = developService.insertHrList(hr);
-		 return result;
+		 log.info(result);
+		 log.info("HR등록");
+		 return "redirect:/develop/list";
 	 }
 
 }

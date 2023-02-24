@@ -5,7 +5,7 @@
 	<select id="selectQnaboardList" resultType="qstn" parameterType="pager">
 		<![CDATA[
 			SELECT 
-					rnum,
+					rnum ,
 					QSTN_NO AS 	"qstnNo",
 					QSTN_TTL AS "qstnTtl",
 					QSTN_INQ_CNT AS "qstnInqCnt",
@@ -16,7 +16,7 @@
 				   	from(
 				      select qstn_no, qstn_ttl, qstn_cn, qstn_inq_cnt, qstn_wrt_date, qstn.user_no, user_nm
 				      from qstn, users
-			          where qstn.user_no = users.user_no and qstn.user_no = 3
+			          where qstn.user_no = users.user_no
 				      order by qstn_no desc
 				    ) 
 			    where rownum <= #{endRowNo}
