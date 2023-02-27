@@ -1,10 +1,12 @@
 package com.team01.webapp.develop.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.team01.webapp.model.HR;
+import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrDevelopDto;
 import com.team01.webapp.model.Users;
@@ -50,11 +52,20 @@ public interface IDevelopRepository {
 	 * @param 	userDpNm를 이용해 팀별 개발자목록 조회
 	 * @return	List형태
 	 */
-	public List<Users> selectDeveloperByDp(String userDpNm);
+	public List<Users> selectDeveloperByDp(@Param("userDpNm") String userDpNm, @Param("userNo") int userNo);
 	
-	public List<HR> hrlist(@Param("userDpNm")String userDpNm, @Param("userNo")int userNo);
+	public List<HR> hrlist(@Param("userDpNm")String userDpNm, @Param("userNo")int userNo, @Param("hrStartDate") Date hrStartDate, @Param("hrEndDate") Date hrEndDate);
 
 	public List<Users> selectNameByNo(int userNo);
 	
-	public int insertHrRow(HR hr);
+	/**
+	 * @author 	정홍주
+	 * @param 	List<HR>를 이용해 insert한다.
+	 * @return	insert에 성공하면 1을 리턴
+	 */
+	public int insertHrRow(List<HR> hr);
+
+	public int selectMaxpRrogNo();
+	
+	public int insertProg(List<Progress> prog);
 }

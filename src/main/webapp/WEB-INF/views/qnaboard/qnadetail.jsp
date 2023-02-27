@@ -26,8 +26,8 @@
 			        		comment += '<div id="readCmnt">';
 			        		comment += 	'<div class="d-flex px-2 flex-row align-items-center justify-content-between">';
 			        		comment += 		'<div>';
-							comment += 			'<span style="color: #406882; margin-right:20px;"><b>'+item.userNm+'</b></span>';
-							comment += 			'<span>'+item.qstnCmntDate+'</span>';
+							comment += 			'<h6 style="color: #406882"><b>'+item.userNm+'</b></h6>';
+							comment += 			'<h6>'+item.qstnCmntDate+'</h6>';
 							comment +=		'</div>';
 							comment += 		'<div>';
 							comment += 			'<input type="hidden" id="qstnCmntNo" value="'+item.qstnCmntNo+'"/>';
@@ -209,7 +209,7 @@
 		                        </div>
                       			</div>
                       			
-	                        	<!-- 댓글 -->
+	                              	<!-- 댓글 -->
                       			<div class="card  p-4">
 	                        		<div id="cmntCount" class="mx-3 mb-2">댓글(${qstn.countCmnt})</div>
 	                        		<div class="mx-3 p-1  justify-content-between" >

@@ -16,9 +16,10 @@ public interface IDevelopService {
 	
 	public List<Users> getDevelopList();
 	public int updateDevelop(SrDevelopDto srDevelop);
-	public List<Users> selectDeveloperList(String userDpNm);
+	public List<Users> selectDeveloperList(String userDpNm, int userNo, String hrStartDate, String hrEndDate);
 	
 	public List<Users> selectDevName(int userNo);
-	public int insertHrList(HR hr);
+	public int insertHrList(List<HR> listHR);
+	public int insertProgress();
 
 }
