@@ -1,10 +1,13 @@
 package com.team01.webapp.develop.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,8 +68,10 @@ public class DevelopController {
 		SrDevelopDto srDetail = developService.getDetail(srNo);
 		List<Users> devList = developService.getDevelopList();
 		model.addAttribute("dlist", srDetail);
+		log.info(srDetail);
 		model.addAttribute("devlist", devList);
 		log.info("SR개발관리 상세보기");
+		
 		return "develop/developdetail";
 	}
 	
@@ -85,16 +90,22 @@ public class DevelopController {
 	}
 	
 	
-	/**
+	/**모달창에 해당 팀의 개발자들 목록 띄우기
 	 * @author				정홍주
 	 * @param userDpNmMap	
 	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
 	 * @return				develop/devlistView jsp 파일
 	 */
 	@PostMapping(value="/devlist")
-	public String getDevList(@RequestBody Map<String, String> userDpNmMap, Model model) {
-		String userDpNm = userDpNmMap.get("userDpNm");
-		List<Users> list = developService.selectDeveloperList(userDpNm);
+	public String getDevList(@RequestBody Map<String, Object> userDpNmDateMap, Model model) {
+		String userDpNm = (String)userDpNmDateMap.get("userDpNm");
+		int userNo = Integer.parseInt((String)userDpNmDateMap.get("userNo"));
+		
+		String sDate = (String)userDpNmDateMap.get("hrStartDate");
+		String eDate = (String)userDpNmDateMap.get("hrEndDate");
+	
+		
+		List<Users> list = developService.selectDeveloperList(userDpNm, userNo, sDate, eDate);
 		log.info("팀별 개발자 조회: " + userDpNm);
 //		log.info(list);
 		model.addAttribute("devlistByDp", list);
@@ -131,12 +142,27 @@ public class DevelopController {
 	  }
 	 
 	 @PostMapping(value="/updateHr")
-	 public String insertHrList(HR hr){
-		 log.info(hr);
-		 int result = developService.insertHrList(hr);
+	 public String insertHrList(String srNo, int[] userNo, String[] hrLeader, int[] taskNo, 
+			 @DateTimeFormat(pattern="yyyy-MM-dd") Date[] hrStartDate, 
+			 @DateTimeFormat(pattern="yyyy-MM-dd") Date[] hrEndDate){
+		 
+		 List<HR> listHR = new ArrayList<>();
+		 for(int i=0; i<userNo.length; i++) {
+			 HR hr = new HR();
+			 hr.setSrNo(srNo);
+			 hr.setUserNo(userNo[i]);
+			 hr.setHrLeader(hrLeader[i]);
+			 hr.setTaskNo(taskNo[i]);
+			 hr.setHrStartDate(hrStartDate[i]);
+			 hr.setHrEndDate(hrEndDate[i]);
+			 listHR.add(hr);
+		 }
+		 		 
+		 int result = developService.insertHrList(listHR);
+		 int result2 = developService.insertProgress(); ///////////////////PROGRESS 삽입
 		 log.info(result);
 		 log.info("HR등록");
-		 return "redirect:/develop/list";
+		 return "redirect:/develop/list/1";
 	 }
 
 }

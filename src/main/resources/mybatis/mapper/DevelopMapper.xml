@@ -46,7 +46,7 @@
 			      select  sr_no, sr_cust_no, sr.sys_no, system.sys_nm, sr.stts_no, sr_stts.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
 			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_view_yn, sr.sr_type,  sr.sr_dev_dp, user_nm, user_ogdp, user_dp_nm
 			      from sr, sr_type, sr_stts, users, system
-			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no and sr.stts_no in(4, 5, 6)
+			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no and sr.stts_no in(4, 5)
 			      order by sr_no desc
 			    ) aa
 			where rownum <= #{endRowNo}
@@ -94,20 +94,20 @@
 	<select id="devList" resultType="users">
 		SELECT USER_NO AS "userNo", USER_NM AS "userNm", USER_OGDP AS "userOgdp", USER_DP_NM AS "userDpNm" 
  		FROM USERS
- 		WHERE USER_TYPE = '개발자'
+ 		WHERE USER_TYPE = '개발자' AND USER_DEL_YN='N'
 	</select>
 	
 	<!-- 
 		팀단위로 개발자 조회
 		작성자: 정홍주
 	 -->
-	<select id="selectDeveloperByDp" parameterType="string" resultType="users">
+	<select id="selectDeveloperByDp" parameterType="map" resultType="users">
 		SELECT USER_NO AS "userNo",
 				USER_JBPS AS "userJbps", 
 				USER_NM AS "userNm", 
 				USER_TELNO AS "userTelno"
 		FROM USERS
-		WHERE USER_TYPE='개발자' AND USER_DP_NM=#{userDpNm}
+		WHERE USER_TYPE='개발자' AND USER_DP_NM=#{userDpNm} AND USER_DEL_YN='N' AND NOT USER_NO=#{userNo}
 	</select>
 	
 	<select id="hrlist" parameterType="map" resultType="hr">
@@ -117,7 +117,8 @@
         		HR_END_DATE AS "hrEndDate", 
         		TASK_NM AS "taskNm"
 		FROM HR, TASK, USERS, SR
-		WHERE USERS.USER_TYPE = '개발자' AND SR.SR_NO = HR.SR_NO AND USERS.USER_DP_NM = #{userDpNm} AND USERS.USER_NO=#{userNo} AND USERS.USER_NO = HR.USER_NO AND HR.TASK_NO = TASK.TASK_NO
+		WHERE USERS.USER_TYPE = '개발자' AND SR.SR_NO = HR.SR_NO AND USERS.USER_DP_NM = #{userDpNm} AND USERS.USER_NO=#{userNo} AND USERS.USER_NO = HR.USER_NO
+			 AND HR.TASK_NO = TASK.TASK_NO  AND (HR_START_DATE BETWEEN #{hrStartDate} AND #{hrEndDate} OR HR_END_DATE BETWEEN #{hrStartDate} AND #{hrEndDate})
 	</select>
 	
 	<!-- 
@@ -136,10 +137,23 @@
 		WHERE USER_NO = #{userNo}
 	</select>
 	
-	<insert id="insertHrRow" parameterType="hr">
-		INSERT INTO HR(SR_NO, USER_NO, TASK_NO, HR_START_DATE, HR_END_DATE, HR_LEADER) 
-		VALUES (#{srNo}, #{userNo}, #{taskNo}, #{hrStartDate}, #{hrEndDate}, 'N')
-	
+	<insert id="insertHrRow"  parameterType="java.util.List">
+		INSERT ALL
+			<foreach item="item" index="index" collection="list">
+				into HR(SR_NO, USER_NO, TASK_NO, HR_START_DATE, HR_END_DATE, HR_LEADER) values (#{item.srNo}, #{item.userNo}, #{item.taskNo}, #{item.hrStartDate},#{item.hrEndDate}, #{item.hrLeader})
+			</foreach>
+		select * from dual
 	</insert>
 	
+	<select id="selectMaxpRrogNo" resultType="int">
+		SELECT COUNT(*) FROM PROGRESS
+	</select>
+	
+	<insert id="insertProg" parameterType="list">
+		INSERT ALL
+		<foreach item="item" index="index" collection="list">
+			INTO PROGRESS(PROG_NO, SR_NO, PROG_TYPE) VALUES (#{item.progNo},'JHJ-SR-00017',#{index}+1)
+		</foreach>
+		select * from dual
+	</insert> 
 </mapper>
