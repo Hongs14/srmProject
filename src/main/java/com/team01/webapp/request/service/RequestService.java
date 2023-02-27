@@ -7,7 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.model.Request;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
@@ -15,6 +17,7 @@ import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SRType;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.System;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.request.dao.IRequestRepository;
@@ -35,39 +38,6 @@ public class RequestService implements IRequestService{
 	@Override
 	public String getSysNo(int userNo) {
 		return requestRepository.selectSysNo(userNo);
-	}
-	/**
-	 * SR 작성
-	 */
-	@Override
-	public void writeRequest(SR sr, File file) {
-		// TODO Auto-generated method stub
-		
-	}
-	/**
-	 * SR 작성
-	 */
-	@Override
-	@Transactional
-	public int writeRequest(SR sr) {
-		log.info("실행"+sr);
-		String srSysNo = sr.getSysNo(); 
-		String sysNo = "%"+srSysNo+"%";
-		log.info("sysNo"+sysNo);
-		int srSeq =0;
-		try {
-			srSeq = Integer.parseInt(requestRepository.selectMaxSrNo(sysNo))+1;
-		}catch(Exception e){
-			srSeq = 1;
-		}
-		String number = String.format("%05d", srSeq);
-		String srNo = srSysNo+"-SR-"+number;
-		sr.setSrNo(srNo);
-		log.info("SR NO: "+srNo);
-		
-		int rows = requestRepository.insertRequest(sr);
-		return rows;
-		
 	}
 	
 	@Override
@@ -131,11 +101,73 @@ public class RequestService implements IRequestService{
 		List<RequestList> requestLists = requestRepository.selectRequestList(requestAjax);
 		return requestLists;
 	}
+	
+	/**
+	 * SR 작성
+	 */
+	@Override
+	@Transactional
+	public String writeRequest(SR sr) {
+		log.info("실행"+sr);
+		String srSysNo = sr.getSysNo(); 
+		String sysNo = "%"+srSysNo+"%";
+		int srSeq = Integer.parseInt(requestRepository.selectMaxSrNo(sysNo))+1;
+		String number = String.format("%05d", srSeq);
+		String srNo = srSysNo+"-SR-"+number;
+		sr.setSrNo(srNo);
+		log.info("SR NO: "+srNo);
+		
+		int rows = requestRepository.insertRequest(sr);
+		return srNo;
+		
+	}
+	
+	@Override
+	public void requestFileUpload(SrFile srFile) {
+		log.info("실행");
+		requestRepository.insertRequestFileUpload(srFile);
+	}
+	
+	/**
+	 * SR 상세조회 
+	 */
 	@Override
 	public Request getRequestDetail(String srNo) {
 		log.info("실행");
 		return requestRepository.selectRequestDetail(srNo);
 	}
+	@Override
+	public List<MultipartFile> selectRequestFileDetail(String srNo) {
+		log.info("실행");
+		List<MultipartFile> requestFile = requestRepository.selectRequestFileDetail(srNo);
+		return requestFile;
+	}
+
+	@Override
+	public SrFile selectFileDownload(String srFileNo) {
+		log.info("실행");
+		SrFile srFile = requestRepository.selectFileDownload(srFileNo);
+		return srFile;
+	}
+
+	@Override
+	@Transactional
+	public int updateRequest(SR sr) {
+		log.info("실행"+sr);
+		
+		int rows = requestRepository.updateRequest(sr);
+		return rows;
+	}
+
+	//업데이트시 파일 삭제
+	@Override
+	public int deleteExistingFile(String srFilePhysNm) {
+		log.info("실행"+srFilePhysNm);
+		return requestRepository.deleteExistingFile(srFilePhysNm);
+	}
+
+	
+
 	
 	
 }

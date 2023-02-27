@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<% pageContext.setAttribute("replaceChar", "\n"); %>
 
 <div class="d-sm-flex align-items-end justify-content-between">
 	<div class="bg-primary px-3 py-2"
@@ -10,8 +12,7 @@
 	</div>
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><b>SR 관리</b></li>
-		<li class="breadcrumb-item active" aria-current="page">SR
-			요청상세</li>
+		<li class="breadcrumb-item active" aria-current="page">SR 요청상세</li>
 	</ol>
 </div>
 <div class="card mb-4">
@@ -86,31 +87,19 @@
 				</div>
 				<div class="col-sm-10">
 					<div class="custom-file">
-					<%-- <c:if test="${!empty sr.srFileName}">
-						<c:set var="len" value="${fn:length(sr.srFileName)}"/>
-						<c:set var="filetype" value="${fn:toUpperCase(fn:substring(sr.srFileName, len-4, len))}"/>
-						<c:if test="${(filetype eq '.JPG') or (filetype eq 'JPEG') or (filetype eq '.PNG') or (filetype eq '.GIF')}"><img src='<c:url value="/request/file/${sr.srFileId}"/>' class="img-thumbnail"><br></c:if>
-						<a href='<c:url value="/request/file/${sr.srFileId}"/>'>${sr.srFileName} (<fmt:formatNumber>${sr.srFileSize}</fmt:formatNumber>byte)</a>	
-					</c:if>
-					<c:if test="${empty sr.srFileName}">
-						<span>첨부된 파일이 없습니다.</span>
-					</c:if> --%>
+						<c:forEach var="requestFile" items="${srFile}">
+							<span><a href="fileDownload?requestFileNo=${requestFile.srFileNo}&srNo=${sr.srNo}">${requestFile.srFileActlNm}</a></span>
+	               		</c:forEach>
 					</div>
-				</div>
+				</div>	
 			</div>
 			<!-- 하단 버튼들 -->
 			<div id="buttons" class="m-3 text-right">
 			<a href='<c:url value="/request/list"/>'><button type="button" class="btn btn-primary">글목록</button></a>
-			<%-- <c:if>
-				<a href='<c:url value="/request/update/${sr.srNo}"/>'><button type="button" class="btn btn-primary">수정</button></a>
-				<!-- Button trigger modal -->
-				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#deleteFun">삭제</button>
-			</c:if>
-			<c:if>
-				<a href='<c:url value="/request/update/${sr.srNo}"/>'><button type="button" class="btn btn-primary">수정</button></a>
-				<!-- Button trigger modal -->
-				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#deleteFun">삭제</button>
-			</c:if> --%>
+			<a><button type="button" onclick="getUpdateForm('${sr.srNo}')"class="btn btn-primary">수정</button></a>
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#deleteFun">삭제</button>
+			
 			
 			<!-- Modal -->
 			<div class="modal fade" id="deleteFun" tabindex="-1" aria-labelledby="deleteFunLabel" aria-hidden="true">
