@@ -8,12 +8,19 @@
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
 	<style>
+	
 	.requsetTtl{
-	width: 190px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display:block;
+		width: 190px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display:block;
 	}	
+	
+	#requestList > .table th, 
+	#requestList > .table td {
+    	padding: 0.5rem;
+    }
+    
 	</style>
   	
 	<script>
@@ -25,6 +32,8 @@
 		        todayBtn: 'linked',
 		      });  
 	  	});
+	  	
+	  	
   	</script>
   	
 </head>
@@ -237,8 +246,6 @@
 				
 				function getSrDetail(i){
 					let srNo = i;
-					$(".ex_info").hide();
-					console.log(srNo);
 					$("#srMenu").removeClass("d-sm-flex");
 					$("#srMenu").hide();
 					$("#srMiniMenu").show();
@@ -257,7 +264,6 @@
 				}
 				
 				function getWriteForm(){
-					$(".ex_info").hide();
 					$("#srMenu").removeClass("d-sm-flex");
 					$("#srMenu").hide();
 					$("#srMiniMenu").show();
@@ -266,6 +272,24 @@
 					
 					$.ajax({
 						url :"write",
+						type : "GET",
+						dataType : "html",
+						success : function(data) {
+							$('#colNo2').html(data);
+						}
+					});
+					
+				}
+				
+				function getUpdateForm(srNo){
+					$("#srMenu").removeClass("d-sm-flex");
+					$("#srMenu").hide();
+					$("#srMiniMenu").show();
+					$("#colNo1").attr("class","col-lg-7");
+					$("#colNo2").attr("class","col-lg-5");
+					
+					$.ajax({
+						url :"update/"+srNo,
 						type : "GET",
 						dataType : "html",
 						success : function(data) {

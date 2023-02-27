@@ -34,7 +34,7 @@
 		    STTS_NO AS "sttsNo",
 		    STTS_NM AS "sttsNm"
 		FROM SR_STTS
-		WHERE STTS_NO = 5 OR STTS_NO = 6
+		WHERE STTS_NO = 5 OR STTS_NO = 6 OR STTS_NO = 8
 	</select>
 	
 	<!--
@@ -64,7 +64,7 @@
 		<if test="srNo != ''">
 			AND sr.sr_no LIKE #{srNo}
 		</if>
-		AND (sr.stts_no = 5 or sr.stts_no = 6)
+		AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8)
 	</select>
 	
 	<!--
@@ -112,6 +112,7 @@
 							    USER_NM,
 							    SR_DDLN_DATE,
 							    STTS_NM,
+							    SR.STTS_NO,
 							    SR_PRY
 							FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, SR_TYPE type
 							where sr.sys_no = system.sys_no
@@ -133,9 +134,9 @@
 							<if test="srNo != ''">
 								AND sr.sr_no LIKE #{srNo}
 							</if>
-							AND (sr.stts_no = 5 or sr.stts_no = 6)
+							AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8)
 						)
-					ORDER BY SR_PRY, SR_DDLN_DATE DESC
+					ORDER BY DECODE(STTS_NO, 8, 1, 5, 2) ASC, SR_PRY, SR_DDLN_DATE DESC
 				)
 			<![CDATA[
 			WHERE rownum <= #{end}
@@ -450,7 +451,7 @@
 		WHERE progfile.prog_no = progress.prog_no
 		AND progress.prog_type = type.prog_type_no
 		AND SR_NO = #{srNo}
-		ORDER BY PROG_REG_DATE DESC
+		ORDER BY PROG_TYPE_NO ASC, PROG_REG_DATE DESC
 	</select>
 	
 	<!-- 
@@ -484,4 +485,30 @@
 		DELETE PROG_FILE
 		WHERE PROG_FILE_NO = #{progFileNo}
 	</delete>
+	
+	<update id="updateProgressFinishRequest" parameterType="map">
+		UPDATE SR
+		SET
+			<if test="choice == 1">
+		    	STTS_NO = 8
+		    </if>
+		    <if test="choice == 2">
+		    	STTS_NO = 6
+		    </if>
+		WHERE SR_NO = #{srNo}
+	</update>
+	
+	<update id="updateProgressRateFinishRequest" parameterType="map">
+		UPDATE PROGRESS
+		SET
+		    PROG_START_DATE = sysdate,
+		    PROG_END_DATE = sysdate,
+		    <if test="choice == 1">
+		    	PROG_RATE = 90
+		    </if>
+		    <if test="choice == 2">
+		    	PROG_RATE = 100
+		    </if>
+		WHERE PROG_NO = #{progNo}
+	</update>
 </mapper>

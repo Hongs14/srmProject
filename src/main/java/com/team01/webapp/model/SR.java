@@ -1,6 +1,7 @@
 package com.team01.webapp.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,12 +27,16 @@ public class SR {
 	private Date srEndDate;
 	private String srViewYn;
 	private String srStd;
-	private MultipartFile file;
 	
 	private int pageNo;
 	private String sysNm;
 	private String sttsNm;
 	private String userType;
+	
+	private int requestFileNo;
+	private List<MultipartFile> requestMFile;
+	private List<String> deleteFile; 
+	
 
 	// pageing 이용
 	private int start;

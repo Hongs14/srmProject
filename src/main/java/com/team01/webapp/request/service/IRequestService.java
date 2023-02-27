@@ -3,11 +3,14 @@ package com.team01.webapp.request.service;
 import java.io.File;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.team01.webapp.model.Request;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
 import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.util.Pager;
 
 public interface IRequestService {
@@ -26,10 +29,9 @@ public interface IRequestService {
 		 * 
 		 * @author		김희률
 		 * @param sr	SR요청 정보
-		 * @param file	첨부파일
+		 * @param srFile	첨부파일
 		 */
-		void writeRequest(SR sr, File file);
-		int writeRequest(SR sr);
+		String writeRequest(SR sr);
 		
 		
 		RequestFilter getFilterList(RequestFilter requestFilter);
@@ -38,5 +40,15 @@ public interface IRequestService {
 		List<RequestList> getRequestList(Pager pager, RequestAjax requestAjax);
 
 		Request getRequestDetail(String srNo);
+
+		void requestFileUpload(SrFile srFile);
+
+		List<MultipartFile> selectRequestFileDetail(String srNo);
+
+		SrFile selectFileDownload(String srFileNo);
+
+		int updateRequest(SR sr);
+		//업데이트시 파일삭제
+		int deleteExistingFile(String string);
 
 }

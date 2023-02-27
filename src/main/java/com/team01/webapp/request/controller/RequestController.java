@@ -1,9 +1,16 @@
 package com.team01.webapp.request.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
@@ -11,9 +18,11 @@ import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -91,6 +100,7 @@ public class RequestController {
 		requestFilter = requestService.getFilterList(requestFilter);
 		model.addAttribute("requestfilter", requestFilter);
 		model.addAttribute("pager", pager);
+		model.addAttribute("command","write");
 		return "request/writeForm";
 	}
 	
@@ -109,13 +119,54 @@ public class RequestController {
 	public String getDetail(@PathVariable String srNo, HttpSession session, Model model, Pager pager) {
 		log.info("실행"+srNo);
 		Request request = requestService.getRequestDetail(srNo);
+		List<MultipartFile> srFile = requestService.selectRequestFileDetail(srNo);
 		model.addAttribute("sr", request);
-		log.info(request);
+		model.addAttribute("srFile", srFile);
+		log.info("request: "+request+" srFile: "+srFile);
 		return "request/ajaxDetail";
 		
 	}
 	
 	
+	@RequestMapping(value="/fileDownload", method = RequestMethod.GET)
+	public void downloadRequestFile(String requestFileNo,String srNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception {
+		log.info("실행"+ "fileNo: "+requestFileNo);
+		
+			SrFile srFile = requestService.selectFileDownload(requestFileNo);
+			
+			String originalName = srFile.getSrFileActlNm();
+			String savedName = srFile.getSrFilePhysNm();
+			String contentType = srFile.getSrFileExtnNm();
+			log.info("userAgent: "+userAgent);
+			
+			//originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩하는 방법
+			if(userAgent.contains("Trident")|| userAgent.contains("MSIE")) {
+				//Trident: IE 11
+				//MSIE: IE 10 이하
+				originalName = URLEncoder.encode(originalName,"UTF-8");
+			}else {
+				//Edge, Chrome, Safari
+				originalName = new String(originalName.getBytes("UTF-8"),"ISO-8859-1");
+			}
+			
+			//응답 헤더 설정
+			response.setHeader("Content-Disposition", "attachmemnt; filename=\""+originalName+"\"");
+			response.setContentType(contentType);
+			
+			//응답 바디에 파일 데이터 실기
+			String filePath = "C:/OTI/uploadfiles/request/"+srNo+"/"+savedName;
+			File file = new File(filePath);
+			log.info("file: "+ file);
+					
+			if(file.exists()) {
+				InputStream is = new FileInputStream(file);
+				OutputStream os = response.getOutputStream();
+				FileCopyUtils.copy(is, os);
+				os.flush();
+				os.close();
+				is.close();
+			}
+	}
 	
 	
 	/**
@@ -128,9 +179,10 @@ public class RequestController {
 	 * @return
 	 */
 	@RequestMapping(value="/write", method = RequestMethod.POST)
-	public String writeRequest(SR sr, HttpSession session, Model model) {
+	public String writeRequest(SR sr, SrFile srFile, HttpSession session, Model model) {
 		int rows =0;
 		try {
+			log.info("sr: "+sr);
 			sr.setSrTtl(Jsoup.clean(sr.getSrTtl(), Whitelist.basic()));
 			String content = sr.getSrCn();
 			content = content.replace("\r\n", "<br>");
@@ -142,23 +194,136 @@ public class RequestController {
 			sr.setSrCustNo(userNo); 
 			sr.setSysNo(requestService.getSysNo(userNo));
 			sr.setSttsNo(1);
+			String srNo = requestService.writeRequest(sr);
 			
+			//첨부 파일 유무 조사
+			List<MultipartFile> mf = sr.getRequestMFile();
+			if(mf!=null &&!mf.isEmpty()) {
+				for(int i=0; i<mf.size(); i++) {		
+					
+					//파일 원래 이름 저장
+					srFile.setSrFileActlNm(mf.get(i).getOriginalFilename());
+					//파일의 저장 이름 설정
+					String srFilePhysNm = new Date().getTime()+"-"+mf.get(i).getOriginalFilename();
+					srFile.setSrFilePhysNm(srFilePhysNm);
+					//파일 타입 설정
+					String str = mf.get(i).getContentType();
+					int beginIndex = str.indexOf("/");
+					int endIndex = str.length();
+					String type = str.substring(beginIndex,endIndex);
+					srFile.setSrFileExtnNm(type);
+					srFile.setSrNo(srNo);
+
+					//서버 파일 시스템에 파일로 저장
+					String filePath = "C:/OTI/uploadfiles/request/"+srNo+"/"+srFilePhysNm;
+					File file = new File(filePath);
+					// 폴더가 없다면 생성한다
+					if(!file.exists()) {
+						try {
+							Files.createDirectories(Paths.get(filePath));
+							log.info("폴더 생성 완료");
+							mf.get(i).transferTo(file);
+						} catch (Exception e) {
+							log.info("생성 실패 : " + filePath);
+						}
+					} else {
+						mf.get(i).transferTo(file);
+					}
+					requestService.requestFileUpload(srFile);
+				}
+				
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		log.info("변경 행수 : "+ rows);
+		return "redirect:/request/list";
+	}
+	
+	@RequestMapping(value="/update/{srNo}", method = RequestMethod.GET)
+	public String updateRequest(@PathVariable String srNo, HttpSession session, Model model) {
+		log.info("실행");
+		Request sr = requestService.getRequestDetail(srNo);
+		List<MultipartFile> srFile = requestService.selectRequestFileDetail(srNo);
+		model.addAttribute("command","update");
+		model.addAttribute("sr", sr);
+		model.addAttribute("srFile", srFile);
+		return "request/writeForm";
+	}
+	
+	@RequestMapping(value="/update", method = RequestMethod.POST)
+	public String updateRequest(SR sr, SrFile srFile, HttpSession session, Model model) {
+		int rows =0;
+		try {
+			log.info("sr: "+sr);
+			sr.setSrTtl(Jsoup.clean(sr.getSrTtl(), Whitelist.basic()));
+			String srNo = sr.getSrNo();
+			String content = sr.getSrCn();
+			content = content.replace("\r\n", "<br>");
+			content = content.replace("\r", "<br>");
+			content = content.replace("\n", "<br>");
+			sr.setSrCn(Jsoup.clean(content, Whitelist.basic()));
+			int userNo = (int) session.getAttribute("userNo");
+			log.info("loginUser:"+ userNo);
+			sr.setSrCustNo(userNo); 
+			sr.setSysNo(requestService.getSysNo(userNo));
+			sr.setSttsNo(1);
+			rows = requestService.updateRequest(sr);
 			
-			MultipartFile mfile = sr.getFile();
-			if(mfile!=null&& !mfile.isEmpty()) {
-				log.info(mfile.getOriginalFilename());
-				SrFile srFile = new SrFile();
-				srFile.setSrFileActlNm(mfile.getOriginalFilename());
-				srFile.setSrFileExtnNm(mfile.getContentType());
-				String physNm = new Date().getTime()+"_"+mfile.getOriginalFilename();
-				srFile.setSrFilePhysNm(physNm);
+			//기존 파일을 삭제했다면 삭제처리
+			List<String> df = sr.getDeleteFile();
+			log.info("DeleteFile: "+df);
+			if(df!=null && !df.isEmpty()) {
+				for(int j=0; j<df.size(); j++) {
+					String filePath = "C:/OTI/uploadfiles/request/" + sr.getSrNo() + "/" + df.get(j);
+					File file = new File(filePath);
+					log.info("filePath"+filePath);
+					if(file.exists()) {
+						if(file.delete()) {
+							log.info("파일 삭제 성공");
+							requestService.deleteExistingFile(df.get(j));
+						} else {
+							log.info("파일 삭제 실패");
+						}
+					}
+				}
+			}
+			//첨부 파일 유무 조사
+			List<MultipartFile> mf = sr.getRequestMFile();
+			if(mf!=null &&!mf.isEmpty()) {
+				for(int i=0; i<mf.size(); i++) {		
+					
+					//파일 원래 이름 저장
+					srFile.setSrFileActlNm(mf.get(i).getOriginalFilename());
+					//파일의 저장 이름 설정
+					String srFilePhysNm = new Date().getTime()+"-"+mf.get(i).getOriginalFilename();
+					srFile.setSrFilePhysNm(srFilePhysNm);
+					//파일 타입 설정
+					String str = mf.get(i).getContentType();
+					int beginIndex = str.indexOf("/");
+					int endIndex = str.length();
+					String type = str.substring(beginIndex,endIndex);
+					srFile.setSrFileExtnNm(type);
+					srFile.setSrNo(srNo);
+
+					//서버 파일 시스템에 파일로 저장
+					String filePath = "C:/OTI/uploadfiles/request/"+srNo+"/"+srFilePhysNm;
+					File file = new File(filePath);
+					// 폴더가 없다면 생성한다
+					if(!file.exists()) {
+						try {
+							Files.createDirectories(Paths.get(filePath));
+							log.info("폴더 생성 완료");
+							mf.get(i).transferTo(file);
+						} catch (Exception e) {
+							log.info("생성 실패 : " + filePath);
+						}
+					} else {
+						mf.get(i).transferTo(file);
+					}
+					requestService.requestFileUpload(srFile);
+				}
 				
-				File file = new File("C:/Temp/uploadfiles/"+physNm);
-				mfile.transferTo(file);
-				
-				requestService.writeRequest(sr, file);
-			}else {
-				rows = requestService.writeRequest(sr);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

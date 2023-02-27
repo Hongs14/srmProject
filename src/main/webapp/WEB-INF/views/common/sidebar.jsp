@@ -50,10 +50,20 @@
 	  게시판 
 	</li>
 	<li class="nav-item">
-	  <a class="nav-link" href="${pageContext.request.contextPath}/notice/list">
-	    <i class="fas fa-fw fa-columns"></i>
-	    <span>공지사항 </span>
-	  </a>
+       <a class="nav-link collapsed" href="${pageContext.request.contextPath}/notice/list" data-toggle="collapse" data-target="#collapsePage"
+       aria-expanded="false" aria-controls="collapsePage">
+      		<i class="fas fa-fw fa-columns"></i>
+  			<span>공지사항 </span>
+       </a>
+      	<div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar" style="">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list">전체 공지사항</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list">JHJ 시스템 공지사항</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list">KTH 시스템 공지사항</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list">KHR 시스템 공지사항</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list">HGH 시스템 공지사항</a>
+          </div>
+        </div>
 	</li>
 	<li class="nav-item">
 	  <a class="nav-link" href="${pageContext.request.contextPath}/qna/list">

@@ -7,6 +7,7 @@ import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFile;
 import com.team01.webapp.model.ProgressFilter;
+import com.team01.webapp.model.ProgressRate;
 import com.team01.webapp.model.ProgressType;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.SrProgressAjax;
@@ -203,5 +204,9 @@ public interface IProgressService {
 	 * @param progFileNo	클라이언트가 보낸 progFileNo 정보 저장
 	 */
 	public void removeProgressFiles(int progFileNo);
+
+	public void progressRateAllAdd(ProgressRate progressRate);
+
+	public void progressRateFinishRequest(String srNo, String progNo, String choice);
 
 }

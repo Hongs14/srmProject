@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,7 @@ import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.ProgressFile;
 import com.team01.webapp.model.ProgressFilter;
+import com.team01.webapp.model.ProgressRate;
 import com.team01.webapp.model.ProgressType;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.SrProgressAjax;
@@ -273,6 +275,8 @@ public class ProgressController {
 		
 		model.addAttribute("progressRateList", progressRateList);
 		
+		model.addAttribute("srNo", hr.getSrNo());
+		
 		log.info(progressRateList);
 		
 		return "progress/progressRateList";
@@ -295,7 +299,32 @@ public class ProgressController {
 		
 		return "progress/progressRateAdd";
 	}
-
+	
+	@RequestMapping(value="progress/detail/progressRateAllAdd", produces="application/json; charset=UTF-8")
+	public String ProgressRateAllAdd(@RequestBody ProgressRate progressRate, HttpSession session) {
+		
+		progressService.progressRateAllAdd(progressRate);
+		
+		session.setAttribute("message", 2);
+		
+		return "redirect:/progress/detail/" + progressRate.getSrNo();
+	}
+	
+	@RequestMapping(value="progress/detail/progressRateFinishRequest", method=RequestMethod.POST)
+	public String progressRateFinishRequest(@RequestBody Progress progress,HttpSession session) {
+		
+		String srNo = progress.getSrNo();
+		String progNo = progress.getProgNo();
+		String choice = progress.getChoice();
+		
+		progressService.progressRateFinishRequest(srNo, progNo, choice);
+		
+		
+		session.setAttribute("message", 2);
+		
+		return "redirect:/progress/detail/" + progress.getSrNo();
+	}
+	
 	/**
 	 * 진척율 업데이트
 	 * 
@@ -305,11 +334,12 @@ public class ProgressController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value="progress/detail/progressRate/update", method=RequestMethod.POST)
-	public String ProgressRateUpdate(Progress progress) throws IOException {
+	public String ProgressRateUpdate(Progress progress, HttpSession session) throws IOException {
 		// 첨부 파일이 있는지 확인
 		List<MultipartFile> mfList = progress.getProgressattach();
 		
-		log.info(mfList);
+		log.info(progress);
+		
 		if(mfList != null && !mfList.isEmpty()) {
 			for(int i=0; i<mfList.size(); i++) {
 				// 파일의 원래 이름
@@ -342,7 +372,7 @@ public class ProgressController {
 				progressService.writeProgressRateFile(progress);
 			}
 		}
-		
+		session.setAttribute("message", 2);
 		progressService.updateProgressRate(progress);
 		
 		return "redirect:/progress/detail/" + progress.getSrNo();
@@ -441,7 +471,7 @@ public class ProgressController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value="progress/detail/progressFile/add", method=RequestMethod.POST)
-	public String ProgressFileAdd(Progress progress) throws IOException {
+	public String ProgressFileAdd(Progress progress, HttpSession session) throws IOException {
 		// 첨부 파일이 있는지 확인
 		List<MultipartFile> mfList = progress.getProgressattach();
 		
@@ -483,6 +513,7 @@ public class ProgressController {
 				progressService.writeProgressRateFile(progress);
 			}
 		}
+		session.setAttribute("message", 3);
 		
 		return "redirect:/progress/detail/" + progress.getSrNo();
 	}
@@ -495,7 +526,7 @@ public class ProgressController {
 	 * @return				progress/detail/{srNo} 로 리다이렉트
 	 */
 	@RequestMapping(value="progress/detail/progressFileRemove", produces="application/json; charset=UTF-8")
-	public String ProgressFileRemove(@RequestBody Progress progress) {
+	public String ProgressFileRemove(@RequestBody Progress progress, HttpSession session) {
 		
 		for(int i=0; i<progress.getProgressFile().size(); i++) {
 			String filePath = "C:/OTI/uploadfiles/" + progress.getSrNo() + "/" + progress.getProgressFile().get(i).getProgFilePhysNm();
@@ -512,6 +543,7 @@ public class ProgressController {
 			}
 		}
 		
+		session.setAttribute("message", 3);
 		
 		return "redirect:/progress/detail/" + progress.getSrNo();
 	}

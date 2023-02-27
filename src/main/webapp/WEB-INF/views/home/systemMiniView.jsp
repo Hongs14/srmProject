@@ -57,7 +57,6 @@
 				    datasets: [{
 				      data: data,
 				      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#4e73df', '#1cc88a', '#36b9cc'],
-				      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#4e73df', '#1cc88a', '#36b9cc'],
 				      hoverBorderColor: "rgba(234, 236, 244, 1)",
 				    }],
 				  },
@@ -83,11 +82,11 @@
 				    plugins : {
 				    	datalabels : {
 				    		formatter : function (value, context) {
-				    			var idx = context.dataIndex; // 각 데이터 인덱스
+				    			var idx = context.dataIndex; 
 				    			
-				    			// 출력 텍스트
-				    			return context.chart.data.labels[idx];
+				    			return context.chart.data.labels[idx] + value + "건";
 				    		},
+				    		display : 'auto',
 				    		font : {
 				    			size : '15',
 				    		},
