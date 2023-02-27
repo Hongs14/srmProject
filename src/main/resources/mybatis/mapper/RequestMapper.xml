@@ -160,8 +160,13 @@
 	</select>
 	
 	<insert id="insertRequest" parameterType="sr">
-		INSERT INTO sr (sr_no, sr_cust_no, sys_no, stts_no, sr_ttl, sr_cn, sr_reg_date) 
-		VALUES (#{srNo}, #{srCustNo}, #{sysNo}, #{sttsNo}, #{srTtl}, #{srCn}, SYSDATE)
+		INSERT INTO sr (sr_no, sr_cust_no, sys_no, sr_std, stts_no, sr_ttl, sr_cn, sr_reg_date) 
+		VALUES (#{srNo}, #{srCustNo}, #{sysNo}, #{srStd} ,#{sttsNo}, #{srTtl}, #{srCn}, SYSDATE)
+	</insert>
+	
+	<insert id="insertRequestFileUpload" parameterType="srFile">
+		INSERT INTO SR_FILE( SR_FILE_NO, SR_NO, SR_FILE_PHYS_NM, SR_FILE_ACTL_NM, SR_FILE_EXTN_NM)
+		VALUES(srFileNo_seq.nextval, #{srNo}, #{srFilePhysNm}, #{srFileActlNm}, #{srFileExtnNm})
 	</insert>
 	
 	<select id="selectRequestDetail" parameterType="string" resultType="request">
@@ -181,5 +186,46 @@
 	        sys.sys_no = s.sys_no
 	        and sr_no = #{srNo}
 	</select>
+	
+	<select id="selectRequestFileDetail" parameterType="string" resultType="srFile">
+		SELECT
+			SR_FILE_NO AS "srFileNo",
+			SR_NO AS "srNo",
+			SR_FILE_PHYS_NM AS "srFilePhysNm",
+			SR_FILE_ACTL_NM AS "srFileActlNm",
+			SR_FILE_EXTN_NM AS "srFileExtnNm"
+		FROM sr_FILE
+		WHERE sr_no = #{srNo}
+	</select>
+	
+	<select id="selectFileDownload" parameterType="string" resultType="srFile">
+		SELECT
+			SR_FILE_NO AS "srFileNo",
+			SR_NO AS "srNo",
+			SR_FILE_PHYS_NM AS "srFilePhysNm",
+			SR_FILE_ACTL_NM AS "srFileActlNm",
+			SR_FILE_EXTN_NM AS "srFileExtnNm"
+		FROM sr_FILE
+		WHERE sr_file_no = #{srFileNo}
+	</select>
+		
+	<update id="updateRequest" parameterType="sr">
+		UPDATE 
+		   	SR
+		SET 
+			SR_REG_DATE=SYSDATE,
+			SR_TTL=#{srTtl},
+			SR_CN=#{srCn}, 
+			SR_STD=#{srStd}
+		WHERE 
+			SR_NO=#{srNo}
+	</update>
+	
+	<delete id="deleteExistingFile" parameterType="string">
+		DELETE FROM 
+	        SR_FILE
+	      WHERE 
+	        SR_FILE_PHYS_NM=#{srFilePhysNm}
+	</delete>
 
 </mapper>

@@ -3,6 +3,7 @@ package com.team01.webapp.request.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.model.Request;
 import com.team01.webapp.model.RequestAjax;
@@ -10,6 +11,7 @@ import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SRType;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.System;
 import com.team01.webapp.model.Users;
 
@@ -29,9 +31,7 @@ public interface IRequestRepository {
 	
 	List<System> selectSysNmList();
 	
-	
 	List<SRType> selectSrType();
-	
 	
 	List<SRStts> selectSttsNmList();
 	
@@ -46,5 +46,15 @@ public interface IRequestRepository {
 	int insertRequest(SR sr);
 
 	Request selectRequestDetail(String srNo);
+
+	void insertRequestFileUpload(SrFile srFile);
+
+	List<MultipartFile> selectRequestFileDetail(String srNo);
+
+	SrFile selectFileDownload(String srFileNo);
+
+	int updateRequest(SR sr);
+
+	int deleteExistingFile(String srFilePhysNm);
 
 }

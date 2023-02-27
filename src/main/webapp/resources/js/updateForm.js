@@ -80,7 +80,7 @@ function deleteFile(num) {
 }
 
 /* ajax 처리 */
-function requestWrite() {
+function requestUpdate(srNo) {
 	// 폼 데이터 담기
 	var form = document.querySelector("form");
     var formData = new FormData(form);
@@ -104,67 +104,8 @@ function requestWrite() {
     	var srStd = $('#srStd').val();
     	formData.append("srStd",srStd);
     }
-    
-    var srCn = document.getElementById('srCn').value;
-    formData.append("srCn",srCn);
-    
-    var userNo = document.getElementById('userNo').value;
-    formData.append("userNo",userNo);
-    
-    $.ajax({
-		type: "POST",
-		enctype: 'multipart/form-data',	// 필수
-		url: 'write',
-		data: formData,		// 필수
-		processData: false,	// 필수
-		contentType: false	// 필수
-    }).done((data) => {
-    	window.location.href = "/webapp/request/list";
-    });
-    
-}
-
-let fileNmArray = [];
-
-/* 기존의 첨부파일 삭제 */
-function deleteExistingFile(srFilePhysNm, srFileNo) {
-	fileNmArray.push(srFilePhysNm);
-	console.log(fileNmArray);
-	
-	document.querySelector("#file" + srFileNo).remove();
-}
-
-/* ajax 업데이트 처리 */
-function requestUpdate() {
-	// 폼 데이터 담기
-	var form = document.querySelector("form");
-    var formData = new FormData(form);
-    for (var i = 0; i < filesArr.length; i++) {
-        // 삭제되지 않은 파일만 폼데이터에 담기
-        if (!filesArr[i].is_delete) {
-        	console.log("돌아감");
-        	console.log(filesArr[i]);
-            formData.append("requestMFile", filesArr[i]);
-        }
-    }
-    
-    for (var j = 0; j< fileNmArray.length; j++){
-    	console.log(fileNmArray[j]);
-    	formData.append("deleteFile",fileNmArray[j]);
-    }
-    var srRegDate=document.getElementById('srRegDate').value;
-    var srNo = document.getElementById('srNo').value;
     formData.append("srNo",srNo);
-    var sysNm=document.getElementById('sysNm').value;
-    formData.append("sysNm",sysNm);
     
-    var srTtl = document.getElementById('srTtl').value;
-    formData.append("srTtl",srTtl);
-    
-    if($('#srStd').val() != ""){
-    	var srStd = $('#srStd').val();
-    	formData.append("srStd",srStd);
-    }
     var srCn = document.getElementById('srCn').value;
     formData.append("srCn",srCn);
     
@@ -174,7 +115,7 @@ function requestUpdate() {
     $.ajax({
 		type: "POST",
 		enctype: 'multipart/form-data',	// 필수
-		url: 'update',
+		url: 'update'+srNo,
 		data: formData,		// 필수
 		processData: false,	// 필수
 		contentType: false	// 필수
@@ -182,6 +123,5 @@ function requestUpdate() {
     	window.location.href = "/webapp/request/list";
     });
     
-    
-    
 }
+
