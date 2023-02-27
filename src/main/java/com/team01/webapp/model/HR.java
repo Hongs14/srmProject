@@ -17,7 +17,7 @@ public class HR {
 	private String userNm;
 	private String userDpNm;
 	private String userJbps;
-	private String userTelNo;
+	private String userTelno;
 	private String taskNm;
 	private String srTtl;
 	

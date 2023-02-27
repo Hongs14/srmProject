@@ -49,7 +49,7 @@
 					<th>${list.userNm}</th>
 					<th>${list.userDpNm}</th>
 					<th>${list.userJbps}</th>
-					<th>${list.userTelNo}</th>
+					<th>${list.userTelno}</th>
 					<th>${list.taskNm}</th>
 					<th id="startDate+${list.userNo}">${list.hrStartDate}</th>
 					<th id="endDate+${list.userNo}">${list.hrEndDate}</th>
@@ -134,7 +134,7 @@
 									<th style="display:none">${list.userNo}</th>
 									<th>${list.userJbps}</th>
 									<th>${list.userNm}</th>
-									<th>${list.userTelNo}</th>
+									<th>${list.userTelno}</th>
 									<th>
 										<c:forEach var="srlist" items="${list.srList}">
 											${srlist.srTtl} / ${srlist.hrStartDate} ~ ${srlist.hrEndDate}
