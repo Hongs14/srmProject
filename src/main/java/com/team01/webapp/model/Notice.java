@@ -19,6 +19,7 @@ public class Notice {
 	private String ntcPry;
 	private String userId;
 	private int countCmnt;
+	private String sysNo;
 	private String ntcFilePhysNm; //바꾼 파일 명
 	private String ntcFileActlNm; //원본 파일 이름
 	private String ntcFileExtnNm; //파일 확장명
@@ -27,6 +28,9 @@ public class Notice {
 	
 	private String startDate;
 	private String endDate;
+	private String ntcToday;
+	private String ntcWeek;
+	private String ntcMonth;
 	
 	private List<NoticeComment> ntcCmnt;
 	

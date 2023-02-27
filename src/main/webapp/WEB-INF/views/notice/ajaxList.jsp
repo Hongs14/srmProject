@@ -20,10 +20,10 @@
 			<c:forEach var="notice" items="${noticeListAjax}">
 				<c:choose>
 					<c:when test="${notice.seq <= 5 }">
-						<tr onclick="location.href='${pageContext.request.contextPath}/notice/detail?ntcNo=${notice.ntcNo}'" style="cursor:pointer; background-color: RGB(239 240 240);">
+						<tr onclick="getNoticeDetail('${notice.ntcNo}')" style="cursor:pointer; background-color: RGB(239 240 240);">
 					</c:when>
 					<c:otherwise>
-						<tr onclick="location.href='${pageContext.request.contextPath}/notice/detail?ntcNo=${notice.ntcNo}'" style="cursor:pointer;">
+						<tr onclick="getNoticeDetail('${notice.ntcNo}')" style="cursor:pointer;">
 					</c:otherwise>
 				</c:choose>
 					<td>

@@ -38,6 +38,7 @@ public class NoticeService implements INoticeService{
 	@Override
 	public Pager returnPage(int pageNo, Pager pager, Notice notice) {
 		log.info("실행");
+		log.info(notice);
 		int totalListNum = (int) noticeRepository.selectTotalNoticeCount(notice);
 		log.info(totalListNum);
 		pager = new Pager(10,5,totalListNum,pageNo);

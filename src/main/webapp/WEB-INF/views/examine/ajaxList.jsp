@@ -5,8 +5,7 @@
 	<div class="table-responsive p-3">
 		<table class="table align-items-center table-flush table-hover">
 			<thead class="thead-light" style="text-align: center;">
-				<tr>
-					<th>No</th>	
+				<tr>	
 					<th>
 						<input type="checkbox" onclick='selectAll(this)' name="examineCheck">
 					</th>
@@ -14,27 +13,26 @@
 					<th>제목</th>
 					<th>관련시스템</th>
 					<th>등록자</th>
-					<th class="ex_info">소속</th>
-					<th class="ex_info">부서</th>
+					<th>소속</th>
+					<th>부서</th>
 					<th>상태</th>
 					<th>등록일</th>
 					<th>중요</th>
-					<th>상세보기</th>
 				</tr>
 			</thead>
 			<tbody style="text-align: center;">
 				<c:forEach var="examine" items="${examine}">
 					<tr>
-						<td>${examine.seq}</td>
+						
 						<td>
 							<input type="checkbox" name="examineCheck" value="${examine.srNo}">
 						</td>
-						<td>${examine.srNo}</td>
-						<td>${examine.srTtl}</td>
+						<td onclick ="getSrDetail('${examine.srNo}')">${examine.srNo}</td>
+						<td onclick ="getSrDetail('${examine.srNo}')">${examine.srTtl}</td>
 						<td>${examine.sysNm}</td>
 						<td>${examine.userNm}</td>
-						<td class="ex_info">${examine.userOgdp}</td>
-						<td class="ex_info">${examine.userDpNm}</td>
+						<td>${examine.userOgdp}</td>
+						<td>${examine.userDpNm}</td>
 						<td>
 							<c:if test="${examine.sttsNm eq '요청'}"><span class="badge badge-dark" style="font-size:100%">${examine.sttsNm}</span></c:if>
 							<c:if test="${examine.sttsNm eq '검토중'}"><span class="badge badge-dark" style="font-size:100%">${examine.sttsNm}</span></c:if>
@@ -47,7 +45,6 @@
 							<c:if test="${examine.srPry eq '중'}"><span class="badge badge-primary" style="font-size:100%">${examine.srPry}</span></c:if>
 							<c:if test="${examine.srPry eq '하'}"><span class="badge badge-secondary" style="font-size:100%">${examine.srPry}</span></c:if>
 						</td>
-						<td><a class="btn btn-sm btn-primary" onclick ="getSrDetail('${examine.srNo}')">상세보기</a></td>
 					</tr>
 					
 				</c:forEach>

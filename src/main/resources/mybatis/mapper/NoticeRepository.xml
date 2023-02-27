@@ -13,12 +13,37 @@
 	<select id="selectTotalNoticeCount" parameterType="notice" resultType="int">
 		SELECT COUNT(NTC_NO)
 		FROM NOTICE
+		<if test="startDate.equals('')">
+			<if test="ntcToday != null">
+				WHERE NTC_WRT_DATE BETWEEN
+					TO_DATE(sysdate,'YY-MM-DD')
+					AND TO_DATE(sysdate,'YY-MM-DD')+0.9
+			</if>
+			<if test="ntcWeek != null">
+				WHERE NTC_WRT_DATE BETWEEN
+					TO_DATE(sysdate-7,'YY-MM-DD')
+					AND TO_DATE(sysdate, 'YY-MM-DD')
+			</if>
+			<if test="ntcMonth != null">
+				WHERE NTC_WRT_DATE BETWEEN
+					ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-1)
+					AND TO_DATE(sysdate,'YY-MM-DD')
+			</if>
+			<if test="ntcToday == null and ntcWeek == null and ntcMonth == null">
+				WHERE NTC_WRT_DATE BETWEEN
+	 				ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-3)
+	            	AND TO_DATE(sysdate,'YY-MM-DD')
+	           	<if test="ntcTtl != ''">
+					AND NTC_TTL like #{ntcTtl}
+				</if>
+			</if>
+		</if>
 		<if test="!startDate.equals('')">
 			WHERE NTC_WRT_DATE BETWEEN
 			TO_DATE(#{startDate},'YY-MM-DD')
 			AND TO_DATE(#{endDate},'YY-MM-DD')+0.9
 			<if test="ntcTtl != ''">
-				AND ntc.NTC_TTL like #{ntcTtl}
+				AND NTC_TTL like #{ntcTtl}
 			</if>
 		</if>
 	</select>
@@ -54,6 +79,31 @@
 		            u.USER_ID
 		        FROM NOTICE n, USERS u
 		        WHERE n.user_no = u.user_no
+		        <if test="startDate.equals('')">
+        	 		<if test="ntcToday != null">
+						AND NTC_WRT_DATE BETWEEN
+							TO_DATE(sysdate,'YY-MM-DD')
+							AND TO_DATE(sysdate,'YY-MM-DD')+0.9
+					</if>
+					<if test="ntcWeek != null">
+						AND NTC_WRT_DATE BETWEEN
+							TO_DATE(sysdate-7,'YY-MM-DD')
+							AND TO_DATE(sysdate, 'YY-MM-DD')
+					</if>
+					<if test="ntcMonth != null">
+						AND NTC_WRT_DATE BETWEEN
+							ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-1)
+							AND TO_DATE(sysdate,'YY-MM-DD')
+					</if>
+					<if test="ntcToday == null and ntcWeek == null and ntcMonth == null">
+						AND NTC_WRT_DATE BETWEEN
+			 				ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-3)
+			            	AND TO_DATE(sysdate,'YY-MM-DD')
+			           	<if test="ntcTtl != ''">
+							AND NTC_TTL like #{ntcTtl}
+						</if>
+					</if>
+		        </if>
 		        <if test="!startDate.equals('')">
 					AND n.NTC_WRT_DATE BETWEEN
 						TO_DATE(#{startDate},'YY-MM-DD')
@@ -81,8 +131,8 @@
 			SELECT ntcno_seq.nextval FROM dual
 		</selectKey>
 		<![CDATA[
-			INSERT INTO NOTICE( NTC_NO, USER_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, NTC_WRT_DATE, NTC_PRY)
-			VALUES( ntcno_seq.nextval, #{userNo}, #{ntcTtl}, #{ntcCn}, 0, sysdate, #{ntcPry} )
+			INSERT INTO NOTICE( NTC_NO, USER_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, NTC_WRT_DATE, NTC_PRY, SYS_NO)
+			VALUES( ntcno_seq.nextval, #{userNo}, #{ntcTtl}, #{ntcCn}, 0, sysdate, #{ntcPry}, #{sysNo} )
 		]]>
 		
 	</insert>
