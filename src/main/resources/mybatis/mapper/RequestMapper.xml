@@ -148,7 +148,7 @@
 					<if test="srTtl != ''">
 						AND  s.SR_TTL like #{srTtl}
 					</if>
-			        ORDER BY s.SR_NO
+			        ORDER BY s.SR_REG_DATE DESC
 			    )
 			    <![CDATA[
 				    WHERE ROWNUM <=#{end}

@@ -135,7 +135,7 @@
 							</if>
 							AND (sr.stts_no = 5 or sr.stts_no = 6)
 						)
-					ORDER BY SR_PRY
+					ORDER BY SR_PRY, SR_DDLN_DATE DESC
 				)
 			<![CDATA[
 			WHERE rownum <= #{end}
@@ -225,7 +225,7 @@
 		    USER_NM AS "userNm",
 		    USER_DP_NM AS "userDpNm",
 		    USER_JBPS AS "userJbps",
-		    USER_TELNO AS "userTelNo",
+		    USER_TELNO AS "userTelno",
 		    TASK_NM AS "taskNm",
 		    HR_START_DATE AS "hrStartDate",
 		    HR_END_DATE AS "hrEndDate",
@@ -246,7 +246,7 @@
 		    USERS.USER_NO AS "userNo",
 		    USER_NM AS "userNM",
 		    USER_JBPS AS "userJbps",
-		    USER_TELNO AS "userTelNo"
+		    USER_TELNO AS "userTelno"
 		FROM USERS users
 		LEFT JOIN (
 		SELECT
