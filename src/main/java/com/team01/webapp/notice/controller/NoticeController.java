@@ -56,14 +56,13 @@ public class NoticeController {
 		
 		return "notice/list";
 	}
-	
+
 	@PostMapping(value="filter/{pageNo}",produces="application/json; charset=UTF-8")
 	public String noticeListAjax(@PathVariable int pageNo, @RequestBody Notice notice, Model model,Pager pager) {
 		log.info("실행");
 		
 		log.info(pageNo);
 		log.info(notice);
-		log.info(pager);
 		pager = noticeService.returnPage(pageNo,pager,notice);
 		
 		List<Notice> noticeListAjax = noticeService.getNoticeListAjax(pager,notice);
@@ -72,6 +71,7 @@ public class NoticeController {
 		
 		return "notice/ajaxList";
 	}
+	
 
 	/**
 	 * 공지사항 작성
@@ -141,8 +141,8 @@ public class NoticeController {
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
-	@GetMapping("/detail")
-	public String getNoticeDetail(int ntcNo, Model model) {
+	@GetMapping("/detail/{ntcNo}")
+	public String getNoticeDetail(@PathVariable int ntcNo, Model model) {
 		log.info("실행");
 		
 		Notice notice = noticeService.noticeDetail(ntcNo);
@@ -165,8 +165,8 @@ public class NoticeController {
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
-	@GetMapping(value="/update")
-	public String noticeUpdate(int ntcNo, Model model) {
+	@GetMapping(value="/update/{ntcNo}")
+	public String noticeUpdate(@PathVariable int ntcNo, Model model) {
 		log.info("실행");
 		Notice notice = noticeService.noticeDetail(ntcNo);
 		List<MultipartFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
