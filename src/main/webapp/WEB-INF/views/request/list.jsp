@@ -72,14 +72,14 @@
 			</div>
          	<div class="card mb-4 ">
          		<!-- 검색 -->
-                <div class="mb-1 mt-5 px-5">
+                <div class="mb-1 mt-5 px-3">
                 <form class="navbar-search">
                 	<div class="row text-right">
                 		<div class="col-4">
                 			<div class="form-group row" id="simple-date4" >
 	                			<div class="input-daterange input-group input-group-sm">
-	                				<label for="start" class="col-sm-4 col-form-label-sm ">조회기간</label>
-	                    			<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart"/>
+	                				<label for="start" class="col-sm-3 col-form-label-sm ">조회기간</label>
+	                    			<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" id="dateStart"/>
 	                    			<div class="input-group-prepend">
 	                    				<span class="input-group-text" style="height:31px;">~</span>
 	                    			</div>
@@ -118,8 +118,8 @@
                 	<div class="row text-right">
                 		<div class="col-4">
                 			<div class="form-group row">
-                				<label for="userOgdp" class="col-sm-4 col-form-label-sm">등록자 소속</label>
-		                    	<select id="userOgdp" class="form-control form-control-sm col-sm-8">
+                				<label for="userOgdp" class="col-sm-3 col-form-label-sm">등록자소속</label>
+		                    	<select id="userOgdp" class="form-control form-control-sm col-sm-9">
 		                        	<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.userOgdpList}">
 										<option class="text-black" value="${item.userOgdp}">${item.userOgdp}</option>
