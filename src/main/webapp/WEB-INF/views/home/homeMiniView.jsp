@@ -37,6 +37,9 @@
 										<c:when test="${list.sttsNm eq '개발중'}">
 											<span class="badge badge-info">${list.sttsNm}</span>
 										</c:when>
+										<c:when test="${list.sttsNm eq '완료요청'}">
+											<span class="badge text-white" style="background-color:#a33bff;">${list.sttsNm}</span>
+										</c:when>
 										<c:when test="${list.sttsNm eq '개발 완료'}">
 											<span class="badge badge-success">${list.sttsNm}</span>
 										</c:when>
@@ -52,15 +55,19 @@
 									<c:choose>
 										<c:when test="${list.sttsNm eq '검토중'}">
 											<div class="progress-bar bg-danger" role="progressbar" 
-											style="width:25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+											style="width:20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
 										</c:when>
 										<c:when test="${list.sttsNm eq '접수'}">
-											<div class="progress-bar bg-waring" role="progressbar" 
-											style="width:50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+											<div class="progress-bar bg-warning" role="progressbar" 
+											style="width:40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
 										</c:when>
 										<c:when test="${list.sttsNm eq '개발중'}">
 											<div class="progress-bar bg-info" role="progressbar" 
-											style="width:75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+											style="width:60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:when>
+										<c:when test="${list.sttsNm eq '완료요청'}">
+											<div class="progress-bar" role="progressbar" 
+											style="width:80%; background-color:#a33bff;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
 										</c:when>
 										<c:when test="${list.sttsNm eq '개발 완료'}">
 											<div class="progress-bar bg-success" role="progressbar" 
@@ -81,7 +88,7 @@
 				<c:if test="${pager.totalRows != 0}">
 					<div class="pager d-flex justify-content-center my-3">
 						<div class="pagingButtonSet d-flex justify-content-center">
-							<c:if test="${pager.pageNo > 1}">
+							<c:if test="${pager.totalPageNo > 5}">
 								<a onclick="homeMiniViewChange(${sttsNo}, 1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
 							</c:if>
 							<c:if test="${pager.groupNo > 1}">
@@ -100,7 +107,7 @@
 							<c:if test="${pager.groupNo < pager.totalGroupNo }">
 								<a onclick="homeMiniViewChange(${sttsNo}, ${pager.endPageNo+1})" type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
 							</c:if>
-							<c:if test="${pager.pageNo < pager.totalPageNo }">
+							<c:if test="${pager.totalPageNo > 5}">
 								<a onclick="homeMiniViewChange(${sttsNo}, ${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
 							</c:if>
 						</div>

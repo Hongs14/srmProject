@@ -62,6 +62,9 @@
 								<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(5, 1)">개발중</a>
 							</li>
 							<li class="nav-item" role="presentation">
+								<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(8, 1)">완료요청</a>
+							</li>
+							<li class="nav-item" role="presentation">
 								<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(6, 1)">개발완료</a>
 							</li>
 							<li class="nav-item" role="presentation">

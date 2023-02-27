@@ -258,5 +258,9 @@ public interface IProgressRepository {
 	 * @param progFileNo	클라이언트가 보낸 progFileNo 정보 저장
 	 */
 	void deleteProgressFiles(int progFileNo);
+
+	void updateProgressFinishRequest(@Param("srNo") String srNo, @Param("choice") String choice);
+
+	void updateProgressRateFinishRequest(@Param("progNo") String progNo, @Param("choice") String choice);
 	
 }

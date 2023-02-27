@@ -15,7 +15,7 @@
 	<div class="col-1"><input type="checkbox" name="devName" value="${users.userNo}"></div> 
  	<div class="col-1">${users.userJbps}</div> 
  	<div class="col-2">${users.userNm}(${users.devList.size()})</div> 
-	<div class="col-3">${users.userTelNo}</div> 
+	<div class="col-3">${users.userTelno}</div> 
  	<div class="col-5"> 
 		<c:if test="${users.devList.size() != 0}">
 			<c:forEach var="devlist" items="${users.devList}">
