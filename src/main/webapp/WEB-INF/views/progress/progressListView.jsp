@@ -41,6 +41,7 @@
 						<td>
 							<c:if test="${list.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${list.sttsNm}</span></c:if>
 							<c:if test="${list.sttsNm eq '개발 완료'}"><span class="badge badge-success" style="font-size:100%">${list.sttsNm}</span></c:if>
+							<c:if test="${list.sttsNm eq '완료요청'}"><span class="badge text-white" style="font-size:100%; background-color:#a33bff;">${list.sttsNm}</span></c:if>
 						</td>
 						<td>
 							<c:if test="${list.srPry eq '상'}"><span class="badge badge-danger" style="font-size:100%">${list.srPry}</span></c:if>
@@ -56,8 +57,8 @@
 		<c:if test="${pager.totalRows != 0}">
 			<div class="pager d-flex justify-content-center my-3">
 				<div class="pagingButtonSet d-flex justify-content-center">
-					<c:if test="${pager.pageNo > 1}">
-						<a onclick="homeMiniView(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
+					<c:if test="${pager.totalPageNo > 5}">
+						<a onclick="progressList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
 					</c:if>
 					<c:if test="${pager.groupNo > 1}">
 						<a onclick="progressList(${pager.startPageNo-1})" type="button" class="btn btn-outline-info btn-sm m-1">이전</a>
@@ -76,7 +77,7 @@
 						<a onclick="progressList(${pager.endPageNo+1})" type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
 	
 					</c:if>
-					<c:if test="${pager.pageNo < pager.totalPageNo }">
+					<c:if test="${pager.totalPageNo > 5}">
 						<a onclick="progressList(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
 					</c:if>
 				</div>

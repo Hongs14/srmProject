@@ -14,7 +14,7 @@
 				<div class="form-group row">
              		<label class="col-sm-3 col-form-label-sm font-weight-bold" for="progressType">산출물 구분</label>
                    	<select class="form-control form-control-sm col-sm-9" id="progressType">
-						<c:forEach var="list" items="${progressTypeList}">
+						<c:forEach var="list" items="${progressTypeList}" end="3">
 							<option value="${list.progTypeNo}">${list.progTypeNm}</option>
 						</c:forEach>
                    	</select>

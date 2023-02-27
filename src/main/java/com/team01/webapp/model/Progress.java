@@ -27,4 +27,6 @@ public class Progress {
 	
 	private List<ProgressFile> progressFile;
 	
+	private String choice;
+	
 }
