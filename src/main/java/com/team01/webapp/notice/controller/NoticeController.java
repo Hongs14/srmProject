@@ -51,14 +51,14 @@ public class NoticeController {
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
-	@GetMapping("/list")
-	public String getNoticeList(Model model) {
+	@GetMapping("/list/{sysNo}")
+	public String getNoticeList(@PathVariable String sysNo, Model model) {
 		log.info("실행");
-		
+		model.addAttribute(sysNo);
 		return "notice/list";
 	}
 
-	@PostMapping(value="filter/{pageNo}",produces="application/json; charset=UTF-8")
+	@PostMapping(value="{sysNo}/filter/{pageNo}",produces="application/json; charset=UTF-8")
 	public String noticeListAjax(@PathVariable int pageNo, @RequestBody Notice notice, Model model,Pager pager) {
 		log.info("실행");
 		
