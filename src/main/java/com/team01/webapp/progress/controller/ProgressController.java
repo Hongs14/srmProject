@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team01.webapp.home.service.IHomeService;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
@@ -35,6 +36,7 @@ import com.team01.webapp.model.ProgressType;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.SrProgressAjax;
 import com.team01.webapp.model.SrProgressList;
+import com.team01.webapp.model.SystemInfo;
 import com.team01.webapp.model.Task;
 import com.team01.webapp.model.ThArr;
 import com.team01.webapp.progress.service.IProgressService;
@@ -48,6 +50,9 @@ public class ProgressController {
 	
 	@Autowired
 	private IProgressService progressService;
+	
+	@Autowired
+	private IHomeService homeService;
 	
 	/**
 	 * 리스트 된 필터링 불러오기
@@ -97,9 +102,25 @@ public class ProgressController {
 	 * @return					progress/progressListView 로 return
 	 */
 	@RequestMapping(value="progress/list/progressajax/{pageNo}", produces="application/json; charset=UTF-8")
-	public String progressAjax(@PathVariable String pageNo, @RequestBody SrProgressAjax srProgressAjax, Model model, Pager pager) {
+	public String progressAjax(@PathVariable String pageNo, @RequestBody SrProgressAjax srProgressAjax, HttpSession session, Model model, Pager pager) {
 		
 		log.info("pageNo " + pageNo);
+		log.info("choice : " + srProgressAjax.getChoice());
+		List<SystemInfo> system = null;
+		srProgressAjax.setAdminSysNo("");
+		
+		if(srProgressAjax.getChoice() == 2) {
+			String userType = (String) session.getAttribute("userType");
+			int userNo = (int) session.getAttribute("userNo");
+			srProgressAjax.setUserType(userType);
+			srProgressAjax.setUserNo(userNo);
+			
+			if(userType.equals("관리자")) {
+				system = homeService.getSystemMiniViewDetail(userNo);
+				srProgressAjax.setAdminSysNo(system.get(0).getSysNo());
+			}
+		}
+		
 		log.info("srProgressAjax " + srProgressAjax);
 		
 		pager = progressService.returnPage(pageNo, pager, srProgressAjax);
@@ -110,6 +131,7 @@ public class ProgressController {
 		
 		model.addAttribute("ProgressList", list);
 		model.addAttribute("pager", pager);
+		model.addAttribute("choice", srProgressAjax.getChoice());
 		
 		log.info(pager);
 		

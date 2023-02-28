@@ -13,4 +13,9 @@ public class SrProgressAjax {
 	// pageing 이용
 	private int start;
 	private int end;
+	
+	private int choice;
+	private String userType;
+	private int userNo;
+	private String adminSysNo;
 }

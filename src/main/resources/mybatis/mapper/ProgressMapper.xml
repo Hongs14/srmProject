@@ -42,29 +42,40 @@
 		작성자 : 김태희	
 	-->
 	<select id="selectTotalProgressCount" parameterType="progressAjax" resultType="int">
-		SELECT
-		    COUNT(SR_NO)
-		FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, SR_TYPE type
-		where sr.sys_no = system.sys_no
-		AND sr.stts_no = stts.stts_no
-		AND sr.sr_cust_no = users.user_no
-		AND sr.sr_type = type.sr_type_no
-		<if test="sysNo != ''">
-			AND sr.sys_no = #{sysNo}
-		</if>
-		<if test="srTypeNo != 0">
-			AND sr.sr_type = #{srTypeNo}
-		</if>
-		<if test="srSttsNo != 0">
-			AND sr.stts_no = #{srSttsNo}
-		</if>
-		<if test="srName != ''">
-			AND sr.sr_ttl LIKE #{srName}
-		</if>
-		<if test="srNo != ''">
-			AND sr.sr_no LIKE #{srNo}
-		</if>
-		AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8)
+		SELECT COUNT(SR_NO)
+		FROM (
+			SELECT
+			    SR.SR_NO
+			FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, SR_TYPE type, HR hr
+			where sr.sys_no = system.sys_no
+			AND sr.stts_no = stts.stts_no
+			AND sr.sr_cust_no = users.user_no
+			AND sr.sr_type = type.sr_type_no
+			AND sr.sr_no = hr.sr_no
+			<if test="sysNo != ''">
+				AND sr.sys_no = #{sysNo}
+			</if>
+			<if test="srTypeNo != 0">
+				AND sr.sr_type = #{srTypeNo}
+			</if>
+			<if test="srSttsNo != 0">
+				AND sr.stts_no = #{srSttsNo}
+			</if>
+			<if test="srName != ''">
+				AND sr.sr_ttl LIKE #{srName}
+			</if>
+			<if test="srNo != ''">
+				AND sr.sr_no LIKE #{srNo}
+			</if>
+			<if test="userType == '개발자'">
+				AND hr.user_no = #{userNo}
+			</if>
+			<if test="adminSysNo != ''">
+				AND sr.sys_no = #{adminSysNo}
+			</if>
+			AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8)
+			GROUP BY SR.SR_NO
+		)
 	</select>
 	
 	<!--
@@ -105,7 +116,7 @@
 						SR_PRY
 						FROM(
 							SELECT
-							    SR_NO,
+							    SR.SR_NO,
 							    SYS_NM,
 							    SR_TYPE_NM,
 							    SR_TTL,
@@ -114,11 +125,12 @@
 							    STTS_NM,
 							    SR.STTS_NO,
 							    SR_PRY
-							FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, SR_TYPE type
+							FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, SR_TYPE type, HR hr
 							where sr.sys_no = system.sys_no
 							AND sr.stts_no = stts.stts_no
 							AND sr.sr_cust_no = users.user_no
 							AND sr.sr_type = type.sr_type_no
+							AND sr.sr_no = hr.sr_no
 							<if test="sysNo != ''">
 								AND sr.sys_no = #{sysNo}
 							</if>
@@ -134,7 +146,14 @@
 							<if test="srNo != ''">
 								AND sr.sr_no LIKE #{srNo}
 							</if>
+							<if test="userType == '개발자'">
+								AND hr.user_no = #{userNo}
+							</if>
+							<if test="adminSysNo != ''">
+								AND sr.sys_no = #{adminSysNo}
+							</if>
 							AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8)
+							GROUP BY SR.SR_NO, SYS_NM, SR_TYPE_NM, SR_TTL, USER_NM, SR_DDLN_DATE, STTS_NM, SR.STTS_NO, SR_PRY
 						)
 					ORDER BY DECODE(STTS_NO, 8, 1, 5, 2) ASC, SR_PRY, SR_DDLN_DATE DESC
 				)
