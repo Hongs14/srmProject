@@ -103,6 +103,8 @@
 												var startDate = document.getElementById("dateStart").value;
 												var endDate = document.getElementById("dateEnd").value;
 												
+												var sysNo = "${sysNo}";
+												
 												var ntcTtl = document.getElementById("keyword").value;
 												
 												if(ntcTtl !== "") {
@@ -113,7 +115,7 @@
 												console.log(startDate);
 												console.log(endDate);
 
-												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl};
+												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, sysNo : sysNo};
 												
 												console.log(data);
 												
@@ -132,6 +134,8 @@
 												var startDate = document.getElementById("dateStart").value;
 												var endDate = document.getElementById("dateEnd").value;
 												
+												var sysNo = "${sysNo}"
+												
 												var ntcTtl = document.getElementById("keyword").value;
 												
 												if(ntcTtl !== "") {
@@ -142,7 +146,7 @@
 												console.log(startDate);
 												console.log(endDate);
 
-												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl};
+												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, sysNo : sysNo};
 												
 												console.log(data);
 												
@@ -164,6 +168,8 @@
 												var ntcWeek = null;
 												var ntcMonth = null;
 												
+												var sysNo = "${sysNo}"
+												
 												var ntcTtl = document.getElementById("keyword").value;
 												
 												if(ntcTtl !== "") {
@@ -177,7 +183,8 @@
 												console.log(ntcWeek);
 												console.log(ntcMonth);
 
-												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth};
+												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
+														ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
 												
 												console.log(data);
 												
@@ -199,6 +206,8 @@
 												var ntcWeek = "1주일전";
 												var ntcMonth = null;
 												
+												var sysNo = "${sysNo}"
+												
 												var ntcTtl = document.getElementById("keyword").value;
 												
 												if(ntcTtl !== "") {
@@ -212,7 +221,8 @@
 												console.log(ntcWeek);
 												console.log(ntcMonth);
 
-												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth};
+												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
+														ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
 												
 												console.log(data);
 												
@@ -234,6 +244,8 @@
 												var ntcWeek = null;
 												var ntcMonth = "1개월전";
 												
+												var sysNo = "${sysNo}"
+												
 												var ntcTtl = document.getElementById("keyword").value;
 												
 												if(ntcTtl !== "") {
@@ -247,7 +259,8 @@
 												console.log(ntcWeek);
 												console.log(ntcMonth);
 
-												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth};
+												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
+														ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
 												
 												console.log(data);
 												

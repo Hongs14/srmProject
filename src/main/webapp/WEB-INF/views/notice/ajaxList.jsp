@@ -19,7 +19,7 @@
 		<tbody>
 			<c:forEach var="notice" items="${noticeListAjax}">
 				<c:choose>
-					<c:when test="${notice.seq <= 5 }">
+					<c:when test="${notice.ntcPry eq Yes}">
 						<tr onclick="getNoticeDetail('${notice.ntcNo}')" style="cursor:pointer; background-color: RGB(239 240 240);">
 					</c:when>
 					<c:otherwise>
@@ -28,7 +28,7 @@
 				</c:choose>
 					<td>
 						<c:choose>
-							<c:when test="${notice.seq <= 5 }">
+							<c:when test="${notice.ntcPry eq Yes}">
 								<span class="badge text-danger" style="font-size:100%; ">${notice.seq}</span>
 							</c:when>
 							<c:otherwise>
@@ -39,7 +39,7 @@
 					</td>
 					<td>
 						<c:choose>
-							<c:when test="${notice.seq <= 5 }">
+							<c:when test="${notice.ntcPry eq Yes}">
 								<span class="badge text-danger" style="font-size:100%; border:1px solid red;">공지사항</span>
 							</c:when>
 							<c:otherwise>
@@ -49,7 +49,7 @@
 					</td>
 					<td>
 						<c:choose>
-							<c:when test="${notice.seq <= 5 }">
+							<c:when test="${notice.ntcPry eq Yes}">
 								<span style="color:red;">${notice.ntcTtl}</span>
 							</c:when>
 							<c:otherwise>
