@@ -33,7 +33,7 @@
 			        sr_ddln_date AS srDdlnDate, 
 			        sr_start_date AS srStartDate, 
 			        sr_end_date AS srEndDate, 
-			        sr_view_yn AS srViewYn, 
+			        sr_del_yn AS srDelYn, 
 			        sr_type AS srType,
 			        sr_dev_dp as srDevDp,
 			        user_nm AS userNm, 
@@ -41,10 +41,10 @@
 			        user_dp_nm AS userDpNm
 			from(
 			    select rownum as rnum, sr_no, sr_cust_no, aa.sys_no, aa.sys_nm, aa.stts_no, aa.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
-			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_view_yn, aa.sr_type, sr_dev_dp, user_nm, user_ogdp, user_dp_nm
+			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, aa.sr_type, sr_dev_dp, user_nm, user_ogdp, user_dp_nm
 			    from(
 			      select  sr_no, sr_cust_no, sr.sys_no, system.sys_nm, sr.stts_no, sr_stts.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
-			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_view_yn, sr.sr_type,  sr.sr_dev_dp, user_nm, user_ogdp, user_dp_nm
+			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr.sr_type,  sr.sr_dev_dp, user_nm, user_ogdp, user_dp_nm
 			      from sr, sr_type, sr_stts, users, system
 			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no and sr.stts_no in(4, 5)
 			      order by sr_no desc
@@ -76,7 +76,7 @@
 		        sr_ddln_date AS "srDdlnDate", 
 		        sr_start_date AS "srStartDate", 
 		        sr_end_date AS "srEndDate", 
-		        sr_view_yn AS "srViewYn", 
+		        sr_del_yn AS "srDelYn", 
 		        sr_type AS "srType",
 		        sr_dev_dp as "srDevDp",
 		        user_nm AS "userNm", 
@@ -152,7 +152,7 @@
 	<insert id="insertProg" parameterType="list">
 		INSERT ALL
 		<foreach item="item" index="index" collection="list">
-			INTO PROGRESS(PROG_NO, SR_NO, PROG_TYPE) VALUES (#{item.progNo},'JHJ-SR-00017',#{index}+1)
+			INTO PROGRESS(PROG_NO, SR_NO, PROG_TYPE) VALUES (#{item.progNo},#{srNo},#{index}+1)
 		</foreach>
 		select * from dual
 	</insert> 
