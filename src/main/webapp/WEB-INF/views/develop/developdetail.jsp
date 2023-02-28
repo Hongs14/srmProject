@@ -10,15 +10,6 @@
 	rel="stylesheet" type="text/css">
 
 <script>
-	$(document).ready(function () {
-	    $('#simple-date4 .input-daterange').datepicker({        
-	        format: 'yyyy/mm/dd',        
-	        autoclose: true,     
-	        todayHighlight: true,   
-	        todayBtn: 'linked',
-    	});  
-	});
-	
 	function selectDev(obj) {
 		//개발담당자 선택
 		let pickDp = obj.value.toString();
@@ -53,6 +44,7 @@
 		let sttsNo = $('#sttsNo').val();
 		let srBgt = $('#srBgt').val();
 		let srNo = $('#srNo').val();
+		let userNo = $('#srDLeader').val();
 
 		let data = {
 			srDevCn : srDevCn,
@@ -62,7 +54,8 @@
 			srStartDate : srStartDate,
 			srEndDate : srEndDate,
 			srDevDp : srDevDp,
-			srNo : srNo
+			srNo : srNo,
+			userNo : userNo
 		};
 		console.log(data);
 
@@ -146,7 +139,6 @@
 		});
 
 	};
-	
 </script>
 
 </head>
@@ -435,7 +427,6 @@
 												</div>
 											</div>
 											<div class="text-right my-3">
-												<button type="button" class="btn" onclick="countRow()">예시</button>
 												<button type="submit" class="btn btn-primary">저장</button>
 												<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/list'">목록</button>
 											</div>

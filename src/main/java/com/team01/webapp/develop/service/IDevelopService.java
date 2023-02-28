@@ -15,7 +15,7 @@ public interface IDevelopService {
 	public SrDevelopDto getDetail(String srNo);
 	
 	public List<Users> getDevelopList();
-	public int updateDevelop(SrDevelopDto srDevelop);
+	public List<Users> updateDevelopSr(SrDevelopDto srDevelop, int userNo);
 	public List<Users> selectDeveloperList(String userDpNm, int userNo, String hrStartDate, String hrEndDate);
 	
 	public List<Users> selectDevName(int userNo);
