@@ -52,6 +52,7 @@ public class UserService implements IUserService {
 		user.setUserTelno(dbUser.getUserTelno());
 		user.setUserDpNm(dbUser.getUserDpNm());
 		UserSystem userSystem = userRepository.selectSystemByUserNo(user.getUserNo());
+		log.info("userSystem: "+userSystem);
 		String sysNo = userSystem.getSysNo();
 		String sysNm = userSystem.getSysNm();
 		user.setSysNm(sysNm);
