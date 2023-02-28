@@ -17,22 +17,22 @@
 			<if test="ntcToday != null">
 				WHERE NTC_WRT_DATE BETWEEN
 					TO_DATE(sysdate,'YY-MM-DD')
-					AND TO_DATE(sysdate,'YY-MM-DD')+0.9
+					AND TO_DATE(sysdate,'YY-MM-DD')+1
 			</if>
 			<if test="ntcWeek != null">
 				WHERE NTC_WRT_DATE BETWEEN
 					TO_DATE(sysdate-7,'YY-MM-DD')
-					AND TO_DATE(sysdate, 'YY-MM-DD')
+					AND TO_DATE(sysdate, 'YY-MM-DD')+1
 			</if>
 			<if test="ntcMonth != null">
 				WHERE NTC_WRT_DATE BETWEEN
 					ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-1)
-					AND TO_DATE(sysdate,'YY-MM-DD')
+					AND TO_DATE(sysdate,'YY-MM-DD')+1
 			</if>
 			<if test="ntcToday == null and ntcWeek == null and ntcMonth == null">
 				WHERE NTC_WRT_DATE BETWEEN
 	 				ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-3)
-	            	AND TO_DATE(sysdate,'YY-MM-DD')
+	            	AND TO_DATE(sysdate,'YY-MM-DD')+1
 	           	<if test="ntcTtl != ''">
 					AND NTC_TTL like #{ntcTtl}
 				</if>
@@ -41,7 +41,7 @@
 		<if test="!startDate.equals('')">
 			WHERE NTC_WRT_DATE BETWEEN
 			TO_DATE(#{startDate},'YY-MM-DD')
-			AND TO_DATE(#{endDate},'YY-MM-DD')+0.9
+			AND TO_DATE(#{endDate},'YY-MM-DD')+1
 			<if test="ntcTtl != ''">
 				AND NTC_TTL like #{ntcTtl}
 			</if>
@@ -83,22 +83,22 @@
         	 		<if test="ntcToday != null">
 						AND NTC_WRT_DATE BETWEEN
 							TO_DATE(sysdate,'YY-MM-DD')
-							AND TO_DATE(sysdate,'YY-MM-DD')+0.9
+							AND TO_DATE(sysdate,'YY-MM-DD')+1
 					</if>
 					<if test="ntcWeek != null">
 						AND NTC_WRT_DATE BETWEEN
 							TO_DATE(sysdate-7,'YY-MM-DD')
-							AND TO_DATE(sysdate, 'YY-MM-DD')
+							AND TO_DATE(sysdate, 'YY-MM-DD')+1
 					</if>
 					<if test="ntcMonth != null">
 						AND NTC_WRT_DATE BETWEEN
 							ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-1)
-							AND TO_DATE(sysdate,'YY-MM-DD')
+							AND TO_DATE(sysdate,'YY-MM-DD')+1
 					</if>
 					<if test="ntcToday == null and ntcWeek == null and ntcMonth == null">
 						AND NTC_WRT_DATE BETWEEN
 			 				ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-3)
-			            	AND TO_DATE(sysdate,'YY-MM-DD')
+			            	AND TO_DATE(sysdate,'YY-MM-DD')+1
 			           	<if test="ntcTtl != ''">
 							AND NTC_TTL like #{ntcTtl}
 						</if>
@@ -107,7 +107,7 @@
 		        <if test="!startDate.equals('')">
 					AND n.NTC_WRT_DATE BETWEEN
 						TO_DATE(#{startDate},'YY-MM-DD')
-						AND TO_DATE(#{endDate},'YY-MM-DD')+0.9
+						AND TO_DATE(#{endDate},'YY-MM-DD')+1
 				</if>
 				<if test="ntcTtl != ''">
 					AND n.NTC_TTL like #{ntcTtl}

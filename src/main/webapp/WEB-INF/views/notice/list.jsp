@@ -268,7 +268,9 @@
     
 						    <!-- 공지사항 목록 -->
 							<div class="d-sm-flex justify-content-end">
-								<a class="btn btn-sm btn-secondary mr-3" onclick="getNoticeWrite()">글작성</a>
+								<c:if test="${sessionScope.loginUser.userNm eq '관리자'}">
+									<a class="btn btn-sm btn-secondary mr-3" onclick="getNoticeWrite()">글작성</a>
+								</c:if>
 							</div>
 							<div id="noticeList" style="width: 100%;"></div>
         				</div>

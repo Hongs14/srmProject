@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.team01.webapp.model.Notice;
 import com.team01.webapp.model.NoticeComment;
 import com.team01.webapp.model.NoticeFile;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.notice.service.INoticeService;
 import com.team01.webapp.util.Pager;
 
@@ -110,9 +111,9 @@ public class NoticeController {
 				String type = str.substring(beginIndex,endIndex);
 				notice.setNtcFileExtnNm(type);
 				notice.setNtcNo(notice.getNtcNo());		
-
+				int ntcNo = notice.getNtcNo()+1;
 				//서버 파일 시스템에 파일로 저장
-				String filePath = "C:/OTI/uploadfiles/notice/"+ntcFilePhysNm;
+				String filePath = "C:/OTI/uploadfiles/notice/"+ntcNo+"/"+ntcFilePhysNm;
 				File file = new File(filePath);
 				// 폴더가 없다면 생성한다
 				if(!file.exists()) {
@@ -203,8 +204,10 @@ public class NoticeController {
 		//첨부 파일 유무 조사
 		List<MultipartFile> mf = notice.getNtcMFile();
 		if(mf!=null &&!mf.isEmpty()) {
-			for(int i=0; i<mf.size(); i++) {
+			for(int i=0; i<mf.size(); i++) {		
+				
 				NoticeFile noticeFile = new NoticeFile();
+				
 				//파일 원래 이름 저장
 				noticeFile.setNtcFileActlNm(mf.get(i).getOriginalFilename());
 				//파일의 저장 이름 설정
@@ -216,11 +219,26 @@ public class NoticeController {
 				int endIndex = str.length();
 				String type = str.substring(beginIndex,endIndex);
 				noticeFile.setNtcFileExtnNm(type);
-				noticeFile.setNtcNo(notice.getNtcNo());		
 				
-				log.info(noticeFile);
+
+				//서버 파일 시스템에 파일로 저장
+				String filePath = "C:/OTI/uploadfiles/notice/"+notice.getNtcNo()+"/"+ntcFilePhysNm;
+				File file = new File(filePath);
+				// 폴더가 없다면 생성한다
+				if(!file.exists()) {
+					try {
+						Files.createDirectories(Paths.get(filePath));
+						log.info("폴더 생성 완료");
+						mf.get(i).transferTo(file);
+					} catch (Exception e) {
+						log.info("생성 실패 : " + filePath);
+					}
+				} else {
+					mf.get(i).transferTo(file);
+				}
 				noticeService.noticeUpdate(notice,noticeFile);
 			}
+			
 		}
 		
 		return "redirect:/notice/list";
@@ -269,7 +287,7 @@ public class NoticeController {
 		String originalName = noticeFile.getNtcFileActlNm();
 		String savedName = noticeFile.getNtcFilePhysNm();
 		String contentType = noticeFile.getNtcFileExtnNm();
-		log.info(userAgent);
+		log.info("userAgent: "+userAgent);
 		
 		//originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩하는 방법
 		if(userAgent.contains("Trident")|| userAgent.contains("MSIE")) {
@@ -286,8 +304,10 @@ public class NoticeController {
 		response.setContentType(contentType);
 		
 		//응답 바디에 파일 데이터 실기
-		String filePath = "C:/OTI/uploadfiles/notice/"+savedName;
+		String filePath = "C:/OTI/uploadfiles/notice/"+noticeFile.getNtcNo()+"/"+savedName;
 		File file = new File(filePath);
+		log.info("file: "+ file);
+				
 		if(file.exists()) {
 			InputStream is = new FileInputStream(file);
 			OutputStream os = response.getOutputStream();
