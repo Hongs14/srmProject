@@ -222,10 +222,8 @@
 											data = {progressArr : progressArr};
 											
 											$.ajax({
-												url : "excelDownload",
-												method : "post",
-												data : JSON.stringify(data),
-												contentType : "application/json; charset=UTF-8"
+												url : "excelDownload" + ""
+											
 											})
 											
 										}

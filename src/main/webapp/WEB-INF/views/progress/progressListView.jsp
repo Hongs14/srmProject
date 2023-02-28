@@ -23,7 +23,7 @@
 					<th>상세</th>
 				</tr>
 			</thead>
-			<c:forEach var="list" items="${ProgressList}">
+			<c:forEach var="list" items="${ProgressList}" varStatus="status">
 				<tbody>
 					<tr>
 						<td class="pr-0">
@@ -32,7 +32,10 @@
 	                  			<label class="custom-control-label" for="customCheck${list.srNo}"></label>
 	                		</div>
 						</td>
-						<td>${list.srNo}</td>
+						<td>
+							${list.srNo}
+							<input type="hidden" name="srNoList[${status.count}].srNo" value="${list.srNo}">
+						</td>
 						<td>${list.sysNm}</td>
 						<td>${list.srTypeNm}</td>
 						<td>${list.srTtl}</td>
