@@ -329,7 +329,8 @@ public class RequestController {
 			e.printStackTrace();
 		}
 		log.info("변경 행수 : "+ rows);
-		return "redirect:/request/list";
+		String srNo = sr.getSrNo();
+		return "redirect:/request/detail/"+srNo;
 	}
 
 }

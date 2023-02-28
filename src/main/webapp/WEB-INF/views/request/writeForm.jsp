@@ -57,7 +57,7 @@
 			</div>
 			<div class="row mb-2 align-items-center">
 				<label class=" font-weight-bold col-sm-2">관련근거 </label> 
-				<input name="srStd" class="col-sm-10" type="text" class="form-control form-control-sm" <c:if test="${command eq 'update'}"> value="${sr.srStd}"</c:if>/>
+				<input name="srStd" id="srStd" class="col-sm-10" type="text" class="form-control form-control-sm" <c:if test="${command eq 'update' and sr.srStd ne undefined}"> value="${sr.srStd}"</c:if>/>
 			</div>
 			<div class="row mb-2">
 					<label class=" font-weight-bold col-sm-2">SR 내용 </label> 

@@ -157,13 +157,18 @@
                 </div>
                 <hr/>
          		<!-- SR 검토 목록 -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">SR 요청 목록</h6>
+                <div class="p-3 d-flex flex-row align-items-center justify-content-between">
+                   	<h5 class="m-0 font-weight-bold text-primary mb-1">SR 요청 목록</h5>
+                 
 					<div class="d-sm-flex justify-content-end">
 						<a class="btn btn-sm btn-secondary mr-1"
 							onclick="getWriteForm()"> 요청등록 </a>
 						<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
 					</div>
+				</div>
+				<div class="custom-control custom-switch px-5 ml-2" style="width:180px; border-radius:3px; background-color:#eaecf4;">
+				  <input type="checkbox" class="custom-control-input" id="customSwitch1">
+				  <label class="custom-control-label" for="customSwitch1"><span class="text-primary">나의 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span></label>
 				</div>
                 <div id="ajaxList">
                 

@@ -101,7 +101,7 @@ function requestWrite() {
     formData.append("srTtl",srTtl);
     
     if($('#srStd').val() != ""){
-    	var srStd = $('#srStd').val();
+    	var srStd = document.getElementById('srStd').value;
     	formData.append("srStd",srStd);
     }
     
@@ -179,7 +179,9 @@ function requestUpdate() {
 		processData: false,	// 필수
 		contentType: false	// 필수
     }).done((data) => {
-    	window.location.href = "/webapp/request/list";
+//    	console.log("update:: "+"srNo"+srNo+"sysNm"+sysNm+"srTtl"+srTtl+"srStd"+srStd+"srCn"+srCn+userNo);
+    	$('#colNo2').html(data);
+    	console.log(data);
     });
     
     
