@@ -23,7 +23,7 @@
 	</select>
 	
 	<select id="selectSystemByUserNo" parameterType="int" resultType="userSystem">
-		SELECT SYS_NM,s.SYS_NO
+		SELECT SYS_NM as "sysNm",s.SYS_NO as "sysNo"
         FROM USER_SYSTEM us, SYSTEM s
         WHERE us.SYS_NO = s.SYS_NO and us.CUST_NO = #{userNo}
 	</select>
