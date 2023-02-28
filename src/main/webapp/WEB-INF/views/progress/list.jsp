@@ -192,8 +192,41 @@
 									
 									<script>
 										function excelDownload() {
-											var thArr = new Array();
-											var checkbox = $("input[name=]");
+											var progressArr = new Array();
+											var checkbox = $("input[name=progressCheck]:checked");
+											
+											// 체크된 체크박스의 값을 가져옴
+											checkbox.each(function(i) {
+												var tr = checkbox.parent().parent().parent().eq(i);
+												var td = tr.children();
+												
+												if(td.eq(1).text() != 'SR 번호') {
+													
+													var srNo = td.eq(1).text();
+													var sysNm = td.eq(2).text();
+													var srTypeNm = td.eq(3).text();
+													var srTtl = td.eq(4).text();
+													var userNm = td.eq(5).text();
+													var srDdlnDate = td.eq(6).text();
+													var sttsNm = td.eq(7).children().text();
+													var srPry = td.eq(8).children().text();
+													
+													let data = {srNo : srNo, sysNm : sysNm, srTypeNm : srTypeNm, 
+																srTtl : srTtl, userNm : userNm, srDdlnDate : srDdlnDate,
+																sttsNm : sttsNm, srPry : srPry}
+													
+													progressArr.push(data);
+												}
+											});
+											
+											data = {progressArr : progressArr};
+											
+											$.ajax({
+												url : "excelDownload",
+												method : "post",
+												data : JSON.stringify(data),
+												contentType : "application/json; charset=UTF-8"
+											})
 											
 										}
 									</script>
