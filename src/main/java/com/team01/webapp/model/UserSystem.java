@@ -7,5 +7,6 @@ public class UserSystem {
 
 	private String sysNo;
 	private int custNo;
+	private String sysNm;
 	
 }

@@ -22,8 +22,8 @@
 		  WHERE user_id = #{userId}
 	</select>
 	
-	<select id="selectSysNmByUserNo" parameterType="int" resultType="string">
-		SELECT SYS_NM
+	<select id="selectSystemByUserNo" parameterType="int" resultType="userSystem">
+		SELECT SYS_NM,s.SYS_NO
         FROM USER_SYSTEM us, SYSTEM s
         WHERE us.SYS_NO = s.SYS_NO and us.CUST_NO = #{userNo}
 	</select>

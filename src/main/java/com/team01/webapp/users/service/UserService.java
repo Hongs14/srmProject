@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.team01.webapp.model.UserSystem;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.users.dao.IUserRepository;
 
@@ -50,8 +51,11 @@ public class UserService implements IUserService {
 		user.setUserEml(dbUser.getUserEml());
 		user.setUserTelno(dbUser.getUserTelno());
 		user.setUserDpNm(dbUser.getUserDpNm());
-		String sysNm = userRepository.selectSysNmByUserNo(user.getUserNo());
+		UserSystem userSystem = userRepository.selectSystemByUserNo(user.getUserNo());
+		String sysNo = userSystem.getSysNo();
+		String sysNm = userSystem.getSysNm();
 		user.setSysNm(sysNm);
+		user.setSysNo(sysNo);
 		
 		
 		return LoginResult.SUCCESS;
