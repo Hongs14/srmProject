@@ -61,9 +61,7 @@ public class UserController {
 			return "user/loginForm";
 		}else {
 			session.setAttribute("loginUser", user);
-
 			session.setAttribute("userType", user.getUserType());
-
 			session.setAttribute("userNo", user.getUserNo());
 
 			log.info(user);
