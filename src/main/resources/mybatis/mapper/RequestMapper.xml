@@ -49,7 +49,7 @@
 	<select id="selectMaxSrNo" parameterType="string" resultType="string">
 		 SELECT  MAX(SUBSTR(sr_no,INSTR(sr_no,'-',6)+1))
          from sr
-         where sr_no LIKE #{sysNo}
+         where sr_no LIKE #{sysNo} 
          order by sr_no desc
 	</select>
 
@@ -60,6 +60,7 @@
 		where sr.sys_no = system.sys_no
 		AND sr.stts_no = stts.stts_no
 		AND sr.sr_cust_no = users.user_no
+		AND sr.SR_DEL_YN = 'N'
 		<if test="srDevDp != '전체'">
 			AND sr.sr_dev_dp = #{srDevDp}
 		</if>
@@ -128,6 +129,7 @@
        			 	WHERE SR_CUST_NO = u.USER_NO
         			AND s.STTS_NO = st.STTS_NO
         			AND s.SYS_NO = sys.SYS_NO
+        			AND s.SR_DEL_YN = 'N'
 			       	<if test="sttsNo != '전체'">
 						AND st.stts_no = #{sttsNo}
 					</if>
@@ -227,5 +229,13 @@
 	      WHERE 
 	        SR_FILE_PHYS_NM=#{srFilePhysNm}
 	</delete>
-
+	
+	<update id="deleteRequest" parameterType="string">
+		UPDATE 
+		   	SR
+		SET 
+			SR_DEL_YN = 'Y'
+		WHERE 
+			SR_NO=#{srNo}
+	</update>
 </mapper>

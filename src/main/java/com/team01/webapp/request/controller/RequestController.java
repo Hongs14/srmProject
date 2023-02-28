@@ -181,6 +181,7 @@ public class RequestController {
 	@RequestMapping(value="/write", method = RequestMethod.POST)
 	public String writeRequest(SR sr, SrFile srFile, HttpSession session, Model model) {
 		int rows =0;
+		String srNo = "";
 		try {
 			log.info("sr: "+sr);
 			sr.setSrTtl(Jsoup.clean(sr.getSrTtl(), Whitelist.basic()));
@@ -194,7 +195,7 @@ public class RequestController {
 			sr.setSrCustNo(userNo); 
 			sr.setSysNo(requestService.getSysNo(userNo));
 			sr.setSttsNo(1);
-			String srNo = requestService.writeRequest(sr);
+			srNo = requestService.writeRequest(sr);
 			
 			//첨부 파일 유무 조사
 			List<MultipartFile> mf = sr.getRequestMFile();
@@ -237,7 +238,7 @@ public class RequestController {
 			e.printStackTrace();
 		}
 		log.info("변경 행수 : "+ rows);
-		return "redirect:/request/list";
+		return "redirect:/request/detail/"+srNo;
 	}
 	
 	@RequestMapping(value="/update/{srNo}", method = RequestMethod.GET)
@@ -331,6 +332,13 @@ public class RequestController {
 		log.info("변경 행수 : "+ rows);
 		String srNo = sr.getSrNo();
 		return "redirect:/request/detail/"+srNo;
+	}
+	
+	@RequestMapping(value="/delete/{srNo}", method = RequestMethod.GET)
+	public String deleteRequest(@PathVariable String srNo, Model model) {
+		log.info("실행");
+		int rows = requestService.deleteRequest(srNo);
+		return "redirect:/request/list";
 	}
 
 }

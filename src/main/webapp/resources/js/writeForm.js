@@ -119,7 +119,7 @@ function requestWrite() {
 		processData: false,	// 필수
 		contentType: false	// 필수
     }).done((data) => {
-    	window.location.href = "/webapp/request/list";
+    	$('#colNo2').html(data);
     });
     
 }
@@ -181,7 +181,6 @@ function requestUpdate() {
     }).done((data) => {
 //    	console.log("update:: "+"srNo"+srNo+"sysNm"+sysNm+"srTtl"+srTtl+"srStd"+srStd+"srCn"+srCn+userNo);
     	$('#colNo2').html(data);
-    	console.log(data);
     });
     
     
