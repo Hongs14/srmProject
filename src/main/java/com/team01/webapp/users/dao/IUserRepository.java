@@ -2,6 +2,7 @@ package com.team01.webapp.users.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.team01.webapp.model.UserSystem;
 import com.team01.webapp.model.Users;
 
 @Mapper
@@ -27,7 +28,7 @@ public interface IUserRepository {
 
 	public void insertUserSystem(Users user);
 	
-	public String selectSysNmByUserNo(int userNo);
+	public UserSystem selectSystemByUserNo(int userNo);
 
 	public String getSysNoByUserOgdp(String userOgdp);
 
