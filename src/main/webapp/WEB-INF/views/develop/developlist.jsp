@@ -161,7 +161,6 @@
 							                        <th>등록일</th>
 							                        <th>완료예정일</th>
 							                        <th>중요도</th>
-							                        <th>상세보기</th>
 							                    </tr>
 						                 	</thead>
 						                   	<tbody>
@@ -173,8 +172,8 @@
 									                   			<label class="custom-control-label" for="customCheck${SrDevelopDto.srNo}"></label>
 									                 		</div>
 								                 		</td>
-						                        		<td>${SrDevelopDto.srNo}</td>
-								                        <td>${SrDevelopDto.srTtl}</td>
+						                        		<td><a href="${pageContext.request.contextPath}/develop/view/${pageNo}?srNo=${SrDevelopDto.srNo}">${SrDevelopDto.srNo}</a></td>
+								                        <td><a href="${pageContext.request.contextPath}/develop/view/${pageNo}?srNo=${SrDevelopDto.srNo}">${SrDevelopDto.srTtl}</a></td>
 								                        <td>${SrDevelopDto.sysNm}</td>
 								                        <td>${SrDevelopDto.userNm}</td>
 								                        <td>${SrDevelopDto.userOgdp}</td>
@@ -182,7 +181,6 @@
 								                        <td>
 								                        	<c:if test="${SrDevelopDto.sttsNm eq '접수'}"><span class="badge badge-outline-primary" style="font-size:100%; border: 1px solid black;">${SrDevelopDto.sttsNm}</span></c:if>
 															<c:if test="${SrDevelopDto.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${SrDevelopDto.sttsNm}</span></c:if>
-															<c:if test="${SrDevelopDto.sttsNm eq '개발 완료'}"><span class="badge badge-success" style="font-size:100%">${SrDevelopDto.sttsNm}</span></c:if>
 								                        </td>
 								                        <td>${SrDevelopDto.srRegDate}</td>
 								                        <td>${SrDevelopDto.srDdlnDate}</td>
@@ -191,7 +189,6 @@
 															<c:if test="${SrDevelopDto.srPry eq '중'}"><span class="badge badge-primary" style="font-size:100%">${SrDevelopDto.srPry}</span></c:if>
 															<c:if test="${SrDevelopDto.srPry eq '하'}"><span class="badge badge-secondary" style="font-size:100%">${SrDevelopDto.srPry}</span></c:if>
 								                        </td>
-								                        <td><button class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/view/${pageNo}?srNo=${SrDevelopDto.srNo}'">상세보기</button></td>
 								                   	</tr>
 						                     	</c:forEach>
 			                 				</tbody>

@@ -17,28 +17,28 @@
 	<select id="selectDevelopList" parameterType="pager" resultType="developDto">
 		<![CDATA[
 			select rnum, 
-			        sr_no AS srNo, 
-			        sr_cust_no AS srCustId, 
-			        sys_no AS sysNo, 
-			        sys_nm as sysNm,
-			        stts_no AS sttsNo, 
-			        stts_nm AS sttsNm,
-			        sr_ttl AS srTtl, 
-			        sr_cn AS srCn, 
-			        sr_reg_date AS srRegDate, 
-			        sr_pry AS srPry, 
-			        sr_opnn AS srOppn, 
-			        sr_bgt AS srBgt, 
-			        sr_dev_cn AS srDevCn, 
-			        sr_ddln_date AS srDdlnDate, 
-			        sr_start_date AS srStartDate, 
-			        sr_end_date AS srEndDate, 
-			        sr_del_yn AS srDelYn, 
-			        sr_type AS srType,
-			        sr_dev_dp as srDevDp,
-			        user_nm AS userNm, 
-			        user_ogdp AS userOgdp, 
-			        user_dp_nm AS userDpNm
+			        sr_no AS "srNo", 
+			        sr_cust_no AS "srCustId", 
+			        sys_no AS "sysNo", 
+			        sys_nm as "sysNm",
+			        stts_no AS "sttsNo", 
+			        stts_nm AS "sttsNm",
+			        sr_ttl AS "srTtl", 
+			        sr_cn AS "srCn", 
+			        sr_reg_date AS "srRegDate", 
+			        sr_pry AS "srPry", 
+			        sr_opnn AS "srOppn", 
+			        sr_bgt AS "srBgt", 
+			        sr_dev_cn AS "srDevCn", 
+			        sr_ddln_date AS "srDdlnDate", 
+			        sr_start_date AS "srStartDate", 
+			        sr_end_date AS "srEndDate", 
+			        sr_del_yn AS "srDelYn", 
+			        sr_type AS "srType",
+			        sr_dev_dp as "srDevDp",
+			        user_nm AS "userNm", 
+			        user_ogdp AS "userOgdp", 
+			        user_dp_nm AS "userDpNm"
 			from(
 			    select rownum as rnum, sr_no, sr_cust_no, aa.sys_no, aa.sys_nm, aa.stts_no, aa.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
 			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, aa.sr_type, sr_dev_dp, user_nm, user_ogdp, user_dp_nm
@@ -132,7 +132,7 @@
 	</update>
 	
 	<select id="selectNameByNo" parameterType="int" resultType="users">
-		SELECT USER_NO AS userNo, USER_NM AS userNm, USER_DP_NM AS userDpNm
+		SELECT USER_NO AS "userNo", USER_NM AS "userNm", USER_DP_NM AS "userDpNm"
 		FROM USERS
 		WHERE USER_NO = #{userNo}
 	</select>
@@ -155,5 +155,34 @@
 			INTO PROGRESS(PROG_NO, SR_NO, PROG_TYPE) VALUES (#{item.progNo},#{srNo},#{index}+1)
 		</foreach>
 		select * from dual
-	</insert> 
+	</insert>
+	
+	<select id="selectSrSttsList" resultType="srstts">
+		SELECT 
+		    STTS_NO AS "sttsNo",
+		    STTS_NM AS "sttsNm"
+		FROM SR_STTS
+	</select>
+	
+	<select id="selectSysNmList" resultType="system">
+		SELECT
+		    DISTINCT(SYS_NM) AS "sysNm",
+		    SYS_NO AS "sysNo"
+		FROM SYSTEM
+	</select>
+	
+	<select id="selectUserOgdpList" resultType="users">
+		SELECT 
+		    DISTINCT(USER_OGDP) AS "userOgdp"
+		FROM USERS
+		WHERE USER_TYPE='고객사'
+	</select>
+	
+	<select id="selectUserDpList" resultType="users">
+		SELECT 
+		    DISTINCT(USER_DP_NM) AS "userDpNm"
+		FROM USERS
+		WHERE USER_TYPE='고객사'
+	</select>
+	
 </mapper>

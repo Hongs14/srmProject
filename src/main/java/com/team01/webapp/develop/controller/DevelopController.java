@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team01.webapp.develop.service.IDevelopService;
 import com.team01.webapp.model.CheckBoxArr;
+import com.team01.webapp.model.DevelopFilter;
+import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrDevelopDto;
@@ -55,6 +57,15 @@ public class DevelopController {
 		log.info("SR개발관리 리스트 목록");
 		return "develop/developlist";
 	}
+/*	@GetMapping(value="/list")
+	public String getExamineList(DevelopFilter developFilter , Model model) {
+		log.info("필터 실행");
+		
+		developFilter = developService.filterList(developFilter);
+		model.addAttribute("developFilter",developFilter);
+		
+		return "devlop/developlist";
+	}*/
 	
 	
 	/**
@@ -84,16 +95,10 @@ public class DevelopController {
 	 */
 	@PostMapping(value="/register", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public String developPlan(@RequestBody SrDevelopDto srDevelop, HttpSession session, Model model) {
-		int userNo = (int)session.getAttribute("userNo"); 
-		log.info("userNO"+userNo);
-		
-		List<Users> list = developService.updateDevelopSr(srDevelop, userNo);
+	public int developPlan(@RequestBody SrDevelopDto srDevelop, Model model) {
+		int result = developService.updateDevelopSr(srDevelop);
 		log.info("SR개발관리 계획 등록");
-		log.info(list);
-		model.addAttribute("devlistByDp", list);
-		
-		return "develop/devlistView";
+		return result;
 	}
 	
 	
@@ -102,7 +107,7 @@ public class DevelopController {
 	 * @param userDpNmMap	
 	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
 	 * @return				develop/devlistView jsp 파일
-	 *//*
+	 */
 	@PostMapping(value="/devlist")
 	public String getDevList(@RequestBody Map<String, Object> userDpNmDateMap, Model model) {
 		String userDpNm = (String)userDpNmDateMap.get("userDpNm");
@@ -117,7 +122,7 @@ public class DevelopController {
 //		log.info(list);
 		model.addAttribute("devlistByDp", list);
 		return "develop/devlistView";
-	}*/
+	}
 	
 	@GetMapping(value="/devLeader")
 	@ResponseBody
@@ -148,7 +153,17 @@ public class DevelopController {
 	     return "develop/selectHr";
 	  }
 	 
-	 @PostMapping(value="/updateHr")
+	 /**
+	 * @author				정홍주
+	 * @param srNo			
+	 * @param userNo		
+	 * @param hrLeader
+	 * @param taskNo
+	 * @param hrStartDate
+	 * @param hrEndDate
+	 * @return
+	 */
+	@PostMapping(value="/updateHr")
 	 public String insertHrList(String srNo, int[] userNo, String[] hrLeader, int[] taskNo, 
 			 @DateTimeFormat(pattern="yyyy-MM-dd") Date[] hrStartDate, 
 			 @DateTimeFormat(pattern="yyyy-MM-dd") Date[] hrEndDate){
@@ -166,7 +181,7 @@ public class DevelopController {
 		 }
 		 		 
 		 int result = developService.insertHrList(listHR);
-		 int result2 = developService.insertProgress(); ///////////////////PROGRESS 삽입
+//		 int result2 = developService.insertProgress(); ///////////////////PROGRESS 삽입
 		 log.info(result);
 		 log.info("HR등록");
 		 return "redirect:/develop/list/1";

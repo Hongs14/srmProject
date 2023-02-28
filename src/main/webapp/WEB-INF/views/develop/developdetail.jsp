@@ -176,7 +176,7 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="card mb-4 px-5">
-								<div class="mb-1 mt-5">
+								<div class="mb-1 mt-4">
 									<div class="align-items-center justify-content-between">
 										<div class="row">
 											<div class="col-6">
@@ -212,25 +212,25 @@
 
 									<div id="srContent">
 										<hr />
-										<div class="row mb-2">
+										<div class="row mb-1">
 											<div class="col-sm-2">
 												<h6 class="m-0 font-weight-bold text-primary">SR제목</h6>
 											</div>
 											<div class="col-sm-10">${dlist.srTtl}</div>
 										</div>
-										<div class="row mb-2">
+										<div class="row mb-1">
 											<div class="col-sm-2">
 												<h6 class="m-0 font-weight-bold text-primary">관련근거(목적)</h6>
 											</div>
 											<div class="col-sm-10">${dlist.srStd}</div>
 										</div>
-										<div class="row mb-2">
+										<div class="row mb-1">
 											<div class="col-sm-2">
 												<h6 class="m-0 font-weight-bold text-primary">SR내용</h6>
 											</div>
 											<div class="col-sm-10">${dlist.srCn}</div>
 										</div>
-										<div class="row mb-2">
+										<div class="row mb-1">
 											<div class="col-sm-2">
 												<h6 class="m-0 font-weight-bold text-primary">첨부파일</h6>
 											</div>
@@ -245,7 +245,7 @@
 								<div class="d-flex flex-column">
 									<form id="devleopForm" name="developForm">
 									<div class="mr-4"><h6 class="text-danger text-right">*는 필수입력항목</h6></div>
-										<div class="align-items-center justify-content-between mt-2">
+										<div class="align-items-center justify-content-between mt-1">
 											<div class="row">
 												<div class="col-6">
 													<div class="form-group row">
@@ -277,6 +277,7 @@
 														<div class="col-sm-9">
 															<select id="sttsNo" name="sttsNo" class="form-control">
 																<option></option>
+																<option value="9">개발계획중</option>
 																<option value="5">개발중</option>
 															</select>
 														</div>

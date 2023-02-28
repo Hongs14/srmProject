@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.SR;
+import com.team01.webapp.model.System;
+import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SrDevelopDto;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
@@ -27,6 +29,10 @@ public interface IDevelopRepository {
 	 */
 	public List<SR> selectDevelopList(Pager pager);
 	
+	public List<SRStts> selectSrSttsList(); 
+	public List<System> selectSysNmList();
+	public List<Users> selectUserOgdpList();
+	public List<Users> selectUserDpList();
 	/**
 	 * @author	정홍주
 	 * @param 	srNo
