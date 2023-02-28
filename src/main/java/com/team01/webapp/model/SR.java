@@ -25,7 +25,7 @@ public class SR {
 	private Date srDdlnDate;
 	private Date srStartDate;
 	private Date srEndDate;
-	private String srViewYn;
+	private char srDelYn;
 	private String srStd;
 	
 	private int pageNo;

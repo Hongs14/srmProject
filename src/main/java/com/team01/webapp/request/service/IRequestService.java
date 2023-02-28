@@ -50,5 +50,8 @@ public interface IRequestService {
 		int updateRequest(SR sr);
 		//업데이트시 파일삭제
 		int deleteExistingFile(String string);
+		
+		//요청 삭제처리
+		int deleteRequest(String srNo);
 
 }

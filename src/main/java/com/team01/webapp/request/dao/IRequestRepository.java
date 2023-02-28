@@ -56,5 +56,9 @@ public interface IRequestRepository {
 	int updateRequest(SR sr);
 
 	int deleteExistingFile(String srFilePhysNm);
+	
+	
+	//요청 삭제
+	int deleteRequest(String srNo);
 
 }

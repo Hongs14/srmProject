@@ -72,14 +72,14 @@
 			</div>
          	<div class="card mb-4 ">
          		<!-- 검색 -->
-                <div class="mb-1 mt-5 px-5">
+                <div class="mb-1 mt-5 px-3">
                 <form class="navbar-search">
                 	<div class="row text-right">
                 		<div class="col-4">
                 			<div class="form-group row" id="simple-date4" >
 	                			<div class="input-daterange input-group input-group-sm">
-	                				<label for="start" class="col-sm-4 col-form-label-sm ">조회기간</label>
-	                    			<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart"/>
+	                				<label for="start" class="col-sm-3 col-form-label-sm ">조회기간</label>
+	                    			<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" id="dateStart"/>
 	                    			<div class="input-group-prepend">
 	                    				<span class="input-group-text" style="height:31px;">~</span>
 	                    			</div>
@@ -118,8 +118,8 @@
                 	<div class="row text-right">
                 		<div class="col-4">
                 			<div class="form-group row">
-                				<label for="userOgdp" class="col-sm-4 col-form-label-sm">등록자 소속</label>
-		                    	<select id="userOgdp" class="form-control form-control-sm col-sm-8">
+                				<label for="userOgdp" class="col-sm-3 col-form-label-sm">등록자소속</label>
+		                    	<select id="userOgdp" class="form-control form-control-sm col-sm-9">
 		                        	<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.userOgdpList}">
 										<option class="text-black" value="${item.userOgdp}">${item.userOgdp}</option>
@@ -157,13 +157,18 @@
                 </div>
                 <hr/>
          		<!-- SR 검토 목록 -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">SR 요청 목록</h6>
+                <div class="p-3 d-flex flex-row align-items-center justify-content-between">
+                   	<h5 class="m-0 font-weight-bold text-primary mb-1">SR 요청 목록</h5>
+                 
 					<div class="d-sm-flex justify-content-end">
 						<a class="btn btn-sm btn-secondary mr-1"
 							onclick="getWriteForm()"> 요청등록 </a>
 						<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
 					</div>
+				</div>
+				<div class="custom-control custom-switch px-5 ml-2" style="width:180px; border-radius:3px; background-color:#eaecf4;">
+				  <input type="checkbox" class="custom-control-input" id="customSwitch1">
+				  <label class="custom-control-label" for="customSwitch1"><span class="text-primary">나의 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span></label>
 				</div>
                 <div id="ajaxList">
                 

@@ -116,7 +116,7 @@
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-			        <a type="button" class="btn btn-warning" href= '<c:url value="/request/delete/${srno}"/>'>삭제</a>
+			        <a type="button" class="btn btn-warning" href= '<c:url value="/request/delete/${sr.srNo}"/>'>삭제</a>
 			      </div>
 			    </div>
 			  </div>

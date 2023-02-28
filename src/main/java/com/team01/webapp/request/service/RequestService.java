@@ -166,6 +166,11 @@ public class RequestService implements IRequestService{
 		return requestRepository.deleteExistingFile(srFilePhysNm);
 	}
 
+	@Override
+	public int deleteRequest(String srNo) {
+		return requestRepository.deleteRequest(srNo);
+	}
+
 	
 
 	
