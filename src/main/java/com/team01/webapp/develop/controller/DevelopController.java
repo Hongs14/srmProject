@@ -84,12 +84,13 @@ public class DevelopController {
 	 */
 	@PostMapping(value="/register", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public String developPlan(@RequestBody SrDevelopDto srDevelop, @RequestParam int userNo, HttpSession session, Model model) {
-		userNo = (int)session.getAttribute("userNo"); 
+	public String developPlan(@RequestBody SrDevelopDto srDevelop, HttpSession session, Model model) {
+		int userNo = (int)session.getAttribute("userNo"); 
 		log.info("userNO"+userNo);
 		
 		List<Users> list = developService.updateDevelopSr(srDevelop, userNo);
 		log.info("SR개발관리 계획 등록");
+		log.info(list);
 		model.addAttribute("devlistByDp", list);
 		
 		return "develop/devlistView";

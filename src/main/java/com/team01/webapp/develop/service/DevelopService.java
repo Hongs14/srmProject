@@ -81,8 +81,9 @@ public class DevelopService implements IDevelopService{
 	@Override
 	public List<Users> selectDeveloperList(String userDpNm, int userNo, String sDate, String eDate) {
 		log.info("개발자 리스트 띄우기");
-		List<Users> list = developRepository.selectDeveloperByDp(userDpNm, userNo);
 		
+		List<Users> list = developRepository.selectDeveloperByDp(userDpNm, userNo);
+		log.info(list);
 		for(int i=0; i<list.size();i++) {
 
 			LocalDate ld = LocalDate.parse(sDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -119,7 +120,7 @@ public class DevelopService implements IDevelopService{
 		
 		int row = developRepository.insertProg(progNoList);
 
-		return 1;
+		return row;
 	}
 	//-----------------------------------------------------------------------------------------
 	

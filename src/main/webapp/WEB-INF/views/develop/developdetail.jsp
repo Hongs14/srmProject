@@ -73,12 +73,17 @@
 
 				selectList();
 
+			},
+			error : function(request, status, error) {
+				console.log("실패");
+				alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
 			}
 		});
 	};
 
 	function selectList() {
 		//모달리스트 띄우기
+		console.log("aa");
 		let userDpNm = $('#srDevDp').val();
 		let startDate = $('#leaderSdate').val();
 		let endDate = $('#leaderEdate').val(); 
