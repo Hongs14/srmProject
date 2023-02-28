@@ -1,10 +1,11 @@
 package com.team01.webapp.develop.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -83,10 +84,16 @@ public class DevelopController {
 	 */
 	@PostMapping(value="/register", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public int developPlan(@RequestBody SrDevelopDto srDevelop) {
-		int result = developService.updateDevelop(srDevelop);
+	public String developPlan(@RequestBody SrDevelopDto srDevelop, HttpSession session, Model model) {
+		int userNo = (int)session.getAttribute("userNo"); 
+		log.info("userNO"+userNo);
+		
+		List<Users> list = developService.updateDevelopSr(srDevelop, userNo);
 		log.info("SR개발관리 계획 등록");
-		return result;
+		log.info(list);
+		model.addAttribute("devlistByDp", list);
+		
+		return "develop/devlistView";
 	}
 	
 	
@@ -95,7 +102,7 @@ public class DevelopController {
 	 * @param userDpNmMap	
 	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
 	 * @return				develop/devlistView jsp 파일
-	 */
+	 *//*
 	@PostMapping(value="/devlist")
 	public String getDevList(@RequestBody Map<String, Object> userDpNmDateMap, Model model) {
 		String userDpNm = (String)userDpNmDateMap.get("userDpNm");
@@ -110,7 +117,7 @@ public class DevelopController {
 //		log.info(list);
 		model.addAttribute("devlistByDp", list);
 		return "develop/devlistView";
-	}
+	}*/
 	
 	@GetMapping(value="/devLeader")
 	@ResponseBody
