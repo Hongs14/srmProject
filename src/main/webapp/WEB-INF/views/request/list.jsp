@@ -156,7 +156,7 @@
                 </form>
                 </div>
                 <hr/>
-         		<!-- SR 검토 목록 -->
+         		<!-- SR 요청 목록 -->
                 <div class="p-3 d-flex flex-row align-items-center justify-content-between">
                    	<h5 class="m-0 font-weight-bold text-primary mb-1">SR 요청 목록</h5>
                  
@@ -166,13 +166,20 @@
 						<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
 					</div>
 				</div>
+				
+				<!-- 나의 SR 조회 -->
+				<input type="hidden" value="${sessionScope.loginUser.userNo}" id="userNo">
 				<div class="custom-control custom-switch px-5 ml-2" style="width:180px; border-radius:3px; background-color:#eaecf4;">
-				  <input type="checkbox" class="custom-control-input" id="customSwitch1">
-				  <label class="custom-control-label" for="customSwitch1"><span class="text-primary">나의 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span></label>
+				  <input type="checkbox" class="custom-control-input" id="searchMySR" onclick="requestList(1)"/>
+				  <label class="custom-control-label" for="searchMySR"><span class="text-primary">나의 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span></label>
 				</div>
+				
+				
+				<!-- ajaxList 들어가는 곳 -->
                 <div id="ajaxList">
                 
                 </div>
+                
               </div>
           </div>
           
@@ -211,13 +218,25 @@
 						data : JSON.stringify(data),
 						contentType: "application/json; charset=UTF-8"
 					}).done((data) => {
-						$("#ajaxList").html(data);
+						$("#ajaxList").html(data)
 					});
 					
 					
 				});
-			
+				
+				var checkMySR = 0;
+				  
 				function requestList(pageNo) {
+					if ( $('#searchMySR').prop('checked') ) {
+						checkMySR = 1;
+						let userNo = $("#userNo").val();
+						console.log(userNo);
+						console.log("checkMySR: "+checkMySR);
+					  } else {
+						checkMySR = 0;
+						console.log("checkMySR: "+checkMySR);
+					  }
+					console.log("requestList + checkMySR: "+checkMySR);
 					console.log(pageNo);
 					var sysNoSelect = document.getElementById("sysNo");
 					var sttsNoSelect = document.getElementById("sttsNo");
@@ -232,11 +251,15 @@
 			 		var srRegStartDate = document.getElementById("dateStart").value;
 					var srRegEndDate = document.getElementById("dateEnd").value;
 					var srTtl = document.getElementById("keyword").value;
+					
+					var userNo = $("#userNo").val();
+					
 					if(srTtl !== "") {
 						srTtl = "%" + srTtl + "%";
 					}
 					
-					let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
+					let data = {checkMySR: checkMySR, userNo: userNo, sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp, 
+								srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 					
 					$.ajax({
 						url : "filter/"+pageNo,
@@ -303,6 +326,8 @@
 					});
 					
 				}
+				
+				
 			</script>
           
 
