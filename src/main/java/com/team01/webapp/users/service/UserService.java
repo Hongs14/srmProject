@@ -6,8 +6,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.team01.webapp.model.UserSystem;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.users.dao.IUserRepository;
-import com.team01.webapp.users.model.User;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -25,10 +26,10 @@ public class UserService implements IUserService {
 	IUserRepository userRepository;
 	
 	@Override
-	public LoginResult login(User user) {
+	public LoginResult login(Users user) {
 		log.info("userId: "+ user.getUserId()+ "실행");
 		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		User dbUser = getUser(user.getUserId());
+		Users dbUser = getUser(user.getUserId());
 		log.info("dbUser"+ dbUser);
 		log.info("ViewUser: "+ user);
 		
@@ -50,11 +51,20 @@ public class UserService implements IUserService {
 		user.setUserEml(dbUser.getUserEml());
 		user.setUserTelno(dbUser.getUserTelno());
 		user.setUserDpNm(dbUser.getUserDpNm());
+		UserSystem userSystem = userRepository.selectSystemByUserNo(user.getUserNo());
+		log.info("userSystem: "+userSystem);
+		String sysNo = userSystem.getSysNo();
+		String sysNm = userSystem.getSysNm();
+		user.setSysNm(sysNm);
+		user.setSysNo(sysNo);
+		
+		
 		return LoginResult.SUCCESS;
 	}
 	
+
 	@Override
-	public User getUser(String userId) {
+	public Users getUser(String userId) {
 		log.info(userId+ "실행 ");
 		return userRepository.selectByUserId(userId);
 	}
@@ -62,16 +72,40 @@ public class UserService implements IUserService {
 
 	@Override
 	@Transactional
-	public int join(User user) {
+	public int join(Users user) {
 		log.info(user.getUserPswd());
 		try {
 		user.setUserDelYn('N');
 		
 		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		user.setUserPswd(pe.encode(user.getUserPswd()));
+		
+		String sysNo = "";
+		switch(user.getUserOgdp()) {
+			case "레드주컴퍼니": 
+				sysNo="JHJ";
+				break;
+			case "한국소프트SRM":
+				sysNo="KOREASOFT_SRM";
+				break;
+			case "에이치알컴퍼니":
+				sysNo="KHR";
+				break;
+			case "티에이치컴퍼니":
+				sysNo="KTH";
+				break;
+			case "지에이치컴퍼니":
+				sysNo="HGH";
+				break;
+				
+		}
+		log.info("sysNo: "+sysNo);
 		userRepository.insert(user);
 		String userId = user.getUserId();
 		user = userRepository.selectByUserId(userId);
+		user.setSysNo(sysNo);
+		log.info("sysNo: "+user.getSysNo());
+		log.info("custNo: "+user.getUserNo());
 		userRepository.insertUserSystem(user);
 		return JOIN_SUCCESS;
 		}catch(Exception e){

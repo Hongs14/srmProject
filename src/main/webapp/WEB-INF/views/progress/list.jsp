@@ -46,7 +46,7 @@
 					                			<div class="form-group row">
 					                				<label class="col-sm-3 col-form-label-sm" for="sysNo">시스템 구분</label>
 							                    	<select class="form-control form-control-sm col-sm-9" id="sysNo">
-														<option value="0">전체</option>
+														<option value="">전체</option>
 														<c:forEach var="item" items="${progressFilter.sysNmList}">
 															<option value="${item.sysNo}">${item.sysNm}</option>
 														</c:forEach>
@@ -99,8 +99,13 @@
 					                		</div>
 											<div class="col-1">
 												<div class="input-group-append float-right">
-													<button class="btn btn-primary btn-sm" type="button" onclick="progressList(1)">
+													<button class="btn btn-primary btn-sm" type="button" onclick="progressList(1, 1)">
 														조회 <i class="fas fa-search fa-sm"></i>
+													</button>
+												</div>
+												<div class="input-group-append float-right">
+													<button class="btn btn-primary btn-sm" type="button" onclick="progressList(1, 2)">
+														내 할일 조회 <i class="fas fa-search fa-sm"></i>
 													</button>
 												</div>
 											</div>
@@ -140,7 +145,7 @@
 												});
 											
 												// 검색 버튼을 누르면 값을 긁어오는 부분
-												function progressList(pageNo) {
+												function progressList(pageNo, choice) {
 													var sysNoSelect = document.getElementById("sysNo");
 													var srTypeNoSelect = document.getElementById("srTypeNo");
 													var srSttsNoSelect = document.getElementById("srSttsNo");
@@ -150,7 +155,7 @@
 													var srSttsNo = srSttsNoSelect.options[document.getElementById("srSttsNo").selectedIndex].value;
 													
 													var srName = document.getElementById('srName').value;
-													var srNo = document.getElementById('srNo').value;	
+													var srNo = document.getElementById('srNo').value;
 													
 													if(srName !== "") {
 														srName = "%" + srName + "%";
@@ -160,7 +165,7 @@
 														srNo = "%" + srNo + "%";
 													}
 													
-													let data = {sysNo : sysNo, srTypeNo : srTypeNo, srSttsNo : srSttsNo, srName : srName, srNo : srNo};
+													let data = {sysNo : sysNo, srTypeNo : srTypeNo, srSttsNo : srSttsNo, srName : srName, srNo : srNo, choice : choice};
 													
 													console.log(data);
 													
@@ -182,8 +187,48 @@
 								<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 									<h6 class="m-0 font-weight-bold text-primary">SR 진척 목록</h6>
 									<div class="d-sm-flex justify-content-end">
-										<button class="btn btn-sm btn-secondary">엑셀 다운로드</button>
+										<button class="btn btn-sm btn-primary" onclick="excelDownload()">엑셀 다운로드</button>
 									</div>
+									
+									<script>
+										function excelDownload() {
+											var progressArr = new Array();
+											var checkbox = $("input[name=progressCheck]:checked");
+											
+											// 체크된 체크박스의 값을 가져옴
+											checkbox.each(function(i) {
+												var tr = checkbox.parent().parent().parent().eq(i);
+												var td = tr.children();
+												
+												if(td.eq(1).text() != 'SR 번호') {
+													
+													var srNo = td.eq(1).text();
+													var sysNm = td.eq(2).text();
+													var srTypeNm = td.eq(3).text();
+													var srTtl = td.eq(4).text();
+													var userNm = td.eq(5).text();
+													var srDdlnDate = td.eq(6).text();
+													var sttsNm = td.eq(7).children().text();
+													var srPry = td.eq(8).children().text();
+													
+													let data = {srNo : srNo, sysNm : sysNm, srTypeNm : srTypeNm, 
+																srTtl : srTtl, userNm : userNm, srDdlnDate : srDdlnDate,
+																sttsNm : sttsNm, srPry : srPry}
+													
+													progressArr.push(data);
+												}
+											});
+											
+											data = {progressArr : progressArr};
+											
+											$.ajax({
+												url : "excelDownload" + ""
+											
+											})
+											
+										}
+									</script>
+									
 								</div>
 								<div id="progressListView" style="width:100%"></div>
 							</div>

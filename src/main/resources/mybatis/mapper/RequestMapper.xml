@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team01.webapp.request.dao.IRequestRepository">
+	
+	<select id="selectSysNo" resultType="string" parameterType="int">
+		select sys_no as "sysNo" 
+		from user_system where cust_no = #{userNo}
+	</select>
+	
+
+	<select id="selectSysNmList" resultType="system">
+		SELECT 
+			SYS_NO AS "sysNo",
+			SYS_NM AS "sysNm"
+		FROM SYSTEM
+         WHERE SYS_NM != '한국소프트SRM'
+	</select>
+
+
+	<select id="selectSrType" resultType="srtype">
+		SELECT 
+		    SR_TYPE_NO AS "srTypeNo",
+		    SR_TYPE_NM AS "srTypeNm"
+		FROM SR_TYPE
+	</select>
+	
+
+	<select id="selectSttsNmList" resultType="srstts">
+		SELECT 
+		    STTS_NO AS "sttsNo",
+		    STTS_NM AS "sttsNm"
+		FROM SR_STTS
+	</select>
+	
+	<select id="selectUserOgdpList" resultType="users">
+		SELECT
+			DISTINCT USER_OGDP AS "userOgdp"
+		FROM users 
+        WHERE user_ogdp !='한국소프트SRM'
+	</select>
+	
+	<select id="selectSrDevDpList" resultType="sr">
+		SELECT
+			DISTINCT SR_DEV_DP AS "srDevDp"
+		FROM SR
+        WHERE SR_DEV_DP IS NOT NULL
+	</select>
+	
+	<select id="selectMaxSrNo" parameterType="string" resultType="string">
+		 SELECT  MAX(SUBSTR(sr_no,INSTR(sr_no,'-',6)+1))
+         from sr
+         where sr_no LIKE #{sysNo} 
+         order by sr_no desc
+	</select>
+
+	<select id="selectTotalRequestCount" parameterType="requestAjax" resultType="int">
+		SELECT
+		    COUNT(SR_NO)
+		FROM SR sr, SYSTEM system, SR_STTS stts, USERS users
+		where sr.sys_no = system.sys_no
+		AND sr.stts_no = stts.stts_no
+		AND sr.sr_cust_no = users.user_no
+		AND sr.SR_DEL_YN = 'N'
+		<if test="srDevDp != '전체'">
+			AND sr.sr_dev_dp = #{srDevDp}
+		</if>
+		<if test="sysNo !='전체'">
+			AND sr.sys_no = #{sysNo}
+		</if>
+		<if test="sttsNo != '전체'">
+			AND sr.stts_no = #{sttsNo}
+		</if>
+		<if test="userOgdp != '전체'">
+			AND users.user_ogdp = #{userOgdp}
+		</if>
+		<if test="srRegStartDate neq null and srRegStartDate neq ''">
+			 AND sr.SR_REG_DATE BETWEEN 
+                TO_DATE(#{srRegStartDate},'YY-MM-DD') 
+                AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+0.9
+		</if>
+		<if test="srTtl != ''">
+			AND  sr.SR_TTL like #{srTtl}
+		</if>
+	</select>
+
+
+	<select id="selectRequestList" parameterType="requestAjax" resultType="requestList">
+		SELECT
+			    SR_NO AS "srNo",
+			    SR_TTL AS "srTtl",
+			    SYS_NM "sysNm",
+			    USER_NM AS "userNm",
+			    USER_DP_NM AS "userDpNm",
+			    USER_OGDP AS "userOgdp",
+			    SR_DEV_DP AS "srDevDp",
+			    STTS_NM AS "sttsNm",
+			    SR_REG_DATE AS "srRegDate",
+			    SR_DDLN_DATE AS "srDdlnDate",
+			    SR_PRY AS "srPry",
+			    RNUM AS "seq"
+			FROM(
+			    SELECT
+			        SR_NO,
+			        SR_TTL,
+			        SYS_NM,
+			        USER_NM,
+			        USER_DP_NM,
+			        USER_OGDP,
+			        SR_DEV_DP,
+			        STTS_NM,
+			        SR_REG_DATE,
+			        SR_DDLN_DATE,
+			        SR_PRY,
+			        ROWNUM AS RNUM
+			    FROM(
+			        SELECT 
+			            s.SR_NO,
+			            s.SR_TTL,
+			            SYS_NM,
+			            u.USER_NM,
+			            u.USER_DP_NM,
+			            u.USER_OGDP,
+			            s.SR_DEV_DP,
+			            st.STTS_NM,
+			            s.SR_REG_DATE,
+			            s.SR_DDLN_DATE,
+			            s.SR_PRY
+			        FROM SR s ,USERS u,  SR_STTS st, SYSTEM sys
+       			 	WHERE SR_CUST_NO = u.USER_NO
+        			AND s.STTS_NO = st.STTS_NO
+        			AND s.SYS_NO = sys.SYS_NO
+        			AND s.SR_DEL_YN = 'N'
+			       	<if test="sttsNo != '전체'">
+						AND st.stts_no = #{sttsNo}
+					</if>
+			       <if test="sysNo != '전체'">
+						AND s.sys_no = #{sysNo}
+					</if>
+			       	<if test="srDevDp != '전체'">
+			       		AND s.sr_dev_dp LIKE #{srDevDp}
+			       	</if>
+			       	<if test="userOgdp != '전체'">
+						AND u.user_ogdp = #{userOgdp}
+					</if>
+					<if test="srRegStartDate neq null and srRegStartDate neq ''">
+						AND s.SR_REG_DATE BETWEEN 
+			                TO_DATE(#{srRegStartDate},'YY-MM-DD') 
+			                AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+0.9
+					</if>
+					<if test="srTtl != ''">
+						AND  s.SR_TTL like #{srTtl}
+					</if>
+			        ORDER BY s.SR_REG_DATE DESC
+			    )
+			    <![CDATA[
+				    WHERE ROWNUM <=#{end}
+			    ]]>
+			)
+			<![CDATA[
+				WHERE RNUM >=#{start}
+			]]>
+	</select>
+	
+	<insert id="insertRequest" parameterType="sr">
+		INSERT INTO sr (sr_no, sr_cust_no, sys_no, sr_std, stts_no, sr_ttl, sr_cn, sr_reg_date) 
+		VALUES (#{srNo}, #{srCustNo}, #{sysNo}, #{srStd} ,#{sttsNo}, #{srTtl}, #{srCn}, SYSDATE)
+	</insert>
+	
+	<insert id="insertRequestFileUpload" parameterType="srFile">
+		INSERT INTO SR_FILE( SR_FILE_NO, SR_NO, SR_FILE_PHYS_NM, SR_FILE_ACTL_NM, SR_FILE_EXTN_NM)
+		VALUES(srFileNo_seq.nextval, #{srNo}, #{srFilePhysNm}, #{srFileActlNm}, #{srFileExtnNm})
+	</insert>
+	
+	<select id="selectRequestDetail" parameterType="string" resultType="request">
+		SELECT
+	        sr_no as "srNo", 
+	        user_nm as "userNm",
+	        user_ogdp as "userOgdp",
+	        sr_reg_date as "srRegDate", 
+	        sys_nm as "sysNm",
+	        sr_ttl as "srTtl",
+	        sr_std as "srStd",
+	        sr_cn as "srCn"
+		FROM
+	        SR s, USERS u, SYSTEM sys
+		WHERE 
+	        s.sr_cust_no = u.user_no and
+	        sys.sys_no = s.sys_no
+	        and sr_no = #{srNo}
+	</select>
+	
+	<select id="selectRequestFileDetail" parameterType="string" resultType="srFile">
+		SELECT
+			SR_FILE_NO AS "srFileNo",
+			SR_NO AS "srNo",
+			SR_FILE_PHYS_NM AS "srFilePhysNm",
+			SR_FILE_ACTL_NM AS "srFileActlNm",
+			SR_FILE_EXTN_NM AS "srFileExtnNm"
+		FROM sr_FILE
+		WHERE sr_no = #{srNo}
+	</select>
+	
+	<select id="selectFileDownload" parameterType="string" resultType="srFile">
+		SELECT
+			SR_FILE_NO AS "srFileNo",
+			SR_NO AS "srNo",
+			SR_FILE_PHYS_NM AS "srFilePhysNm",
+			SR_FILE_ACTL_NM AS "srFileActlNm",
+			SR_FILE_EXTN_NM AS "srFileExtnNm"
+		FROM sr_FILE
+		WHERE sr_file_no = #{srFileNo}
+	</select>
+		
+	<update id="updateRequest" parameterType="sr">
+		UPDATE 
+		   	SR
+		SET 
+			SR_REG_DATE=SYSDATE,
+			SR_TTL=#{srTtl},
+			SR_CN=#{srCn}, 
+			SR_STD=#{srStd}
+		WHERE 
+			SR_NO=#{srNo}
+	</update>
+	
+	<delete id="deleteExistingFile" parameterType="string">
+		DELETE FROM 
+	        SR_FILE
+	      WHERE 
+	        SR_FILE_PHYS_NM=#{srFilePhysNm}
+	</delete>
+	
+	<update id="deleteRequest" parameterType="string">
+		UPDATE 
+		   	SR
+		SET 
+			SR_DEL_YN = 'Y'
+		WHERE 
+			SR_NO=#{srNo}
+	</update>
+</mapper>

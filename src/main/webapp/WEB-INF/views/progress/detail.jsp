@@ -2,10 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <style>
 #prog_tabs .nav-link{
 background-color:#EFEFEF;
+color: black;
 border-top-left-radius: 10px; 
 border-top-right-radius: 10px;
 
@@ -175,15 +176,41 @@ color:white;
 						<div class="col-lg-7">
 						<div class="d-flex justify-content-between flex-lg-nowrap" id="prog_tabs">
 							<ul class="nav nav-tabs" role="tablist">
-								<li class="nav-item">
-									<a class="nav-link active" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
-								</li>
+							<c:choose>
+								<c:when test="${message == 2}">
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link active" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+									</li>
+								</c:when>
+								<c:when test="${message == 3}">
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link active" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li class="nav-item">
+										<a class="nav-link active" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+									</li>
+								</c:otherwise>
+							</c:choose>
 							</ul>
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item">SR 관리</li>
@@ -193,15 +220,21 @@ color:white;
 							<div class="card mb-4" style="text-align:center">
 								<script>
 									$(document).ready(function () {
+										
+										if ("${message}" == "") {
+											message = 1
+										} else {
+											message = "${message}"
+										}
+										console.log(message);
+									
 										var srNo = '${progressDetail.srNo}';
 										console.log(srNo);
 										
 										let data = {srNo : srNo};
-										
-										console.log(data);
 
 										$.ajax({
-											url : "progressajax/1",
+											url : "progressajax/" + message,
 											method : "post",
 											data : JSON.stringify(data),
 											contentType: "application/json; charset=UTF-8"

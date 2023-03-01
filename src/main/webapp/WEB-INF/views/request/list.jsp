@@ -1,18 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
-	<style>
-	.requsetTtl{
-	width: 190px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display:block;
-	}	
-	</style>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
+	<style>
+	
+	.requsetTtl{
+		width: 190px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display:block;
+	}	
+	
+	#requestList > .table th, 
+	#requestList > .table td {
+    	padding: 0.5rem;
+    }
+    
+	</style>
+  	
+	<script>
+	  	$(document).ready(function () {
+		    $('#simple-date4 .input-daterange').datepicker({        
+		        format: 'yyyy/mm/dd',        
+		        autoclose: true,     
+		        todayHighlight: true,   
+		        todayBtn: 'linked',
+		      });  
+	  	});
+	  	
+	  	
+  	</script>
   	
 </head>
 
@@ -32,10 +54,10 @@
         <!-- 메인 컨테이너 Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
         
-          <div class="d-sm-flex align-items-end justify-content-between">
-          <div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px;">
-            <h6 class="mb-0 text-white">SR 요청관리</h6>
-          </div>
+          <div class="d-sm-flex align-items-end justify-content-between"  id="srMenu">
+          	<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:121px;">
+			 	<h6 class="mb-0 text-white">SR 요청관리</h6>
+			</div>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><b>SR 관리</b></li>
               <li class="breadcrumb-item active" aria-current="page">SR 요청관리</li>
@@ -44,48 +66,47 @@
 		
           <!-- Row -->
         <div class="row">
-     	<div class="col-lg-12">
+     	<div class="col-lg-12" id="colNo1">
+	     	<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:121px; display:none;" id="srMiniMenu">
+			 	<h6 class="mb-0 text-white">SR 요청관리</h6>
+			</div>
          	<div class="card mb-4 ">
          		<!-- 검색 -->
-                <div class="mb-1 mt-5 px-5">
+                <div class="mb-1 mt-5 px-3">
                 <form class="navbar-search">
-                	<div class="row">
+                	<div class="row text-right">
                 		<div class="col-4">
                 			<div class="form-group row" id="simple-date4" >
-			                	<div class="input-daterange input-group input-group-sm">
-			                		<label for="startDate" class="col-sm-3 col-form-label-sm">조회기간</label>
-			                    	<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" id="startDate"/>
-			                    	<div class="input-group-prepend">
-			                    		<span class="input-group-text" style="height:31px;">~</span>
-			                    	</div>
-			                    	<input type="text" class="input-sm form-control form-control-sm" name="end" />
-			                    </div>
-			            	</div>
+	                			<div class="input-daterange input-group input-group-sm">
+	                				<label for="start" class="col-sm-3 col-form-label-sm ">조회기간</label>
+	                    			<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" id="dateStart"/>
+	                    			<div class="input-group-prepend">
+	                    				<span class="input-group-text" style="height:31px;">~</span>
+	                    			</div>
+	                    			<input type="text" class="input-sm form-control form-control-sm" name="end" id="dateEnd"/>
+	                    		</div>
+	            			</div>
                 		</div>
                 		
                 		<div class="col-3">
                 			<div class="form-group row">
-                				<label class="col-sm-3 col-form-label-sm" for="srStts">진행상태</label>
-		                    	<select class="form-control form-control-sm col-sm-9" id="srStts">
-		                        	<option selected>전체</option>
-		                        	<option>요청</option>
-		                        	<option>검토중</option>
-		                        	<option>접수</option>
-		                        	<option>개발중</option>
-		                        	<option>개발완료</option>
-		                        	<option>재검토</option>
+                				<label for="sttsNo" class="col-sm-4 col-form-label-sm" >진행상태</label>
+                				<select id="sttsNo" class="form-control form-control-sm col-sm-8" >
+									<option selected>전체</option>
+									<c:forEach var="item" items="${requestFilter.srSttsList}">
+										<option value="${item.sttsNo}">${item.sttsNm}</option>
+									</c:forEach>
 		                    	</select>
 		                	</div>
                 		</div>
                 		<div class="col-4">
                 			<div class="form-group row">
-                				<label for="srSystem" class="col-sm-3 col-form-label-sm">관련시스템</label>
-		                    	<select class="form-control form-control-sm col-sm-9" id="srSystem" >
-		                        	<option selected>전체</option>
-		                        	<option>KHR시스템</option>
-		                        	<option>KTH시스템</option>
-		                        	<option>JHJ시스템 </option>
-		                        	<option>HGH시스템 </option>
+                				<label for="sysNo" class="col-sm-4 col-form-label-sm">관련시스템</label>
+                				<select  id="sysNo" class="form-control form-control-sm col-sm-8">
+									<option selected>전체</option>
+									<c:forEach var="item" items="${requestFilter.sysNmList}">
+										<option value="${item.sysNo}">${item.sysNm}</option>
+									</c:forEach>
 		                    	</select>
 		                	</div>
                 		</div>
@@ -94,41 +115,39 @@
                 		</div>
                 		
                 	</div>
-                	<div class="row">
+                	<div class="row text-right">
                 		<div class="col-4">
                 			<div class="form-group row">
-                				<label for="srOgdp" class="col-sm-3 col-form-label-sm">등록자 소속</label>
-		                    	<select class="form-control form-control-sm col-sm-9" id="srOgdp">
+                				<label for="userOgdp" class="col-sm-3 col-form-label-sm">등록자소속</label>
+		                    	<select id="userOgdp" class="form-control form-control-sm col-sm-9">
 		                        	<option selected>전체</option>
-		                        	<option>KHR시스템</option>
-		                        	<option>KTH시스템</option>
-		                        	<option>JHJ시스템</option>
-		                        	<option>HGH시스템</option>
+									<c:forEach var="item" items="${requestFilter.userOgdpList}">
+										<option class="text-black" value="${item.userOgdp}">${item.userOgdp}</option>
+									</c:forEach>
 		                    	</select>
 		                	</div>
                 		</div>
                 		<div class="col-3">
                 			<div class="form-group row">
-                			<label for="srDept" class="col-sm-3 col-form-label-sm">개발부서</label>
-		                    	<select class="form-control form-control-sm col-sm-9" id="srDept">
+                			<label for="srDevDp" class="col-sm-4 col-form-label-sm">개발부서</label>
+		                    	<select id="srDevDp" class="form-control form-control-sm col-sm-8" >
 		                        	<option selected>전체</option>
-		                        	<option>한국소프트웨어 개발1팀</option>
-		                        	<option>한국소프트웨어 개발2팀</option>
-		                        	<option>서강소프트웨어 개발1팀</option>
-		                        	<option>미래소프트웨어 개발1팀</option>
+									<c:forEach var="item" items="${requestFilter.srDevDpList}">
+										<option value="${item.srDevDp}">${item.srDevDp}</option>
+									</c:forEach>
 		                    	</select>
 		                	</div>
                 		</div>
                 		<div class="col-4">
 		                	<div class="form-group row">
-		                		<label for="srKeyWord" class="col-sm-3 col-form-label-sm">키워드</label>
-		                    	<input type="text" id="srKeyWord" class="form-control form-control-sm col-sm-9 bg-light" 
+		                		<label for="srKeyWord" class="col-sm-4 col-form-label-sm">키워드</label>
+		                    	<input type="text" id="keyword" class="form-control form-control-sm col-sm-8 bg-light" 
 		                   		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
 		                  	</div>
                 		</div>
                 		<div class="col-1">
                 			<div class="input-group-append float-right">
-								<button class="btn btn-primary btn-sm" type="button" onclick="progressList()" >
+								<button class="btn btn-primary btn-sm" type="button" onclick="requestList(1)" >
 									조회 <i class="fas fa-search fa-sm"></i>
 								</button>
 							</div>
@@ -138,146 +157,153 @@
                 </div>
                 <hr/>
          		<!-- SR 검토 목록 -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">SR 요청 목록</h6>
+                <div class="p-3 d-flex flex-row align-items-center justify-content-between">
+                   	<h5 class="m-0 font-weight-bold text-primary mb-1">SR 요청 목록</h5>
+                 
 					<div class="d-sm-flex justify-content-end">
 						<a class="btn btn-sm btn-secondary mr-1"
-							href="<c:url value='/request/write/'/>"> 요청등록 </a>
+							onclick="getWriteForm()"> 요청등록 </a>
 						<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
 					</div>
 				</div>
+				<div class="custom-control custom-switch px-5 ml-2" style="width:180px; border-radius:3px; background-color:#eaecf4;">
+				  <input type="checkbox" class="custom-control-input" id="customSwitch1">
+				  <label class="custom-control-label" for="customSwitch1"><span class="text-primary">나의 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span></label>
+				</div>
+                <div id="ajaxList">
                 
-                <div class="table-responsive p-3">
-                  <table class="table align-items-center table-flush table-hover border" id="dataTableHover">
-                    <thead class="thead-light">
-                      <tr>
-                        <th class="pr-0">
-	                        <div class="custom-control custom-checkbox">
-	                   			<input type="checkbox" class="custom-control-input" id="customCheck1">
-	                   			<label class="custom-control-label" for="customCheck1"></label>
-	                 		</div>
-                        </th>
-                        <th>요청번호 </th>
-                        <th>제목 </th>
-                        <th>관련시스템 </th>
-                        <th>등록자 </th>
-                        <th>소속 </th>
-                        <th>개발부서 </th>
-                        <th>상태 </th>
-                        <th>등록일 </th>
-                        <th>완료예정일 </th>
-                        <th>중요도 </th>
-                      </tr>
-                    </thead>
-                    
-                    <tbody>
-                    <tr>
-                    	<td class="pr-0">
-	                        <div class="custom-control custom-checkbox">
-	                   			<input type="checkbox" class="custom-control-input" id="customCheck5">
-	                   			<label class="custom-control-label" for="customCheck5"></label>
-	                 		</div>
-                        </td>
-                        <td>JHJ-SR-0001</td>
-                        <td><a href="detail/1" class="requsetTtl">댓글 기능 추가 부탁드립니다.~~~~~~~~~~~~~~~~~~`</a></td>
-                        <td>JHJ쇼핑몰</td>
-                        <td>정홍주 </td>
-                        <td>관리팀 </td>
-                        <td>미배정 </td>
-                        <td><span  class="badge badge-danger" style="font-size:100%">미검토</span></td>
-                        <td>2023/02/09 </td>
-                        <td>2023/04/08 </td>
-                        <td><span  class="badge badge-danger" style="font-size:100%">상</span></td>
-                      </tr>
-                      <tr>
-                      	<td class="pr-0">
-	                        <div class="custom-control custom-checkbox">
-	                   			<input type="checkbox" class="custom-control-input" id="customCheck2">
-	                   			<label class="custom-control-label" for="customCheck2"></label>
-	                 		</div>
-                        </td>
-                        <td>JHJ-SR-0002</td>
-                        <td>게시 기능 추가 부탁드립니다.</td>
-                        <td>JHJ쇼핑몰</td>
-                        <td>문지연</td>
-                        <td>관리팀 </td>
-                        <td>미배정 </td>
-                        <td><span  class="badge badge-danger" style="font-size:100%">미검토</span></td>
-                        <td>2023/02/09 </td>
-                        <td>2023/04/08 </td>
-                        <td><span  class="badge badge-secondary" style="font-size:100%">하</span></td>
-                      </tr>
-                      <tr>
-                      	<td class="pr-0">
-	                        <div class="custom-control custom-checkbox">
-	                   			<input type="checkbox" class="custom-control-input" id="customCheck3">
-	                   			<label class="custom-control-label" for="customCheck3"></label>
-	                 		</div>
-                        </td>
-                        <td>JHJ-SR-0003</td>
-                        <td >알림 기능 추가 부탁드립니다.</td>
-                        <td>JHJ쇼핑몰</td>
-                        <td>김주하 </td>
-                        <td>관리팀 </td>
-                        <td>미배정 </td>
-                        <td><span  class="badge badge-danger" style="font-size:100%">미검토</span></td>
-                        <td>2023/02/01 </td>
-                        <td>2023/04/11 </td>
-                        <td><span  class="badge badge-secondary" style="font-size:100%">하</span></td>
-                      </tr>
-                      <tr>
-                      	<td class="pr-0">
-	                        <div class="custom-control custom-checkbox">
-	                   			<input type="checkbox" class="custom-control-input" id="customCheck4">
-	                   			<label class="custom-control-label" for="customCheck4"></label>
-	                 		</div>
-                        </td>
-                        <td>JHJ-SR-0004</td>
-                        <td>댓글/검색 기능 보완 부탁드립니다.</td>
-                        <td>JHJ쇼핑몰</td>
-                        <td>정지혜 </td>
-                        <td>관리팀 </td>
-                        <td>미배정 </td>
-                        <td><span class="badge badge-primary" style="font-size:100%" >개발중</span></td>
-                        <td>2023/02/09 </td>
-                        <td>2023/04/08 </td>
-                        <td><span  class="badge badge-primary" style="font-size:100%">중</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-					<div class="pager d-flex justify-content-center my-4">
-						<div class="pagingButtonSet d-flex justify-content-center">
-							<c:if test="${pager.pageNo > 1}">
-								<a onclick="requestList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
-							</c:if>
-							<c:if test="${pager.groupNo > 1}">
-								<a onclick="requestList(${pager.startPageNo-1})" type="button" class="btn btn-outline-info btn-sm m-1">이전</a>
-							</c:if>
-			
-							<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
-								<c:if test="${pager.pageNo != i}">
-									<a onclick="requestList(${i})" type="button" class="btn btn-outline-success btn-sm m-1">${i}</a>
-								</c:if>
-								<c:if test="${pager.pageNo == i}">
-									<a onclick="requestList(${i})" type="button" class="btn btn-primary btn-sm m-1 text-white">${i}</a>
-								</c:if>
-							</c:forEach>
-			
-							<c:if test="${pager.groupNo < pager.totalGroupNo }">
-								<a onclick="requestList(${pager.endPageNo+1})" type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
-			
-							</c:if>
-							<c:if test="${pager.pageNo < pager.totalPageNo }">
-								<a onclick="requestList(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
-							</c:if>
-						</div>
-					</div>
                 </div>
               </div>
           </div>
+          
+          <div id="colNo2">
+          
+          </div>
+          
           </div>
           <!-- Row -->
-
+			<script>
+				$(document).ready(function () {
+					console.log("시작");
+					var sysNoSelect = document.getElementById("sysNo");
+					var sttsNoSelect = document.getElementById("sttsNo");
+					var userOgdpSelect = document.getElementById("userOgdp");
+					var srDevDpSelect = document.getElementById("srDevDp");
+					
+					var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+					var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+					var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].value;
+			 		var srDevDp = srDevDpSelect.options[document.getElementById("srDevDp").selectedIndex].value;  
+			 		
+			 		var srRegStartDate = document.getElementById("dateStart").value;
+					var srRegEndDate = document.getElementById("dateEnd").value;
+					var srTtl = document.getElementById("keyword").value;
+					if(srTtl !== "") {
+						srTtl = "%" + srTtl + "%";
+					}
+			 		
+					let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
+					
+					
+					$.ajax({
+						url : "filter/1",
+						method : "post",
+						data : JSON.stringify(data),
+						contentType: "application/json; charset=UTF-8"
+					}).done((data) => {
+						$("#ajaxList").html(data);
+					});
+					
+					
+				});
+			
+				function requestList(pageNo) {
+					console.log(pageNo);
+					var sysNoSelect = document.getElementById("sysNo");
+					var sttsNoSelect = document.getElementById("sttsNo");
+					var userOgdpSelect = document.getElementById("userOgdp");
+					var srDevDpSelect = document.getElementById("srDevDp");
+					
+					var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+					var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+					var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].value;
+			 		var srDevDp = srDevDpSelect.options[document.getElementById("srDevDp").selectedIndex].value;  
+					
+			 		var srRegStartDate = document.getElementById("dateStart").value;
+					var srRegEndDate = document.getElementById("dateEnd").value;
+					var srTtl = document.getElementById("keyword").value;
+					if(srTtl !== "") {
+						srTtl = "%" + srTtl + "%";
+					}
+					
+					let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
+					
+					$.ajax({
+						url : "filter/"+pageNo,
+						method : "post",
+						data : JSON.stringify(data),
+						contentType: "application/json; charset=UTF-8"
+					}).done((data) => {
+						$("#ajaxList").html(data);
+					});
+				}
+				
+				
+				function getSrDetail(i){
+					let srNo = i;
+					$("#srMenu").removeClass("d-sm-flex");
+					$("#srMenu").hide();
+					$("#srMiniMenu").show();
+					$("#colNo1").attr("class","col-lg-7");
+					$("#colNo2").attr("class","col-lg-5");
+					
+					$.ajax({
+						url : "detail/"+srNo,
+						type : "GET",
+						dataType : "html",
+						success : function(data) {
+							$('#colNo2').html(data);
+						}
+					});
+					
+				}
+				
+				function getWriteForm(){
+					$("#srMenu").removeClass("d-sm-flex");
+					$("#srMenu").hide();
+					$("#srMiniMenu").show();
+					$("#colNo1").attr("class","col-lg-7");
+					$("#colNo2").attr("class","col-lg-5");
+					
+					$.ajax({
+						url :"write",
+						type : "GET",
+						dataType : "html",
+						success : function(data) {
+							$('#colNo2').html(data);
+						}
+					});
+					
+				}
+				
+				function getUpdateForm(srNo){
+					$("#srMenu").removeClass("d-sm-flex");
+					$("#srMenu").hide();
+					$("#srMiniMenu").show();
+					$("#colNo1").attr("class","col-lg-7");
+					$("#colNo2").attr("class","col-lg-5");
+					
+					$.ajax({
+						url :"update/"+srNo,
+						type : "GET",
+						dataType : "html",
+						success : function(data) {
+							$('#colNo2').html(data);
+						}
+					});
+					
+				}
+			</script>
           
 
           <!-- 로그아웃 모달 -->

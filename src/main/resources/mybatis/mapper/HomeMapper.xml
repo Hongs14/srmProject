@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team01.webapp.home.dao.IHomeRepository">
+	
+	<select id="selectSysInfo" parameterType="int" resultType="systemInfo">
+		select 
+			s.sys_no as "sysNo", 
+			u.user_nm as "managerNm", 
+			sys_nm as "sysNm", 
+			sys_updt_date as "sysUpdtDate"
+		from system s, user_system us, users u
+		where s.sys_no = us.sys_no and u.user_no = s.manager_no
+		and us.cust_no = #{userNo}
+	</select>
+	
+	<select id="selectDonutList" parameterType="string" resultType="donut">
+		SELECT
+		    stts.STTS_NO AS "sttsNo",
+		    stts_NM AS "sttsNm", 
+		    COUNT(SR_NO) AS "count"
+		FROM SR sr, SR_STTS stts
+		WHERE sr.stts_no = stts.stts_no
+		AND SYS_NO = #{sysNo}
+		GROUP BY stts.STTS_NO, STTS_NM
+		ORDER BY stts.STTS_NO ASC
+	</select>
+
+	<select id="selectSysInfo2" parameterType="int" resultType="systemInfo">
+		select 
+		    s.sys_no as "sysNo", 
+		    u.user_nm as "managerNm", 
+		    sys_nm as "sysNm", 
+		    sys_updt_date as "sysUpdtDate"
+		from system s, users u
+		WHERE s.manager_no = u.user_no
+		AND u.user_no = #{userNo}
+	</select>
+	
+	<select id="selectTotalCount" parameterType="sr" resultType="int">
+	    SELECT
+		    COUNT(sr.SR_NO)
+		FROM SR sr, SYSTEM system, SR_STTS stts
+		WHERE sr.sys_no = system.sys_no
+		AND stts.stts_no = sr.stts_no
+	    <if test="userType.equals('고객사')">
+	    	AND SR_CUST_NO = #{srCustNo}
+	   	</if>
+	    AND sr.sys_no = #{sysNo}
+	    <if test="sttsNo != 0">
+	    	AND SR.STTS_NO = #{sttsNo}
+	    </if>
+	</select>
+	
+	<select id="selectHomeList" parameterType="sr" resultType="sr">
+	SELECT
+		rownum,
+		SR_NO AS "srNo",
+        SR_TTL AS "srTtl",
+        SYS_NM AS "sysNm",
+        stts_NM AS "sttsNm",
+        SR_REG_DATE AS "srRegDate",
+        SR_PRY AS "srPry"
+	FROM (
+		SELECT
+			rownum as rnum,
+			SR_NO,
+			SR_TTL,
+			SYS_NM,
+			STTS_NM,
+			SR_REG_DATE,
+			SR_PRY
+			FROM (
+				SELECT
+					SR_NO,
+					SR_TTL,
+					SYS_NM,
+					STTS_NM,
+					SR_REG_DATE,
+					SR_PRY
+					FROM (
+						SELECT
+					        sr.SR_NO AS "SR_NO",
+					        SR_TTL AS,
+					        SYS_NM AS,
+					        stts_NM AS,
+					        SR_REG_DATE AS,
+					        SR_PRY AS
+					    FROM SR sr, SYSTEM system, SR_STTS stts
+					    WHERE sr.sys_no = system.sys_no
+					    AND stts.stts_no = sr.stts_no
+					    <if test="userType.equals('고객사')">
+					    	AND SR_CUST_NO = #{srCustNo}
+					   	</if>
+					   	AND sr.sys_no = #{sysNo}
+					    <if test="sttsNo != 0">
+					    	AND SR.STTS_NO = #{sttsNo}
+					    </if>
+				    )
+				ORDER BY SR_PRY
+			)
+			<![CDATA[
+				WHERE rownum <= #{end}
+			]]>
+		)
+		<![CDATA[
+		WHERE rnum >= #{start}
+		]]>
+	</select>
+</mapper>

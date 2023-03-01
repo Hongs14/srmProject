@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team01.webapp.notice.dao.INoticeRepository">
+	
+	<!-- 전체 공지사항 행수 
+		 @author : 황건희
+	-->
+	<select id="selectTotalNoticeListCount" resultType="int">
+		SELECT COUNT(*) FROM NOTICE
+	</select>
+	
+	<!-- 필터링 된 공지사항 행수 -->
+	<select id="selectTotalNoticeCount" parameterType="notice" resultType="int">
+		SELECT COUNT(NTC_NO)
+		FROM NOTICE
+		<if test="startDate.equals('')">
+			<if test="ntcToday != null">
+				WHERE NTC_WRT_DATE BETWEEN
+					TO_DATE(sysdate,'YY-MM-DD')
+					AND TO_DATE(sysdate,'YY-MM-DD')+1
+				AND SYS_NO = #{sysNo}
+			</if>
+			<if test="ntcWeek != null">
+				WHERE NTC_WRT_DATE BETWEEN
+					TO_DATE(sysdate-7,'YY-MM-DD')
+					AND TO_DATE(sysdate, 'YY-MM-DD')+1
+				AND SYS_NO = #{sysNo}
+			</if>
+			<if test="ntcMonth != null">
+				WHERE NTC_WRT_DATE BETWEEN
+					ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-1)
+					AND TO_DATE(sysdate,'YY-MM-DD')+1
+				AND SYS_NO = #{sysNo}
+			</if>
+			<if test="ntcToday == null and ntcWeek == null and ntcMonth == null">
+				WHERE NTC_WRT_DATE BETWEEN
+	 				ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-3)
+	            	AND TO_DATE(sysdate,'YY-MM-DD')+1
+	            AND SYS_NO = #{sysNo}
+	           	<if test="ntcTtl != ''">
+					AND NTC_TTL like #{ntcTtl}
+				</if>
+			</if>
+		</if>
+		<if test="!startDate.equals('')">
+			WHERE NTC_WRT_DATE BETWEEN
+				TO_DATE(#{startDate},'YY-MM-DD')
+				AND TO_DATE(#{endDate},'YY-MM-DD')+1
+			AND SYS_NO = #{sysNo}
+			<if test="ntcTtl != ''">
+				AND NTC_TTL like #{ntcTtl}
+			</if>
+		</if>
+	</select>
+	
+	<!-- 공지사항 게시글 목록 
+		@author : 황건희
+	-->
+	<select id="selectFilterNoticeList" parameterType="notice" resultType="notice">
+		SELECT 
+		    RNUM AS "seq",
+		    NTC_NO AS "ntcNo",
+		    USER_ID AS "userId",
+		    NTC_TTL AS "ntcTtl",
+		    NTC_INQ_CNT AS "ntcInqCnt",
+	    	NTC_WRT_DATE AS "ntcWrtDate"
+		FROM(
+		    SELECT 
+		        NTC_NO,
+		        NTC_TTL,
+		        NTC_INQ_CNT,
+		        NTC_WRT_DATE,
+		        NTC_PRY,
+		        USER_ID,
+		        ROWNUM as RNUM
+
+		    FROM(
+		        SELECT 
+		            n.NTC_NO,
+		            n.NTC_TTL,
+		            n.NTC_INQ_CNT,
+		            n.NTC_WRT_DATE,
+		            n.NTC_PRY,
+		            u.USER_ID
+		        FROM NOTICE n, USERS u
+		        WHERE n.user_no = u.user_no
+		        <if test="startDate.equals('')">
+        	 		<if test="ntcToday != null">
+						AND NTC_WRT_DATE BETWEEN
+							TO_DATE(sysdate,'YY-MM-DD')
+							AND TO_DATE(sysdate,'YY-MM-DD')+1
+						AND SYS_NO = #{sysNo}
+					</if>
+					<if test="ntcWeek != null">
+						AND NTC_WRT_DATE BETWEEN
+							TO_DATE(sysdate-7,'YY-MM-DD')
+							AND TO_DATE(sysdate, 'YY-MM-DD')+1
+						AND SYS_NO = #{sysNo}
+					</if>
+					<if test="ntcMonth != null">
+						AND NTC_WRT_DATE BETWEEN
+							ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-1)
+							AND TO_DATE(sysdate,'YY-MM-DD')+1
+						AND SYS_NO = #{sysNo}
+					</if>
+					<if test="ntcToday == null and ntcWeek == null and ntcMonth == null">
+						AND NTC_WRT_DATE BETWEEN
+			 				ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-3)
+			            	AND TO_DATE(sysdate,'YY-MM-DD')+1
+			            AND SYS_NO = #{sysNo}
+			           	<if test="ntcTtl != ''">
+							AND NTC_TTL like #{ntcTtl}
+						</if>
+					</if>
+		        </if>
+		        <if test="!startDate.equals('')">
+					AND n.NTC_WRT_DATE BETWEEN
+						TO_DATE(#{startDate},'YY-MM-DD')
+						AND TO_DATE(#{endDate},'YY-MM-DD')+1
+					AND SYS_NO = #{sysNo}
+				</if>
+				<if test="ntcTtl != ''">
+					AND n.NTC_TTL like #{ntcTtl}
+					AND SYS_NO = #{sysNo}
+				</if>
+		        ORDER BY n.ntc_pry desc
+		    )
+		    <![CDATA[
+		    	WHERE ROWNUM <=#{endRowNo}
+		   	]]>
+		)
+		<![CDATA[
+			WHERE rnum >=#{startRowNo}
+		]]>
+	</select>
+	
+	<!-- 게시글 작성
+		@author : 황건희
+	 -->
+	<insert id="insertNoticeWrite" parameterType="notice">
+		<selectKey keyProperty="ntcNo" resultType="int" order="BEFORE">
+			SELECT ntcno_seq.nextval FROM dual
+		</selectKey>
+		<![CDATA[
+			INSERT INTO NOTICE( NTC_NO, USER_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, NTC_WRT_DATE, NTC_PRY, SYS_NO)
+			VALUES( ntcno_seq.nextval, #{userNo}, #{ntcTtl}, #{ntcCn}, 0, sysdate, #{ntcPry}, #{sysNo} )
+		]]>
+		
+	</insert>
+	
+	<!-- 첨부파일 
+		 @author : 황건희
+	-->
+	<insert id="insertNoticeFileUpload" parameterType="notice">
+		<![CDATA[
+			INSERT INTO NTC_FILE( NTC_FILE_NO, NTC_NO, NTC_FILE_PHYS_NM, NTC_FILE_ACTL_NM, NTC_FILE_EXTN_NM)
+			VALUES(ntcFileNo_seq.nextval, #{ntcNo}+1, #{ntcFilePhysNm}, #{ntcFileActlNm}, #{ntcFileExtnNm})
+		]]>
+	</insert>
+	
+
+	<!-- 게시글 상세조회 
+		@author : 황건희	
+	-->
+	<select id="selectNoticeDetail" parameterType="int" resultType="notice">
+		SELECT 
+		    n.NTC_TTL AS ntcTtl,
+		    n.NTC_NO AS ntcNo,
+		    u.USER_ID AS userId,
+		    n.NTC_INQ_CNT AS ntcInqCnt,
+		    n.NTC_WRT_DATE AS ntcWrtDate,
+		    n.NTC_CN AS ntcCn
+		FROM NOTICE n
+		LEFT OUTER JOIN USERS u
+		ON n.USER_NO = u.USER_NO
+		WHERE n.NTC_NO = #{ntcNo}
+	</select>
+	
+	<select id="selectNoticeFileDetail" parameterType="int" resultType="noticeFile">
+		SELECT
+			NTC_FILE_NO AS "ntcFileNo",
+			NTC_NO AS "ntcNo",
+			NTC_FILE_PHYS_NM AS "ntcFilePhysNm",
+			NTC_FILE_ACTL_NM AS "ntcFileActlNm",
+			NTC_FILE_EXTN_NM AS "ntcFileExtnNm"
+		FROM NTC_FILE
+		WHERE NTC_NO = #{ntcNo}
+	</select>
+	
+	<select id="selectFileDownload" parameterType="int" resultType="noticeFile">
+		SELECT
+			NTC_FILE_NO AS "ntcFileNo",
+			NTC_NO AS "ntcNo",
+			NTC_FILE_PHYS_NM AS "ntcFilePhysNm",
+			NTC_FILE_ACTL_NM AS "ntcFileActlNm",
+			NTC_FILE_EXTN_NM AS "ntcFileExtnNm"
+		FROM NTC_FILE
+		WHERE NTC_FILE_NO = #{ntcFileNo}
+	</select>
+	
+	
+	<!-- 게시글 조회수
+		@author : 황건희	
+	 -->
+	<update id="selectInqCnt" parameterType="int">
+		UPDATE NOTICE
+		SET NTC_INQ_CNT = NTC_INQ_CNT+1
+		WHERE NTC_NO = #{ntcNo} 
+		
+	</update>
+	
+	<!-- 게시글 수정 
+		@author : 황건희	
+	-->
+	<update id="updateNotice" parameterType="notice">
+		UPDATE NOTICE
+		SET NTC_CN = #{ntcCn}
+		WHERE NTC_NO = #{ntcNo}
+	</update>
+	
+	<!-- 게시글 삭제 
+		@author : 황건희	
+	-->
+	<delete id="delete" parameterType="int">
+		DELETE FROM NOTICE
+		WHERE NTC_NO = #{ntcNo}
+	</delete>
+	
+	<!-- 공지사항 첨부파일 삭제 -->
+	<delete id="deleteFile" parameterType="int">
+		DELETE FROM NTC_FILE
+		WHERE NTC_FILE_NO = #{ntcFileNo}
+	</delete>
+	
+	<!-- 첨부파일 수정
+		@author : 황건희	
+	 -->
+	<update id="updateFile" parameterType="noticeFile">
+		UPDATE NTC_FILE
+		SET 
+			NTC_FILE_ACTL_NM = #{ntcFileActlNm},
+			NTC_FILE_PHYS_NM = #{ntcFilePhysNm},
+			NTC_FILE_EXTN_NM = #{ntcFileExtnNm}
+		WHERE NTC_NO = #{ntcNo}
+			
+	</update>	
+	
+	<!-- DB의 최신 첨부파일 No 
+		@author : 황건희	
+	-->
+	<select id="selectMaxFileNo" resultType="int">
+		SELECT COUNT(*) FROM NTC_FILE
+	</select>
+	
+	<insert id="updateNoticeFileUpload" parameterType="noticeFile">
+		<![CDATA[
+			INSERT INTO NTC_FILE( NTC_FILE_NO, NTC_NO, NTC_FILE_PHYS_NM, NTC_FILE_ACTL_NM, NTC_FILE_EXTN_NM)
+			VALUES(ntcFileNo_seq.nextval, #{ntcNo}, #{ntcFilePhysNm}, #{ntcFileActlNm}, #{ntcFileExtnNm})
+		]]>
+	</insert>
+	
+	<!-- 댓글 -->
+	<!-- 댓글 읽기 -->
+	<select id="selectNoticeCommentList" parameterType="int" resultType="noticeComment">
+		SELECT 
+		    nc.NTC_CMNT_NO AS "ntcCmntNo",
+		    nc.NTC_NO AS "ntcNo",
+		    u.USER_ID AS "userId",
+		    nc.NTC_CMNT_CN AS "ntcCmntCn",
+		    nc.NTC_CMNT_DATE AS "ntcCmntDate"
+		FROM NOTICE ntc, NTC_COMMENT nc, USERS u
+		WHERE ntc.NTC_NO = nc.NTC_NO
+		AND ntc.USER_NO = u.USER_NO
+		AND nc.NTC_No = #{ntcNo}
+		ORDER BY NTC_CMNT_NO DESC
+	</select>	
+	
+	<!-- 댓글 작성 -->
+	<insert id="insertComment" parameterType="noticeComment">
+		INSERT INTO NTC_COMMENT(NTC_CMNT_NO, NTC_NO, USER_NO, NTC_CMNT_CN, NTC_CMNT_DATE)
+		VALUES(NTCCMNTNO_SEQ.NEXTVAL,#{ntcNo},#{userNo},#{ntcCmntCn},sysdate)
+	</insert>
+	
+	<select id="selectComment" resultType="noticeComment">
+		SELECT 
+		    ROWNUM,
+		    NTC_CMNT_NO AS "ntcCmntNo",
+		    NTC_NO AS "ntcNo",
+		    USER_NO AS "userNo",
+		    NTC_CMNT_CN AS "ntcCmntCn",
+		    NTC_CMNT_DATE AS "ntcCmntDate"
+		FROM(
+		    SELECT
+		        ROWNUM,
+		        nc.NTC_CMNT_NO,
+		        nc.NTC_NO,
+		        u.USER_NO,
+		        nc.NTC_CMNT_CN,
+		        nc.NTC_CMNT_DATE
+		    FROM NTC_COMMENT nc, NOTICE ntc, USERS u
+		    WHERE ntc.NTC_NO = nc.NTC_NO
+		    AND ntc.USER_NO = u.USER_NO
+		    ORDER BY NTC_CMNT_NO DESC
+		)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateComment" parameterType="noticeComment">
+		UPDATE NTC_COMMENT 
+		SET NTC_CMNT_CN = #{ntcCmntCn},
+		    NTC_CMNT_DATE = sysdate
+		WHERE NTC_CMNT_NO = #{ntcCmntNo}
+	</update>	
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM NTC_COMMENT 
+		WHERE NTC_CMNT_NO = #{ntcCmntNo}
+	</delete>
+	
+</mapper>

@@ -3,22 +3,17 @@ package com.team01.webapp.request.service;
 import java.io.File;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.team01.webapp.model.Request;
+import com.team01.webapp.model.RequestAjax;
+import com.team01.webapp.model.RequestFilter;
+import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.util.Pager;
 
 public interface IRequestService {
-		
-		/**
-		 * 리스트 페이징 처리
-		 * 
-		 * @author			김희률
-		 * @param pageNo	현재 페이지넘버
-		 * @param pager		페이저 객체
-		 * @return			페이저 리턴
-		 */
-		Pager returnPage(String pageNo, Pager pager);
-		List<SR> getTotalArticleList(Pager pager);
-		
 		
 		/**
 		 * 작성자의 시스템 정보 가져오기
@@ -34,9 +29,29 @@ public interface IRequestService {
 		 * 
 		 * @author		김희률
 		 * @param sr	SR요청 정보
-		 * @param file	첨부파일
+		 * @param srFile	첨부파일
 		 */
-		void writeRequest(SR sr, File file);
-		void writeRequest(SR sr);
+		String writeRequest(SR sr);
+		
+		
+		RequestFilter getFilterList(RequestFilter requestFilter);
+		
+		Pager returnPage(String pageNo, Pager pager, RequestAjax requestAjax);
+		List<RequestList> getRequestList(Pager pager, RequestAjax requestAjax);
+
+		Request getRequestDetail(String srNo);
+
+		void requestFileUpload(SrFile srFile);
+
+		List<MultipartFile> selectRequestFileDetail(String srNo);
+
+		SrFile selectFileDownload(String srFileNo);
+
+		int updateRequest(SR sr);
+		//업데이트시 파일삭제
+		int deleteExistingFile(String string);
+		
+		//요청 삭제처리
+		int deleteRequest(String srNo);
 
 }

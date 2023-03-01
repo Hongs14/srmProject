@@ -1,6 +1,9 @@
 package com.team01.webapp.model;
 
 import java.sql.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -15,5 +18,15 @@ public class Progress {
 	private int progRate;
 	
 	private String progTypeNm;
+	private int progTypeNo;
+	
+	private String progFilePhysNm;
+	private String progFileActlNm;
+	private String progFileExtnNm;
+	private List<MultipartFile> progressattach;
+	
+	private List<ProgressFile> progressFile;
+	
+	private String choice;
 	
 }

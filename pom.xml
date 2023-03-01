@@ -176,7 +176,21 @@
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.14.2</version>
 		</dependency>
-		       
+		
+		<!-- excel -->
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>5.2.3</version>
+		</dependency>
+		
+		<!-- Commons io -->
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.11.0</version>
+		</dependency>
+		
 	</dependencies>
     <build>
         <plugins>
@@ -195,17 +209,17 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <source>${java-version}</source>
-                    <target>${java-version}</target>
-                    <compilerArgument>-Xlint:all</compilerArgument>
-                    <showWarnings>true</showWarnings>
-                    <showDeprecation>true</showDeprecation>
-                </configuration>
-            </plugin>
+	           <artifactId>maven-compiler-plugin</artifactId>
+	           <version>3.8.1</version>
+	           <configuration>
+	             <source>${java-version}</source>
+	             <target>${java-version}</target>
+	           </configuration>
+	         </plugin>
+	         <plugin>
+	           <artifactId>maven-war-plugin</artifactId>
+	           <version>3.2.3</version>
+	         </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>

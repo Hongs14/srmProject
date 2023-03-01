@@ -5,8 +5,7 @@
 	<div class="table-responsive p-3">
 		<table class="table align-items-center table-flush table-hover">
 			<thead class="thead-light" style="text-align: center;">
-				<tr>
-					<th>No</th>	
+				<tr>	
 					<th>
 						<input type="checkbox" onclick='selectAll(this)' name="examineCheck">
 					</th>
@@ -19,27 +18,35 @@
 					<th>상태</th>
 					<th>등록일</th>
 					<th>중요</th>
-					<th>상세보기</th>
 				</tr>
 			</thead>
 			<tbody style="text-align: center;">
 				<c:forEach var="examine" items="${examine}">
 					<tr>
-						<td>${examine.seq}</td>
+						
 						<td>
-							<input type="checkbox" name="examineCheck">
+							<input type="checkbox" name="examineCheck" value="${examine.srNo}">
 						</td>
-						<td>${examine.srNo}</td>
-						<td>${examine.srTtl}</td>
+						<td onclick ="getSrDetail('${examine.srNo}')">${examine.srNo}</td>
+						<td onclick ="getSrDetail('${examine.srNo}')">${examine.srTtl}</td>
 						<td>${examine.sysNm}</td>
 						<td>${examine.userNm}</td>
 						<td>${examine.userOgdp}</td>
 						<td>${examine.userDpNm}</td>
-						<td>${examine.sttsNm}</td>
+						<td>
+							<c:if test="${examine.sttsNm eq '요청'}"><span class="badge badge-dark" style="font-size:100%">${examine.sttsNm}</span></c:if>
+							<c:if test="${examine.sttsNm eq '검토중'}"><span class="badge badge-dark" style="font-size:100%">${examine.sttsNm}</span></c:if>
+							<c:if test="${examine.sttsNm eq '반려'}"><span class="badge badge-danger" style="font-size:100%">${examine.sttsNm}</span></c:if>
+							<c:if test="${examine.sttsNm eq '재검토'}"><span class="badge badge-warning" style="font-size:100%">${examine.sttsNm}</span></c:if>
+						</td>
 						<td>${examine.srRegDate}</td>
-						<td>${examine.srPry}</td>
-						<td><a href="${pageContext.request.contextPath}/examine/detail?srNo=${examine.srNo}" class="btn btn-sm btn-info">상세보기</a></td>
+						<td>
+							<c:if test="${examine.srPry eq '상'}"><span class="badge badge-danger" style="font-size:100%">${examine.srPry}</span></c:if>
+							<c:if test="${examine.srPry eq '중'}"><span class="badge badge-primary" style="font-size:100%">${examine.srPry}</span></c:if>
+							<c:if test="${examine.srPry eq '하'}"><span class="badge badge-secondary" style="font-size:100%">${examine.srPry}</span></c:if>
+						</td>
 					</tr>
+					
 				</c:forEach>
 			</tbody>
 		</table>
@@ -56,7 +63,7 @@
 	
 					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
 						<c:if test="${pager.pageNo != i}">
-							<a onclick="examineList(${i})" type="button" class="btn btn-outline-success btn-sm m-1">${i}</a>
+							<a onclick="examineList(${i})" type="button" class="btn btn-outline-info btn-sm m-1">${i}</a>
 						</c:if>
 						<c:if test="${pager.pageNo == i}">
 							<a onclick="examineList(${i})" type="button" class="btn btn-primary btn-sm m-1">${i}</a>

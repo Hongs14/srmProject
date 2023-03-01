@@ -8,15 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.team01.webapp.users.model.User;
+
+import com.team01.webapp.model.Users;
 import com.team01.webapp.users.service.IUserService;
 import com.team01.webapp.users.service.UserService;
-import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
 
 @Controller
-@RequestMapping("/user")
 @Log4j2
 public class UserController {
 	
@@ -31,7 +30,7 @@ public class UserController {
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return			로그인폼으로 이동
 	 */
-	@RequestMapping(value="/login", method = RequestMethod.GET)
+	@RequestMapping(value="/user/login", method = RequestMethod.GET)
 	public String login(HttpSession session, Model model) {
 		log.info("실행");
 		return "user/loginForm";
@@ -47,8 +46,8 @@ public class UserController {
 	 * @param model 	View로 데이터 전달을 위한 Model 객체 주입
 	 * @return			홈으로 리다이렉트
 	 */
-	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String login(User user, HttpSession session, Model model) {
+	@RequestMapping(value="/user/login", method = RequestMethod.POST)
+	public String login(Users user, HttpSession session, Model model) {
 		log.info(user+" post 실행");
 		UserService.LoginResult loginResult = userService.login(user);
 		
@@ -62,8 +61,11 @@ public class UserController {
 			return "user/loginForm";
 		}else {
 			session.setAttribute("loginUser", user);
+			session.setAttribute("userType", user.getUserType());
+			session.setAttribute("userNo", user.getUserNo());
+
 			log.info(user);
-			return "redirect:/";
+			return "redirect:/home";
 		}
 	}
 	
@@ -74,7 +76,7 @@ public class UserController {
 	 * @param session	HttpSession 객체 주입, 세션 초기화
 	 * @return 			로그인폼으로 이동
 	 */
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "user/loginForm";
@@ -86,11 +88,13 @@ public class UserController {
 	 * @author	김희률
 	 * @return	로그인폼으로 이동
 	 */
-	@RequestMapping(value = "/join", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/join", method = RequestMethod.GET)
 	public String join() {
+		log.info("정보 로그 실행");
+		
 		return "user/joinForm";
 	}
-	
+
 	/**
 	 * 회원가입 메서드
 	 * 
@@ -99,8 +103,8 @@ public class UserController {
 	 * @param model	View로 데이터 전달을 위한 Model 객체 주입
 	 * @return		뷰로 이동
 	 */
-	@RequestMapping(value="/join", method = RequestMethod.POST)
-	public String join(User user, Model model) {
+	@RequestMapping(value="/user/join", method = RequestMethod.POST)
+	public String join(Users user, Model model) {
 		log.info(user.getUserPswd()+"실행");
 		
 		int result = userService.join(user);
@@ -118,7 +122,7 @@ public class UserController {
 	 * @author	김희률
 	 * @return	나의 정보 뷰로 이동
 	 */
-	@RequestMapping(value = "/myinfo", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/myinfo", method = RequestMethod.GET)
 	public String myinfo() {
 		log.info("실행");
 		return "user/myInfo";

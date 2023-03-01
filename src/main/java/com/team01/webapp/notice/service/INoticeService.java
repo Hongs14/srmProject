@@ -2,7 +2,10 @@ package com.team01.webapp.notice.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.team01.webapp.model.Notice;
+import com.team01.webapp.model.NoticeComment;
 import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.util.Pager;
 
@@ -13,6 +16,8 @@ public interface INoticeService {
 	 * @return
 	 */
 	public int getTotalRows();
+	
+	public Pager returnPage(int pageNo, Pager pager, Notice notice);
 
 	/**
 	 * 공지사항 리스트
@@ -21,6 +26,10 @@ public interface INoticeService {
 	 * @return
 	 */
 	public List<Notice> getNoticeList(Pager pager);
+	
+	//필터링된 공지사항 리스트
+	public List<Notice> getNoticeListAjax(Pager pager, Notice notice);
+	
 	
 	/**
 	 * 공지사항 작성
@@ -35,7 +44,7 @@ public interface INoticeService {
 	 * @author : 황건희
 	 * @param noticeFile 공지사항 작성 시 첨부한 파일
 	 */
-	public void noticeFileUpload(NoticeFile noticeFile);
+	public void noticeFileUpload(Notice notice);
 	
 	
 	/**
@@ -46,6 +55,11 @@ public interface INoticeService {
 	 */
 	public Notice noticeDetail(int ntcNo);
 	
+	//공지사항 상세 조회 첨부파일 읽어오기
+	public List<MultipartFile> selectNoticeFileDetail(int ntcNo);
+	
+	//공지사항 상세 조회 첨부파일 다운로드
+	public NoticeFile selectFiledownload(int ntcFileNo);
 	
 	/**
 	 * 공지사항 조회수
@@ -69,5 +83,20 @@ public interface INoticeService {
 	 * @param ntcNo	삭제하려는 공지사항 No
 	 */
 	public void noticeDelete(int ntcNo);
-
+	
+	//공지사항 첨부파일 삭제
+	public int noticeFileDelete(int ntcFileNo);
+	
+	//댓글 읽기
+	public List<NoticeComment> getCommentList(int ntcNo);
+	
+	//댓글 작성
+	public NoticeComment writeComment(NoticeComment ntcComment);
+	
+	//댓글 수정
+	public void updateComment(NoticeComment ntcComment);
+	
+	//댓글 삭제
+	public void deleteComment(int ntcCmntNo);
+	
 }

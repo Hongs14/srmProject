@@ -16,10 +16,10 @@
 	  			let qstnNo ='${qstn.qstnNo}';
 	  			console.log(qstnNo);
 	  			$.ajax({
-			    	url:"read/comment"
-			        ,type:"get"
-			        ,data: 'qstnNo='+qstnNo
-			        ,success:function(data){
+			    	url:"read/comment",
+			        type:"get",
+			        data: 'qstnNo='+qstnNo,
+			        success:function(data){
 			        	console.log(data);
 			        	$.each(data, function(index, item){
 			        		let comment = '<hr/>';
@@ -49,7 +49,7 @@
 				console.log("댓글달기 실행");
 				let content = $('#qnaCmntCn').val();
 				let qcwriterNo = '${sessionScope.loginUser.userNo}';
-				let qcwriter = '${sessionScope.loginUser.userNm}';
+				/* let qcwriter = '${sessionScope.loginUser.userNm}'; */
 				let qstnNo = '${qstn.qstnNo}';
 				
 				let data = {userNo: qcwriterNo, qstnNo: qstnNo, qstnCmntCn: content};
@@ -65,8 +65,8 @@
 					let comment = '<hr/>';
 	        		comment += '<div class="d-flex px-2 flex-row align-items-center justify-content-between">';
 	        		comment += 	'<div>'
-					comment += 		'<h6 style="color: #406882"><b>'+item.userNm+'</b></h6>';
-					comment += 		'<h6>'+item.qstnCmntDate+'</h6>';
+					comment += 		'<span style="color: #406882; margin-right:20px;"><b>'+item.userNm+'</b></span>';
+					comment += 		'<span>'+item.qstnCmntDate+'</span>';
 					comment +=	'</div>'
 					comment += 	'<div>'
 					comment += 		'<input type="hidden" id="qstnCmntNo" value="'+item.qstnCmntNo+'"/>'
@@ -77,7 +77,7 @@
 					
 	        		$('#qComment').append(comment); 
 	        		$('#cmntCount').empty();
-	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt}+1)+')');
+	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt+1})+')');
 	        		$('#qnaCmntCn').val('');
 					
 				});
@@ -121,7 +121,7 @@
 				}).done((data) => {
 					console.log("성공");
 					$('#cmntCount').empty();
-	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt}-1)+')');
+	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt-1})+')');
 					$('#qComment').empty(); 
 					readComment();
 					
@@ -154,8 +154,8 @@
           			</div>
           			<!-- Row -->
 					<div class="row">
-		       			<div class="col-lg-12">
-	                    	<div class="card mb-4">
+		       			<div class="col-lg-8">
+	                    	<div class="card mb-4 p-4">
 	                    	
 	                        	<div class="card-header">
 	                            	<div class="d-flex flex-row align-items-center justify-content-between">
@@ -163,44 +163,42 @@
 	                                 	<div>조회수 2</div>
 	                                </div>
 	                                 	<div>
-	                                 		<h2 class="m-0 font-weight-bold text-primary">${qstn.qstnTtl}</h2>
+	                                 		<h4 class="m-0 font-weight-bold text-primary">${qstn.qstnTtl}</h4>
 	                                 	</div>
 	                                 	<hr/>
 	                          	</div>   
 		                        <div class="mx-3 p-3 d-flex flex-column">
 		                       		<form>
 	                            		<div class="row mb-2">
-		                            		<div class="form-group col-sm-3 ">
+		                            		<div class="form-group col-sm-2 ">
 		                            			<label class="col-form-label">작성자</label>
 		                            		</div>
-		                            		<div class="col-sm-9">
+		                            		<div class="col-sm-10">
 		                            			<!-- <input type="text" class="form-control" id="qqnaWriter" value="정홍주"/> -->
 		                            			${qstn.userNm}
 		                            		</div>
 	                            		</div>	
 	                            		<div class="row mb-2">
-		                            		<div class="form-group col-sm-3 ">
+		                            		<div class="form-group col-sm-2 ">
 		                            			<label class="col-form-label">작성일</label>
 		                            		</div>
-		                            		<div class="col-sm-9">
-		                            			<!-- <input type="text" class="form-control" id="qqnaWriter" value="정홍주"/> -->
+		                            		<div class="col-sm-10">
 		                            			${qstn.qstnWrtDate}
 		                            		</div>
 	                            		</div>
 	                            		<div class="row mb-2">
-		                            		<div class="form-group col-sm-3 ">
+		                            		<div class="form-group col-sm-2 ">
 		                            			<label class="col-form-label">내용</label>
 		                            		</div>
-		                            		<div class="col-sm-9" style="border: 1px solid black">
+		                            		<div class="col-sm-10">
 		                            			${qstn.qstnCn}
-		                            			<!-- <textarea rows="5" cols="80" readonly>지금 한달째 검토중입니다. 빨리 접수해주세요</textarea> -->
 		                            		</div>
 	                            		</div>
 	                            		<div class="row mb-2">
-		                            		<div class="form-group col-sm-3 ">
+		                            		<div class="form-group col-sm-2 ">
 		                            			<label class="col-form-label">첨부파일</label>
 		                            		</div>
-		                            		<div class="col-sm-9">화면캡처.png</div>
+		                            		<div class="col-sm-10">화면캡처.png</div>
 	                            		</div>
 	                            		<div class="text-right"> 
 	                            			<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/qna/list'">목록</button>
@@ -209,27 +207,27 @@
 	                            		</div>
 		                            </form>
 		                        </div>
-	                        	<hr/>
-	                        	<!-- 댓글 -->
-                        		<div id="cmntCount" class="mx-3 mb-2">댓글(${qstn.countCmnt})</div>
-                        		<div class="mx-3 p-1" style="border: 1px solid black">
-	                        		<div class="row">
-	                        			<div class="col-sm-1 form-group" id="qnaComentWriter">
-	                        				${sessionScope.loginUser.userNm}
-	                        			</div>
-	                        			<div class="col-sm-10 form-group">
-	                        				<textarea style="width: 100%" id="qnaCmntCn"></textarea>
-	                        			</div>
-	                        			<div class="col-sm-1">
-	                        				<button type="button" onclick="writeComment();">등록하기</button>
-	                        			</div>
-			                        </div>
                       			</div>
-                      			<div class="px-4" id="qComment">
-	                        		
-		                        </div>
                       			
-                      			</div>
+	                              	<!-- 댓글 -->
+                      			<div class="card  p-4">
+	                        		<div id="cmntCount" class="mx-3 mb-2">댓글(${qstn.countCmnt})</div>
+	                        		<div class="mx-3 p-1  justify-content-between" >
+		                        		<div class="row">
+		                        			<div class="col-sm-2 form-group" id="qnaComentWriter">
+		                        				${sessionScope.loginUser.userNm}
+		                        			</div>
+		                        			<div class="col-sm-8  form-group">
+		                        				<textarea style="width: 100%" class="form-control" id="qnaCmntCn"></textarea>
+		                        			</div>
+		                        			<div class="col-sm-2 text-right">
+		                        				<button type="button" class="btn btn-primary btn-sm" onclick="writeComment();">등록하기</button>
+		                        			</div>
+				                        </div>
+	                      			</div>
+	                      			<div class="px-4" id="qComment">
+			                        </div>
+		                        </div>
                       		</div>
                     	</div>
           			<!-- 로그아웃 모달 -->

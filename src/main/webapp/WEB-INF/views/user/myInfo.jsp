@@ -4,6 +4,11 @@
 <html lang="en">
 
 <head>
+	<style>
+	.text-primary {
+	font-size: 2rem;
+	}
+	</style>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
 </head>
 
@@ -21,7 +26,7 @@
 
 
         <!-- 메인 컨테이너 Container Fluid-->
-        <div class="container-fluid" id="container-wrapper">
+        <div class="container-fluid " id="container-wrapper">
 			<div class="d-sm-flex align-items-center justify-content-between">
 				<div></div>
 				<ol class="breadcrumb">
@@ -34,49 +39,49 @@
 
 		<!-- Row -->
           <div class="row">
-	     	<div class="col-lg-12">
+	     	<div class="col-lg-7">
               <div class="card">
                <div class="card-header py-4 bg-gradient-primary d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-light">나의 정보 </h6>
                 </div>
                 <div class="card-body">
-					<table class="table center m-3" style="width: 600px;">
+					<table class="table center m-3" style="width: 800px;">
 						<tr>
-							<th class="text-primary">성명 </th>
-							<td>${sessionScope.loginUser.userNm}</td>
+							<th class="text-primary" style="border-top:0;">성명 </th>
+							<td style="border-top:0;">${sessionScope.loginUser.userNm}</td>
 						</tr>
 						<tr>
-							<th class="text-primary">ID</th>
+							<th class="text-primary ">ID</th>
 							<td>${sessionScope.loginUser.userId}</td>
 						</tr>
 						<tr>
-							<th class="text-primary">비밀번호 </th>
+							<th class="text-primary ">비밀번호 </th>
 							<td><input type="password" disabled placeholder="password">
 								<a class="btn btn-outline-warning btn-sm mx-1" data-toggle="modal" data-target="#updatePswd">수정하기</a>
 							</td>
 						</tr>
 						<tr>
-							<th class="text-primary">소속</th>
+							<th class="text-primary ">소속</th>
 							<td>${sessionScope.loginUser.userOgdp}</td>
 						</tr>
 						<tr>
-							<th class="text-primary">EMAIL</th>
+							<th class="text-primary ">EMAIL</th>
 							<td>${sessionScope.loginUser.userEml}</td>
 						</tr>
 						<tr>
-							<th class="text-primary">연락처</th>
-							<td>${sessionScope.loginUser.userTelno}</td>
+							<th class="text-primary ">연락처</th>
+							<td><h6>${sessionScope.loginUser.userTelno}</h6></td>
 						</tr>
 						<tr>
 							<th class="text-primary">부서</th>
-							<td>${sessionScope.loginUser.userDpNm}</td>
+							<td><h6>${sessionScope.loginUser.userDpNm}</h6></td>
 						</tr>
 						<tr>
 							<th class="text-primary">직급</th>
 							<td>${sessionScope.loginUser.userJbps}</td>
 						</tr>
 					</table>
-					<div class="mx-5 px-5">
+					<div class="text-center">
 						<a href="update?userNo=${sessionScope.loginUser.userNo}" class="btn btn-info btn-sm">수정하기</a>
 	
 					</div>
@@ -143,8 +148,8 @@
         </div>
         <!---Container Fluid-->
       </div>
-     <%@include file="/WEB-INF/views/common/footer.jsp" %>
       </div>
+     <%@include file="/WEB-INF/views/common/footer.jsp" %>
       <!-- Footer -->
     </div>
  <%@include file="/WEB-INF/views/common/bottom.jsp" %>

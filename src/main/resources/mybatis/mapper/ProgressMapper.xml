@@ -8,9 +8,10 @@
 	-->
 	<select id="selectSysNmList" resultType="system">
 		SELECT 
-			SYS_NO AS "sysNo",
-			SYS_NM AS "sysNm"
+		    SYS_NO AS "sysNo",
+		    SYS_NM AS "sysNm"
 		FROM SYSTEM
+		WHERE SYS_NM != '한국소프트SRM'
 	</select>
 
 	<!--
@@ -33,6 +34,7 @@
 		    STTS_NO AS "sttsNo",
 		    STTS_NM AS "sttsNm"
 		FROM SR_STTS
+		WHERE STTS_NO = 5 OR STTS_NO = 6 OR STTS_NO = 8
 	</select>
 	
 	<!--
@@ -40,28 +42,40 @@
 		작성자 : 김태희	
 	-->
 	<select id="selectTotalProgressCount" parameterType="progressAjax" resultType="int">
-		SELECT
-		    COUNT(SR_NO)
-		FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, SR_TYPE type
-		where sr.sys_no = system.sys_no
-		AND sr.stts_no = stts.stts_no
-		AND sr.sr_cust_no = users.user_no
-		AND sr.sr_type = type.sr_type_no
-		<if test="sysNo != 0">
-			AND sr.sys_no = #{sysNo}
-		</if>
-		<if test="srTypeNo != 0">
-			AND sr.sr_type = #{srTypeNo}
-		</if>
-		<if test="srSttsNo != 0">
-			AND sr.stts_no = #{srSttsNo}
-		</if>
-		<if test="srName != ''">
-			AND sr.sr_ttl LIKE #{srName}
-		</if>
-		<if test="srNo != ''">
-			AND sr.sr_no LIKE #{srNo}
-		</if>
+		SELECT COUNT(SR_NO)
+		FROM (
+			SELECT
+			    SR.SR_NO
+			FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, SR_TYPE type, HR hr
+			where sr.sys_no = system.sys_no
+			AND sr.stts_no = stts.stts_no
+			AND sr.sr_cust_no = users.user_no
+			AND sr.sr_type = type.sr_type_no
+			AND sr.sr_no = hr.sr_no
+			<if test="sysNo != ''">
+				AND sr.sys_no = #{sysNo}
+			</if>
+			<if test="srTypeNo != 0">
+				AND sr.sr_type = #{srTypeNo}
+			</if>
+			<if test="srSttsNo != 0">
+				AND sr.stts_no = #{srSttsNo}
+			</if>
+			<if test="srName != ''">
+				AND sr.sr_ttl LIKE #{srName}
+			</if>
+			<if test="srNo != ''">
+				AND sr.sr_no LIKE #{srNo}
+			</if>
+			<if test="userType == '개발자'">
+				AND hr.user_no = #{userNo}
+			</if>
+			<if test="adminSysNo != ''">
+				AND sr.sys_no = #{adminSysNo}
+			</if>
+			AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8)
+			GROUP BY SR.SR_NO
+		)
 	</select>
 	
 	<!--
@@ -102,20 +116,22 @@
 						SR_PRY
 						FROM(
 							SELECT
-							    SR_NO,
+							    SR.SR_NO,
 							    SYS_NM,
 							    SR_TYPE_NM,
 							    SR_TTL,
 							    USER_NM,
 							    SR_DDLN_DATE,
 							    STTS_NM,
+							    SR.STTS_NO,
 							    SR_PRY
-							FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, SR_TYPE type
+							FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, SR_TYPE type, HR hr
 							where sr.sys_no = system.sys_no
 							AND sr.stts_no = stts.stts_no
 							AND sr.sr_cust_no = users.user_no
 							AND sr.sr_type = type.sr_type_no
-							<if test="sysNo != 0">
+							AND sr.sr_no = hr.sr_no
+							<if test="sysNo != ''">
 								AND sr.sys_no = #{sysNo}
 							</if>
 							<if test="srTypeNo != 0">
@@ -130,8 +146,16 @@
 							<if test="srNo != ''">
 								AND sr.sr_no LIKE #{srNo}
 							</if>
+							<if test="userType == '개발자'">
+								AND hr.user_no = #{userNo}
+							</if>
+							<if test="adminSysNo != ''">
+								AND sr.sys_no = #{adminSysNo}
+							</if>
+							AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8)
+							GROUP BY SR.SR_NO, SYS_NM, SR_TYPE_NM, SR_TTL, USER_NM, SR_DDLN_DATE, STTS_NM, SR.STTS_NO, SR_PRY
 						)
-					ORDER BY SR_PRY
+					ORDER BY DECODE(STTS_NO, 8, 1, 5, 2) ASC, SR_PRY, SR_DDLN_DATE DESC
 				)
 			<![CDATA[
 			WHERE rownum <= #{end}
@@ -221,7 +245,7 @@
 		    USER_NM AS "userNm",
 		    USER_DP_NM AS "userDpNm",
 		    USER_JBPS AS "userJbps",
-		    USER_TELNO AS "userTelNo",
+		    USER_TELNO AS "userTelno",
 		    TASK_NM AS "taskNm",
 		    HR_START_DATE AS "hrStartDate",
 		    HR_END_DATE AS "hrEndDate",
@@ -242,7 +266,7 @@
 		    USERS.USER_NO AS "userNo",
 		    USER_NM AS "userNM",
 		    USER_JBPS AS "userJbps",
-		    USER_TELNO AS "userTelNo"
+		    USER_TELNO AS "userTelno"
 		FROM USERS users
 		LEFT JOIN (
 		SELECT
@@ -356,6 +380,10 @@
 		ORDER BY PROG_TYPE
 	</select>
 	
+	<!-- 
+		진척율 정보 저장
+		작성자 : 김태희
+	-->
 	<select id="selectProgressRate" parameterType="int" resultType="progress">
 		SELECT
 		    PROG_NO AS "progNo",
@@ -369,4 +397,137 @@
 		WHERE progress.prog_type = type.prog_type_no
 		AND PROG_NO = #{progNo}
 	</select>
+	
+	<!-- 
+		진척율 파일 저장
+		작성자 : 김태희
+	-->
+	<insert id="insertProgressRateFile" parameterType="progress">
+		<![CDATA[
+			INSERT INTO PROG_FILE
+				(PROG_FILE_NO, PROG_NO, PROG_FILE_PHYS_NM, PROG_FILE_ACTL_NM, PROG_FILE_EXTN_NM, PROG_REG_DATE)
+		 		VALUES (progfileno_seq.nextval, #{progNo}, #{progFilePhysNm}, #{progFileActlNm}, #{progFileExtnNm}, sysdate)
+    	]]>
+	</insert>
+	
+	<!-- 
+		진척율 정보 수정
+		작성자 : 김태희
+	-->
+	<update id="updateProgressRate" parameterType="progress">
+		UPDATE PROGRESS
+		SET
+		    PROG_START_DATE = #{progStartDate},
+		    PROG_END_DATE = #{progEndDate},
+		    PROG_RATE = #{progRate}
+		WHERE PROG_NO = #{progNo}
+	</update>
+	
+	<!-- 
+		진척율 파일 정보 조회
+		작성자 : 김태희
+	-->
+	<select id="selectProgressRateFile" parameterType="string" resultType="progressFile">
+		SELECT
+		    PROG_FILE_NO AS "progFileNo",
+		    PROG_NO AS "progNo",
+		    PROG_FILE_PHYS_NM AS "progFilePhysNm",
+		    PROG_FILE_ACTL_NM AS "progFileActlNm",
+		    PROG_FILE_EXTN_NM AS "progFileExtnNm"
+		FROM PROG_FILE
+		WHERE PROG_NO = #{progNo}
+	</select>
+	
+	<!-- 
+		진척율 파일 정보 조회
+		작성자 : 김태희
+	-->
+	<select id="selectProgressFile" parameterType="string" resultType="progressFile">
+		SELECT
+		    PROG_FILE_NO AS "progFileNo",
+		    PROG_NO AS "progNo",
+		    PROG_FILE_PHYS_NM AS "progFilePhysNm",
+		    PROG_FILE_ACTL_NM AS "progFileActlNm",
+		    PROG_FILE_EXTN_NM AS "progFileExtnNm"
+		FROM PROG_FILE
+		WHERE PROG_FILE_NO = #{progFileNo}
+	</select>
+	
+	<!-- 
+		진척율 파일 리스트 조회
+		작성자 : 김태희
+	-->
+	<select id="selectProgressFileList" parameterType="string" resultType="progressFile">
+		SELECT
+		    PROG_FILE_NO AS "progFileNo",
+		    progfile.PROG_NO "progNo",
+		    PROG_TYPE_NM "progTypeNm",
+		    PROG_FILE_PHYS_NM "progFilePhysNm",
+		    PROG_FILE_ACTL_NM "progFileActlNm",
+		    PROG_FILE_EXTN_NM "progFileExtnNm",
+		    PROG_REG_DATE "progRegDate"
+		FROM PROG_FILE progfile, PROGRESS progress, PROG_TYPE type
+		WHERE progfile.prog_no = progress.prog_no
+		AND progress.prog_type = type.prog_type_no
+		AND SR_NO = #{srNo}
+		ORDER BY PROG_TYPE_NO ASC, PROG_REG_DATE DESC
+	</select>
+	
+	<!-- 
+		진척율 파일 타입 리스트 조회
+		작성자 : 김태희
+	-->
+	<select id="selectProgressTypeList" resultType="progressType">
+		SELECT
+		    PROG_TYPE_NO AS "progTypeNo",
+		    PROG_TYPE_NM AS "progTypeNm"
+		FROM PROG_TYPE
+	</select>
+	
+	<!-- 
+		진척율 파일 progNo 조회
+		작성자 : 김태희
+	-->
+	<select id="selectProgNo" parameterType="map" resultType="progress">
+		SELECT
+		    PROG_NO AS "progNo"
+		FROM PROGRESS
+		WHERE SR_NO = #{srNo}
+		AND PROG_TYPE = #{progTypeNo}
+	</select>
+	
+	<!-- 
+		진척율 파일 삭제
+		작성자 : 김태희
+	-->
+	<delete id="deleteProgressFiles" parameterType="int">
+		DELETE PROG_FILE
+		WHERE PROG_FILE_NO = #{progFileNo}
+	</delete>
+	
+	<update id="updateProgressFinishRequest" parameterType="map">
+		UPDATE SR
+		SET
+			<if test="choice == 1">
+		    	STTS_NO = 8
+		    </if>
+		    <if test="choice == 2">
+		    	STTS_NO = 6
+		    </if>
+		WHERE SR_NO = #{srNo}
+	</update>
+	
+	<update id="updateProgressRateFinishRequest" parameterType="map">
+		UPDATE PROGRESS
+		SET
+		    PROG_START_DATE = sysdate,
+		    PROG_END_DATE = sysdate,
+		    <if test="choice == 1">
+		    	PROG_RATE = 90
+		    </if>
+		    <if test="choice == 2">
+		    	PROG_RATE = 100
+		    </if>
+		WHERE PROG_NO = #{progNo}
+	</update>
 </mapper>

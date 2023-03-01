@@ -22,13 +22,31 @@
 		  WHERE user_id = #{userId}
 	</select>
 	
+	<select id="selectSystemByUserNo" parameterType="int" resultType="userSystem">
+		SELECT SYS_NM as "sysNm",s.SYS_NO as "sysNo"
+        FROM USER_SYSTEM us, SYSTEM s
+        WHERE us.SYS_NO = s.SYS_NO and us.CUST_NO = #{userNo}
+	</select>
+	
+	<select id="selectSysNmByUserNo" parameterType="int" resultType="string">
+		SELECT SYS_NM
+        FROM USER_SYSTEM us, SYSTEM s
+        WHERE us.SYS_NO = s.SYS_NO and us.CUST_NO = #{userNo}
+	</select>
+	
+	<select id="getSysNoByUserOgdp" parameterType="users" resultType="string">
+		SELECT SYS_NO FROM SYSTEM WHERE SYS_NM = #{sysNo}
+	</select>	
+	
 	<insert id="insert" parameterType="users">
 		insert into users ( user_no, user_id, user_pswd, user_jbps, user_nm, user_type, user_ogdp, user_eml, user_telno, user_dp_nm )
 		values (user_seq.nextval, #{userId}, #{userPswd}, #{userJbps}, #{userNm}, #{userType}, #{userOgdp}, #{userEml}, #{userTelno}, #{userDpNm} )
 	</insert>
+
 	
 	<insert id="insertUserSystem" parameterType="users">
 		INSERT INTO user_system (sys_no, cust_no) 
-		VALUES ((select sys_no from system where sys_nm = #{userOgdp}), #{userNo})
+		VALUES (#{sysNo}, #{userNo})
 	</insert>
+	
 </mapper>

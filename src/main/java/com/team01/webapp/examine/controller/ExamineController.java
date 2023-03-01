@@ -2,6 +2,8 @@ package com.team01.webapp.examine.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,10 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team01.webapp.examine.service.IExamineService;
 import com.team01.webapp.model.Examine;
@@ -49,6 +48,7 @@ public class ExamineController {
 		return "examine/list";
 	}
 	
+	
 	/**
 	 * SR 요청에 대한 필터링 후 리스트 가져오기
 	 * @author : 황건희
@@ -68,28 +68,60 @@ public class ExamineController {
 		
 		model.addAttribute("examine",list);
 		model.addAttribute("pager",pager);
-		
+
 		return "examine/ajaxList";
 	}
 	
-	@PostMapping(value="/summary/{pageNo}", produces="application/json; charset=UTF-8")
-	public String getExamineSummaryFilter(@PathVariable int pageNo,@RequestBody ExamineList examineList, Model model, Pager pager) {
+	/**
+	 * SR 검토 상세 조회
+	 * @author : 황건희
+	 * @param examineFilter 필터링 후 SR 검토 리스트 가져오기
+	 * @param model
+	 * @return
+	 */
+	@GetMapping(value="/detail/{srNo}")
+	public String getExamineDetail(@PathVariable String srNo, HttpSession session, Model model) {
 		log.info("실행");
-		log.info("pageNo"+pageNo);
-		pager = examineService.returnPage(pageNo,pager,examineList);
+
+		Examine examine = examineService.getExamine(srNo);
+		model.addAttribute("examine",examine);
+		
+		
+		
+		return "examine/detailView";
+	}
+	
+	/**
+	 * SR 검토 상태 변경
+	 * @author : 황건희
+	 * @param examine	detailView.jsp에서 요청 검토 처리
+	 * @return
+	 */
+	@PostMapping(value="/detail")
+	public String updateExamine(Examine examine) {
+		log.info("실행");
+		log.info(examine);
+		
+		examineService.updateExamine(examine);
+		
+		return "examine/list";
+	}
+	
+	//일괄 처리(검토중) or 일괄처리(접수)
+	@PostMapping(value="/processing")
+	public String updateExamineProcessing(@RequestBody ExamineList examineList,Model model, Pager pager) {
+		log.info("실행");
+
+		examineService.updateExamineProcessing(examineList);
+		
+		pager = examineService.returnPage(1,pager,examineList);
 		
 		List<Examine> list = examineService.getExamineList(pager, examineList);
 		
 		model.addAttribute("examine",list);
 		model.addAttribute("pager",pager);
 		
-		return "examine/summaryAjax";
-	}
-	
-	@GetMapping(value="/detail")
-	public String getExamineDetail() {
-		log.info("실행");
-		return "examine/detail";
+		return "examine/ajaxList";
 	}
 	
 }

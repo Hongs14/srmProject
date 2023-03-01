@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class SrProgressAjax {
-	private int sysNo;
+	private String sysNo;
 	private int srTypeNo;
 	private int srSttsNo;
 	private String srName;
@@ -13,4 +13,9 @@ public class SrProgressAjax {
 	// pageing 이용
 	private int start;
 	private int end;
+	
+	private int choice;
+	private String userType;
+	private int userNo;
+	private String adminSysNo;
 }

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import = "java.util.Enumeration" %>
+<% session.removeAttribute("message"); %>
     
 <!DOCTYPE html>
 	<script>
@@ -24,7 +26,7 @@
 			삭제
 		</button>
 	</div>
-		<table class="table align-items-center table-flush table-hover">
+		<table class="table align-items-center table-flush table-hover p-2">
 			<thead class="thead-light">
 				<tr>
 					<th></th>
@@ -49,7 +51,7 @@
 					<th>${list.userNm}</th>
 					<th>${list.userDpNm}</th>
 					<th>${list.userJbps}</th>
-					<th>${list.userTelNo}</th>
+					<th>${list.userTelno}</th>
 					<th>${list.taskNm}</th>
 					<th id="startDate+${list.userNo}">${list.hrStartDate}</th>
 					<th id="endDate+${list.userNo}">${list.hrEndDate}</th>
@@ -127,22 +129,22 @@
 							</thead>
 							<c:forEach var="list" items="${developerList}">
 								<tr>
-									<th>
+									<td>
 										<input type="checkbox" name="developerCheckBox">
-									</th>
-									<th style="display:none">${srNo}</th>
-									<th style="display:none">${list.userNo}</th>
-									<th>${list.userJbps}</th>
-									<th>${list.userNm}</th>
-									<th>${list.userTelNo}</th>
-									<th>
+									</td>
+									<td style="display:none">${srNo}</td>
+									<td style="display:none">${list.userNo}</td>
+									<td>${list.userJbps}</td>
+									<td>${list.userNm}</td>
+									<td>${list.userTelno}</td>
+									<td>
 										<c:forEach var="srlist" items="${list.srList}">
 											${srlist.srTtl} / ${srlist.hrStartDate} ~ ${srlist.hrEndDate}
 											<br/>
 										</c:forEach>
-									</th>
-									<th>
-										<div class="form-group row" id="simple-date4">
+									</td>
+									<td>
+										<div class="form-group row" id="simple-date4" style="width:250px">
 											<div class="input-daterange input-group input-group-sm">
 												<input type="text" value="" class="input-sm form-control form-control-sm col-sm-9" name="start" id="start-${list.userNo}"/>
 												<div class="input-group-prepend">
@@ -151,16 +153,16 @@
 												<input type="text" class="input-sm form-control form-control-sm" name="end" id="end-${list.userNo}"/>
 											</div>
 										</div>
-									</th>
-									<th>
-										<div style="width:200px">
+									</td>
+									<td>
+										<div style="width:100px">
 											<select class="form-control form-control-sm col-sm-9" id="dv-${list.userNo}" style="width:100%">
 												<c:forEach var="list" items="${taskList}">
 													<option value="${list.taskNo}">${list.taskNm}</option>
 												</c:forEach>
 					                    	</select>
 				                    	</div>
-									</th>
+									</td>
 								</tr>
 							</c:forEach>
 						</table>

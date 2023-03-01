@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.model.Notice;
+import com.team01.webapp.model.NoticeComment;
 import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.notice.dao.INoticeRepository;
 import com.team01.webapp.notice.service.INoticeService;
@@ -33,6 +35,16 @@ public class NoticeService implements INoticeService{
 		return rows;
 	}
 	
+	@Override
+	public Pager returnPage(int pageNo, Pager pager, Notice notice) {
+		log.info("실행");
+		log.info(notice);
+		int totalListNum = (int) noticeRepository.selectTotalNoticeCount(notice);
+		log.info(totalListNum);
+		pager = new Pager(10,5,totalListNum,pageNo);
+		return pager;
+	}
+	
 	/**
 	 * 공지사항 리스트
 	 * @author : 황건희
@@ -47,6 +59,18 @@ public class NoticeService implements INoticeService{
 		
 		return list;
 	}
+	
+	// 필터링 된 공지사항 리스트
+	@Override
+	public List<Notice> getNoticeListAjax(Pager pager, Notice notice){
+		log.info("실행");
+		notice.setStartRowNo(pager.getStartRowNo());
+		notice.setEndRowNo(pager.getEndRowNo());
+		List<Notice> list = noticeRepository.selectFilterNoticeList(notice);
+		
+		return list;
+	}
+	
 	
 	/**
 	 * 공지사항 작성
@@ -65,9 +89,9 @@ public class NoticeService implements INoticeService{
 	 * @param noticeFile 공지사항 작성 시 첨부한 파일
 	 */
 	@Override
-	public void noticeFileUpload(NoticeFile noticeFile) {
+	public void noticeFileUpload(Notice notice) {
 		log.info("실행");
-		noticeRepository.insertNoticeFileUpload(noticeFile);
+		noticeRepository.insertNoticeFileUpload(notice);
 		
 	}
 	
@@ -83,6 +107,24 @@ public class NoticeService implements INoticeService{
 		Notice notice = noticeRepository.selectNoticeDetail(ntcNo);
 		return notice;
 	}
+	
+	//공지사항 상세조회 첨부파일 읽어오기
+	@Override
+	public List<MultipartFile> selectNoticeFileDetail(int ntcNo) {
+		log.info("실행");
+		List<MultipartFile> noticeFile = noticeRepository.selectNoticeFileDetail(ntcNo);
+		return noticeFile;
+	}
+	
+	//공지사항 상세조회 첨부파일 다운로드
+	@Override
+	public NoticeFile selectFiledownload(int ntcFileNo) {
+		log.info("실행");
+		NoticeFile noticeFile = noticeRepository.selectFileDownload(ntcFileNo);
+		
+		return noticeFile;
+	}
+	
 	
 	/**
 	 * 공지사항 조회수
@@ -115,22 +157,11 @@ public class NoticeService implements INoticeService{
 		int ntcNo = notice.getNtcNo();
 		String ntcCn = notice.getNtcCn();
 		noticeRepository.updateNotice(ntcNo,ntcCn);
-		System.out.println(noticeFile.getNtcFileActlNm());
-		//첨부파일 수정
-		if(noticeFile.getNtcFileActlNm() != null && !noticeFile.getNtcFileActlNm().equals("")) {
-			if(noticeFile.getNtcFileNo()>0) {
-				noticeFile.setNtcNo(ntcNo);
-				System.out.println("첨수:"+ntcNo);
-				noticeRepository.updateFile(noticeFile);
-				System.out.println("첨부파일 수정  실행" );
-			}else {
-				noticeFile.setNtcNo(ntcNo);
-				noticeFile.setNtcFileNo(noticeRepository.selectMaxFileNo()+1);
-				noticeRepository.updateNoticeFileUpload(noticeFile);
-				System.out.println("첨부파일 수정 업로드  실행" );
-			}
-		}
 		
+		//첨부파일 수정
+		noticeFile.setNtcNo(ntcNo);
+		log.info(noticeFile);
+		noticeRepository.updateNoticeFileUpload(noticeFile);
 		
 	}
 
@@ -144,5 +175,50 @@ public class NoticeService implements INoticeService{
 		log.info("실행");
 		noticeRepository.delete(ntcNo);
 	}
+	
+	//공지사항 첨부파일 삭제
+	@Override
+	public int noticeFileDelete(int ntcFileNo) {
+		log.info("실행");
+		int ntcNo = noticeRepository.deleteFile(ntcFileNo);
+		return ntcNo;
+	}
+	
+	
+	//댓글 읽기
+	@Override
+	public List<NoticeComment> getCommentList(int ntcNo) {
+		log.info("실행");
+		List<NoticeComment> list = noticeRepository.selectNoticeCommentList(ntcNo);
+		return list;
+	}
+	
+	//댓글 작성
+	@Override
+	public NoticeComment writeComment(NoticeComment ntcComment) {
+		log.info("실행");
+		noticeRepository.insertComment(ntcComment);
+		ntcComment = noticeRepository.selectComment();
+		return ntcComment;
+	}
+
+	//댓글 수정
+	@Override
+	public void updateComment(NoticeComment ntcComment) {
+		log.info("실행");
+		int a = noticeRepository.updateComment(ntcComment);
+		log.info(a);
+	}
+
+	//댓글 삭제
+	@Override
+	public void deleteComment(int ntcCmntNo) {
+		log.info("실행");
+		noticeRepository.deleteComment(ntcCmntNo);
+	}
+	
+
+	
+	
 
 }

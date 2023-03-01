@@ -43,7 +43,7 @@
 
 
 			<div class="container-fluid" id="container-wrapper">
-   				<div class="d-sm-flex align-items-end justify-content-between">
+   				<div class="d-sm-flex align-items-end justify-content-between" id="mainNoticeMenu">
   					<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px;">
 						<h6 class="mb-0 text-white">공지사항</h6>
 					</div>
@@ -54,98 +54,298 @@
 				</div>
 				<!-- Row -->
    				<div class="row">
-					<div class="col-lg-12">
+					<div id="mainNoitce" class="col-lg-12">
+						<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:121px; display:none;"  id="noticeMenu">
+							<h6 class="mb-0 text-white">공지사항</h6>
+						</div>
                			<div class="card mb-4">
                   			<!-- 검색 -->
             				<div class="mb-1 mt-5 px-5">
-								<div class="row">
-   									<div class="col-4">
-       									<div class="form-group row" id="simple-date4" >
-  											<div class="input-daterange input-group input-group-sm">
-      											<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
-         										<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" />
-               									<div class="input-group-prepend">
-               										<span class="input-group-text" style="height:31px;">~</span>
-           										</div>
-            									<input type="text" class="input-sm form-control form-control-sm" name="end" />
+								<form class="navbar-search">
+									<div class="row text-right">
+	   									<div class="col-4">
+	       									<div class="form-group row" id="simple-date4" >
+	  											<div class="input-daterange input-group input-group-sm text-right">
+	      											<label for="start" class="col-sm-4 col-form-label-sm">조회기간</label>
+	         										<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart" value="${notice.startDate}"/>
+	               									<div class="input-group-prepend">
+	               										<span class="input-group-text" style="height:31px;">~</span>
+	           										</div>
+	            									<input type="text" class="input-sm form-control form-control-sm" name="end" id="dateEnd" value="${notice.endDate}" />
+												</div>
+	   										</div>
+											<div class="row">
+												<div class="col-sm-9">
+													<input type="button" class="btn btn-sm btn-primary ml-5" value="당일" onclick="nTodayClick(1)">
+													<input type="button" class="btn btn-sm btn-primary" value="1주일 전" onclick="nWeekClick(1)">
+													<input type="button" class="btn btn-sm btn-primary" value="1개월 전" onclick="nMonthClick(1)">
+												</div>
+												
 											</div>
-   										</div>
-									</div> 
-    								<div class="col-3"></div>
-    								<div class="col-4">
-      									<div class="form-group row">
-								      		<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">키워드</label>
-								          	<input type="text" class="form-control form-control-sm col-sm-9 bg-light" 
-	         									aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
-            							</div>
-        							</div>
-        							<div class="col-1">
-        								<div class="input-group-append float-right">
-												<button class="btn btn-primary btn-sm" type="button" onclick="#">조회 <i class="fas fa-search fa-sm"></i>
-											</button>
-										</div>
-         							</div>
-         						</div>
+										</div> 
+	    								<div class="col-3"></div>
+	    								<div class="col-4">
+	      									<div class="form-group row">
+									      		<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm text-right">키워드</label>
+									          	<input type="text" class="form-control form-control-sm col-sm-9 bg-light" 
+		         									aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;" id="keyword">
+	            							</div>
+	        							</div>
+	        							<div class="col-1">
+	        								<div class="input-group-append float-right">
+													<button class="btn btn-primary btn-sm" type="button" onclick="searchNoticeList(1)">조회 <i class="fas fa-search fa-sm"></i>
+												</button>
+											</div>
+	         							</div>
+	         							<script>
+											$(document).ready(function () {
+												console.log("시작");
+												var startDate = document.getElementById("dateStart").value;
+												var endDate = document.getElementById("dateEnd").value;
+												
+												var sysNo = "${sysNo}";
+												
+												var ntcTtl = document.getElementById("keyword").value;
+												
+												if(ntcTtl !== "") {
+													ntcTtl = "%" + ntcTtl + "%";
+												}
+												
+												console.log(ntcTtl);
+												console.log(startDate);
+												console.log(endDate);
+
+												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, sysNo : sysNo};
+												
+												console.log(data);
+												
+												$.ajax({
+													url : "filter/1",
+													method : "post",
+													data : JSON.stringify(data),
+													contentType: "application/json; charset=UTF-8"
+												}).done((data) => {
+													$("#noticeList").html(data)
+												});
+											});
+											
+											function searchNoticeList(pageNo) {
+												console.log(pageNo);
+												var startDate = document.getElementById("dateStart").value;
+												var endDate = document.getElementById("dateEnd").value;
+												
+												var sysNo = "${sysNo}"
+												
+												var ntcTtl = document.getElementById("keyword").value;
+												
+												if(ntcTtl !== "") {
+													ntcTtl = "%" + ntcTtl + "%";
+												}
+												
+												console.log(ntcTtl);
+												console.log(startDate);
+												console.log(endDate);
+
+												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, sysNo : sysNo};
+												
+												console.log(data);
+												
+												$.ajax({
+													url : "filter/"+pageNo,
+													method : "post",
+													data : JSON.stringify(data),
+													contentType: "application/json; charset=UTF-8"
+												}).done((data) => {
+													$("#noticeList").html(data)
+												});
+											}
+											
+											function nTodayClick(pageNo){
+												var startDate = '';
+												var endDate = '';
+												
+												var ntcToday = "당일";
+												var ntcWeek = null;
+												var ntcMonth = null;
+												
+												var sysNo = "${sysNo}"
+												
+												var ntcTtl = document.getElementById("keyword").value;
+												
+												if(ntcTtl !== "") {
+													ntcTtl = "%" + ntcTtl + "%";
+												}
+
+												console.log(ntcTtl);
+												console.log(startDate);
+												console.log(endDate);
+												console.log(ntcToday);
+												console.log(ntcWeek);
+												console.log(ntcMonth);
+
+												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
+														ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
+												
+												console.log(data);
+												
+												$.ajax({
+													url : "filter/"+pageNo,
+													method : "post",
+													data : JSON.stringify(data),
+													contentType: "application/json; charset=UTF-8"
+												}).done((data) => {
+													$("#noticeList").html(data)
+												});
+											}
+											
+											function nWeekClick(pageNo){
+												var startDate = '';
+												var endDate = '';
+												
+												var ntcToday = null;
+												var ntcWeek = "1주일전";
+												var ntcMonth = null;
+												
+												var sysNo = "${sysNo}"
+												
+												var ntcTtl = document.getElementById("keyword").value;
+												
+												if(ntcTtl !== "") {
+													ntcTtl = "%" + ntcTtl + "%";
+												}
+
+												console.log(ntcTtl);
+												console.log(startDate);
+												console.log(endDate);
+												console.log(ntcToday);
+												console.log(ntcWeek);
+												console.log(ntcMonth);
+
+												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
+														ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
+												
+												console.log(data);
+												
+												$.ajax({
+													url : "filter/"+pageNo,
+													method : "post",
+													data : JSON.stringify(data),
+													contentType: "application/json; charset=UTF-8"
+												}).done((data) => {
+													$("#noticeList").html(data)
+												});
+											}
+											
+											function nMonthClick(pageNo){
+												var startDate = '';
+												var endDate = '';
+												
+												var ntcToday = null;
+												var ntcWeek = null;
+												var ntcMonth = "1개월전";
+												
+												var sysNo = "${sysNo}"
+												
+												var ntcTtl = document.getElementById("keyword").value;
+												
+												if(ntcTtl !== "") {
+													ntcTtl = "%" + ntcTtl + "%";
+												}
+
+												console.log(ntcTtl);
+												console.log(startDate);
+												console.log(endDate);
+												console.log(ntcToday);
+												console.log(ntcWeek);
+												console.log(ntcMonth);
+
+												let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
+														ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
+												
+												console.log(data);
+												
+												$.ajax({
+													url : "filter/"+pageNo,
+													method : "post",
+													data : JSON.stringify(data),
+													contentType: "application/json; charset=UTF-8"
+												}).done((data) => {
+													$("#noticeList").html(data)
+												});
+											}
+										</script>
+	         						</div>
+								</form>
         					</div>
         					<hr/>
     
 						    <!-- 공지사항 목록 -->
 							<div class="d-sm-flex justify-content-end">
-								<a href="${pageContext.request.contextPath}/notice/write" class="btn btn-sm btn-secondary mr-3">글작성</a>
+								<c:if test="${sessionScope.loginUser.userNm eq '관리자'}">
+									<a class="btn btn-sm btn-secondary mr-3" onclick="getNoticeWrite()">글작성</a>
+								</c:if>
 							</div>
-							<div class="table-responsive p-3">
-								<table class="table align-items-center table-flush table-hover">
-								    <thead class="thead-light">
-									    <tr>
-								      		<th>카테고리</th>
-								      		<th>글번호</th>
-								      		<th>글제목</th>
-								      		<th>작성자</th>
-								      		<th>작성일</th>
-								      		<th>조회수</th>
-									    </tr>
-								    </thead>
-									<tbody>
-   										<c:forEach var="notice" items="${noticeList}">
-											<tr onclick="location.href='${pageContext.request.contextPath}/notice/detail?ntcNo=${notice.ntcNo}'" style="cursor:pointer;">
-											<td>공지사항</td>
-											<td>${notice.ntcNo}</td>
-											<td>${notice.ntcTtl}</td>
-											<td>${notice.userId}</td>
-											<td>${notice.ntcWrtDate}</td>
-											<td>${notice.ntcInqCnt}</td>
-											</tr>
-										</c:forEach>
-            							<tr>
-											<td colspan="6" class="text-center">
-												<div>
-													<a class="btn btn-outline-primary btn-sm" href="list?pageNo=1">처음</a>
-													<c:if test="${pager.groupNo>1}">
-														<a class="btn btn-outline-info btn-sm" href="list?pageNo=${pager.startPageNo-1}">이전</a>
-													</c:if>
-
-													<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
-														<c:if test="${pager.pageNo != i}">
-															<a class="btn btn-outline-success btn-sm" href="list?pageNo=${i}">${i}</a>
-														</c:if>
-														<c:if test="${pager.pageNo == i}">
-															<a class="btn btn-danger btn-sm" href="list?pageNo=${i}">${i}</a>
-														</c:if>
-													</c:forEach>
-
-													<c:if test="${pager.groupNo<pager.totalGroupNo}">
-														<a class="btn btn-outline-info btn-sm" href="list?pageNo=${pager.endPageNo+1}">다음</a>
-													</c:if>
-													<a class="btn btn-outline-primary btn-sm" href="list?pageNo=${pager.totalPageNo}">맨끝</a>
-												</div>
-											</td>
-										</tr>
-            						</tbody>
-            					</table>
-          					</div>
+							<div id="noticeList" style="width: 100%;"></div>
         				</div>
 					</div>
+					<div id="subNoticeDetailView" style="width: 100%;"></div>
 				</div>
+				<script>
+					function getNoticeDetail(i) {
+						let ntcNo = i;
+						$("#mainNoticeMenu").removeClass("d-sm-flex");
+						$("#mainNoticeMenu").hide();
+						$("#noticeMenu").show();
+						$("#mainNoitce").attr("class","col-lg-7");
+						$("#subNoticeDetailView").attr("class","col-lg-5");
+						
+						$.ajax({
+							url : "detail/"+ntcNo,
+							method : "get",
+							dataType : "html",
+							success : function(data) {
+								$("#subNoticeDetailView").html(data);
+							}
+						});
+					}
+					
+					function getNoticeWrite() {
+						$("#mainNoticeMenu").removeClass("d-sm-flex");
+						$("#mainNoticeMenu").hide();
+						$("#noticeMenu").show();
+						$("#mainNoitce").attr("class","col-lg-7");
+						$("#subNoticeDetailView").attr("class","col-lg-5");
+						
+						$.ajax({
+							url : "write",
+							method : "get",
+							dataType : "html",
+							success : function(data) {
+								$("#subNoticeDetailView").html(data);
+							}
+						});
+					}
+					
+					function getNoticeUpdate(i) {
+						let ntcNo = i;
+						$("#mainNoticeMenu").removeClass("d-sm-flex");
+						$("#mainNoticeMenu").hide();
+						$("#noticeMenu").show();
+						$("#mainNoitce").attr("class","col-lg-7");
+						$("#subNoticeDetailView").attr("class","col-lg-5");
+						
+						$.ajax({
+							url : "update/"+ntcNo,
+							method : "get",
+							dataType : "html",
+							success : function(data) {
+								$("#subNoticeDetailView").html(data);
+							}
+						});
+					}
+					
+				</script>
+				
 				<!-- 로그아웃 모달 -->
 	          	<%@include file="/WEB-INF/views/common/logout.jsp" %>
 	        	</div>
