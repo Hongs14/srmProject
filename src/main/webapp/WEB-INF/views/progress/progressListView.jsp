@@ -32,10 +32,7 @@
 	                  			<label class="custom-control-label" for="customCheck${list.srNo}"></label>
 	                		</div>
 						</td>
-						<td>
-							${list.srNo}
-							<input type="hidden" name="srNoList[${status.count}].srNo" value="${list.srNo}">
-						</td>
+						<td>${list.srNo}</td>
 						<td>${list.sysNm}</td>
 						<td>${list.srTypeNm}</td>
 						<td>${list.srTtl}</td>
