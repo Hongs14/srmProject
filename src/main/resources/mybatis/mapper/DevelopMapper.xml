@@ -3,20 +3,45 @@
 <mapper namespace="com.team01.webapp.develop.dao.IDevelopRepository">
 	
 	<!-- 
-		페이징처리를 위한 전체 행의 수  
+		전체 행의 수  
 		작성자: 정홍주
 	-->
 	<select id="totalRow" resultType="int">
-		select count(*) from sr where stts_no = 4 or stts_no = 5 or stts_no=6
+		SELECT COUNT(*) 
+			FROM SR SR, SYSTEM SYS, SR_STTS ST, USERS U 
+		WHERE SR.SYS_NO = SYS.SYS_NO
+		AND SR.STTS_NO = ST.STTS_NO
+		AND SR.SR_CUST_NO = U.USER_NO
+		AND SR.STTS_NO IN (4,5)
+		<if test="!sysNo.equals('all')">
+			AND sys.sys_no = #{sysNo}
+		</if>
+		<if test="sttsNo != 0">
+			AND st.stts_no = #{sttsNo}
+		</if>
+		<if test="!userOgdp.equals('all')">
+			AND u.user_ogdp = #{userOgdp}
+		</if>
+		<if test="!srDevDp.equals('all')">
+			AND	SR.SR_DEV_DP = #{srDevDp}
+		</if>
+		<if test="srRegStartDate neq null and srRegStartDate neq ''" >
+			 AND sr.SR_REG_DATE BETWEEN 
+                TO_DATE(#{srRegStartDate},'YY-MM-DD') 
+                AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+0.9
+		</if>
+		<if test="srTtl != ''">
+			AND  sr.SR_TTL like #{srTtl}
+		</if>
 	</select>
 	
 	<!-- 
-		목록조회
+		필터링 후 목록조회
 		작성자: 정홍주
 	-->
-	<select id="selectDevelopList" parameterType="pager" resultType="developDto">
-		<![CDATA[
-			select rnum, 
+	<select id="selectDevelopList" parameterType="developDto" resultType="developDto">
+		
+			select rnum AS "seq", 
 			        sr_no AS "srNo", 
 			        sr_cust_no AS "srCustId", 
 			        sys_no AS "sysNo", 
@@ -46,13 +71,36 @@
 			      select  sr_no, sr_cust_no, sr.sys_no, system.sys_nm, sr.stts_no, sr_stts.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
 			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr.sr_type,  sr.sr_dev_dp, user_nm, user_ogdp, user_dp_nm
 			      from sr, sr_type, sr_stts, users, system
-			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no and sr.stts_no in(4, 5)
-			      order by sr_no desc
+			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no 
+			      	<if test="sttsNo == 4 or sttsNo == 5">
+			      		and sr.stts_no = #{sttsNo}
+			      	</if>
+			      	<if test="sttsNo == 0">
+			      		and sr.stts_no in (4, 5)
+			      	</if>
+			      	<if test="!userOgdp.equals('all')">
+						AND u.user_ogdp = #{userOgdp}
+					</if>
+					<if test="!srDevDp.equals('all')">
+						AND	SR.SR_DEV_DP = #{srDevDp}
+					</if>
+					<if test="srRegStartDate neq null and srRegStartDate neq ''" >
+						 AND sr.SR_REG_DATE BETWEEN 
+			                TO_DATE(#{srRegStartDate},'YY-MM-DD') 
+			                AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+0.9
+					</if> 
+					<if test="srTtl != ''">
+						AND  sr.SR_TTL like #{srTtl}
+					</if>
+			      	ORDER BY SR.SR_PRY, SR.SR_NO DESC
 			    ) aa
-			where rownum <= #{endRowNo}
+				<![CDATA[
+					where rownum <= #{endRowNo}
+				]]>
 			)
-			where rnum >= #{startRowNo}
-		]]>
+			<![CDATA[
+				where rnum >= #{startRowNo}
+			]]>
 	</select>
 	
 	<!-- 
@@ -60,7 +108,7 @@
 		작성자: 정홍주
 	 -->
 	<select id="selectDevelopContent" parameterType="string" resultType="developDto">
-		select  sr_no AS "srNo", 
+		select  s.sr_no AS "srNo", 
 		        sr_cust_no AS "srCustId", 
 		        s.sys_no AS "sysNo", 
 		        sys_nm as "sysNm",
@@ -81,9 +129,10 @@
 		        sr_dev_dp as "srDevDp",
 		        user_nm AS "userNm", 
 		        user_ogdp AS "userOgdp", 
-		        user_dp_nm AS "userDpNm"
-		 from sr s, sr_type, sr_stts, users, system
-		 where s.stts_no = sr_stts.stts_no and system.sys_no = s.sys_no and s.sr_cust_no = users.user_no 
+		        user_dp_nm AS "userDpNm",
+		        SR_FILE_ACTL_NM AS "srFileActlNm"
+		 from sr s, sr_type, sr_stts, users, system, SR_FILE
+		 where s.stts_no = sr_stts.stts_no and system.sys_no = s.sys_no and s.sr_cust_no = users.user_no AND S.SR_NO = SR_FILE.SR_NO
 		    and s.sr_type = sr_type.sr_type_no and s.sr_no = #{srNo}
 	</select>
 	
@@ -178,11 +227,30 @@
 		WHERE USER_TYPE='고객사'
 	</select>
 	
-	<select id="selectUserDpList" resultType="users">
-		SELECT 
-		    DISTINCT(USER_DP_NM) AS "userDpNm"
-		FROM USERS
-		WHERE USER_TYPE='고객사'
+	<select id="selectDevDpList" resultType="users">
+		SELECT
+			DISTINCT SR_DEV_DP AS "srDevDp"
+		FROM SR
+        WHERE SR_DEV_DP IS NOT NULL
+	</select>
+	
+	<select id="selectSrFile" parameterType="int" resultType="srFile">
+		SELECT
+		    SR_FILE_PHYS_NM AS "srFilePhysNm",
+		    SR_FILE_EXTN_NM AS "srFileExtnNm",
+		    SR_FILE_ACTL_NM AS "srFileActlNm"
+		FROM SR_FILE
+		WHERE SR_FILE_NO = #{srFileNo}
+	</select>
+	
+	<select id="selectSrFileList" parameterType="string" resultType="srFile">
+		SELECT
+		    SR_FILE_NO AS "srFileNo",
+		    SR_FILE_PHYS_NM AS "srFilePhysNm",
+		    SR_FILE_EXTN_NM AS "srFileExtnNm",
+		    SR_FILE_ACTL_NM AS "srFileActlNm"
+		FROM SR_FILE
+		WHERE SR_NO = #{srNo}
 	</select>
 	
 </mapper>

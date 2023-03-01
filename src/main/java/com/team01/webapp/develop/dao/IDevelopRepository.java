@@ -5,40 +5,48 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.team01.webapp.model.Examine;
+import com.team01.webapp.model.ExamineList;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.System;
 import com.team01.webapp.model.SRStts;
-import com.team01.webapp.model.SrDevelopDto;
+import com.team01.webapp.model.SrFile;
+import com.team01.webapp.model.DevelopDto;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
 
 public interface IDevelopRepository {
 
 	/**
-	 * @author	정홍주
-	 * @return	전체 행의 개수
+	 * @author				정홍주
+	 * @param developDto	검색조건
+	 * @return				전체 행의 개수
 	 */
-	public int totalRow();
+	public int totalRow(DevelopDto developDto);
 	
 	/**
-	 * @author 	정홍주
-	 * @param 	pager
-	 * @return	개발관리 목록
+	 * @author 				정홍주
+	 * @param developDto	
+	 * @return				개발관리 목록
 	 */
-	public List<SR> selectDevelopList(Pager pager);
+	public List<DevelopDto> selectDevelopList(DevelopDto developDto);
 	
+	/**	필터링 종류
+	 * @author	정홍주
+	 * @return	
+	 */
 	public List<SRStts> selectSrSttsList(); 
 	public List<System> selectSysNmList();
 	public List<Users> selectUserOgdpList();
-	public List<Users> selectUserDpList();
+	public List<Users> selectDevDpList();
 	/**
 	 * @author	정홍주
 	 * @param 	srNo
 	 * @return	상세 내용
 	 */
-	public SrDevelopDto selectDevelopContent(String srNo);
+	public DevelopDto selectDevelopContent(String srNo);
 	
 	/**
 	 * @author	정홍주
@@ -51,7 +59,7 @@ public interface IDevelopRepository {
 	 * @param	srDevelop객체에 값을 넣어 SR테이블을 update한다.
 	 * @return	update에 성공하면 1 리턴
 	 */
-	public int updateSr(SrDevelopDto srDevelop);
+	public int updateSr(DevelopDto srDevelop);
 	
 	/**
 	 * @author 	정홍주
@@ -74,4 +82,9 @@ public interface IDevelopRepository {
 	public int selectMaxpRrogNo();
 	
 	public int insertProg(List<Progress> prog);
+
+	public SrFile selectSrFile(int srFileNo);
+
+	public List<SrFile> selectSrFileList(String srNo);
+
 }

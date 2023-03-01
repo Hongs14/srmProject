@@ -3,11 +3,10 @@
 
 <!DOCTYPE html>
 <html>
-
 	<head>
 	  	<%@include file="/WEB-INF/views/common/head.jsp" %>
-	  	<script>
-		  	$(document).ready(function () {
+		<script>
+			$(document).ready(function () {
 			    $('#simple-date4 .input-daterange').datepicker({        
 			        format: 'yyyy/mm/dd',        
 			        autoclose: true,     
@@ -15,7 +14,7 @@
 			        todayBtn: 'linked',
 			      });  
 		  	});
-  		</script>	
+		</script>
 	</head>
 
 	<body id="page-top">
@@ -34,7 +33,7 @@
             					<h6 class="mb-0 text-white">SR 개발관리</h6>
          					</div>
             				<ol class="breadcrumb">
-              					<li class="breadcrumb-item">SR 관리</li>
+              					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/develop/list/1">SR 관리</a></li>
               					<li class="breadcrumb-item active" aria-current="page">SR 개발관리</li>
             				</ol>
           				</div>
@@ -52,37 +51,32 @@
 									            	<div class="form-group row" id="simple-date4" >
 												    	<div class="input-daterange input-group input-group-sm">
 												        	<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
-											            	<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" />
+											            	<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="startDate" />
 									                    	<div class="input-group-prepend">
 									                    		<span class="input-group-text" style="height:31px;">~</span>
 									                    	</div>
-										                    <input type="text" class="input-sm form-control form-control-sm" name="end" />
+										                    <input type="text" class="input-sm form-control form-control-sm" name="endDate" />
 												     	</div>
 									            	</div>
 									         	</div> 
 						                		<div class="col-sm-3">
 						                			<div class="form-group row">
 						                				<label class="col-sm-3 col-form-label-sm">진행상태</label>
-								                    	<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1">
-								                        	<option selected>전체</option>
-								                        	<option>요청</option>
-								                        	<option>검토중</option>
-								                        	<option>접수</option>
-								                        	<option>개발중</option>
-								                        	<option>개발완료</option>
-								                        	<option>재검토</option>
+								                    	<select class="form-control form-control-sm col-sm-9" id="sttsNo">
+								                        	<option value="0">전체</option>
+								                        	<option value="4">접수</option>
+								                        	<option value="5">개발중</option>
 								                    	</select>
 								                	</div>
 						                		</div>
 						                		<div class="col-sm-4">
 						                			<div class="form-group row">
-						                				<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">관련시스템</label>
-								                    	<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1" >
-								                        	<option selected>전체</option>
-								                        	<option>KHR시스템</option>
-								                        	<option>KTH시스템</option>
-								                        	<option>JHJ시스템 </option>
-								                        	<option>HGH시스템 </option>
+						                				<label for="exampleFormControlSelect1 sysNo" class="col-sm-3 col-form-label-sm">관련시스템</label>
+								                    	<select class="form-control form-control-sm col-sm-9" id="sysNo" >
+								                        	<option value="all">전체</option>
+				                        					<c:forEach var="system" items="${developFilter.sysNmList}">		                        	
+					                        					<option value="${system.sysNo}">${system.sysNm}</option>
+				                        					</c:forEach>
 								                    	</select>
 								                	</div>
 						                		</div>
@@ -92,24 +86,22 @@
 						                		<div class="col-sm-4">
 						                			<div class="form-group row">
 						                				<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">등록자 소속</label>
-								                    	<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1">
-								                        	<option selected>전체</option>
-								                        	<option>KHR시스템</option>
-								                        	<option>KTH시스템</option>
-								                        	<option>JHJ시스템</option>
-								                        	<option>HGH시스템</option>
+								                    	<select class="form-control form-control-sm col-sm-9" id="userOgdp">
+								                        	<option value="all" selected>전체</option>
+								                        	<c:forEach var="users" items="${developFilter.userOgdpList}">		                        	
+							                        			<option>${users.userOgdp}</option>
+						                        			</c:forEach>
 								                    	</select>
 								                	</div>
 						                		</div>
 						                		<div class="col-sm-3">
 						                			<div class="form-group row">
 						                				<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">개발부서</label>
-								                    	<select class="form-control form-control-sm col-sm-9" id="exampleFormControlSelect1">
-								                        	<option selected>전체</option>
-								                        	<option>한국소프트웨어 개발1팀</option>
-								                        	<option>한국소프트웨어 개발2팀</option>
-								                        	<option>서강소프트웨어 개발1팀</option>
-								                        	<option>미래소프트웨어 개발1팀</option>
+								                    	<select class="form-control form-control-sm col-sm-9" id="srDevdp">
+								                        	<option value="all" selected>전체</option>
+								                        	<c:forEach var="users" items="${developFilter.srDevDpList}">		                        	
+					                        					<option>${users.userDpNm}</option>
+				                        					</c:forEach>
 								                    	</select>
 								                	</div>
 						                		</div>
@@ -117,12 +109,12 @@
 								                	<div class="form-group row">
 								                		<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">키워드</label>
 								                    	<input type="text" class="form-control form-control-sm col-sm-9 bg-light" 
-								                   		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
+								                   		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;" id="keyword">
 								                  	</div>
 						                		</div>
 						                		<div class="col-sm-1">
 						                			<div class="input-group-append float-right">
-														<button class="btn btn-primary btn-sm" type="button">
+														<button class="btn btn-primary btn-sm" type="button" onclick="developList(1)">
 															조회 <i class="fas fa-search fa-sm"></i>
 														</button>
 													</div>
@@ -140,98 +132,85 @@
 			                  			</div>
 			                		</div>
 			                		
-	                                <!-- 테이블 -->
-	                                <div class="table-responsive p-3">
-						      			<table class="table align-items-center table-flush table-hover border">
-						                	<thead class="thead-light">
-							                	<tr>
-							                		<th class="pr-0">
-								                        <div class="custom-control custom-checkbox">
-								                   			<input type="checkbox" class="custom-control-input" id="customCheck${srNo}">
-								                   			<label class="custom-control-label" for="customCheck${srNo}"></label>
-								                 		</div>
-								                 	</th>
-							                    	<th>요청번호</th>
-							                        <th>제목</th>
-							                        <th>관련시스템</th>
-							                        <th>등록자</th>
-							                        <th>소속</th>
-							                        <th>개발부서</th>
-							                        <th>상태</th>
-							                        <th>등록일</th>
-							                        <th>완료예정일</th>
-							                        <th>중요도</th>
-							                    </tr>
-						                 	</thead>
-						                   	<tbody>
-					                   			<c:forEach items="${developlist}" var="SrDevelopDto">
-						                   			<tr>
-						                   				<td class="pr-0">
-									                        <div class="custom-control custom-checkbox">
-									                   			<input type="checkbox" class="custom-control-input" id="customCheck${SrDevelopDto.srNo}">
-									                   			<label class="custom-control-label" for="customCheck${SrDevelopDto.srNo}"></label>
-									                 		</div>
-								                 		</td>
-						                        		<td><a href="${pageContext.request.contextPath}/develop/view/${pageNo}?srNo=${SrDevelopDto.srNo}">${SrDevelopDto.srNo}</a></td>
-								                        <td><a href="${pageContext.request.contextPath}/develop/view/${pageNo}?srNo=${SrDevelopDto.srNo}">${SrDevelopDto.srTtl}</a></td>
-								                        <td>${SrDevelopDto.sysNm}</td>
-								                        <td>${SrDevelopDto.userNm}</td>
-								                        <td>${SrDevelopDto.userOgdp}</td>
-								                        <td>${SrDevelopDto.userDpNm }</td>
-								                        <td>
-								                        	<c:if test="${SrDevelopDto.sttsNm eq '접수'}"><span class="badge badge-outline-primary" style="font-size:100%; border: 1px solid black;">${SrDevelopDto.sttsNm}</span></c:if>
-															<c:if test="${SrDevelopDto.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${SrDevelopDto.sttsNm}</span></c:if>
-								                        </td>
-								                        <td>${SrDevelopDto.srRegDate}</td>
-								                        <td>${SrDevelopDto.srDdlnDate}</td>
-								                        <td>
-								                        	<c:if test="${SrDevelopDto.srPry eq '상'}"><span class="badge badge-danger" style="font-size:100%">${SrDevelopDto.srPry}</span></c:if>
-															<c:if test="${SrDevelopDto.srPry eq '중'}"><span class="badge badge-primary" style="font-size:100%">${SrDevelopDto.srPry}</span></c:if>
-															<c:if test="${SrDevelopDto.srPry eq '하'}"><span class="badge badge-secondary" style="font-size:100%">${SrDevelopDto.srPry}</span></c:if>
-								                        </td>
-								                   	</tr>
-						                     	</c:forEach>
-			                 				</tbody>
-						            	</table>
-						            	<!-- 테이블 -->
-						            </div>
-
-                                 		
-                                   	<c:if test="${pager.totalRows != 0}">
-										<div class="pager d-flex justify-content-center my-3">
-											<div class="pagingButtonSet d-flex justify-content-center">
-												<c:if test="${pager.pageNo > 1}">
-													<a href='<c:url value="/develop/list/1"/>' type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
-												</c:if>
-												<c:if test="${pager.groupNo > 1}">
-													<a href='<c:url value="/develop/list/${pager.startPageNo-1}"/>' type="button" class="btn btn-outline-info btn-sm m-1">이전</a>
-												</c:if>
-								
-												<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
-													<c:if test="${pager.pageNo != i}">
-														<a href='<c:url value="/develop/list/${i}"/>' type="button" class="btn btn-outline-info btn-sm m-1">${i}</a>
-													</c:if>
-													<c:if test="${pager.pageNo == i}">
-														<a href='<c:url value="/develop/list/${i}"/>' type="button" class="btn btn-primary btn-sm m-1">${i}</a>
-													</c:if>
-												</c:forEach>
-								
-												<c:if test="${pager.groupNo < pager.totalGroupNo }">
-													<a href='<c:url value="/develop/list/${pager.endPageNo+1}"/>' type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
-								
-												</c:if>
-												<c:if test="${pager.pageNo < pager.totalPageNo }">
-													<a href='<c:url value="/develop/list/${pager.totalPageNo}"/>' type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
-												</c:if>
-											</div>
-										</div>
-									</c:if>
-
+			                		<div id="ajaxList" style="width:100%"></div>
+	                               
                          		</div>
                          	</div>
            				</div>
            				<!-- row -->
 					</div>
+					
+					<script>
+						function selectAll(selectAll) {
+							const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+						  
+						  	checkboxes.forEach((checkbox) => {
+						    	checkbox.checked = selectAll.checked
+						  	})
+							
+						}
+						
+						$(document).ready(function () {
+							var sysNo = $('#sysNo').val();
+							var sttsNo = $('#sttsNo').val();
+							var userOgdp = $('#userOgdp').val();
+							var srDevDp = $('#srDevdp').val();
+			
+							var srRegStartDate = $('#startDate').val();
+							var srRegEndDate = $('#endDate').val();
+							
+							var srTtl = $('#keyword').val();
+							
+							if(srTtl !== "") {
+								srTtl = "%" + srTtl + "%";
+							}
+							
+							let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp: srDevDp,
+									srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
+							
+							console.log(data);
+							
+							$.ajax({
+								url : '<c:url value="/develop/filter/1"/>',
+								method : "post",
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+							}).done((data) => {
+								$("#ajaxList").html(data)
+							});
+						});
+					
+						function developList(pageNo) {
+							console.log(pageNo);
+							var sysNo = $('#sysNo').val();
+							var sttsNo = $('#sttsNo').val();
+							var userOgdp = $('#userOgdp').val();
+							var userDpNm = $('#userDpNm').val();
+							
+							var srRegStartDate = $('#start').val();
+							var srRegEndDate = $('#end').val();
+							
+							var srTtl = $('#keyword').val();
+							
+							if(srTtl !== "") {
+								srTtl = "%" + srTtl + "%";
+							}
+							
+							let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
+									srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
+							console.log(data);
+							
+							$.ajax({
+								url :  '<c:url value="/develop/filter/'+pageNo+'"/>',
+								method : "post",
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+							}).done((data) => {
+								$("#ajaxList").html(data)
+							});
+						}
+			  		</script>	
+					
 		         	<!-- 로그아웃 모달 -->
 		           	<%@include file="/WEB-INF/views/common/logout.jsp" %>
 		        </div>

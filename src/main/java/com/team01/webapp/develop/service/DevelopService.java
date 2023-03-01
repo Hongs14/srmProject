@@ -11,11 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.team01.webapp.develop.dao.IDevelopRepository;
 import com.team01.webapp.model.DevelopFilter;
+import com.team01.webapp.model.Examine;
+import com.team01.webapp.model.ExamineList;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SRStts;
-import com.team01.webapp.model.SrDevelopDto;
+import com.team01.webapp.model.SrFile;
+import com.team01.webapp.model.DevelopDto;
 import com.team01.webapp.model.System;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
@@ -29,25 +32,28 @@ public class DevelopService implements IDevelopService{
 	@Autowired
 	private IDevelopRepository developRepository;
 	
-
-	 /** 전체 행수 세기
-	 * @author 		 정홍주
-	 * @return		develop/selectHr jsp 반환
+	/** 페이지 정보 저장
+	 * 
+	 * @author					정홍주
+	 * @param pageNo			현재 Page 번호 
+	 * @param pager				pager 객체
+	 * @param developDto		클라이언트가 보낸 필터링 후 데이터 정보 저장
+	 * @return					Pager 객체 return
 	 */
 	@Override
-	public int totalRow() {
-		 int totalRow = developRepository.totalRow();
-		 return totalRow;
+	public Pager returnPage(int pageNo, Pager pager, DevelopDto developDto) {
+		int totalRow = developRepository.totalRow(developDto);
+		log.info(totalRow);
+		pager = new Pager(10,5,totalRow,pageNo);
+		return pager;
 	}
 	
-//	@Override
-//	public Pager returnPage(int pageNo, Pager pager, ExamineList examinelist) {
-//		int totalRow = (int) developRepository.selectTotalExamineCount(examinelist);
-//		pager = new Pager(10,5,totalRow,pageNo);
-//		
-//		return pager;
-//	}
-	
+	/**
+	 * SR 검토 검색 조건에 대한 리스트 
+	 * @author				정홍주
+	 * @param developFilter	검색 조건에 대한 해당 리스트 가져오기
+	 * @return
+	 */
 	public DevelopFilter filterList(DevelopFilter developFilter) {
 		List<SRStts> srSttsList = new ArrayList<>();
 		List<System> sysNmList = new ArrayList<>();
@@ -67,22 +73,52 @@ public class DevelopService implements IDevelopService{
 		developFilter.setUserOgdpList(userOgdpList);
 		
 		//등록자 부서
-		userDpList = developRepository.selectUserDpList();
-		developFilter.setUserDpList(userDpList);
+		userDpList = developRepository.selectDevDpList();
+		developFilter.setSrDevDpList(userDpList);
 		
+		log.info(developFilter);
 		return developFilter;
 	}
 	
+	/**
+	 * SR 개발 리스트 가져오기
+	 * @author				정홍주
+	 * @param examinelist	SR리스트 가져오기
+	 * @param pager			페이징 처리
+	 * @return
+	 */
 	@Override
-	public List<SR> getDevelopList(Pager pager) {
-		List<SR> list = developRepository.selectDevelopList(pager);
+	public List<DevelopDto> getDevelopList(Pager pager, DevelopDto developDto) {
+		int end = pager.getPageNo() * pager.getRowsPerPage();
+		int start = (pager.getPageNo()-1)* pager.getRowsPerPage()+1;
+		developDto.setStartRowNo(end);
+		developDto.setEndRowNo(start);
+		
+		List<DevelopDto> list = developRepository.selectDevelopList(developDto);
+		log.info(list);
 		return list;
 	}
 
+	/** SR개발 상세보기
+	* @author 		정홍주
+	* @param srNo	가져올 srNO
+	* @return		List<Users> 리턴
+	*/
 	@Override
-	public SrDevelopDto getDetail(String srNo) {
-		SrDevelopDto srDdto = developRepository.selectDevelopContent(srNo);
+	public DevelopDto getDetail(String srNo) {
+		DevelopDto srDdto = developRepository.selectDevelopContent(srNo);
+		List<SrFile> srFile = developRepository.selectSrFileList(srNo);
 		return srDdto;
+	}
+	
+	/** SR개발 상세보기
+	* @author 			정홍주
+	* @param srFileNo	첨부파일 번호
+	*/
+	@Override
+	public SrFile getSrFile(int srFileNo) {
+		SrFile file = developRepository.selectSrFile(srFileNo);
+		return file;
 	}
 
 	/** 전체 개발자 조회
@@ -108,7 +144,7 @@ public class DevelopService implements IDevelopService{
 	}
 
 	@Transactional
-	public int updateDevelopSr(SrDevelopDto srDevelop) {
+	public int updateDevelopSr(DevelopDto srDevelop) {
 		log.info("개발계획 수정");
 		int result = developRepository.updateSr(srDevelop);
 		return result;
@@ -117,7 +153,7 @@ public class DevelopService implements IDevelopService{
 	/** 개발자 리스트 불러오기(모달창)
 	 * @author 			 정홍주
 	 * @param userDpNm	
-	 * @oaram userNo
+	 * @param userNo
 	 * @param sDate
 	 * @param eDate	
 	 * @return			개발 담당자의 정보 가져오기
