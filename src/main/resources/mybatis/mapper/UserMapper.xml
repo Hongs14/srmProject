@@ -28,6 +28,12 @@
         WHERE us.SYS_NO = s.SYS_NO and us.CUST_NO = #{userNo}
 	</select>
 	
+	<select id="selectSysNmByUserNo" parameterType="int" resultType="string">
+		SELECT SYS_NM
+        FROM USER_SYSTEM us, SYSTEM s
+        WHERE us.SYS_NO = s.SYS_NO and us.CUST_NO = #{userNo}
+	</select>
+	
 	<select id="getSysNoByUserOgdp" parameterType="users" resultType="string">
 		SELECT SYS_NO FROM SYSTEM WHERE SYS_NM = #{sysNo}
 	</select>	
