@@ -83,16 +83,17 @@ public class NoticeController {
 	 * @throws IOException
 	 */
 
-	@GetMapping("/write")
+	@GetMapping("{sysNo}/write")
 	public String getNoticeWrite() {
 		log.info("실행");
 		return "notice/write";
 	}
 	
-	@PostMapping("/write")
+	@PostMapping("{sysNo}/write")
 	public String getNoticeWrite(Notice notice) throws IOException  {
 		log.info("실행");
-		System.out.println(notice.toString());
+		String sysNo = notice.getSysNo();
+		log.info(sysNo);
 		noticeService.noticeWrite(notice);
 		//첨부 파일 유무 조사
 		List<MultipartFile> mf = notice.getNtcMFile();
@@ -129,9 +130,8 @@ public class NoticeController {
 				}
 				noticeService.noticeFileUpload(notice);
 			}
-			
 		}
-		return "redirect:/notice/list";
+		return "redirect:/notice/list/sysNo";
 	}
 	
 	
@@ -142,7 +142,7 @@ public class NoticeController {
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
-	@GetMapping("/detail/{ntcNo}")
+	@GetMapping("{sysNo}/detail/{ntcNo}")
 	public String getNoticeDetail(@PathVariable int ntcNo, Model model) {
 		log.info("실행");
 		
@@ -166,7 +166,7 @@ public class NoticeController {
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
-	@GetMapping(value="/update/{ntcNo}")
+	@GetMapping(value="{sysNo}/update/{ntcNo}")
 	public String noticeUpdate(@PathVariable int ntcNo, Model model) {
 		log.info("실행");
 		Notice notice = noticeService.noticeDetail(ntcNo);
@@ -180,7 +180,7 @@ public class NoticeController {
 	}
 	
 	//updateAjax
-	@PostMapping(value="/updateAjax/{ntcNo}",produces="application/json; charset=UTF-8")
+	@PostMapping(value="{sysNo}/updateAjax/{ntcNo}",produces="application/json; charset=UTF-8")
 	public String updateAjax(@PathVariable int ntcNo, Model model) {
 		log.info("실행");
 		List<MultipartFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
@@ -197,7 +197,7 @@ public class NoticeController {
 	 * @return
 	 * @throws IOException
 	 */
-	@PostMapping(value="/update",produces="application/json; charset=UTF-8")
+	@PostMapping(value="{sysNo}/update",produces="application/json; charset=UTF-8")
 	public String noticeUpdate(Notice notice) throws IOException {
 		log.info("실행");
 		
