@@ -35,7 +35,6 @@ import com.team01.webapp.model.ProgressFilter;
 import com.team01.webapp.model.ProgressRate;
 import com.team01.webapp.model.ProgressType;
 import com.team01.webapp.model.SrFile;
-import com.team01.webapp.model.SrNo;
 import com.team01.webapp.model.SrProgressAjax;
 import com.team01.webapp.model.SrProgressList;
 import com.team01.webapp.model.SystemInfo;

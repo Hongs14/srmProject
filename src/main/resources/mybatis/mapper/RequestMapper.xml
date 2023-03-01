@@ -81,6 +81,10 @@
 		<if test="srTtl != ''">
 			AND  sr.SR_TTL like #{srTtl}
 		</if>
+		
+		<if test="checkMySR != 0">
+			AND  sr.SR_CUST_NO = #{userNo}
+		</if>
 	</select>
 
 
@@ -149,6 +153,9 @@
 					</if>
 					<if test="srTtl != ''">
 						AND  s.SR_TTL like #{srTtl}
+					</if>
+					<if test="checkMySR != 0">
+						AND  s.SR_CUST_NO = #{userNo}
 					</if>
 			        ORDER BY s.SR_REG_DATE DESC
 			    )
