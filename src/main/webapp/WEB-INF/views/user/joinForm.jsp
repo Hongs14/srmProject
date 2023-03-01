@@ -11,7 +11,7 @@
         }
         .userType_check input[type="radio"] {display: none; }
         .userType_check input[type="radio"] + label {cursor:pointer;}
-        .userType_check input[type="radio"]:checked + label { background: #406882; color: white;}
+        .userType_check input[type="radio"]:checked + label { background: #66bb6a; color: white;}
         .form-group { margin-bottom: 30px;}
         .form-group > input { max-width: 780px;}
          .form-group > select { max-width: 780px;}
@@ -45,20 +45,20 @@
 	                  
 	                  <form action="${pageContext.request.contextPath}/user/join"method="post">
 	                  
-	                  <h6 class="m-5 px-5 font-weight-bold text-primary">가입 타입 선택 </h6>
-	                  	<div class="container mb-5">
-	                  	<div class="userType_check row row-cols-3 px-2 justify-content-md-center" role="group" onchange="optionChange1();" aria-label="radio group">
+	                  <h6 class="m-3 px-5 mt-5 font-weight-bold text-primary">가입 타입 선택 </h6>
+	                  	<div class="container mb-5 border p-5">
+	                  	<div class="userType_check row row-cols-3 justify-content-md-center" role="group" onchange="optionChange1();" aria-label="radio group">
 						  <div class="col text-center">
 							  <input type="radio" class="btn-check" name="userType" id="userType1" autocomplete="off"  value="고객사" checked>
-							  <label class="btn btn-outline-primary " for="userType1"><i class="fas fa-users fa-lg" style="width:160px; height:120px; font-size:3rem; line-height:7rem;"></i><br><h3>고객사</h3></label>
+							  <label class="btn btn-outline-success" for="userType1"><i class="fas fa-users fa-lg" style="width:160px; height:120px; font-size:3rem; line-height:7rem;"></i><br><h3>고객사</h3></label>
 						  </div>
 						  <div class="col text-center">
 							  <input type="radio" class="btn-check" name="userType" id="userType2" autocomplete="off"  value="개발자">
-							  <label class="btn btn-outline-primary" for="userType2"><i class="fas fa-cogs fa-sm fa-fw" style="width:160px; height:120px; font-size:3rem; line-height:7rem;"></i><br><h3>개발자</h3></i></label>
+							  <label class="btn btn-outline-success" for="userType2"><i class="fas fa-cogs fa-sm fa-fw" style="width:160px; height:120px; font-size:3rem; line-height:7rem;"></i><br><h3>개발자</h3></i></label>
 						  </div>
 						  <div class="col text-center">
 							  <input type="radio" class="btn-check" name="userType" id="userType3" autocomplete="off"  value="관리자">
-							  <label class="btn btn-outline-primary" for="userType3"><i class="fab fa-fw fa-wpforms" style="width:160px; height:120px; font-size:3rem; line-height:7rem;"></i><br><h3>관리자</h3></i></label>
+							  <label class="btn btn-outline-success" for="userType3"><i class="fab fa-fw fa-wpforms" style="width:160px; height:120px; font-size:3rem; line-height:7rem;"></i><br><h3>관리자</h3></i></label>
 						  </div>
 						</div>
 						</div>
@@ -136,7 +136,7 @@
 	                  </form>
 	                 <hr>
 	                  <div class="text-center">
-	                    <a class="font-weight-bold small" href="login.html">이미 계정을 가지고 계신가요?</a>
+	                    <a class="font-weight-bold small" href="${pageContext.request.contextPath}/user/login">이미 계정을 가지고 계신가요?</a>
 	                  </div>
 	                  <div class="text-center">
 	                  </div>

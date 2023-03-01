@@ -182,7 +182,8 @@
 		    USER_NM AS "requesterNm",
 		    SR_REG_DATE AS "srRegDate",
 		    SR_DDLN_DATE AS "srDdlnDate",
-		    SR_CN AS "srCn"
+		    SR_CN AS "srCn",
+		    SR_PRY "srPry"
 		FROM SR sr, SR_TYPE type ,SYSTEM system, SR_STTS stts, USERS users
 		WHERE sr.sr_type = type.sr_type_no
 		AND sr.sys_no = system.sys_no

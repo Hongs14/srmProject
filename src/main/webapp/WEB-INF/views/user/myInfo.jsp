@@ -8,6 +8,12 @@
 	.text-primary {
 	font-size: 2rem;
 	}
+	
+	#myInfoWrapper{
+  			justify-content: center;
+  			align-items:center;
+  			min-height: 100vh;
+  		}
 	</style>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
 </head>
@@ -27,68 +33,65 @@
 
         <!-- 메인 컨테이너 Container Fluid-->
         <div class="container-fluid " id="container-wrapper">
-			<div class="d-sm-flex align-items-center justify-content-between">
-				<div></div>
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a
-						href="${pageContext.request.contextPath}">Home</a></li>
-					<li class="breadcrumb-item active" aria-current="page">나의 업무
-					</li>
-				</ol>
-			</div>
+			
 
 		<!-- Row -->
-          <div class="row">
-	     	<div class="col-lg-7">
-              <div class="card">
+          <div class="row" id="myInfoWrapper">
+	     	<div class="col-lg-7 container">
+              <div class="card" >
                <div class="card-header py-4 bg-gradient-primary d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-light">나의 정보 </h6>
+                  <h4 class="m-0 font-weight-bold text-light">나의 정보 </h4>
                 </div>
-                <div class="card-body">
-					<table class="table center m-3" style="width: 800px;">
-						<tr>
-							<th class="text-primary" style="border-top:0;">성명 </th>
-							<td style="border-top:0;">${sessionScope.loginUser.userNm}</td>
-						</tr>
-						<tr>
-							<th class="text-primary ">ID</th>
-							<td>${sessionScope.loginUser.userId}</td>
-						</tr>
-						<tr>
-							<th class="text-primary ">비밀번호 </th>
-							<td><input type="password" disabled placeholder="password">
-								<a class="btn btn-outline-warning btn-sm mx-1" data-toggle="modal" data-target="#updatePswd">수정하기</a>
-							</td>
-						</tr>
-						<tr>
-							<th class="text-primary ">소속</th>
-							<td>${sessionScope.loginUser.userOgdp}</td>
-						</tr>
-						<tr>
-							<th class="text-primary ">EMAIL</th>
-							<td>${sessionScope.loginUser.userEml}</td>
-						</tr>
-						<tr>
-							<th class="text-primary ">연락처</th>
-							<td><h6>${sessionScope.loginUser.userTelno}</h6></td>
-						</tr>
-						<tr>
-							<th class="text-primary">부서</th>
-							<td><h6>${sessionScope.loginUser.userDpNm}</h6></td>
-						</tr>
-						<tr>
-							<th class="text-primary">직급</th>
-							<td>${sessionScope.loginUser.userJbps}</td>
-						</tr>
-					</table>
-					<div class="text-center">
-						<a href="update?userNo=${sessionScope.loginUser.userNo}" class="btn btn-info btn-sm">수정하기</a>
-	
+                <div class="card-body d-flex p-0">
+                	<div class="userOgdp bg-primary">
+                		<div class="p-3 pt-5">
+							<h6 class="text-white ">${sessionScope.loginUser.userType}</h6>
+							<h3 class="text-white">${sessionScope.loginUser.userOgdp}</h3>
+						</div>
+                	</div>
+                	<form class="myInfoWrapper p-5 container"> 
+						<div class="row mb-4">
+							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userNm">성명 </label>
+							<input class="col-9" id="userNm"class="mx-2" style="border:0; font-size:1.2rem;" value="${sessionScope.loginUser.userNm}" disabled>
+						</div>
+						<div class="row mb-4">
+							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userId">ID </label>
+							<input class="col-9" id="userId"class="mx-2" style="border:0; font-size:1.2rem;" value="${sessionScope.loginUser.userId}" disabled>
+						</div>
+						<div class="row mb-4">
+							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userPswd">비밀번호 </label>
+							<input class="col-7" type="password" placeholder="password" id="userPswd"class="mx-2" style="border:0; font-size:1.2rem;" disabled>
+							<a class="btn btn-outline-warning btn-sm col-2" data-toggle="modal" data-target="#updatePswd">수정하기</a>
+						</div>
+						<div class="row mb-4">
+							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userEml">EMAIL </label>
+							<input class="col-9" id="userEml"class="mx-2" style="border:0; font-size:1.2rem;" value="${sessionScope.loginUser.userEml}" disabled>
+						</div>
+						<div class="row mb-4">
+							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userTelno">연락처 </label>
+							<input class="col-9" id="userTelno"class="mx-2" style="border:0; font-size:1.2rem;" value="${sessionScope.loginUser.userTelno}" disabled>
+						</div>
+						<div class="row mb-4">
+							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userDpNm">부서 </label>
+							<input class="col-9" id="userDpNm"class="mx-2" style="border:0; font-size:1.2rem;" value="${sessionScope.loginUser.userDpNm}" disabled>
+						</div>
+						<div class="row mb-4 ">
+							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userJbps">직급 </label>
+							<input class="col-9" id="userJbps"class="mx-2" style="border:0; font-size:1.2rem;" value="${sessionScope.loginUser.userJbps}" disabled>
+						</div>
+					<div class="card-footer">
+						<div class="text-center">
+							<a href="update?userNo=${sessionScope.loginUser.userNo}" class="btn btn-info btn-sm">수정하기</a>
+							<a href="unregister?userNo=${sessionScope.loginUser.userNo}" class="btn btn-warning btn-sm">탈퇴하기</a>
+						</div>
 					</div>
-					<div class="card-footer"></div>
-              </div>
-            </div>
-          </div>
+					</form>
+              	</div>
+              	
+				
+			
+	          </div>
+	        </div>
           <!-- Row -->
           
 			<!-- Modal -->
@@ -151,6 +154,7 @@
       </div>
      <%@include file="/WEB-INF/views/common/footer.jsp" %>
       <!-- Footer -->
+    </div>
     </div>
  <%@include file="/WEB-INF/views/common/bottom.jsp" %>
 </body>
