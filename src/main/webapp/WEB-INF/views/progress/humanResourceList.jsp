@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import = "java.util.Enumeration" %>
 <% session.removeAttribute("message"); %>
     
@@ -53,8 +54,12 @@
 					<th>${list.userJbps}</th>
 					<th>${list.userTelno}</th>
 					<th>${list.taskNm}</th>
-					<th id="startDate+${list.userNo}">${list.hrStartDate}</th>
-					<th id="endDate+${list.userNo}">${list.hrEndDate}</th>
+					<th id="startDate+${list.userNo}">
+						<fmt:formatDate value="${list.hrStartDate}" pattern="yyyy-MM-dd" />
+					</th>
+					<th id="endDate+${list.userNo}">
+						<fmt:formatDate value="${list.hrEndDate}" pattern="yyyy-MM-dd" />
+					</th>
 					<th id="leader+${list.userNo}">${list.hrLeader}</th>
 				</tr>
 			</c:forEach>
