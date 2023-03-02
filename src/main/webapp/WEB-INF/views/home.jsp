@@ -92,7 +92,7 @@
 								});
 								
 								$.ajax({
-									url : "/webapp/home/systemMiniView",
+									url : "${pageContext.request.contextPath}/systemMiniView",
 									type : "GET",
 									datatype : "html",
 									success : function(data){

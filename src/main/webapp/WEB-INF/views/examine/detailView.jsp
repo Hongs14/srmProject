@@ -136,7 +136,7 @@
 				<div class="col-sm-10">
 					<div class="custom-file">
 						<c:forEach var="examineFileList" items="${examineFileList}">
-							<span><a href="fileDownload?examineFileNo=${examineFileList.srFileNo}&srNo=${examineFileList.srNo}">${examineFileList.srFileActlNm}</a></span>
+							<span><a href="fileDownload?srFileNo=${examineFileList.srFileNo}">${examineFileList.srFileActlNm}</a></span>
 	               		</c:forEach>
 					</div>
 				</div>
