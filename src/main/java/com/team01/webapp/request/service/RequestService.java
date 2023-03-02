@@ -97,7 +97,7 @@ public class RequestService implements IRequestService{
 		
 		requestAjax.setStart(start);
 		requestAjax.setEnd(end);
-		
+		log.info("pager: "+pager+"requestAjax: "+requestAjax);
 		List<RequestList> requestLists = requestRepository.selectRequestList(requestAjax);
 		return requestLists;
 	}
