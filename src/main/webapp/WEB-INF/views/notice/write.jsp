@@ -161,7 +161,7 @@
 		processData: false,	// 필수
 		contentType: false	// 필수
 	}).done((data) => {
-		window.location.href = "/webapp/notice/list";
+		window.location.href = "/webapp/notice/list/"+sysNo;
 	});
 						    
 	}
