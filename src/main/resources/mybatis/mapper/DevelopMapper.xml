@@ -175,7 +175,7 @@
 		SR에 개발계획  update하기
 		작성자: 정홍주
 	 -->
-	<update id="updateSr" parameterType="developDto">
+	<update id="updateSr" parameterType="updateDevelop">
 		UPDATE SR SET SR_DEV_CN=#{srDevCn}, SR_BGT=#{srBgt}, STTS_NO = #{sttsNo}, SR_DDLN_DATE=#{srDdlnDate}, SR_START_DATE=#{srStartDate},
     			SR_END_DATE=#{srEndDate}, SR_DEV_DP=#{srDevDp}
 		WHERE SR_NO=#{srNo}

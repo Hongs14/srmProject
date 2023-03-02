@@ -32,6 +32,7 @@ import com.team01.webapp.model.DevelopFilter;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.model.SrFile;
+import com.team01.webapp.model.UpdateDevelop;
 import com.team01.webapp.model.DevelopDto;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
@@ -143,21 +144,6 @@ public class DevelopController {
 		}
 	}
 	
-	
-	/**
-	 * @author				 정홍주
-	 * @param srDevelop		서비스에 보내줄 DTO객체 주입
-	 * @return				
-	 */
-	@PostMapping(value="/register", produces="application/json; charset=UTF-8")
-	@ResponseBody
-	public int developPlan(@RequestBody DevelopDto srDevelop, Model model) {
-		int result = developService.updateDevelopSr(srDevelop);
-		log.info("SR개발관리 계획 등록");
-		return result;
-	}
-	
-	
 	/**모달창에 해당 팀의 개발자들 목록 띄우기
 	 * @author				정홍주
 	 * @param userDpNmMap	
@@ -175,11 +161,16 @@ public class DevelopController {
 		
 		List<Users> list = developService.selectDeveloperList(userDpNm, userNo, sDate, eDate);
 		log.info("팀별 개발자 조회: " + userDpNm);
-//		log.info(list);
+		log.info(list);
 		model.addAttribute("devlistByDp", list);
 		return "develop/devlistView";
 	}
 	
+	/**개발담당자를 고르기 위한 개발자들 목록 불러오기
+	 * @author 			정홍주
+	 * @param userNo	사용자PK
+	 * @return			개발자 목록
+	 */
 	@GetMapping(value="/devLeader")
 	@ResponseBody
 	public List<Users> updateDevLeader(@RequestParam int userNo) {
@@ -189,7 +180,7 @@ public class DevelopController {
 		return user;
 	}
 	
-	 /**
+	/**
 	 * @author 				김태희, 정홍주
 	 * @param checkBoxArr	선택된 값을 배열로 받음
 	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
@@ -208,6 +199,22 @@ public class DevelopController {
 	     
 	     return "develop/selectHr";
 	  }
+	
+	/**
+	 * @author				 정홍주
+	 * @param srDevelop		서비스에 보내줄 DTO객체 주입
+	 * @return				
+	 *//*
+	@PostMapping(value="/register", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public int developPlan(@RequestBody UpdateDevelop updateDevelop, Model model) {
+		int result = developService.updateDevelopSr(updateDevelop);
+		log.info("SR개발관리 계획 등록");
+		return result;
+	}*/
+	
+	
+	
 	 
 	 /**
 	 * @author				정홍주
@@ -219,28 +226,18 @@ public class DevelopController {
 	 * @param hrEndDate
 	 * @return
 	 */
-	@PostMapping(value="/updateHr")
-	 public String insertHrList(String srNo, int[] userNo, String[] hrLeader, int[] taskNo, 
-			 @DateTimeFormat(pattern="yyyy-MM-dd") Date[] hrStartDate, 
-			 @DateTimeFormat(pattern="yyyy-MM-dd") Date[] hrEndDate){
-		 
-		 List<HR> listHR = new ArrayList<>();
-		 for(int i=0; i<userNo.length; i++) {
-			 HR hr = new HR();
-			 hr.setSrNo(srNo);
-			 hr.setUserNo(userNo[i]);
-			 hr.setHrLeader(hrLeader[i]);
-			 hr.setTaskNo(taskNo[i]);
-			 hr.setHrStartDate(hrStartDate[i]);
-			 hr.setHrEndDate(hrEndDate[i]);
-			 listHR.add(hr);
-		 }
-		 log.info(listHR);
-//		 int result = developService.insertHrList(listHR);
-//		 int result2 = developService.insertProgress(); ///////////////////PROGRESS 삽입
-//		 log.info(result);
-		 log.info("HR등록");
-		 return "redirect:/develop/list/1";
-	 }
+	  @PostMapping(value="/updateHr")
+	    public String insertHrList(UpdateDevelop updateDevelop){
+		  log.info(updateDevelop);
+		  int result = developService.updateDevelopSr(updateDevelop);
+//	       List<HR> listHR = new ArrayList<>();
+//	   
+//	       log.info(listHR);
+//	       int result = developService.insertHrList(listHR);
+//	       int result2 = developService.insertProgress(); ///////////////////PROGRESS 삽입
+//	       log.info(result);
+	       log.info("HR등록");
+	       return "redirect:/develop/list/1";
+	    }
 
 }
