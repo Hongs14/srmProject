@@ -2,7 +2,16 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
+<script>
+	$(document).ready(function () {
+		$('#simple-date4 .input-daterange').datepicker({        
+			format: 'yyyy-mm-dd',        
+			autoclose: true,     
+			todayHighlight: true,   
+			todayBtn: 'linked',
+		});  
+	});
+</script>
 <!-- 메인 컨테이너 Container Fluid-->
 
 <div class="d-sm-flex align-items-center justify-content-between">
@@ -48,6 +57,18 @@
 						</select>
 					</div>
 				</div>
+			</div>
+			<div class="row mt-1">
+				<div class="form-group row" id="simple-date4" >
+          			<div class="input-daterange input-group input-group-sm">
+          				<label for="start" class="col-sm-4 col-form-label-sm">조회기간</label>
+              			<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="datePryStart"/>
+              			<div class="input-group-prepend">
+              				<span class="input-group-text" style="height:31px;">~</span>
+              			</div>
+              			<input type="text" class="input-sm form-control form-control-sm" name="end" id="datePryEnd"/>
+              		</div>
+      			</div>
 			</div>
 			<!-- 글 내용 -->
 			<div class="row mt-1">
@@ -146,7 +167,27 @@
 	var ntcPry = ntcPrySelect.options[document.getElementById("ntcPry").selectedIndex].value;
 	console.log(ntcPry);
 	formData.append("ntcPry",ntcPry);
-						    
+	
+	var ntcPryStartDate = document.getElementById("datePryStart").value;
+	console.log(ntcPryStartDate);
+	if(document.getElementById("datePryStart").value != ""){		
+		ntcPryStartDate = document.getElementById("datePryStart").value;
+		formData.append("ntcPryStartDate",ntcPryStartDate);
+	}else{
+		ntcPryStartDate = "";
+		formData.append("ntcPryStartDate",ntcPryStartDate);
+	}
+	
+	var ntcPryEndDate = document.getElementById("datePryEnd").value;
+	console.log(ntcPryEndDate);
+	if(document.getElementById("datePryEnd").value != ""){		
+		ntcPryEndDate = document.getElementById("datePryEnd").value;
+		formData.append("ntcPryEndDate",ntcPryEndDate);
+	}else{
+		ntcPryEndDate = "";
+		formData.append("ntcPryEndDate",ntcPryEndDate);
+	}
+	
 	var ntcCn = document.getElementById('ntcCn').value;
 	formData.append("ntcCn",ntcCn);
 						    

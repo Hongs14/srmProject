@@ -94,6 +94,7 @@ public class NoticeController {
 		log.info("실행");
 		String sysNo = notice.getSysNo();
 		log.info(sysNo);
+		log.info(notice);
 		noticeService.noticeWrite(notice);
 		//첨부 파일 유무 조사
 		List<MultipartFile> mf = notice.getNtcMFile();

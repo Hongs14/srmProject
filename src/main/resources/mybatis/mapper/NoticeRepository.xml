@@ -143,8 +143,8 @@
 			SELECT ntcno_seq.nextval FROM dual
 		</selectKey>
 		<![CDATA[
-			INSERT INTO NOTICE( NTC_NO, USER_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, NTC_WRT_DATE, NTC_PRY, SYS_NO)
-			VALUES( ntcno_seq.nextval, #{userNo}, #{ntcTtl}, #{ntcCn}, 0, sysdate, #{ntcPry}, #{sysNo} )
+			INSERT INTO NOTICE( NTC_NO, USER_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, NTC_WRT_DATE, NTC_PRY, SYS_NO, NTC_PRY_START_DATE, NTC_PRY_END_DATE)
+			VALUES( ntcno_seq.nextval, #{userNo}, #{ntcTtl}, #{ntcCn}, 0, sysdate, #{ntcPry}, #{sysNo}, #{ntcPryStartDate}, #{ntcPryEndDate} )
 		]]>
 		
 	</insert>
@@ -260,6 +260,14 @@
 			VALUES(ntcFileNo_seq.nextval, #{ntcNo}, #{ntcFilePhysNm}, #{ntcFileActlNm}, #{ntcFileExtnNm})
 		]]>
 	</insert>
+	
+	<update id="updatePryCheck">
+		<![CDATA[
+			UPDATE NOTICE 
+			SET NTC_PRY = 'No'
+			WHERE NTC_PRY_END_DATE < sysdate
+		]]>
+	</update>
 	
 	<!-- 댓글 -->
 	<!-- 댓글 읽기 -->

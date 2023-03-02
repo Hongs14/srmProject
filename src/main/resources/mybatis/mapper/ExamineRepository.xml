@@ -60,7 +60,7 @@
         AND sr.stts_no !=4
         AND sr.stts_no !=5
         AND sr.stts_no !=6
-		<if test="!sysNo.equals('전체')">
+		<if test="!sysNo.equals('')">
 			AND sys.sys_no = #{sysNo}
 		</if>
 		<if test="sttsNo != 0">
@@ -79,6 +79,9 @@
 		</if>
 		<if test="srTtl != ''">
 			AND  sr.SR_TTL like #{srTtl}
+		</if>
+		<if test="!sysNm.equals('전체')">
+			AND sys.sys_nm = #{sysNm}
 		</if>
 		
 	</select>
