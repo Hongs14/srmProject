@@ -99,13 +99,8 @@
 					                		</div>
 											<div class="col-1">
 												<div class="input-group-append float-right">
-													<button class="btn btn-primary btn-sm" type="button" onclick="progressList(1, 1)">
+													<button class="btn btn-primary btn-sm" type="button" onclick="progressList(1)">
 														조회 <i class="fas fa-search fa-sm"></i>
-													</button>
-												</div>
-												<div class="input-group-append float-right">
-													<button class="btn btn-primary btn-sm" type="button" onclick="progressList(1, 2)">
-														내 할일 조회 <i class="fas fa-search fa-sm"></i>
 													</button>
 												</div>
 											</div>
@@ -145,7 +140,15 @@
 												});
 											
 												// 검색 버튼을 누르면 값을 긁어오는 부분
-												function progressList(pageNo, choice) {
+												function progressList(pageNo) {
+													if ( $('#searchMySR').prop('checked') ) {
+														choice = 2;
+													} else {
+														choice = 1;
+													}
+													
+													console.log(choice)
+													
 													var sysNoSelect = document.getElementById("sysNo");
 													var srTypeNoSelect = document.getElementById("srTypeNo");
 													var srSttsNoSelect = document.getElementById("srSttsNo");
@@ -185,9 +188,17 @@
 				                </div>
 								<hr/>
 								<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-									<h6 class="m-0 font-weight-bold text-primary">SR 진척 목록</h6>
+									<h5 class="m-0 font-weight-bold text-primary">SR 진척 목록</h5>
 									<div class="d-sm-flex justify-content-end">
 										<button class="btn btn-sm btn-primary" onclick="excelDownload()">엑셀 다운로드</button>
+									</div>
+								</div>
+									
+									<div class="custom-control custom-switch px-5 ml-2" style="width:180px; border-radius:3px; background-color:#eaecf4;">
+										<input type="checkbox" class="custom-control-input" id="searchMySR" onclick="progressList(1)"/>
+										<label class="custom-control-label" for="searchMySR">
+											<span class="text-primary">나의 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span>
+										</label>
 									</div>
 									
 									<script>
@@ -226,8 +237,6 @@
 										}
 										
 									</script>
-									
-								</div>
 								<div id="progressListView" style="width:100%"></div>
 							</div>
 						</div>
