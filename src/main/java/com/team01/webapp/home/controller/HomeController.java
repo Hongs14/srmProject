@@ -76,6 +76,8 @@ public class HomeController {
 			system = homeService.getSystemMiniView(userNo);
 			model.addAttribute("system", system);
 			donutList = homeService.getDonutList(system.get(0).getSysNo());
+		} else if(userType.equals("개발자")) {
+			donutList = homeService.getDonutListDeveloper(userNo);
 		} else {
 			system = homeService.getSystemMiniViewDetail(userNo);
 			model.addAttribute("system", system);
@@ -97,14 +99,21 @@ public class HomeController {
 		
 		if(userType.equals("고객사")) {
 			system = homeService.getSystemMiniView(userNo);
+			sr.setSysNo(system.get(0).getSysNo());
+		} else if(userType.equals("개발자")) {
+			
 		} else {
 			system = homeService.getSystemMiniViewDetail(userNo);
+			sr.setSysNo(system.get(0).getSysNo());
 		}
-		sr.setSysNo(system.get(0).getSysNo());
 		
 		pager = homeService.returnPage(sr.getPageNo(), pager, sr);
 		
 		List<SR> srList = homeService.homeList(pager, sr);
+		
+		for(int i=0; i<srList.size(); i++) {
+			log.info(srList.get(i).getSrNo());
+		}
 		
 		model.addAttribute("srList", srList);
 		model.addAttribute("pager", pager);

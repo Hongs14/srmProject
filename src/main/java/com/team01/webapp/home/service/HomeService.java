@@ -53,8 +53,16 @@ public class HomeService implements IHomeService{
 		sr.setEnd(end);
 		sr.setStart(start);
 		
+		log.info(start);
+		log.info(end);
+		
 		return homeRepository.selectHomeList(sr);
 		
+	}
+
+	@Override
+	public List<Donut> getDonutListDeveloper(int userNo) {
+		return homeRepository.selectDonutListDeveloper(userNo);
 	}
 
 }

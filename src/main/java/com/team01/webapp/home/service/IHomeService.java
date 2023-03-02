@@ -19,4 +19,6 @@ public interface IHomeService {
 
 	List<SR> homeList(Pager pager, SR sr);
 
+	List<Donut> getDonutListDeveloper(int userNo);
+
 }

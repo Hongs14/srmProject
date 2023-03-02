@@ -261,7 +261,7 @@ public class ProgressService implements IProgressService {
 	 * @return			Progress 객체 return
 	 */
 	@Override
-	public Progress progressRate(int progNo) {
+	public Progress progressRate(String progNo) {
 		return progressRepository.selectProgressRate(progNo);
 	}
 	

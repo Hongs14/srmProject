@@ -24,6 +24,19 @@
 		GROUP BY stts.STTS_NO, STTS_NM
 		ORDER BY stts.STTS_NO ASC
 	</select>
+	
+	<select id="selectDonutListDeveloper" parameterType="int" resultType="donut">
+		SELECT
+		    stts.STTS_NO AS "sttsNo",
+		    stts_NM AS "sttsNm",
+            COUNT(SR.SR_NO) AS "count"
+		FROM SR sr, SR_STTS stts, HR hr
+		WHERE sr.stts_no = stts.stts_no
+        AND sr.sr_no = hr.sr_no
+		AND USER_NO = #{userNo}
+        GROUP BY stts.STTS_NO, STTS_NM
+		ORDER BY stts.STTS_NO ASC
+	</select>
 
 	<select id="selectSysInfo2" parameterType="int" resultType="systemInfo">
 		select 
@@ -40,14 +53,24 @@
 	    SELECT
 		    COUNT(sr.SR_NO)
 		FROM SR sr, SYSTEM system, SR_STTS stts
+	    <if test="userType.equals('개발자')">
+	    , HR hr
+	    </if>
 		WHERE sr.sys_no = system.sys_no
 		AND stts.stts_no = sr.stts_no
 	    <if test="userType.equals('고객사')">
 	    	AND SR_CUST_NO = #{srCustNo}
+	    	AND sr.sys_no = #{sysNo}
 	   	</if>
-	    AND sr.sys_no = #{sysNo}
+	   	<if test="userType.equals('관리자')">
+	   		AND sr.sys_no = #{sysNo}
+	   	</if>
 	    <if test="sttsNo != 0">
 	    	AND SR.STTS_NO = #{sttsNo}
+	    </if>
+		<if test="userType.equals('개발자')">
+			AND hr.sr_no = sr.sr_no
+			AND user_no = #{srCustNo}
 	    </if>
 	</select>
 	
@@ -80,23 +103,33 @@
 					FROM (
 						SELECT
 					        sr.SR_NO AS "SR_NO",
-					        SR_TTL AS,
-					        SYS_NM AS,
-					        stts_NM AS,
-					        SR_REG_DATE AS,
-					        SR_PRY AS
+					        SR_TTL,
+					        SYS_NM,
+					        stts_NM,
+					        SR_REG_DATE,
+					        SR_PRY
 					    FROM SR sr, SYSTEM system, SR_STTS stts
+					    <if test="userType.equals('개발자')">
+					    , HR hr
+					    </if>
 					    WHERE sr.sys_no = system.sys_no
 					    AND stts.stts_no = sr.stts_no
 					    <if test="userType.equals('고객사')">
 					    	AND SR_CUST_NO = #{srCustNo}
+					    	AND sr.sys_no = #{sysNo}
 					   	</if>
-					   	AND sr.sys_no = #{sysNo}
+					   	<if test="userType.equals('관리자')">
+					    	AND sr.sys_no = #{sysNo}
+					   	</if>
 					    <if test="sttsNo != 0">
 					    	AND SR.STTS_NO = #{sttsNo}
 					    </if>
+					    <if test="userType.equals('개발자')">
+	                        AND hr.sr_no = sr.sr_no
+	                        AND user_no = #{srCustNo}
+					    </if>
 				    )
-				ORDER BY SR_PRY
+				ORDER BY SR_PRY, SR_REG_DATE, SR_NO
 			)
 			<![CDATA[
 				WHERE rownum <= #{end}
