@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <!DOCTYPE html>
 	<script>
@@ -31,10 +32,10 @@
 						<div class="input-daterange input-group input-group-sm">
 							<c:choose>
 								<c:when test="${startresult}">
-									<input type="text" value="${developer.hrStartDate}" class="a input-sm form-control form-control-sm col-sm-9" name="start" id="start"/>
+									<input type="text" value="<fmt:formatDate value="${developer.hrStartDate}" pattern="yyyy-MM-dd"/>" class="a input-sm form-control form-control-sm col-sm-9" name="start" id="start"/>
 								</c:when>
 								<c:otherwise>
-									<input type="text" value="${developer.hrStartDate}" class="input-sm form-control form-control-sm col-sm-9" name="start" id="start" readonly/>
+									<input type="text" value="<fmt:formatDate value="${developer.hrStartDate}" pattern="yyyy-MM-dd"/>" class="input-sm form-control form-control-sm col-sm-9" name="start" id="start" readonly/>
 								</c:otherwise>
 							</c:choose>
 							<div class="input-group-prepend">
@@ -42,10 +43,10 @@
 							</div>
 							<c:choose>
 								<c:when test="${endresult}">
-									<input type="text" value="${developer.hrEndDate}" class="a input-sm form-control form-control-sm" name="end" id="end"/>
+									<input type="text" value="<fmt:formatDate value="${developer.hrEndDate}" pattern="yyyy-MM-dd"/>" class="a input-sm form-control form-control-sm" name="end" id="end"/>
 								</c:when>
 								<c:otherwise>
-									<input type="text" value="${developer.hrEndDate}" class="input-sm form-control form-control-sm" name="end" id="end" readonly/>
+									<input type="text" value="<fmt:formatDate value="${developer.hrEndDate}" pattern="yyyy-MM-dd"/>" class="input-sm form-control form-control-sm" name="end" id="end" readonly/>
 								</c:otherwise>
 							</c:choose>
 						</div>
