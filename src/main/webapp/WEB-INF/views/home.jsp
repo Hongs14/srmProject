@@ -90,6 +90,16 @@
 								}).done((data) => {
 									$("#homeMiniView").html(data)
 								});
+								
+								$.ajax({
+									url : "/webapp/home/systemMiniView",
+									type : "GET",
+									datatype : "html",
+									success : function(data){
+										$('#systemMiniView').html(data);
+										console.log(data);
+									}
+								});
 							});
 							
 							function homeMiniViewChange(sttsNo, pageNo) {
@@ -224,7 +234,6 @@
       <!-- Footer -->
     </div>
  <%@include file="/WEB-INF/views/common/bottom.jsp" %>
- <script src="${pageContext.request.contextPath}/resources/js/home.js"></script>
 </body>
 
 </html>

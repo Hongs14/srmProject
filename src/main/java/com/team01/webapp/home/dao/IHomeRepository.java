@@ -21,4 +21,6 @@ public interface IHomeRepository {
 
 	List<SR> selectHomeList(SR sr);
 
+	List<Donut> selectDonutListDeveloper(int userNo);
+
 }

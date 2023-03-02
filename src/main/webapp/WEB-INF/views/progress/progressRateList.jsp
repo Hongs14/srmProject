@@ -15,7 +15,7 @@
 	  	});
 	</script>
 
-	<div class="table-responsive">
+	<div class="table-responsive p-1">
 	<div class="input-group-append float-right mb-3">
 		<button class="btn btn-primary btn-sm mr-2" type="button" onclick="progressRateALLAdd()">
 			저장
@@ -62,8 +62,9 @@
 						</th>
 						<th>
 							<c:if test="${list.progressFile[0].progFileNo != null}">
-								<div class="row">
+								<div class="row d-flex flex-column text-left">
 									<c:forEach var="fileList" items="${list.progressFile}">
+								
 										<a href="progressFiledownload/${list.srNo}/?progFileNo=${fileList.progFileNo}">
 											<span>[${fileList.progFileActlNm}]</span>
 										</a>

@@ -5,26 +5,48 @@
         <div class="card shadow mb-4">
           <div class="card-header py-3">
            	<div class="table-responsive">
-          	 	<c:forEach var="list" items="${system}">
-				    <table class="table" >
-						<thead class="thead-light">
-							  <tr>
-							    <th>
-							    	<i class="far fa-fw fa-window-maximize"></i>
-							    	${list.sysNm} 
-							    </th>
-							  </tr>
-						</thead>
+           		<c:if test="${userType == '관리자' || userType == '고객사'}">
+	          	 	<c:forEach var="list" items="${system}">
+					    <table class="table" >
+							<thead class="thead-light">
+								  <tr>
+								    <th>
+								    	<i class="far fa-fw fa-window-maximize"></i>
+								    	${list.sysNm} 
+								    </th>
+								  </tr>
+							</thead>
+						    <tbody>
+							      <tr>
+							        <td><b>시스템 담당자 :  ${list.managerNm}</b></td>
+							      </tr>
+							      <tr>
+							        <td style="border:0;"><b>시스템 업데이트일자 : ${list.sysUpdtDate}</b></td>
+							      </tr>
+						     </tbody>
+					     </table>
+				     </c:forEach>
+			     </c:if>
+			     <c:if test="${userType == '개발자'}">
+			     	<table class="table" >
+			     		<thead class="thead-light">
+			     			<tr>
+			     				<th>
+			     					<i class="far fa-fw fa-window-maximize"></i>
+			     					나의 업무 통계
+			     				</th>
+			     			</tr>
+			     		</thead>
 					    <tbody>
 						      <tr>
-						        <td><b>시스템 담당자 :  ${list.managerNm}</b></td>
+						        <td><b>부서 : ${loginUser.userDpNm}</b></td>
 						      </tr>
 						      <tr>
-						        <td style="border:0;"><b>시스템 업데이트일자 : ${list.sysUpdtDate}</b></td>
+						        <td style="border:0;"><b>직급 : ${loginUser.userJbps}</b></td>
 						      </tr>
 					     </tbody>
-				     </table>
-			     </c:forEach>
+			     	</table>
+			     </c:if>
 	    	 </div>
           </div>
           <div class="card-body">
