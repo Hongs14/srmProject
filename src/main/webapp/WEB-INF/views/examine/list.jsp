@@ -80,7 +80,7 @@
 		                				<div class="col-4">
 		                					<div class="form-group row">
 		                						<label for="exampleFormControlSelect1 sysNo" class="col-sm-4 col-form-label-sm">관련시스템</label>
-				                    			<select class="form-control form-control-sm col-sm-8" id="sysNo">
+				                    			<select class="form-control form-control-sm col-sm-8" id="sysNm">
 				                        			<option value="0">전체</option>
 				                        			<c:forEach var="system" items="${examineFilter.sysNmList}">		                        	
 					                        			<option value="${system.sysNo }">${system.sysNm}</option>
@@ -130,12 +130,13 @@
 		                				<script>
 			                				$(document).ready(function () {
 												console.log("시작");
-												var sysNoSelect = document.getElementById("sysNo");
+												var sysNo = "";
+												var sysNmSelect = document.getElementById("sysNm");
 												var sttsNoSelect = document.getElementById("sttsNo");
 												var userOgdpSelect = document.getElementById("userOgdp");
 												var userDpSelect = document.getElementById("userDpNm");
 												
-												var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].text;
+												var sysNm = sysNmSelect.options[document.getElementById("sysNm").selectedIndex].text;
 												var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
 												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 												var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
@@ -157,7 +158,7 @@
 												console.log(srRegStartDate);
 												console.log(srRegEndDate);
 												
-												let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
+												let data = {sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
 														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 												
 												console.log(data);
@@ -174,16 +175,17 @@
 										
 											function examineList(pageNo) {
 												console.log(pageNo);
-												var sysNoSelect = document.getElementById("sysNo");
+												var sysNo = "";
+												var sysNmSelect = document.getElementById("sysNm");
 												var sttsNoSelect = document.getElementById("sttsNo");
 												var userOgdpSelect = document.getElementById("userOgdp");
 												var userDpSelect = document.getElementById("userDpNm");
 												
-												var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].text;
+												var sysNm = sysNmSelect.options[document.getElementById("sysNm").selectedIndex].text;
 												var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
 												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 												var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
-												
+
 												var srRegStartDate = document.getElementById("dateStart").value;
 												var srRegEndDate = document.getElementById("dateEnd").value;
 												
@@ -201,7 +203,53 @@
 												console.log(srRegStartDate);
 												console.log(srRegEndDate);
 												
-												let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
+												let data = {sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
+														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
+												
+												console.log(data);
+												
+												$.ajax({
+													url : "filter/"+pageNo,
+													method : "post",
+													data : JSON.stringify(data),
+													contentType: "application/json; charset=UTF-8"
+												}).done((data) => {
+													$("#ajaxList").html(data)
+												});
+											}
+											
+											function seleckMySr(pageNo) {
+												console.log(pageNo);
+												var sysNo = "${sessionScope.loginUser.sysNo}";
+												
+												var sysNmSelect = document.getElementById("sysNm");
+												var sttsNoSelect = document.getElementById("sttsNo");
+												var userOgdpSelect = document.getElementById("userOgdp");
+												var userDpSelect = document.getElementById("userDpNm");
+												
+												var sysNm = sysNmSelect.options[document.getElementById("sysNm").selectedIndex].text;
+												var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
+												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
+												var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
+
+												var srRegStartDate = document.getElementById("dateStart").value;
+												var srRegEndDate = document.getElementById("dateEnd").value;
+												
+												var srTtl = document.getElementById("keyword").value;
+												
+												if(srTtl !== "") {
+													srTtl = "%" + srTtl + "%";
+												}
+												
+												console.log(sysNo);
+												console.log(sttsNo);
+												console.log(srTtl);
+												console.log(userOgdp);
+												console.log(userDpNm);
+												console.log(srRegStartDate);
+												console.log(srRegEndDate);
+												
+												let data = {sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
 														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 												
 												console.log(data);
@@ -229,12 +277,25 @@
 			                		<button class="btn btn-sm btn-primary ">엑셀 다운로드</button>
 			                  	</div>
 			                </div>     
+		                  	<div class="custom-control custom-switch px-5 ml-3" style="width:180px; border-radius:3px; background-color:#eaecf4;">
+			  					<input type="checkbox" class="custom-control-input" id="customSwitch1" name="mySrWork" onclick="seleckMySr(1)">
+			  					<label class="custom-control-label" for="customSwitch1"><span class="text-primary">나의 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span></label>
+							</div>
 			                <form>
 					           	<div id="ajaxList" style="width:100%"></div>
 					           	<script>
-									function selectAll(selectAll) {
-										const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-									  
+						           	function checkSelectAll(checkbox)  {
+						           	  const selectall 
+						           	    = document.querySelector('input[name="selectall"]');
+						           	  
+						           	  if(checkbox.checked === false)  {
+						           	    selectall.checked = false;
+						           	  }
+						           	}
+
+					           		function selectAll(selectAll) {
+					           			const checkboxes = document.getElementsByName('examineCheck');
+					           	    
 									  	checkboxes.forEach((checkbox) => {
 									    	checkbox.checked = selectAll.checked
 									  	})

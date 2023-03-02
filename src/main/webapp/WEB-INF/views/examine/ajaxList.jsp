@@ -7,7 +7,7 @@
 			<thead class="thead-light" style="text-align: center;">
 				<tr>	
 					<th>
-						<input type="checkbox" onclick='selectAll(this)' name="examineCheck">
+						<input type="checkbox" onclick='selectAll(this)' name="selectall">
 					</th>
 					<th>요청번호</th>
 					<th>제목</th>
@@ -25,7 +25,7 @@
 					<tr>
 						
 						<td>
-							<input type="checkbox" name="examineCheck" value="${examine.srNo}">
+							<input type="checkbox" name="examineCheck" value="${examine.srNo}" onclick='checkSelectAll(this)'>
 						</td>
 						<td onclick ="getSrDetail('${examine.srNo}')">${examine.srNo}</td>
 						<td onclick ="getSrDetail('${examine.srNo}')">${examine.srTtl}</td>

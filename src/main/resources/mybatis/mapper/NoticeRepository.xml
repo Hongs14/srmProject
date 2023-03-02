@@ -63,7 +63,8 @@
 		    USER_ID AS "userId",
 		    NTC_TTL AS "ntcTtl",
 		    NTC_INQ_CNT AS "ntcInqCnt",
-	    	NTC_WRT_DATE AS "ntcWrtDate"
+	    	NTC_WRT_DATE AS "ntcWrtDate",
+	    	NTC_PRY AS "ntcPry"
 		FROM(
 		    SELECT 
 		        NTC_NO,
@@ -169,7 +170,8 @@
 		    u.USER_ID AS userId,
 		    n.NTC_INQ_CNT AS ntcInqCnt,
 		    n.NTC_WRT_DATE AS ntcWrtDate,
-		    n.NTC_CN AS ntcCn
+		    n.NTC_CN AS ntcCn,
+		    n.SYS_NO AS sysNo
 		FROM NOTICE n
 		LEFT OUTER JOIN USERS u
 		ON n.USER_NO = u.USER_NO

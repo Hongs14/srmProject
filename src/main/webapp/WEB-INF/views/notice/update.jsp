@@ -296,6 +296,9 @@
 	        }
 	    }
 	    
+	    var sysNo = "${sysNo}";
+	    console.log(sysNo);
+	    
 	    var ntcCn = document.getElementById('ntcCn').value;
 	    formData.append("ntcCn",ntcCn);
 	    
@@ -310,7 +313,7 @@
 			processData: false,	// 필수
 			contentType: false	// 필수
 	    }).done((data) => {
-	    	window.location.href = "/webapp/notice/list";
+	    	window.location.href = "/webapp/notice/list/KOREASOFT_SRM";
 	    });
 	    
 	}

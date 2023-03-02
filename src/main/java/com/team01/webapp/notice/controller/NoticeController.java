@@ -63,11 +63,11 @@ public class NoticeController {
 		log.info("실행");
 		
 		log.info(pageNo);
-		log.info(notice);
 		pager = noticeService.returnPage(pageNo,pager,notice);
 		
 		List<Notice> noticeListAjax = noticeService.getNoticeListAjax(pager,notice);
 		model.addAttribute("noticeListAjax",noticeListAjax);
+		log.info(noticeListAjax);
 		model.addAttribute("pager",pager);
 		
 		return "notice/ajaxList";
@@ -83,16 +83,17 @@ public class NoticeController {
 	 * @throws IOException
 	 */
 
-	@GetMapping("/write")
+	@GetMapping("{sysNo}/write")
 	public String getNoticeWrite() {
 		log.info("실행");
 		return "notice/write";
 	}
 	
-	@PostMapping("/write")
+	@PostMapping("{sysNo}/write")
 	public String getNoticeWrite(Notice notice) throws IOException  {
 		log.info("실행");
-		System.out.println(notice.toString());
+		String sysNo = notice.getSysNo();
+		log.info(sysNo);
 		noticeService.noticeWrite(notice);
 		//첨부 파일 유무 조사
 		List<MultipartFile> mf = notice.getNtcMFile();
@@ -129,9 +130,8 @@ public class NoticeController {
 				}
 				noticeService.noticeFileUpload(notice);
 			}
-			
 		}
-		return "redirect:/notice/list";
+		return "redirect:/notice/list/"+sysNo;
 	}
 	
 	
@@ -142,7 +142,7 @@ public class NoticeController {
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
-	@GetMapping("/detail/{ntcNo}")
+	@GetMapping("{sysNo}/detail/{ntcNo}")
 	public String getNoticeDetail(@PathVariable int ntcNo, Model model) {
 		log.info("실행");
 		
@@ -166,7 +166,7 @@ public class NoticeController {
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
-	@GetMapping(value="/update/{ntcNo}")
+	@GetMapping(value="{sysNo}/update/{ntcNo}")
 	public String noticeUpdate(@PathVariable int ntcNo, Model model) {
 		log.info("실행");
 		Notice notice = noticeService.noticeDetail(ntcNo);
@@ -180,7 +180,7 @@ public class NoticeController {
 	}
 	
 	//updateAjax
-	@PostMapping(value="/updateAjax/{ntcNo}",produces="application/json; charset=UTF-8")
+	@PostMapping(value="{sysNo}/updateAjax/{ntcNo}",produces="application/json; charset=UTF-8")
 	public String updateAjax(@PathVariable int ntcNo, Model model) {
 		log.info("실행");
 		List<MultipartFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
@@ -197,10 +197,11 @@ public class NoticeController {
 	 * @return
 	 * @throws IOException
 	 */
-	@PostMapping(value="/update",produces="application/json; charset=UTF-8")
+	@PostMapping(value="{sysNo}/update",produces="application/json; charset=UTF-8")
 	public String noticeUpdate(Notice notice) throws IOException {
 		log.info("실행");
-		
+		String sysNo = notice.getSysNo();
+		log.info(notice);
 		//첨부 파일 유무 조사
 		List<MultipartFile> mf = notice.getNtcMFile();
 		if(mf!=null &&!mf.isEmpty()) {
@@ -240,8 +241,8 @@ public class NoticeController {
 			}
 			
 		}
-		
-		return "redirect:/notice/list";
+		noticeService.noticeUpdate(notice);
+		return "redirect:/notice/list/"+sysNo;
 	}
 	
 	
@@ -251,16 +252,19 @@ public class NoticeController {
 	 * @param ntcNo		삭제하려는 공지사항 No
 	 * @return
 	 */
-	@PostMapping("/delete")
-	public String noticeDelete(int ntcNo) {
+	@PostMapping("{sysNo}/delete")
+	public String noticeDelete(Notice notice) {
 		log.info("실행");
-		noticeService.noticeDelete(ntcNo);
+		int ntcNo = notice.getNtcNo();
+		String sysNo = notice.getSysNo();
 		
-		return "redirect:/notice/list";
+		noticeService.noticeDelete(ntcNo);
+
+		return "redirect:/notice/list/"+sysNo;
 	}
 	
 	//공지사항 첨부파일 삭제
-	@PostMapping(value="/deleteFile/{ntcFileNo}/{ntcNo}",produces="application/json; charset=UTF-8")
+	@PostMapping(value="{sysNo}/deleteFile/{ntcFileNo}/{ntcNo}",produces="application/json; charset=UTF-8")
 	public String noticeFileDelete(@PathVariable int ntcFileNo, @PathVariable int ntcNo,Model model) {
 		log.info("실행");
 		noticeService.noticeFileDelete(ntcFileNo);
@@ -320,7 +324,7 @@ public class NoticeController {
 	
 	//댓글 
 	//댓글 읽기
-	@GetMapping(value="/read/comment")
+	@GetMapping(value="{sysNo}/read/comment")
 	@ResponseBody
 	public List<NoticeComment> readComment(@RequestParam int ntcNo){
 		log.info("실행");
@@ -329,7 +333,7 @@ public class NoticeController {
 	}
 	
 	//댓글 작성
-	@PostMapping(value="/write/comment", produces="application/json; charset=UTF-8")
+	@PostMapping(value="{sysNo}/write/comment", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public NoticeComment writeComment(@RequestBody NoticeComment ntcComment) {
 		log.info("실행");
@@ -340,7 +344,7 @@ public class NoticeController {
 	}
 	
 	//댓글 수정
-	@PostMapping(value="/update/comment", produces="application/json; charset=UTF-8")
+	@PostMapping(value="{sysNo}/update/comment", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public NoticeComment updateComment(@RequestBody NoticeComment ntcComment) {
 		log.info("실행");
@@ -352,7 +356,7 @@ public class NoticeController {
 	}
 	
 	//댓글 삭제
-	@GetMapping(value="/delete/comment", produces="application/json; charset=UTF-8")
+	@GetMapping(value="{sysNo}/delete/comment", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public int deleteComment(@RequestParam int ntcCmntNo) {
 		log.info("실행");
