@@ -5,7 +5,7 @@
           <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
-          <ul class="navbar-nav ml-auto">
+         <!--  <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -73,8 +73,8 @@
                 </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
-            </li>
-            <li class="nav-item dropdown no-arrow mt-3 mx-2">
+            </li> -->
+            <li class="nav-item dropdown no-arrow ml-auto">
              <button class="btn" style="border: 1px solid white; color:white; cursor: default;" >
              	<c:if test="${sessionScope.loginUser.userType eq '고객사'}">고객사</c:if>
              	<c:if test="${sessionScope.loginUser.userType eq '개발자'}">개발자</c:if>
@@ -84,10 +84,9 @@
             
             <div class="topbar-divider d-none d-sm-block"></div>
            
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <img class="img-profile rounded-circle" src="${pageContext.request.contextPath}/resources/images/user.png" style="max-width: 60px; border:0px; ">
+            <li class="dropdown no-arrow row">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="img-profile rounded-circle" src="${pageContext.request.contextPath}/resources/images/user.png" style="max-width: 30px; border:0px; ">
                 <c:if test="${!empty sessionScope.loginUser.userId}">
               		<button class= "btn text-white" style="background-color:transparent; border:0px;">${sessionScope.loginUser.userNm} 님</button>
               	</c:if>
@@ -108,10 +107,10 @@
             </li>
             <li>
             	<c:if test="${empty sessionScope.loginUser.userId}">
-            	  <a class="btn btn-sm btn-primary mt-3" href="${pageContext.request.contextPath}/user/login">로그인</a>
+            	  <a class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/user/login">로그인</a>
               	</c:if>
              	<c:if test="${!empty sessionScope.loginUser.userId}">
-            	  <a class="btn btn-sm btn-primary mt-3" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">로그아웃</a>
+            	  <a class="btn btn-sm btn-primary" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">로그아웃</a>
               	</c:if>
             </li>
           </ul>

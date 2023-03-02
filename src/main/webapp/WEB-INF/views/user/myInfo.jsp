@@ -52,33 +52,33 @@
                 <div class="card-body d-flex p-2">
                 	<div class="userOgdp" style="border-right: 2px solid #757575;">
                 		<div class="p-3 pt-5">
-							<a class="badge badge-primary" ><small>${user.userType}</small></a>
-							<h3 >${user.userOgdp}</h3>
+							<a class="badge badge-primary mb-3"  style="font-size:100%">${user.userType}</a>
+							<h3 style="border-bottom:1px solid #757575;">${user.userOgdp}</h3>
 						</div>
                 	</div>
                 	<form class="myInfoWrapper p-5 container" action="${pageContext.request.contextPath}/user/update" method="post"> 
-						<div class="row mb-4">
-							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userNm">성명 </label>
+						<div class="row mb-5">
+							<label class="col-3 " style="border-top:0; margin:0px;font-size:1.2rem;" for="userNm">성명 </label>
 							<input class="col-9" id="userNm"class="mx-2" style="border:0; font-size:1.2rem;" value="${user.userNm}" disabled>
 						</div>
-						<div class="row mb-4">
+						<div class="row mb-5">
 							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userId">ID </label>
 							<input class="col-9" id="userId" class="mx-2" style="border:0; font-size:1.2rem;" value="${user.userId}" disabled>
 						</div>
-						<div class="row mb-4">
+						<div class="row mb-5">
 							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userPswd">비밀번호 </label>
 							<input class="col-7" type="password" placeholder="password" id="userPswd"class="mx-2" style="border:0; font-size:1.2rem;" disabled>
 							<a class="btn btn-outline-warning btn-sm col-2" data-toggle="modal" data-target="#updatePswd">수정하기</a>
 						</div>
-						<div class="row mb-4">
+						<div class="row mb-5">
 							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userEml">EMAIL </label>
 							<input class="col-9 updatable" id="userEml" name="userEml" class="mx-2" style="border:0; font-size:1.2rem;" value="${user.userEml}" disabled>
 						</div>
-						<div class="row mb-4">
+						<div class="row mb-5">
 							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userTelno">연락처 </label>
 							<input class="col-9 updatable" id="userTelno" name="userTelno" class="mx-2" style="border:0; font-size:1.2rem;" value="${user.userTelno}" disabled>
 						</div>
-						<div class="row mb-4">
+						<div class="row mb-5">
 							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userDpNm">부서 </label>
 							<select class="col-9 updatable" id="userDpNm" style="border:0; font-size:1.2rem;"  name="userDpNm" disabled>
 	                      		<option value="${user.userDpNm}"selected>${user.userDpNm}</option>
@@ -104,7 +104,7 @@
 	                      		</c:if>
 	                      	</select>
 						</div>
-						<div class="row mb-4 ">
+						<div class="row mb-5 ">
 							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userJbps">직급 </label>
 							<select class="col-9 updatable" id="userJbps" name="userJbps" style="border:0; font-size:1.2rem;" disabled>
 		                      	<option value="${user.userJbps}" selected>${user.userJbps}</option>
@@ -193,15 +193,6 @@
           <div class="modal fade" id="unregister" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
 			   <div class="modal-dialog" role="document" style="max-width:400px;">
 			     <div class="modal-content">
-			       <%-- <div class="modal-header">
-			         	<h5 class="modal-title" id="exampleModalLabelLogout"> 
-				          	<img src="${pageContext.request.contextPath}/resources/images/logoOnlyBlue.png" style="width:20px;">
-				        	<small><b>회원탈퇴</b></small>
-				        </h5>
-			         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			           <span aria-hidden="true">&times;</span>
-			         </button>
-			       </div> --%>
 			       <div class="modal-header bg-primary">
 			         	<h5 class="modal-title" id="exampleModalLabelLogout"> 
 				          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
