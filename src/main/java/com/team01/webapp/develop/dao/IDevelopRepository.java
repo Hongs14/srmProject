@@ -75,9 +75,9 @@ public interface IDevelopRepository {
 	 * @param 	List<HR>를 이용해 insert한다.
 	 * @return	insert에 성공하면 1을 리턴
 	 */
-	public int insertHrRow(UpdateDevelop updateDevelop);
+	public int insertHrRow(List<HR> list);
 
-	public int selectMaxpRrogNo();
+	public int selectMaxProgNo();
 	
 	public int insertProg(List<Progress> prog);
 
