@@ -69,9 +69,14 @@
 	<div class="modal fade" id="HumanResourceUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalScrollableTitle">수정</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title" id="exampleModalScrollableTitle">
+			          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+			        	<small class="text-white">
+			        		<b>수정</b>
+			        	</small>
+					</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -86,14 +91,26 @@
 	<div class="modal fade" id="HumanResourceDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalScrollableTitle">삭제</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title" id="exampleModalScrollableTitle">
+			          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+			        	<small class="text-white">
+			        		<b>삭제</b>
+			        	</small>
+					</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body" style="white-space: normal;">
-					<h5 id="message"></h5>
+					<div class="d-flex align-items-center">
+						<div id="iconWrapper" class="mr-4">
+							<i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#FFA426;"></i>
+						</div>
+						<div id="dialogWrapper" class="text-left">
+							<h5 id="message"></h5>
+						</div>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
@@ -106,18 +123,26 @@
 	<div class="modal fade" id="HumanResourceAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalScrollableTitle">개발자 추가</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title" id="exampleModalScrollableTitle">
+						<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+			        	<small class="text-white">
+			        		<b>개발자 추가</b>
+			        	</small>
+					</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body" style="white-space: normal;">
+				<div class="modal-body justify-content-center text-center p-5">
 					<div style="text-align:left">
 						<h5>${hrList.get(0).userDpNm}</h5>
 					</div>
 					<c:if test="${empty developerList}">
-						비어 있다.
+						<div class="alert alert-secondary m-3 p-2" role="alert">
+			                  <h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+			                  	${hrList.get(0).userDpNm}에 투입 가능한 인력이 더이상 존재하지 않습니다.
+						</div>
 					</c:if>
 					<c:if test="${!empty developerList}">
 						<table class="table align-items-center table-flush table-hover">
@@ -172,7 +197,6 @@
 							</c:forEach>
 						</table>
 					</c:if>
-					<hr/>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
@@ -257,7 +281,7 @@
 								$("#message").text("리더라서 삭제할수 없습니다.");
 							} else {
 								if(startDate <= today) {
-									$("#message").text("이미 일을 시작했기 떄문에 삭제할 수 없습니다.");
+									$("#message").text("이미 일을 시작했기 때문에 삭제할 수 없습니다.");
 								} else {
 									var srNo = '${srNo}';
 									let data = {srNo : srNo, userNo : userNo};

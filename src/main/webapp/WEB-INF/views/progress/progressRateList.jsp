@@ -117,7 +117,7 @@
 					<h5 class="modal-title" id="exampleModalLabelLogout">
 			          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
 			        	<small class="text-white">
-			        		<b>완료 요청 신청</b>
+			        		<b>요청 신청</b>
 			        	</small>
 					</h5>
 					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">

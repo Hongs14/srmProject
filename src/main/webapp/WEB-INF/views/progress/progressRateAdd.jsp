@@ -13,9 +13,14 @@
 	  	});
 	</script>
 
-	<div class="modal-header">
-		<h5 class="modal-title" id="exampleModalScrollableTitle">진척율</h5>
-		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<div class="modal-header bg-primary">
+		<h5 class="modal-title" id="exampleModalScrollableTitle">
+          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+        	<small class="text-white">
+        		<b>진척율</b>
+        	</small>
+		</h5>
+		<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>

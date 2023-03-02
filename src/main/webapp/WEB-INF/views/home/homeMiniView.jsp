@@ -119,7 +119,7 @@
 			<div class="alert alert-secondary m-3 p-2" role="alert">
                   <h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
                   	조건에 맞는 SR건이 존재하지 않습니다.
-                </div>
+			</div>
 		</c:if>
 	</div>
 <div class="card-footer"></div>
