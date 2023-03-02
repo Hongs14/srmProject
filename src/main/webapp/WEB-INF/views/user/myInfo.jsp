@@ -49,14 +49,17 @@
 				</ol>
 			</div>
               <div class="card">
-                <div class="card-body d-flex p-2">
-                	<div class="userOgdp" style="border-right: 2px solid #757575;">
+                <div class="card-body d-flex p-5">
+                	<div class="userOgdp" style="border-right: 2px solid #757575; padding-right: 30px;">
                 		<div class="p-3 pt-5">
 							<a class="badge badge-primary mb-3"  style="font-size:100%">${user.userType}</a>
 							<h3 style="border-bottom:1px solid #757575;">${user.userOgdp}</h3>
 						</div>
                 	</div>
                 	<form class="myInfoWrapper p-5 container" action="${pageContext.request.contextPath}/user/update" method="post"> 
+                		<div class="row mb-5  justify-content-center d-flex align-items-center alert alert-primary" >
+							   나의 정보 상세
+            			</div>
 						<div class="row mb-5">
 							<label class="col-3 " style="border-top:0; margin:0px;font-size:1.2rem;" for="userNm">성명 </label>
 							<input class="col-9" id="userNm"class="mx-2" style="border:0; font-size:1.2rem;" value="${user.userNm}" disabled>

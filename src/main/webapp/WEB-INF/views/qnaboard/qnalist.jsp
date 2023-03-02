@@ -14,7 +14,14 @@
 	  	<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 	  	<!-- RuangAdmin Javascript -->
 	  	<script src="${pageContext.request.contextPath}/resources/js/ruang-admin.min.js"></script>
-  	
+  		<style>
+  			.qstnTtl{
+				width: 400px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display:block;
+			}
+  		</style>
 	  	<script>
 		  	$(document).ready(function () {
 			    $('#simple-date4 .input-daterange').datepicker({        
@@ -24,6 +31,7 @@
 			        todayBtn: 'linked',
 			      });  
 		  	});
+		  	
 	  	</script>
 	</head>
 
@@ -52,51 +60,56 @@
 			         	<!-- Row -->
 			         	<div class="row">
 							<div class="col-lg-12">
-	                        	<div class="card mb-4 text-center">
+	                        	<div class="card mb-4">
 	                        		<!-- 검색 -->
 	                        		<div class="mb-1 mt-5 px-5">
-								    	<div class="row">
-								        	<div class="col-4">
-								            	<div class="form-group row" id="simple-date4" >
-											    	<div class="input-daterange input-group input-group-sm">
-											        	<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
-										            	<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" />
-								                    	<div class="input-group-prepend">
-								                    		<span class="input-group-text" style="height:31px;">~</span>
-								                    	</div>
-									                    <input type="text" class="input-sm form-control form-control-sm" name="end" />
-											     	</div>
-								            	</div>
-								         	</div> 
-					                		<div class="col-3"></div>
-					                		<div class="col-4">
-							                	<div class="form-group row">
-							                		<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">키워드</label>
-							                    	<input type="text" class="form-control form-control-sm col-sm-9 bg-light" 
-							                   		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
-							                  	</div>
-					                		</div>
-					                		<div class="col-1">
-					                			<div class="input-group-append float-right">
-													<button class="btn btn-primary btn-sm" type="button" onclick="progressList()">
-														조회 <i class="fas fa-search fa-sm"></i>
-													</button>
-												</div>
-					                		</div>
-					                	</div>
-					               	</div>
+										<form class="navbar-search">
+											<div class="row text-right">
+			   									<div class="col-4">
+			       									<div class="form-group row" id="simple-date4" >
+			  											<div class="input-daterange input-group input-group-sm text-right">
+			      											<label for="start" class="col-sm-4 col-form-label-sm">조회기간</label>
+			         										<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart" value="${notice.startDate}"/>
+			               									<div class="input-group-prepend">
+			               										<span class="input-group-text" style="height:31px;">~</span>
+			           										</div>
+			            									<input type="text" class="input-sm form-control form-control-sm" name="end" id="dateEnd" value="${notice.endDate}" />
+														</div>
+			   										</div>
+												</div> 
+			    								<div class="col-3 text-left">
+														<input type="button" class="btn btn-sm btn-primary" value="당일" onclick="nTodayClick(1)">
+														<input type="button" class="btn btn-sm btn-primary" value="1주일 전" onclick="nWeekClick(1)">
+														<input type="button" class="btn btn-sm btn-primary" value="1개월 전" onclick="nMonthClick(1)">
+			    								</div>
+			    								<div class="col-4">
+			      									<div class="form-group row">
+											      		<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm text-right">키워드</label>
+											          	<input type="text" class="form-control form-control-sm col-sm-9 bg-light" 
+				         									aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;" id="keyword">
+			            							</div>
+			        							</div>
+			        							<div class="col-1">
+			        								<div class="input-group-append float-right">
+															<button class="btn btn-primary btn-sm" type="button" onclick="searchNoticeList(1)">조회 <i class="fas fa-search fa-sm"></i>
+														</button>
+													</div>
+			         							</div>
+			         						</div>
+										</form>
+		        					</div>
 					               	<hr/>
 	                        		<!-- 검색 -->
 						         	
-						            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						            <div class="card-header px-5 d-flex flex-row align-items-center justify-content-between">
 			                			<h6 class="m-0 font-weight-bold text-primary">질문 목록</h6>
 			                			<div class="d-sm-flex justify-content-end">
-			                				<button class="btn btn-sm btn-secondary">Q&A 등록하기</button>
+			                				<a href="${pageContext.request.contextPath}/qna/write" class="btn btn-outline-primary">Q&A 등록하기</a>
 			                  			</div>
 			                		</div> 
 			                		
 			                		<!-- 테이블 -->
-			                		<div class="table-responsive p-3">
+			                		<div class="table-responsive px-5">
 					               		<table class="table align-items-center table-flush">
 					                    	<thead class="thead-light">
 							                	<tr>
@@ -112,11 +125,11 @@
 					                   			<c:forEach var="QnaboardDto" items="${qnalist}">
 						                   			<tr onclick="location.href='${pageContext.request.contextPath}/qna/view?qstnNo=${QnaboardDto.qstnNo}'">
 						                        		<td class="1">${QnaboardDto.qstnNo}</td>
-								                        <td class="3">${QnaboardDto.qstnTtl}</td>
+								                        <td class="3" class="qstnTtl">${QnaboardDto.qstnTtl}</td>
 								                        <td class="2">${QnaboardDto.userNm}</td>
 								                        <td class="2">${QnaboardDto.qstnWrtDate}</td>
-								                        <td class="1">${QnaboardDto.qstnInqCnt}</td>
-								                        <td class="1">${QnaboardDto.countCmnt}</td>
+								                        <td class="1 pl-4">${QnaboardDto.qstnInqCnt}</td>
+								                        <td class="1 pl-4">${QnaboardDto.countCmnt}</td>
 						                     		</tr>
 					                     		</c:forEach>
 					                 		</tbody>

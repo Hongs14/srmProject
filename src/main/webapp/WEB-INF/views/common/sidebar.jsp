@@ -59,16 +59,16 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/KOREASOFT_SRM">전체 공지사항</a>
             <c:if test="${sessionScope.loginUser.userOgdp eq '레드주컴퍼니' or sessionScope.loginUser.userOgdp eq '한국소프트SRM'}">            
-	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/JHJ">JHJ 시스템 공지사항</a>
+	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/JHJ">JHJ시스템 공지</a>
             </c:if>
             <c:if test="${sessionScope.loginUser.userOgdp eq '티에이치컴퍼니' or sessionScope.loginUser.userOgdp eq '한국소프트SRM'}">
-	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/KTH">KTH 시스템 공지사항</a>
+	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/KTH">KTH시스템 공지</a>
             </c:if>
             <c:if test="${sessionScope.loginUser.userOgdp eq '에이치알컴퍼니' or sessionScope.loginUser.userOgdp eq '한국소프트SRM'}">
-	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/KHR">KHR 시스템 공지사항</a>
+	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/KHR">KHR시스템 공지</a>
             </c:if>
             <c:if test="${sessionScope.loginUser.userOgdp eq '지에이치컴퍼니' or sessionScope.loginUser.userOgdp eq '한국소프트SRM'}">
-	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/HGH">HGH 시스템 공지사항</a>
+	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/HGH">HGH시스템 공지</a>
             </c:if>
           </div>
         </div>
