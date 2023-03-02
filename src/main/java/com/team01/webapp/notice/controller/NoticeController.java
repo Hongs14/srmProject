@@ -283,7 +283,7 @@ public class NoticeController {
 	 * @param response		응답 정보를 전송
 	 * @throws Exception	예외 발생
 	 */
-	@GetMapping("/fileDownload")
+	@GetMapping("{sysNo}/fileDownload")
 	public void download(int ntcFileNo,@RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
 		log.info("실행");
 		

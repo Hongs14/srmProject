@@ -206,6 +206,8 @@
 	<select id="selectExamineFileDownload" parameterType="int" resultType="srFile">
 		SELECT
 			sf.SR_FILE_ACTL_NM AS "srFileActlNm",
+			sf.SR_FILE_PHYS_NM AS "srFilePhysNm",
+			sf.SR_FILE_EXTN_NM AS "srFileExtnNm",
 			s.SR_NO AS "srNo",
 			sf.SR_FILE_NO AS "srFileNo"
 		FROM sr_file sf, sr s
