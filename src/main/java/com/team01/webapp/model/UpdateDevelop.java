@@ -10,7 +10,6 @@ import lombok.Data;
 
 @Data
 public class UpdateDevelop {
-	public  String getUserNo;
 	//SR계발 계획
 	private String srNo;
 	private String sysNo;

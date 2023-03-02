@@ -12,7 +12,7 @@ public class Progress {
 
 	private String progNo;
 	private String srNo;
-	private String progType;
+	private int progType;
 	private Date progStartDate;
 	private Date progEndDate;
 	private int progRate;

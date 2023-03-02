@@ -195,14 +195,14 @@
 		select * from dual
 	</insert>
 	
-	<select id="selectMaxpRrogNo" resultType="int">
+	<select id="selectMaxProgNo" resultType="int">
 		SELECT COUNT(*) FROM PROGRESS
 	</select>
 	
 	<insert id="insertProg" parameterType="list">
 		INSERT ALL
 		<foreach item="item" index="index" collection="list">
-			INTO PROGRESS(PROG_NO, SR_NO, PROG_TYPE) VALUES (#{item.progNo},#{srNo},#{index}+1)
+			INTO PROGRESS(PROG_NO, SR_NO, PROG_TYPE) VALUES (#{item.progNo},#{item.srNo},#{item.progType})
 		</foreach>
 		select * from dual
 	</insert>
