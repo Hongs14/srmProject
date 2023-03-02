@@ -51,11 +51,11 @@
 									            	<div class="form-group row" id="simple-date4" >
 												    	<div class="input-daterange input-group input-group-sm">
 												        	<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
-											            	<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="startDate" />
+											            	<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="startDate" id="startDate" />
 									                    	<div class="input-group-prepend">
 									                    		<span class="input-group-text" style="height:31px;">~</span>
 									                    	</div>
-										                    <input type="text" class="input-sm form-control form-control-sm" name="endDate" />
+										                    <input type="text" class="input-sm form-control form-control-sm" name="endDate" id="endDate" />
 												     	</div>
 									            	</div>
 									         	</div> 
@@ -89,7 +89,7 @@
 								                    	<select class="form-control form-control-sm col-sm-9" id="userOgdp">
 								                        	<option value="all" selected>전체</option>
 								                        	<c:forEach var="users" items="${developFilter.userOgdpList}">		                        	
-							                        			<option>${users.userOgdp}</option>
+							                        			<option value="${users.userOgdp}">${users.userOgdp}</option>
 						                        			</c:forEach>
 								                    	</select>
 								                	</div>
@@ -97,10 +97,10 @@
 						                		<div class="col-sm-3">
 						                			<div class="form-group row">
 						                				<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">개발부서</label>
-								                    	<select class="form-control form-control-sm col-sm-9" id="srDevdp">
+								                    	<select class="form-control form-control-sm col-sm-9" id="srDevDp">
 								                        	<option value="all" selected>전체</option>
-								                        	<c:forEach var="users" items="${developFilter.srDevDpList}">		                        	
-					                        					<option>${users.userDpNm}</option>
+								                        	<c:forEach var="sr" items="${developFilter.srDevDpList}">		                        	
+					                        					<option value="${sr.srDevDp}">${sr.srDevDp}</option>
 				                        					</c:forEach>
 								                    	</select>
 								                	</div>
@@ -131,85 +131,80 @@
 			                				<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
 			                  			</div>
 			                		</div>
-			                		
+			                			<script>
+											function selectAll(selectAll) {
+												const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+											  
+											  	checkboxes.forEach((checkbox) => {
+											    	checkbox.checked = selectAll.checked
+											  	});
+												
+											};
+											
+											$(document).ready(function () {
+												var sysNo = $('#sysNo').val();
+												var sttsNo = $('#sttsNo').val();
+												var userOgdp = $('#userOgdp').val();
+												var srDevDp = $('#srDevDp').val();
+												var srRegStartDate = $('#startDate').val();
+												var srRegEndDate = $('#endDate').val();
+												
+												var srTtl = $('#keyword').val();
+												
+												if(srTtl !== "") {
+													srTtl = "%" + srTtl + "%";
+												}
+												
+												let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp: srDevDp,
+														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
+												
+												console.log(data);
+												
+												$.ajax({
+													url : '<c:url value="/develop/filter/1"/>',
+													method : "post",
+													data : JSON.stringify(data),
+													contentType: "application/json; charset=UTF-8"
+												}).done((data) => {
+													$("#ajaxList").html(data)
+												});
+											});
+										
+											function developList(pageNo) {
+												console.log("개발관리 리스트 불러오기")
+												var sysNo = $('#sysNo').val();
+												var sttsNo = $('#sttsNo').val();
+												var userOgdp = $('#userOgdp').val();
+												var srDevDp = $('#srDevDp').val();
+												var srRegStartDate = $('#startDate').val();
+												var srRegEndDate = $('#endDate').val();
+												
+												var srTtl = $('#keyword').val();
+												
+												if(srTtl !== "") {
+													srTtl = "%" + srTtl + "%";
+												};
+												
+												let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp: srDevDp,
+														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
+												console.log(data);
+												
+												$.ajax({
+													url :  '<c:url value="/develop/filter/'+pageNo+'"/>',
+													method : "post",
+													data : JSON.stringify(data),
+													contentType: "application/json; charset=UTF-8"
+												}).done((data) => {
+													$("#ajaxList").html(data);
+												});
+											};
+								  		</script>	
 			                		<div id="ajaxList" style="width:100%"></div>
-	                               
                          		</div>
                          	</div>
            				</div>
            				<!-- row -->
-					</div>
-					
-					<script>
-						function selectAll(selectAll) {
-							const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-						  
-						  	checkboxes.forEach((checkbox) => {
-						    	checkbox.checked = selectAll.checked
-						  	})
-							
-						}
-						
-						$(document).ready(function () {
-							var sysNo = $('#sysNo').val();
-							var sttsNo = $('#sttsNo').val();
-							var userOgdp = $('#userOgdp').val();
-							var srDevDp = $('#srDevdp').val();
-			
-							var srRegStartDate = $('#startDate').val();
-							var srRegEndDate = $('#endDate').val();
-							
-							var srTtl = $('#keyword').val();
-							
-							if(srTtl !== "") {
-								srTtl = "%" + srTtl + "%";
-							}
-							
-							let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp: srDevDp,
-									srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
-							
-							console.log(data);
-							
-							$.ajax({
-								url : '<c:url value="/develop/filter/1"/>',
-								method : "post",
-								data : JSON.stringify(data),
-								contentType: "application/json; charset=UTF-8"
-							}).done((data) => {
-								$("#ajaxList").html(data)
-							});
-						});
-					
-						function developList(pageNo) {
-							console.log(pageNo);
-							var sysNo = $('#sysNo').val();
-							var sttsNo = $('#sttsNo').val();
-							var userOgdp = $('#userOgdp').val();
-							var userDpNm = $('#userDpNm').val();
-							
-							var srRegStartDate = $('#start').val();
-							var srRegEndDate = $('#end').val();
-							
-							var srTtl = $('#keyword').val();
-							
-							if(srTtl !== "") {
-								srTtl = "%" + srTtl + "%";
-							}
-							
-							let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
-									srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
-							console.log(data);
-							
-							$.ajax({
-								url :  '<c:url value="/develop/filter/'+pageNo+'"/>',
-								method : "post",
-								data : JSON.stringify(data),
-								contentType: "application/json; charset=UTF-8"
-							}).done((data) => {
-								$("#ajaxList").html(data)
-							});
-						}
-			  		</script>	
+					</div>	
 					
 		         	<!-- 로그아웃 모달 -->
 		           	<%@include file="/WEB-INF/views/common/logout.jsp" %>

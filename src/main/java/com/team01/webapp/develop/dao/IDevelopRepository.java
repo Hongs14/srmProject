@@ -40,7 +40,7 @@ public interface IDevelopRepository {
 	public List<SRStts> selectSrSttsList(); 
 	public List<System> selectSysNmList();
 	public List<Users> selectUserOgdpList();
-	public List<Users> selectDevDpList();
+	public List<SR> selectDevDpList();
 	/**
 	 * @author	정홍주
 	 * @param 	srNo

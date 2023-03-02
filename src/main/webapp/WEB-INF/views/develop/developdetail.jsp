@@ -231,7 +231,13 @@
 											<div class="col-sm-2">
 												<h6 class="m-0 font-weight-bold text-primary">첨부파일</h6>
 											</div>
-											<div class="col-sm-10">${dlist.srFileActlNm}</div>
+											<div  class="col-sm-10">
+												<div class="row" >
+													<c:forEach items="${dlist.srDevelopFile}" var="file">
+														<div>${file.srFileActlNm}</div>&nbsp;/&nbsp;
+													</c:forEach>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -300,8 +306,7 @@
 														<h6 class="m-0 font-weight-bold text-primary">&nbsp;&nbsp;&nbsp;소요예산</h6>
 													</div>
 													<div class="col-sm-8">
-														<input type="text" id="srBgt" name="srBgt"
-															class="form-control" value="${srBgt}" />
+														<input type="text" id="srBgt" name="srBgt" class="form-control" value="${srBgt}" />
 													</div>
 												</div>
 												<div class="form-group row">
@@ -309,8 +314,7 @@
 														<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">계획 시작일</h6>
 													</div>
 													<div class="col-sm-8">
-														<input type="date" id="srStartDate" name="srStartDate"
-															class="form-control" />
+														<input type="date" id="srStartDate" name="srStartDate" value="${dlist.srStartDate}" class="form-control" />
 													</div>
 												</div>
 												<div class="form-group row">
@@ -318,8 +322,7 @@
 														<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">계획 종료일</h6>
 													</div>
 													<div class="col-sm-8">
-														<input type="date" id="srEndDate" name="srEndDate"
-															class="form-control" required />
+														<input type="date" id="srEndDate" name="srEndDate" value="${dlist.srStartDate }" class="form-control" required />
 													</div>
 												</div>
 												<div class="text-right">
@@ -382,7 +385,7 @@
 															</div>
 														</div>
 													</div>
-													<div class="p-2 mt-3" style="border: 1px solid gray">
+													<div class="p-2 mt-3" style="border: 1px solid gray; min-height: 400px;">
 		
 														<div id="HrList">
 															<div class="row mb-1" id="dvleaderHr"></div>

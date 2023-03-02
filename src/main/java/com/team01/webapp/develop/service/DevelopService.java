@@ -43,7 +43,6 @@ public class DevelopService implements IDevelopService{
 	@Override
 	public Pager returnPage(int pageNo, Pager pager, DevelopDto developDto) {
 		int totalRow = developRepository.totalRow(developDto);
-		log.info(totalRow);
 		pager = new Pager(10,5,totalRow,pageNo);
 		return pager;
 	}
@@ -58,7 +57,7 @@ public class DevelopService implements IDevelopService{
 		List<SRStts> srSttsList = new ArrayList<>();
 		List<System> sysNmList = new ArrayList<>();
 		List<Users> userOgdpList = new ArrayList<>();
-		List<Users> userDpList = new ArrayList<>();
+		List<SR> srDevdpList = new ArrayList<>();
 		
 		//요청 진행상태
 		srSttsList = developRepository.selectSrSttsList();
@@ -72,11 +71,10 @@ public class DevelopService implements IDevelopService{
 		userOgdpList = developRepository.selectUserOgdpList();
 		developFilter.setUserOgdpList(userOgdpList);
 		
-		//등록자 부서
-		userDpList = developRepository.selectDevDpList();
-		developFilter.setSrDevDpList(userDpList);
+		//개발자 부서
+		srDevdpList = developRepository.selectDevDpList();
+		developFilter.setSrDevDpList(srDevdpList);
 		
-		log.info(developFilter);
 		return developFilter;
 	}
 	
@@ -89,13 +87,12 @@ public class DevelopService implements IDevelopService{
 	 */
 	@Override
 	public List<DevelopDto> getDevelopList(Pager pager, DevelopDto developDto) {
-		int end = pager.getPageNo() * pager.getRowsPerPage();
 		int start = (pager.getPageNo()-1)* pager.getRowsPerPage()+1;
-		developDto.setStartRowNo(end);
-		developDto.setEndRowNo(start);
+		int end = pager.getPageNo() * pager.getRowsPerPage();
 		
+		developDto.setStartRowNo(start);
+		developDto.setEndRowNo(end);
 		List<DevelopDto> list = developRepository.selectDevelopList(developDto);
-		log.info(list);
 		return list;
 	}
 
@@ -107,11 +104,12 @@ public class DevelopService implements IDevelopService{
 	@Override
 	public DevelopDto getDetail(String srNo) {
 		DevelopDto srDdto = developRepository.selectDevelopContent(srNo);
-		List<SrFile> srFile = developRepository.selectSrFileList(srNo);
+		List<SrFile> fileList = developRepository.selectSrFileList(srNo);
+		srDdto.setSrDevelopFile(fileList);
 		return srDdto;
 	}
 	
-	/** SR개발 상세보기
+	/** 파일 얻기
 	* @author 			정홍주
 	* @param srFileNo	첨부파일 번호
 	*/

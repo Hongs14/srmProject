@@ -40,7 +40,6 @@
 		작성자: 정홍주
 	-->
 	<select id="selectDevelopList" parameterType="developDto" resultType="developDto">
-		
 			select rnum AS "seq", 
 			        sr_no AS "srNo", 
 			        sr_cust_no AS "srCustId", 
@@ -65,8 +64,8 @@
 			        user_ogdp AS "userOgdp", 
 			        user_dp_nm AS "userDpNm"
 			from(
-			    select rownum as rnum, sr_no, sr_cust_no, aa.sys_no, aa.sys_nm, aa.stts_no, aa.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
-			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, aa.sr_type, sr_dev_dp, user_nm, user_ogdp, user_dp_nm
+			    select rownum as rnum, sr_no, sr_cust_no, sys_no,sys_nm, stts_no, stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
+			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr_type, sr_dev_dp, user_nm, user_ogdp, user_dp_nm
 			    from(
 			      select  sr_no, sr_cust_no, sr.sys_no, system.sys_nm, sr.stts_no, sr_stts.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
 			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr.sr_type,  sr.sr_dev_dp, user_nm, user_ogdp, user_dp_nm
@@ -78,21 +77,24 @@
 			      	<if test="sttsNo == 0">
 			      		and sr.stts_no in (4, 5)
 			      	</if>
+			      	<if test="!sysNo.equals('all')">
+			      		AND sr.sys_no = #{sysNo}
+			      	</if>
 			      	<if test="!userOgdp.equals('all')">
-						AND u.user_ogdp = #{userOgdp}
+						AND user_ogdp = #{userOgdp}
 					</if>
 					<if test="!srDevDp.equals('all')">
 						AND	SR.SR_DEV_DP = #{srDevDp}
 					</if>
 					<if test="srRegStartDate neq null and srRegStartDate neq ''" >
 						 AND sr.SR_REG_DATE BETWEEN 
-			                TO_DATE(#{srRegStartDate},'YY-MM-DD') 
-			                AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+0.9
+			                TO_DATE(#{srRegStartDate},'YY-MM-dd') 
+			                AND TO_DATE(#{srRegEndDate},'YY-MM-dd')+0.9
 					</if> 
 					<if test="srTtl != ''">
 						AND  sr.SR_TTL like #{srTtl}
 					</if>
-			      	ORDER BY SR.SR_PRY, SR.SR_NO DESC
+			      	ORDER BY SR_STTS.STTS_NO, SR.SR_PRY, SR.SR_REG_DATE
 			    ) aa
 				<![CDATA[
 					where rownum <= #{endRowNo}
@@ -129,10 +131,9 @@
 		        sr_dev_dp as "srDevDp",
 		        user_nm AS "userNm", 
 		        user_ogdp AS "userOgdp", 
-		        user_dp_nm AS "userDpNm",
-		        SR_FILE_ACTL_NM AS "srFileActlNm"
-		 from sr s, sr_type, sr_stts, users, system, SR_FILE
-		 where s.stts_no = sr_stts.stts_no and system.sys_no = s.sys_no and s.sr_cust_no = users.user_no AND S.SR_NO = SR_FILE.SR_NO
+		        user_dp_nm AS "userDpNm"
+		 from sr s, sr_type, sr_stts, users, system
+		 where s.stts_no = sr_stts.stts_no and system.sys_no = s.sys_no and s.sr_cust_no = users.user_no 
 		    and s.sr_type = sr_type.sr_type_no and s.sr_no = #{srNo}
 	</select>
 	
@@ -227,20 +228,11 @@
 		WHERE USER_TYPE='고객사'
 	</select>
 	
-	<select id="selectDevDpList" resultType="users">
+	<select id="selectDevDpList" resultType="sr">
 		SELECT
 			DISTINCT SR_DEV_DP AS "srDevDp"
 		FROM SR
         WHERE SR_DEV_DP IS NOT NULL
-	</select>
-	
-	<select id="selectSrFile" parameterType="int" resultType="srFile">
-		SELECT
-		    SR_FILE_PHYS_NM AS "srFilePhysNm",
-		    SR_FILE_EXTN_NM AS "srFileExtnNm",
-		    SR_FILE_ACTL_NM AS "srFileActlNm"
-		FROM SR_FILE
-		WHERE SR_FILE_NO = #{srFileNo}
 	</select>
 	
 	<select id="selectSrFileList" parameterType="string" resultType="srFile">
@@ -251,6 +243,15 @@
 		    SR_FILE_ACTL_NM AS "srFileActlNm"
 		FROM SR_FILE
 		WHERE SR_NO = #{srNo}
+	</select>
+	
+	<select id="selectSrFile" parameterType="int" resultType="srFile">
+		SELECT
+		    SR_FILE_PHYS_NM AS "srFilePhysNm",
+		    SR_FILE_EXTN_NM AS "srFileExtnNm",
+		    SR_FILE_ACTL_NM AS "srFileActlNm"
+		FROM SR_FILE
+		WHERE SR_FILE_NO = #{srFileNo}
 	</select>
 	
 </mapper>

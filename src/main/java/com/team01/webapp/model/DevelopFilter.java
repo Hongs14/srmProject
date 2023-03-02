@@ -9,5 +9,5 @@ public class DevelopFilter {
 	private List<SRStts> srSttsList;
 	private List<System> sysNmList;
 	private List<Users> userOgdpList;
-	private List<Users> srDevDpList;
+	private List<SR> srDevDpList;
 }

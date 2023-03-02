@@ -1,6 +1,9 @@
 package com.team01.webapp.model;
 
 import java.sql.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -18,8 +21,11 @@ public class DevelopDto {
 	private int srBgt;
 	private String srDevCn;
 	private String srReqSe;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date srDdlnDate;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date srStartDate;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date srEndDate;
 	private String srViewYn;
 	private String srStd;
@@ -31,8 +37,7 @@ public class DevelopDto {
 	private String userDpNm;
 	private String sttsNm;
 	private String sysNm;
-	
-	private String progFileActlNm;
+
 	private Date srRegStartDate;
 	private Date srRegEndDate;
 	
@@ -41,4 +46,7 @@ public class DevelopDto {
 	//페이징 처리
 	private int startRowNo;
 	private int endRowNo;
+	
+	//첨부파일
+	private List<SrFile> srDevelopFile;
 }

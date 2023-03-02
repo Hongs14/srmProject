@@ -78,6 +78,7 @@ public class DevelopController {
 		log.info("필터링한 목록");
 		log.info("pageNo "+pageNo);
 		pager = developService.returnPage(pageNo,pager,developDto);
+		log.info(pager);
 		List<DevelopDto> list = developService.getDevelopList(pager, developDto);
 		model.addAttribute("develop",list);
 		model.addAttribute("pager",pager);
@@ -234,10 +235,10 @@ public class DevelopController {
 			 hr.setHrEndDate(hrEndDate[i]);
 			 listHR.add(hr);
 		 }
-		 		 
-		 int result = developService.insertHrList(listHR);
+		 log.info(listHR);
+//		 int result = developService.insertHrList(listHR);
 //		 int result2 = developService.insertProgress(); ///////////////////PROGRESS 삽입
-		 log.info(result);
+//		 log.info(result);
 		 log.info("HR등록");
 		 return "redirect:/develop/list/1";
 	 }
