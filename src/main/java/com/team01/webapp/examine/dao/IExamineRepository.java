@@ -2,11 +2,12 @@ package com.team01.webapp.examine.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineList;
 import com.team01.webapp.model.SRStts;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.System;
 import com.team01.webapp.model.Users;
 
@@ -67,9 +68,9 @@ public interface IExamineRepository {
 	 * @return
 	 */
 	public Examine selectExamine(String srNo);
-	
+	public List<MultipartFile> selectExamineFileList(String srNo);
+	public SrFile selectExamineFileDownload(int srFileNo);
 	public void updateExamine(Examine examine);
-	
 	public void updateExamineProcessing(ExamineList examineList);
 	
 }

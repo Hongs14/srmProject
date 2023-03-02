@@ -1,22 +1,33 @@
 package com.team01.webapp.examine.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.examine.service.IExamineService;
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.ExamineList;
+import com.team01.webapp.model.NoticeFile;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -84,8 +95,9 @@ public class ExamineController {
 		log.info("실행");
 
 		Examine examine = examineService.getExamine(srNo);
+		List<MultipartFile> examineFileList = examineService.selectExamineFileList(srNo);
 		model.addAttribute("examine",examine);
-		
+		model.addAttribute("examineFileList",examineFileList);
 		
 		
 		return "examine/detailView";
@@ -105,6 +117,46 @@ public class ExamineController {
 		examineService.updateExamine(examine);
 		
 		return "examine/list";
+	}
+	
+	@GetMapping("/fileDownload")
+	public void download(int srFileNo,@RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
+		log.info("실행");
+		
+		SrFile srFile = examineService.selectFileDownload(srFileNo);
+		
+		String originalName = srFile.getSrFileActlNm();
+		String savedName = srFile.getSrFilePhysNm();
+		String contentType = srFile.getSrFileExtnNm();
+		log.info("userAgent: "+userAgent);
+		
+		//originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩하는 방법
+		if(userAgent.contains("Trident")|| userAgent.contains("MSIE")) {
+			//Trident: IE 11
+			//MSIE: IE 10 이하
+			originalName = URLEncoder.encode(originalName,"UTF-8");
+		}else {
+			//Edge, Chrome, Safari
+			originalName = new String(originalName.getBytes("UTF-8"),"ISO-8859-1");
+		}
+		
+		//응답 헤더 설정
+		response.setHeader("Content-Disposition", "attachmemnt; filename=\""+originalName+"\"");
+		response.setContentType(contentType);
+		
+		//응답 바디에 파일 데이터 실기
+		String filePath = "C:/OTI/uploadfiles/examine/"+srFile.getSrFileNo()+"/"+savedName;
+		File file = new File(filePath);
+		log.info("file: "+ file);
+				
+		if(file.exists()) {
+			InputStream is = new FileInputStream(file);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			os.flush();
+			os.close();
+			is.close();
+		}
 	}
 	
 	//일괄 처리(검토중) or 일괄처리(접수)

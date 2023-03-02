@@ -135,15 +135,9 @@
 				</div>
 				<div class="col-sm-10">
 					<div class="custom-file">
-					<c:if test="${!empty sr.srFileName}">
-						<c:set var="len" value="${fn:length(sr.srFileName)}"/>
-						<c:set var="filetype" value="${fn:toUpperCase(fn:substring(sr.srFileName, len-4, len))}"/>
-						<c:if test="${(filetype eq '.JPG') or (filetype eq 'JPEG') or (filetype eq '.PNG') or (filetype eq '.GIF')}"><img src='<c:url value="/request/file/${sr.srFileId}"/>' class="img-thumbnail"><br></c:if>
-						<a href='<c:url value="/request/file/${sr.srFileId}"/>'>${sr.srFileName} (<fmt:formatNumber>${sr.srFileSize}</fmt:formatNumber>byte)</a>	
-					</c:if>
-					<c:if test="${empty sr.srFileName}">
-						<span>첨부된 파일이 없습니다.</span>
-					</c:if>
+						<c:forEach var="examineFileList" items="${examineFileList}">
+							<span><a href="fileDownload?examineFileNo=${examineFileList.srFileNo}&srNo=${examineFileList.srNo}">${examineFileList.srFileActlNm}</a></span>
+	               		</c:forEach>
 					</div>
 				</div>
 			</div>

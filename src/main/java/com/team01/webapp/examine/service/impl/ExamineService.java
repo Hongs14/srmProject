@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.examine.dao.IExamineRepository;
 import com.team01.webapp.examine.service.IExamineService;
@@ -12,6 +13,7 @@ import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.ExamineList;
 import com.team01.webapp.model.SRStts;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.System;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
@@ -111,7 +113,25 @@ public class ExamineService implements IExamineService {
 		
 		return examine;
 	}
-
+	
+	@Override
+	public List<MultipartFile> selectExamineFileList(String srNo){
+		log.info("실행");
+		
+		List<MultipartFile> examineFileList = examineRepository.selectExamineFileList(srNo);
+		
+		return examineFileList;
+	}
+	
+	@Override
+	public SrFile selectFileDownload(int srFileNo) {
+		log.info("실행");
+		
+		SrFile srFile = examineRepository.selectExamineFileDownload(srFileNo);
+		
+		return srFile;
+	}
+	
 
 	@Override
 	public void updateExamine(Examine examine) {

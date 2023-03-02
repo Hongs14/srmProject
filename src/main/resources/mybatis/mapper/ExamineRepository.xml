@@ -193,6 +193,26 @@
 		AND s.SR_NO = #{srNo}
 	</select>
 	
+	<select id="selectExamineFileList" parameterType="String" resultType="srFile">
+		SELECT
+			sf.SR_FILE_ACTL_NM AS "srFileActlNm",
+			s.SR_NO AS "srNo",
+			sf.SR_FILE_NO AS "srFileNo"
+		FROM sr_file sf, sr s
+		WHERE s.sr_no = sf.sr_no
+		AND s.sr_no = #{srNo}
+	</select>
+	
+	<select id="selectExamineFileDownload" parameterType="int" resultType="srFile">
+		SELECT
+			sf.SR_FILE_ACTL_NM AS "srFileActlNm",
+			s.SR_NO AS "srNo",
+			sf.SR_FILE_NO AS "srFileNo"
+		FROM sr_file sf, sr s
+		WHERE s.sr_no = sf.sr_no
+		AND sf.SR_FILE_NO = #{srFileNo}
+	</select>
+	
 	<update id="updateExamine" parameterType="examine">
 		UPDATE SR
 		SET STTS_NO = (
@@ -226,5 +246,5 @@
 		)
 		WHERE SR_NO = #{srNo}
 	</update>
-
+	
 </mapper>
