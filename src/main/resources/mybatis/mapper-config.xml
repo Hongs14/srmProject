@@ -37,5 +37,6 @@
 	<typeAlias type="com.team01.webapp.model.ThArr" alias="thArr"/>
 	<typeAlias type="com.team01.webapp.model.DevelopDto" alias="developDto"/>
 	<typeAlias type="com.team01.webapp.model.Donut" alias="donut"/>
+	<typeAlias type="com.team01.webapp.model.UpdateDevelop" alias="updateDevelop"/>
 </typeAliases>
 </configuration>

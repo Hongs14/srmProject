@@ -30,8 +30,24 @@
 			}
 		});
 	};
+	
+	function registerDevelop(){
+		console.log("개발계획 등록");
+		let srDevDp = $('#srDevDp').val();
+		let srDdlnDate = $('#srDdlnDate').val();
+		let srStartDate = $('#srStartDate').val();
+		let srEndDate = $('#srEndDate').val();
+		
+		$('#modalBody').empty();
+		$('#modalBody').append('<div><h5>[' + srDevDp + ']</h5></div>');
+		$('#leaderSdate').val(srStartDate);
+		$('#leaderEdate').val(srEndDate);
+		
+		selectList();
 
-	function registerDevelop() {
+	}
+
+	/* function registerDevelop() {
 		console.log("개발계획 등록");
 		let srDevCn = $('#srDevCn').val();
 		let srDdlnDate = $('#srDdlnDate').val();
@@ -77,7 +93,7 @@
 			}
 		});
 	};
-
+ */
 	function selectList() {
 		//모달리스트 띄우기
 		console.log("aa");
@@ -92,6 +108,7 @@
 			hrStartDate : startDate,
 			hrEndDate : endDate
 		};
+		console.log(data);
 
 		$.ajax({
 			url : '<c:url value="/develop/devlist"/>',
@@ -245,106 +262,105 @@
 								<!-- SR내용 -->
 
 								<!-- 개발단계 관련 내용 -->
+								<div class="mr-3"><h6 class="text-danger text-right">*는 필수입력항목</h6></div>
 								<div class="d-flex flex-column">
 									<div class="align-items-center justify-content-between mt-1">
-										<div class="row">
-											<div class="col-5">
-												<div class="mr-4"><h6 class="text-danger text-right">*는 필수입력항목</h6></div>
-												<div class="form-group row">
-													<div class="col-sm-4 col-form-label row">
-														<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">개발담당자</h6>
+										<form action='<c:url value="/develop/updateHr"/>' method="post">
+											<div class="row">
+												<div class="col-5">
+													<div class="form-group row">
+														<div class="col-sm-4 col-form-label row">
+															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">개발담당자</h6>
+														</div>
+														<div class="col-sm-8">
+															<select onchange="selectDev(this);" id="srDLeader" class="form-control" required>
+																<option></option>
+																<c:forEach var="users" items="${devlist}">
+																	<option value="${users.userNo}">${users.userNm}</option>
+																</c:forEach>
+															</select>
+														</div>
 													</div>
-													<div class="col-sm-8">
-														<select onchange="selectDev(this);" id="srDLeader" class="form-control" required>
-															<option></option>
-															<c:forEach var="users" items="${devlist}">
-																<option value="${users.userNo}">${users.userNm}</option>
-															</c:forEach>
-														</select>
+													<div class="form-group row">
+														<div class="col-sm-4 col-form-label row">
+															<h6 class="text-danger">&nbsp;&nbsp;&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">개발부서</h6>
+														</div>
+														<div class="col-sm-8">
+															<input id="srDevDp" name="srDevDp" class="form-control" type="text" value="" readonly />
+														
+															<input type="hidden" value="${dlist.srNo}" name="srNo"/>
+														</div>
 													</div>
-												</div>
-												<div class="form-group row">
-													<div class="col-sm-4 col-form-label row">
-														<h6 class="text-danger">&nbsp;&nbsp;&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">개발부서</h6>
+													<div class="form-group row">
+														<div class="col-sm-4 col-form-label row">
+															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">진행상태</h6>
+														</div>
+														<div class="col-sm-8">
+															<select id="sttsNo" name="sttsNo" class="form-control">
+																<option></option>
+																<option value="5">개발중</option>
+															</select>
+														</div>
 													</div>
-													<div class="col-sm-8">
-														<input id="srDevDp" class="form-control" type="text" value="" readonly />
-														<input type="hidden" value="${dlist.srNo}" name="srNo"/>
+													<div class="form-group row mb-2">
+														<div class="col-sm-4 col-form-control pr-0 row">
+															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">개발 내용</h6>
+														</div>
+														<div class="col-sm-8 p-2">
+													 		<textarea name="srDevCn" id="srDevCn" style="width: 100%" ></textarea>
+														</div>
 													</div>
-												</div>
-												<div class="form-group row">
-													<div class="col-sm-4 col-form-label row">
-														<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">진행상태</h6>
+													
+													<div class="form-group row">
+														<div class="col-sm-4 col-form-label row">
+															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">완료(예정)일</h6>
+														</div>
+														<div class="col-sm-8">
+															<input type="date" id="srDdlnDate" name="srDdlnDate" value="${dlist.srDdlnDate}" class="form-control" />
+														</div>
 													</div>
-													<div class="col-sm-8">
-														<select id="sttsNo" name="sttsNo" class="form-control">
-															<option></option>
-															<option value="5">개발중</option>
-														</select>
+													<div class="form-group row">
+														<div class="col-sm-4 col-form-label row">
+															<h6 class="m-0 font-weight-bold text-primary">&nbsp;&nbsp;&nbsp;소요예산</h6>
+														</div>
+														<div class="col-sm-8">
+															<input type="text" id="srBgt" name="srBgt" class="form-control" value="${srBgt}" />
+														</div>
 													</div>
-												</div>
-
-												<div class="form-group row mb-2">
-													<div class="col-sm-4 col-form-control pr-0 row">
-														<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">개발 내용</h6>
+													<div class="form-group row">
+														<div class="col-sm-4 col-form-label row">
+															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">계획 시작일</h6>
+														</div>
+														<div class="col-sm-8">
+															<input type="date" id="srStartDate" name="srStartDate" value="${dlist.srStartDate}" class="form-control" />
+														</div>
 													</div>
-													<div class="col-sm-8 p-2">
-												 		<textarea name="srDevCn" id="srDevCn" style="width: 100%" ></textarea>
+													<div class="form-group row">
+														<div class="col-sm-4 col-form-label row">
+															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">계획 종료일</h6>
+														</div>
+														<div class="col-sm-8">
+															<input type="date" id="srEndDate" name="srEndDate" value="${dlist.srStartDate }" class="form-control" required />
+														</div>
 													</div>
-												</div>
-												
-												<div class="form-group row">
-													<div class="col-sm-4 col-form-label row">
-														<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">완료(예정)일</h6>
-													</div>
-													<div class="col-sm-8">
-														<input type="date" id="srDdlnDate" name="srDdlnDate" value="${dlist.srDdlnDate}" class="form-control" />
-													</div>
-												</div>
-												<div class="form-group row">
-													<div class="col-sm-4 col-form-label row">
-														<h6 class="m-0 font-weight-bold text-primary">&nbsp;&nbsp;&nbsp;소요예산</h6>
-													</div>
-													<div class="col-sm-8">
-														<input type="text" id="srBgt" name="srBgt" class="form-control" value="${srBgt}" />
-													</div>
-												</div>
-												<div class="form-group row">
-													<div class="col-sm-4 col-form-label row">
-														<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">계획 시작일</h6>
-													</div>
-													<div class="col-sm-8">
-														<input type="date" id="srStartDate" name="srStartDate" value="${dlist.srStartDate}" class="form-control" />
-													</div>
-												</div>
-												<div class="form-group row">
-													<div class="col-sm-4 col-form-label row">
-														<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">계획 종료일</h6>
-													</div>
-													<div class="col-sm-8">
-														<input type="date" id="srEndDate" name="srEndDate" value="${dlist.srStartDate }" class="form-control" required />
-													</div>
-												</div>
-												<div class="text-right">
-													<input type="hidden" id="srNo" value="${dlist.srNo}" />
-													<button type="button" id="button" class="btn btn-sm btn-primary mr-4" onclick="registerDevelop()"> 등록 ▶</button>
-												</div>
-											</div>
-
-											<div class="col-7">
-												<div class="row" style="white-space: normal;">
-													<div class="col-2">
-														<h6 class="text-primary font-weight-bold">투입인력</h6>
-													</div>
-													<div class="col-10">
-														<button class="btn btn-secondary btn-sm addlist"
-															data-toggle="modal" data-target="#exampleModalScrollable"
-															id="#modalScroll">추가하기</button>
+													<div class="text-right">
+														<input type="hidden" id="srNo" value="${dlist.srNo}" />
+														<button type="button" id="button" class="btn btn-sm btn-primary mr-4" onclick="registerDevelop()"> 등록 ▶</button>
 													</div>
 												</div>
-												
-												<form id="" action='<c:url value="/develop/updateHr"/>' method="post">
-													<input name="srNo" type="hidden" value="${dlist.srNo}"/>
+											
+												<div class="col-7">
+													<div class="row" style="white-space: normal;">
+														<div class="col-2">
+															<div class="row">
+																<div><h6 class="text-danger">*&nbsp;</h6></div>
+																<div><h6 class="text-primary font-weight-bold">투입인력</h6></div>
+															</div>	
+														</div>
+														<div class="col-10">
+															<button class="btn btn-secondary btn-sm addlist" type="button" data-toggle="modal" data-target="#exampleModalScrollable" id="#modalScroll">추가하기</button>
+														</div>
+													</div>
 													<div class="row mt-2 align-items-center">
 														<div class="col-sm-2">
 															<div class="row  align-items-center">
@@ -395,9 +411,9 @@
 														<button type="submit" class="btn btn-primary">저장</button>
 														<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/list'">목록</button>
 													</div>
-												</form>
+												</div>
 											</div>
-										</div>
+										</form>
 									</div>
 									<hr />
 									<!-- 모달 시작-->
@@ -424,19 +440,16 @@
 													<div class="modal-footer">
 														<button type="button" class="btn btn-outline-primary"
 															data-dismiss="modal">닫기</button>
-														<button type="button" onclick="submitDev()"
-															class="btn btn-primary" data-dismiss="modal">등록</button>
+														<button type="button" onclick="submitDev()"	class="btn btn-primary" data-dismiss="modal">등록</button>
 													</div>
 												</div>
 											</div>
 										</div>
 										<!-- 모달 끝-->
-									
 									</div>
-
 								</div>
 								<!-- 개발단계 관련 내용 -->
-
+							
 							</div>
 						</div>
 					</div>

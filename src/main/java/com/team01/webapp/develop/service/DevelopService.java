@@ -20,6 +20,7 @@ import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.DevelopDto;
 import com.team01.webapp.model.System;
+import com.team01.webapp.model.UpdateDevelop;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
 
@@ -141,13 +142,6 @@ public class DevelopService implements IDevelopService{
 		return user;
 	}
 
-	@Transactional
-	public int updateDevelopSr(DevelopDto srDevelop) {
-		log.info("개발계획 수정");
-		int result = developRepository.updateSr(srDevelop);
-		return result;
-	}
-	
 	/** 개발자 리스트 불러오기(모달창)
 	 * @author 			 정홍주
 	 * @param userDpNm	
@@ -175,13 +169,44 @@ public class DevelopService implements IDevelopService{
 	}
 	
 	@Transactional
-	public int insertHrList(List<HR> hr) {
-		log.info("HR리스트 삽입");
-		int row =developRepository.insertHrRow(hr);
-		insertProgress(hr.get(0).getSrNo());
-		return row;
+	public int updateDevelopSr(UpdateDevelop updateDevelop) {
+		int result1 = developRepository.updateSr(updateDevelop);
+		log.info("개발계획 수정 result1: "+result1); 
+		log.info("AAAAAAAAAAAAAAAAAAA"+updateDevelop.getUserNo.length());
+		
+		List<HR> listHR = new ArrayList<>();
+		for(int i=0; i<updateDevelop.getUserNo.length(); i++) {
+			HR hr = new HR();
+			hr.setSrNo(updateDevelop.getSrNo());
+			hr.setUserNo(updateDevelop.getUserNo.indexOf(i));
+			log.info(updateDevelop.getUserNo.indexOf(i));
+		}
+		
+		
+		int result2 =developRepository.insertHrRow(updateDevelop);
+		log.info("HR리스트 삽입 result2: "+ result2);
+		
+//		
+//		 List<HR> listHR = new ArrayList<>();
+//		 for(int i=0; i<updateDevelop.getUserNo.length(); i++) {
+//			 HR hr = new HR();
+//			 hr.setSrNo(updateDevelop.getSrCn());
+//			 hr.setUserNo(updateDevelop.getUserNo());
+//			 hr.setHrLeader(updateDevelop.getHrLeader[i]);
+//			 hr.setTaskNo(updateDevelop.taskNo[i]);
+//			 hr.setHrStartDate(updateDevelop.getHrStartDate[i]);
+//			 hr.setHrEndDate(updateDevelop.HhrEndDate[i]);
+//			 listHR.add(hr);
+//		 }
+//		 log.info(listHR);
+		 
+		int result3 = insertProgress(updateDevelop.getSrNo());
+		log.info("Progress 삽입 result3"+result3);
+		
+		return 1;
 	}
 	
+	@Override
 	public int insertProgress(String srNo){
 		log.info("Progress리스트 insert");
 		int srSeq = 0;
@@ -202,5 +227,6 @@ public class DevelopService implements IDevelopService{
 
 		return row;
 	}
+
 
 }
