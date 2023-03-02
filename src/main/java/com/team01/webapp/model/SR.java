@@ -41,5 +41,4 @@ public class SR {
 	// pageing 이용
 	private int start;
 	private int end;
-
 }

@@ -29,6 +29,8 @@ public interface IUserRepository {
 	public void insertUserSystem(Users user);
 	
 	public UserSystem selectSystemByUserNo(int userNo);
+	
+	public String selectSysNmByUserNo(int userNo);
 
 	public String getSysNoByUserOgdp(String userOgdp);
 

@@ -23,7 +23,7 @@
 					<th>상세</th>
 				</tr>
 			</thead>
-			<c:forEach var="list" items="${ProgressList}">
+			<c:forEach var="list" items="${ProgressList}" varStatus="status">
 				<tbody>
 					<tr>
 						<td class="pr-0">

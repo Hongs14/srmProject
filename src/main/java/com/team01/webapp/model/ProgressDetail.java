@@ -25,4 +25,6 @@ public class ProgressDetail {
 	
 	// 멀티 파일
 	private List<SrFile> srFile;
+	
+	private String srPry;
 }

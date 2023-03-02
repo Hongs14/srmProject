@@ -95,7 +95,8 @@
 				</div>
 			</div>
 			<div class="modal-footer justify-content-center">
-		       <button type="button" class="btn btn-outline-primary" data-dismiss="modal">취소</button>
+		       <c:if test="${command ne 'update'}"><a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/request/list">취소</a></c:if>
+		       <c:if test="${command eq 'update'}"><button type="button" class="btn btn-outline-primary" onclick="getSrDetail('${sr.srNo}')">취소</button></c:if>
 		       <c:if test="${command ne 'update'}"><button type="submit" class="btn btn-primary" onclick="requestWrite()">저장</button></c:if>
 		       <c:if test="${command eq 'update'}"><button type="submit" class="btn btn-primary" onclick="requestUpdate()">저장</button></c:if>
 		    </div>

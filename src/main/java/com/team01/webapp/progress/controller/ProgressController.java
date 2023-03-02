@@ -8,12 +8,17 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.home.service.IHomeService;
@@ -434,6 +440,8 @@ public class ProgressController {
 		
 		File file = new File(filePath);
 		
+		log.info(file);
+		
 		if(file.exists()) {
 			InputStream is = new FileInputStream(file);
 			OutputStream os = response.getOutputStream();
@@ -454,7 +462,7 @@ public class ProgressController {
 	 * @return			progress/progressFileAdd 로 리턴
 	 */
 	@RequestMapping(value="progress/detail/progressajax/3", produces="application/json; charset=UTF-8")
-	public String ProgresssFileList(@RequestBody HR hr, Model model) {
+	public String progresssFileList(@RequestBody HR hr, Model model) {
 		
 		List<ProgressFile> progressFileList = progressService.progressfileList(hr.getSrNo());
 		
@@ -475,7 +483,7 @@ public class ProgressController {
 	 * @return			progress/progressFileAdd 로 리턴
 	 */
 	@RequestMapping(value="progress/detail/progressFileAdd/{srNo}", method=RequestMethod.GET)
-	public String ProgressFileAdd(@PathVariable String srNo, Model model) {
+	public String progressFileAdd(@PathVariable String srNo, Model model) {
 		List<ProgressType> progressTypeList = progressService.getProgressTypeList();
 		
 		model.addAttribute("srNo", srNo);
@@ -493,7 +501,7 @@ public class ProgressController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value="progress/detail/progressFile/add", method=RequestMethod.POST)
-	public String ProgressFileAdd(Progress progress, HttpSession session) throws IOException {
+	public String progressFileAdd(Progress progress, HttpSession session) throws IOException {
 		// 첨부 파일이 있는지 확인
 		List<MultipartFile> mfList = progress.getProgressattach();
 		
@@ -548,7 +556,7 @@ public class ProgressController {
 	 * @return				progress/detail/{srNo} 로 리다이렉트
 	 */
 	@RequestMapping(value="progress/detail/progressFileRemove", produces="application/json; charset=UTF-8")
-	public String ProgressFileRemove(@RequestBody Progress progress, HttpSession session) {
+	public String progressFileRemove(@RequestBody Progress progress, HttpSession session) {
 		
 		for(int i=0; i<progress.getProgressFile().size(); i++) {
 			String filePath = "C:/OTI/uploadfiles/" + progress.getSrNo() + "/" + progress.getProgressFile().get(i).getProgFilePhysNm();
@@ -568,5 +576,58 @@ public class ProgressController {
 		session.setAttribute("message", 3);
 		
 		return "redirect:/progress/detail/" + progress.getSrNo();
+	}
+	
+	@RequestMapping(value="progress/list/excelDownload", method=RequestMethod.POST)
+	public void excelDownload(@RequestParam List<String> progressArr, HttpServletResponse response) throws IOException {
+		XSSFWorkbook wb=null;
+		Sheet sheet=null;
+		Row row=null;
+		Cell cell=null; 
+		wb = new XSSFWorkbook();
+		sheet = wb.createSheet("freeBoard");
+        
+        String[] HeaderList = {"SR 번호", "시스템 구분", "업무 구분", "SR 명", "요청자", "완료 예정일", "진행 상태", "중요도"};
+        
+        //첫행   열 이름 표기 
+        int cellCount=0;
+        row = sheet.createRow(0);
+        for(int i=0; i<HeaderList.length; i++) {
+    		cell=row.createCell(cellCount++);
+    		cell.setCellValue(HeaderList[i]);
+        }
+        
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+		
+		List<ProgressDetail> list = progressService.getProgressList(progressArr);
+		
+		for(int i=0; i<list.size(); i++) {
+			row=sheet.createRow(i+1);
+			cellCount = 0;
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrNo());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSysNm());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrTypeNm());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrTtl());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getRequesterNm());
+			cell=row.createCell(cellCount++);
+			String SrDdlnDate = simpleDateFormat.format(list.get(i).getSrDdlnDate()); 
+			cell.setCellValue(SrDdlnDate);
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSttsNm());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrPry());
+		}
+		
+		// 컨텐츠 타입과 파일명 지정
+		response.setContentType("ms-vnd/excel");
+		response.setHeader("Content-Disposition", "attachment;filename=testlist.xlsx");  //파일이름지정.
+		//response OutputStream에 엑셀 작성
+		wb.write(response.getOutputStream());
+		wb.close();
 	}
 }

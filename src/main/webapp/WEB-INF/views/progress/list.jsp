@@ -203,32 +203,28 @@
 												if(td.eq(1).text() != 'SR 번호') {
 													
 													var srNo = td.eq(1).text();
-													var sysNm = td.eq(2).text();
-													var srTypeNm = td.eq(3).text();
-													var srTtl = td.eq(4).text();
-													var userNm = td.eq(5).text();
-													var srDdlnDate = td.eq(6).text();
-													var sttsNm = td.eq(7).children().text();
-													var srPry = td.eq(8).children().text();
 													
-													let data = {srNo : srNo, sysNm : sysNm, srTypeNm : srTypeNm, 
-																srTtl : srTtl, userNm : userNm, srDdlnDate : srDdlnDate,
-																sttsNm : sttsNm, srPry : srPry}
-													
-													progressArr.push(data);
+													progressArr.push(srNo);
 												}
 											});
 											
-											data = {progressArr : progressArr};
+											console.log(progressArr)
 											
-											$.ajax({
-												url : "excelDownload",
-												method : "post",
-												data : JSON.stringify(data),
-												contentType : "application/json; charset=UTF-8"
-											})
+											var form = document.createElement('form');
+											form.setAttribute('method','post');
+											form.setAttribute('action', 'excelDownload');
+											document.charset = "utf-8";
 											
+											var hiddenField = document.createElement("input");
+											hiddenField.setAttribute('type', 'hidden');
+											hiddenField.setAttribute('name', 'progressArr');
+											hiddenField.setAttribute('value', progressArr);
+											form.appendChild(hiddenField);
+											
+											document.body.appendChild(form);
+											form.submit();
 										}
+										
 									</script>
 									
 								</div>

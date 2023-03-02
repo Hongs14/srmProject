@@ -362,4 +362,16 @@ public class ProgressService implements IProgressService {
 		
 	}
 
+	@Override
+	public List<ProgressDetail> getProgressList(List<String> progressArr) {
+		ProgressDetail progressDetail = null;
+		ArrayList<ProgressDetail> ProgressDetailList = new ArrayList<>();
+		for(int i=0; i<progressArr.size(); i++) {
+			progressDetail = progressRepository.selectProgressRequester(progressArr.get(i));
+			ProgressDetailList.add(progressDetail);
+		}
+		
+		return ProgressDetailList;
+	}
+
 }
