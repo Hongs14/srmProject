@@ -1,164 +1,122 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <%@include file="/WEB-INF/views/common/head.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/vendor/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css">
-
-<script>
-	function selectDev(obj) {
-		//개발담당자 선택
-		let pickDp = obj.value.toString();
-
-		$.ajax({
-			url : '<c:url value="/develop/devLeader?userNo=' + pickDp + '"/>',
-			method : "get",
-			dataType : "json",
-			success : function(data) {
-				console.log(data);
-				console.log(data[0].userDpNm);
-				$('#srDevDp').val(data[0].userDpNm);
-				$('#pickDevNm').empty();
-				$('#leaderNo').val(data[0].userNo);
-				$('#pickDevNm').append(data[0].userNm);
-			},
-			error : function(request, status, error) {
-				console.log("실패");
-				alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
-			}
-		});
-	};
+	<style>
+		select option[value=""][disabled] {
+           display: none;
+        }
+	</style>
+	<script>
+		function selectDev(obj) {
+			//개발담당자 선택
+			let pickDp = obj.value.toString();
 	
-	function registerDevelop(){
-		console.log("개발계획 등록");
-		let srDevDp = $('#srDevDp').val();
-		let srDdlnDate = $('#srDdlnDate').val();
-		let srStartDate = $('#srStartDate').val();
-		let srEndDate = $('#srEndDate').val();
-		
-		$('#modalBody').empty();
-		$('#modalBody').append('<div><h5>[' + srDevDp + ']</h5></div>');
-		$('#leaderSdate').val(srStartDate);
-		$('#leaderEdate').val(srEndDate);
-		
-		selectList();
-
-	}
-
-	/* function registerDevelop() {
-		console.log("개발계획 등록");
-		let srDevCn = $('#srDevCn').val();
-		let srDdlnDate = $('#srDdlnDate').val();
-		let srStartDate = $('#srStartDate').val();
-		let srEndDate = $('#srEndDate').val();
-		let srDevDp = $('#srDevDp').val();
-		let sttsNo = $('#sttsNo').val();
-		let srBgt = $('#srBgt').val();
-		let srNo = $('#srNo').val();
-		let userNo = $('#srDLeader').val();
-
-		let data = {
-			srDevCn : srDevCn,
-			srBgt : srBgt,
-			sttsNo : sttsNo,
-			srDdlnDate : srDdlnDate,
-			srStartDate : srStartDate,
-			srEndDate : srEndDate,
-			srDevDp : srDevDp,
-			srNo : srNo,
-			userNo : userNo
+			$.ajax({
+				url : '<c:url value="/develop/devLeader?userNo=' + pickDp + '"/>',
+				method : "get",
+				dataType : "json",
+				success : function(data) {
+					console.log(data);
+					console.log(data[0].userDpNm);
+					$('#srDevDp').val(data[0].userDpNm);
+					$('#pickDevNm').empty();
+					$('#leaderNo').val(data[0].userNo);
+					$('#pickDevNm').append(data[0].userNm);
+				},
+				error : function(request, status, error) {
+					console.log("실패");
+					alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+				}
+			});
 		};
-		console.log(data);
-
-		$.ajax({
-			url : '<c:url value="/develop/register"/>',
-			method : "post",
-			data : JSON.stringify(data),
-			contentType : "application/json; charset=UTF-8",
-			success : function(result) {
-				console.log("성공");
-				$('#modalBody').empty();
-				$('#modalBody').append('<div><h5>[' + $('#srDevDp').val() + ']</h5></div>');
-				$('#leaderSdate').val(data.srStartDate);
-				$('#leaderEdate').val(data.srEndDate);
-
-				selectList();
-
-			},
-			error : function(request, status, error) {
-				console.log("실패");
-				alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
-			}
-		});
-	};
- */
-	function selectList() {
-		//모달리스트 띄우기
-		console.log("aa");
-		let userDpNm = $('#srDevDp').val();
-		let startDate = $('#leaderSdate').val();
-		let endDate = $('#leaderEdate').val(); 
-		let userNo = $('#srDLeader').val();
-		console.log(userDpNm);
-		let data = {
-			userDpNm : userDpNm,
-			userNo : userNo,
-			hrStartDate : startDate,
-			hrEndDate : endDate
-		};
-		console.log(data);
-
-		$.ajax({
-			url : '<c:url value="/develop/devlist"/>',
-			type : "post",
-			dataType : "html",
-			data : JSON.stringify(data),
-			contentType : "application/json; charset=UTF-8",
-			success : function(data) {
-				console.log(data);
-				$("#modalContent").html(data);
-			},
-			error : function(request, status, error) {
-				console.log("실패");
-				alert("status : " + request.status + ", message : "
-						+ request.responseText + ", error : " + error);
-			}
-		});
-	};
-
-	function submitDev() {
-		//HR리스트에 일반개발자 등록
-		var checkBoxArr = [];
-		var srNo = '${dlist.srNo}';
-		$("input:checkbox[name='devName']:checked").each(function(i) {
-			//체크박스값 배열에 넣기
-			var userNo = $(this).val();
-			var data = {
+		
+		function registerDevelop(){
+			console.log("개발계획 등록");
+			let srDevDp = $('#srDevDp').val();
+			let srDdlnDate = $('#srDdlnDate').val();
+			let srStartDate = $('#srStartDate').val();
+			let srEndDate = $('#srEndDate').val();
+			
+			$('#modalBody').empty();
+			$('#modalBody').append('<div><h5>[' + srDevDp + ']</h5></div>');
+			$('#leaderSdate').val(srStartDate);
+			$('#leaderEdate').val(srEndDate);
+			
+			selectList();
+	
+		}
+	
+		function selectList() {
+			//모달리스트 띄우기
+			console.log("aa");
+			let userDpNm = $('#srDevDp').val();
+			let startDate = $('#leaderSdate').val();
+			let endDate = $('#leaderEdate').val(); 
+			let userNo = $('#srDLeader').val();
+			console.log(userDpNm);
+			let data = {
+				userDpNm : userDpNm,
 				userNo : userNo,
-				srNo : srNo
+				hrStartDate : startDate,
+				hrEndDate : endDate
 			};
-		
-			checkBoxArr.push(data);
-			$("input:checkbox[name='devName']").prop("checked", false);
-		});
-
-		console.log(checkBoxArr);
-
-		$.ajax({
-			url : '<c:url value="/develop/selectNm"/>',
-			type : 'post',
-			data : JSON.stringify(checkBoxArr),
-			contentType : "application/json; charset=UTF-8",
-			success : function(data) {
-				console.log(data);
-				$('#HrList').html(data);
-			}
-		});
-
-	};
-</script>
+			console.log(data);
+	
+			$.ajax({
+				url : '<c:url value="/develop/devlist"/>',
+				type : "post",
+				dataType : "html",
+				data : JSON.stringify(data),
+				contentType : "application/json; charset=UTF-8",
+				success : function(data) {
+					console.log(data);
+					$("#modalContent").html(data);
+				},
+				error : function(request, status, error) {
+					console.log("실패");
+					alert("status : " + request.status + ", message : "
+							+ request.responseText + ", error : " + error);
+				}
+			});
+		};
+	
+		function submitDev() {
+			//HR리스트에 일반개발자 등록
+			var checkBoxArr = [];
+			var srNo = '${dlist.srNo}';
+			$("input:checkbox[name='devName']:checked").each(function(i) {
+				//체크박스값 배열에 넣기
+				var userNo = $(this).val();
+				var data = {
+					userNo : userNo,
+					srNo : srNo
+				};
+			
+				checkBoxArr.push(data);
+				$("input:checkbox[name='devName']").prop("checked", false);
+			});
+	
+			console.log(checkBoxArr);
+	
+			$.ajax({
+				url : '<c:url value="/develop/selectNm"/>',
+				type : 'post',
+				data : JSON.stringify(checkBoxArr),
+				contentType : "application/json; charset=UTF-8",
+				success : function(data) {
+					console.log(data);
+					$('#HrList').html(data);
+				}
+			});
+	
+		};
+	</script>
 
 </head>
 
@@ -248,7 +206,7 @@
 											<div class="col-sm-2">
 												<h6 class="m-0 font-weight-bold text-primary">첨부파일</h6>
 											</div>
-											<div  class="col-sm-10">
+											<div class="col-sm-10">
 												<div class="row" >
 													<c:forEach items="${dlist.srDevelopFile}" var="file">
 														<div>${file.srFileActlNm}</div>&nbsp;/&nbsp;
@@ -273,12 +231,19 @@
 															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">개발담당자</h6>
 														</div>
 														<div class="col-sm-8">
-															<select onchange="selectDev(this);" id="srDLeader" class="form-control" required>
-																<option></option>
-																<c:forEach var="users" items="${devlist}">
-																	<option value="${users.userNo}">${users.userNm}</option>
+															<c:if test="${dlist.sttsNo != 5}">
+																<select onchange="selectDev(this);" id="srDLeader" class="form-control" required>
+																	<option></option>
+																	<c:forEach var="users" items="${devlist}">
+																		<option value="${users.userNo}">${users.userNm}</option>
+																	</c:forEach>
+																</select>
+															</c:if>
+															<c:if test="${dlist.sttsNo == 5}">
+																<c:forEach items="${hrlist}" var="devlist" >
+																	<c:if test="${devlist.hrLeader eq 'Y'}"> ${devlist.userNm}</c:if>
 																</c:forEach>
-															</select>
+															</c:if>
 														</div>
 													</div>
 													<div class="form-group row">
@@ -286,7 +251,7 @@
 															<h6 class="text-danger">&nbsp;&nbsp;&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">개발부서</h6>
 														</div>
 														<div class="col-sm-8">
-															<input id="srDevDp" name="srDevDp" class="form-control" type="text" value="" readonly />
+															<input id="srDevDp" name="srDevDp" class="form-control" type="text" value="${dlist.srDevDp}" readonly />
 														
 															<input type="hidden" value="${dlist.srNo}" name="srNo"/>
 														</div>
@@ -296,8 +261,8 @@
 															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">진행상태</h6>
 														</div>
 														<div class="col-sm-8">
-															<select id="sttsNo" name="sttsNo" class="form-control">
-																<option></option>
+															<select id="sttsNo" name="sttsNo"  class="form-control">
+																<option>${dlist.sttsNm}</option>
 																<option value="5">개발중</option>
 															</select>
 														</div>
@@ -307,7 +272,7 @@
 															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">개발 내용</h6>
 														</div>
 														<div class="col-sm-8 p-2">
-													 		<textarea name="srDevCn" id="srDevCn" style="width: 100%" ></textarea>
+													 		<textarea name="srDevCn" id="srDevCn" style="width: 100%">${dlist.srDevCn}</textarea>
 														</div>
 													</div>
 													
@@ -324,7 +289,7 @@
 															<h6 class="m-0 font-weight-bold text-primary">&nbsp;&nbsp;&nbsp;소요예산</h6>
 														</div>
 														<div class="col-sm-8">
-															<input type="text" id="srBgt" name="srBgt" class="form-control" value="${srBgt}" />
+															<input type="text" id="srBgt" name="srBgt" class="form-control" value="${dlist.srBgt}" />
 														</div>
 													</div>
 													<div class="form-group row">
@@ -340,12 +305,14 @@
 															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">계획 종료일</h6>
 														</div>
 														<div class="col-sm-8">
-															<input type="date" id="srEndDate" name="srEndDate" value="${dlist.srStartDate }" class="form-control" required />
+															<input type="date" id="srEndDate" name="srEndDate" value="${dlist.srEndDate}" class="form-control" required />
 														</div>
 													</div>
 													<div class="text-right">
 														<input type="hidden" id="srNo" value="${dlist.srNo}" />
-														<button type="button" id="button" class="btn btn-sm btn-primary mr-4" onclick="registerDevelop()"> 등록 ▶</button>
+														<c:if test="${dlist.sttsNo != 5}">
+															<button type="button" id="button" class="btn btn-sm btn-primary mr-4" onclick="registerDevelop()"> 등록 ▶</button>
+														</c:if>
 													</div>
 												</div>
 											
@@ -358,7 +325,9 @@
 															</div>	
 														</div>
 														<div class="col-10">
-															<button class="btn btn-secondary btn-sm addlist" type="button" data-toggle="modal" data-target="#exampleModalScrollable" id="#modalScroll">추가하기</button>
+															<c:if test="${dlist.sttsNo != 5}">
+																<button class="btn btn-secondary btn-sm addlist" type="button" data-toggle="modal" data-target="#exampleModalScrollable" id="#modalScroll">추가하기</button>
+															</c:if>
 														</div>
 													</div>
 													<div class="row mt-2 align-items-center">
@@ -366,20 +335,35 @@
 															<div class="row  align-items-center">
 																<div class="col-sm-6">[담당자]</div>
 																<div id="devNameInput" class="col-sm-6">
-																	<input name="userNo" id="leaderNo" type="hidden" value="" />
-																	<div id="pickDevNm"></div>
-																	<input name="hrLeader" type="hidden" value="Y" />
+																	<c:if test="${dlist.sttsNo == 5}">
+																		<c:forEach items="${hrlist}" var="devlist" >
+																			<c:if test="${devlist.hrLeader eq 'Y'}"> ${devlist.userNm}</c:if>
+																		</c:forEach>
+																	</c:if>	
+																	<c:if test="${dlist.sttsNo != 5}">
+																		<input name="userNo" id="leaderNo" type="hidden" value="" />
+																		<div id="pickDevNm"></div>
+																		<input name="hrLeader" type="hidden" value="Y" />
+																	</c:if>
+																	
 																</div>
 															</div>
 														</div>
 														<div class="col-sm-2">
 															<div class="row">
-																<select name="taskNo" class="form-control">
-																	<option>작업구분</option>
-																	<option value="2">설계</option>
-																	<option value="1">개발</option>
-																	<option value="3">테스트</option>
-																</select>
+																<c:if test="${dlist.sttsNo != 5}">
+																	<select name="taskNo" class="form-control" required>
+																		<option value="" disabled selected>작업구분</option>
+																		<option value="2">설계</option>
+																		<option value="1">개발</option>
+																		<option value="3">테스트</option>
+																	</select>
+																</c:if>
+																<c:if test="${dlist.sttsNo == 5}">
+																	<c:forEach items="${hrlist}" var="devlist" >
+																		<c:if test="${devlist.hrLeader eq 'Y'}"><span class="badge badge-primary">${devlist.taskNm}</span></c:if>
+																	</c:forEach>
+																</c:if>
 															</div>
 														</div>
 														<div class="col-8">
@@ -388,27 +372,56 @@
 																	<h6 class="font-weight-bold text-primary">시작일</h6>
 																</div>
 																<div class="col-sm-4">
-																	<input name="hrStartDate" id="leaderSdate" type="date" class="form-control"
-																		readonly />
+																	<c:if test="${dlist.sttsNo == 5}">
+																		<c:forEach items="${hrlist}" var="devlist" >
+																			<c:if test="${devlist.hrLeader eq 'Y'}"><fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy-MM-dd"/></c:if>
+																		</c:forEach>
+																	</c:if>
+																	<c:if test="${dlist.sttsNo != 5}">
+																		<input name="hrStartDate" id="leaderSdate" type="date" class="form-control" readonly />
+																	</c:if>
 																</div>
 																<div class="col-sm-2 col-form-label">
 																	<h6 class="font-weight-bold text-primary">종료일</h6>
 																</div>
 																<div class="col-sm-4">
-																	<input  name="hrEndDate" id="leaderEdate" type="date" class="form-control"
-																		readonly />
+																	<c:if test="${dlist.sttsNo == 5}">
+																		<c:forEach items="${hrlist}" var="devlist" >
+																			<c:if test="${devlist.hrLeader eq 'Y'}"><fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy-MM-dd"/></c:if>
+																		</c:forEach>
+																	</c:if>
+																	<c:if test="${dlist.sttsNo != 5}">
+																		<input  name="hrEndDate" id="leaderEdate" type="date" class="form-control" readonly />
+																	</c:if>
 																</div>
 															</div>
 														</div>
 													</div>
-													<div class="p-2 mt-3" style="border: 1px solid gray; min-height: 400px;">
+													<div class="mt-3" style="border: 1px solid gray; min-height: 400px;">
 		
 														<div id="HrList">
-															<div class="row mb-1" id="dvleaderHr"></div>
+														<div class="row d-flex m-0 p-o" style="border-bottom:1px solid black; background-color:#eaecf4;">
+															<div class="col-3 text-primary">개발 인력 성명</div>
+															<div class="col-3 text-primary">작업 할당</div>
+															<div class="col-3 text-primary">인력 투입일</div>
+															<div class="col-3 text-primary">인력 투입종료일</div>
+														</div>
+															<div class="row mb-1" id="dvleaderHr">
+																<c:if test="${dlist.sttsNo == 5}">
+																	<c:forEach items="${hrlist}" var="devlist" >
+																		<div class="col-3"><c:if test="${devlist.hrLeader eq 'N'}">${devlist.userNm}</c:if></div>
+																		<div class="col-3"><c:if test="${devlist.hrLeader eq 'N'}"><span class="badge badge-primary">${devlist.taskNm}</span></c:if></div>
+																		<div class="col-3"><c:if test="${devlist.hrLeader eq 'N'}"><fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy-MM-dd"/></c:if></div>
+																		<div class="col-3"><c:if test="${devlist.hrLeader eq 'N'}"><fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy-MM-dd"/></c:if></div>
+																	</c:forEach>
+																</c:if>
+															</div>
 														</div>
 													</div>
 													<div class="text-right my-3">
-														<button type="submit" class="btn btn-primary">저장</button>
+														<c:if test="${dlist.sttsNo != 5}">
+															<button type="submit" class="btn btn-primary">저장</button>
+														</c:if>
 														<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/list'">목록</button>
 													</div>
 												</div>
@@ -449,7 +462,6 @@
 									</div>
 								</div>
 								<!-- 개발단계 관련 내용 -->
-							
 							</div>
 						</div>
 					</div>
@@ -460,9 +472,23 @@
 			</div>
 		</div>
 		<!-- Footer -->
-		
 	</div>
 	<%@include file="/WEB-INF/views/common/bottom.jsp"%>
+	<script>
+ 	$(document).ready(function(){
+		let sttsNo = $("#sttsNo").val();
+		console.log(sttsNo);
+		if(sttsNo == '개발중' ){
+			$("input").attr("disabled", true);
+			$("select").attr("disabled", true);
+			$("textarea").attr("disabled", true);
+			
+			
+			console.log(sttsNo);
+		}
+	}); 
+	
+	</script>
 	
 </body>
 </html>

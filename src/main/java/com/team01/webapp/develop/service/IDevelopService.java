@@ -26,8 +26,14 @@ public interface IDevelopService {
 	public List<Users> selectDeveloperList(String userDpNm, int userNo, String hrStartDate, String hrEndDate);
 	
 	public List<Users> selectDevName(int userNo);
-//	public int insertHrList(List<HR> listHR);
 	public SrFile getSrFile(int srFileNo);
 	int insertProgress(String srNo);
+	
+	/**
+	 * @author 		정홍주
+	 * @param srNo	
+	 * @return		HR객체
+	 */
+	public List<HR> selectHrList(String srNo);
 	
 }
