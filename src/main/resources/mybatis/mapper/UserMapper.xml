@@ -20,6 +20,7 @@
 		  FROM 
 			users
 		  WHERE user_id = #{userId}
+		  AND user_del_yn != 'Y'
 	</select>
 	
 	<select id="selectSystemByUserNo" parameterType="int" resultType="userSystem">
@@ -48,5 +49,27 @@
 		INSERT INTO user_system (sys_no, cust_no) 
 		VALUES (#{sysNo}, #{userNo})
 	</insert>
+	
+	<update id="updateUnregister" parameterType="int">
+		UPDATE
+			USERS
+		SET 
+			USER_DEL_YN = 'Y'
+		WHERE 
+			USER_NO = #{userNo}
+	</update>
+	
+	<update id="updateUserInfo" parameterType="users">
+		UPDATE
+			USERS
+		SET 
+			user_eml = #{userEml}, 
+			user_telno = #{userTelno}, 
+			user_dp_nm = #{userDpNm}, 
+			user_jbps = #{userJbps}
+		WHERE 
+			USER_NO = #{userNo}
+	</update>
+
 	
 </mapper>

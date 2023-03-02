@@ -20,6 +20,12 @@
 	#requestList > .table td {
     	padding: 0.5rem;
     }
+    .col-lg-12 .requsetTtl{
+    	width: 300px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display:block;
+    }
     
 	</style>
   	
@@ -79,11 +85,13 @@
                 			<div class="form-group row" id="simple-date4" >
 	                			<div class="input-daterange input-group input-group-sm">
 	                				<label for="start" class="col-sm-3 col-form-label-sm ">조회기간</label>
-	                    			<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" id="dateStart"/>
-	                    			<div class="input-group-prepend">
-	                    				<span class="input-group-text" style="height:31px;">~</span>
-	                    			</div>
-	                    			<input type="text" class="input-sm form-control form-control-sm" name="end" id="dateEnd"/>
+	                				<div class="col-sm-9 d-flex">
+		                    			<input type="text" class="input-sm form-control form-control-sm" name="start" id="dateStart"/>
+		                    			<div class="input-group-prepend">
+		                    				<span class="input-group-text" style="height:31px; border-radius:0px;">~</span>
+		                    			</div>
+		                    			<input type="text" class="input-sm form-control form-control-sm" name="end" id="dateEnd"/>
+	                				</div>
 	                    		</div>
 	            			</div>
                 		</div>
@@ -101,7 +109,7 @@
                 		</div>
                 		<div class="col-4">
                 			<div class="form-group row">
-                				<label for="sysNo" class="col-sm-4 col-form-label-sm">관련시스템</label>
+                				<label for="sysNo" class="col-sm-4 col-form-label-sm" id="sysNoLabel">관련시스템</label>
                 				<select  id="sysNo" class="form-control form-control-sm col-sm-8">
 									<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.sysNmList}">
@@ -119,12 +127,14 @@
                 		<div class="col-4">
                 			<div class="form-group row">
                 				<label for="userOgdp" class="col-sm-3 col-form-label-sm">등록자소속</label>
-		                    	<select id="userOgdp" class="form-control form-control-sm col-sm-9">
+                				<div class="col-sm-9">
+		                    	<select id="userOgdp" class="form-control form-control-sm">
 		                        	<option selected>전체</option>
 									<c:forEach var="item" items="${requestFilter.userOgdpList}">
 										<option class="text-black" value="${item.userOgdp}">${item.userOgdp}</option>
 									</c:forEach>
 		                    	</select>
+                				</div>
 		                	</div>
                 		</div>
                 		<div class="col-3">
@@ -159,21 +169,28 @@
          		<!-- SR 요청 목록 -->
                 <div class="p-3 d-flex flex-row align-items-center justify-content-between">
                    	<h5 class="m-0 font-weight-bold text-primary mb-1">SR 요청 목록</h5>
-                 
 					<div class="d-sm-flex justify-content-end">
-						<a class="btn btn-sm btn-secondary mr-1"
-							onclick="getWriteForm()"> 요청등록 </a>
+					<c:if test="${sessionScope.loginUser.userType eq '고객사'}">
+                 		<a class="btn btn-sm btn-secondary mr-1" onclick="getWriteForm()"> 요청등록 </a>
+                 	</c:if>
 						<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
 					</div>
 				</div>
 				
 				<!-- 나의 SR 조회 -->
-				<input type="hidden" value="${sessionScope.loginUser.userNo}" id="userNo">
-				<div class="custom-control custom-switch px-5 ml-2" style="width:180px; border-radius:3px; background-color:#eaecf4;">
+				<input type="hidden" id="userNo" value="${sessionScope.loginUser.userNo}">
+				<input type="hidden" id="userType" name="userType" value="${sessionScope.loginUser.userType}">
+				<div class="custom-control custom-switch px-5 ml-2" style="width:200px; border-radius:3px; background-color:#eaecf4;">
 				  <input type="checkbox" class="custom-control-input" id="searchMySR" onclick="requestList(1)"/>
-				  <label class="custom-control-label" for="searchMySR"><span class="text-primary">나의 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span></label>
+				  <label class="custom-control-label" for="searchMySR"><span class="text-primary">
+				  <c:if test="${sessionScope.loginUser.userType eq '고객사'}">
+				  	나의 SR 조회
+				  </c:if>
+				  <c:if test="${sessionScope.loginUser.userType eq '관리자' or sessionScope.loginUser.userType eq '개발자'}">
+				  	담당 SR 조회
+				  </c:if>
+				  <i class="fas fa-search fa-sm mx-2"></i></span></label>
 				</div>
-				
 				
 				<!-- ajaxList 들어가는 곳 -->
                 <div id="ajaxList">
@@ -227,11 +244,28 @@
 				var checkMySR = 0;
 				  
 				function requestList(pageNo) {
+					var userNo = $("#userNo").val();
+					var userType = $("#userType").val();
+					
 					if ( $('#searchMySR').prop('checked') ) {
-						checkMySR = 1;
-						let userNo = $("#userNo").val();
-						console.log(userNo);
-						console.log("checkMySR: "+checkMySR);
+						if(userType == '고객사'){
+							checkMySR = '고객사';
+							userNo = $("#userNo").val();
+							console.log(userNo);
+							console.log("checkMySR: "+checkMySR);
+						} else if(userType == '관리자'){
+							checkMySR = '관리자';
+							userNo = $("#userNo").val();
+							console.log(userNo);
+							console.log("checkMySR: "+checkMySR);
+						} else {
+							checkMySR = '개발자';
+							userNo = $("#userNo").val();
+							console.log(userNo);
+							console.log("checkMySR: "+checkMySR);
+						}
+						
+						
 					  } else {
 						checkMySR = 0;
 						console.log("checkMySR: "+checkMySR);
@@ -252,13 +286,11 @@
 					var srRegEndDate = document.getElementById("dateEnd").value;
 					var srTtl = document.getElementById("keyword").value;
 					
-					var userNo = $("#userNo").val();
-					
 					if(srTtl !== "") {
 						srTtl = "%" + srTtl + "%";
 					}
 					
-					let data = {checkMySR: checkMySR, userNo: userNo, sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp, 
+					let data = {checkMySR: checkMySR, userNo: userNo, userType: userType, sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp, 
 								srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 					
 					$.ajax({

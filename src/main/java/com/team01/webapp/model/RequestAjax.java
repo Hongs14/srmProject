@@ -4,8 +4,9 @@ import lombok.Data;
 
 @Data
 public class RequestAjax {
-	private int checkMySR;
+	private String checkMySR;
 	private int userNo;
+	private String userType;
 	private String srDevDp;
 	private String sysNo;
 	private String sttsNo;

@@ -34,4 +34,9 @@ public interface IUserRepository {
 
 	public String getSysNoByUserOgdp(String userOgdp);
 
+	public int updateUnregister(int userNo);
+
+	public int updateUserInfo(Users user);
+
+
 }

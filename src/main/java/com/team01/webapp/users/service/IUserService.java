@@ -10,4 +10,10 @@ public interface IUserService {
 	Users getUser(String userId);
 
 	int join(Users user);
+
+	int unregister(int userNo);
+
+	int updateUserInfo(Users user);
+
+	Users getMyInfo(String userId);
 }
