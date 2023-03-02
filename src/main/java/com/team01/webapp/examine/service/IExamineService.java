@@ -2,10 +2,12 @@ package com.team01.webapp.examine.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.ExamineList;
-import com.team01.webapp.model.SrProgressAjax;
+import com.team01.webapp.model.SrFile;
 import com.team01.webapp.util.Pager;
 
 public interface IExamineService {
@@ -54,6 +56,8 @@ public interface IExamineService {
 	 * @return
 	 */
 	public Examine getExamine(String srNo);
+	public List<MultipartFile> selectExamineFileList(String srNo);
+	public SrFile selectFileDownload(int srFileNo);
 	
 	public void updateExamine(Examine examine);
 	public void updateExamineProcessing(ExamineList examinelist);

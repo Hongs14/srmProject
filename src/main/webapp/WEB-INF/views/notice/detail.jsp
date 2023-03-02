@@ -193,7 +193,7 @@
 		</div>			                            		
 		<div class="d-sm-flex justify-content-end">
 			<a href="${pageContext.request.contextPath}/notice/list/${notice.sysNo}" class="btn btn-primary mr-1">목록</a>
-			<c:if test="${sessionScope.loginUser.userNm eq 'admin'}">
+			<c:if test="${sessionScope.loginUser.userNm eq '관리자'}">
 				<a onclick="getNoticeUpdate('${notice.ntcNo}')" class="btn btn-primary mr-1">수정</a>
 				<form method="post" action="delete" enctype="multipart/form-data">
 					<input type="hidden" id="ntcNo" name="ntcNo" value="${notice.ntcNo}"/>

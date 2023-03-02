@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -17,6 +19,10 @@ public class Notice {
 	private int ntcInqCnt;
 	private Date ntcWrtDate;
 	private String ntcPry;
+	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd")
+	private String ntcPryStartDate;
+	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd")
+	private String ntcPryEndDate;
 	private String userId;
 	private int countCmnt;
 	private String sysNo;

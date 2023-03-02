@@ -184,6 +184,13 @@ public class NoticeService implements INoticeService{
 		return ntcNo;
 	}
 	
+	//공지사항 중요도 체크 변경
+	@Override
+	public void updatePryCheck() {
+		log.info("실행");
+		noticeRepository.updatePryCheck();
+	}
+	
 	
 	//댓글 읽기
 	@Override

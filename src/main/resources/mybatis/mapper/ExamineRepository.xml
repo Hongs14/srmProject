@@ -60,7 +60,7 @@
         AND sr.stts_no !=4
         AND sr.stts_no !=5
         AND sr.stts_no !=6
-		<if test="!sysNo.equals('전체')">
+		<if test="!sysNo.equals('')">
 			AND sys.sys_no = #{sysNo}
 		</if>
 		<if test="sttsNo != 0">
@@ -79,6 +79,9 @@
 		</if>
 		<if test="srTtl != ''">
 			AND  sr.SR_TTL like #{srTtl}
+		</if>
+		<if test="!sysNm.equals('전체')">
+			AND sys.sys_nm = #{sysNm}
 		</if>
 		
 	</select>
@@ -190,6 +193,26 @@
 		AND s.SR_NO = #{srNo}
 	</select>
 	
+	<select id="selectExamineFileList" parameterType="String" resultType="srFile">
+		SELECT
+			sf.SR_FILE_ACTL_NM AS "srFileActlNm",
+			s.SR_NO AS "srNo",
+			sf.SR_FILE_NO AS "srFileNo"
+		FROM sr_file sf, sr s
+		WHERE s.sr_no = sf.sr_no
+		AND s.sr_no = #{srNo}
+	</select>
+	
+	<select id="selectExamineFileDownload" parameterType="int" resultType="srFile">
+		SELECT
+			sf.SR_FILE_ACTL_NM AS "srFileActlNm",
+			s.SR_NO AS "srNo",
+			sf.SR_FILE_NO AS "srFileNo"
+		FROM sr_file sf, sr s
+		WHERE s.sr_no = sf.sr_no
+		AND sf.SR_FILE_NO = #{srFileNo}
+	</select>
+	
 	<update id="updateExamine" parameterType="examine">
 		UPDATE SR
 		SET STTS_NO = (
@@ -223,5 +246,5 @@
 		)
 		WHERE SR_NO = #{srNo}
 	</update>
-
+	
 </mapper>

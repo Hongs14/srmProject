@@ -109,6 +109,9 @@ public interface INoticeRepository {
 	//공지사항 첨부파일 삭제
 	public int deleteFile(int ntcFileNo);
 	
+	//공지사항 중요도 체크 변경
+	public void updatePryCheck();
+	
 	//댓글 읽기
 	public List<NoticeComment> selectNoticeCommentList(int ntcNo);
 	

@@ -130,7 +130,15 @@
 		                				<script>
 			                				$(document).ready(function () {
 												console.log("시작");
-												var sysNo = "";
+												var sysNo = "${sessionScope.loginUser.sysNo}";
+												
+												if ( $('#mySrWork').prop('checked') ) {
+													
+													sysNo = "${sessionScope.loginUser.sysNo}";
+													
+												}else{
+													sysNo="";
+												}
 												var sysNmSelect = document.getElementById("sysNm");
 												var sttsNoSelect = document.getElementById("sttsNo");
 												var userOgdpSelect = document.getElementById("userOgdp");
@@ -175,7 +183,17 @@
 										
 											function examineList(pageNo) {
 												console.log(pageNo);
-												var sysNo = "";
+
+												var sysNo = "${sessionScope.loginUser.sysNo}";
+												
+												if ( $('#mySrWork').prop('checked') ) {
+													
+													sysNo = "${sessionScope.loginUser.sysNo}";
+													
+												}else{
+													sysNo="";
+												}
+												
 												var sysNmSelect = document.getElementById("sysNm");
 												var sttsNoSelect = document.getElementById("sttsNo");
 												var userOgdpSelect = document.getElementById("userOgdp");
@@ -218,51 +236,7 @@
 												});
 											}
 											
-											function seleckMySr(pageNo) {
-												console.log(pageNo);
-												var sysNo = "${sessionScope.loginUser.sysNo}";
-												
-												var sysNmSelect = document.getElementById("sysNm");
-												var sttsNoSelect = document.getElementById("sttsNo");
-												var userOgdpSelect = document.getElementById("userOgdp");
-												var userDpSelect = document.getElementById("userDpNm");
-												
-												var sysNm = sysNmSelect.options[document.getElementById("sysNm").selectedIndex].text;
-												var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
-												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
-												var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
-
-												var srRegStartDate = document.getElementById("dateStart").value;
-												var srRegEndDate = document.getElementById("dateEnd").value;
-												
-												var srTtl = document.getElementById("keyword").value;
-												
-												if(srTtl !== "") {
-													srTtl = "%" + srTtl + "%";
-												}
-												
-												console.log(sysNo);
-												console.log(sttsNo);
-												console.log(srTtl);
-												console.log(userOgdp);
-												console.log(userDpNm);
-												console.log(srRegStartDate);
-												console.log(srRegEndDate);
-												
-												let data = {sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
-														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
-												
-												console.log(data);
-												
-												$.ajax({
-													url : "filter/"+pageNo,
-													method : "post",
-													data : JSON.stringify(data),
-													contentType: "application/json; charset=UTF-8"
-												}).done((data) => {
-													$("#ajaxList").html(data)
-												});
-											}
+											
 										</script>
 	                				</div>
 	               				</form>
@@ -278,8 +252,8 @@
 			                  	</div>
 			                </div>     
 		                  	<div class="custom-control custom-switch px-5 ml-3" style="width:180px; border-radius:3px; background-color:#eaecf4;">
-			  					<input type="checkbox" class="custom-control-input" id="customSwitch1" name="mySrWork" onclick="seleckMySr(1)">
-			  					<label class="custom-control-label" for="customSwitch1"><span class="text-primary">나의 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span></label>
+			  					<input type="checkbox" class="custom-control-input" id="mySrWork" name="mySrWork" onclick="examineList(1)" >
+			  					<label class="custom-control-label" for="mySrWork"><span class="text-primary">나의 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span></label>
 							</div>
 			                <form>
 					           	<div id="ajaxList" style="width:100%"></div>
