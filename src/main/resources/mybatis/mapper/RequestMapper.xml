@@ -59,6 +59,9 @@
 		    COUNT(sr.SR_NO)
 		
 			FROM SR sr, SYSTEM system, SR_STTS stts, USERS users
+			 <if test="checkMySR == '개발자'">
+			    , HR hr
+			 </if>
 			WHERE sr.SR_CUST_NO = users.USER_NO
 			AND sr.sys_no = system.sys_no
 			AND sr.stts_no = stts.stts_no
@@ -89,6 +92,10 @@
 		<if test="checkMySR == '관리자'">
 			AND  system.MANAGER_NO = #{userNo}
 		</if>
+		<if test="checkMySR == '개발자'">
+			AND hr.sr_no = sr.sr_no
+			AND hr.user_no = #{userNo}
+	    </if>
 		
 	</select>
 
@@ -134,11 +141,12 @@
 			            s.SR_REG_DATE,
 			            s.SR_DDLN_DATE,
 			            s.SR_PRY
-			       
-					<if test="checkMySR != '개발자'">
+			       	
 						FROM SR s ,USERS u,  SR_STTS st, SYSTEM sys
+						<if test="checkMySR == '개발자'">
+						    , HR hr
+						</if>
 						WHERE s.SR_CUST_NO = u.USER_NO
-					</if>
 			        
 	        			AND s.STTS_NO = st.STTS_NO
 	        			AND s.SYS_NO = sys.SYS_NO
@@ -169,6 +177,10 @@
 					<if test="checkMySR == '관리자'">
 						AND  sys.MANAGER_NO = #{userNo}
 					</if>
+					<if test="checkMySR == '개발자'">
+                        AND hr.sr_no = s.sr_no
+                        AND hr.user_no = #{userNo}
+				    </if>
 					
 			        ORDER BY s.SR_REG_DATE DESC
 			    )
