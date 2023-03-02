@@ -193,15 +193,6 @@
           <div class="modal fade" id="unregister" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
 			   <div class="modal-dialog" role="document" style="max-width:400px;">
 			     <div class="modal-content">
-			       <%-- <div class="modal-header">
-			         	<h5 class="modal-title" id="exampleModalLabelLogout"> 
-				          	<img src="${pageContext.request.contextPath}/resources/images/logoOnlyBlue.png" style="width:20px;">
-				        	<small><b>회원탈퇴</b></small>
-				        </h5>
-			         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			           <span aria-hidden="true">&times;</span>
-			         </button>
-			       </div> --%>
 			       <div class="modal-header bg-primary">
 			         	<h5 class="modal-title" id="exampleModalLabelLogout"> 
 				          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">

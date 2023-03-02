@@ -113,17 +113,29 @@
 	<div class="modal fade" id="progressFinishRequestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 		<div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalScrollableTitle"></h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title" id="exampleModalLabelLogout">
+			          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+			        	<small class="text-white">
+			        		<b>완료 요청 신청</b>
+			        	</small>
+					</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body justify-content-center text-center p-5">
+					<div class="d-flex align-items-center">
+						<div id="iconWrapper" class="mr-4">
+							<i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#FFA426;"></i>
+						</div>
+						<div id="dialogWrapper" class="text-left">
+							<h5 id="message"></h5>
+						</div>
 					</div>
-					<div class="modal-body" style="white-space: normal;">
-						<h5 id="message"></h5>
-					</div>
-					<div class="modal-footer" id="footer">
-					</div>
+				</div>
+				<div class="modal-footer" id="footer">
+				</div>
 			</div>
 		</div>
 	</div>
