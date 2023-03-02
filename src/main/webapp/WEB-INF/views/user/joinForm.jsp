@@ -14,8 +14,8 @@
         .userType_check input[type="radio"]:checked + label { background: #66bb6a; color: white;}
         .form-group { margin-bottom: 30px;}
         .form-group > input { max-width: 780px;}
-         .form-group > select { max-width: 780px;}
-         .form-group > small {padding-left:180px;}
+        .form-group > select { max-width: 780px;}
+        .form-group > small {padding-left:180px;}
     </style>
 </head>
 

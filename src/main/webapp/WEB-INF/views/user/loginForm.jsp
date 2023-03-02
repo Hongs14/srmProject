@@ -39,10 +39,12 @@
 			                  
 			                  <form class="user d-flex flex-column m-5" method="post" action="<c:url value='/user/login'/>">
 			                    <div class="form-group mb-4">
-			                      <input type="text" class="form-control" id="userId" name="userId" placeholder="ID" >
+			                      <input type="text" class="form-control" id="userId" name="userId" placeholder="ID" required>
+			                      <c:if test="${!empty result and result eq 'wrongId'}"><small style="color:red;">ID를 잘못 입력하셨습니다.</small></c:if>
 			                    </div>
 			                    <div class="form-group mb-4">
-			                      <input type="password" class="form-control" id="userPswd" name="userPswd" placeholder="Password" >
+			                      <input type="password" class="form-control" id="userPswd" name="userPswd" placeholder="Password" required>
+			                      <c:if test="${!empty result and result eq 'wrongPassword'}"><small style="color:red;">패스워드를 잘못 입력하셨습니다.</small></c:if>
 			                    </div>
 			                    <div class="form-group mb-1">
 				                    <button type="submit" class="btn btn-primary btn-block" >로그인 </button>

@@ -114,6 +114,28 @@ public class UserService implements IUserService {
 		}
 		
 	}
+	
+
+	@Override
+	public int unregister(int userNo) {
+		return userRepository.updateUnregister(userNo);
+	}
+
+	
+	@Override
+	public int updateUserInfo(Users user) {
+		log.info("user: "+user);
+		int rows = userRepository.updateUserInfo(user);
+		log.info("변경 행수: " + rows);
+		return rows;
+	}
+
+
+	@Override
+	public Users getMyInfo(String userId) {
+		log.info("실행");
+		return userRepository.selectByUserId(userId);
+	}
 
 
 }

@@ -55,11 +55,12 @@
 
 	<select id="selectTotalRequestCount" parameterType="requestAjax" resultType="int">
 		SELECT
-		    COUNT(SR_NO)
-		FROM SR sr, SYSTEM system, SR_STTS stts, USERS users
+		    COUNT(sr.SR_NO)
+		FROM SR sr, SYSTEM system, SR_STTS stts, USERS users, HR hr
 		where sr.sys_no = system.sys_no
 		AND sr.stts_no = stts.stts_no
 		AND sr.sr_cust_no = users.user_no
+		AND hr.SR_NO = sr.SR_NO
 		AND sr.SR_DEL_YN = 'N'
 		<if test="srDevDp != '전체'">
 			AND sr.sr_dev_dp = #{srDevDp}
@@ -81,10 +82,16 @@
 		<if test="srTtl != ''">
 			AND  sr.SR_TTL like #{srTtl}
 		</if>
-		
-		<if test="checkMySR != 0">
+		<if test="checkMySR == '고객사'">
 			AND  sr.SR_CUST_NO = #{userNo}
 		</if>
+		<if test="checkMySR == '관리자'">
+			AND  system.MANAGER_NO = #{userNo}
+		</if>
+		<if test="checkMySR == '개발자'">
+			AND  hr.USER_NO = #{userNo}
+		</if>
+		
 	</select>
 
 
@@ -129,10 +136,11 @@
 			            s.SR_REG_DATE,
 			            s.SR_DDLN_DATE,
 			            s.SR_PRY
-			        FROM SR s ,USERS u,  SR_STTS st, SYSTEM sys
+			        FROM SR s ,USERS u,  SR_STTS st, SYSTEM sys, HR hr
        			 	WHERE SR_CUST_NO = u.USER_NO
         			AND s.STTS_NO = st.STTS_NO
         			AND s.SYS_NO = sys.SYS_NO
+        			AND s.SR_NO = hr.SR_NO
         			AND s.SR_DEL_YN = 'N'
 			       	<if test="sttsNo != '전체'">
 						AND st.stts_no = #{sttsNo}
@@ -154,9 +162,16 @@
 					<if test="srTtl != ''">
 						AND  s.SR_TTL like #{srTtl}
 					</if>
-					<if test="checkMySR != 0">
+					<if test="checkMySR == '고객사'">
 						AND  s.SR_CUST_NO = #{userNo}
 					</if>
+					<if test="checkMySR == '관리자'">
+						AND  sys.MANAGER_NO = #{userNo}
+					</if>
+					<if test="checkMySR == '개발자'">
+						AND  hr.USER_NO = #{userNo}
+					</if>
+					
 			        ORDER BY s.SR_REG_DATE DESC
 			    )
 			    <![CDATA[

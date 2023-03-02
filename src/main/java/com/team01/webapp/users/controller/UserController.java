@@ -5,9 +5,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 
 import com.team01.webapp.model.Users;
 import com.team01.webapp.users.service.IUserService;
@@ -122,9 +122,43 @@ public class UserController {
 	 * @author	김희률
 	 * @return	나의 정보 뷰로 이동
 	 */
-	@RequestMapping(value = "/user/myinfo", method = RequestMethod.GET)
-	public String myinfo() {
+	@RequestMapping(value = "/user/myinfo/{userId}", method = RequestMethod.GET)
+	public String myinfo(@PathVariable String userId, Model model) {
 		log.info("실행");
+		Users user = userService.getMyInfo(userId);
+		model.addAttribute("user", user);
+		log.info("user: "+user);
 		return "user/myInfo";
+	}
+	
+	
+	/**
+	 * 회원탈퇴 메서드
+	 * @author	김희률
+	 * @param userNo
+	 * @return
+	 */
+	@RequestMapping(value = "/user/unregister/{userNo}", method = RequestMethod.GET)
+	public String unregister(@PathVariable int userNo) {
+		log.info("unregister 실행"+ userNo);
+		
+		int rows = userService.unregister(userNo);
+		return "redirect:/";
+	}
+	
+	/**
+	 * 회원정보 수정 메서드
+	 * @author	김희률
+	 * @param userNo
+	 * @param user
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/user/update", method = RequestMethod.POST)
+	public String update(Users user, Model model ) {
+			log.info("user: "+user);
+			int rows = userService.updateUserInfo(user);
+			log.info("변경행수: "+rows);
+			return "redirect:/user/myinfo";
 	}
 }

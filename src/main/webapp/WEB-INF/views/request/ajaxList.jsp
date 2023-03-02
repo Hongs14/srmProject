@@ -2,13 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 	<div class="table-responsive p-2">
-		<table class="table align-items-center table-flush table-hover" id="requestList" style="width:100%;">
-			<thead class="thead-light" style="text-align: center;">
+		<table class="table table-flush table-hover" id="requestList" style="width:100%;">
+			<thead class="thead-light">
 				<tr>
 					<th>
 						<input type="checkbox" onclick='selectAll(this)' name="requestCheck">
 					</th>
-					<th>요청번호</th>
+					<th>SR번호</th>
 					<th>제목</th>
 					<th>관련시스템</th>
 					<th>등록자</th>
@@ -19,7 +19,7 @@
 					<th>중요</th>
 				</tr>
 			</thead>
-			<tbody style="text-align: center;">
+			<tbody>
 				<c:forEach var="request" items="${requestLists}">
 					<tr>
 						<td>
