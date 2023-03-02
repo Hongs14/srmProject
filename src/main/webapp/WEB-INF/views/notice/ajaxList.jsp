@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<div class="table-responsive p-3">
+<div class="table-responsive px-5">
 	<table class="table align-items-center table-flush table-hover">
     	<thead class="thead-light">
 	    	<tr>
