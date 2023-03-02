@@ -385,7 +385,7 @@
 		진척율 정보 저장
 		작성자 : 김태희
 	-->
-	<select id="selectProgressRate" parameterType="int" resultType="progress">
+	<select id="selectProgressRate" parameterType="string" resultType="progress">
 		SELECT
 		    PROG_NO AS "progNo",
 		    SR_NO AS "srNo",

@@ -319,7 +319,7 @@ public class ProgressController {
 	 * @return			progress/progressRateAdd 로 return
 	 */
 	@RequestMapping(value="progress/detail/progressRateAdd/{progNo}", method=RequestMethod.POST)
-	public String ProgressRateAdd(@PathVariable int progNo, Model model) {
+	public String ProgressRateAdd(@PathVariable String progNo, Model model) {
 		
 		Progress progress = progressService.progressRate(progNo);
 		

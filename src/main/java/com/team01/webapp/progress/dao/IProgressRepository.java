@@ -188,7 +188,7 @@ public interface IProgressRepository {
 	 * @param progNo	클라이언트가 보낸 progNo 정보 저장
 	 * @return			Progress 객체 return
 	 */
-	Progress selectProgressRate(int progNo);
+	Progress selectProgressRate(String progNo);
 
 	/**
 	 * 진척율 파일 저장
