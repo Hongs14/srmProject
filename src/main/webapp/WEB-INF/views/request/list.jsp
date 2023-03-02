@@ -258,7 +258,7 @@
 							userNo = $("#userNo").val();
 							console.log(userNo);
 							console.log("checkMySR: "+checkMySR);
-						} else {
+						} else if (userType == '개발자'){
 							checkMySR = '개발자';
 							userNo = $("#userNo").val();
 							console.log(userNo);

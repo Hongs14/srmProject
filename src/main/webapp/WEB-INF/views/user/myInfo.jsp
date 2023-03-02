@@ -38,15 +38,22 @@
 		<!-- Row -->
           <div class="row" id="myInfoWrapper">
 	     	<div class="col-lg-7 container">
-              <div class="card" >
-               <div class="card-header py-4 bg-gradient-primary d-flex flex-row align-items-center justify-content-between">
-                  <h4 class="m-0 font-weight-bold text-light">나의 정보 </h4>
-                </div>
-                <div class="card-body d-flex p-0">
-                	<div class="userOgdp bg-primary">
+	     	<div class="d-sm-flex align-items-end justify-content-between">
+				<div class="bg-primary px-3 py-2"
+					style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+					<h6 class="mb-0 text-white">마이페이지</h6>
+				</div>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><b>나의 정보 확인</b></li>
+					<li class="breadcrumb-item active" aria-current="page">나의 정보 상세</li>
+				</ol>
+			</div>
+              <div class="card">
+                <div class="card-body d-flex p-2">
+                	<div class="userOgdp" style="border-right: 2px solid #757575;">
                 		<div class="p-3 pt-5">
-							<h6 class="text-white ">${user.userType}</h6>
-							<h3 class="text-white">${user.userOgdp}</h3>
+							<a class="badge badge-primary" ><small>${user.userType}</small></a>
+							<h3 >${user.userOgdp}</h3>
 						</div>
                 	</div>
                 	<form class="myInfoWrapper p-5 container" action="${pageContext.request.contextPath}/user/update" method="post"> 
@@ -56,7 +63,7 @@
 						</div>
 						<div class="row mb-4">
 							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userId">ID </label>
-							<input class="col-9" id="userId"class="mx-2" style="border:0; font-size:1.2rem;" value="${user.userId}" disabled>
+							<input class="col-9" id="userId" class="mx-2" style="border:0; font-size:1.2rem;" value="${user.userId}" disabled>
 						</div>
 						<div class="row mb-4">
 							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userPswd">비밀번호 </label>
@@ -114,6 +121,7 @@
 		                      </select>
 						</div>
 						<input type="hidden" value="${user.userNo}" name="userNo"/>
+						<input type="hidden" value="${user.userId}" name="userId"/>
 					<div class="card-footer">
 						<div class="text-center">
 							<a type="button" class="btn btn-primary btn-sm" onclick= "updateInfo()" id="updateInfo_fun">수정하기</a>
@@ -183,20 +191,39 @@
 			
           <!-- 회원탈퇴 Modal -->
           <div class="modal fade" id="unregister" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
-			   <div class="modal-dialog" role="document">
+			   <div class="modal-dialog" role="document" style="max-width:400px;">
 			     <div class="modal-content">
-			       <div class="modal-header bg-warning">
-			         <h5 class="modal-title" id="exampleModalLabelLogout"><i class="fas fa-exclamation-triangle"></i><b> 회원탈퇴</b></h5>
+			       <%-- <div class="modal-header">
+			         	<h5 class="modal-title" id="exampleModalLabelLogout"> 
+				          	<img src="${pageContext.request.contextPath}/resources/images/logoOnlyBlue.png" style="width:20px;">
+				        	<small><b>회원탈퇴</b></small>
+				        </h5>
 			         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			           <span aria-hidden="true">&times;</span>
 			         </button>
+			       </div> --%>
+			       <div class="modal-header bg-primary">
+			         	<h5 class="modal-title" id="exampleModalLabelLogout"> 
+				          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+				        	<small class="text-white"><b>회원탈퇴</b></small>
+				        </h5>
+			         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+			           <span aria-hidden="true">&times;</span>
+			         </button>
 			       </div>
-			       <div class="modal-body text-center p-5">
-			         <h5>정말 탈퇴하시겠습니까?</h5>
+			       <div class="modal-body justify-content-center text-center p-5">
+				       <div class="d-flex align-items-center">
+					       <div id="iconWrapper" class="mr-4">
+						       	<i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#FFA426;"></i>
+					       </div>
+					       <div id="dialogWrapper" class="text-left">
+						     <h5>정말 탈퇴하시겠습니까?</h5>
+					       </div>
+				       </div>
 			       </div>
-			       <div class="modal-footer">
-			         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">취소</button>
-			         <a href="${pageContext.request.contextPath}/user/unregister/${user.userNo}" class="btn btn-primary">탈퇴</a>
+			       <div class="modal-footer justify-content-center text-center">
+			         <button type="button" class="btn btn-outline-primary mx-2" data-dismiss="modal">취소</button>
+			         <a href="${pageContext.request.contextPath}/user/unregister/${user.userNo}" class="btn btn-outline-warning">탈퇴</a>
 			       </div>
 			     </div>
 			   </div>
@@ -217,6 +244,7 @@
  <script>
  function updateInfo(){
 	 console.log("updateInfo 실행!!");
+	 console.log($("#userId").val());
 	$(".updatable").attr("disabled",false);
 	$(".updatable").addClass("border");
 	$("#updateInfo_fun").hide();

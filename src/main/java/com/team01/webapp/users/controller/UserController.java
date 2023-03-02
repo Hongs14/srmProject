@@ -159,6 +159,6 @@ public class UserController {
 			log.info("user: "+user);
 			int rows = userService.updateUserInfo(user);
 			log.info("변경행수: "+rows);
-			return "redirect:/user/myinfo";
+			return "redirect:/user/myinfo/"+user.getUserId();
 	}
 }
