@@ -14,7 +14,6 @@
  <div class="row"> 
 	<div class="col-1"><input type="checkbox" name="devName" value="${users.userNo}"></div> 
  	<div class="col-1">${users.userJbps}</div> 
-
  	<div class="col-2">${users.userNm}&nbsp;[${users.devList.size()}건]</div> 
 
 	<div class="col-3">${users.userTelno}</div> 

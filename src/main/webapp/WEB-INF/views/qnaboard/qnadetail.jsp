@@ -8,8 +8,11 @@
 		<script>
 	  		$(document).ready(function(){
 	  			console.log("시작할때");
+	 
 	  			readComment();
 	  		});
+
+	  		let countCmnt = ${qstn.countCmnt};
 	  		
 	  		function readComment(){
 	  			console.log("aa");
@@ -70,14 +73,16 @@
 					comment +=	'</div>'
 					comment += 	'<div>'
 					comment += 		'<input type="hidden" id="qstnCmntNo" value="'+item.qstnCmntNo+'"/>'
-					comment += 		'<a id="updateToggle'+data.qstnCmntNo+'" onclick="updateCButton('+item.qstnCmntNo+')">수정</a> | <a onclick="deleteComment('+item.qstnCmntNo+')">삭제</a> |';
+					comment += 		'<a id="updateToggle'+item.qstnCmntNo+'" onclick="updateCButton('+item.qstnCmntNo+')">수정</a> | <a onclick="deleteComment('+item.qstnCmntNo+')">삭제</a> |';
 					comment += 	'</div>';
 					comment +='</div>';
 					comment += '<textarea id="commentContent'+item.qstnCmntNo+'" disabled="disabled" style="border: none; resize:none; width:90%">'+item.qstnCmntCn+'</textarea>';
 					
 	        		$('#qComment').append(comment); 
-	        		$('#cmntCount').empty();
-	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt+1})+')');
+	        		/* $('#cmntCount').empty(); */
+	        		console.log(countCmnt);
+	        		$('#cmntCount').html('댓글('+(countCmnt+1)+')');
+	        		countCmnt += 1;
 	        		$('#qnaCmntCn').val('');
 					
 				});
@@ -86,7 +91,6 @@
 			function updateCButton(i){
 				console.log(i);
 				$('#commentContent'+i).removeAttr("disabled");
-				console.log("here");
 				$('#updateToggle'+i).html("변경");
 				$('#updateToggle'+i).attr('onclick', 'udpateComplete('+i+')');
 				
@@ -120,8 +124,8 @@
 					data: 'qstnCmntNo='+qstnCmntNo,
 				}).done((data) => {
 					console.log("성공");
-					$('#cmntCount').empty();
-	        		$('#cmntCount').append('댓글('+(${qstn.countCmnt-1})+')');
+					$('#cmntCount').html('댓글('+(countCmnt-1)+')');
+	        		countCmnt -= 1;
 					$('#qComment').empty(); 
 					readComment();
 					

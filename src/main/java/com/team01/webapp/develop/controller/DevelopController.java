@@ -1,29 +1,38 @@
 package com.team01.webapp.develop.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team01.webapp.develop.service.IDevelopService;
 import com.team01.webapp.model.CheckBoxArr;
+import com.team01.webapp.model.DevelopFilter;
 import com.team01.webapp.model.HR;
-import com.team01.webapp.model.SR;
-import com.team01.webapp.model.SrDevelopDto;
+import com.team01.webapp.model.NoticeFile;
+import com.team01.webapp.model.SrFile;
+import com.team01.webapp.model.DevelopDto;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
 
@@ -38,24 +47,44 @@ public class DevelopController {
 	private IDevelopService developService;
 	
 	/**
-	 * @author 			 정홍주
-	 * @param pageNo	
-	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
-	 * @param pager		페이징 처리를 위한 pager객체 주입
-	 * @return 			develop/developlist로 이동
+	 * SR개발관리 목록 
+	 * @author					정홍주
+	 * @param developFilter 	SR요청에 대한 검색 조건
+	 * @param model				View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
 	 */
-	@GetMapping("/list/{pageNo}")
-	public String getDevelopList(@PathVariable int pageNo, Model model, Pager pager) {
-		int totalRow = developService.totalRow();
-		pager = new Pager(10, 5, totalRow, pageNo);
-		List<SR> list = developService.getDevelopList(pager);
-		model.addAttribute("pager", pager);
-		model.addAttribute("developlist",list);
-		model.addAttribute("pageNo", pageNo);
-		log.info("SR개발관리 리스트 목록");
+	@GetMapping(value="/list/{pageNo}")
+	public String getDevelopList(@PathVariable int pageNo, DevelopFilter developFilter, Model model) {
+		log.info("SR개발 목록");
+		
+		developFilter = developService.filterList(developFilter);
+		
+		model.addAttribute("developFilter",developFilter);
 		return "develop/developlist";
 	}
 	
+	
+	/**
+	 * SR 요청에 대한 필터링 후 리스트 가져오기
+	 * @author 				정홍주, 김태희
+	 * @param pageNo		SR개발 목록 페이지 위치
+	 * @param examineList	SR검토 리스트
+	 * @param pager			페이지 처리	
+	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
+	 */
+	@PostMapping(value="/filter/{pageNo}", produces="application/json; charset=UTF-8")
+	public String getDevelopFilter(@PathVariable int pageNo, @RequestBody DevelopDto developDto, Model model, Pager pager) {
+		log.info("필터링한 목록");
+		log.info("pageNo "+pageNo);
+		pager = developService.returnPage(pageNo,pager,developDto);
+		log.info(pager);
+		List<DevelopDto> list = developService.getDevelopList(pager, developDto);
+		model.addAttribute("develop",list);
+		model.addAttribute("pager",pager);
+
+		return "develop/ajaxList";
+	}
 	
 	/**
 	 * @author 			정홍주
@@ -64,16 +93,54 @@ public class DevelopController {
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return			develop/developdetail로 이동
 	 */
-	@GetMapping("/view/{pageNo}")
-	public String getDevelopDetail(@PathVariable int pageNo, @RequestParam String srNo, Model model) {
-		SrDevelopDto srDetail = developService.getDetail(srNo);
+	@GetMapping("/view/{srNo}")
+	public String getDevelopDetail(@PathVariable String srNo, Model model) {
 		List<Users> devList = developService.getDevelopList();
+		DevelopDto srDetail = developService.getDetail(srNo);
+		
 		model.addAttribute("dlist", srDetail);
 		log.info(srDetail);
 		model.addAttribute("devlist", devList);
 		log.info("SR개발관리 상세보기");
 		
 		return "develop/developdetail";
+	}
+	
+	@GetMapping("/file")
+	public void download(int srFileNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
+		log.info("파일 다운로드");
+		
+		SrFile srFile = developService.getSrFile(srFileNo);
+		
+		String originalName = srFile.getSrFileActlNm();
+		String savedName = srFile.getSrFilePhysNm();
+		String contentType = srFile.getSrFileExtnNm();
+		log.info("userAgent: "+userAgent);
+		
+		// originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩
+		if(userAgent.contains("Trident") || userAgent.contains("MSIE")) {
+			originalName = URLEncoder.encode(originalName, "UTF-8");
+		} else {
+			originalName = new String(originalName.getBytes("UTF-8"), "ISO-8859-1");
+		}
+		
+		// 응답 헤더 설정
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + originalName + "\"");
+		response.setContentType(contentType);
+		
+		// 응답 바디에 파일 데이터 싣기
+		String filePath = "C:/Temp/uploadfiles/" + savedName;
+			
+			File file = new File(filePath);
+			
+			if(file.exists()) {
+				InputStream is = new FileInputStream(file);
+				OutputStream os = response.getOutputStream();
+				FileCopyUtils.copy(is, os);
+				os.flush();
+				os.close();
+				is.close();
+		}
 	}
 	
 	
@@ -84,16 +151,10 @@ public class DevelopController {
 	 */
 	@PostMapping(value="/register", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public String developPlan(@RequestBody SrDevelopDto srDevelop, HttpSession session, Model model) {
-		int userNo = (int)session.getAttribute("userNo"); 
-		log.info("userNO"+userNo);
-		
-		List<Users> list = developService.updateDevelopSr(srDevelop, userNo);
+	public int developPlan(@RequestBody DevelopDto srDevelop, Model model) {
+		int result = developService.updateDevelopSr(srDevelop);
 		log.info("SR개발관리 계획 등록");
-		log.info(list);
-		model.addAttribute("devlistByDp", list);
-		
-		return "develop/devlistView";
+		return result;
 	}
 	
 	
@@ -102,7 +163,7 @@ public class DevelopController {
 	 * @param userDpNmMap	
 	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
 	 * @return				develop/devlistView jsp 파일
-	 *//*
+	 */
 	@PostMapping(value="/devlist")
 	public String getDevList(@RequestBody Map<String, Object> userDpNmDateMap, Model model) {
 		String userDpNm = (String)userDpNmDateMap.get("userDpNm");
@@ -117,7 +178,7 @@ public class DevelopController {
 //		log.info(list);
 		model.addAttribute("devlistByDp", list);
 		return "develop/devlistView";
-	}*/
+	}
 	
 	@GetMapping(value="/devLeader")
 	@ResponseBody
@@ -148,7 +209,17 @@ public class DevelopController {
 	     return "develop/selectHr";
 	  }
 	 
-	 @PostMapping(value="/updateHr")
+	 /**
+	 * @author				정홍주
+	 * @param srNo			
+	 * @param userNo		
+	 * @param hrLeader
+	 * @param taskNo
+	 * @param hrStartDate
+	 * @param hrEndDate
+	 * @return
+	 */
+	@PostMapping(value="/updateHr")
 	 public String insertHrList(String srNo, int[] userNo, String[] hrLeader, int[] taskNo, 
 			 @DateTimeFormat(pattern="yyyy-MM-dd") Date[] hrStartDate, 
 			 @DateTimeFormat(pattern="yyyy-MM-dd") Date[] hrEndDate){
@@ -164,10 +235,10 @@ public class DevelopController {
 			 hr.setHrEndDate(hrEndDate[i]);
 			 listHR.add(hr);
 		 }
-		 		 
-		 int result = developService.insertHrList(listHR);
-		 int result2 = developService.insertProgress(); ///////////////////PROGRESS 삽입
-		 log.info(result);
+		 log.info(listHR);
+//		 int result = developService.insertHrList(listHR);
+//		 int result2 = developService.insertProgress(); ///////////////////PROGRESS 삽입
+//		 log.info(result);
 		 log.info("HR등록");
 		 return "redirect:/develop/list/1";
 	 }

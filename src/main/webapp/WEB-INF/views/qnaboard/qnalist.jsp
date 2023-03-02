@@ -52,7 +52,7 @@
 			         	<!-- Row -->
 			         	<div class="row">
 							<div class="col-lg-12">
-	                        	<div class="card mb-4">
+	                        	<div class="card mb-4 text-center">
 	                        		<!-- 검색 -->
 	                        		<div class="mb-1 mt-5 px-5">
 								    	<div class="row">
@@ -100,12 +100,12 @@
 					               		<table class="table align-items-center table-flush">
 					                    	<thead class="thead-light">
 							                	<tr>
-							                    	<th class="1">번호</th>
-							                        <th class="3">글제목</th>
-							                        <th class="2">작성자</th>
-							                        <th class="2">작성일</th>
-							                        <th class="1">조회수</th>
-							                        <th class="1">댓글수</th>
+							                    	<th class="col-1">번호</th>
+							                        <th class="col-3">글제목</th>
+							                        <th class="col-2">작성자</th>
+							                        <th class="col-2">작성일</th>
+							                        <th class="col-1">조회수</th>
+							                        <th class="col-1">댓글수</th>
 							                    </tr>
 					                   		</thead>
 					                   		<tbody>
