@@ -263,7 +263,7 @@
 														<div class="col-sm-8">
 															<select id="sttsNo" name="sttsNo"  class="form-control">
 																<option>${dlist.sttsNm}</option>
-																<option value="5">개발중</option>
+																<option value="5" selected>개발중</option>
 															</select>
 														</div>
 													</div>
@@ -272,7 +272,7 @@
 															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">개발 내용</h6>
 														</div>
 														<div class="col-sm-8 p-2">
-													 		<textarea name="srDevCn" id="srDevCn" style="width: 100%">${dlist.srDevCn}</textarea>
+													 		<textarea name="srDevCn" id="srDevCn" style="width: 100%" required>${dlist.srDevCn}</textarea>
 														</div>
 													</div>
 													
@@ -399,13 +399,13 @@
 													</div>
 													<div class="mt-3" style="border: 1px solid gray; min-height: 400px;">
 		
-														<div id="HrList">
 														<div class="row d-flex m-0 p-o" style="border-bottom:1px solid black; background-color:#eaecf4;">
 															<div class="col-3 text-primary">개발 인력 성명</div>
 															<div class="col-3 text-primary">작업 할당</div>
 															<div class="col-3 text-primary">인력 투입일</div>
 															<div class="col-3 text-primary">인력 투입종료일</div>
 														</div>
+														<div class="mt-2" id="HrList">
 															<div class="row mb-1" id="dvleaderHr">
 																<c:if test="${dlist.sttsNo == 5}">
 																	<c:forEach items="${hrlist}" var="devlist" >
@@ -419,10 +419,7 @@
 														</div>
 													</div>
 													<div class="text-right my-3">
-														<c:if test="${dlist.sttsNo != 5}">
-															<button type="submit" class="btn btn-primary">저장</button>
-														</c:if>
-														<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/develop/list'">목록</button>
+														<button type="submit" class="btn btn-primary">저장</button>
 													</div>
 												</div>
 											</div>

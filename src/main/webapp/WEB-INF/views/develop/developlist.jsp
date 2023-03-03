@@ -126,11 +126,21 @@
                                 	<!-- 검색 -->
                                 	
                             		<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-			                			<h6 class="m-0 font-weight-bold text-primary">SR 개발 목록</h6>
+			                			<h5 class="m-0 font-weight-bold text-primary mb-1">SR 개발 목록</h5>
 			                			<div class="d-sm-flex justify-content-end">
 			                				<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
 			                  			</div>
 			                		</div>
+			                		<div>
+										<input type="hidden" id="userNo" value="${sessionScope.loginUser.userNo}">
+										<input type="hidden" id="userType" name="userType" value="${sessionScope.loginUser.userType}">
+										<div class="custom-control custom-switch px-5 ml-2" style="width:200px; border-radius:3px; background-color:#eaecf4;">
+											<input type="checkbox" class="custom-control-input" id="searchMySR" onclick="developList(1)"/>
+											<label class="custom-control-label" for="searchMySR">
+												<span class="text-primary">담당 SR 조회 <i class="fas fa-search fa-sm mx-2"></i></span>
+											</label>
+										</div>
+									</div>	
 			                			<script>
 											function selectAll(selectAll) {
 												const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -178,7 +188,15 @@
 												var srDevDp = $('#srDevDp').val();
 												var srRegStartDate = $('#startDate').val();
 												var srRegEndDate = $('#endDate').val();
+												var srCustNo =0;
+												var userType;
+												if($('#searchMySR').prop('checked')){
+													console.log("내 목록보기 체크");
+													srCustNo = $('#userNo').val();
+													userType = $('#userType').val();
+												} 
 												
+												console.log(srCustNo + " "+userType);
 												var srTtl = $('#keyword').val();
 												
 												if(srTtl !== "") {
@@ -186,7 +204,8 @@
 												};
 												
 												let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp: srDevDp,
-														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
+														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl,
+														srCustNo: srCustNo, userType: userType};
 												console.log(data);
 												
 												$.ajax({
