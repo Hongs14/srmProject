@@ -181,6 +181,7 @@
             s.SR_PRY AS "srPry",
             s.SR_STD AS "srStd",
             s.SR_CN AS "srCn",
+            s.SR_OPNN AS "srOpnn",
             u.USER_NM AS "userNm",
             u.USER_OGDP AS "userOgdp",
             u.USER_DP_NM AS "userDpNm",

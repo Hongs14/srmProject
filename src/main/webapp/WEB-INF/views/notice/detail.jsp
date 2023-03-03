@@ -141,7 +141,7 @@
 <!-- Row -->
 
 
-<div class="card mb-4">
+<div class="card mb-4 ajaxDetail">
 	<div class="card-header">
 		<div class="d-flex flex-row align-items-center justify-content-between">
 			<div>

@@ -14,8 +14,13 @@
   	<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
   	<!-- RuangAdmin Javascript -->
   	<script src="${pageContext.request.contextPath}/resources/js/ruang-admin.min.js"></script>
-  	
-  	
+  	<style type="text/css">
+  		.ajaxDetail span {
+        	white-space:normal !important;
+    }
+  	</style>
+
+    
   	<script>
   	$(document).ready(function () {
 	    $('#simple-date4 .input-daterange').datepicker({        
