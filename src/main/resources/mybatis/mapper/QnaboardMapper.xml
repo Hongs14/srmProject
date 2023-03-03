@@ -82,4 +82,8 @@
 	<delete id="deleteComment" parameterType="int">
 		DELETE FROM QSTN_COMMENT WHERE QSTN_CMNT_NO = #{qstnCmntNp}
 	</delete>
+	
+	<insert id="insertQSTN" parameterType="qstn">
+		INSERT INTO QSTN VALUES(QSTNNO_SEQ.NEXTVAL, #{userNo}, #{qstnTtl}, #{qstnCn}, 0, SYSDATE, #{sysNo})
+	</insert>
 </mapper>

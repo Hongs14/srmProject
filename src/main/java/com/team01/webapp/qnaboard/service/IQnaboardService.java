@@ -19,6 +19,8 @@ public interface IQnaboardService {
 	public void updateComment(QSTNComment qComment);
 	public void deleteComment(int qstnCmntNo);
 	
+	public void writeQSTN(QSTN qstn);
+	
 
 	
 }
