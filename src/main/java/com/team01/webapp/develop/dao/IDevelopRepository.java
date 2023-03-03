@@ -84,5 +84,14 @@ public interface IDevelopRepository {
 	public SrFile selectSrFile(int srFileNo);
 
 	public List<SrFile> selectSrFileList(String srNo);
+	
+	/**
+	 * @author		 정홍주
+	 * @param srNo	
+	 * @return		HR객체
+	 */
+	public List<HR> selectHrList(String srNo);
+
+	
 
 }
