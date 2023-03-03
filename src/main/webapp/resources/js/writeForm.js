@@ -82,8 +82,6 @@ function deleteFile(num) {
 /* ajax 처리 */
 function requestWrite() {
 	console.log("requestWrite");
-	console.log("end: "+end);
-	console.log("start: "+ start);
 	// 폼 데이터 담기
 	var form = document.querySelector("form");
     var formData = new FormData(form);
@@ -103,7 +101,7 @@ function requestWrite() {
     var srTtl = document.getElementById('srTtl').value;
     formData.append("srTtl",srTtl);
     
-    if($('#srStd').val() != ""){
+    if($('#srStd').val() !== ""){
     	var srStd = document.getElementById('srStd').value;
     	formData.append("srStd",srStd);
     }
@@ -165,7 +163,7 @@ function requestUpdate() {
     var srTtl = document.getElementById('srTtl').value;
     formData.append("srTtl",srTtl);
     
-    if($('#srStd').val() != ""){
+    if($('#srStd').val() !== ""){
     	var srStd = $('#srStd').val();
     	formData.append("srStd",srStd);
     }

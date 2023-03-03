@@ -61,7 +61,7 @@
 			</div>
 			<div class="row mb-2">
 					<label class=" font-weight-bold col-sm-2">SR 내용 </label> 
-					<textarea name="srCn" id="srCn" rows="10" class="form-control form-control-sm col-sm-10"><c:if test="${command eq 'update'}">${fn: replace(sr.srCn, "<br>","") } </c:if></textarea>
+					<textarea name="srCn" id="srCn" rows="10" class="form-control form-control-sm col-sm-10" wrap="hard"><c:if test="${command eq 'update'}">${fn: replace(sr.srCn, "<br>","") } </c:if></textarea>
 					
 			</div>
 			

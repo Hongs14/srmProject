@@ -15,7 +15,7 @@
 		<li class="breadcrumb-item active" aria-current="page">SR 요청상세</li>
 	</ol>
 </div>
-<div class="card mb-4">
+<div class="card mb-4 ajaxDetail">
 	<div>
 		<div class="mb-1 mt-5 px-5" style="max-width:850px">
  			<div class="my-2" id="sr_no">
@@ -75,7 +75,7 @@
 					<span class=" font-weight-bold">SR 내용: </span> 
 				</div>
 				<div class="col-sm-10 border border-light p-2" style="min-height: 320px;">
-					<span class="sr_content" > 
+					<span class="sr_content"> 
 						${fn: replace(sr.srCn, replaceChar, "") } 
 					</span> 
 				</div>

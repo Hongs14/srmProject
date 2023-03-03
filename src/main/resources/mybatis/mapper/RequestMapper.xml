@@ -181,8 +181,7 @@
                         AND hr.sr_no = s.sr_no
                         AND hr.user_no = #{userNo}
 				    </if>
-					
-			        ORDER BY s.SR_REG_DATE DESC
+			        ORDER BY DECODE(st.STTS_NO, 1, 2, 4, 5, 3, 7, 9, 8, 6) ASC, s.SR_REG_DATE DESC 
 			    )
 			    <![CDATA[
 				    WHERE ROWNUM <=#{end}
@@ -195,7 +194,7 @@
 	
 	<insert id="insertRequest" parameterType="sr">
 		INSERT INTO sr (sr_no, sr_cust_no, sys_no, sr_std, stts_no, sr_ttl, sr_cn, sr_reg_date) 
-		VALUES (#{srNo}, #{srCustNo}, #{sysNo}, #{srStd} ,#{sttsNo}, #{srTtl}, #{srCn}, SYSDATE)
+		VALUES (#{srNo}, #{srCustNo}, #{sysNo}, #{srStd,jdbcType=VARCHAR} ,#{sttsNo}, #{srTtl}, #{srCn}, SYSDATE)
 	</insert>
 	
 	<insert id="insertRequestFileUpload" parameterType="srFile">
@@ -249,8 +248,8 @@
 		SET 
 			SR_REG_DATE=SYSDATE,
 			SR_TTL=#{srTtl},
-			SR_CN=#{srCn}, 
-			SR_STD=#{srStd}
+			SR_CN=#{srCn},
+			SR_STD=#{srStd,jdbcType=VARCHAR}
 		WHERE 
 			SR_NO=#{srNo}
 	</update>
