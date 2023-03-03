@@ -159,7 +159,7 @@
 					<if test="srTtl != ''">
 						AND  s.SR_TTL like #{srTtl}
 					</if>
-			       	ORDER BY s.SR_PRY, s.SR_REG_DATE DESC
+			       	ORDER BY DECODE(s.STTS_NO, 1, 2) ASC ,s.SR_PRY, s.SR_REG_DATE DESC
 			    )
 			    <![CDATA[
 				    WHERE ROWNUM <=#{endRowNo}

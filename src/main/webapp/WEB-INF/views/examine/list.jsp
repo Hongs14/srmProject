@@ -278,16 +278,25 @@
 									
 									function selectUnderReview() {
 										
-										var sysNoSelect = document.getElementById("sysNo");
+										var sysNo = "${sessionScope.loginUser.sysNo}";
+										
+										if ( $('#mySrWork').prop('checked') ) {
+											
+											sysNo = "${sessionScope.loginUser.sysNo}";
+											
+										}else{
+											sysNo="";
+										}
+										var sysNmSelect = document.getElementById("sysNm");
 										var sttsNoSelect = document.getElementById("sttsNo");
 										var userOgdpSelect = document.getElementById("userOgdp");
 										var userDpSelect = document.getElementById("userDpNm");
 										
-										var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].text;
+										var sysNm = sysNmSelect.options[document.getElementById("sysNm").selectedIndex].text;
 										var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
 										var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 										var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
-										
+
 										var srRegStartDate = document.getElementById("dateStart").value;
 										var srRegEndDate = document.getElementById("dateEnd").value;
 										var srTtl = document.getElementById("keyword").value;
@@ -304,7 +313,7 @@
 								  		
 									  	selectedEls.forEach((el) => {
 									  		data = {srNo : el.value , sttsNm : '검토중', srPry : '상', srReqSe : '개발(신규)', srOpnn : '',
-									  				sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm, 
+									  				sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm, 
 									  				srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl			
 									  		};
 									  		
@@ -323,15 +332,25 @@
 									}
 									
 									function selectreception() {
-										var sysNoSelect = document.getElementById("sysNo");
+										var sysNo = "${sessionScope.loginUser.sysNo}";
+										
+										if ( $('#mySrWork').prop('checked') ) {
+											
+											sysNo = "${sessionScope.loginUser.sysNo}";
+											
+										}else{
+											sysNo="";
+										}
+										var sysNmSelect = document.getElementById("sysNm");
 										var sttsNoSelect = document.getElementById("sttsNo");
 										var userOgdpSelect = document.getElementById("userOgdp");
 										var userDpSelect = document.getElementById("userDpNm");
 										
-										var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].text;
+										var sysNm = sysNmSelect.options[document.getElementById("sysNm").selectedIndex].text;
 										var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
 										var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 										var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
+
 										
 										var srRegStartDate = document.getElementById("dateStart").value;
 										var srRegEndDate = document.getElementById("dateEnd").value;
@@ -348,7 +367,7 @@
 								  		
 									  	selectedEls.forEach((el) => {
 									  		data = {srNo : el.value , sttsNm : '접수', srPry : '상', srReqSe : '개발(신규)', srOpnn : '',
-									  				sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm, 
+									  				sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm, 
 									  				srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl			
 									  		};
 									  		
