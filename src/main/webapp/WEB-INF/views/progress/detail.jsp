@@ -11,10 +11,14 @@ border-top-left-radius: 10px;
 border-top-right-radius: 10px;
 
 }
-#prog_tabs .nav-link.active{
-background-color:#406882;
-color:white;
-}
+	#prog_tabs .nav-link.active{
+	background-color:#406882;
+	color:white;
+	}
+
+	.ajaxDetail span {
+        white-space:normal !important;
+    }
 </style>
 <head>
 	<%@include file="/WEB-INF/views/common/head.jsp"%>
@@ -43,7 +47,7 @@ color:white;
 								</div>
 
 							</div>
-							<div class="card mb-4">
+							<div class="ajaxDetail card mb-4">
 								<div class="card-header mt-2">
 									<h6 class="m-0 font-weight-bold text-primary"> <i class="fab fa-fw fa-wpforms"></i> SR 검토 상세</h6>
 								</div>
@@ -52,32 +56,32 @@ color:white;
 									<div class="container-fluid">
 										<!-- 번호/구분 -->
 										<div class="row">
-											<div class="col-2">
+											<div class="col-3">
 												<span class="font-weight-bold">SR 번호 : </span>
 											</div>
-											<div class="col-4">
+											<div class="col-3">
 												<span> ${progressDetail.srNo}</span>
 											</div>
-											<div class="col-2">
+											<div class="col-3">
 												<span class="font-weight-bold">요청 구분 : </span>
 											</div>
-											<div class="col-4">
+											<div class="col-3">
 												<span> ${progressDetail.srTypeNm}</span>
 											</div>
 										</div>
 										<hr/>
 										<!-- 시스템 구분/업무 구분 -->
 										<div class="row">
-											<div class="col-2">
-												<span class="font-weight-bold">시스템 구분 : </span>
+											<div class="col-3">
+												<span class="font-weight-bold">시스템 구분: </span>
 											</div>
-											<div class="col-4">
+											<div class="col-3">
 												<span class="pl-4"> ${progressDetail.sysNm}</span>
 											</div>
-											<div class="col-2">
-												<span class="font-weight-bold">진행 상태 : </span>
+											<div class="col-3">
+												<span class="font-weight-bold">진행 상태: </span>
 											</div>
-											<div class="col-4">
+											<div class="col-3">
 												<span class="pl-1">  ${progressDetail.sttsNm}</span>
 											</div>
 										</div>
@@ -85,27 +89,27 @@ color:white;
 										<!-- 요청팀/요청자 -->
 										<div class="row">
 											<div class="col-6">
-												<span class="font-weight-bold ">요청 팀 : </span><span>${progressDetail.userDpNm}</span>
+												<span class="font-weight-bold ">요청 팀: </span><span>${progressDetail.userDpNm}</span>
 											</div>
 											<div class="col-6">
-												<span class="font-weight-bold ">요청자 : </span><span>${progressDetail.requesterNm}</span>
+												<span class="font-weight-bold ">요청자: </span><span>${progressDetail.requesterNm}</span>
 											</div>
 										</div>
 										<br/>
 										<!-- 등록일/ 완료 예정 일 -->
 										<div class="row">
 											<div class="col-6">
-												<span class="font-weight-bold ">등록일 : </span><span>${progressDetail.srRegDate}</span>
+												<span class="font-weight-bold ">등록일: </span><span>${progressDetail.srRegDate}</span>
 											</div>
 											<div class="col-6">
-												<span class="font-weight-bold ">완료 예정일 : </span><span>${progressDetail.srDdlnDate}</span>
+												<span class="font-weight-bold ">완료 예정일: </span><span>${progressDetail.srDdlnDate}</span>
 											</div>
 										</div>
 										<br/>
 										<!-- SR 제목 -->
 										<div class="row">
 											<div class="col-2">
-												<span class="font-weight-bold">SR 제목 : </span>
+												<span class="font-weight-bold">SR 제목: </span>
 											</div>
 											<div class="col-10">
 												<span> ${progressDetail.srTtl}</span>
@@ -114,10 +118,10 @@ color:white;
 										<br>
 										<!-- 관련 근거(목적) -->
 										<div class="row">
-											<div class="col-3">
-												<span class="font-weight-bold">관련근거(목적) : </span>
+											<div class="col-4">
+												<span class="font-weight-bold">관련근거(목적): </span>
 											</div>
-											<div class="col-9">
+											<div class="col-8">
 												<span>${progressDetail.srStd}</span>
 											</div>
 										</div>

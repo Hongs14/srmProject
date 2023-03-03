@@ -37,30 +37,25 @@
 					<th>산출물</th>
 				</tr>
 			</thead>
+			<tbody>
 			<c:forEach var="list" items="${progressRateList}">
 				<tr>
 					<c:if test="${list.progType != 5 && list.progType != 6}">
-						<th>
-							<a onclick="progressRateAdd(${list.progNo})" data-toggle="modal" data-target="#progressRateModal">
+						<td>
+							<a onclick="progressRateAdd('${list.progNo}')" data-toggle="modal" data-target="#progressRateModal">
 								${list.progTypeNm}
 							</a>
-						</th>
-						<th>
-							<div class="input-daterange input-group input-group-sm justify-content-center" style="width:110px">
-								<input type="text" value="${list.progStartDate}" class="a input-sm form-control form-control-sm" id="start-${list.progNo}"/>
-							</div>
-						</th>
-						<th>
-							<div class="input-daterange input-group input-group-sm justify-content-center" style="width:110px">
-								<input type="text" value="${list.progEndDate}" class="a input-sm form-control form-control-sm" id="end-${list.progNo}"/>
-							</div>
-						</th>
-						<th>
-							<div class="input-daterange input-group input-group-sm justify-content-center">
-								<input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="width:50px" value="${list.progRate}" min="0" class="input-sm form-control form-control-sm" id="rate-${list.progNo}"/>
-							</div>
-						</th>
-						<th>
+						</td>
+						<td class="input-daterange p-3" style="width:170px;">
+							<input type="text" value="${list.progStartDate}" class="a form-control form-control-sm" id="start-${list.progNo}"/>
+						</td>
+						<td class="input-daterange p-3" style="width:170px;">
+							<input type="text" value="${list.progEndDate}" class="a form-control form-control-sm" id="end-${list.progNo}"/>
+						</td>
+						<td class="input-daterange p-3" style="width:100px;">
+							<input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="${list.progRate}" min="0" class="form-control form-control-sm" id="rate-${list.progNo}"/>
+						</td>
+						<td>
 							<c:if test="${list.progressFile[0].progFileNo != null}">
 								<div class="row d-flex flex-column text-left">
 									<c:forEach var="fileList" items="${list.progressFile}">
@@ -71,7 +66,7 @@
 									</c:forEach>
 								</div>
 							</c:if>
-						</th>
+						</td>
 					</c:if>
 					<c:if test="${list.progType == 5 || list.progType == 6}">
 						<th>
@@ -100,6 +95,7 @@
 					</c:if>
 				</tr>
 			</c:forEach>
+			</tbody>
 		</table>
 	<!-- 모달 창 -->
 	<div class="modal fade" id="progressRateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
@@ -183,7 +179,7 @@
 		var progressArr = new Array();
 		
 		<c:forEach var="list" items="${progressRateList}" end="3">
-			progNo = ${list.progNo}
+			progNo = "${list.progNo}"
 			
 			var progStartDate = document.getElementById("start-${list.progNo}").value;
 			var progEndDate = document.getElementById("end-${list.progNo}").value;
@@ -191,7 +187,6 @@
 			
 			var data = {progNo : progNo, progStartDate : progStartDate, progEndDate : progEndDate, progRate : progRate}
 			progressArr.push(data);
-			
 		</c:forEach>
 		var srNo = "${srNo}"
 		
@@ -212,11 +207,11 @@
 		
 		if(choice == 1) {
 			<c:forEach var="list" items="${progressRateList}" begin="4" end="4">
-				progNo = ${list.progNo}
+				progNo = "${list.progNo}"
 			</c:forEach>
 		} else {
 			<c:forEach var="list" items="${progressRateList}" begin="5" end="5">
-				progNo = ${list.progNo}
+				progNo = "${list.progNo}"
 			</c:forEach>
 		}
 		
