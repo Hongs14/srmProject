@@ -89,7 +89,9 @@
 				                			</div>
 		                				</div>
 		                				<div class="col-1">
-		                			
+		                					<div class="input-group-append float-right">
+												<button class="btn btn-outline-warning btn-sm" type="button" onclick="examineListReset(1)" >초기화 </button>
+											</div>
 		                				</div>
 		                			</div>
 		                			<div class="row text-right">
@@ -236,7 +238,55 @@
 												});
 											}
 											
-											
+											function examineListReset(pageNo) {
+												console.log(pageNo);
+
+												var sysNo = "${sessionScope.loginUser.sysNo}";
+												
+												if ( $('#mySrWork').prop('checked') ) {
+													
+													sysNo = "${sessionScope.loginUser.sysNo}";
+													
+												}else{
+													sysNo="";
+												}
+												
+												var sysNm = "전체";
+												var sttsNo = "0";
+												var userOgdp = "전체";
+												var userDpNm = "전체";
+
+												var srRegStartDate = "";
+												var srRegEndDate = "";
+												
+												var srTtl = "";
+												
+												if(srTtl !== "") {
+													srTtl = "%" + srTtl + "%";
+												}
+												
+												console.log(sysNo);
+												console.log(sttsNo);
+												console.log(srTtl);
+												console.log(userOgdp);
+												console.log(userDpNm);
+												console.log(srRegStartDate);
+												console.log(srRegEndDate);
+												
+												let data = {sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
+														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
+												
+												console.log(data);
+												
+												$.ajax({
+													url : "filter/"+pageNo,
+													method : "post",
+													data : JSON.stringify(data),
+													contentType: "application/json; charset=UTF-8"
+												}).done((data) => {
+													window.location.href = "/webapp/examine/list";
+												});
+											}
 										</script>
 	                				</div>
 	               				</form>

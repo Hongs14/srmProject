@@ -19,7 +19,7 @@
 		<div class="mb-1 mt-5 px-5" style="max-width:1050px">
  			<form method="post" action="detail">
 	 			<div class="my-2">
-		  			<span class="text-primary font-weight-bold">SR N0.</span> 
+		  			<span class="text-primary font-weight-bold">SR No.</span> 
 		  			<span>${examine.srNo}</span>
 		  			<input type="hidden" id="srNo" name="srNo" value="${examine.srNo}">
 	 			</div>
@@ -93,7 +93,7 @@
 	   			<div class="row mb-2 mr-0">
 	   				<div class="col-12">
 				   		<span>검토 의견</span>
-				   		<textarea class="form-control" rows="3" id="srOpnn" name="srOpnn"></textarea>
+				   		<textarea class="form-control" rows="3" id="srOpnn" name="srOpnn">${examine.srOpnn}</textarea>
 	   				</div>
 	   			</div>
 				<!-- 하단 버튼들 -->
