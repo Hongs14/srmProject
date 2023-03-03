@@ -5,7 +5,7 @@
           <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
-         <!--  <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -73,7 +73,7 @@
                 </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
-            </li> -->
+            </li>
             <li class="nav-item dropdown no-arrow ml-auto">
              <button class="btn" style="border: 1px solid white; color:white; cursor: default;" >
              	<c:if test="${sessionScope.loginUser.userType eq '고객사'}">고객사</c:if>
