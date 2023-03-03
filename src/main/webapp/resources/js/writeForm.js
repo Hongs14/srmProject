@@ -81,19 +81,22 @@ function deleteFile(num) {
 
 /* ajax 처리 */
 function requestWrite() {
+	console.log("requestWrite");
+	console.log("end: "+end);
+	console.log("start: "+ start);
 	// 폼 데이터 담기
 	var form = document.querySelector("form");
     var formData = new FormData(form);
     for (var i = 0; i < filesArr.length; i++) {
         // 삭제되지 않은 파일만 폼데이터에 담기
         if (!filesArr[i].is_delete) {
-        	console.log("돌아감");
+        	console.log("삭제되지 않은 파일 담기");
         	console.log(filesArr[i]);
             formData.append("requestMFile", filesArr[i]);
         }
     }
     var srRegDate=document.getElementById('srRegDate').value;
-    
+    console.log("srRegDate: "+ srRegDate);
     var sysNm=document.getElementById('sysNm').value;
     formData.append("sysNm",sysNm);
     
@@ -115,11 +118,12 @@ function requestWrite() {
 		type: "POST",
 		enctype: 'multipart/form-data',	// 필수
 		url: 'write',
-		data: formData,		// 필수
+		data: formData,	// 필수
 		processData: false,	// 필수
 		contentType: false	// 필수
     }).done((data) => {
     	$('#colNo2').html(data);
+    	alret("전송완료");
     });
     
 }

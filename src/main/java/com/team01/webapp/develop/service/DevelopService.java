@@ -110,6 +110,12 @@ public class DevelopService implements IDevelopService{
 		return srDdto;
 	}
 	
+	@Override
+	public List<HR> selectHrList(String srNo) {
+		List<HR> hrlist = developRepository.selectHrList(srNo);
+		return hrlist;
+	}
+	
 	/** 파일 얻기
 	* @author 			정홍주
 	* @param srFileNo	첨부파일 번호
@@ -168,6 +174,12 @@ public class DevelopService implements IDevelopService{
 		return list;
 	}
 	
+
+	/** 개발계획 및 인력 추가 
+	 * @author 			 	정홍주
+	 * @param updateDevelop	SR개발관리 업데이트
+	 * @return				개발 담당자의 정보 가져오기
+	 */
 	@Transactional
 	public int updateDevelopSr(UpdateDevelop updateDevelop) {
 		try {

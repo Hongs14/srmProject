@@ -98,11 +98,12 @@ public class DevelopController {
 	public String getDevelopDetail(@PathVariable String srNo, Model model) {
 		List<Users> devList = developService.getDevelopList();
 		DevelopDto srDetail = developService.getDetail(srNo);
-		
+		List<HR> hrlist = developService.selectHrList(srNo);
+	
 		model.addAttribute("dlist", srDetail);
-		log.info(srDetail);
 		model.addAttribute("devlist", devList);
-		log.info("SR개발관리 상세보기");
+		log.info("devList"+devList);
+		model.addAttribute("hrlist",hrlist);
 		
 		return "develop/developdetail";
 	}
@@ -201,43 +202,16 @@ public class DevelopController {
 	  }
 	
 	/**
-	 * @author				 정홍주
-	 * @param srDevelop		서비스에 보내줄 DTO객체 주입
-	 * @return				
-	 *//*
-	@PostMapping(value="/register", produces="application/json; charset=UTF-8")
-	@ResponseBody
-	public int developPlan(@RequestBody UpdateDevelop updateDevelop, Model model) {
-		int result = developService.updateDevelopSr(updateDevelop);
-		log.info("SR개발관리 계획 등록");
-		return result;
-	}*/
-	
-	
-	
-	 
-	 /**
-	 * @author				정홍주
-	 * @param srNo			
-	 * @param userNo		
-	 * @param hrLeader
-	 * @param taskNo
-	 * @param hrStartDate
-	 * @param hrEndDate
+	 * @author 					정홍주
+	 * @param updateDevelop		
 	 * @return
 	 */
-	  @PostMapping(value="/updateHr")
-	    public String insertHrList(UpdateDevelop updateDevelop){
-		  log.info(updateDevelop);
-		  int result = developService.updateDevelopSr(updateDevelop);
-//	       List<HR> listHR = new ArrayList<>();
-//	   
-//	       log.info(listHR);
-//	       int result = developService.insertHrList(listHR);
-//	       int result2 = developService.insertProgress(); ///////////////////PROGRESS 삽입
-//	       log.info(result);
-	       log.info("HR등록");
-	       return "redirect:/develop/list/1";
-	    }
+	@PostMapping(value="/updateHr")
+    public String insertHrList(UpdateDevelop updateDevelop){
+		log.info(updateDevelop);
+		int result = developService.updateDevelopSr(updateDevelop);
+		log.info("HR등록");
+		return "redirect:/develop/list/1";
+    }
 
 }
