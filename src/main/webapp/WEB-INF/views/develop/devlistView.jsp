@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="row">
 	<div class="col-1">선택</div>
@@ -21,8 +21,8 @@
 		<c:if test="${users.devList.size() != 0}">
 			<c:forEach var="devlist" items="${users.devList}">
 				<div class="row">
-					<div>${devlist.hrStartDate}</div>
-					 ~<div>${devlist.hrEndDate}</div>
+					<div><fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy-MM-dd"/></div>
+					 ~<div><fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy-MM-dd"/></div>
 					&nbsp;<div>${devlist.srTtl}</div>
 					&nbsp;/&nbsp;<div>${devlist.taskNm}</div>
 				</div>

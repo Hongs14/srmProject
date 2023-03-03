@@ -37,6 +37,7 @@ public class DevelopDto {
 	private String userDpNm;
 	private String sttsNm;
 	private String sysNm;
+	private String userType;
 
 	private Date srRegStartDate;
 	private Date srRegEndDate;

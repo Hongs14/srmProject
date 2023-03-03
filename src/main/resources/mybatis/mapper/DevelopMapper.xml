@@ -33,6 +33,10 @@
 		<if test="srTtl != ''">
 			AND  sr.SR_TTL like #{srTtl}
 		</if>
+		<if test="srCustNo != 0">
+			AND U.USER_TYPE = #{userType}
+			AND sr_Cust_No = #{srCustNo}
+		</if>
 	</select>
 	
 	<!-- 
@@ -60,15 +64,16 @@
 			        sr_del_yn AS "srDelYn", 
 			        sr_type AS "srType",
 			        sr_dev_dp as "srDevDp",
+			        user_type AS "userType",
 			        user_nm AS "userNm", 
 			        user_ogdp AS "userOgdp", 
 			        user_dp_nm AS "userDpNm"
 			from(
 			    select rownum as rnum, sr_no, sr_cust_no, sys_no,sys_nm, stts_no, stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
-			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr_type, sr_dev_dp, user_nm, user_ogdp, user_dp_nm
+			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr_type, sr_dev_dp, user_type, user_nm, user_ogdp, user_dp_nm
 			    from(
 			      select  sr_no, sr_cust_no, sr.sys_no, system.sys_nm, sr.stts_no, sr_stts.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
-			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr.sr_type,  sr.sr_dev_dp, user_nm, user_ogdp, user_dp_nm
+			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr.sr_type,  sr.sr_dev_dp, user_type, user_nm, user_ogdp, user_dp_nm
 			      from sr, sr_type, sr_stts, users, system
 			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no 
 			      	<if test="sttsNo == 4 or sttsNo == 5">
@@ -94,6 +99,11 @@
 					<if test="srTtl != ''">
 						AND  sr.SR_TTL like #{srTtl}
 					</if>
+					<if test="srCustNo != 0">
+						AND sr_cust_no= #{srCustNo}
+						AND USERS.USER_TYPE = #{userType}
+					</if>
+					
 			      	ORDER BY SR_STTS.STTS_NO, SR.SR_PRY, SR.SR_REG_DATE
 			    ) aa
 				<![CDATA[
