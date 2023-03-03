@@ -65,7 +65,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/home/systemMiniView", method = RequestMethod.GET)
+	@RequestMapping(value = "/systemMiniView", method = RequestMethod.GET)
 	public String getSystemMiniView(HttpSession session, Model model) {
 		int userNo = (int) session.getAttribute("userNo");
 		String userType = (String) session.getAttribute("userType");
