@@ -9,7 +9,7 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
+                 <!-- <i class="fas fa-search fa-fw"></i>  -->
               </a>
               <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                 aria-labelledby="searchDropdown">
@@ -19,7 +19,7 @@
                       aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
+                        <!-- <i class="fas fa-search fa-sm"></i> -->
                       </button>
                     </div>
                   </div>
@@ -31,7 +31,7 @@
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
-                <span class="badge badge-danger badge-counter">3+</span>
+               <span class="badge badge-danger badge-counter">3</span>
               </a>
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="alertsDropdown">
@@ -74,7 +74,7 @@
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
             </li>
-            <li class="nav-item dropdown no-arrow ml-auto">
+            <li class="nav-item dropdown no-arrow mt-3">
              <button class="btn" style="border: 1px solid white; color:white; cursor: default;" >
              	<c:if test="${sessionScope.loginUser.userType eq '고객사'}">고객사</c:if>
              	<c:if test="${sessionScope.loginUser.userType eq '개발자'}">개발자</c:if>
@@ -84,7 +84,7 @@
             
             <div class="topbar-divider d-none d-sm-block"></div>
            
-            <li class="dropdown no-arrow row">
+            <li class="dropdown no-arrow row mt-2">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img class="img-profile rounded-circle" src="${pageContext.request.contextPath}/resources/images/user.png" style="max-width: 30px; border:0px; ">
                 <c:if test="${!empty sessionScope.loginUser.userId}">
@@ -105,7 +105,7 @@
                 </a>
               </div>
             </li>
-            <li>
+            <li class="mt-3">
             	<c:if test="${empty sessionScope.loginUser.userId}">
             	  <a class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/user/login">로그인</a>
               	</c:if>

@@ -104,7 +104,7 @@
 						            <div class="card-header px-5 d-flex flex-row align-items-center justify-content-between">
 			                			<h6 class="m-0 font-weight-bold text-primary">질문 목록</h6>
 			                			<div class="d-sm-flex justify-content-end">
-			                				<a href="${pageContext.request.contextPath}/qna/write" class="btn btn-outline-primary">Q&A 등록하기</a>
+			                				<a href="${pageContext.request.contextPath}/qna/write" class="btn btn-outline-primary btn-sm">Q&A 등록하기</a>
 			                  			</div>
 			                		</div> 
 			                		
