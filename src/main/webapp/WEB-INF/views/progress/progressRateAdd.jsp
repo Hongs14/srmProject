@@ -128,7 +128,7 @@
 		        }
 		    }
 		    
-		    formData.append("progNo", ${progress.progNo});
+		    formData.append("progNo", "${progress.progNo}");
 		    
 		    formData.append("srNo", "${progress.srNo}");
 		    

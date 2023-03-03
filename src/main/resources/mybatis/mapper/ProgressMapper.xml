@@ -418,12 +418,11 @@
 	<update id="updateProgressRate" parameterType="progress">
 		UPDATE PROGRESS
 		SET
-		    PROG_START_DATE = #{progStartDate},
-		    PROG_END_DATE = #{progEndDate},
+		    PROG_START_DATE = #{progStartDate, jdbcType=VARCHAR},
+		    PROG_END_DATE = #{progEndDate, jdbcType=VARCHAR},
 		    PROG_RATE = #{progRate}
 		WHERE PROG_NO = #{progNo}
 	</update>
-	
 	<!-- 
 		진척율 파일 정보 조회
 		작성자 : 김태희
