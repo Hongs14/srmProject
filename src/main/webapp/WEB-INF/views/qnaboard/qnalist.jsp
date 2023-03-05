@@ -160,7 +160,7 @@
 													<a href='<c:url value="/qna/list?pageNo=${pager.endPageNo+1}"/>' type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
 								
 												</c:if>
-												<c:if test="${pager.pageNo < pager.totalPageNo }">
+												<c:if test="${pager.pageNo < pager.totalPageNo && paer.totalPageNo > 5}">
 													<a href='<c:url value="/qna/list?pageNo=${pager.totalPageNo}"/>' type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
 												</c:if>
 											</div>

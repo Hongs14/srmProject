@@ -78,6 +78,7 @@
 	    <i class="fas fa-fw fa-sticky-note"></i>
 	    <span>QnA게시판</span>
 	  </a>
+	
 	</li>
 	<li class="version my-5" id="version-ruangadmin"></li>
     </ul>
