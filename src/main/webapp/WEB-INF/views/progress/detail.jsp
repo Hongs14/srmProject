@@ -70,7 +70,7 @@ border-top-right-radius: 10px;
 												<span class="font-weight-bold">시스템 구분: </span><span> ${progressDetail.sysNm}</span>
 											</div>
 											<div class="col-6">
-												<span class="font-weight-bold">진행 상태: </span><span>  ${progressDetail.sttsNm}</span>
+												<span class="font-weight-bold">진행 상태: </span><span> ${progressDetail.sttsNm}</span>
 											</div>
 										</div>
 										<br/>
