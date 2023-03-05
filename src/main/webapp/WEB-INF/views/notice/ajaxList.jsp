@@ -70,10 +70,15 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	<c:if test="${pager.totalRows != 0}">
-		<div class="pager d-flex justify-content-center my-3">
-			<div class="pagingButtonSet d-flex justify-content-center">
-				<c:if test="${pager.pageNo > 1}">
+	<div class="pager d-flex justify-content-center my-3">
+		<div class="pagingButtonSet d-flex justify-content-center">
+			<c:if test="${pager.totalRows < 1}">
+				<h6 class="m-3">
+					게시글이 존재하지 않습니다.
+				</h6>
+			</c:if>
+			<c:if test="${pager.totalRows >=1}">
+				<c:if test="${pager.pageNo > 5}">
 					<a onclick="searchNoticeList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
 				</c:if>
 				<c:if test="${pager.groupNo > 1}">
@@ -82,7 +87,7 @@
 
 				<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
 					<c:if test="${pager.pageNo != i}">
-						<a onclick="searchNoticeList(${i})" type="button" class="btn btn-outline-success btn-sm m-1">${i}</a>
+						<a onclick="searchNoticeList(${i})" type="button" class="btn btn-outline-info btn-sm m-1">${i}</a>
 					</c:if>
 					<c:if test="${pager.pageNo == i}">
 						<a onclick="searchNoticeList(${i})" type="button" class="btn btn-primary btn-sm m-1">${i}</a>
@@ -93,12 +98,12 @@
 					<a onclick="searchNoticeList(${pager.endPageNo+1})" type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
 
 				</c:if>
-				<c:if test="${pager.pageNo < pager.totalPageNo }">
+				<c:if test="${pager.totalPageNo > 5 }">
 					<a onclick="searchNoticeList(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
 				</c:if>
-			</div>
+			</c:if>
 		</div>
-	</c:if>
+	</div>
 </div>
 
 
