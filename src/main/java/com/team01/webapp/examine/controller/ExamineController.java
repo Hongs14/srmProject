@@ -145,7 +145,7 @@ public class ExamineController {
 		response.setContentType(contentType);
 		
 		//응답 바디에 파일 데이터 실기
-		String filePath = "C:/OTI/uploadfiles/examine/"+srFile.getSrNo()+"/"+savedName;
+		String filePath = "C:/OTI/uploadfiles/request/"+srFile.getSrNo()+"/"+savedName;
 		File file = new File(filePath);
 		log.info("file: "+ file);
 				

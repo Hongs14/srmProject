@@ -71,7 +71,7 @@
                     Spending Alert: We've noticed unusually high spending for your account.
                   </div>
                 </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                <a class="dropdown-item text-center small text-gray-500" href="${pageContext.request.contextPath}/alarm/list">Show All Alerts</a>
               </div>
             </li>
             <li class="nav-item dropdown no-arrow mt-3">

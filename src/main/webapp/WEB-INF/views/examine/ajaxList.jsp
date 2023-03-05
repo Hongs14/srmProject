@@ -27,8 +27,8 @@
 						<td>
 							<input type="checkbox" name="examineCheck" value="${examine.srNo}" onclick='checkSelectAll(this)'>
 						</td>
-						<td onclick ="getSrDetail('${examine.srNo}')">${examine.srNo}</td>
-						<td onclick ="getSrDetail('${examine.srNo}')">${examine.srTtl}</td>
+						<td onclick ="getSrDetail('${examine.srNo}')" style="cursor:pointer;">${examine.srNo}</td>
+						<td onclick ="getSrDetail('${examine.srNo}')" style="cursor:pointer;">${examine.srTtl}</td>
 						<td>${examine.sysNm}</td>
 						<td>${examine.userNm}</td>
 						<td>${examine.userOgdp}</td>
