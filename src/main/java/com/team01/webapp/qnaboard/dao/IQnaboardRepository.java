@@ -22,7 +22,6 @@ public interface IQnaboardRepository {
 	
 	public void updateComment(QSTNComment qComment);
 	public void deleteComment(int qstnCmntNo);
-	public void insertQSTN(QSTN qstn);
 	
 
 	

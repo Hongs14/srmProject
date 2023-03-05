@@ -21,7 +21,6 @@ public interface IQnaboardService {
 	public int writeQSTN(QSTN qstn);
 
 	
-	public void writeQSTN(QSTN qstn);
 	
 
 	

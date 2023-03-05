@@ -82,14 +82,7 @@ public class QnaController {
 		log.info("Qna작성하기");
 		return "qnaboard/qnawrite";
 	}
-	//QNA작성하기
-	@PostMapping("/write")
-	public String writeQna(QSTN qstn, Model model) {
-		log.info("Qna작성하기");
-		qnaboardService.writeQSTN(qstn);
-		return "redirect:/qna/list";
-	}
-	
+
 	@PostMapping("/write")
 	public String writeQna(QSTN qstn, Model model) {
 		log.info("Qna작성하기");

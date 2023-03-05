@@ -86,10 +86,5 @@ public class QnaboardService implements IQnaboardService {
 		
 	}
 
-	@Override
-	public void writeQSTN(QSTN qstn) {
-		qnaboardRepository.insertQSTN(qstn);
-	}
-
 	
 }

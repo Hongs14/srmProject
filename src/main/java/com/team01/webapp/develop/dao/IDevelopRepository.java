@@ -95,6 +95,6 @@ public interface IDevelopRepository {
 	public Users selectLeader(String srNo);
 	
 	public int checkHr(String srNo);
-	public int deleteHr(@Param("srNo") String srNo);
+	public int deleteHr(String srNo);
 
 }
