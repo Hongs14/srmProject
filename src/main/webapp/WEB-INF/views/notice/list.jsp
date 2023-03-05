@@ -22,14 +22,15 @@
 
     
   	<script>
-  	$(document).ready(function () {
-	    $('#simple-date4 .input-daterange').datepicker({        
-	        format: 'yyyy/mm/dd',        
-	        autoclose: true,     
-	        todayHighlight: true,   
-	        todayBtn: 'linked',
-	      });  
-  	});
+	  	$(document).ready(function () {
+		    $('#simple-date4 .input-daterange').datepicker({        
+		        format: 'yyyy/mm/dd',        
+		        autoclose: true,     
+		        todayHighlight: true,   
+		        todayBtn: 'linked',
+		      });  
+	  	});
+	  	
   	</script>
   	
 </head>
@@ -72,7 +73,7 @@
 	       									<div class="form-group row" id="simple-date4" >
 	  											<div class="input-daterange input-group input-group-sm text-right">
 	      											<label for="start" class="col-sm-4 col-form-label-sm">조회기간</label>
-	         										<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart" value="${notice.startDate}"/>
+	         										<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart" value=""/>
 	               									<div class="input-group-prepend">
 	               										<span class="input-group-text" style="height:31px;">~</span>
 	           										</div>
@@ -176,8 +177,24 @@
 				<script>
 					$(document).ready(function () {
 						console.log("시작");
-						var startDate = document.getElementById("dateStart").value;
-						var endDate = document.getElementById("dateEnd").value;
+						
+						let today = new Date();   
+						
+					  	let year = today.getFullYear(); // 년도
+					  	let month = today.getMonth() + 1;  // 월
+					  	let date = today.getDate();  // 날짜
+					  	
+					  	var defaltStartDate = (year + '/' + (month-2) + '/' + date);
+					  	var defaltEndDate = (year + '/' + month + '/' + date);
+					  	
+					  	console.log(defaltStartDate);
+					  	console.log(defaltEndDate);
+					  	
+					  	document.getElementById("dateStart").value = defaltStartDate;
+					  	document.getElementById("dateEnd").value = defaltEndDate;
+					  	
+					  	var startDate = document.getElementById("dateStart").value;
+					  	var endDate = document.getElementById("dateEnd").value;
 						
 						var sysNo = "${sysNo}";
 						
@@ -204,6 +221,7 @@
 							$("#noticeList").html(data)
 						});
 					});
+					
 					
 					function searchNoticeList(pageNo) {
 						console.log(pageNo);
@@ -237,8 +255,24 @@
 					}
 					
 					function nTodayClick(pageNo){
-						var startDate = '';
-						var endDate = '';
+						
+						let today = new Date();   
+						
+					  	let year = today.getFullYear(); // 년도
+					  	let month = today.getMonth() + 1;  // 월
+					  	let date = today.getDate();  // 날짜
+					  	
+					  	var defaltStartDate = (year + '/' + month + '/' + date);
+					  	var defaltEndDate = (year + '/' + month + '/' + date);
+					  	
+					  	console.log(defaltStartDate);
+					  	console.log(defaltEndDate);
+					  	
+					  	document.getElementById("dateStart").value = defaltStartDate;
+					  	document.getElementById("dateEnd").value = defaltEndDate;
+					  	
+					  	var startDate = document.getElementById("dateStart").value;
+					  	var endDate = document.getElementById("dateEnd").value;
 						
 						var ntcToday = "당일";
 						var ntcWeek = null;
@@ -275,9 +309,28 @@
 					}
 					
 					function nWeekClick(pageNo){
-						var startDate = '';
-						var endDate = '';
+						let today = new Date();   
 						
+					  	let year = today.getFullYear(); // 년도
+					  	let month = today.getMonth() + 1;  // 월
+					  	let date = today.getDate();  // 날짜
+					  	
+					  	let day = new Date(new Date().setDate(date - 7));
+					  	let lastMonth = day.getMonth()+1;
+					  	let lastDay = day.getDate();
+					  	
+					  	var defaltStartDate = (year + '/' + lastMonth + '/' + lastDay);
+					  	var defaltEndDate = (year + '/' + month + '/' + date);
+					  	
+					  	console.log(defaltStartDate);
+					  	console.log(defaltEndDate);
+					  	
+					  	document.getElementById("dateStart").value = defaltStartDate;
+					  	document.getElementById("dateEnd").value = defaltEndDate;
+					  	
+					  	var startDate = document.getElementById("dateStart").value;
+					  	var endDate = document.getElementById("dateEnd").value;
+					  	
 						var ntcToday = null;
 						var ntcWeek = "1주일전";
 						var ntcMonth = null;
@@ -313,8 +366,23 @@
 					}
 					
 					function nMonthClick(pageNo){
-						var startDate = '';
-						var endDate = '';
+						let today = new Date();   
+						
+					  	let year = today.getFullYear(); // 년도
+					  	let month = today.getMonth() + 1;  // 월
+					  	let date = today.getDate();  // 날짜
+					  	
+					  	var defaltStartDate = (year + '/' + (month-1) + '/' + date);
+					  	var defaltEndDate = (year + '/' + month + '/' + date);
+					  	
+					  	console.log(defaltStartDate);
+					  	console.log(defaltEndDate);
+					  	
+					  	document.getElementById("dateStart").value = defaltStartDate;
+					  	document.getElementById("dateEnd").value = defaltEndDate;
+					  	
+					  	var startDate = document.getElementById("dateStart").value;
+					  	var endDate = document.getElementById("dateEnd").value;
 						
 						var ntcToday = null;
 						var ntcWeek = null;
