@@ -7,17 +7,22 @@ import com.team01.webapp.model.QSTNComment;
 import com.team01.webapp.util.Pager;
 
 public interface IQnaboardRepository {
-	public List<QSTN> selectQnaboardList(Pager pager);
-	public int totalRow();
-	public QSTN getDetail(int qstnNo);
-	public void writeComment(QSTNComment qComment);
+	public List<QSTN> selectQstnList(QSTN qstn);
+	public int totalRow(QSTN qstn);
+	public Pager returnPager(int pageNo, Pager pager, QSTN qstn);
+	public QSTN selectDetail(int qstnNo);
+	
+	public int insertQSTN(QSTN qstn);
+	public void	insertComment(QSTNComment qComment);
 	
 	public int countComment(int qstnNo);
 	
-	public List<QSTNComment> getCommentList(int qstnNo);
-	public QSTNComment getComment();
+	public List<QSTNComment> selectCommentList(int qstnNo);
+	public QSTNComment selectComment();
 	
 	public void updateComment(QSTNComment qComment);
 	public void deleteComment(int qstnCmntNo);
+	
+
 	
 }

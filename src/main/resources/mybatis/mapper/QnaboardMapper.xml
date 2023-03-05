@@ -25,11 +25,50 @@
 		]]>
 	</select>
 	
-	<select id="totalRow" resultType="int">
-		select count(*) from qstn
+	<select id="totalRow" parameterType="qstn" resultType="int">
+		SELECT COUNT(*)
+		FROM QSTN
+		<if test="startDate.equals('')">
+			<if test="qstnToday != null">
+				WHERE QSTN_WRT_DATE BETWEEN
+					TO_DATE(sysdate,'YY-MM-DD')
+					AND TO_DATE(sysdate,'YY-MM-DD')+1
+				AND SYS_NO = #{sysNo}
+			</if>
+			<if test="qstnWeek != null">
+				WHERE NTC_WRT_DATE BETWEEN
+					TO_DATE(sysdate-7,'YY-MM-DD')
+					AND TO_DATE(sysdate, 'YY-MM-DD')+1
+				AND SYS_NO = #{sysNo}
+			</if>
+			<if test="qstnMonth != null">
+				WHERE NTC_WRT_DATE BETWEEN
+					ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-1)
+					AND TO_DATE(sysdate,'YY-MM-DD')+1
+				AND SYS_NO = #{sysNo}
+			</if>
+			<if test="qstnToday == null and qstnWeek == null and qstnMonth == null">
+				WHERE QSTN_WRT_DATE BETWEEN
+	 				ADD_MONTHS(TO_DATE(sysdate,'YY-MM-DD'),-3)
+	            	AND TO_DATE(sysdate,'YY-MM-DD')+1
+	            AND SYS_NO = #{sysNo}
+	           	<if test="qstnTtl != ''">
+					AND QSTN_TTL like #{qstnTtl}
+				</if>
+			</if>
+		</if>
+		<if test="!startDate.equals('')">
+			WHERE QSTN_WRT_DATE BETWEEN
+				TO_DATE(#{startDate},'YY-MM-DD')
+				AND TO_DATE(#{endDate},'YY-MM-DD')+1
+			AND SYS_NO = #{sysNo}
+			<if test="ntcTtl != ''">
+				AND	QSTN_TTL like #{qstnTtl}
+			</if>
+		</if>
 	</select>
 	
-	<select id="getDetail" parameterType="int" resultType="qstn">
+	<select id="selectDetail" parameterType="int" resultType="qstn">
 		SELECT QSTN_NO AS "qstnNo", 
 				USER_NM AS "userNm", 
 				QSTN_TTL AS "qstnTtl", 
@@ -40,7 +79,7 @@
 		WHERE QSTN.USER_NO = USERS.USER_NO AND QSTN.QSTN_NO =#{qstnNo}
 	</select>
 	
-	<select id="getCommentList" parameterType="int" resultType="qstnComment">
+	<select id="selectCommentList" parameterType="int" resultType="qstnComment">
 		SELECT QSTN_CMNT_NO AS qstnCmntNo, 
 				QSTN_NO AS qstnNo, 
 				QC.USER_NO AS userNo, 
@@ -52,7 +91,13 @@
 		ORDER BY QSTN_CMNT_NO 
 	</select>
 	
-	<select id="getComment" resultType="qstnComment">
+	<insert id="insertQSTN" parameterType="qstn">
+		INSERT INTO QSTN VALUES(QSTNNO_SEQ.NEXTVAL, #{userNo}, #{qstnTtl}, #{qstnCn}, 0, SYSDATE, #{sysNo})
+	</insert>
+	
+	
+	
+	<select id="selectComment" resultType="qstnComment">
 		select rownum, QSTN_CMNT_NO AS qstnCmntNo, 
 				QSTN_NO AS qstnNo, 
 				aa.USER_NO AS userNo, 
@@ -70,7 +115,7 @@
 		SELECT COUNT(*) FROM QSTN_COMMENT WHERE QSTN_NO = #{qstnNo}
 	</select>
 	
-	<insert id="writeComment" parameterType="qstnComment">
+	<insert id="insertComment" parameterType="qstnComment">
 		INSERT INTO QSTN_COMMENT VALUES(QSTNCMNTNO_SEQ.NEXTVAL, #{qstnNo}, #{userNo}, #{qstnCmntCn}, SYSDATE)
 	</insert>
 	

@@ -116,6 +116,10 @@
 			});
 	
 		};
+		
+		function updateDevelop(){
+			
+		};
 	</script>
 
 </head>
@@ -232,7 +236,7 @@
 														</div>
 														<div class="col-sm-8">
 															<c:if test="${dlist.sttsNo != 5}">
-																<select onchange="selectDev(this);" id="srDLeader" class="form-control" required>
+																<select onchange="selectDev(this);" id="srDLeader" class="form-control noneUpdate" required>
 																	<option></option>
 																	<c:forEach var="users" items="${devlist}">
 																		<option value="${users.userNo}">${users.userNm}</option>
@@ -261,7 +265,7 @@
 															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">진행상태</h6>
 														</div>
 														<div class="col-sm-8">
-															<select id="sttsNo" name="sttsNo"  class="form-control">
+															<select id="sttsNo" name="sttsNo"  class="form-control noneUpdate">
 																<option>${dlist.sttsNm}</option>
 																<option value="5" selected>개발중</option>
 															</select>
@@ -418,9 +422,16 @@
 															</div>
 														</div>
 													</div>
-													<div class="text-right my-3">
-														<button type="submit" class="btn btn-primary">저장</button>
-													</div>
+													<c:if test="${dlist.sttsNo == 5}">
+														<div class="text-right my-3">
+															<button type="button" onclick="updateDevelop()" class="btn btn-primary">저장</button>
+														</div>
+													</c:if>
+													<c:if test="${dlist.sttsNo != 5}">
+														<div class="text-right my-3">
+															<button type="submit" class="btn btn-primary">저장</button>
+														</div>
+													</c:if>
 												</div>
 											</div>
 										</form>
@@ -476,10 +487,11 @@
 		let sttsNo = $("#sttsNo").val();
 		console.log(sttsNo);
 		if(sttsNo == '개발중' ){
-			$("input").attr("disabled", true);
-			$("select").attr("disabled", true);
-			$("textarea").attr("disabled", true);
 			
+			$(".noneUpdate").attr("disabled", true);
+		/* 	$("select").attr("disabled", true);
+			$("textarea").attr("disabled", true);
+			 */
 			
 			console.log(sttsNo);
 		}

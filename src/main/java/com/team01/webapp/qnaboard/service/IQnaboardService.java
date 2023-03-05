@@ -9,8 +9,8 @@ import com.team01.webapp.util.Pager;
 
 public interface IQnaboardService {
 	
-	public List<QSTN> getList(Pager pager);
-	public int countTotalRow();
+	public List<QSTN> getQstnList(Pager pager, QSTN qstn);
+	public Pager returnPage(int pageNo, Pager pager, QSTN qstn);
 	
 	public QSTN getDetail(int qstnNo);
 
@@ -18,6 +18,8 @@ public interface IQnaboardService {
 	public List<QSTNComment> getCommentList(int qstnNo);
 	public void updateComment(QSTNComment qComment);
 	public void deleteComment(int qstnCmntNo);
+	public int writeQSTN(QSTN qstn);
+
 	
 
 	
