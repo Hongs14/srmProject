@@ -79,8 +79,7 @@ public class DevelopService implements IDevelopService{
 		return developFilter;
 	}
 	
-	/**
-	 * SR 개발 리스트 가져오기
+	/** SR 개발 리스트 가져오기
 	 * @author				정홍주
 	 * @param examinelist	SR리스트 가져오기
 	 * @param pager			페이징 처리
@@ -116,7 +115,7 @@ public class DevelopService implements IDevelopService{
 		return hrlist;
 	}
 	
-	/** 파일 얻기
+	/** 파일 읽어오기
 	* @author 			정홍주
 	* @param srFileNo	첨부파일 번호
 	*/

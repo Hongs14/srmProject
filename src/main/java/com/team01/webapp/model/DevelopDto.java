@@ -34,6 +34,7 @@ public class DevelopDto {
 	//등록자 , 소속, 개발부서, 등록날짜, 파일
 	private String userNm;
 	private String userOgdp;
+	private String userJbps;
 	private String userDpNm;
 	private String sttsNm;
 	private String sysNm;

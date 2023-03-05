@@ -25,10 +25,10 @@
 				<c:forEach var="develop" items="${develop}">
 					<tr>
 						<td>
-							<input type="checkbox" name="devleopCheck" value="${develop.srNo}">
+							<input type="checkbox" onclick="checkSelectAll(this)" name="devleopCheck" value="${develop.srNo}">
 						</td>
 						<td><a href="${pageContext.request.contextPath}/develop/view/${develop.srNo}">${develop.srNo}</a></td>
-		                <td><a href="${pageContext.request.contextPath}/develop/view/${develop.srNo}">${develop.srTtl}</a></td>
+		                <td><a href="${pageContext.request.contextPath}/develop/view/${develop.srNo}" class="srdTtl">${develop.srTtl}</a></td>
                        	<td>${develop.sysNm}</td>
 						<td>${develop.userNm}</td>
 						<td>${develop.userOgdp}</td>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -15,6 +16,14 @@
 			      });  
 		  	});
 		</script>
+		<style>
+			.srdTtl{
+				width: 190px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display:block;
+			}
+		</style>
 	</head>
 
 	<body id="page-top">
@@ -80,7 +89,13 @@
 								                    	</select>
 								                	</div>
 						                		</div>
-					                			<div class="col-sm-1"></div>
+					                			<div class="col-sm-1">
+						                			<div class="input-group-append float-right">
+														<button class="btn btn-outline-warning btn-sm" type="button" onclick="searchClear()">
+															초기화 
+														</button>
+													</div>
+						                		</div>
 								           	</div>
 						                	<div class="row">
 						                		<div class="col-sm-4">
@@ -141,83 +156,105 @@
 											</label>
 										</div>
 									</div>	
-			                			<script>
-											function selectAll(selectAll) {
-												const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-											  
-											  	checkboxes.forEach((checkbox) => {
-											    	checkbox.checked = selectAll.checked
-											  	});
-												
+		                			<script>
+										function selectAll(selectAll) {
+											const checkboxes = document.querySelectorAll('input[name="devleopCheck"]');
+										  
+										  	checkboxes.forEach((checkbox) => {
+										    	checkbox.checked = selectAll.checked
+										  	});
+										};
+										
+										function checkSelectAll(checkbox)  {
+											//체크 해제
+											const selectall  = document.querySelector('input[name="devleopCheck"]');
+										  
+										  	if(checkbox.checked === false)  {
+										    	selectall.checked = false;
+										  	}
+										};
+										
+										$(document).ready(function () {
+											var sysNo = $('#sysNo').val();
+											var sttsNo = $('#sttsNo').val();
+											var userOgdp = $('#userOgdp').val();
+											var srDevDp = $('#srDevDp').val();
+											var srRegStartDate = $('#startDate').val();
+											var srRegEndDate = $('#endDate').val();
+											
+											var srTtl = $('#keyword').val();
+											
+											if(srTtl !== "") {
+												srTtl = "%" + srTtl + "%";
+											}
+											
+											let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp: srDevDp,
+													srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
+											
+											console.log(data);
+											
+											$.ajax({
+												url : '<c:url value="/develop/filter/1"/>',
+												method : "post",
+												data : JSON.stringify(data),
+												contentType: "application/json; charset=UTF-8"
+											}).done((data) => {
+												$("#ajaxList").html(data)
+											});
+										});
+									
+										function developList(pageNo) {
+											console.log("개발관리 리스트 불러오기")
+											var sysNo = $('#sysNo').val();
+											var sttsNo = $('#sttsNo').val();
+											var userOgdp = $('#userOgdp').val();
+											var srDevDp = $('#srDevDp').val();
+											var srRegStartDate = $('#startDate').val();
+											var srRegEndDate = $('#endDate').val();
+											var srCustNo =0;
+											var userType;
+											if($('#searchMySR').prop('checked')){
+												console.log("내 목록보기 체크");
+												srCustNo = $('#userNo').val();
+												userType = $('#userType').val();
+											} 
+											
+											console.log(srCustNo + " "+userType);
+											var srTtl = $('#keyword').val();
+											
+											if(srTtl !== "") {
+												srTtl = "%" + srTtl + "%";
 											};
 											
-											$(document).ready(function () {
-												var sysNo = $('#sysNo').val();
-												var sttsNo = $('#sttsNo').val();
-												var userOgdp = $('#userOgdp').val();
-												var srDevDp = $('#srDevDp').val();
-												var srRegStartDate = $('#startDate').val();
-												var srRegEndDate = $('#endDate').val();
-												
-												var srTtl = $('#keyword').val();
-												
-												if(srTtl !== "") {
-													srTtl = "%" + srTtl + "%";
-												}
-												
-												let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp: srDevDp,
-														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
-												
-												console.log(data);
-												
-												$.ajax({
-													url : '<c:url value="/develop/filter/1"/>',
-													method : "post",
-													data : JSON.stringify(data),
-													contentType: "application/json; charset=UTF-8"
-												}).done((data) => {
-													$("#ajaxList").html(data)
-												});
+											let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp: srDevDp,
+													srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl,
+													srCustNo: srCustNo, userType: userType};
+											console.log(data);
+											
+											$.ajax({
+												url :  '<c:url value="/develop/filter/'+pageNo+'"/>',
+												method : "post",
+												data : JSON.stringify(data),
+												contentType: "application/json; charset=UTF-8"
+											}).done((data) => {
+												$("#ajaxList").html(data);
 											});
+										};
 										
-											function developList(pageNo) {
-												console.log("개발관리 리스트 불러오기")
-												var sysNo = $('#sysNo').val();
-												var sttsNo = $('#sttsNo').val();
-												var userOgdp = $('#userOgdp').val();
-												var srDevDp = $('#srDevDp').val();
-												var srRegStartDate = $('#startDate').val();
-												var srRegEndDate = $('#endDate').val();
-												var srCustNo =0;
-												var userType;
-												if($('#searchMySR').prop('checked')){
-													console.log("내 목록보기 체크");
-													srCustNo = $('#userNo').val();
-													userType = $('#userType').val();
-												} 
-												
-												console.log(srCustNo + " "+userType);
-												var srTtl = $('#keyword').val();
-												
-												if(srTtl !== "") {
-													srTtl = "%" + srTtl + "%";
-												};
-												
-												let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp: srDevDp,
-														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl,
-														srCustNo: srCustNo, userType: userType};
-												console.log(data);
-												
-												$.ajax({
-													url :  '<c:url value="/develop/filter/'+pageNo+'"/>',
-													method : "post",
-													data : JSON.stringify(data),
-													contentType: "application/json; charset=UTF-8"
-												}).done((data) => {
-													$("#ajaxList").html(data);
-												});
-											};
-								  		</script>	
+										function searchClear(){
+											console.log("실행");
+										/* 	$('#sttsNo').find("select").find('option:first').prop('selected', true);
+											$('#sttsNo').find("select").selectpicker('refresh');
+
+
+											$('#sysNo').find("select").find('option:first').prop('selected', true);
+											$('#srDevDp').find("select").find('option:first').prop('selected', true);
+											$('#userOgdp').find("select").find('option:first').prop('selected', true);
+											$('#keyword').val(""); */
+											$('select').find('option:first').attr('selected', 'selected');
+											
+										};
+							  		</script>	
 			                		<div id="ajaxList" style="width:100%"></div>
                          		</div>
                          	</div>
