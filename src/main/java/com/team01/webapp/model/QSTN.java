@@ -13,10 +13,16 @@ public class QSTN {
 	private String qstnCn;
 	private int qstnInqCnt;
 	private Date qstnWrtDate;
+	private String userNo;
 	private String userNm;
 	private int countCmnt;
 	private String sysNo;
-	private int userNo;
 	private List<QSTNComment> qstnCmnt;
+	
+	private Date startDate;
+	private Date endDate;
+	//paging
+	private int startRowNo;
+	private int endRowNo;
 	
 }

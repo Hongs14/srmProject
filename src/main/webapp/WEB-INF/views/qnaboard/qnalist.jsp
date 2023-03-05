@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 	<head>
 	  	<%@include file="/WEB-INF/views/common/head.jsp" %>
@@ -59,7 +59,10 @@
           				</div>
 			         	<!-- Row -->
 			         	<div class="row">
-							<div class="col-lg-12">
+							<div id="mainQstn" class="col-lg-12">
+								<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:121px; display:none;"  id="qstnMenu">
+									<h6 class="mb-0 text-white">공지사항</h6>
+								</div>
 	                        	<div class="card mb-4">
 	                        		<!-- 검색 -->
 	                        		<div class="mb-1 mt-5 px-5">
@@ -69,11 +72,11 @@
 			       									<div class="form-group row" id="simple-date4" >
 			  											<div class="input-daterange input-group input-group-sm text-right">
 			      											<label for="start" class="col-sm-4 col-form-label-sm">조회기간</label>
-			         										<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart" value="${notice.startDate}"/>
+			         										<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart"/>
 			               									<div class="input-group-prepend">
 			               										<span class="input-group-text" style="height:31px;">~</span>
 			           										</div>
-			            									<input type="text" class="input-sm form-control form-control-sm" name="end" id="dateEnd" value="${notice.endDate}" />
+			            									<input type="text" class="input-sm form-control form-control-sm" name="end" id="dateEnd"/>
 														</div>
 			   										</div>
 												</div> 
@@ -91,84 +94,27 @@
 			        							</div>
 			        							<div class="col-1">
 			        								<div class="input-group-append float-right">
-															<button class="btn btn-primary btn-sm" type="button" onclick="searchNoticeList(1)">조회 <i class="fas fa-search fa-sm"></i>
+															<button class="btn btn-primary btn-sm" type="button" onclick="searchQnaList(1)">조회 <i class="fas fa-search fa-sm"></i>
 														</button>
 													</div>
 			         							</div>
 			         						</div>
 										</form>
-		        					</div>
+			       					</div>
 					               	<hr/>
 	                        		<!-- 검색 -->
 						         	
+						         	<!-- Qna 목록 -->
 						            <div class="card-header px-5 d-flex flex-row align-items-center justify-content-between">
 			                			<h6 class="m-0 font-weight-bold text-primary">질문 목록</h6>
 			                			<div class="d-sm-flex justify-content-end">
-			                				<a href="${pageContext.request.contextPath}/qna/write" class="btn btn-outline-primary btn-sm">Q&A 등록하기</a>
+			                				<a href="${pageContext.request.contextPath}/qna/write" class="btn-outline-primary btn-sm">Q&A 등록하기</a>
 			                  			</div>
 			                		</div> 
-			                		
-			                		<!-- 테이블 -->
-			                		<div class="table-responsive px-5">
-					               		<table class="table align-items-center table-flush">
-					                    	<thead class="thead-light">
-							                	<tr>
-							                    	<th class="col-1">번호</th>
-							                        <th class="col-3">글제목</th>
-							                        <th class="col-2">작성자</th>
-							                        <th class="col-2">작성일</th>
-							                        <th class="col-1">조회수</th>
-							                        <th class="col-1">댓글수</th>
-							                    </tr>
-					                   		</thead>
-					                   		<tbody>
-					                   			<c:forEach var="QnaboardDto" items="${qnalist}">
-						                   			<tr onclick="location.href='${pageContext.request.contextPath}/qna/view?qstnNo=${QnaboardDto.qstnNo}'">
-						                        		<td class="1">${QnaboardDto.qstnNo}</td>
-								                        <td class="3" class="qstnTtl">${QnaboardDto.qstnTtl}</td>
-								                        <td class="2">${QnaboardDto.userNm}</td>
-								                        <td class="2">${QnaboardDto.qstnWrtDate}</td>
-								                        <td class="1 pl-4">${QnaboardDto.qstnInqCnt}</td>
-								                        <td class="1 pl-4">${QnaboardDto.countCmnt}</td>
-						                     		</tr>
-					                     		</c:forEach>
-					                 		</tbody>
-					                  	</table>
-					                  	<!-- table -->
-						           	</div>
-						            
-						            <c:if test="${pager.totalRows != 0}">
-										<div class="pager d-flex justify-content-center my-3">
-											<div class="pagingButtonSet d-flex justify-content-center">
-												<c:if test="${pager.pageNo > 1}">
-													<a href='<c:url value="/qna/list?pageNo=1"/>' type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
-												</c:if>
-												<c:if test="${pager.groupNo > 1}">
-													<a href='<c:url value="/qna/list?pageNo=${pager.startPageNo-1}"/>' type="button" class="btn btn-outline-info btn-sm m-1">이전</a>
-												</c:if>
-								
-												<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
-													<c:if test="${pager.pageNo != i}">
-														<a href='<c:url value="/qna/list?pageNo=${i}"/>' type="button" class="btn btn-outline-success btn-sm m-1">${i}</a>
-													</c:if>
-													<c:if test="${pager.pageNo == i}">
-														<a href='<c:url value="/qna/list?pageNo=${i}"/>' type="button" class="btn btn-primary btn-sm m-1">${i}</a>
-													</c:if>
-												</c:forEach>
-								
-												<c:if test="${pager.groupNo < pager.totalGroupNo }">
-													<a href='<c:url value="/qna/list?pageNo=${pager.endPageNo+1}"/>' type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
-								
-												</c:if>
-												<c:if test="${pager.pageNo < pager.totalPageNo && paer.totalPageNo > 5}">
-													<a href='<c:url value="/qna/list?pageNo=${pager.totalPageNo}"/>' type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
-												</c:if>
-											</div>
-										</div>
-									</c:if>
-						            
-					            </div>
-					    	</div>  
+			                		<div id="qstnlist" style="width: 100%;"></div>
+			                	</div>
+					        </div>
+					   		<div id="qnaDetailView" style="width: 100%;"></div>
 			        	</div> 
 						<!-- Row -->
 						
@@ -179,6 +125,52 @@
 				</div>
 			</div>
 		</div>
+		<script>
+			$(document).ready(function () {
+				console.log("시작");
+				var startDate = $('#dateStart').val;
+				var endDate = $('#dateEnd').val;
+				
+				var sysNo = "${sessionScope.loginUser.sysNo}";
+				
+				var qstnTtl = $('#keyword').val;
+				
+				if(qstnTtl !== "") {
+					qstnTtl = "%" + qstnTtl + "%";
+				}
+				
+				let data = {startDate : startDate, endDate : endDate, qstnTtl : qstnTtl, sysNo : sysNo};
+				
+				console.log(data);
+				
+				$.ajax({
+					url : "filter/1",
+					method : "post",
+					data : JSON.stringify(data),
+					contentType: "application/json; charset=UTF-8"
+				}).done((data) => {
+					$("#qstnlist").html(data)
+				});
+			});
+			
+			function getQnaDetail(i) {
+				let qstnNo = i;
+				$("#mainQstnMenu").removeClass("d-sm-flex");
+				$("#mainQstnMenu").hide();
+				$("#QstnMenu").show();
+				$("#mainQstn").attr("class","col-lg-7");
+				$("#qnaDetailView").attr("class","col-lg-5");
+				
+				$.ajax({
+					url : "detail/"+qstnNo,
+					method : "get",
+					dataType : "html",
+					success : function(data) {
+						$("#qnaDetailView").html(data);
+					}
+				});
+			}
+		</script>
  		<%@include file="/WEB-INF/views/common/bottom.jsp" %>
 	</body>
 </html>
