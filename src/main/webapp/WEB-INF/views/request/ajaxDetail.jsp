@@ -28,10 +28,10 @@
 				<div class="col-sm-2">
 					<span class="font-weight-bold">등록자: </span> 
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<span>${sr.userNm}</span> 
 				</div>
-				<div class="col-sm-2">
+				<div class="col-sm-3">
 					<span class="font-weight-bold">소속: </span> 
 				</div>
 				<div class="col-sm-4">
@@ -43,10 +43,10 @@
 				<div class="col-sm-2">
 					<span class=" font-weight-bold">등록일: </span> 
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-3">
 					<span>${sr.srRegDate}</span> 
 				</div>
-				<div class="col-sm-2">
+				<div class="col-sm-3">
 					<span class=" font-weight-bold">관련시스템: </span> 
 				</div>
 				<div class="col-sm-4">

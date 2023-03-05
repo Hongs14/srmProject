@@ -7,26 +7,57 @@
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
 	<style>
 	
-	.requsetTtl{
-		width: 190px;
+	.col-lg-7 .requsetTtl{
+		width: 100px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display:block;
 	}	
-	
-	#requestList > .table th, 
-	#requestList > .table td {
-    	padding: 0.5rem;
-    }
     .col-lg-12 .requsetTtl{
-    	width: 300px;
+    	width: 400px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display:block;
     }
+    .srNo{
+		width: 120px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display:block;
+	}	
+   
+	.col-lg-7 .userOgdp{
+		width: 70px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display:block;
+	}
+	
+    .col-lg-12 .userOgdp{
+		width: 70px;
+		display:block;
+	}
+	.col-lg-12 .srStts{
+		width: 50px;
+		display:block;
+	}
+	#requestList > .table th, 
+	#requestList > .table td {
+    	padding: 0.5rem;
+    }
+    
     .ajaxDetail span {
 	  	white-space:normal !important;
+	  	font-size:14px;
 	 }
+	 #colNo2 label,
+	 #colNo2 input {
+	  	white-space:normal !important;
+	  	font-size:14px;
+	 }
+	  #colNo2 label{
+	  	font-weight: 700 !important;
+	  }
     
 	</style>
   	
@@ -39,7 +70,6 @@
 		        todayBtn: 'linked',
 		      });  
 	  	});
-	  	
 	  	
   	</script>
   	
@@ -158,9 +188,7 @@
                 		</div>
                 		<div class="col-1">
                 			<div class="input-group-append float-right">
-								<button class="btn btn-primary btn-sm" type="button" onclick="requestList(1)" >
-									조회 <i class="fas fa-search fa-sm"></i>
-								</button>
+								<button class="btn btn-primary btn-sm" type="button" onclick="requestList(1)" > 조회 <i class="fas fa-search fa-sm"></i></button>
 							</div>
                 		</div>
                 	</div>
@@ -174,7 +202,7 @@
 					<c:if test="${sessionScope.loginUser.userType eq '고객사'}">
                  		<a class="btn btn-sm btn-secondary mr-1" onclick="getWriteForm()"> 요청등록 </a>
                  	</c:if>
-						<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
+						<button class="btn btn-sm btn-secondary" onclick="excelDownload()">엑셀 다운로드</button>
 					</div>
 				</div>
 				
@@ -208,6 +236,54 @@
           </div>
           <!-- Row -->
 			<script>
+				
+				//오늘 날짜 디폴트로 입력
+				$(document).ready(function() {
+					var todayResult = getTimeStamp();
+					console.log(todayResult);
+					document.getElementById('dateEnd').value = todayResult;
+					
+					var dateStart =getLastYearTimeStamp();
+					console.log(dateStart);
+					document.getElementById('dateStart').value = dateStart;
+				});
+					
+				//오늘 날짜 양식
+				function getTimeStamp() {
+				  var d = new Date();
+	
+				  var s =
+				    leadingZeros(d.getFullYear(), 4) + '/' +
+				    leadingZeros(d.getMonth() + 1, 2) + '/' +
+				    leadingZeros(d.getDate(), 2);
+	
+				  return s;
+				}
+				//작년 날짜 양식
+				function getLastYearTimeStamp() {
+					  var d = new Date();
+	
+					  var s =
+					    leadingZeros(d.getFullYear(), 4)-1 + '/' +
+					    leadingZeros(d.getMonth() + 1, 2) + '/' +
+					    leadingZeros(d.getDate(), 2);
+	
+					  return s;
+					}
+	
+	
+	
+				//오늘 날짜 양식 (+두자리)
+				function leadingZeros(n, digits) {
+				  var zero = '';
+				  n = n.toString();
+	
+				  if (n.length < digits) {
+				    for (i = 0; i < digits - n.length; i++)
+				      zero += '0';
+				  }
+				  return zero + n;
+				}
 				$(document).ready(function () {
 					console.log("시작");
 					var sysNoSelect = document.getElementById("sysNo");
@@ -358,6 +434,57 @@
 						}
 					});
 					
+				}
+				function selectAll(selectAll) {
+					const checkboxes = document.querySelectorAll('input[name="requestCheck"]');
+				  
+				  	checkboxes.forEach((checkbox) => {
+				    	checkbox.checked = selectAll.checked
+				  	})
+					
+				}
+				
+				function checkSelectAll(checkbox)  {
+				  const selectall 
+				    = document.querySelector('input[name="requestCheck"]');
+				  
+				  if(checkbox.checked === false)  {
+				    selectall.checked = false;
+				  }
+				}
+				
+				function excelDownload() {
+					var requestArr = new Array();
+					var checkbox = $("input[name=requestCheck]:checked");
+					
+					// 체크된 체크박스의 값을 가져옴
+					checkbox.each(function(i) {
+						var tr = checkbox.parent().parent().parent().eq(i);
+						var td = tr.children();
+						
+						if(td.eq(1).text() != 'SR 번호') {
+							
+							var srNo = td.eq(1).text();
+							
+							progressArr.push(srNo);
+						}
+					});
+					
+					console.log(progressArr)
+					
+					var form = document.createElement('form');
+					form.setAttribute('method','post');
+					form.setAttribute('action', 'excelDownload');
+					document.charset = "utf-8";
+					
+					var hiddenField = document.createElement("input");
+					hiddenField.setAttribute('type', 'hidden');
+					hiddenField.setAttribute('name', 'requestArr');
+					hiddenField.setAttribute('value', requestArr);
+					form.appendChild(hiddenField);
+					
+					document.body.appendChild(form);
+					form.submit();
 				}
 				
 				

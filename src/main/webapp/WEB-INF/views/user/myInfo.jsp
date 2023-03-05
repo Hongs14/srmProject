@@ -48,7 +48,7 @@
 					<li class="breadcrumb-item active" aria-current="page">나의 정보 상세</li>
 				</ol>
 			</div>
-              <div class="card">
+              <div class="card mb-5">
                 <div class="card-body d-flex p-5">
                 	<div class="userOgdp" style="border-right: 2px solid #757575; padding-right: 30px;">
                 		<div class="p-3 pt-5">
@@ -229,8 +229,8 @@
         <!---Container Fluid-->
       </div>
       </div>
-     <%@include file="/WEB-INF/views/common/footer.jsp" %>
       <!-- Footer -->
+     <%@include file="/WEB-INF/views/common/footer.jsp" %>
     </div>
     </div>
  <%@include file="/WEB-INF/views/common/bottom.jsp" %>

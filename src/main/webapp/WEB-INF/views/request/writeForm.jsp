@@ -31,28 +31,28 @@
 	   			<hr>
    			</c:if>
 			<div class="row mb-2 mr-0" >
-					<label class="col-sm-2">등록자 </label> 
-					<input  class="col-sm-4" disabled value="${sessionScope.loginUser.userNm}" />
-					<span class="col-sm-2">소속 </span> 
-					<input class="col-sm-4" disabled value="${sessionScope.loginUser.userDpNm}" />
+					<label class="col-sm-2" for="srUserNm">등록자 </label> 
+					<input id="srUserNm" class="col-sm-4" disabled value="${sessionScope.loginUser.userNm}" />
+					<label class="col-sm-3" for="srUserOgdp">소속 </label> 
+					<input id="srUserOgdp" class="col-sm-3" disabled value="${sessionScope.loginUser.userDpNm}" />
 			</div>
 			
 			<div class="row mb-2 mr-0">
-				<span class="col-sm-2">등록일 </span> 
+				<label class="col-sm-2" for="dateInput">등록일 </label> 
 				<div class="form-group col-sm-4 px-0" id="simple-date1" >
 					<div class="input-group date" >
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="srRegDate"><i class="fas fa-calendar" ></i></span>
 						</div>
-						<input type="text" class="form-control" value="" id="dateInput"  style="height:30px;" disabled>
+						<input type="text" class="form-control" id="dateInput"  style="height:30px;" disabled>
 					</div>
 				</div>
-				<span class="col-sm-2">관련시스템 </span> 
-				<input name="sysNm" id="sysNm" class="col-sm-4" disabled value="${sessionScope.loginUser.sysNm}" style="height:30px;"/>
+				<label class="col-sm-3">관련시스템 </label> 
+				<input name="sysNm" id="sysNm" class="col-sm-3" disabled value="${sessionScope.loginUser.sysNm}" style="height:30px;"/>
 			</div>
 			<hr>
 			<div class="row mb-2 align-items-center">
-				<span class=" font-weight-bold col-sm-2">SR 제목 </span> 
+				<label class=" font-weight-bold col-sm-2" for="srTtl">SR 제목 </label> 
 				<input name="srTtl" id="srTtl"class="col-sm-10" type="text" class="form-control form-control-sm" <c:if test="${command eq 'update'}">value="${sr.srTtl}"</c:if>/>
 			</div>
 			<div class="row mb-2 align-items-center">
@@ -72,14 +72,14 @@
 			
 			<!-- 파일 첨부 -->
 			<div class="row mb-2">
-				<span class=" font-weight-bold col-sm-2">첨부파일 </span> 
+				<label class=" font-weight-bold col-sm-2" for="srFile">첨부파일 </label> 
 				<div class="custom-file col-sm-10">
 					<input type="file" class="custom-file-input form-control" id="srFile" name="srFile" onchange="addRequestFile(this)" multiple>
 					<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
 				</div>
 			</div>
 			<div class="row mb-2">
-				<span class=" font-weight-bold col-sm-2">파일목록 </span> 
+				<label class=" font-weight-bold col-sm-2" for="requestFile">파일목록 </label> 
 				
 				<div class="col-sm-10" id="userfile">
 					<div id="requestFile">
