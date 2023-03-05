@@ -13,6 +13,13 @@
   			min-height: 100vh;
   		}
   	</style>
+  	<c:if test="${result eq 'success'}">
+	  	<script>
+	  	 	console.log("회원가입 성공");
+	  	 	alert("회원가입 성공");
+	  	</script>
+  	</c:if>
+  	
 </head>
 
 <body id="page-top">
@@ -34,7 +41,7 @@
 		          <div class="card-body p-0 d-flex">
 		                <div class="login-form">
 			                  <div class="text-center">
-			                    <h3 class="text-gray-900 mb-4">LOGIN</h3>
+			                    <h3 class="text-gray-900 mb-4">LOGIN ${result}</h3>
 			                  </div>
 			                  
 			                  <form class="user d-flex flex-column m-5" method="post" action="<c:url value='/user/login'/>">

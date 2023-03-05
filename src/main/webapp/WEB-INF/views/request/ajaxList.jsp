@@ -6,7 +6,10 @@
 			<thead class="thead-light">
 				<tr>
 					<th>
-						<input type="checkbox" onclick='selectAll(this)' name="requestCheck">
+						<div class="custom-control custom-checkbox">
+                  			<input type="checkbox" class="custom-control-input" id="customCheckAll" onclick='selectAll(this)' name="requestCheck">
+                  			<label class="custom-control-label" for="customCheckAll"></label>
+                		</div>
 					</th>
 					<th>SR번호</th>
 					<th>제목</th>
@@ -22,23 +25,28 @@
 			<tbody>
 				<c:forEach var="request" items="${requestLists}">
 					<tr>
-						<td>
-							<input type="checkbox" name="requestCheck">
+						<td class="pr-0">
+	                       <div class="custom-control custom-checkbox">
+	                  			<input type="checkbox" class="custom-control-input" id="customCheck${request.srNo}" name="requestCheck" onclick='checkSelectAll(this)'>
+	                  			<label class="custom-control-label" for="customCheck${request.srNo}"></label>
+	                		</div>
 						</td>
-						<td><a onclick="getSrDetail('${request.srNo}')" style="cursor:pointer;">${request.srNo}</a></td>
+						<td><a onclick="getSrDetail('${request.srNo}')" style="cursor:pointer;" class="srNo">${request.srNo}</a></td>
 						<td><a onclick="getSrDetail('${request.srNo}')" style="cursor:pointer;"><span class="requsetTtl">${request.srTtl}</span></a></td>
 						<td>${request.sysNm}</td>
 						<td>${request.userNm}</td>
-						<td>${request.userOgdp}</td>
+						<td><span class="userOgdp">${request.userOgdp}</span></td>
 						<td>${request.srDevDp}</td>
 						<td>
+						<span class="srStts">
 							<c:if test="${request.sttsNm eq '요청'}"><span class="badge badge-dark" style="font-size:100%">${request.sttsNm}</span></c:if>
 							<c:if test="${request.sttsNm eq '검토중'}"><span class="badge badge-dark" style="font-size:100%">${request.sttsNm}</span></c:if>
 							<c:if test="${request.sttsNm eq '접수'}"><span class="badge badge-outline-primary" style="font-size:100%; border: 1px solid black;">${request.sttsNm}</span></c:if>
 							<c:if test="${request.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${request.sttsNm}</span></c:if>
-							<c:if test="${request.sttsNm eq '개발 완료'}"><span class="badge badge-success" style="font-size:100%">${request.sttsNm}</span></c:if>
+							<c:if test="${request.sttsNm eq '개발 완료'}"><span class="badge badge-success" style="font-size:100%">개발완료</span></c:if>
 							<c:if test="${request.sttsNm eq '반려'}"><span class="badge badge-danger" style="font-size:100%">${request.sttsNm}</span></c:if>
 							<c:if test="${request.sttsNm eq '재검토'}"><span class="badge badge-warning" style="font-size:100%">${request.sttsNm}</span></c:if>
+						</span>
 						</td>
 						<td>${request.srRegDate}</td>
 						<td>

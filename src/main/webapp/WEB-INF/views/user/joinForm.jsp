@@ -154,16 +154,16 @@
      	 <%@include file="/WEB-INF/views/common/footer.jsp" %>
      	 <script>
      	function optionChange1() {
-            let a = ['티에이치컴퍼니','레드주컴퍼니','에이치알컴퍼니','지에이치컴퍼니'];
-            let b = ['한국소프트SRM'];
+            var a = ['티에이치컴퍼니','레드주컴퍼니','에이치알컴퍼니','지에이치컴퍼니'];
+            var b = ['한국소프트SRM'];
             
-            let a2 = ['전산팀','마케팅팀','기획팀','인사팀','회계팀','총무팀','영업팀','판매팀'];
-            let b2 = ['개발1팀','개발2팀','개발3팀'];
-            let c2 = ['관리1팀','관리2팀','관리3팀'];
+            var a2 = ['전산팀','마케팅팀','기획팀','인사팀','회계팀','총무팀','영업팀','판매팀'];
+            var b2 = ['개발1팀','개발2팀','개발3팀'];
+            var c2 = ['관리1팀','관리2팀','관리3팀'];
             
-            let userType = document.querySelector('input[name="userType"]:checked').value;
-            let userOgdpOptions;
-            let userDpNmOptions;
+            var userType = document.querySelector('input[name="userType"]:checked').value;
+            var userOgdpOptions;
+            var userDpNmOptions;
             if ( userType == '고객사' ) {
             	userOgdpOptions = a;
             	userDpNmOptions = a2;
@@ -188,6 +188,25 @@
             }
           }
      	
+    	$(document).ready(function () {
+    		 var a = ['티에이치컴퍼니','레드주컴퍼니','에이치알컴퍼니','지에이치컴퍼니'];
+    		 var a2 = ['전산팀','마케팅팀','기획팀','인사팀','회계팀','총무팀','영업팀','판매팀'];
+         	 var userType = '고객사';
+    		 var userOgdpOptions = a;
+         	 var userDpNmOptions = a2;
+    		$( '#userOgdp' ).empty();
+            $( '#userOgdp' ).append( '<option value="" disabled selected>소속 회사 선택</option>' );
+            for ( let i = 0; i < userOgdpOptions.length; i++ ) {
+              $( '#userOgdp' ).append( '<option>' + userOgdpOptions[ i ] + '</option>' );
+            }
+            
+            $( '#userDpNm' ).empty();
+            $( '#userDpNm' ).append( '<option value="" disabled selected>소속 부서 선택</option>' );
+            for ( var i = 0; i < userDpNmOptions.length; i++ ) {
+              $( '#userDpNm' ).append( '<option>' + userDpNmOptions[ i ] + '</option>' );
+            }
+    		
+    	});
      	
      	 </script>
      <!-- Footer -->

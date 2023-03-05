@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team01.webapp.model.Users;
 import com.team01.webapp.users.service.IUserService;
@@ -89,9 +90,9 @@ public class UserController {
 	 * @return	로그인폼으로 이동
 	 */
 	@RequestMapping(value = "/user/join", method = RequestMethod.GET)
-	public String join() {
+	public String join(Model model) {
 		log.info("정보 로그 실행");
-		
+		log.info(model.getAttribute("result"));
 		return "user/joinForm";
 	}
 
@@ -104,11 +105,12 @@ public class UserController {
 	 * @return		뷰로 이동
 	 */
 	@RequestMapping(value="/user/join", method = RequestMethod.POST)
-	public String join(Users user, Model model) {
+	public String join(Users user, Model model, RedirectAttributes redirectAttributes) {
 		log.info(user.getUserPswd()+"실행");
 		
 		int result = userService.join(user);
 		if(result == UserService.JOIN_SUCCESS) {
+			redirectAttributes.addFlashAttribute("result", "success");
 			return "redirect:/user/login";
 		}else {
 			model.addAttribute("result", "wrongJoin");

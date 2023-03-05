@@ -93,7 +93,7 @@
 									data : JSON.stringify(data),
 									contentType: "application/json; charset=UTF-8"
 								}).done((data) => {
-									$("#homeMiniView").html(data);
+									$("#homeMiniView").html(data)
 								});
 								
 								$.ajax({
@@ -119,7 +119,6 @@
 									$("#homeMiniView").html(data)
 								});
 							};
-							
 						</script>
 						
 						<div id="homeMiniView">
