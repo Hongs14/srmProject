@@ -120,14 +120,10 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body justify-content-center text-center p-5">
-					<div class="d-flex align-items-center">
-						<div id="iconWrapper" class="mr-4">
-							<i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#FFA426;"></i>
-						</div>
-						<div id="dialogWrapper" class="text-left">
-							<h5 id="message"></h5>
-						</div>
+				<div class="modal-body p-5" style="white-space: normal;">
+					<div class="alert alert-secondary m-3 p-2" role="alert">
+						<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+						<div id="message"></div>
 					</div>
 				</div>
 				<div class="modal-footer" id="footer">
@@ -157,9 +153,10 @@
 				$("#message").text("요청하시겠습니까?");
 				$('#footer').empty();
 				let htmlData = '';
-				htmlData += '<button class="btn btn-primary btn-sm mr-2" type="button" onclick="progressRateFinishRequest(1)">'
+				htmlData += '<button class="btn btn-primary mr-2" type="button" onclick="progressRateFinishRequest(1)">'
 				htmlData += "네"
 				htmlData += '</button>'
+				htmlData += '<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>';
 				$('#footer').append(htmlData)
 			} else {
 				$("#message").text("테스트 종료값인 80이 아니라서 요청할 수 없습니다.");
@@ -168,9 +165,10 @@
 			$("#message").text("승인하시겠습니까?");
 			$('#footer').empty();
 			let htmlData = '';
-			htmlData += '<button class="btn btn-primary btn-sm mr-2" type="button" onclick="progressRateFinishRequest(2)">'
+			htmlData += '<button class="btn btn-primary mr-2" type="button" onclick="progressRateFinishRequest(2)">'
 			htmlData += "네"
 			htmlData += '</button>'
+			htmlData += '<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>';
 			$('#footer').append(htmlData)
 		}
 	}

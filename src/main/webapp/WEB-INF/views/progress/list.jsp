@@ -197,7 +197,7 @@
 									<div class="custom-control custom-switch px-5 ml-2" style="width:180px; border-radius:3px; background-color:#eaecf4;">
 										<input type="checkbox" class="custom-control-input" id="searchMySR" onclick="progressList(1)"/>
 										<label class="custom-control-label" for="searchMySR">
-											<span class="text-primary">나의 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span>
+											<span class="text-primary">담당 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span>
 										</label>
 									</div>
 									

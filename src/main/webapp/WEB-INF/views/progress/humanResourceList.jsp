@@ -80,9 +80,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body" style="white-space: normal;">
-					<div id="developerUpdateView" style="width:100%"></div>
-				</div>
+				<div id="developerUpdateView" style="width:100%"></div>
 			</div>
 		</div>
 	</div>
@@ -102,14 +100,10 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body" style="white-space: normal;">
-					<div class="d-flex align-items-center">
-						<div id="iconWrapper" class="mr-4">
-							<i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#FFA426;"></i>
-						</div>
-						<div id="dialogWrapper" class="text-left">
-							<h5 id="message"></h5>
-						</div>
+				<div class="modal-body p-5" style="white-space: normal;">
+					<div class="alert alert-secondary m-3 p-2" role="alert">
+						<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+						<div id="message"></div>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -152,28 +146,46 @@
 									<th>직책</th>
 									<th>성명</th>
 									<th>전화번호</th>
-									<th>업무사항</th>
+									<th colspan="4">업무사항</th>
 									<th>투입 날짜</th>
 									<th>투입 형태</th>
 								</tr>
 							</thead>
 							<c:forEach var="list" items="${developerList}">
 								<tr>
-									<td>
+									<td valign="middle">
 										<input type="checkbox" name="developerCheckBox">
 									</td>
-									<td style="display:none">${srNo}</td>
+									<td valign="middle" style="display:none">${srNo}</td>
 									<td style="display:none">${list.userNo}</td>
 									<td>${list.userJbps}</td>
 									<td>${list.userNm}</td>
 									<td>${list.userTelno}</td>
-									<td>
+									<td style="width:200px; overflow:hidden; text-overflow: ellipsis; display:block;">
 										<c:forEach var="srlist" items="${list.srList}">
-											${srlist.srTtl} / ${srlist.hrStartDate} ~ ${srlist.hrEndDate}
+											${srlist.srTtl}
 											<br/>
 										</c:forEach>
 									</td>
 									<td>
+										<c:forEach var="srlist" items="${list.srList}">
+											${srlist.hrStartDate}
+											<br/>
+										</c:forEach>
+									</td>
+									<td>
+										<c:forEach var="srlist" items="${list.srList}">
+											~
+											<br/>
+										</c:forEach>
+									</td>
+									<td>
+										<c:forEach var="srlist" items="${list.srList}">
+											${srlist.hrEndDate}
+											<br/>
+										</c:forEach>
+									</td>
+									<td align="center">
 										<div class="form-group row" id="simple-date4" style="width:250px">
 											<div class="input-daterange input-group input-group-sm">
 												<input type="text" value="" class="input-sm form-control form-control-sm col-sm-9" name="start" id="start-${list.userNo}"/>
@@ -184,9 +196,9 @@
 											</div>
 										</div>
 									</td>
-									<td>
+									<td align="center">
 										<div style="width:100px">
-											<select class="form-control form-control-sm col-sm-9" id="dv-${list.userNo}" style="width:100%">
+											<select class="form-control form-control-sm col-sm-9" id="dv-${list.userNo}" style="width:100%; text-align:center">
 												<c:forEach var="list" items="${taskList}">
 													<option value="${list.taskNo}">${list.taskNm}</option>
 												</c:forEach>
@@ -199,8 +211,10 @@
 					</c:if>
 				</div>
 				<div class="modal-footer">
+					<c:if test="${!empty developerList}">
+						<button type="button" class="btn btn-primary" id="selectDeveloper">등록</button>
+					</c:if>
 					<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary" id="selectDeveloper">등록</button>
 					<script>
 						$("#selectDeveloper").click(function(){
 							
@@ -245,17 +259,32 @@
 								}
 							});
 							
-							var srNo = '${srNo}';
-							let data = {srNo : srNo, userNo : userNo};
-							
-							$.ajax({
-								url : "developerUpdateView",
-								method : "post",
-								data : JSON.stringify(data),
-								contentType : "application/json; charset=UTF-8"
-							}).done((data) => {
-								$("#developerUpdateView").html(data)
-							});
+							if(userNo == null) {
+								$("#developerUpdateView").empty();
+								let userNoNullData = '';
+								userNoNullData += '<div class="modal-body" style="white-space: normal;">';
+								userNoNullData += '	<div class="alert alert-secondary m-3 p-2" role="alert">';
+								userNoNullData += '		<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>';
+								userNoNullData += '			수정할 인력을 선택해 주세요.';
+								userNoNullData += '	</div>';
+								userNoNullData += '</div>';
+								userNoNullData += '<div class="modal-footer">';
+								userNoNullData += '	<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>';
+								userNoNullData += '</div>';
+								$("#developerUpdateView").append(userNoNullData);
+							} else {
+								var srNo = '${srNo}';
+								let data = {srNo : srNo, userNo : userNo};
+								
+								$.ajax({
+									url : "developerUpdateView",
+									method : "post",
+									data : JSON.stringify(data),
+									contentType : "application/json; charset=UTF-8"
+								}).done((data) => {
+									$("#developerUpdateView").html(data)
+								});
+							}
 						}
 							
 						function developerDelete() {
@@ -268,34 +297,37 @@
 								}
 							});
 							
-							console.log(userNo);
-							var start = document.getElementById("startDate+"+userNo).innerText;
-							var end = document.getElementById("endDate+"+userNo).innerText;
-							var leader = document.getElementById("leader+"+userNo).innerText;
-							
-							var startDate = new Date(start);
-							var endDate = new Date(end);
-							var today = new Date();
-							
-							if(leader == 'Y') {
-								$("#message").text("리더라서 삭제할수 없습니다.");
+							if(userNo == null) {
+								$("#message").text("삭제할 인력을 선택해 주세요.");
 							} else {
-								if(startDate <= today) {
-									$("#message").text("이미 일을 시작했기 때문에 삭제할 수 없습니다.");
+								var start = document.getElementById("startDate+"+userNo).innerText;
+								var end = document.getElementById("endDate+"+userNo).innerText;
+								var leader = document.getElementById("leader+"+userNo).innerText;
+								
+								var startDate = new Date(start);
+								var endDate = new Date(end);
+								var today = new Date();
+								
+								if(leader == 'Y') {
+									$("#message").text("리더라서 삭제할수 없습니다.");
 								} else {
-									var srNo = '${srNo}';
-									let data = {srNo : srNo, userNo : userNo};
-									
-									$.ajax({
-										url : "developerDelete",
-										method : "post",
-										data : JSON.stringify(data),
-										contentType : "application/json; charset=UTF-8"
-									}).done((data) => {
-										window.location.href ='${srNo}';
-									})
+									if(startDate <= today) {
+										$("#message").text("이미 일을 시작했기 때문에 삭제할 수 없습니다.");
+									} else {
+										var srNo = '${srNo}';
+										let data = {srNo : srNo, userNo : userNo};
+										
+										$.ajax({
+											url : "developerDelete",
+											method : "post",
+											data : JSON.stringify(data),
+											contentType : "application/json; charset=UTF-8"
+										}).done((data) => {
+											window.location.href ='${srNo}';
+										})
+									}
 								}
-							}							
+							}
 						}
 					</script>
 				</div>

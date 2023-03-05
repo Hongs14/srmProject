@@ -13,55 +13,58 @@
 		      });  
 	  	});
 	</script>
-	<div class="table-responsive p-3">
-		<table class="table align-items-center table-hover border">
-			<thead class="thead-light">
+	<div class="modal-body" style="white-space: normal;">
+		<div class="table-responsive p-3">
+			<table class="table align-items-center table-hover border">
+				<thead class="thead-light">
+					<tr>
+						<th>직책</th>
+						<th>성명</th>
+						<th>투입 날짜</th>
+						<th>투입 형태</th>
+					</tr>
+				</thead>
+				<tbody>
 				<tr>
-					<th>직책</th>
-					<th>성명</th>
-					<th>투입 날짜</th>
-					<th>투입 형태</th>
-				</tr>
-			</thead>
-			<tbody>
-			<tr>
-				<td>${developer.userJbps}</td>
-				<td>${developer.userNm}</td>
-				<td>
-					<div class="form-group row" id="simple-date4">
-						<div class="input-daterange input-group input-group-sm">
-							<c:choose>
-								<c:when test="${startresult}">
-									<input type="text" value="<fmt:formatDate value="${developer.hrStartDate}" pattern="yyyy-MM-dd"/>" class="a input-sm form-control form-control-sm col-sm-9" name="start" id="start"/>
-								</c:when>
-								<c:otherwise>
-									<input type="text" value="<fmt:formatDate value="${developer.hrStartDate}" pattern="yyyy-MM-dd"/>" class="input-sm form-control form-control-sm col-sm-9" name="start" id="start" readonly/>
-								</c:otherwise>
-							</c:choose>
-							<div class="input-group-prepend">
-								<span class="input-group-text" style="height: 31px;">~</span>
+					<td>${developer.userJbps}</td>
+					<td>${developer.userNm}</td>
+					<td>
+						<div class="form-group row" id="simple-date4">
+							<div class="input-daterange input-group input-group-sm">
+								<c:choose>
+									<c:when test="${startresult}">
+										<input type="text" value="<fmt:formatDate value="${developer.hrStartDate}" pattern="yyyy-MM-dd"/>" class="a input-sm form-control form-control-sm col-sm-9" name="start" id="start"/>
+									</c:when>
+									<c:otherwise>
+										<input type="text" value="<fmt:formatDate value="${developer.hrStartDate}" pattern="yyyy-MM-dd"/>" class="input-sm form-control form-control-sm col-sm-9" name="start" id="start" readonly/>
+									</c:otherwise>
+								</c:choose>
+								<div class="input-group-prepend">
+									<span class="input-group-text" style="height: 31px;">~</span>
+								</div>
+								<c:choose>
+									<c:when test="${endresult}">
+										<input type="text" value="<fmt:formatDate value="${developer.hrEndDate}" pattern="yyyy-MM-dd"/>" class="a input-sm form-control form-control-sm" name="end" id="end"/>
+									</c:when>
+									<c:otherwise>
+										<input type="text" value="<fmt:formatDate value="${developer.hrEndDate}" pattern="yyyy-MM-dd"/>" class="input-sm form-control form-control-sm" name="end" id="end" readonly/>
+									</c:otherwise>
+								</c:choose>
 							</div>
-							<c:choose>
-								<c:when test="${endresult}">
-									<input type="text" value="<fmt:formatDate value="${developer.hrEndDate}" pattern="yyyy-MM-dd"/>" class="a input-sm form-control form-control-sm" name="end" id="end"/>
-								</c:when>
-								<c:otherwise>
-									<input type="text" value="<fmt:formatDate value="${developer.hrEndDate}" pattern="yyyy-MM-dd"/>" class="input-sm form-control form-control-sm" name="end" id="end" readonly/>
-								</c:otherwise>
-							</c:choose>
 						</div>
-					</div>
-				</td>
-				<td>${developer.taskNm}</td>
-			</tr>
-			</tbody>
-		</table>
-		<br/>
-		<div class="d-sm-flex justify-content-end">
-			<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>
-			<button type="button" class="btn btn-primary" id="updateDeveloper">수정</button>
+					</td>
+					<td>${developer.taskNm}</td>
+				</tr>
+				</tbody>
+			</table>
 		</div>
-		
+	</div>
+	<div class="modal-footer">
+		<c:if test="${startresult || endresult}">
+			<button type="button" class="btn btn-primary" id="updateDeveloper">수정</button>
+		</c:if>
+		<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>
+	</div>
 		<script>
 			$("#updateDeveloper").click(function(){
 				var srNo = "${developer.srNo}";
@@ -73,7 +76,7 @@
 				console.log(srNo);
 				console.log(userNo);
 				console.log(hrStartDate);
-				console.log(hrEndDate);
+				console.log(hrEndDate);"src/main/webapp/WEB-INF/views/progress/progressListView.jsp"
 				
 				let data = {srNo : srNo, userNo : userNo, hrStartDate : hrStartDate, hrEndDate : hrEndDate};
 				
@@ -87,4 +90,3 @@
 				});
 			});
 		</script>
-</div>

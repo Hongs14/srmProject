@@ -21,9 +21,9 @@
 						<c:forEach var="list" items="${srList}">
 						<tr >
 							<td><a href="#">${list.srNo}</a></td>
-							<td>${list.srTtl}</td>
+							<td  class="srTtl">${list.srTtl}</td>
 							<td>${list.sysNm}</td>
-							<td>
+							<td style="width : 100px">
 								<c:choose>
 										<c:when test="${list.sttsNm eq '요청'}">
 											<span class="badge badge-outline-secondary" style="border: 1px solid gray;">${list.sttsNm}</span>
