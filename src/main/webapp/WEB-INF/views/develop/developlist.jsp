@@ -74,6 +74,7 @@
 								                    	<select class="form-control form-control-sm col-sm-9" id="sttsNo">
 								                        	<option value="0">전체</option>
 								                        	<option value="4">접수</option>
+								                        	<option value="9">개발 계획</option>
 								                        	<option value="5">개발중</option>
 								                    	</select>
 								                	</div>
@@ -159,7 +160,6 @@
 		                			<script>
 										function selectAll(selectAll) {
 											const checkboxes = document.querySelectorAll('input[name="devleopCheck"]');
-										  
 										  	checkboxes.forEach((checkbox) => {
 										    	checkbox.checked = selectAll.checked
 										  	});

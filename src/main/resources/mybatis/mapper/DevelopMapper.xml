@@ -12,7 +12,7 @@
 		WHERE SR.SYS_NO = SYS.SYS_NO
 		AND SR.STTS_NO = ST.STTS_NO
 		AND SR.SR_CUST_NO = U.USER_NO
-		AND SR.STTS_NO IN (4,5)
+		AND SR.STTS_NO IN (4,5,9)
 		<if test="!sysNo.equals('all')">
 			AND sys.sys_no = #{sysNo}
 		</if>
@@ -76,11 +76,11 @@
 			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr.sr_type,  sr.sr_dev_dp, user_type, user_nm, user_ogdp, user_dp_nm
 			      from sr, sr_type, sr_stts, users, system
 			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no 
-			      	<if test="sttsNo == 4 or sttsNo == 5">
+			      	<if test="sttsNo == 4 or sttsNo == 5 or sttsNo == 9">
 			      		and sr.stts_no = #{sttsNo}
 			      	</if>
 			      	<if test="sttsNo == 0">
-			      		and sr.stts_no in (4, 5)
+			      		and sr.stts_no in (4, 5, 9)
 			      	</if>
 			      	<if test="!sysNo.equals('all')">
 			      		AND sr.sys_no = #{sysNo}
@@ -195,9 +195,25 @@
 	</select>
 	
 	<!-- 
+		개발담당자 조회
+		작성자 : 정홍주
+	 -->
+	<select id="selectLeader" parameterType="string" resultType="users">
+		SELECT USERS.USER_NO AS "userNo", USERS.USER_NM AS "userNm", USERS.USER_DP_NM AS "userDpNm", USERS.USER_JBPS AS "userJbps"
+		FROM USERS, HR
+		WHERE USERS.USER_NO = HR.USER_NO AND HR_LEADER = 'Y' AND SR_NO=#{srNo}
+	</select>
+	
+	<!-- 
 		SR에 개발계획  update하기
 		작성자: 정홍주
 	 -->
+	<select id="checkHr" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM HR WHERE SR_NO=#{srNo}
+	</select>
+	<delete id="deleteHr" parameterType="string">
+		DELETE FROM HR WHERE WR_NO=#{srNo}
+	</delete>
 	<update id="updateSr" parameterType="updateDevelop">
 		UPDATE SR SET SR_DEV_CN=#{srDevCn}, SR_BGT=#{srBgt}, STTS_NO = #{sttsNo}, SR_DDLN_DATE=#{srDdlnDate}, SR_START_DATE=#{srStartDate},
     			SR_END_DATE=#{srEndDate}, SR_DEV_DP=#{srDevDp}

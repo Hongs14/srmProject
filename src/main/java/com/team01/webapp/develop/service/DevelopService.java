@@ -146,6 +146,15 @@ public class DevelopService implements IDevelopService{
 		List<Users> user = developRepository.selectNameByNo(userNo);
 		return user;
 	}
+	
+	@Override
+	public Users getLeader(String srNo) {
+		log.info("개발담당자 불러오기");
+		Users user = developRepository.selectLeader(srNo);
+		return user;
+	}
+	
+	
 
 	/** 개발자 리스트 불러오기(모달창)
 	 * @author 			 정홍주
@@ -182,6 +191,8 @@ public class DevelopService implements IDevelopService{
 	@Transactional
 	public int updateDevelopSr(UpdateDevelop updateDevelop) {
 		try {
+			int check = developRepository.checkHr(updateDevelop.getSrNo());
+			
 			int result1 = developRepository.updateSr(updateDevelop);
 			log.info("개발계획 수정 result1: "+result1); 
 			
@@ -197,13 +208,19 @@ public class DevelopService implements IDevelopService{
 				listHR.add(hr);
 			}
 			log.info(listHR);
-			int result2 =developRepository.insertHrRow(listHR);
-			log.info("HR리스트 삽입 result2: "+ result2);
-			 
-			int result3 = insertProgress(updateDevelop.getSrNo());
-			log.info("Progress 삽입 result3"+result3);
 			
-	
+			if(check > 0) {
+				int result2 = developRepository.deleteHr(updateDevelop.getSrNo());
+				log.info("HR리스트 삭제 result2: "+ result2);
+				int result3 =developRepository.insertHrRow(listHR);
+				log.info("HR리스트 삽입 result3: "+ result3);
+			} else {
+				int result2 =developRepository.insertHrRow(listHR);
+				log.info("HR리스트 삽입 result2: "+ result2);
+				 
+				int result3 = insertProgress(updateDevelop.getSrNo());
+				log.info("Progress 삽입 result3"+result3);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -232,6 +249,5 @@ public class DevelopService implements IDevelopService{
 
 		return row;
 	}
-
 
 }

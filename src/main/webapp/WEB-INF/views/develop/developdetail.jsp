@@ -8,7 +8,7 @@
 <%@include file="/WEB-INF/views/common/head.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/vendor/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css">
 	<style>
-		select option[value=""][disabled] {
+		select option[disabled] {
            display: none;
         }
         
@@ -263,19 +263,12 @@
 															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">개발담당자</h6>
 														</div>
 														<div class="col-sm-8">
-															<c:if test="${dlist.sttsNo != 5}">
-																<select onchange="selectDev(this);" id="srDLeader" class="form-control noneUpdate" required>
-																	<option></option>
-																	<c:forEach var="users" items="${devlist}">
-																		<option value="${users.userNo}">${users.userNm} [${users.userDpNm}&nbsp;${users.userJbps}]</option>
-																	</c:forEach>
-																</select>
-															</c:if>
-															<c:if test="${dlist.sttsNo == 5}">
-																<c:forEach items="${hrlist}" var="devlist" >
-																	<c:if test="${devlist.hrLeader eq 'Y'}"> ${devlist.userNm}</c:if>
+															<select onchange="selectDev(this);" id="srDLeader" class="form-control noneUpdate" required>
+																	<option value="${leader.userNo}" disabled selected>${leader.userNm} [${leader.userDpNm}&nbsp;${leader.userJbps}]</option>
+																<c:forEach var="users" items="${devlist}">
+																	<option value="${users.userNo}">${users.userNm} [${users.userDpNm}&nbsp;${users.userJbps}]</option>
 																</c:forEach>
-															</c:if>
+															</select>
 														</div>
 													</div>
 													<div class="form-group row">
@@ -295,7 +288,7 @@
 														<div class="col-sm-8">
 															<select id="sttsNo" name="sttsNo"  class="form-control noneUpdate">
 																<option value="5" selected>개발중</option>
-																<option value="9">개발 계획중</option>
+																<option value="9">개발 계획</option>
 															</select>
 														</div>
 													</div>
@@ -345,9 +338,7 @@
 													</div>
 													<div class="text-right">
 														<input type="hidden" id="srNo" value="${dlist.srNo}" />
-														<c:if test="${dlist.sttsNo != 5}">
-															<button type="button" id="button" class="btn btn-sm btn-primary mr-4" onclick="registerDevelop()"> 등록 ▶</button>
-														</c:if>
+														<button type="button" id="button" class="btn btn-sm btn-primary mr-4" onclick="registerDevelop()"> 등록 ▶</button>
 													</div>
 												</div>
 											
@@ -365,73 +356,6 @@
 															</c:if>
 														</div>
 													</div>
-													<%-- <div class="row mt-2 align-items-center">
-														<div class="col-sm-2">
-															<div class="row  align-items-center">
-																<div class="col-sm-6">[담당자]</div>
-																<div id="devNameInput" class="col-sm-6">
-																	<c:if test="${dlist.sttsNo == 5}">
-																		<c:forEach items="${hrlist}" var="devlist" >
-																			<c:if test="${devlist.hrLeader eq 'Y'}"> ${devlist.userNm}</c:if>
-																		</c:forEach>
-																	</c:if>	
-																	<c:if test="${dlist.sttsNo != 5}">
-																		<input name="userNo" id="leaderNo" type="hidden" value="" />
-																		<div id="pickDevNm"></div>
-																		<input name="hrLeader" type="hidden" value="Y" />
-																	</c:if>
-																	
-																</div>
-															</div>
-														</div>
-													 	<div class="col-sm-2">
-															<div class="row">
-																<c:if test="${dlist.sttsNo != 5}">
-																	<select name="taskNo" class="form-control" required>
-																		<option value="" disabled selected>작업구분</option>
-																		<option value="2">설계</option>
-																		<option value="1">개발</option>
-																		<option value="3">테스트</option>
-																	</select>
-																</c:if>
-																<c:if test="${dlist.sttsNo == 5}">
-																	<c:forEach items="${hrlist}" var="devlist" >
-																		<c:if test="${devlist.hrLeader eq 'Y'}"><span class="badge badge-primary">${devlist.taskNm}</span></c:if>
-																	</c:forEach>
-																</c:if>
-															</div>
-														</div>
-														<div class="col-8">
-															<div class="row">
-																<div class="col-sm-2 col-form-label">
-																	<h6 class="font-weight-bold text-primary">시작일</h6>
-																</div>
-																<div class="col-sm-4">
-																	<c:if test="${dlist.sttsNo == 5}">
-																		<c:forEach items="${hrlist}" var="devlist" >
-																			<c:if test="${devlist.hrLeader eq 'Y'}"><fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy-MM-dd"/></c:if>
-																		</c:forEach>
-																	</c:if>
-																	<c:if test="${dlist.sttsNo != 5}">
-																		<input name="hrStartDate" id="leaderSdate" type="date" class="form-control" readonly />
-																	</c:if>
-																</div>
-																<div class="col-sm-2 col-form-label">
-																	<h6 class="font-weight-bold text-primary">종료일</h6>
-																</div>
-																<div class="col-sm-4">
-																	<c:if test="${dlist.sttsNo == 5}">
-																		<c:forEach items="${hrlist}" var="devlist" >
-																			<c:if test="${devlist.hrLeader eq 'Y'}"><fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy-MM-dd"/></c:if>
-																		</c:forEach>
-																	</c:if>
-																	<c:if test="${dlist.sttsNo != 5}">
-																		<input  name="hrEndDate" id="leaderEdate" type="date" class="form-control" readonly />
-																	</c:if>
-																</div>
-															</div>
-														</div>
-													</div> --%> 
 													<div class="mt-3" style="border: 1px solid gray; min-height: 400px;">
 														<div class="row d-flex text-center m-0 p-o" style="border-bottom:1px solid black; background-color:#eaecf4;">
 															<div class="col-2 text-primary">성명</div>
@@ -443,7 +367,7 @@
 															<div class="row  d-flex text-center m-0">
 																<div class="col-sm-2 text-center">
 																	<div class="row">
-																		<c:if test="${dlist.sttsNo == 5}">
+																		<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
 																			<c:forEach items="${hrlist}" var="devlist" >
 																				<c:if test="${devlist.hrLeader eq 'Y'}">
 																					<span class="badge badge-warning">L</span>
@@ -451,7 +375,7 @@
 																				</c:if>
 																			</c:forEach>
 																		</c:if>	
-																		<c:if test="${dlist.sttsNo != 5}">
+																		<c:if test="${dlist.sttsNo == 4}">
 																			<input name="userNo" id="leaderNo" type="hidden" value="" />
 																			<div class="badge badge-warning ml-3">L</div>
 																			<div id="pickDevNm"></div>
@@ -460,37 +384,41 @@
 																	</div>
 																</div>
 																<div class="col-sm-2 text-center">
-																	<c:if test="${dlist.sttsNo != 5}">
-																		<select name="taskNo" class="form-control-sm mx-0" required>
-																			<option value="" disabled selected>작업구분</option>
-																			<option value="2">설계</option>
-																			<option value="1">개발</option>
-																			<option value="3">테스트</option>
-																		</select>
+																	<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
+																		<c:forEach items="${hrlist}" var="devlist" >
+																			<c:if test="${devlist.hrLeader eq 'Y'}">
+																				<select name="taskNo" class="form-control-sm mx-0" required>
+																					<option value="${devlist.taskNo}" disabled selected>${devlist.taskNm}</option>
+																					<option value="2">설계</option>
+																					<option value="1">개발</option>
+																					<option value="3">테스트</option>
+																				</select>
+																			</c:if>
+																		</c:forEach>
 																	</c:if>
-																	<c:if test="${dlist.sttsNo == 5}">
+																	<c:if test="${dlist.sttsNo == 4}">
 																		<c:forEach items="${hrlist}" var="devlist" >
 																			<c:if test="${devlist.hrLeader eq 'Y'}"><span class="badge badge-primary">${devlist.taskNm}</span></c:if>
 																		</c:forEach>
 																	</c:if>
 																</div>
 																<div class="col-sm-4 text-center">
-																	<c:if test="${dlist.sttsNo == 5}">
+																	<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
 																		<c:forEach items="${hrlist}" var="devlist" >
 																			<c:if test="${devlist.hrLeader eq 'Y'}"><fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy-MM-dd"/></c:if>
 																		</c:forEach>
 																	</c:if>
-																	<c:if test="${dlist.sttsNo != 5}">
+																	<c:if test="${dlist.sttsNo == 4}">
 																		<input name="hrStartDate" id="leaderSdate" type="date" class="form-control-sm" readonly />
 																	</c:if>
 																</div>
 																<div class="col-sm-4 text-center">
-																	<c:if test="${dlist.sttsNo == 5}">
+																	<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
 																		<c:forEach items="${hrlist}" var="devlist" >
 																			<c:if test="${devlist.hrLeader eq 'Y'}"><fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy-MM-dd"/></c:if>
 																		</c:forEach>
 																	</c:if>
-																	<c:if test="${dlist.sttsNo != 5}">
+																	<c:if test="${dlist.sttsNo == 4}">
 																		<input name="hrEndDate" id="leaderEdate" type="date" class="form-control-sm" readonly />
 																	</c:if>
 																</div>
@@ -498,20 +426,42 @@
 														</div>
 														<hr class="my-0"/>
 														<div class="mt-2" id="HrList">
-															<%-- <div class="row mb-1" id="dvleaderHr">
-																<c:if test="${dlist.sttsNo == 5}">
-																	<c:forEach items="${hrlist}" var="devlist" >
-																		<div class="col-3"><c:if test="${devlist.hrLeader eq 'N'}">${devlist.userNm}</c:if></div>
-																		<div class="col-3"><c:if test="${devlist.hrLeader eq 'N'}"><span class="badge badge-primary">${devlist.taskNm}</span></c:if></div>
-																		<div class="col-3"><c:if test="${devlist.hrLeader eq 'N'}"><fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy-MM-dd"/></c:if></div>
-																		<div class="col-3"><c:if test="${devlist.hrLeader eq 'N'}"><fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy-MM-dd"/></c:if></div>
-																	</c:forEach>
-																</c:if>
-															</div> --%>
+															<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
+																<c:forEach items="${hrlist}" var="devlist" >
+																	<div class="row  d-flex text-center m-0">
+																		<c:if test="${devlist.hrLeader eq 'N'}">
+																			<div class="col-sm-2">${devlist.userNm}</div>
+																		
+																			<div class="col-sm-2 text-center">
+																				<select name="taskNo" class="form-control-sm">
+																					<option value="${devlist.taskNo}" disabled selected>${devlist.taskNm}</option>
+																					<option value="2">설계</option>
+																					<option value="1">개발</option>
+																					<option value="3">테스트</option>
+																				</select>
+																			</div>
+																			<div class="col-sm-4 text-center">
+																				<input name="hrStartDate" type="date" value="<fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy-MM-dd"/>" class="form-control-sm"/>
+																			</div>
+																				
+																			<div class="col-sm-4 text-center">
+																				<input name="hrEndDate" type="date" value="<fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy-MM-dd"/>" class="form-control-sm"/>
+																				<a href="#" class="deleteHr text-right" id='${users.userNo}' style="color: red;">x</a>
+																			</div>
+																			<hr class="my-0"/>
+																		</c:if>
+																	</div>
+																</c:forEach>
+															</c:if>
 														</div>
 													</div>
 													<div class="text-right my-3">
-														<button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter" class="btn btn-primary">저장</button>
+														<c:if test="${dlist.sttsNo != 5}">
+															<button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter" class="btn btn-primary">저장</button>
+														</c:if>
+														<c:if test="${dlist.sttsNo == 5}">
+															<button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter" class="btn btn-primary">수정</button>
+														</c:if>
 													</div>
 													<!-- 확인 모달 -->
 													<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"

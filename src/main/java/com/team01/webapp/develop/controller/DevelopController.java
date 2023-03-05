@@ -99,11 +99,13 @@ public class DevelopController {
 		List<Users> devList = developService.getDevelopList();
 		DevelopDto srDetail = developService.getDetail(srNo);
 		List<HR> hrlist = developService.selectHrList(srNo);
+		Users leader = developService.getLeader(srNo);
 	
 		model.addAttribute("dlist", srDetail);
 		model.addAttribute("devlist", devList);
 		log.info("devList"+devList);
 		model.addAttribute("hrlist",hrlist);
+		model.addAttribute("leader", leader);
 		
 		return "develop/developdetail";
 	}

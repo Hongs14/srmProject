@@ -36,6 +36,7 @@
 						<td>
 							<c:if test="${develop.sttsNm eq '접수'}"><span class="badge badge-outline-primary" style="font-size:100%; border: 1px solid black;">${develop.sttsNm}</span></c:if>
 							<c:if test="${develop.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${develop.sttsNm}</span></c:if>
+							<c:if test="${develop.sttsNm eq '개발계획'}"><span class="badge badge-outline-secondary" style="font-size:100%; border:1px solid orange;">${develop.sttsNm}</span></c:if>
 						</td>
 						<td>${develop.srRegDate}</td>
 						<td>${develop.srDdlnDate}</td>
@@ -52,7 +53,7 @@
 		<c:if test="${pager.totalRows != 0}">
 			<div class="pager d-flex justify-content-center my-3">
 				<div class="pagingButtonSet d-flex justify-content-center">
-					<c:if test="${pager.pageNo > 1}">
+					<c:if test="${pager.pageNo > 1 && pager.totalPageNo > 5 }">
 						<a onclick="developList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
 					</c:if>
 					<c:if test="${pager.groupNo > 1}">
