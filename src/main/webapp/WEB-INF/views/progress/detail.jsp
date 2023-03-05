@@ -56,33 +56,21 @@ border-top-right-radius: 10px;
 									<div class="container-fluid">
 										<!-- 번호/구분 -->
 										<div class="row">
-											<div class="col-3">
-												<span class="font-weight-bold">SR 번호 : </span>
+											<div class="col-6">
+												<span class="font-weight-bold">SR 번호: </span><span> ${progressDetail.srNo}</span>
 											</div>
-											<div class="col-3">
-												<span> ${progressDetail.srNo}</span>
-											</div>
-											<div class="col-3">
-												<span class="font-weight-bold">요청 구분 : </span>
-											</div>
-											<div class="col-3">
-												<span> ${progressDetail.srTypeNm}</span>
+											<div class="col-6">
+												<span class="font-weight-bold">요청 구분: </span><span> ${progressDetail.srTypeNm}</span>
 											</div>
 										</div>
 										<hr/>
 										<!-- 시스템 구분/업무 구분 -->
 										<div class="row">
-											<div class="col-3">
-												<span class="font-weight-bold">시스템 구분: </span>
+											<div class="col-6">
+												<span class="font-weight-bold">시스템 구분: </span><span> ${progressDetail.sysNm}</span>
 											</div>
-											<div class="col-3">
-												<span class="pl-4"> ${progressDetail.sysNm}</span>
-											</div>
-											<div class="col-3">
-												<span class="font-weight-bold">진행 상태: </span>
-											</div>
-											<div class="col-3">
-												<span class="pl-1">  ${progressDetail.sttsNm}</span>
+											<div class="col-6">
+												<span class="font-weight-bold">진행 상태: </span><span>  ${progressDetail.sttsNm}</span>
 											</div>
 										</div>
 										<br/>
@@ -108,21 +96,15 @@ border-top-right-radius: 10px;
 										<br/>
 										<!-- SR 제목 -->
 										<div class="row">
-											<div class="col-2">
-												<span class="font-weight-bold">SR 제목: </span>
-											</div>
-											<div class="col-10">
-												<span> ${progressDetail.srTtl}</span>
+											<div class="col-12">
+												<span class="font-weight-bold">SR 제목: </span><span> ${progressDetail.srTtl}</span>
 											</div>
 										</div>
 										<br>
 										<!-- 관련 근거(목적) -->
 										<div class="row">
-											<div class="col-4">
-												<span class="font-weight-bold">관련근거(목적): </span>
-											</div>
-											<div class="col-8">
-												<span>${progressDetail.srStd}</span>
+											<div class="col-12">
+												<span class="font-weight-bold">관련근거(목적): </span><span>${progressDetail.srStd}</span>
 											</div>
 										</div>
 										<br>
