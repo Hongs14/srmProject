@@ -9,6 +9,7 @@ import lombok.Data;
 public class QSTN {
 
 	private String qstnNo;
+	private int rnum;
 	private String qstnTtl;
 	private String qstnCn;
 	private int qstnInqCnt;

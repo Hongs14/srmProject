@@ -24,6 +24,7 @@ public class QnaboardService implements IQnaboardService {
 
 	@Override
 	public Pager returnPage(int pageNo, Pager pager, QSTN qstn) {
+		log.info("qstn: "+qstn+", pageNo: "+pageNo );
 		int totalList = (int) qnaboardRepository.totalRow(qstn);
 		log.info(totalList);
 		pager = new Pager(10,5,totalList,pageNo);
@@ -45,11 +46,18 @@ public class QnaboardService implements IQnaboardService {
 		//게시물 상세
 		QSTN qstn = qnaboardRepository.selectDetail(qstnNo);
 		
+		//조회수
+		int countInq = qnaboardRepository.countInqCnt(qstnNo);
+		
+		
+		return qstn;
+	}
+	
+	@Override
+	public int countInq(int qstnNo) {
 		//댓글 개수
 		int countCmnt = qnaboardRepository.countComment(qstnNo);
-		
-		qstn.setCountCmnt(countCmnt);
-		return qstn;
+		return countCmnt;
 	}
 	
 	/* QnA게시글 작성

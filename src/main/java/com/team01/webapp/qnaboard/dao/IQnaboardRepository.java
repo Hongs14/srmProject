@@ -23,6 +23,7 @@ public interface IQnaboardRepository {
 	public void updateComment(QSTNComment qComment);
 	public void deleteComment(int qstnCmntNo);
 	
+	public int countInqCnt(int qstnNo);
 
 	
 }

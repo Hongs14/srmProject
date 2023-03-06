@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -48,7 +48,7 @@
 			
 			        <!-- 메인 컨테이너 Container Fluid-->
 					<div class="container-fluid" id="container-wrapper">
-			        	<div class="d-sm-flex align-items-end justify-content-between">
+			        	<div class="d-sm-flex align-items-end justify-content-between" id="mainQstnMenu">
           					<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px;">
             					<h6 class="mb-0 text-white">Q&A 게시판</h6>
          					</div>
@@ -61,22 +61,22 @@
 			         	<div class="row">
 							<div id="mainQstn" class="col-lg-12">
 								<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:121px; display:none;"  id="qstnMenu">
-									<h6 class="mb-0 text-white">공지사항</h6>
+									<h6 class="mb-0 text-white">Q&A 상세보기</h6>
 								</div>
 	                        	<div class="card mb-4">
 	                        		<!-- 검색 -->
 	                        		<div class="mb-1 mt-5 px-5">
-										<form class="navbar-search">
+										<form action="">
 											<div class="row text-right">
 			   									<div class="col-4">
 			       									<div class="form-group row" id="simple-date4" >
 			  											<div class="input-daterange input-group input-group-sm text-right">
 			      											<label for="start" class="col-sm-4 col-form-label-sm">조회기간</label>
-			         										<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart"/>
+			         										<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="startDate" id="dateStart"/>
 			               									<div class="input-group-prepend">
 			               										<span class="input-group-text" style="height:31px;">~</span>
 			           										</div>
-			            									<input type="text" class="input-sm form-control form-control-sm" name="end" id="dateEnd"/>
+			            									<input type="text" class="input-sm form-control form-control-sm" name="endDate" id="dateEnd"/>
 														</div>
 			   										</div>
 												</div> 
@@ -128,12 +128,11 @@
 		<script>
 			$(document).ready(function () {
 				console.log("시작");
-				var startDate = $('#dateStart').val;
-				var endDate = $('#dateEnd').val;
-				
+				var startDate = $('#dateStart').val();
+				var endDate = $('#dateEnd').val();
 				var sysNo = "${sessionScope.loginUser.sysNo}";
 				
-				var qstnTtl = $('#keyword').val;
+				var qstnTtl = $('#keyword').val();
 				
 				if(qstnTtl !== "") {
 					qstnTtl = "%" + qstnTtl + "%";
@@ -144,7 +143,7 @@
 				console.log(data);
 				
 				$.ajax({
-					url : "filter/1",
+					url : "${pageContext.request.contextPath}/qna/"+sysNo+"/filter/1",
 					method : "post",
 					data : JSON.stringify(data),
 					contentType: "application/json; charset=UTF-8"
@@ -153,7 +152,7 @@
 				});
 			});
 			
-			function getQnaDetail(i) {
+			function qnaDetail(i) {
 				let qstnNo = i;
 				$("#mainQstnMenu").removeClass("d-sm-flex");
 				$("#mainQstnMenu").hide();
@@ -162,7 +161,7 @@
 				$("#qnaDetailView").attr("class","col-lg-5");
 				
 				$.ajax({
-					url : "detail/"+qstnNo,
+					url : "view/"+qstnNo,
 					method : "get",
 					dataType : "html",
 					success : function(data) {
