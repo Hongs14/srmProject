@@ -60,6 +60,19 @@ public class RequestController {
 		log.info("실행");
 		requestFilter = requestService.getFilterList(requestFilter);
 		model.addAttribute("requestfilter", requestFilter);
+		model.addAttribute("command", "list");
+		return "request/list";
+		
+	}
+	
+	@RequestMapping(value="/list/{srNo}", method = RequestMethod.GET)
+	public String getDetailList(@PathVariable String srNo, HttpSession session, RequestFilter requestFilter, Model model) {
+		log.info("실행");
+		requestFilter = requestService.getFilterList(requestFilter);
+		model.addAttribute("requestfilter", requestFilter);
+		
+		model.addAttribute("srNo", srNo);
+		model.addAttribute("command", "detail");
 		return "request/list";
 		
 	}
