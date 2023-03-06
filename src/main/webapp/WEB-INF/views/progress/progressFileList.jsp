@@ -6,12 +6,16 @@
 <!DOCTYPE html>
 	<div class="table-responsive">
 	<div class="input-group-append float-right mb-3">
-		<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFileModal" id="#modalScroll" onclick="progressFileAdd()">
-			추가
-		</button>
-		<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressRateModal" id="#modalScroll" onclick="progressFileDelete()">
-			삭제
-		</button>
+		<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
+			<c:if test="${check}">
+				<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFileModal" id="#modalScroll" onclick="progressFileAdd()">
+					추가
+				</button>
+				<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressRateModal" id="#modalScroll" onclick="progressFileDelete()">
+					삭제
+				</button>
+			</c:if>
+		</c:if>
 	</div>
 		<table class="table align-items-center table-flush table-hover">
 			<thead class="thead-light">

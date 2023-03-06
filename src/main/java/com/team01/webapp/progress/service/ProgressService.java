@@ -374,4 +374,26 @@ public class ProgressService implements IProgressService {
 		return ProgressDetailList;
 	}
 
+	@Override
+	public ProgressDetail getSrSttsNm(String srNo) {
+		return progressRepository.selectProgressRequester(srNo);
+	}
+
+	@Override
+	public String managerNo(String srNo) {
+		return progressRepository.selectManagerNo(srNo);
+	}
+
+	@Override
+	public List<Integer> humanList(String srNo) {
+		List<HR> hrList = progressRepository.selectHumanResourceList(srNo);
+		List<Integer> humanList = new ArrayList<Integer>();
+		
+		for(int i=0; i<hrList.size(); i++) {
+			humanList.add(hrList.get(i).getUserNo());
+		}
+		
+		return humanList;
+	}
+
 }
