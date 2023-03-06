@@ -538,4 +538,44 @@
 		WHERE SYSTEM.SYS_NO = SR.SYS_NO
 		AND SR_NO = #{srNo}
 	</select>
+	
+	<insert id="insertChangeRequest" parameterType="changeRequest">
+		INSERT INTO CHANGE_REQUEST
+        (CR_NO, CR_REG_DATE, SR_NO, USER_NO, CR_TTL, CR_CN, CR_RESULT, CR_FILE_PHYS_NM, CR_FILE_EXTN_NM, CR_FILE_ACTL_NM, CR_DDLN_DATE)
+    VALUES
+        (crno_seq.nextval, sysdate, #{srNo}, #{userNo}, #{crTtl}, #{crCn}, '미처리', #{crFilePhysNm}, #{crFileExtnNm}, #{crFileActlNm}, #{crDdlnDate})
+	</insert>
+	
+	<select id="selectChangeRequestList" parameterType="string" resultType="changeRequest">
+		SELECT
+			CR_NO AS "crNo",
+		    CR_TTL AS "crTtl",
+		    CR_REG_DATE AS "crRegDate",
+		    CR_RESULT AS "crResult",
+		    CR_FILE_PHYS_NM AS "crFilePhysNm",
+		    CR_FILE_EXTN_NM AS "crFileExtnNm",
+		    CR_FILE_ACTL_NM AS "crFileActlNm"
+		FROM CHANGE_REQUEST
+		WHERE SR_NO = #{srNo}
+	</select>
+	
+	<select id="selectChangeRequestFile" parameterType="int" resultType="changeRequest">
+		SELECT
+			CR_NO AS "crNo",
+			CR_REG_DATE AS "crRegDate",
+			SR_NO AS "srNo",
+			request.USER_NO AS "userNo",
+            USER_NM AS "userNm",
+			CR_TTL AS "crTtl",
+			CR_CN AS "crCn",
+			CR_RESULT AS "crResult",
+			CR_COMMENT AS "crComment",
+		    CR_FILE_PHYS_NM AS "crFilePhysNm",
+		    CR_FILE_EXTN_NM AS "crFileExtnNm",
+		    CR_FILE_ACTL_NM AS "crFileActlNm",
+		    CR_DDLN_DATE AS "crDdlnDate"
+		FROM CHANGE_REQUEST request, USERS users
+        WHERE request.user_no = users.user_no
+		AND CR_NO = #{crNo}
+	</select>
 </mapper>

@@ -64,7 +64,9 @@
 			<div class="pager d-flex justify-content-center my-3">
 				<div class="pagingButtonSet d-flex justify-content-center">
 					<c:if test="${pager.totalPageNo > 5}">
-						<a onclick="progressList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
+						<c:if test="${pager.pageNo > 1}">
+							<a onclick="progressList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
+						</c:if>
 					</c:if>
 					<c:if test="${pager.groupNo > 1}">
 						<a onclick="progressList(${pager.startPageNo-1})" type="button" class="btn btn-outline-info btn-sm m-1">이전</a>
@@ -84,7 +86,9 @@
 	
 					</c:if>
 					<c:if test="${pager.totalPageNo > 5}">
-						<a onclick="progressList(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
+						<c:if test="${pager.pageNo < pager.totalPageNo }">
+							<a onclick="progressList(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
+						</c:if>
 					</c:if>
 				</div>
 			</div>

@@ -19,6 +19,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.home.service.IHomeService;
+import com.team01.webapp.model.ChangeRequest;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
@@ -659,4 +662,127 @@ public class ProgressController {
 		wb.write(response.getOutputStream());
 		wb.close();
 	}
+	
+	@RequestMapping(value="progress/detail/progressajax/4", produces="application/json; charset=UTF-8")
+	public String progressChangeRequestList(@RequestBody HR hr, Model model, HttpSession session) {
+		model.addAttribute("srNo", hr.getSrNo());
+		
+		List<ChangeRequest> changeRequestList = progressService.getChangeRequestList(hr.getSrNo());
+		
+		model.addAttribute("changeRequestList", changeRequestList);
+		
+		return "progress/progressChangeRequestList";
+	}
+	
+	@RequestMapping(value="progress/detail/changeRequestList/{srNo}", method=RequestMethod.POST)
+	public String changeRequest(@PathVariable String srNo) {
+		
+		return "progress/progressChangeRequest";
+	}
+	
+	@RequestMapping(value="progress/detail/changeRequest", method=RequestMethod.POST)
+	public String changeRequestWrite(ChangeRequest changeRequest, HttpSession session) {
+		int userNo = (Integer) session.getAttribute("userNo");
+		
+		changeRequest.setUserNo(userNo);
+		
+		try {
+			changeRequest.setCrTtl(Jsoup.clean(changeRequest.getCrTtl(), Whitelist.basic()));
+			String content = changeRequest.getCrCn();
+			content = content.replace("\r\n", "<br>");
+			content = content.replace("\r", "<br>");
+			content = content.replace("\n", "<br>");
+			changeRequest.setCrCn(Jsoup.clean(content, Whitelist.basic()));
+			
+			MultipartFile mf = changeRequest.getChangeRequestFile();
+			
+			if(mf!=null &&!mf.isEmpty()) {
+				// 파일 원래 이름 저장
+				changeRequest.setCrFileActlNm(mf.getOriginalFilename());
+				// 파일의 저장 이름 설정
+				String crFilePhysNm = new Date().getTime()+"-"+mf.getOriginalFilename();
+				changeRequest.setCrFilePhysNm(crFilePhysNm);
+				// 파일 타입 설정
+				String str = mf.getContentType();
+				int beginIndex = str.indexOf("/");
+				int endIndex = str.length();
+				String type = str.substring(beginIndex,endIndex);
+				changeRequest.setCrFileExtnNm(type);
+				
+				// 서버 파일 시스템에 파일로 저장
+				String filePath = "C:/OTI/uploadfiles/ChangeRequest/" + changeRequest.getSrNo() + "/" + crFilePhysNm;
+				File file = new File(filePath);
+				// 폴더가 없다면 생성한다.
+				if(!file.exists()) {
+					try {
+						Files.createDirectories(Paths.get(filePath));
+						log.info("폴더 생성 완료");
+						mf.transferTo(file);
+					} catch (Exception e) {
+						log.info("생성 실패 : " + filePath);
+					}
+				} else {
+					mf.transferTo(file);
+				}
+			}
+			log.info(changeRequest);
+			
+			progressService.changeRequest(changeRequest);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		session.setAttribute("message", 4);
+		
+		return "redirect:/progress/detail/" + changeRequest.getSrNo();
+	}
+	
+	@RequestMapping(value="progress/detail/ChangeRequestFileDownload/{crNo}")
+	public void ChangeRequestFileDownload(@PathVariable int crNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception {
+		ChangeRequest changeRequest = progressService.getChangeRequestFile(crNo);
+		
+		String originalName = changeRequest.getCrFileActlNm();
+		String savedName = changeRequest.getCrFilePhysNm();
+		String contentType = changeRequest.getCrFileExtnNm();
+		
+		// originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩
+		if(userAgent.contains("Trident") || userAgent.contains("MSIE")) {
+			originalName = URLEncoder.encode(originalName, "UTF-8");
+		} else {
+			originalName = new String(originalName.getBytes("UTF-8"), "ISO-8859-1");
+		}
+		
+		// 응답 헤더 설정
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + originalName + "\"");
+		response.setContentType(contentType);
+		
+		
+		// 응답 바디에 파일 데이터 싣기
+		String filePath = "C:/OTI/uploadfiles/ChangeRequest/" + changeRequest.getSrNo() + "/" + savedName;
+		
+		File file = new File(filePath);
+		
+		if(file.exists()) {
+			InputStream is = new FileInputStream(file);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			os.flush();
+			os.close();
+			is.close();
+		}
+	}
+	
+	@RequestMapping(value="progress/detail/changeRequestDetail/{crNo}", method=RequestMethod.POST)
+	public String changeRequestDetail(@PathVariable int crNo, Model model) {
+		ChangeRequest changeRequest = progressService.getChangeRequestFile(crNo);
+		
+		String[] list = changeRequest.getCrDdlnDate().split(" ");
+		changeRequest.setCrDdlnDate(list[0]);
+		
+		model.addAttribute("changeRequest", changeRequest);
+		
+		return "progress/progressChangeRequestDetail";
+	}
+	
 }

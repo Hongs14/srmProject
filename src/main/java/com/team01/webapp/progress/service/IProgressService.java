@@ -2,6 +2,7 @@ package com.team01.webapp.progress.service;
 
 import java.util.List;
 
+import com.team01.webapp.model.ChangeRequest;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
@@ -216,5 +217,11 @@ public interface IProgressService {
 	public String managerNo(String srNo);
 
 	public List<Integer> humanList(String srNo);
+
+	public void changeRequest(ChangeRequest changeRequest);
+
+	public List<ChangeRequest> getChangeRequestList(String srNo);
+
+	public ChangeRequest getChangeRequestFile(int crNo);
 
 }

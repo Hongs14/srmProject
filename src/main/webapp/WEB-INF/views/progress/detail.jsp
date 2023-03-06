@@ -114,7 +114,7 @@ border-top-right-radius: 10px;
 												<span class="font-weight-bold ">SR 내용 </span>
 											</div>
 											<div class="col-10 border" style="min-height:100px;">
-												<span>${progressDetail.srCn}~~~~~~~~~~~~~~~~</span>
+												<span>${progressDetail.srCn}</span>
 											</div>
 										</div>
 										<br/>
@@ -126,7 +126,7 @@ border-top-right-radius: 10px;
 													<div>
 													<c:forEach var="filelist" items="${progressDetail.srFile}">
 														<a href="filedownload?srFileNo=${filelist.srFileNo}">
-															<span class="font-weight-bold ">${filelist.srFileActlNm}.${filelist.srFileExtnNm}</span>
+															<span class="font-weight-bold ">${filelist.srFileActlNm}</span>
 															<br/>
 														</a>
 													</c:forEach>

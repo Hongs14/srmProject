@@ -331,7 +331,10 @@
 											data : JSON.stringify(data),
 											contentType : "application/json; charset=UTF-8"
 										}).done((data) => {
-											window.location.href ='${srNo}';
+											$("#message").text("삭제 되었습니다.");
+											setTimeout(function() {
+												window.location.href ='${srNo}';
+											}, 2000);
 										})
 									}
 								}

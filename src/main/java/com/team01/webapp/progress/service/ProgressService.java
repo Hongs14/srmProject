@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.team01.webapp.model.ChangeRequest;
 import com.team01.webapp.model.DeveloperSR;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
@@ -394,6 +395,21 @@ public class ProgressService implements IProgressService {
 		}
 		
 		return humanList;
+	}
+
+	@Override
+	public void changeRequest(ChangeRequest changeRequest) {
+		progressRepository.insertChangeRequest(changeRequest);
+	}
+
+	@Override
+	public List<ChangeRequest> getChangeRequestList(String srNo) {
+		return progressRepository.selectChangeRequestList(srNo);
+	}
+
+	@Override
+	public ChangeRequest getChangeRequestFile(int crNo) {
+		return progressRepository.selectChangeRequestFile(crNo);
 	}
 
 }
