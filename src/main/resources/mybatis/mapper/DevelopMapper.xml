@@ -12,7 +12,7 @@
 		WHERE SR.SYS_NO = SYS.SYS_NO
 		AND SR.STTS_NO = ST.STTS_NO
 		AND SR.SR_CUST_NO = U.USER_NO
-		AND SR.STTS_NO IN (4,5,9)
+		AND SR.STTS_NO IN (4, 9)
 		<if test="!sysNo.equals('all')">
 			AND sys.sys_no = #{sysNo}
 		</if>
@@ -76,11 +76,11 @@
 			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr.sr_type,  sr.sr_dev_dp, user_type, user_nm, user_ogdp, user_dp_nm
 			      from sr, sr_type, sr_stts, users, system
 			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no 
-			      	<if test="sttsNo == 4 or sttsNo == 5 or sttsNo == 9">
+			      	<if test="sttsNo == 4 or sttsNo == 9">
 			      		and sr.stts_no = #{sttsNo}
 			      	</if>
 			      	<if test="sttsNo == 0">
-			      		and sr.stts_no in (4, 5, 9)
+			      		and sr.stts_no in (4, 9)
 			      	</if>
 			      	<if test="!sysNo.equals('all')">
 			      		AND sr.sys_no = #{sysNo}
