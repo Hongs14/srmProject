@@ -87,7 +87,7 @@ public class DevelopController {
 		return "develop/ajaxList";
 	}
 	
-	/**
+	/**개발관리 상세보기
 	 * @author 			정홍주
 	 * @param pageNo	
 	 * @param srNo		서비스에 보내줄 int타입 객체
@@ -99,17 +99,19 @@ public class DevelopController {
 		List<Users> devList = developService.getDevelopList();
 		DevelopDto srDetail = developService.getDetail(srNo);
 		List<HR> hrlist = developService.selectHrList(srNo);
+		Users leader = developService.getLeader(srNo);
 	
 		model.addAttribute("dlist", srDetail);
 		model.addAttribute("devlist", devList);
 		log.info("devList"+devList);
 		model.addAttribute("hrlist",hrlist);
+		model.addAttribute("leader", leader);
 		
 		return "develop/developdetail";
 	}
 	
-	@GetMapping("/file")
-	public void download(int srFileNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
+	@GetMapping("/file/{srFileNo}")
+	public void download(@PathVariable int srFileNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
 		log.info("파일 다운로드");
 		
 		SrFile srFile = developService.getSrFile(srFileNo);
@@ -131,7 +133,7 @@ public class DevelopController {
 		response.setContentType(contentType);
 		
 		// 응답 바디에 파일 데이터 싣기
-		String filePath = "C:/Temp/uploadfiles/" + savedName;
+		String filePath = "C:/OTI/uploadfiles/" + savedName;
 			
 			File file = new File(filePath);
 			

@@ -92,6 +92,9 @@ public interface IDevelopRepository {
 	 */
 	public List<HR> selectHrList(String srNo);
 
+	public Users selectLeader(String srNo);
 	
+	public int checkHr(String srNo);
+	public int deleteHr(String srNo);
 
 }

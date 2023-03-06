@@ -36,4 +36,6 @@ public interface IDevelopService {
 	 */
 	public List<HR> selectHrList(String srNo);
 	
+	public Users getLeader(String srNo);
+	
 }

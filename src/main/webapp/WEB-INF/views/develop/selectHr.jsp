@@ -2,26 +2,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:forEach var="users" items="${pickName}">
-	<div class="row">
-		<div id="devNameInput" class="col-sm-3 col-form-label">
+	<div class="row  d-flex text-center m-0 py-2">
+		<div id="devNameInput" class="col-sm-2 col-form-label text-center">
 			<input name="userNo" id="userNo" type="hidden" value="${users.userNo}"/>
 			<input name="hrLeader" type="hidden" value="N"/>
 			<div id="pickDevNm">${users.userNm}</div>
 		</div>
-		<div class="col-sm-3">
-			<select name="taskNo" class="form-control">
+		<div class="col-sm-2 text-center">
+			<select name="taskNo" class="form-control-sm">
 				<option>작업구분</option>
 				<option value="2">설계</option>
 				<option value="1">개발</option>
 				<option value="3">테스트</option>
 			</select>
 		</div>
-		<div class="col-3">
-			<input name="hrStartDate" type="date" class="form-control"/>
+		<div class="col-sm-4 text-center">
+			<input name="hrStartDate" type="date" class="form-control-sm"/>
 		</div>
 			
-		<div>
-			<input name="hrEndDate" type="date" class="form-control"/>
+		<div class="col-sm-4 text-center">
+			<input name="hrEndDate" type="date" class="form-control-sm"/>
+			<a href="#" class="deleteHr text-right" id='${users.userNo}' style="color: red;">x</a>
 		</div>
+		<hr class="my-0"/>
 	</div>
+	
 </c:forEach>
