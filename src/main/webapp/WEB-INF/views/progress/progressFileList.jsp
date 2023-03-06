@@ -39,6 +39,11 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<c:if test="${empty progressFileList}">
+			<h2 class="m-3">
+				등록된 산출물이 없습니다
+			</h2>
+		</c:if>
 	<!-- 모달 창 -->
 	<div class="modal fade" id="progressFileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">

@@ -38,63 +38,94 @@
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach var="list" items="${progressRateList}">
-				<tr>
-					<c:if test="${list.progType != 5 && list.progType != 6}">
-						<td>
-							<a onclick="progressRateAdd('${list.progNo}')" data-toggle="modal" data-target="#progressRateModal">
+				<c:if test="${choice == 0}">
+					<c:forEach var="list" items="${progressRateList}">
+						<tr>
+							<c:if test="${list.progType != 5 && list.progType != 6}">
+								<td>
+									<a onclick="progressRateAdd('${list.progNo}')" data-toggle="modal" data-target="#progressRateModal">
+										${list.progTypeNm}
+									</a>
+								</td>
+								<td class="input-daterange p-3" style="width:170px;">
+									<input type="text" value="${list.progStartDate}" class="a form-control form-control-sm" id="start-${list.progNo}"/>
+								</td>
+								<td class="input-daterange p-3" style="width:170px;">
+									<input type="text" value="${list.progEndDate}" class="a form-control form-control-sm" id="end-${list.progNo}"/>
+								</td>
+								<td class="input-daterange p-3" style="width:100px;">
+									<input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="${list.progRate}" min="0" class="form-control form-control-sm" id="rate-${list.progNo}"/>
+								</td>
+								<td class="pl-5">
+									<c:if test="${list.progressFile[0].progFileNo != null}">
+										<div class="row d-flex flex-column text-left">
+											<c:forEach var="fileList" items="${list.progressFile}">
+										
+												<a href="progressFiledownload/${list.srNo}/?progFileNo=${fileList.progFileNo}">
+													<span>[${fileList.progFileActlNm}]</span>
+												</a>
+											</c:forEach>
+										</div>
+									</c:if>
+								</td>
+							</c:if>
+							<c:if test="${list.progType == 5 || list.progType == 6}">
+								<td>
+									${list.progTypeNm}
+								</td>
+								<td>
+									${list.progStartDate}
+								</td>
+								<td>
+									${list.progEndDate}
+								</td>
+								<td>
+									${list.progRate}
+								</td>
+								<td>
+									<c:if test="${list.progressFile[0].progFileNo != null}">
+										<div class="row">
+											<c:forEach var="fileList" items="${list.progressFile}">
+												<a href="progressFiledownload/${list.srNo}/?progFileNo=${fileList.progFileNo}">
+													<span>[${fileList.progFileActlNm}]</span>
+												</a>
+											</c:forEach>
+										</div>
+									</c:if>
+								</td>
+							</c:if>
+						</tr>
+					</c:forEach>
+				</c:if>
+				<c:if test="${choice == 90}">
+					<c:forEach var="list" items="${progressRateList}">
+						<tr>
+							<td>
 								${list.progTypeNm}
-							</a>
-						</td>
-						<td class="input-daterange p-3" style="width:170px;">
-							<input type="text" value="${list.progStartDate}" class="a form-control form-control-sm" id="start-${list.progNo}"/>
-						</td>
-						<td class="input-daterange p-3" style="width:170px;">
-							<input type="text" value="${list.progEndDate}" class="a form-control form-control-sm" id="end-${list.progNo}"/>
-						</td>
-						<td class="input-daterange p-3" style="width:100px;">
-							<input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="${list.progRate}" min="0" class="form-control form-control-sm" id="rate-${list.progNo}"/>
-						</td>
-						<td>
-							<c:if test="${list.progressFile[0].progFileNo != null}">
-								<div class="row d-flex flex-column text-left">
-									<c:forEach var="fileList" items="${list.progressFile}">
-								
-										<a href="progressFiledownload/${list.srNo}/?progFileNo=${fileList.progFileNo}">
-											<span>[${fileList.progFileActlNm}]</span>
-										</a>
-									</c:forEach>
-								</div>
-							</c:if>
-						</td>
-					</c:if>
-					<c:if test="${list.progType == 5 || list.progType == 6}">
-						<th>
-							${list.progTypeNm}
-						</th>
-						<th>
-							${list.progStartDate}
-						</th>
-						<th>
-							${list.progEndDate}
-						</th>
-						<th>
-							${list.progRate}
-						</th>
-						<th>
-							<c:if test="${list.progressFile[0].progFileNo != null}">
-								<div class="row">
-									<c:forEach var="fileList" items="${list.progressFile}">
-										<a href="progressFiledownload/${list.srNo}/?progFileNo=${fileList.progFileNo}">
-											<span>[${fileList.progFileActlNm}]</span>
-										</a>
-									</c:forEach>
-								</div>
-							</c:if>
-						</th>
-					</c:if>
-				</tr>
-			</c:forEach>
+							</td>
+							<td>
+								${list.progStartDate}
+							</td>
+							<td>
+								${list.progEndDate}
+							</td>
+							<td>
+								${list.progRate}
+							</td>
+							<td>
+								<c:if test="${list.progressFile[0].progFileNo != null}">
+									<div class="row">
+										<c:forEach var="fileList" items="${list.progressFile}">
+											<a href="progressFiledownload/${list.srNo}/?progFileNo=${fileList.progFileNo}">
+												<span>[${fileList.progFileActlNm}]</span>
+											</a>
+										</c:forEach>
+									</div>
+								</c:if>
+							</td>
+						</tr>
+					</c:forEach>
+				</c:if>
 			</tbody>
 		</table>
 	<!-- 모달 창 -->

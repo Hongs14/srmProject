@@ -305,7 +305,7 @@ public class ProgressController {
 		
 		model.addAttribute("srNo", hr.getSrNo());
 		
-		log.info(progressRateList);
+		model.addAttribute("choice", progressRateList.get(4).getProgRate());
 		
 		return "progress/progressRateList";
 	}
