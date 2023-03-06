@@ -232,9 +232,21 @@
           <div id="colNo2">
           
           </div>
-          
+          <c:if test="${!empty command and command eq 'detail'}">
+          	<input type="hidden" value="${srNo}" id="detailSrNo">
+          </c:if>
           </div>
           <!-- Row -->
+          <c:if test="${!empty command and command eq 'detail'}">
+	          <script>
+	          	$(document).ready(function(){
+	          		var srNo = $("#detailSrNo").val();
+		  			getSrDetail(srNo);
+		          }
+	          	
+	          	);
+	          </script>
+          </c:if>
 			<script>
 				
 				//오늘 날짜 디폴트로 입력
@@ -307,7 +319,7 @@
 					
 					
 					$.ajax({
-						url : "filter/1",
+						url : "${pageContext.request.contextPath}/request/filter/1",
 						method : "post",
 						data : JSON.stringify(data),
 						contentType: "application/json; charset=UTF-8"
@@ -371,12 +383,13 @@
 								srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 					
 					$.ajax({
-						url : "filter/"+pageNo,
+						url : "${pageContext.request.contextPath}/request/filter/"+pageNo,
 						method : "post",
 						data : JSON.stringify(data),
 						contentType: "application/json; charset=UTF-8"
 					}).done((data) => {
 						$("#ajaxList").html(data);
+						
 					});
 				}
 				
@@ -390,7 +403,7 @@
 					$("#colNo2").attr("class","col-lg-5");
 					
 					$.ajax({
-						url : "detail/"+srNo,
+						url : "${pageContext.request.contextPath}/request/detail/"+srNo,
 						type : "GET",
 						dataType : "html",
 						success : function(data) {
@@ -399,7 +412,6 @@
 					});
 					
 				}
-				
 				function getWriteForm(){
 					$("#srMenu").removeClass("d-sm-flex");
 					$("#srMenu").hide();
@@ -408,7 +420,7 @@
 					$("#colNo2").attr("class","col-lg-5");
 					
 					$.ajax({
-						url :"write",
+						url :"${pageContext.request.contextPath}/request/write",
 						type : "GET",
 						dataType : "html",
 						success : function(data) {
@@ -426,7 +438,7 @@
 					$("#colNo2").attr("class","col-lg-5");
 					
 					$.ajax({
-						url :"update/"+srNo,
+						url :"${pageContext.request.contextPath}/request/update/"+srNo,
 						type : "GET",
 						dataType : "html",
 						success : function(data) {

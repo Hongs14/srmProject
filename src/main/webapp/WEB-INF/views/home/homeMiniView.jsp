@@ -20,8 +20,8 @@
 					<tbody>
 						<c:forEach var="list" items="${srList}">
 						<tr >
-							<td><a href="#">${list.srNo}</a></td>
-							<td  class="srTtl">${list.srTtl}</td>
+							<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srNo}</a></td>
+							<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}" class="srTtl">${list.srTtl}</a></td>
 							<td>${list.sysNm}</td>
 							<td style="width : 100px">
 								<c:choose>

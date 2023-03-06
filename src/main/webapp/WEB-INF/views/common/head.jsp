@@ -21,6 +21,3 @@
 <link href="${pageContext.request.contextPath}/resources/vendor/clock-picker/clockpicker.css" rel="stylesheet">
 
 <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
-
-<link href="${pageContext.request.contextPath}/resources/css/alertify.bootstrap.css" type="text/css" rel="stylesheet" />
-<script src="${pageContext.request.contextPath}/resources/jquery/alertify.js"></script>
