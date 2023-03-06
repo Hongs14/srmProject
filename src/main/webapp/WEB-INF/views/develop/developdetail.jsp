@@ -78,10 +78,10 @@
 		function selectList() {
 			//모달리스트 띄우기
 			let userDpNm = $('#srDevDp').val();
-			let startDate = $('#leaderSdate').val();
-			let endDate = $('#leaderEdate').val(); 
+			let startDate = $('#srStartDate').val();
+			let endDate = $('#srEndDate').val(); 
 			let userNo = $('#srDLeader').val();
-			console.log(userDpNm);
+			console.log(userNo);
 			let data = {
 				userDpNm : userDpNm,
 				userNo : userNo,
@@ -112,6 +112,7 @@
 			//HR리스트에 일반개발자 등록
 			var checkBoxArr = [];
 			var srNo = '${dlist.srNo}';
+			console.log("aAAAAAAAA"+srNo);
 			$("input:checkbox[name='devName']:checked").each(function(i) {
 				//체크박스값 배열에 넣기
 				var userNo = $(this).val();
@@ -119,7 +120,7 @@
 					userNo : userNo,
 					srNo : srNo
 				};
-			
+				console.log("data"+data);
 				checkBoxArr.push(data);
 				/* $("input:checkbox[name='devName']").prop("checked", false); */
 			});
@@ -187,13 +188,13 @@
 											<div class="col-6">
 												<div class="row">
 													<div class="col-sm-4">
-														<h6 class="m-0 font-weight-bold text-primary">등록자</h6>
+														<h6 class="font-weight-bold text-primary">등록자</h6>
 													</div>
 													<div class="col-sm-8">${dlist.userNm}</div>
 												</div>
 												<div class="row">
 													<div class="col-sm-4">
-														<h6 class="m-0 font-weight-bold text-primary">등록일</h6>
+														<h6 class="font-weight-bold text-primary">등록일</h6>
 													</div>
 													<div class="col-sm-8">${dlist.srRegDate}</div>
 												</div>
@@ -201,13 +202,13 @@
 											<div class="col-6">
 												<div class="row">
 													<div class="col-sm-4">
-														<h6 class="m-0 font-weight-bold text-primary">소속</h6>
+														<h6 class="font-weight-bold text-primary">소속</h6>
 													</div>
 													<div class="col-sm-8">${dlist.userOgdp}</div>
 												</div>
 												<div class="row">
 													<div class="col-sm-4">
-														<h6 class="m-0 font-weight-bold text-primary">관련시스템</h6>
+														<h6 class=" font-weight-bold text-primary">관련시스템</h6>
 													</div>
 													<div class="col-sm-8">${dlist.sysNm}</div>
 												</div>
@@ -223,18 +224,21 @@
 											</div>
 											<div class="col-sm-10">${dlist.srTtl}</div>
 										</div>
+										<hr/>
 										<div class="row mb-1">
 											<div class="col-sm-2">
 												<h6 class="m-0 font-weight-bold text-primary">관련근거(목적)</h6>
 											</div>
 											<div class="col-sm-10">${dlist.srStd}</div>
 										</div>
+										<hr/>
 										<div class="row mb-1">
 											<div class="col-sm-2">
 												<h6 class="m-0 font-weight-bold text-primary">SR내용</h6>
 											</div>
-											<div class="col-sm-10">${dlist.srCn}</div>
+											<div class="col-sm-10" style="border: 1px solid gray">${dlist.srCn}</div>
 										</div>
+										<hr/>
 										<div class="row mb-1">
 											<div class="col-sm-2">
 												<h6 class="m-0 font-weight-bold text-primary">첨부파일</h6>
@@ -264,7 +268,12 @@
 														</div>
 														<div class="col-sm-8">
 															<select onchange="selectDev(this);" id="srDLeader" class="form-control noneUpdate" required>
+																<c:if test="${leader.userNo ne null}">
 																	<option value="${leader.userNo}" disabled selected>${leader.userNm} [${leader.userDpNm}&nbsp;${leader.userJbps}]</option>
+																</c:if>
+																<c:if test="${leader.userNo eq null}">
+																	<option value="" disabled selected></option>
+																</c:if>
 																<c:forEach var="users" items="${devlist}">
 																	<option value="${users.userNo}">${users.userNm} [${users.userDpNm}&nbsp;${users.userJbps}]</option>
 																</c:forEach>
@@ -277,7 +286,6 @@
 														</div>
 														<div class="col-sm-8">
 															<input id="srDevDp" name="srDevDp" class="form-control" type="text" value="${dlist.srDevDp}" readonly />
-														
 															<input type="hidden" value="${dlist.srNo}" name="srNo"/>
 														</div>
 													</div>
@@ -358,49 +366,56 @@
 													</div>
 													<div class="mt-3" style="border: 1px solid gray; min-height: 400px;">
 														<div class="row d-flex text-center m-0 p-o" style="border-bottom:1px solid black; background-color:#eaecf4;">
-															<div class="col-2 text-primary">성명</div>
+															<div class="col-1 text-primary">리더</div>
+															<div class="col-1 text-primary">성명</div>
 															<div class="col-2 text-primary">작업 할당</div>
 															<div class="col-4 text-primary">인력 투입일</div>
 															<div class="col-4 text-primary">인력 투입종료일</div>
 														</div>
 														<div id="leader" class="py-2">
 															<div class="row  d-flex text-center m-0">
-																<div class="col-sm-2 text-center">
+															<div class="col-sm-1 text-center">
+															
+													
+																<%-- <c:forEach items="${hrlist}" var="devlist" >
+																	<c:if test="${devlist.hrLeader eq 'Y'}">
+																		<i class="fas fa-flag"></i>
+																	</c:if>
+																	<c:if test="${devlist.hrLeader ne 'Y'}">
+																		<span class="badge badge-warning ml-3">N</span>
+																	</c:if>
+																</c:forEach> --%>	
+															</div>
+																<div class="col-sm-1 text-center">
 																	<div class="row">
 																		<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
 																			<c:forEach items="${hrlist}" var="devlist" >
 																				<c:if test="${devlist.hrLeader eq 'Y'}">
-																					<span class="badge badge-warning">L</span>
 																					<div id="pickDevNm">${devlist.userNm}</div>
+																					<input name="hrLeader" type="hidden" value="Y"/>
 																				</c:if>
 																			</c:forEach>
 																		</c:if>	
 																		<c:if test="${dlist.sttsNo == 4}">
 																			<input name="userNo" id="leaderNo" type="hidden" value="" />
-																			<div class="badge badge-warning ml-3">L</div>
 																			<div id="pickDevNm"></div>
-																			<input name="hrLeader" type="hidden" value="Y" />
+																			<input name="hrLeader" type="hidden" value="Y"/>
 																		</c:if>
 																	</div>
 																</div>
 																<div class="col-sm-2 text-center">
-																	<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
-																		<c:forEach items="${hrlist}" var="devlist" >
-																			<c:if test="${devlist.hrLeader eq 'Y'}">
-																				<select name="taskNo" class="form-control-sm mx-0" required>
+																	<select name="taskNo" class="form-control-sm mx-0" required>	
+																		<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
+																			<c:forEach items="${hrlist}" var="devlist">
+																				<c:if test="${devlist.hrLeader eq 'Y'}">
 																					<option value="${devlist.taskNo}" disabled selected>${devlist.taskNm}</option>
-																					<option value="2">설계</option>
-																					<option value="1">개발</option>
-																					<option value="3">테스트</option>
-																				</select>
-																			</c:if>
-																		</c:forEach>
-																	</c:if>
-																	<c:if test="${dlist.sttsNo == 4}">
-																		<c:forEach items="${hrlist}" var="devlist" >
-																			<c:if test="${devlist.hrLeader eq 'Y'}"><span class="badge badge-primary">${devlist.taskNm}</span></c:if>
-																		</c:forEach>
-																	</c:if>
+																				</c:if>
+																			</c:forEach>
+																		</c:if>			
+																		<option value="2">설계</option>
+																		<option value="1">개발</option>
+																		<option value="3">테스트</option>
+																	</select>
 																</div>
 																<div class="col-sm-4 text-center">
 																	<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
@@ -429,8 +444,11 @@
 															<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
 																<c:forEach items="${hrlist}" var="devlist" >
 																	<div class="row  d-flex text-center m-0">
+																		<div class="col-sm-1">
+																			<span class="badge badge-warning ml-3">D</span>
+																		</div>
 																		<c:if test="${devlist.hrLeader eq 'N'}">
-																			<div class="col-sm-2">${devlist.userNm}</div>
+																			<div class="col-sm-1">${devlist.userNm}</div>
 																		
 																			<div class="col-sm-2 text-center">
 																				<select name="taskNo" class="form-control-sm">
