@@ -424,7 +424,7 @@
 		WHERE PROG_NO = #{progNo}
 	</update>
 	<!-- 
-		진척율 파일 정보 조회
+		진척율 파일 정보 조회1
 		작성자 : 김태희
 	-->
 	<select id="selectProgressRateFile" parameterType="string" resultType="progressFile">
@@ -439,7 +439,7 @@
 	</select>
 	
 	<!-- 
-		진척율 파일 정보 조회
+		진척율 파일 정보 조회2
 		작성자 : 김태희
 	-->
 	<select id="selectProgressFile" parameterType="string" resultType="progressFile">
@@ -530,4 +530,12 @@
 		    </if>
 		WHERE PROG_NO = #{progNo}
 	</update>
+	
+	<select id="selectManagerNo" parameterType="string" resultType="string">
+		SELECT
+		    MANAGER_NO
+		FROM SYSTEM, SR
+		WHERE SYSTEM.SYS_NO = SR.SYS_NO
+		AND SR_NO = #{srNo}
+	</select>
 </mapper>

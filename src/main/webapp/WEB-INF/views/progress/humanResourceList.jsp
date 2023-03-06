@@ -17,20 +17,26 @@
 	</script>
 	<div class="table-responsive">
 	<div class="input-group-append float-right mb-3">
-		<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#HumanResourceAdd" id="#modalScroll">
-			추가
-		</button>
-		<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#HumanResourceUpdate" id="#modalScroll" onclick="developerUpdate()">
-			변경
-		</button>
-		<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#HumanResourceDelete" id="#modalScroll" onclick="developerDelete()">
-			삭제
-		</button>
+		<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
+			<c:if test="${userNo == managerNo}">
+				<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#HumanResourceAdd" id="#modalScroll">
+					추가
+				</button>
+				<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#HumanResourceUpdate" id="#modalScroll" onclick="developerUpdate()">
+					변경
+				</button>
+				<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#HumanResourceDelete" id="#modalScroll" onclick="developerDelete()">
+					삭제
+				</button>
+			</c:if>
+		</c:if>
 	</div>
 		<table class="table align-items-center table-flush table-hover p-2">
 			<thead class="thead-light">
 				<tr>
-					<th></th>
+					<c:if test="${userNo == managerNo}">
+						<th></th>
+					</c:if>
 					<th>성명</th>
 					<th>부서 명</th>
 					<th>직책</th>
@@ -43,12 +49,14 @@
 			</thead>
 			<c:forEach var="list" items="${hrList}">
 				<tr>
-					<th>
-						<div class="custom-control custom-radio">
-							<input type="radio" id="SR+${list.userNo}" name="customRadio" class="custom-control-input" value="${list.userNo}">
-							<label class="custom-control-label" for="SR+${list.userNo}"></label>
-						</div>
-					</th>
+					<c:if test="${userNo == managerNo}">
+						<th>
+							<div class="custom-control custom-radio">
+								<input type="radio" id="SR+${list.userNo}" name="customRadio" class="custom-control-input" value="${list.userNo}">
+								<label class="custom-control-label" for="SR+${list.userNo}"></label>
+							</div>
+						</th>
+					</c:if>
 					<th>${list.userNm}</th>
 					<th>${list.userDpNm}</th>
 					<th>${list.userJbps}</th>

@@ -210,6 +210,12 @@ public class ProgressController {
 		List<HR> developerList = progressService.developerList(hrList.get(0).getUserDpNm(), srNo);
 		model.addAttribute("developerList", developerList);
 		
+		ProgressDetail progressDetail = progressService.getSrSttsNm(hr.getSrNo());
+		model.addAttribute("sttsNm", progressDetail.getSttsNm());
+		
+		String managerNo = progressService.managerNo(srNo);
+		model.addAttribute("managerNo", managerNo);
+		
 		return "progress/humanResourceList";
 	}
 	
@@ -297,7 +303,8 @@ public class ProgressController {
 	 * @return			progress/progressRateList 로 return
 	 */
 	@RequestMapping(value="progress/detail/progressajax/2", produces="application/json; charset=UTF-8")
-	public String Progressrate(@RequestBody HR hr, Model model) {
+	public String Progressrate(@RequestBody HR hr, Model model, HttpSession session) {
+		int userNo = (int) session.getAttribute("userNo");
 		
 		List<Progress> progressRateList = progressService.progressRateList(hr.getSrNo());
 		
@@ -305,7 +312,17 @@ public class ProgressController {
 		
 		model.addAttribute("srNo", hr.getSrNo());
 		
-		model.addAttribute("choice", progressRateList.get(4).getProgRate());
+		ProgressDetail progressDetail = progressService.getSrSttsNm(hr.getSrNo());
+		model.addAttribute("sttsNm", progressDetail.getSttsNm());
+		
+		String managerNo = progressService.managerNo(hr.getSrNo());
+		model.addAttribute("managerNo", managerNo);
+		
+		List<Integer> humanList = progressService.humanList(hr.getSrNo());
+		humanList.add(Integer.parseInt(managerNo));
+		
+		boolean check = humanList.contains(userNo);
+		model.addAttribute("check", check);
 		
 		return "progress/progressRateList";
 	}
@@ -462,14 +479,26 @@ public class ProgressController {
 	 * @return			progress/progressFileAdd 로 리턴
 	 */
 	@RequestMapping(value="progress/detail/progressajax/3", produces="application/json; charset=UTF-8")
-	public String progresssFileList(@RequestBody HR hr, Model model) {
+	public String progresssFileList(@RequestBody HR hr, Model model, HttpSession session) {
+		int userNo = (int) session.getAttribute("userNo");
 		
 		List<ProgressFile> progressFileList = progressService.progressfileList(hr.getSrNo());
+		
+		ProgressDetail progressDetail = progressService.getSrSttsNm(hr.getSrNo());
+		
+		model.addAttribute("sttsNm", progressDetail.getSttsNm());
 		
 		model.addAttribute("progressFileList", progressFileList);
 		model.addAttribute("srNo", hr.getSrNo());
 		
-		log.info(progressFileList);
+		String managerNo = progressService.managerNo(hr.getSrNo());
+		model.addAttribute("managerNo", managerNo);
+		
+		List<Integer> humanList = progressService.humanList(hr.getSrNo());
+		humanList.add(Integer.parseInt(managerNo));
+		
+		boolean check = humanList.contains(userNo);
+		model.addAttribute("check", check);
 		
 		return "progress/progressFileList";
 	}

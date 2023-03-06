@@ -211,4 +211,10 @@ public interface IProgressService {
 
 	public List<ProgressDetail> getProgressList(List<String> progressArr);
 
+	public ProgressDetail getSrSttsNm(String srNo);
+
+	public String managerNo(String srNo);
+
+	public List<Integer> humanList(String srNo);
+
 }

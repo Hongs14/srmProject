@@ -262,5 +262,7 @@ public interface IProgressRepository {
 	void updateProgressFinishRequest(@Param("srNo") String srNo, @Param("choice") String choice);
 
 	void updateProgressRateFinishRequest(@Param("progNo") String progNo, @Param("choice") String choice);
+
+	String selectManagerNo(String srNo);
 	
 }
