@@ -4,7 +4,7 @@
 <c:forEach var="users" items="${pickName}">
 	<div class="row  d-flex text-center m-0 py-2">
 		<div class="col-sm-1">
-			<span class="badge badge-warning ml-3">N</span>
+			<span class="badge badge-warning ml-3">D</span>
 		</div>
 		<div id="devNameInput" class="col-sm-1 col-form-label text-center">
 			<input name="userNo" id="userNo" type="hidden" value="${users.userNo}"/>
