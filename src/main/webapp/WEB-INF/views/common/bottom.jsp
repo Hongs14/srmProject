@@ -8,8 +8,6 @@
   <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.js"></script>
   <script src="${pageContext.request.contextPath}/resources/vendor/jquery-easing/jquery.easing.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/ruang-admin.js"></script>
-<%--   <script src="${pageContext.request.contextPath}/resources/vendor/chart.js/Chart.js"></script> --%>
-<%--   <script src="${pageContext.request.contextPath}/resources/js/demo/chart-area-demo.js"></script>  --%>
 
 
   <!-- Select2 -->
@@ -22,3 +20,4 @@
   <script src="${pageContext.request.contextPath}/resources/vendor/clock-picker/clockpicker.js"></script>
   <!-- Javascript for this page -->
   <script src="${pageContext.request.contextPath}/resources/js/form_advanceds.js"></script>
+  
