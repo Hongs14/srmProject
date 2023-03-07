@@ -59,13 +59,23 @@
 									        	<div class="col-sm-4">
 									            	<div class="form-group row" id="simple-date4" >
 												    	<div class="input-daterange input-group input-group-sm">
-												        	<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
-											            	<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="startDate" id="startDate" />
-									                    	<div class="input-group-prepend">
-									                    		<span class="input-group-text" style="height:31px;">~</span>
-									                    	</div>
-										                    <input type="text" class="input-sm form-control form-control-sm" name="endDate" id="endDate" />
-												     	</div>
+												    	
+												    		<c:set var="today" value="<%=new java.util.Date()%>"/>
+															<c:set var="today"><fmt:formatDate value="${today}" pattern="yyyyMMdd" /></c:set> 
+												    		
+												    		
+												    		<input type="text" value="" class="input-sm form-control form-control-sm col-sm-9" name="startDate" id="startDate" />
+								                    		
+								                    		<input type="text" class="input-sm form-control form-control-sm" name="endDate" id="endDate"/> 
+											     	
+												    		
+												        	<%-- <label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
+										            		<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="startDate" id="startDate" />
+								                    		<div class="input-group-prepend">
+								                    			<span class="input-group-text" style="height:31px;">~</span>
+								                    		</div>
+									                    	<input type="text" class="input-sm form-control form-control-sm" name="endDate" id="endDate"/> --%>
+											     		</div>
 									            	</div>
 									         	</div> 
 						                		<div class="col-sm-3">
@@ -205,21 +215,23 @@
 									
 										function developList(pageNo) {
 											console.log("개발관리 리스트 불러오기")
-											var sysNo = $('#sysNo').val();
+											/* var sysNo = $('#sysNo').val(); */
 											var sttsNo = $('#sttsNo').val();
 											var userOgdp = $('#userOgdp').val();
 											var srDevDp = $('#srDevDp').val();
 											var srRegStartDate = $('#startDate').val();
 											var srRegEndDate = $('#endDate').val();
-											var srCustNo =0;
-											var userType;
+											/* var srCustNo =0;
+											var userType; */
 											if($('#searchMySR').prop('checked')){
 												console.log("내 목록보기 체크");
-												srCustNo = $('#userNo').val();
-												userType = $('#userType').val();
-											} 
+												var sysNo = "${sessionScope.loginUser.sysNo}";
+												/* srCustNo = $('#userNo').val();
+												userType = $('#userType').val(); */
+											}  else{
+												var sysNo = 'all';
+											}
 											
-											console.log(srCustNo + " "+userType);
 											var srTtl = $('#keyword').val();
 											
 											if(srTtl !== "") {
@@ -227,8 +239,7 @@
 											};
 											
 											let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp: srDevDp,
-													srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl,
-													srCustNo: srCustNo, userType: userType};
+													srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl };
 											console.log(data);
 											
 											$.ajax({

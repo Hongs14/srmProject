@@ -366,7 +366,6 @@
 													</div>
 													<div class="mt-3" style="border: 1px solid gray; min-height: 400px;">
 														<div class="row d-flex text-center m-0 p-o" style="border-bottom:1px solid black; background-color:#eaecf4;">
-															<div class="col-1 text-primary">리더</div>
 															<div class="col-1 text-primary">성명</div>
 															<div class="col-2 text-primary">작업 할당</div>
 															<div class="col-4 text-primary">인력 투입일</div>
@@ -374,31 +373,19 @@
 														</div>
 														<div id="leader" class="py-2">
 															<div class="row  d-flex text-center m-0">
-															<div class="col-sm-1 text-center">
-															
-													
-																<%-- <c:forEach items="${hrlist}" var="devlist" >
-																	<c:if test="${devlist.hrLeader eq 'Y'}">
-																		<i class="fas fa-flag"></i>
-																	</c:if>
-																	<c:if test="${devlist.hrLeader ne 'Y'}">
-																		<span class="badge badge-warning ml-3">N</span>
-																	</c:if>
-																</c:forEach> --%>	
-															</div>
-																<div class="col-sm-1 text-center">
+																<div class="col-sm-2 text-center">
 																	<div class="row">
-																		<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
+																		<c:if test="${dlist.hrLeader} != 4">
 																			<c:forEach items="${hrlist}" var="devlist" >
 																				<c:if test="${devlist.hrLeader eq 'Y'}">
-																					<div id="pickDevNm">${devlist.userNm}</div>
+																					<i class="fas fa-flag"></i><div id="pickDevNm">${devlist.userNm}</div>
 																					<input name="hrLeader" type="hidden" value="Y"/>
 																				</c:if>
 																			</c:forEach>
-																		</c:if>	
+																		</c:if>
 																		<c:if test="${dlist.sttsNo == 4}">
 																			<input name="userNo" id="leaderNo" type="hidden" value="" />
-																			<div id="pickDevNm"></div>
+																			<i class="fas fa-flag"></i><div id="pickDevNm"></div>
 																			<input name="hrLeader" type="hidden" value="Y"/>
 																		</c:if>
 																	</div>
@@ -445,7 +432,7 @@
 																<c:forEach items="${hrlist}" var="devlist" >
 																	<div class="row  d-flex text-center m-0">
 																		<div class="col-sm-1">
-																			<span class="badge badge-warning ml-3">D</span>
+																			<span class="badge badge-warning">D</span>
 																		</div>
 																		<c:if test="${devlist.hrLeader eq 'N'}">
 																			<div class="col-sm-1">${devlist.userNm}</div>

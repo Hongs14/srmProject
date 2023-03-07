@@ -45,7 +45,7 @@ public class QnaController {
 	@PostMapping(value="/{sysNo}/filter/{pageNo}", produces="application/json; charset=UTF-8")
 	public String getQnaList(@PathVariable int pageNo, @RequestBody QSTN qstn, Model model,Pager pager) {
 		log.info("qstn 목록 필터링");
-		log.info(pageNo+" "+pager+" "+qstn);
+		log.info(qstn);
 		pager = qnaboardService.returnPage(pageNo,pager,qstn);
 		List<QSTN> qnalist = qnaboardService.getQstnList(pager,qstn);
 		model.addAttribute("qnalist", qnalist); 
@@ -64,10 +64,11 @@ public class QnaController {
 	 */
 	@GetMapping("/{sysNo}/view/{qstnNo}")
 	public String getQnaDetail(@PathVariable int qstnNo, Model model) {
+		log.info("QnA상세보기");
 		QSTN qstn = qnaboardService.getDetail(qstnNo);
 		
 		model.addAttribute("qstn", qstn);
-		log.info("qna상세보기");
+		int updateInq = qnaboardService.countInq(qstnNo);
 		return "qnaboard/qnadetail";
 	}
 	
@@ -102,7 +103,7 @@ public class QnaController {
 	 * @param qstnNo
 	 * @return
 	 */
-	@GetMapping(value="/read/comment")
+	@GetMapping(value="{sysNo}/read/comment")
 	@ResponseBody
 	public List<QSTNComment> readComment(@RequestParam int qstnNo) {
 		List<QSTNComment> list = qnaboardService.getCommentList(qstnNo);
