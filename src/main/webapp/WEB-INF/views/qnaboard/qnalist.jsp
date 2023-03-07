@@ -133,64 +133,59 @@
 			</div>
 		</div>
 		<script>
-		//오늘 날짜 디폴트로 입력
-		$(document).ready(function() {
-			var todayResult = getTimeStamp();
-			console.log(todayResult);
-			document.getElementById('dateEnd').value = todayResult;
-			
-			var dateStart =getLastYearTimeStamp();
-			console.log(dateStart);
-			document.getElementById('dateStart').value = dateStart;
-		});
-			
-		//오늘 날짜 양식
-		function getTimeStamp() {
-		  var d = new Date();
-
-		  var s =
-		    leadingZeros(d.getFullYear(), 4) + '/' +
-		    leadingZeros(d.getMonth() + 1, 2) + '/' +
-		    leadingZeros(d.getDate(), 2);
-
-		  return s;
-		}
-		//작년 날짜 양식
-		function getLastYearTimeStamp() {
+			//오늘 날짜 디폴트로 입력
+			$(document).ready(function() {
+				var todayResult = getTimeStamp();
+				console.log(todayResult);
+				$('#dateEnd').val = todayResult;
+				
+				var dateStart =getLastYearTimeStamp();
+				console.log(dateStart);
+				$('#dateStart').value = dateStart;
+			});
+				
+			//오늘 날짜 양식
+			function getTimeStamp() {
 			  var d = new Date();
-
+	
 			  var s =
-			    leadingZeros(d.getFullYear(), 4)-1 + '/' +
+			    leadingZeros(d.getFullYear(), 4) + '/' +
 			    leadingZeros(d.getMonth() + 1, 2) + '/' +
 			    leadingZeros(d.getDate(), 2);
-
+	
 			  return s;
 			}
-
-
-
-		//오늘 날짜 양식 (+두자리)
-		function leadingZeros(n, digits) {
-		  var zero = '';
-		  n = n.toString();
-
-		  if (n.length < digits) {
-		    for (i = 0; i < digits - n.length; i++)
-		      zero += '0';
-		  }
-		  return zero + n;
-		}
+			
+			//작년 날짜 양식
+			function getLastYearTimeStamp() {
+				  var d = new Date();
+	
+				  var s =
+				    leadingZeros(d.getFullYear(), 4)-1 + '/' +
+				    leadingZeros(d.getMonth() + 1, 2) + '/' +
+				    leadingZeros(d.getDate(), 2);
+	
+				  return s;
+			}
+	
+			//오늘 날짜 양식 (+두자리)
+			function leadingZeros(n, digits) {
+			  var zero = '';
+			  n = n.toString();
+	
+			  if (n.length < digits) {
+			    for (i = 0; i < digits - n.length; i++)
+			      zero += '0';
+			  }
+			  return zero + n;
+			}
 		
 		
-		
-		
-			$(document).ready(function () {
+			$(document).ready(function(){
 				console.log("시작");
 				var startDate = $('#dateStart').val();
 				var endDate = $('#dateEnd').val();
-				
 				var sysNo = "${sessionScope.loginUser.sysNo}";
-				
 				var qstnTtl = $('#keyword').val();
 				
 				if(qstnTtl !== "") {
@@ -202,7 +197,7 @@
 				console.log(data);
 				
 				$.ajax({
-					url : "${pageContext.request.contextPath}/qna/"+sysNo+"/filter/1",
+					url : '<c:url value="/qna/'+sysNo+'/filter/1"/>',
 					method : "post",
 					data : JSON.stringify(data),
 					contentType: "application/json; charset=UTF-8"
@@ -223,11 +218,10 @@
 					"overflow": "hidden",
 					"text-overflow": "ellipsis",
 					"display":"block"
-					
 				});
 				
 				$.ajax({
-					url : "view/"+qstnNo,
+					url : '<c:url value="/qna/view/'+qstnNo+'"/>',
 					method : "get",
 					dataType : "html",
 					success : function(data) {
@@ -236,10 +230,8 @@
 				});
 			}
 			
-		
-			
 			function searchQnaList(pageNo){
-				console.log(pageNo);
+				console.log("검색조건 리스트 페이지 번호: "+pageNo);
 				var startDate = $("#dateStart").val();
 				var endDate = $("#dateEnd").val();
 				var sysNo = "${sessionScope.loginUser.sysNo}"
@@ -257,9 +249,15 @@
 					url : '<c:url value="/qna/'+sysNo+'/filter/'+pageNo+'"/>',
 					method : "post",
 					data : JSON.stringify(data),
-					contentType: "application/json; charset=UTF-8"
-				}).done((data) => {
-					$("#qstnList").html(data)
+					contentType: "application/json; charset=UTF-8",
+					
+					success : function(result){
+						$("#qstnList").html(data);
+					},
+					error : function(request, status, error) {
+						console.log("실패");
+						alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+					}
 				});
 			}
 			
@@ -309,7 +307,7 @@
 					data : JSON.stringify(data),
 					contentType: "application/json; charset=UTF-8"
 				}).done((data) => {
-					$("#qstnList").html(data)
+					$("#qstnList").html(data);
 				}); 
 			}
 		</script>
