@@ -14,7 +14,6 @@
 }
 </style>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
-  	
   	<style>
   		.srTtl {
   			width : 190px;
