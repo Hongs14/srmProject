@@ -51,10 +51,19 @@ public class NoticeController {
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
-	@GetMapping("/list/{sysNo}")
-	public String getNoticeList(@PathVariable String sysNo, Model model) {
+	@GetMapping("/list")
+	public String getNoticeList(Model model) {
 		log.info("실행");
-		model.addAttribute(sysNo);
+		model.addAttribute("command","de");
+		return "notice/list";
+	}
+	
+	@GetMapping("/list/{ntcNo}")
+	public String getNoticeDetailView(@PathVariable int ntcNo, Model model) {
+		log.info("디테일 실행");
+		model.addAttribute("ntcNo", ntcNo);
+		model.addAttribute("sysNo","KOREASOFT_SRM");
+		model.addAttribute("command", "detail");
 		return "notice/list";
 	}
 

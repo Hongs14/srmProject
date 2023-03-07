@@ -15,6 +15,7 @@
 			<mvc:mapping path="/progress/**"/>
 			<mvc:mapping path="/qnaboard/**"/>
 			<mvc:mapping path="/request/**"/>
+			<mvc:mapping path="/alarm/**"/>
 			<bean id="interceptor" class="com.team01.webapp.interceptor.LoginInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

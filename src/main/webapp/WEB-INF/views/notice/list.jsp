@@ -174,250 +174,609 @@
 					}
 					
 				</script>
+				<c:if test="${!empty command and command eq 'de'}">
 				<script>
-					$(document).ready(function () {
-						console.log("시작");
+						$(document).ready(function () {
+							console.log("시작");
+							
+							let today = new Date();   
+							
+						  	let year = today.getFullYear(); // 년도
+						  	let month = today.getMonth() + 1;  // 월
+						  	let date = today.getDate();  // 날짜
+						  	
+						  	var defaltStartDate = (year + '/' + (month-2) + '/' + date);
+						  	var defaltEndDate = (year + '/' + month + '/' + date);
+						  	
+						  	console.log(defaltStartDate);
+						  	console.log(defaltEndDate);
+						  	
+						  	document.getElementById("dateStart").value = defaltStartDate;
+						  	document.getElementById("dateEnd").value = defaltEndDate;
+						  	
+						  	var startDate = document.getElementById("dateStart").value;
+						  	var endDate = document.getElementById("dateEnd").value;
+							
+						  	var str = location.href;
+						  	console.log(str);
+							var index = str.indexOf("?")+1;
+							console.log(index);
+						    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+						 
+						    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+						    if (index == 0) {
+						        return "";
+						    }
+						 
+						    // str의 값은 a=1&b=first&c=true
+						    str = str.substring(index, lastIndex); 
+						    console.log(str);
+
+						    var arr = str.split("=");
+						    console.log(arr);
+						    
+						    var sysNo = arr[1];
+						    console.log(sysNo);
+						    
+							var ntcTtl = document.getElementById("keyword").value;
+							
+							if(ntcTtl !== "") {
+								ntcTtl = "%" + ntcTtl + "%";
+							}
+							
+							console.log(ntcTtl);
+							console.log(startDate);
+							console.log(endDate);
+	
+							let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, sysNo : sysNo};
+							
+							console.log(data);
+							
+							$.ajax({
+								url : sysNo+"/filter/1",
+								method : "post",
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+							}).done((data) => {
+								$("#noticeList").html(data)
+							});
+						});
 						
-						let today = new Date();   
 						
-					  	let year = today.getFullYear(); // 년도
-					  	let month = today.getMonth() + 1;  // 월
-					  	let date = today.getDate();  // 날짜
-					  	
-					  	var defaltStartDate = (year + '/' + (month-2) + '/' + date);
-					  	var defaltEndDate = (year + '/' + month + '/' + date);
-					  	
-					  	console.log(defaltStartDate);
-					  	console.log(defaltEndDate);
-					  	
-					  	document.getElementById("dateStart").value = defaltStartDate;
-					  	document.getElementById("dateEnd").value = defaltEndDate;
-					  	
-					  	var startDate = document.getElementById("dateStart").value;
-					  	var endDate = document.getElementById("dateEnd").value;
-						
-						var sysNo = "${sysNo}";
-						
-						var ntcTtl = document.getElementById("keyword").value;
-						
-						if(ntcTtl !== "") {
-							ntcTtl = "%" + ntcTtl + "%";
+						function searchNoticeList(pageNo) {
+							console.log(pageNo);
+							var startDate = document.getElementById("dateStart").value;
+							var endDate = document.getElementById("dateEnd").value;
+							
+							var str = location.href;
+						  	console.log(str);
+							var index = str.indexOf("?")+1;
+							console.log(index);
+						    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+						 
+						    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+						    if (index == 0) {
+						        return "";
+						    }
+						 
+						    // str의 값은 a=1&b=first&c=true
+						    str = str.substring(index, lastIndex); 
+						    console.log(str);
+
+						    var arr = str.split("=");
+						    console.log(arr);
+						    
+						    var sysNo = arr[1];
+						    console.log(sysNo);
+							
+							var ntcTtl = document.getElementById("keyword").value;
+							
+							if(ntcTtl !== "") {
+								ntcTtl = "%" + ntcTtl + "%";
+							}
+							
+							console.log(ntcTtl);
+							console.log(startDate);
+							console.log(endDate);
+	
+							let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, sysNo : sysNo};
+							
+							console.log(data);
+							
+							$.ajax({
+								url : sysNo+"/filter/"+pageNo,
+								method : "post",
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+							}).done((data) => {
+								$("#noticeList").html(data)
+							});
 						}
 						
-						console.log(ntcTtl);
-						console.log(startDate);
-						console.log(endDate);
+						function nTodayClick(pageNo){
+							
+							let today = new Date();   
+							
+						  	let year = today.getFullYear(); // 년도
+						  	let month = today.getMonth() + 1;  // 월
+						  	let date = today.getDate();  // 날짜
+						  	
+						  	var defaltStartDate = (year + '/' + month + '/' + date);
+						  	var defaltEndDate = (year + '/' + month + '/' + date);
+						  	
+						  	console.log(defaltStartDate);
+						  	console.log(defaltEndDate);
+						  	
+						  	document.getElementById("dateStart").value = defaltStartDate;
+						  	document.getElementById("dateEnd").value = defaltEndDate;
+						  	
+						  	var startDate = document.getElementById("dateStart").value;
+						  	var endDate = document.getElementById("dateEnd").value;
+							
+							var ntcToday = "당일";
+							var ntcWeek = null;
+							var ntcMonth = null;
+							
+							var str = location.href;
+						  	console.log(str);
+							var index = str.indexOf("?")+1;
+							console.log(index);
+						    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+						 
+						    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+						    if (index == 0) {
+						        return "";
+						    }
+						 
+						    // str의 값은 a=1&b=first&c=true
+						    str = str.substring(index, lastIndex); 
+						    console.log(str);
 
-						let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, sysNo : sysNo};
-						
-						console.log(data);
-						
-						$.ajax({
-							url : "filter/1",
-							method : "post",
-							data : JSON.stringify(data),
-							contentType: "application/json; charset=UTF-8"
-						}).done((data) => {
-							$("#noticeList").html(data)
-						});
-					});
-					
-					
-					function searchNoticeList(pageNo) {
-						console.log(pageNo);
-						var startDate = document.getElementById("dateStart").value;
-						var endDate = document.getElementById("dateEnd").value;
-						
-						var sysNo = "${sysNo}"
-						
-						var ntcTtl = document.getElementById("keyword").value;
-						
-						if(ntcTtl !== "") {
-							ntcTtl = "%" + ntcTtl + "%";
+						    var arr = str.split("=");
+						    console.log(arr);
+						    
+						    var sysNo = arr[1];
+						    console.log(sysNo);
+							
+							var ntcTtl = document.getElementById("keyword").value;
+							
+							if(ntcTtl !== "") {
+								ntcTtl = "%" + ntcTtl + "%";
+							}
+	
+							console.log(ntcTtl);
+							console.log(startDate);
+							console.log(endDate);
+							console.log(ntcToday);
+							console.log(ntcWeek);
+							console.log(ntcMonth);
+	
+							let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
+									ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
+							
+							console.log(data);
+							
+							$.ajax({
+								url : sysNo+"/filter/"+pageNo,
+								method : "post",
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+							}).done((data) => {
+								$("#noticeList").html(data)
+							});
 						}
 						
-						console.log(ntcTtl);
-						console.log(startDate);
-						console.log(endDate);
+						function nWeekClick(pageNo){
+							let today = new Date();   
+							
+						  	let year = today.getFullYear(); // 년도
+						  	let month = today.getMonth() + 1;  // 월
+						  	let date = today.getDate();  // 날짜
+						  	
+						  	let day = new Date(new Date().setDate(date - 7));
+						  	let lastMonth = day.getMonth()+1;
+						  	let lastDay = day.getDate();
+						  	
+						  	var defaltStartDate = (year + '/' + lastMonth + '/' + lastDay);
+						  	var defaltEndDate = (year + '/' + month + '/' + date);
+						  	
+						  	console.log(defaltStartDate);
+						  	console.log(defaltEndDate);
+						  	
+						  	document.getElementById("dateStart").value = defaltStartDate;
+						  	document.getElementById("dateEnd").value = defaltEndDate;
+						  	
+						  	var startDate = document.getElementById("dateStart").value;
+						  	var endDate = document.getElementById("dateEnd").value;
+						  	
+							var ntcToday = null;
+							var ntcWeek = "1주일전";
+							var ntcMonth = null;
+							
+							var str = location.href;
+						  	console.log(str);
+							var index = str.indexOf("?")+1;
+							console.log(index);
+						    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+						 
+						    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+						    if (index == 0) {
+						        return "";
+						    }
+						 
+						    // str의 값은 a=1&b=first&c=true
+						    str = str.substring(index, lastIndex); 
+						    console.log(str);
 
-						let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, sysNo : sysNo};
-						
-						console.log(data);
-						
-						$.ajax({
-							url : "filter/"+pageNo,
-							method : "post",
-							data : JSON.stringify(data),
-							contentType: "application/json; charset=UTF-8"
-						}).done((data) => {
-							$("#noticeList").html(data)
-						});
-					}
-					
-					function nTodayClick(pageNo){
-						
-						let today = new Date();   
-						
-					  	let year = today.getFullYear(); // 년도
-					  	let month = today.getMonth() + 1;  // 월
-					  	let date = today.getDate();  // 날짜
-					  	
-					  	var defaltStartDate = (year + '/' + month + '/' + date);
-					  	var defaltEndDate = (year + '/' + month + '/' + date);
-					  	
-					  	console.log(defaltStartDate);
-					  	console.log(defaltEndDate);
-					  	
-					  	document.getElementById("dateStart").value = defaltStartDate;
-					  	document.getElementById("dateEnd").value = defaltEndDate;
-					  	
-					  	var startDate = document.getElementById("dateStart").value;
-					  	var endDate = document.getElementById("dateEnd").value;
-						
-						var ntcToday = "당일";
-						var ntcWeek = null;
-						var ntcMonth = null;
-						
-						var sysNo = "${sysNo}"
-						
-						var ntcTtl = document.getElementById("keyword").value;
-						
-						if(ntcTtl !== "") {
-							ntcTtl = "%" + ntcTtl + "%";
+						    var arr = str.split("=");
+						    console.log(arr);
+						    
+						    var sysNo = arr[1];
+						    console.log(sysNo);
+							
+							var ntcTtl = document.getElementById("keyword").value;
+							
+							if(ntcTtl !== "") {
+								ntcTtl = "%" + ntcTtl + "%";
+							}
+	
+							console.log(ntcTtl);
+							console.log(startDate);
+							console.log(endDate);
+							console.log(ntcToday);
+							console.log(ntcWeek);
+							console.log(ntcMonth);
+	
+							let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
+									ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
+							
+							console.log(data);
+							
+							$.ajax({
+								url : sysNo+"/filter/"+pageNo,
+								method : "post",
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+							}).done((data) => {
+								$("#noticeList").html(data)
+							});
 						}
+						
+						function nMonthClick(pageNo){
+							let today = new Date();   
+							
+						  	let year = today.getFullYear(); // 년도
+						  	let month = today.getMonth() + 1;  // 월
+						  	let date = today.getDate();  // 날짜
+						  	
+						  	var defaltStartDate = (year + '/' + (month-1) + '/' + date);
+						  	var defaltEndDate = (year + '/' + month + '/' + date);
+						  	
+						  	console.log(defaltStartDate);
+						  	console.log(defaltEndDate);
+						  	
+						  	document.getElementById("dateStart").value = defaltStartDate;
+						  	document.getElementById("dateEnd").value = defaltEndDate;
+						  	
+						  	var startDate = document.getElementById("dateStart").value;
+						  	var endDate = document.getElementById("dateEnd").value;
+							
+							var ntcToday = null;
+							var ntcWeek = null;
+							var ntcMonth = "1개월전";
+							
+							var str = location.href;
+						  	console.log(str);
+							var index = str.indexOf("?")+1;
+							console.log(index);
+						    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+						 
+						    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+						    if (index == 0) {
+						        return "";
+						    }
+						 
+						    // str의 값은 a=1&b=first&c=true
+						    str = str.substring(index, lastIndex); 
+						    console.log(str);
 
-						console.log(ntcTtl);
-						console.log(startDate);
-						console.log(endDate);
-						console.log(ntcToday);
-						console.log(ntcWeek);
-						console.log(ntcMonth);
-
-						let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
-								ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
-						
-						console.log(data);
-						
-						$.ajax({
-							url : "filter/"+pageNo,
-							method : "post",
-							data : JSON.stringify(data),
-							contentType: "application/json; charset=UTF-8"
-						}).done((data) => {
-							$("#noticeList").html(data)
-						});
-					}
-					
-					function nWeekClick(pageNo){
-						let today = new Date();   
-						
-					  	let year = today.getFullYear(); // 년도
-					  	let month = today.getMonth() + 1;  // 월
-					  	let date = today.getDate();  // 날짜
-					  	
-					  	let day = new Date(new Date().setDate(date - 7));
-					  	let lastMonth = day.getMonth()+1;
-					  	let lastDay = day.getDate();
-					  	
-					  	var defaltStartDate = (year + '/' + lastMonth + '/' + lastDay);
-					  	var defaltEndDate = (year + '/' + month + '/' + date);
-					  	
-					  	console.log(defaltStartDate);
-					  	console.log(defaltEndDate);
-					  	
-					  	document.getElementById("dateStart").value = defaltStartDate;
-					  	document.getElementById("dateEnd").value = defaltEndDate;
-					  	
-					  	var startDate = document.getElementById("dateStart").value;
-					  	var endDate = document.getElementById("dateEnd").value;
-					  	
-						var ntcToday = null;
-						var ntcWeek = "1주일전";
-						var ntcMonth = null;
-						
-						var sysNo = "${sysNo}"
-						
-						var ntcTtl = document.getElementById("keyword").value;
-						
-						if(ntcTtl !== "") {
-							ntcTtl = "%" + ntcTtl + "%";
+						    var arr = str.split("=");
+						    console.log(arr);
+						    
+						    var sysNo = arr[1];
+						    console.log(sysNo);
+							
+							var ntcTtl = document.getElementById("keyword").value;
+							
+							if(ntcTtl !== "") {
+								ntcTtl = "%" + ntcTtl + "%";
+							}
+	
+							console.log(ntcTtl);
+							console.log(startDate);
+							console.log(endDate);
+							console.log(ntcToday);
+							console.log(ntcWeek);
+							console.log(ntcMonth);
+	
+							let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
+									ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
+							
+							console.log(data);
+							
+							$.ajax({
+								url : sysNo+"/filter/"+pageNo,
+								method : "post",
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+							}).done((data) => {
+								$("#noticeList").html(data)
+							});
 						}
-
-						console.log(ntcTtl);
-						console.log(startDate);
-						console.log(endDate);
-						console.log(ntcToday);
-						console.log(ntcWeek);
-						console.log(ntcMonth);
-
-						let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
-								ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
-						
-						console.log(data);
-						
-						$.ajax({
-							url : "filter/"+pageNo,
-							method : "post",
-							data : JSON.stringify(data),
-							contentType: "application/json; charset=UTF-8"
-						}).done((data) => {
-							$("#noticeList").html(data)
+					</script>
+				</c:if>
+				
+				<c:if test="${!empty command and command eq 'detail'}">
+					<script>
+						$(document).ready(function () {
+							console.log("시작");
+							
+							let today = new Date();   
+							
+						  	let year = today.getFullYear(); // 년도
+						  	let month = today.getMonth() + 1;  // 월
+						  	let date = today.getDate();  // 날짜
+						  	
+						  	var defaltStartDate = (year + '/' + (month-2) + '/' + date);
+						  	var defaltEndDate = (year + '/' + month + '/' + date);
+						  	
+						  	console.log(defaltStartDate);
+						  	console.log(defaltEndDate);
+						  	
+						  	document.getElementById("dateStart").value = defaltStartDate;
+						  	document.getElementById("dateEnd").value = defaltEndDate;
+						  	
+						  	var startDate = document.getElementById("dateStart").value;
+						  	var endDate = document.getElementById("dateEnd").value;
+							
+							var sysNo = "${sysNo}";
+							
+							var ntcTtl = document.getElementById("keyword").value;
+							
+							if(ntcTtl !== "") {
+								ntcTtl = "%" + ntcTtl + "%";
+							}
+							
+							console.log(ntcTtl);
+							console.log(startDate);
+							console.log(endDate);
+	
+							let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, sysNo : sysNo};
+							
+							console.log(data);
+							
+							$.ajax({
+								url : "filter/1",
+								method : "post",
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+							}).done((data) => {
+								$("#noticeList").html(data)
+							});
 						});
-					}
-					
-					function nMonthClick(pageNo){
-						let today = new Date();   
 						
-					  	let year = today.getFullYear(); // 년도
-					  	let month = today.getMonth() + 1;  // 월
-					  	let date = today.getDate();  // 날짜
-					  	
-					  	var defaltStartDate = (year + '/' + (month-1) + '/' + date);
-					  	var defaltEndDate = (year + '/' + month + '/' + date);
-					  	
-					  	console.log(defaltStartDate);
-					  	console.log(defaltEndDate);
-					  	
-					  	document.getElementById("dateStart").value = defaltStartDate;
-					  	document.getElementById("dateEnd").value = defaltEndDate;
-					  	
-					  	var startDate = document.getElementById("dateStart").value;
-					  	var endDate = document.getElementById("dateEnd").value;
 						
-						var ntcToday = null;
-						var ntcWeek = null;
-						var ntcMonth = "1개월전";
-						
-						var sysNo = "${sysNo}"
-						
-						var ntcTtl = document.getElementById("keyword").value;
-						
-						if(ntcTtl !== "") {
-							ntcTtl = "%" + ntcTtl + "%";
+						function searchNoticeList(pageNo) {
+							console.log(pageNo);
+							var startDate = document.getElementById("dateStart").value;
+							var endDate = document.getElementById("dateEnd").value;
+							
+							var sysNo = "${sysNo}"
+							
+							var ntcTtl = document.getElementById("keyword").value;
+							
+							if(ntcTtl !== "") {
+								ntcTtl = "%" + ntcTtl + "%";
+							}
+							
+							console.log(ntcTtl);
+							console.log(startDate);
+							console.log(endDate);
+	
+							let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, sysNo : sysNo};
+							
+							console.log(data);
+							
+							$.ajax({
+								url : "filter/"+pageNo,
+								method : "post",
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+							}).done((data) => {
+								$("#noticeList").html(data)
+							});
 						}
-
-						console.log(ntcTtl);
-						console.log(startDate);
-						console.log(endDate);
-						console.log(ntcToday);
-						console.log(ntcWeek);
-						console.log(ntcMonth);
-
-						let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
-								ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
 						
-						console.log(data);
+						function nTodayClick(pageNo){
+							
+							let today = new Date();   
+							
+						  	let year = today.getFullYear(); // 년도
+						  	let month = today.getMonth() + 1;  // 월
+						  	let date = today.getDate();  // 날짜
+						  	
+						  	var defaltStartDate = (year + '/' + month + '/' + date);
+						  	var defaltEndDate = (year + '/' + month + '/' + date);
+						  	
+						  	console.log(defaltStartDate);
+						  	console.log(defaltEndDate);
+						  	
+						  	document.getElementById("dateStart").value = defaltStartDate;
+						  	document.getElementById("dateEnd").value = defaltEndDate;
+						  	
+						  	var startDate = document.getElementById("dateStart").value;
+						  	var endDate = document.getElementById("dateEnd").value;
+							
+							var ntcToday = "당일";
+							var ntcWeek = null;
+							var ntcMonth = null;
+							
+							var sysNo = "${sysNo}"
+							
+							var ntcTtl = document.getElementById("keyword").value;
+							
+							if(ntcTtl !== "") {
+								ntcTtl = "%" + ntcTtl + "%";
+							}
+	
+							console.log(ntcTtl);
+							console.log(startDate);
+							console.log(endDate);
+							console.log(ntcToday);
+							console.log(ntcWeek);
+							console.log(ntcMonth);
+	
+							let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
+									ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
+							
+							console.log(data);
+							
+							$.ajax({
+								url : "filter/"+pageNo,
+								method : "post",
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+							}).done((data) => {
+								$("#noticeList").html(data)
+							});
+						}
 						
-						$.ajax({
-							url : "filter/"+pageNo,
-							method : "post",
-							data : JSON.stringify(data),
-							contentType: "application/json; charset=UTF-8"
-						}).done((data) => {
-							$("#noticeList").html(data)
-						});
-					}
-				</script>
+						function nWeekClick(pageNo){
+							let today = new Date();   
+							
+						  	let year = today.getFullYear(); // 년도
+						  	let month = today.getMonth() + 1;  // 월
+						  	let date = today.getDate();  // 날짜
+						  	
+						  	let day = new Date(new Date().setDate(date - 7));
+						  	let lastMonth = day.getMonth()+1;
+						  	let lastDay = day.getDate();
+						  	
+						  	var defaltStartDate = (year + '/' + lastMonth + '/' + lastDay);
+						  	var defaltEndDate = (year + '/' + month + '/' + date);
+						  	
+						  	console.log(defaltStartDate);
+						  	console.log(defaltEndDate);
+						  	
+						  	document.getElementById("dateStart").value = defaltStartDate;
+						  	document.getElementById("dateEnd").value = defaltEndDate;
+						  	
+						  	var startDate = document.getElementById("dateStart").value;
+						  	var endDate = document.getElementById("dateEnd").value;
+						  	
+							var ntcToday = null;
+							var ntcWeek = "1주일전";
+							var ntcMonth = null;
+							
+							var sysNo = "${sysNo}"
+							
+							var ntcTtl = document.getElementById("keyword").value;
+							
+							if(ntcTtl !== "") {
+								ntcTtl = "%" + ntcTtl + "%";
+							}
+	
+							console.log(ntcTtl);
+							console.log(startDate);
+							console.log(endDate);
+							console.log(ntcToday);
+							console.log(ntcWeek);
+							console.log(ntcMonth);
+	
+							let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
+									ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
+							
+							console.log(data);
+							
+							$.ajax({
+								url : "filter/"+pageNo,
+								method : "post",
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+							}).done((data) => {
+								$("#noticeList").html(data)
+							});
+						}
+						
+						function nMonthClick(pageNo){
+							let today = new Date();   
+							
+						  	let year = today.getFullYear(); // 년도
+						  	let month = today.getMonth() + 1;  // 월
+						  	let date = today.getDate();  // 날짜
+						  	
+						  	var defaltStartDate = (year + '/' + (month-1) + '/' + date);
+						  	var defaltEndDate = (year + '/' + month + '/' + date);
+						  	
+						  	console.log(defaltStartDate);
+						  	console.log(defaltEndDate);
+						  	
+						  	document.getElementById("dateStart").value = defaltStartDate;
+						  	document.getElementById("dateEnd").value = defaltEndDate;
+						  	
+						  	var startDate = document.getElementById("dateStart").value;
+						  	var endDate = document.getElementById("dateEnd").value;
+							
+							var ntcToday = null;
+							var ntcWeek = null;
+							var ntcMonth = "1개월전";
+							
+							var sysNo = "${sysNo}"
+							
+							var ntcTtl = document.getElementById("keyword").value;
+							
+							if(ntcTtl !== "") {
+								ntcTtl = "%" + ntcTtl + "%";
+							}
+	
+							console.log(ntcTtl);
+							console.log(startDate);
+							console.log(endDate);
+							console.log(ntcToday);
+							console.log(ntcWeek);
+							console.log(ntcMonth);
+	
+							let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
+									ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
+							
+							console.log(data);
+							
+							$.ajax({
+								url : "filter/"+pageNo,
+								method : "post",
+								data : JSON.stringify(data),
+								contentType: "application/json; charset=UTF-8"
+							}).done((data) => {
+								$("#noticeList").html(data)
+							});
+						}
+					</script>
+				</c:if>
+				
+				<c:if test="${!empty command and command eq 'detail'}">
+					<input type="hidden" value="${ntcNo}" id="detailNtcNo">
+				</c:if>
+				<c:if test="${!empty command and command eq 'detail'}">
+					<script>
+			          	$(document).ready(function(){
+			          		var ntcNo = $("#detailNtcNo").val();
+			          		
+			          		getNoticeDetail(ntcNo);
+				          }
+			          	
+			          	);
+			          </script>
+				</c:if>
 				<!-- 로그아웃 모달 -->
 	          	<%@include file="/WEB-INF/views/common/logout.jsp" %>
 	        	</div>

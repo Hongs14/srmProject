@@ -102,7 +102,6 @@
 				</div>
 			</form>
    		
-   		
    			<hr>
 			<div class="row mb-4">
 				<div class="col-sm-2">

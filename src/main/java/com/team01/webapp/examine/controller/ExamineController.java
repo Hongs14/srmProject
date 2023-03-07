@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.examine.service.IExamineService;
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
@@ -40,6 +41,9 @@ public class ExamineController {
 
 	@Autowired
 	IExamineService examineService;
+	
+	@Autowired
+	IAlarmService alarmService;
 	
 	
 	/**
@@ -115,6 +119,9 @@ public class ExamineController {
 		log.info(examine);
 		
 		examineService.updateExamine(examine);
+		
+		String srNo = examine.getSrNo();
+		alarmService.insertAlarm(srNo);
 		
 		return "examine/list";
 	}

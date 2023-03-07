@@ -31,13 +31,21 @@
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
-               <span class="badge badge-danger badge-counter">3</span>
+               <span class="badge badge-danger badge-counter">
+               		<c:set var="alarmCnt" value="${alarmCnt}"/>
+					<c:choose>
+						<c:when test="${alarmCnt != null}">
+		               		<c:out value="${alarmCnt}"/>						
+						</c:when>
+						<c:otherwise>
+							0
+						</c:otherwise>
+					</c:choose>
+               </span>
               </a>
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                  Alerts Center
-                </h6>
+                <h6 class="dropdown-header">읽지않은 알림</h6>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="mr-3">
                     <div class="icon-circle bg-primary">

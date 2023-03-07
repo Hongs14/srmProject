@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.home.service.IHomeService;
 import com.team01.webapp.model.Donut;
 import com.team01.webapp.model.Notice;
@@ -34,6 +35,8 @@ public class HomeController {
 	@Autowired
 	INoticeService noticeService;
 	
+	@Autowired
+	IAlarmService alarmService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Pager pager, Notice notice, Model model) {
@@ -60,11 +63,16 @@ public class HomeController {
 		
 		// Q n A 페이징 처리
 		
-		
+		//알림 수
+		int userNo = (Integer) session.getAttribute("userNo");
+		log.info("유저N0 : "+userNo);
+		int alarmCnt = alarmService.selectAlarmCount(userNo);
+		model.addAttribute("alarmCnt",alarmCnt);
 		
 		return "home";
 	}
-	
+
+
 	@RequestMapping(value = "/systemMiniView", method = RequestMethod.GET)
 	public String getSystemMiniView(HttpSession session, Model model) {
 		int userNo = (int) session.getAttribute("userNo");
