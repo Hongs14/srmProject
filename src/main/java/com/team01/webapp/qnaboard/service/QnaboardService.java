@@ -24,18 +24,23 @@ public class QnaboardService implements IQnaboardService {
 
 	@Override
 	public Pager returnPage(int pageNo, Pager pager, QSTN qstn) {
-		log.info("qstn: "+qstn+", pageNo: "+pageNo );
+		log.info("페이징");
 		int totalList = (int) qnaboardRepository.totalRow(qstn);
 		log.info(totalList);
 		pager = new Pager(10,5,totalList,pageNo);
+		log.info(pager);
 		return pager;
 	}
 	
 	@Override
 	public List<QSTN> getQstnList(Pager pager, QSTN qstn){
-		log.info("실행");
-		qstn.setStartRowNo(pager.getStartRowNo());
-		qstn.setEndRowNo(pager.getEndRowNo());
+		
+		int start = (pager.getPageNo()-1)* pager.getRowsPerPage()+1;
+		int end = pager.getPageNo() * pager.getRowsPerPage();
+		
+		qstn.setStartRowNo(start);
+		qstn.setEndRowNo(end);
+		log.info(qstn);
 		List<QSTN> list = qnaboardRepository.selectQstnList(qstn);
 		
 		return list;

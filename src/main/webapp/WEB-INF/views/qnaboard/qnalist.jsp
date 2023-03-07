@@ -16,11 +16,18 @@
 	  	<script src="${pageContext.request.contextPath}/resources/js/ruang-admin.min.js"></script>
   		<style>
   			.qstnTtl{
-				width: 400px;
+				width: 680px;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				display:block;
-			}
+			} 
+			
+			.detail span {
+        		white-space:normal !important;
+    		}
+    		.textDetail{
+    			white-space:normal !important;
+    		} 
   		</style>
 	  	<script>
 		  	$(document).ready(function () {
@@ -50,7 +57,7 @@
 					<div class="container-fluid" id="container-wrapper">
 			        	<div class="d-sm-flex align-items-end justify-content-between" id="mainQstnMenu">
           					<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px;">
-            					<h6 class="mb-0 text-white">Q&A 게시판</h6>
+            					<h6 class="mb-0 text-white">Q&A게시판</h6>
          					</div>
             				<ol class="breadcrumb">
               					<li class="breadcrumb-item">Q&A</li>
@@ -60,30 +67,30 @@
 			         	<!-- Row -->
 			         	<div class="row">
 							<div id="mainQstn" class="col-lg-12">
-								<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:121px; display:none;"  id="qstnMenu">
-									<h6 class="mb-0 text-white">Q&A 상세보기</h6>
+								<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:114px; display:none;"  id="qstnMenu">
+									<h6 class="mb-0 text-white">Q&A게시판</h6>
 								</div>
 	                        	<div class="card mb-4">
 	                        		<!-- 검색 -->
 	                        		<div class="mb-1 mt-5 px-5">
-										<form action="">
+										<form class="navbar-search">
 											<div class="row text-right">
 			   									<div class="col-4">
 			       									<div class="form-group row" id="simple-date4" >
 			  											<div class="input-daterange input-group input-group-sm text-right">
 			      											<label for="start" class="col-sm-4 col-form-label-sm">조회기간</label>
-			         										<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="startDate" id="dateStart"/>
+			         										<input type="text" class="input-sm form-control form-control-sm col-sm-8" value="" name="startDate" id="dateStart"/>
 			               									<div class="input-group-prepend">
 			               										<span class="input-group-text" style="height:31px;">~</span>
 			           										</div>
-			            									<input type="text" class="input-sm form-control form-control-sm" name="endDate" id="dateEnd"/>
+			            									<input type="text" class="input-sm form-control form-control-sm" name="endDate" id="dateEnd" value=""/>
 														</div>
 			   										</div>
 												</div> 
 			    								<div class="col-3 text-left">
-														<input type="button" class="btn btn-sm btn-primary" value="당일" onclick="nTodayClick(1)">
-														<input type="button" class="btn btn-sm btn-primary" value="1주일 전" onclick="nWeekClick(1)">
-														<input type="button" class="btn btn-sm btn-primary" value="1개월 전" onclick="nMonthClick(1)">
+														<input type="button" class="btn btn-sm btn-primary" value="당일" onclick="RangeClick('하루')"/>
+														<input type="button" class="btn btn-sm btn-primary" value="1주일 전" onclick="RangeClick('일주일')"/>
+														<input type="button" class="btn btn-sm btn-primary" value="1개월 전" onclick="RangeClick('한달')"/>
 			    								</div>
 			    								<div class="col-4">
 			      									<div class="form-group row">
@@ -126,10 +133,62 @@
 			</div>
 		</div>
 		<script>
+		//오늘 날짜 디폴트로 입력
+		$(document).ready(function() {
+			var todayResult = getTimeStamp();
+			console.log(todayResult);
+			document.getElementById('dateEnd').value = todayResult;
+			
+			var dateStart =getLastYearTimeStamp();
+			console.log(dateStart);
+			document.getElementById('dateStart').value = dateStart;
+		});
+			
+		//오늘 날짜 양식
+		function getTimeStamp() {
+		  var d = new Date();
+
+		  var s =
+		    leadingZeros(d.getFullYear(), 4) + '/' +
+		    leadingZeros(d.getMonth() + 1, 2) + '/' +
+		    leadingZeros(d.getDate(), 2);
+
+		  return s;
+		}
+		//작년 날짜 양식
+		function getLastYearTimeStamp() {
+			  var d = new Date();
+
+			  var s =
+			    leadingZeros(d.getFullYear(), 4)-1 + '/' +
+			    leadingZeros(d.getMonth() + 1, 2) + '/' +
+			    leadingZeros(d.getDate(), 2);
+
+			  return s;
+			}
+
+
+
+		//오늘 날짜 양식 (+두자리)
+		function leadingZeros(n, digits) {
+		  var zero = '';
+		  n = n.toString();
+
+		  if (n.length < digits) {
+		    for (i = 0; i < digits - n.length; i++)
+		      zero += '0';
+		  }
+		  return zero + n;
+		}
+		
+		
+		
+		
 			$(document).ready(function () {
 				console.log("시작");
 				var startDate = $('#dateStart').val();
 				var endDate = $('#dateEnd').val();
+				
 				var sysNo = "${sessionScope.loginUser.sysNo}";
 				
 				var qstnTtl = $('#keyword').val();
@@ -156,9 +215,16 @@
 				let qstnNo = i;
 				$("#mainQstnMenu").removeClass("d-sm-flex");
 				$("#mainQstnMenu").hide();
-				$("#QstnMenu").show();
+				$("#qstnMenu").show();
 				$("#mainQstn").attr("class","col-lg-7");
 				$("#qnaDetailView").attr("class","col-lg-5");
+				$(".qstnTtl").css({
+					"width" : "360px",
+					"overflow": "hidden",
+					"text-overflow": "ellipsis",
+					"display":"block"
+					
+				});
 				
 				$.ajax({
 					url : "view/"+qstnNo,
@@ -168,6 +234,83 @@
 						$("#qnaDetailView").html(data);
 					}
 				});
+			}
+			
+		
+			
+			function searchQnaList(pageNo){
+				console.log(pageNo);
+				var startDate = $("#dateStart").val();
+				var endDate = $("#dateEnd").val();
+				var sysNo = "${sessionScope.loginUser.sysNo}"
+				
+				var qstnTtl = $("#keyword").val();
+				
+				if(qstnTtl !== "") {
+					qstnTtl = "%" + qstnTtl + "%";
+				}
+
+				let data = {startDate : startDate, endDate : endDate, qstnTtl : qstnTtl, sysNo : sysNo};
+				console.log(data);
+				
+				$.ajax({
+					url : '<c:url value="/qna/'+sysNo+'/filter/'+pageNo+'"/>',
+					method : "post",
+					data : JSON.stringify(data),
+					contentType: "application/json; charset=UTF-8"
+				}).done((data) => {
+					$("#qstnList").html(data)
+				});
+			}
+			
+			function RangeClick(range){
+				console.log(range);
+				let today = new Date();   
+				let year = today.getFullYear(); // 년도
+			  	let month = today.getMonth() + 1;  // 월
+			  	let date = today.getDate();  // 날짜
+			  	var defaultStartDate;
+				
+			  	if(range === "하루"){
+			  		defaultStartDate = (year + '/' + month + '/' + date);
+				 
+				} else if(range==="일주일"){
+				  	let day = new Date(new Date().setDate(date - 7));
+				  	let lastMonth = day.getMonth()+1;
+				  	let lastDay = day.getDate();
+				  	defaultStartDate = (year + '/' + lastMonth + '/' + lastDay);
+				} else if(range === "한달"){
+					defaultStartDate = (year + '/' + (month-1) + '/' + date);
+				}
+			  	
+				var defaultEndDate = (year + '/' + month + '/' + date);
+				console.log("시작날짜: "+defaultStartDate);
+			  	console.log("끝 날짜: "+defaultEndDate);
+			  	$("#dateStart").val(defaultStartDate);
+			  	$("#dateEnd").val(defaultEndDate);
+			  	
+			  	var startDate = $("#dateStart").val();
+			  	var endDate = $("#dateEnd").val();
+				var sysNo = "${sessionScope.loginUser.sysNo}"
+				var qstnTtl = $("#keyword").val();
+			
+				if(qstnTtl !== "") {
+					qstnTtl = "%" + qstnTtl + "%";
+				}
+
+				let data = {startDate : startDate, endDate : endDate, qstnTtl : qstnTtl,
+							range: range, sysNo : sysNo};
+				
+				console.log(data);
+				
+				$.ajax({
+					url : '<c:url value="/qna/'+sysNo+'/filter/1"/>',
+					method : "post",
+					data : JSON.stringify(data),
+					contentType: "application/json; charset=UTF-8"
+				}).done((data) => {
+					$("#qstnList").html(data)
+				}); 
 			}
 		</script>
  		<%@include file="/WEB-INF/views/common/bottom.jsp" %>

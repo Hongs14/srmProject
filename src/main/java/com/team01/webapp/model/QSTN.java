@@ -3,6 +3,8 @@ package com.team01.webapp.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -20,8 +22,9 @@ public class QSTN {
 	private String sysNo;
 	private List<QSTNComment> qstnCmnt;
 	
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
+	private String range;
 	//paging
 	private int startRowNo;
 	private int endRowNo;

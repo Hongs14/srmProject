@@ -69,9 +69,7 @@ public class QnaController {
 		
 		model.addAttribute("qstn", qstn);
 		int updateInq = qnaboardService.countInq(qstnNo);
-		
-		log.info("qna상세보기");
-		return "qnaboard/qnadetail2";
+		return "qnaboard/qnadetail";
 	}
 	
 	/** Qna 작성하기
@@ -105,7 +103,7 @@ public class QnaController {
 	 * @param qstnNo
 	 * @return
 	 */
-	@GetMapping(value="/read/comment")
+	@GetMapping(value="{sysNo}/read/comment")
 	@ResponseBody
 	public List<QSTNComment> readComment(@RequestParam int qstnNo) {
 		List<QSTNComment> list = qnaboardService.getCommentList(qstnNo);

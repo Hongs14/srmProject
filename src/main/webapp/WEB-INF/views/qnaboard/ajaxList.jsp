@@ -2,29 +2,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <div class="table-responsive px-5">
 	<table class="table align-items-center table-flush table-hover">
     	<thead class="thead-light">
 	    	<tr>
-	    		<th>No.</th>
-	      		<th>카테고리</th>
-	      		<th>글제목</th>
-	      		<th>작성자</th>
-	      		<th>작성일</th>
-	      		<th>조회수</th>
+	    		<th class="col-sm-1">No.</th>
+	      		<th class="col-sm-1">카테고리</th>
+	      		<th class="col-sm-5">글제목</th>
+	      		<th class="col-sm-2">작성자</th>
+	      		<th class="col-sm-2">작성일</th>
+	      		<th class="col-sm-1 text-center">조회수</th>
 	    	</tr>
     	</thead>
 		<tbody>
 			<c:forEach var="qstn" items="${qnalist}">
 				<tr>
-					<td onclick="qnaDetail(${qstn.qstnNo})">${qstn.rnum}</td>
-					<td>질문사항</td>
-					<td onclick="qnaDetail(${qstn.qstnNo})">${qstn.qstnTtl}</td>
-					<td>${qstn.userNm}</td>
-					<td>${qstn.qstnWrtDate}</td>
-					<td>${qstn.qstnInqCnt}</td>
+					<td class="col-sm-1" onclick="qnaDetail(${qstn.qstnNo})">${qstn.rnum}</td>
+					<td class="col-sm-1">질문사항</td>
+					<td class="qstnTtl" onclick="qnaDetail(${qstn.qstnNo})">${qstn.qstnTtl}</td>
+					<td class="col-sm-2">${qstn.userNm}</td>
+					<td class="col-sm-2">${qstn.qstnWrtDate}</td>
+					<td class="col-sm-1 text-center">${qstn.qstnInqCnt}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
