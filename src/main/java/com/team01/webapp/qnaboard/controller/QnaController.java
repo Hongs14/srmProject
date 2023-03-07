@@ -49,7 +49,10 @@ public class QnaController {
 		pager = qnaboardService.returnPage(pageNo,pager,qstn);
 		List<QSTN> qnalist = qnaboardService.getQstnList(pager,qstn);
 		model.addAttribute("qnalist", qnalist); 
+		log.info("############################################################################");
 		log.info(qnalist);
+		log.info(pager);
+		log.info("############################################################################");
 		model.addAttribute("pager",pager);
 		
 		return "qnaboard/ajaxList";

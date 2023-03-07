@@ -118,7 +118,9 @@
 			                				<a href="${pageContext.request.contextPath}/qna/write" class="btn-outline-primary btn-sm">Q&A 등록하기</a>
 			                  			</div>
 			                		</div> 
-			                		<div id="qstnlist" style="width: 100%;"></div>
+			                		<div id="qstnlist" style="width: 100%;">
+			                		
+			                		</div>
 			                	</div>
 					        </div>
 					   		<div id="qnaDetailView" style="width: 100%;"></div>
@@ -137,11 +139,11 @@
 			$(document).ready(function() {
 				var todayResult = getTimeStamp();
 				console.log(todayResult);
-				$('#dateEnd').val = todayResult;
+				$('#dateEnd').val(todayResult);
 				
 				var dateStart =getLastYearTimeStamp();
 				console.log(dateStart);
-				$('#dateStart').value = dateStart;
+				$('#dateStart').val(dateStart);
 			});
 				
 			//오늘 날짜 양식
@@ -180,7 +182,6 @@
 			  return zero + n;
 			}
 		
-		
 			$(document).ready(function(){
 				console.log("시작");
 				var startDate = $('#dateStart').val();
@@ -197,7 +198,7 @@
 				console.log(data);
 				
 				$.ajax({
-					url : '<c:url value="/qna/'+sysNo+'/filter/1"/>',
+					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/filter/1',
 					method : "post",
 					data : JSON.stringify(data),
 					contentType: "application/json; charset=UTF-8"
@@ -206,6 +207,33 @@
 				});
 			});
 			
+			function searchQnaList(pageNo){
+				console.log("검색조건 리스트 페이지 번호: "+pageNo);
+				var startDate = $("#dateStart").val();
+				var endDate = $("#dateEnd").val();
+				var sysNo = "${sessionScope.loginUser.sysNo}";
+				var qstnTtl = $("#keyword").val();
+				
+				if(qstnTtl !== "") {
+					qstnTtl = "%" + qstnTtl + "%";
+				}
+
+				let data = {startDate : startDate, endDate : endDate, qstnTtl : qstnTtl, sysNo : sysNo};
+				
+				console.log(data);
+				
+				$.ajax({
+					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/filter/'+pageNo ,
+					method : "post",
+					data : JSON.stringify(data),
+					contentType: "application/json; charset=UTF-8",
+					
+					}).done((data) => {
+						$("#qstnlist").html(data);
+						console.log("성공!!!!!" +data);
+				});
+			
+			}
 			function qnaDetail(i) {
 				let qstnNo = i;
 				$("#mainQstnMenu").removeClass("d-sm-flex");
@@ -219,44 +247,14 @@
 					"text-overflow": "ellipsis",
 					"display":"block"
 				});
+				let sysNo = "${sessionScope.loginUser.sysNo}";
 				
 				$.ajax({
-					url : '<c:url value="/qna/view/'+qstnNo+'"/>',
+					url : '<c:url value="/qna/'+sysNo+'/view/'+qstnNo+'"/>',
 					method : "get",
 					dataType : "html",
 					success : function(data) {
 						$("#qnaDetailView").html(data);
-					}
-				});
-			}
-			
-			function searchQnaList(pageNo){
-				console.log("검색조건 리스트 페이지 번호: "+pageNo);
-				var startDate = $("#dateStart").val();
-				var endDate = $("#dateEnd").val();
-				var sysNo = "${sessionScope.loginUser.sysNo}"
-				
-				var qstnTtl = $("#keyword").val();
-				
-				if(qstnTtl !== "") {
-					qstnTtl = "%" + qstnTtl + "%";
-				}
-
-				let data = {startDate : startDate, endDate : endDate, qstnTtl : qstnTtl, sysNo : sysNo};
-				console.log(data);
-				
-				$.ajax({
-					url : '<c:url value="/qna/'+sysNo+'/filter/'+pageNo+'"/>',
-					method : "post",
-					data : JSON.stringify(data),
-					contentType: "application/json; charset=UTF-8",
-					
-					success : function(result){
-						$("#qstnList").html(data);
-					},
-					error : function(request, status, error) {
-						console.log("실패");
-						alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
 					}
 				});
 			}
@@ -289,7 +287,7 @@
 			  	
 			  	var startDate = $("#dateStart").val();
 			  	var endDate = $("#dateEnd").val();
-				var sysNo = "${sessionScope.loginUser.sysNo}"
+				var sysNo = "${sessionScope.loginUser.sysNo}";
 				var qstnTtl = $("#keyword").val();
 			
 				if(qstnTtl !== "") {
@@ -302,13 +300,20 @@
 				console.log(data);
 				
 				$.ajax({
-					url : '<c:url value="/qna/'+sysNo+'/filter/1"/>',
+					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/filter/1' ,
 					method : "post",
 					data : JSON.stringify(data),
-					contentType: "application/json; charset=UTF-8"
-				}).done((data) => {
-					$("#qstnList").html(data);
-				}); 
+					contentType: "application/json; charset=UTF-8",
+					
+					}).done((data) => {
+						$(".qstnTtl").css({
+							"width" : "360px",
+							"overflow": "hidden",
+							"text-overflow": "ellipsis",
+							"display":"block"
+						});
+						$("#qstnlist").html(data);
+				});
 			}
 		</script>
  		<%@include file="/WEB-INF/views/common/bottom.jsp" %>
