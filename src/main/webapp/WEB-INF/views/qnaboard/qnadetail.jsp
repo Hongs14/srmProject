@@ -175,7 +175,7 @@
              		<div class="form-group col-sm-2 ">
              			<label class="col-form-label">내용</label>
              		</div>
-             		<div class="col-sm-10 textDetail">
+             		<div class="col-sm-10 textDetail" id="qstnCn">
              			${qstn.qstnCn}
              		</div>
            		</div>

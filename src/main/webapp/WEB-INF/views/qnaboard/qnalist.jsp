@@ -306,13 +306,17 @@
 					contentType: "application/json; charset=UTF-8",
 					
 					}).done((data) => {
-						$(".qstnTtl").css({
-							"width" : "360px",
-							"overflow": "hidden",
-							"text-overflow": "ellipsis",
-							"display":"block"
-						});
 						$("#qstnlist").html(data);
+						console.log($('#qstnCn'));
+						if($('#qstnCn')){
+							$(".qstnTtl").css({
+						 		"width" : "360px",
+								"overflow": "hidden",
+								"text-overflow": "ellipsis",
+								"display":"block"
+						 });
+						}						
+						
 				});
 			}
 		</script>
