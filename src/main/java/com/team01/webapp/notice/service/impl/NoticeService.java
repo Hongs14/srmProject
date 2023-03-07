@@ -147,14 +147,16 @@ public class NoticeService implements INoticeService{
 	public void noticeUpdate(Notice notice) {
 		log.info("실행");
 		int ntcNo = notice.getNtcNo();
+		log.info(ntcNo);
 		String ntcCn = notice.getNtcCn();
 		noticeRepository.updateNotice(ntcNo,ntcCn);
-		
+		log.info("실행");
 	}
 	@Override
 	public void noticeUpdate(Notice notice,NoticeFile noticeFile) {
 		log.info("실행");
 		int ntcNo = notice.getNtcNo();
+		log.info(ntcNo);
 		String ntcCn = notice.getNtcCn();
 		noticeRepository.updateNotice(ntcNo,ntcCn);
 		

@@ -174,7 +174,7 @@
 	                        <td>${list.ntcTtl} </td>
 	                        <td>${list.userId}</td>
 	                        <td>${list.ntcWrtDate}</td>
-	                        <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=${list.ntcNo}" class="btn btn-sm btn-primary">상세</a></td>
+	                        <td><a href="${pageContext.request.contextPath}/notice/list/${list.ntcNo}" class="btn btn-sm btn-primary">상세</a></td>
 	                      </tr>
 	                      </c:forEach>
 	                      </tbody>

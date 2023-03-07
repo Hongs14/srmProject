@@ -158,9 +158,26 @@
 	var ntcTtl = document.getElementById('ntcTtl').value;
 	formData.append("ntcTtl",ntcTtl);
 						    
-	var ntcCategorySelect = document.getElementById("sysNo");
-	var sysNo = ntcCategorySelect.options[document.getElementById("sysNo").selectedIndex].value;
-	console.log(sysNo);
+    var str = location.href;
+  	console.log(str);
+	var index = str.indexOf("?")+1;
+	console.log(index);
+    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+ 
+    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+    if (index == 0) {
+        return "";
+    }
+ 
+    // str의 값은 a=1&b=first&c=true
+    str = str.substring(index, lastIndex); 
+    console.log(str);
+
+    var arr = str.split("=");
+    console.log(arr);
+    
+    var sysNo = arr[1];
+    console.log(sysNo);
 	formData.append("sysNo",sysNo);
 						    
 	var ntcPrySelect = document.getElementById("ntcPry");
@@ -197,12 +214,12 @@
 	$.ajax({
 		type: "POST",
 		enctype: 'multipart/form-data',	// 필수
-		url: 'write',
+		url: sysNo+'/write',
 		data: formData,		// 필수
 		processData: false,	// 필수
 		contentType: false	// 필수
 	}).done((data) => {
-		window.location.href = "/webapp/notice/list/"+sysNo;
+		window.location.href = "/webapp/notice/list?sysNo="+sysNo;
 	});
 						    
 	}

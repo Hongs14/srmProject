@@ -223,13 +223,33 @@
 <script>
 	$(document).ready(function () {
 		var ntcNo = document.getElementById('ntcNo').value;
-     			
+		var str = location.href;
+	  	console.log(str);
+		var index = str.indexOf("?")+1;
+		console.log(index);
+	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+	 
+	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+	    if (index == 0) {
+	        return "";
+	    }
+	 
+	    // str의 값은 a=1&b=first&c=true
+	    str = str.substring(index, lastIndex); 
+	    console.log(str);
+
+	    var arr = str.split("=");
+	    console.log(arr);
+	    
+	    var sysNo = arr[1];
+	    console.log(sysNo);
+	    
 		let data = {ntcNo : ntcNo};
 		console.log(data);
      			
 		$.ajax({
 			type: "post",
-			url: 'updateAjax/'+ntcNo,
+			url: sysNo+'/updateAjax/'+ntcNo,
 			data : JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
 	    }).done((data) => {
@@ -296,7 +316,25 @@
 	        }
 	    }
 	    
-	    var sysNo = "${sysNo}";
+	    var str = location.href;
+	  	console.log(str);
+		var index = str.indexOf("?")+1;
+		console.log(index);
+	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+	 
+	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+	    if (index == 0) {
+	        return "";
+	    }
+	 
+	    // str의 값은 a=1&b=first&c=true
+	    str = str.substring(index, lastIndex); 
+	    console.log(str);
+
+	    var arr = str.split("=");
+	    console.log(arr);
+	    
+	    var sysNo = arr[1];
 	    console.log(sysNo);
 	    
 	    var ntcCn = document.getElementById('ntcCn').value;
@@ -308,12 +346,12 @@
 	    $.ajax({
 			type: "POST",
 			enctype: 'multipart/form-data',	// 필수
-			url: 'update',
+			url: sysNo+'/update',
 			data: formData,		// 필수
 			processData: false,	// 필수
 			contentType: false	// 필수
 	    }).done((data) => {
-	    	window.location.href = "/webapp/notice/list/KOREASOFT_SRM";
+	    	window.location.href = "/webapp/notice/list?sysNo="+sysNo;
 	    });
 	    
 	}
