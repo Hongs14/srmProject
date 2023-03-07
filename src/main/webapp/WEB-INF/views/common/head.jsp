@@ -21,3 +21,10 @@
 <link href="${pageContext.request.contextPath}/resources/vendor/clock-picker/clockpicker.css" rel="stylesheet">
 
 <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/resources/vendor/chart.js/Chart.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/demo/chart-pie-demo.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vendor/chart.js/chartjs-plugin-datalabels.js"></script>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/gantt/dist/jquery-gantt.css">
+<script src="https://kit.fontawesome.com/95401d2f49.js" crossorigin="anonymous"></script>

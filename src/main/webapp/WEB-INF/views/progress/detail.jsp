@@ -111,10 +111,10 @@ border-top-right-radius: 10px;
 										<!-- SR 내용 -->
 										<div class="row mb-1">
 											<div class="col-2">
-												<span class="font-weight-bold ">SR 내용 </span>
+												<span class="font-weight-bold">SR 내용 </span>
 											</div>
 											<div class="col-10 border" style="min-height:100px;">
-												<span>${progressDetail.srCn}~~~~~~~~~~~~~~~~</span>
+												<span>${progressDetail.srCn}</span>
 											</div>
 										</div>
 										<br/>
@@ -126,7 +126,7 @@ border-top-right-radius: 10px;
 													<div>
 													<c:forEach var="filelist" items="${progressDetail.srFile}">
 														<a href="filedownload?srFileNo=${filelist.srFileNo}">
-															<span class="font-weight-bold ">${filelist.srFileActlNm}.${filelist.srFileExtnNm}</span>
+															<span class="font-weight-bold ">${filelist.srFileActlNm}</span>
 															<br/>
 														</a>
 													</c:forEach>
@@ -173,6 +173,9 @@ border-top-right-radius: 10px;
 									<li class="nav-item">
 										<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
 									</li>
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="pill" onclick="progressDetail(4)">SR 계획조정</a>
+									</li>
 								</c:when>
 								<c:when test="${message == 3}">
 									<li class="nav-item">
@@ -184,6 +187,23 @@ border-top-right-radius: 10px;
 									<li class="nav-item">
 										<a class="nav-link active" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
 									</li>
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="pill" onclick="progressDetail(4)">SR 계획조정</a>
+									</li>
+								</c:when>
+								<c:when test="${message == 4}">
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link active" data-toggle="pill" onclick="progressDetail(4)">SR 계획조정</a>
+									</li>
 								</c:when>
 								<c:otherwise>
 									<li class="nav-item">
@@ -194,6 +214,9 @@ border-top-right-radius: 10px;
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" data-toggle="pill" onclick="progressDetail(4)">SR 계획조정</a>
 									</li>
 								</c:otherwise>
 							</c:choose>
@@ -251,7 +274,7 @@ border-top-right-radius: 10px;
 								<div class="card-body">
 									<!-- ajax 변경 부분-->
 									<div class="container-fluid mb-5">
-										<div id="progressDetailView" style="width:100%"></div>
+										<div id="progressDetailView" style="width:100%; min-height:467px"></div>
 									</div>
 								</div>
 							</div>

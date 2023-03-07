@@ -64,6 +64,7 @@ public class UserController {
 			session.setAttribute("loginUser", user);
 			session.setAttribute("userType", user.getUserType());
 			session.setAttribute("userNo", user.getUserNo());
+			session.setAttribute("userId", user.getUserId());
 
 			log.info(user);
 			return "redirect:/home";

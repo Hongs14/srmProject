@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.examine.service.IExamineService;
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
@@ -41,6 +42,9 @@ public class ExamineController {
 	@Autowired
 	IExamineService examineService;
 	
+	@Autowired
+	IAlarmService alarmService;
+	
 	
 	/**
 	 * SR요청에 대한 필터링 
@@ -50,10 +54,15 @@ public class ExamineController {
 	 * @return
 	 */
 	@GetMapping(value="/list")
-	public String getExamineList(ExamineFilter examineFilter , Model model) {
+	public String getExamineList(ExamineFilter examineFilter , HttpSession session,Model model) {
 		log.info("실행");
 		
 		examineFilter = examineService.filterList(examineFilter);
+		//알림 수
+		int userNo = (Integer) session.getAttribute("userNo");
+		log.info("유저No : "+userNo);
+		int alarmCnt = alarmService.selectAlarmCount(userNo);
+		model.addAttribute("alarmCnt",alarmCnt);
 		model.addAttribute("examineFilter",examineFilter);
 		
 		return "examine/list";
@@ -115,6 +124,9 @@ public class ExamineController {
 		log.info(examine);
 		
 		examineService.updateExamine(examine);
+		
+		String srNo = examine.getSrNo();
+		alarmService.insertAlarm(srNo);
 		
 		return "examine/list";
 	}
