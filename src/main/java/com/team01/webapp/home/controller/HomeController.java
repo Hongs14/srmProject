@@ -15,10 +15,13 @@ import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.home.service.IHomeService;
 import com.team01.webapp.model.Alarm;
 import com.team01.webapp.model.Donut;
+import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Notice;
+import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SystemInfo;
 import com.team01.webapp.notice.service.INoticeService;
+import com.team01.webapp.progress.service.IProgressService;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -132,5 +135,23 @@ public class HomeController {
 		model.addAttribute("sttsNo", sr.getSttsNo());
 		
 		return "home/homeMiniView";
+	}
+	
+	@RequestMapping(value = "/managerMiniView", method = RequestMethod.POST)
+	public String getManagerMiniView(@RequestBody SR sr, Model model) {
+		if(sr.getSrNo().equals("초기값")) {
+			return "home/managerMiniView";
+		} else {
+			ProgressDetail progressdetail = homeService.selectDetailHome(sr.getSrNo());
+			model.addAttribute("progressdetail", progressdetail);
+			String[] list = {"요청", "검토중", "접수", "개발중", "완료요청", "개발 완료"};
+			model.addAttribute("list", list);
+			
+			List<HR> hrList = homeService.DeveloperList(sr.getSrNo());
+			model.addAttribute("hrList", hrList);
+			log.info(hrList);
+			
+			return "home/managerMiniView";
+		}
 	}
 }
