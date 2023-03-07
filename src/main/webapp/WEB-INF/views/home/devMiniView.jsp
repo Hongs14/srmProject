@@ -15,18 +15,56 @@
 	</div>
    
 
-  <script src="${pageContext.request.contextPath}/resources/gantt/dist/jquery-gantt.js"></script>
-  <script src="${pageContext.request.contextPath}/resources/gantt/examples/js/demo-events.js"></script>
-  <script>
-  	$('#demo').gantt({
-      data: eventsData,
-      startDate: new Date('2023-01-01'),
-      endDate: new Date('2023-04-01'),
-    });
-
-     $('#demo2').gantt({
-      data: eventsData2,
-      startDate: new Date('2023-01-01'),
-      endDate: new Date('2023-04-01'),
-    });
-  </script>
+ 	<canvas id="myChart"></canvas>
+    <script>
+        var ctx = document.getElementById("myChart");
+        
+        var chart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: ['Task 1', 'Task 2', 'Task 3'],
+                datasets: [{
+                    label: 'Start',
+                    backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                    data: [
+                        new Date('2023-03-01T00:00:00.000Z'),
+                        new Date('2023-03-05T00:00:00.000Z'),
+                        new Date('2023-03-10T00:00:00.000Z')
+                    ]
+                }, {
+                    label: 'End',
+                    backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                    data: [
+                        new Date('2023-03-10T00:00:00.000Z'),
+                        new Date('2023-03-15T00:00:00.000Z'),
+                        new Date('2023-03-20T00:00:00.000Z')
+                    ]
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+                            unit: 'day',
+                            displayFormats: {
+                                day: 'MMM D'
+                            }
+                        }
+                    }]
+                },
+                tooltips: {
+                    callbacks: {
+                        title: function(tooltipItem, data) {
+                            return data.labels[tooltipItem[0].index];
+                        },
+                        label: function(tooltipItem, data) {
+                            var datasetLabel = data.datasets[tooltipItem.datasetIndex].label;
+                            var date = new Date(tooltipItem.xLabel);
+                            return datasetLabel + ': ' + date.toLocaleDateString();
+                        }
+                    }
+                }
+            }
+        });
+    </script>

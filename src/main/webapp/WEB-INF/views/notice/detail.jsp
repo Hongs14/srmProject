@@ -14,8 +14,30 @@
 	function readComment(){
 		let noticeNo ='${notice.ntcNo}';
 	  	console.log(noticeNo);
+	  	
+	  	var str = location.href;
+	  	console.log(str);
+		var index = str.indexOf("?")+1;
+		console.log(index);
+	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+	 
+	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+	    if (index == 0) {
+	        return "";
+	    }
+	 
+	    // str의 값은 a=1&b=first&c=true
+	    str = str.substring(index, lastIndex); 
+	    console.log(str);
+
+	    var arr = str.split("=");
+	    console.log(arr);
+	    
+	    var sysNo = arr[1];
+	    console.log(sysNo);
+	  	
 	  	$.ajax({
-			url:"read/comment"
+			url: sysNo+"/read/comment"
 			,type:"get"
 			,data: 'ntcNo='+noticeNo
 			,success:function(data){
@@ -48,11 +70,32 @@
 		let ntcWriterNo = '${sessionScope.loginUser.userNo}';
 		let ntcwriter = '${sessionScope.loginUser.userId}';
 		let ntcNo = '${notice.ntcNo}';
-				
+		
 		let data = {userNo: ntcWriterNo, ntcNo: ntcNo, ntcCmntCn: content};
 		console.log(data);
+		
+		var str = location.href;
+	  	console.log(str);
+		var index = str.indexOf("?")+1;
+		console.log(index);
+	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+	 
+	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+	    if (index == 0) {
+	        return "";
+	    }
+	 
+	    str = str.substring(index, lastIndex); 
+	    console.log(str);
+
+	    var arr = str.split("=");
+	    console.log(arr);
+	    
+	    var sysNo = arr[1];
+	    console.log(sysNo);
+		
 		$.ajax({
-			url: "write/comment",
+			url: sysNo+"/write/comment",
 			method: "post",
 			data: JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
@@ -96,8 +139,29 @@
 		let content = $('#commentContent'+i).val();
 		let ntcCmntNo = i;
 		let data = {ntcCmntNo: ntcCmntNo, ntcCmntCn: content};  
+		
+		var str = location.href;
+	  	console.log(str);
+		var index = str.indexOf("?")+1;
+		console.log(index);
+	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+	 
+	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+	    if (index == 0) {
+	        return "";
+	    }
+	 
+	    str = str.substring(index, lastIndex); 
+	    console.log(str);
+
+	    var arr = str.split("=");
+	    console.log(arr);
+	    
+	    var sysNo = arr[1];
+	    console.log(sysNo);
+		
 		$.ajax({
-			url: "update/comment",
+			url: sysNo+"/update/comment",
 			method: "post",
 			data: JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
@@ -112,8 +176,30 @@
 	function deleteComment(i){
 		console.log("댓글삭제"+i);
 		let ntcCmntNo = i;
+		
+		var str = location.href;
+	  	console.log(str);
+		var index = str.indexOf("?")+1;
+		console.log(index);
+	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+	 
+	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+	    if (index == 0) {
+	        return "";
+	    }
+	 
+	    // str의 값은 a=1&b=first&c=true
+	    str = str.substring(index, lastIndex); 
+	    console.log(str);
+
+	    var arr = str.split("=");
+	    console.log(arr);
+	    
+	    var sysNo = arr[1];
+	    console.log(sysNo);
+		
 		$.ajax({
-			url: "delete/comment",
+			url: sysNo+"/delete/comment",
 			method: "get",
 			data: 'ntcCmntNo='+ntcCmntNo,
 		}).done((data) => {
@@ -187,15 +273,15 @@
 			</div>
 			<div class="col-sm-10">	
 				<c:forEach var="noticeFile" items="${noticeFile}">
-					<span><a href="fileDownload?ntcFileNo=${noticeFile.ntcFileNo}">${noticeFile.ntcFileActlNm}</a></span>
+					<span><a href="${notice.sysNo}/fileDownload?ntcFileNo=${noticeFile.ntcFileNo}">${noticeFile.ntcFileActlNm}</a></span>
 				</c:forEach>	                            		
 			</div>
 		</div>			                            		
 		<div class="d-sm-flex justify-content-end">
-			<a href="${pageContext.request.contextPath}/notice/list/${notice.sysNo}" class="btn btn-primary mr-1">목록</a>
+			<a href="${pageContext.request.contextPath}/notice/list?sysNo=${notice.sysNo}" class="btn btn-primary mr-1">목록</a>
 			<c:if test="${sessionScope.loginUser.userNm eq '관리자'}">
 				<a onclick="getNoticeUpdate('${notice.ntcNo}')" class="btn btn-primary mr-1">수정</a>
-				<form method="post" action="delete" enctype="multipart/form-data">
+				<form method="post" action="${notice.sysNo}/delete" enctype="multipart/form-data">
 					<input type="hidden" id="ntcNo" name="ntcNo" value="${notice.ntcNo}"/>
 					<input type="hidden" id="sysNo" name="sysNo" value="${notice.sysNo}"/>
 					<button type="submit" class="btn btn-primary">삭제</button>

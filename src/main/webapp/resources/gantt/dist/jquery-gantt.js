@@ -248,17 +248,11 @@ var lazyload = {
 
       var eventIcon = $$1('<div class="gantt-event-icon"><div class="' + tourType + '"></div></div>');
 
-      var eventPrice = $$1('<div>', {
-        class: 'gantt-event-price'
-      }).text(element.price.original.price + ' ' + element.price.original.priceType);
-
       var eventDesc = $$1('<div>', {
         class: 'gantt-event-desc'
       }).text(element.title);
 
       var left = remDay * this.config.cellWidth + this.gridDefaults.eventsWidth;
-
-      templateEventRow.append(templateEvent.css('left', left).append(eventBlock).append(eventIcon).append(eventPrice).append(eventDesc)).css('height', this.config.cellHeight);
 
       templateEvents.append(templateEventRow);
     }, this);
@@ -686,17 +680,12 @@ var Gantt = function () {
 
         var eventIcon = $$1('<div class="gantt-event-icon"><div class="' + tourType + '"></div></div>');
 
-        var eventPrice = $$1('<div>', {
-          class: 'gantt-event-price'
-        }).text(el.price.original.price + ' ' + el.price.original.priceType);
-
+       
         var eventDesc = $$1('<div>', {
           class: 'gantt-event-desc'
         }).text(el.title);
 
         var left = remDay * this.config.cellWidth;
-
-        templateEventRow.append(templateEvent.css('left', left).append(eventBlock).append(eventIcon).append(eventPrice).append(eventDesc)).css('height', this.config.cellHeight);
 
         templateEvents.append(templateEventRow);
       }, this);
@@ -758,9 +747,19 @@ var Gantt = function () {
   }, {
     key: 'tooltipView',
     value: function tooltipView(data) {
-      var template = '' + '<div class="gantt-tooltip">' + '    <div class="tooltip-content">' + '        <img src="{0}" alt="tooltip-img">' + '        <span class="title">{1}</span>' + '        <div class="desc">' + '            {2} <br> {3} <br> {4}' + '        </div>' + '    </div>' + '    <div class="tooltip-action">' + '        <span>Gidiş: <span class="desc">{5}</span></span><br>' + '        <span>Dönüş: <span class="desc">{6}</span></span>' + '        <div class="price">' + '            <div class="tl">{7}</div>' + '            <div class="eur">{8}</div>' + '        </div>' + '    </div>' + '</div>';
+      var template = '' 
+    	  + '<div class="gantt-tooltip">' 
+    	  + '    <div class="tooltip-content">' 
+    	  + '        <img src="{0}" alt="tooltip-img">'
+    	  + '        <span class="title">{1}</span>' 
+    	  + '        <div class="desc">' 
+    	  + '            {2} <br> {3} <br> {4}' 
+    	  + '        </div>' 
+    	  + '    </div>' 
+    	  + '</div>';
 
-      var html = this.format(template, data.image, data.title, data.desc[0], data.desc[1], data.desc[2], data.dates.begin, data.dates.end, this.format('{0} {1}', data.price.converted.price, data.price.converted.priceType), this.format('{0} {1}', data.price.original.price, data.price.original.priceType));
+      var html = this.format(template, data.image, data.title, data.desc[0], data.desc[1], data.desc[2],
+    		  data.dates.begin, data.dates.end);
       return html;
     }
   }, {

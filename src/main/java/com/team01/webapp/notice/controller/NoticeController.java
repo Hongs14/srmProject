@@ -162,7 +162,7 @@ public class NoticeController {
 				noticeService.noticeFileUpload(notice);
 			}
 		}
-		return "redirect:/notice/list/"+sysNo;
+		return "redirect:/notice/list";
 	}
 	
 	
@@ -273,7 +273,7 @@ public class NoticeController {
 			
 		}
 		noticeService.noticeUpdate(notice);
-		return "redirect:/notice/list/"+sysNo;
+		return "redirect:/notice/list";
 	}
 	
 	
@@ -291,7 +291,7 @@ public class NoticeController {
 		
 		noticeService.noticeDelete(ntcNo);
 
-		return "redirect:/notice/list/"+sysNo;
+		return "redirect:/notice/list?sysNo="+sysNo;
 	}
 	
 	//공지사항 첨부파일 삭제
