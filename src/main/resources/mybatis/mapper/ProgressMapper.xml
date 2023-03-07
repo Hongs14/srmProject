@@ -589,9 +589,12 @@
 	<update id="updateSr" parameterType="changeRequest">
 		UPDATE SR
 		SET
-			STTS_NO = 5,
+			STTS_NO = 5
+			<if test="choice == 1">
+			,
 			SR_DDLN_DATE = #{date},
 			SR_END_DATE = #{crDdlnDate}
+			</if>
 		WHERE SR_NO = #{srNo}	
 	</update>
 	
@@ -602,7 +605,8 @@
 		    CR_RESULT = '승인'
 		    </if>
 		    <if test="choice == 2">
-		    CR_RESULT = '반려'
+		    CR_RESULT = '반려',
+		    CR_COMMENT = #{crComment}
 		    </if>
 		WHERE CR_NO = #{crNo}
 	</update>
