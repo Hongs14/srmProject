@@ -397,9 +397,10 @@ public class ProgressService implements IProgressService {
 		return humanList;
 	}
 
-	@Override
+	@Transactional
 	public void changeRequest(ChangeRequest changeRequest) {
 		progressRepository.insertChangeRequest(changeRequest);
+		progressRepository.updateSrStts(changeRequest.getSrNo());
 	}
 
 	@Override
@@ -410,6 +411,19 @@ public class ProgressService implements IProgressService {
 	@Override
 	public ChangeRequest getChangeRequestFile(int crNo) {
 		return progressRepository.selectChangeRequestFile(crNo);
+	}
+
+	@Transactional
+	public void changeRequestUpdate(ChangeRequest changeRequest) {
+		progressRepository.updateSr(changeRequest);
+		
+		int choice = 1;
+		
+		progressRepository.updateChangeRequest(changeRequest.getCrNo(), choice);
+		
+		List<HR> list = progressRepository.selectHumanResourceList(changeRequest.getSrNo());
+		
+		progressRepository.updateDeveloperEndDate(list.get(0).getUserNo(), changeRequest.getSrNo(), changeRequest.getCrDdlnDate());
 	}
 
 }

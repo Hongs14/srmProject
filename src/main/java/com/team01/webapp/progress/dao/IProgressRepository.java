@@ -271,5 +271,13 @@ public interface IProgressRepository {
 	List<ChangeRequest> selectChangeRequestList(String srNo);
 
 	ChangeRequest selectChangeRequestFile(int crNo);
+
+	void updateSrStts(String srNo);
+
+	void updateSr(ChangeRequest changeRequest);
+
+	void updateChangeRequest(@Param("crNo") int crNo, @Param("choice") int choice);
+
+	void updateDeveloperEndDate(@Param("userNo") int userNo, @Param("srNo") String srNo, @Param("hrEndDate") String crDdlnDate);
 	
 }

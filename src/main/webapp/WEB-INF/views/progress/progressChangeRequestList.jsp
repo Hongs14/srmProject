@@ -30,11 +30,7 @@
 							</th>
 							<th>${list.crRegDate}</th>
 							<th>${list.crResult}</th>
-							<th>
-								<a href="ChangeRequestFileDownload/${list.crNo}">
-									${list.crFileActlNm}
-								</a>
-							</th>
+							<th>${list.crFileActlNm}</th>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -52,7 +48,6 @@
 
 <script>
 	function changeRequest() {
-		console.log("돌아감1")
 		var srNo = "${srNo}";
 		
 		$.ajax({
@@ -64,7 +59,6 @@
 	}
 	
 	function changeRequestDetail(crNo) {
-		console.log("돌아감2")
 		$.ajax({
 			url : "changeRequestDetail/" + crNo,
 			method : "post"

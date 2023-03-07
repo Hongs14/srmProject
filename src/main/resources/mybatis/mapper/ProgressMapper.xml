@@ -34,7 +34,7 @@
 		    STTS_NO AS "sttsNo",
 		    STTS_NM AS "sttsNm"
 		FROM SR_STTS
-		WHERE STTS_NO = 5 OR STTS_NO = 6 OR STTS_NO = 8
+		WHERE STTS_NO = 5 OR STTS_NO = 6 OR STTS_NO = 8 OR STTS_NO = 10
 	</select>
 	
 	<!--
@@ -73,7 +73,7 @@
 			<if test="adminSysNo != ''">
 				AND sr.sys_no = #{adminSysNo}
 			</if>
-			AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8)
+			AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8 or sr.stts_no = 10)
 			GROUP BY SR.SR_NO
 		)
 	</select>
@@ -152,10 +152,10 @@
 							<if test="adminSysNo != ''">
 								AND sr.sys_no = #{adminSysNo}
 							</if>
-							AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8)
+							AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8 or sr.stts_no = 10)
 							GROUP BY SR.SR_NO, SYS_NM, SR_TYPE_NM, SR_TTL, USER_NM, SR_DDLN_DATE, STTS_NM, SR.STTS_NO, SR_PRY
 						)
-					ORDER BY DECODE(STTS_NO, 8, 1, 5, 2) ASC, SR_PRY, SR_DDLN_DATE DESC
+					ORDER BY DECODE(STTS_NO, 8, 1, 10, 2, 5, 3) ASC, SR_PRY, SR_DDLN_DATE DESC
 				)
 			<![CDATA[
 			WHERE rownum <= #{end}
@@ -578,4 +578,40 @@
         WHERE request.user_no = users.user_no
 		AND CR_NO = #{crNo}
 	</select>
+	
+	<update id="updateSrStts" parameterType="string">
+		UPDATE SR
+		SET 
+		    STTS_NO = 10
+		WHERE SR_NO = #{srNo}
+	</update>
+	
+	<update id="updateSr" parameterType="changeRequest">
+		UPDATE SR
+		SET
+			STTS_NO = 5,
+			SR_DDLN_DATE = #{date},
+			SR_END_DATE = #{crDdlnDate}
+		WHERE SR_NO = #{srNo}	
+	</update>
+	
+	<update id="updateChangeRequest" parameterType="map">
+		UPDATE CHANGE_REQUEST
+		SET
+			<if test="choice == 1">
+		    CR_RESULT = '승인'
+		    </if>
+		    <if test="choice == 2">
+		    CR_RESULT = '반려'
+		    </if>
+		WHERE CR_NO = #{crNo}
+	</update>
+	
+	<update id="updateDeveloperEndDate" parameterType="map">
+		UPDATE HR
+		SET 
+		    HR_END_DATE = #{hrEndDate}
+		WHERE SR_NO = #{srNo}
+		AND USER_NO = #{userNo}
+	</update>
 </mapper>

@@ -111,7 +111,7 @@ border-top-right-radius: 10px;
 										<!-- SR 내용 -->
 										<div class="row mb-1">
 											<div class="col-2">
-												<span class="font-weight-bold ">SR 내용 </span>
+												<span class="font-weight-bold">SR 내용 </span>
 											</div>
 											<div class="col-10 border" style="min-height:100px;">
 												<span>${progressDetail.srCn}</span>

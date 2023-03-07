@@ -725,8 +725,6 @@ public class ProgressController {
 					mf.transferTo(file);
 				}
 			}
-			log.info(changeRequest);
-			
 			progressService.changeRequest(changeRequest);
 			
 		} catch (Exception e) {
@@ -783,6 +781,16 @@ public class ProgressController {
 		model.addAttribute("changeRequest", changeRequest);
 		
 		return "progress/progressChangeRequestDetail";
+	}
+	
+	@RequestMapping(value="progress/detail/srChangeRequest", produces="application/json; charset=UTF-8")
+	public String progressRateFinishRequest(@RequestBody ChangeRequest changeRequest, HttpSession session) {
+		
+		progressService.changeRequestUpdate(changeRequest);
+		
+		session.setAttribute("message", 4);
+		
+		return "redirect:/progress/detail/" + changeRequest.getSrNo();
 	}
 	
 }

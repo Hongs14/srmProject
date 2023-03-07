@@ -32,7 +32,7 @@
 				</div>
 				<div class="row mb-2">
 					<label class=" font-weight-bold col-sm-2">신청 내용</label> 
-					<textarea name="crCn" id="crCn" rows="10" class="form-control form-control-sm col-sm-10" wrap="hard"></textarea>
+					<textarea name="crComment" id="crComment" rows="10" class="form-control form-control-sm col-sm-10" wrap="hard"></textarea>
 				</div>
 				<!-- 파일 첨부 -->
 				<div class="row mb-2">

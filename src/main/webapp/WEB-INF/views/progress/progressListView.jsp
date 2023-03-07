@@ -49,6 +49,7 @@
 							<c:if test="${list.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${list.sttsNm}</span></c:if>
 							<c:if test="${list.sttsNm eq '개발 완료'}"><span class="badge badge-success" style="font-size:100%">${list.sttsNm}</span></c:if>
 							<c:if test="${list.sttsNm eq '완료요청'}"><span class="badge text-white" style="font-size:100%; background-color:#a33bff;">${list.sttsNm}</span></c:if>
+							<c:if test="${list.sttsNm eq '계획조정'}"><span class="badge text-white" style="font-size:100%; background-color:#78380c;">${list.sttsNm}</span></c:if>
 						</td>
 						<td>
 							<c:if test="${list.srPry eq '상'}"><span class="badge badge-danger" style="font-size:100%">${list.srPry}</span></c:if>
