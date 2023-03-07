@@ -17,15 +17,23 @@
 
 	<div class="table-responsive p-1">
 	<div class="input-group-append float-right mb-3">
-		<button class="btn btn-primary btn-sm mr-2" type="button" onclick="progressRateALLAdd()">
-			저장
-		</button>
-		<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFinishRequestModal" onclick="progressRequestModal(1)">
-			완료 요청
-		</button>
-		<button class="btn btn-warning btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFinishRequestModal" onclick="progressRequestModal(2)">
-			개발 완료 승인
-		</button>
+		<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
+			<c:if test="${check}">
+				<button class="btn btn-primary btn-sm mr-2" type="button" onclick="progressRateALLAdd()">
+					저장
+				</button>
+				<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFinishRequestModal" onclick="progressRequestModal(1)">
+					완료 요청
+				</button>
+			</c:if>
+		</c:if>
+		<c:if test="${sttsNm == '완료요청'}">
+			<c:if test="${userNo == managerNo}">
+				<button class="btn btn-warning btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFinishRequestModal" onclick="progressRequestModal(2)">
+					개발 완료 승인
+				</button>
+			</c:if>
+		</c:if>
 	</div>
 		<table class="table align-items-center table-flush table-hover">
 			<thead class="thead-light">
@@ -38,7 +46,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:if test="${choice == 0}">
+				<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료') && check}">
 					<c:forEach var="list" items="${progressRateList}">
 						<tr>
 							<c:if test="${list.progType != 5 && list.progType != 6}">
@@ -97,7 +105,7 @@
 						</tr>
 					</c:forEach>
 				</c:if>
-				<c:if test="${choice == 90}">
+				<c:if test="${sttsNm == '완료요청' || sttsNm == '개발 완료' || !check}">
 					<c:forEach var="list" items="${progressRateList}">
 						<tr>
 							<td>
@@ -176,11 +184,25 @@
 	
 	function progressRequestModal(choice) {
 		if(choice == 1) {
-			<c:forEach var="list" items="${progressRateList}" begin="3" end="3">
-				progRate = ${list.progRate}
+			var progRateArr = new Array();
+		
+			<c:forEach var="list" items="${progressRateList}" begin="0" end="3">
+				progRateArr.push(${list.progRate})
 			</c:forEach>
 			
-			if(progRate == 80) {
+			var a = null;
+			
+			if(progRateArr[0] != 20) {
+				a = "요구정의가 끝나지 않아서 요청하실 수 없습니다.";
+			} else if(progRateArr[1] != 40) {
+				a = "분석/설계가 끝나지 않아서 요청하실 수 없습니다.";
+			} else if(progRateArr[2] != 60) {
+				a = "구현이 끝나지 않아서 요청하실 수 없습니다.";
+			} else if(progRateArr[3] != 80) {
+				a = "테스트가 끝나지 않아서 요청하실 수  없습니다.";
+			} 
+			
+			if(a == null) {
 				$("#message").text("요청하시겠습니까?");
 				$('#footer').empty();
 				let htmlData = '';
@@ -190,8 +212,9 @@
 				htmlData += '<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>';
 				$('#footer').append(htmlData)
 			} else {
-				$("#message").text("테스트 종료값인 80이 아니라서 요청할 수 없습니다.");
+				$("#message").text(a);
 			}
+			
 		} else {
 			$("#message").text("승인하시겠습니까?");
 			$('#footer').empty();
