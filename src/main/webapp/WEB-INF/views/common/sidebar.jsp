@@ -57,30 +57,30 @@
        </a>
       	<div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar" style="">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/KOREASOFT_SRM">전체 공지사항</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list?sysNo=KOREASOFT_SRM">전체 공지사항</a>
             <c:if test="${sessionScope.loginUser.userOgdp eq '레드주컴퍼니' or sessionScope.loginUser.userOgdp eq '한국소프트SRM'}">            
-	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/JHJ">JHJ시스템 공지</a>
+	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list?sysNo=JHJ">JHJ시스템 공지</a>
             </c:if>
             <c:if test="${sessionScope.loginUser.userOgdp eq '티에이치컴퍼니' or sessionScope.loginUser.userOgdp eq '한국소프트SRM'}">
-	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/KTH">KTH시스템 공지</a>
+	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list?sysNo=KTH">KTH시스템 공지</a>
             </c:if>
             <c:if test="${sessionScope.loginUser.userOgdp eq '에이치알컴퍼니' or sessionScope.loginUser.userOgdp eq '한국소프트SRM'}">
-	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/KHR">KHR시스템 공지</a>
+	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list?sysNo=KHR">KHR시스템 공지</a>
             </c:if>
             <c:if test="${sessionScope.loginUser.userOgdp eq '지에이치컴퍼니' or sessionScope.loginUser.userOgdp eq '한국소프트SRM'}">
-	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list/HGH">HGH시스템 공지</a>
+	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list?sysNo=HGH">HGH시스템 공지</a>
             </c:if>
           </div>
         </div>
 	</li>
 	<li class="nav-item">
-	  <a class="nav-link collapsed" href="${pageContext.request.contextPath}/qna/list" data-toggle="collapse" data-target="#collapsePage"
+	  <a class="nav-link collapsed" href="${pageContext.request.contextPath}/qna/list" data-toggle="collapse" data-target="#collapsePage2"
        aria-expanded="false" aria-controls="collapsePage">
 	    <i class="fas fa-fw fa-sticky-note"></i>
 	    <span>QnA게시판</span>
 	  </a>
 	
-	  <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar" style="">
+	  <div id="collapsePage2" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar" style="">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="${pageContext.request.contextPath}/qna/KOREASOFT_SRM/list">전체 공지사항</a>
             <c:if test="${sessionScope.loginUser.userOgdp eq '레드주컴퍼니' or sessionScope.loginUser.userOgdp eq '한국소프트SRM'}">            

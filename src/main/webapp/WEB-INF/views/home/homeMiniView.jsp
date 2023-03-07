@@ -126,4 +126,3 @@
 			</div>
 		</c:if>
 	</div>
-<div class="card-footer"></div>

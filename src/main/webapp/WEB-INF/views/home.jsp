@@ -5,6 +5,9 @@
 <html lang="ko">
 
 <head>
+<c:if test="${sessionScope.loginUser.userType eq '관리자'}">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/managerMiniView.css">
+</c:if>
 <style>
 .nav-link {
 	cursor: pointer;
@@ -19,6 +22,18 @@
   			text-overflow : ellipsis;
   			display : block;
   		}
+  		.graph_container{
+		  display:block;
+		  width:800px;
+		  margin-left: 30px;
+		  height: 250px;
+		}
+		.gantt-grid-cols .row{
+			white-space: normal;
+		}
+		.row {
+			white-space: normal;
+		}
   	</style>
   	
 </head>
@@ -38,15 +53,6 @@
 
         <!-- 메인 컨테이너 Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
-	        <div class="card mb-4 p-3">
-	        	<div class="d-sm-flex align-items-center justify-content-between">
-	            <h4 class="mb-0 text-gray-800 m-1 "><b>${sessionScope.loginUser.userNm} 님 환영합니다.</b></h4>
-	            <ol class="breadcrumb">
-	              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}">Home</a></li>
-	              <li class="breadcrumb-item active" aria-current="page">나의 업무 </li>
-	            </ol>
-	          </div>
-	        </div>
           
 		
           <!-- Row -->
@@ -144,96 +150,109 @@
             </div>
           </div>
           <div class="row mb-5">
-          <div class="col-xl-6 col-lg-6 ">
-              <div class="card p-3">
-                <div class="card-header align-items-center">
-                  <h6 class="font-weight-bold text-primary"><i class="fas fa-fw fa-columns"></i> Notice </h6>
+          <c:if test="${sessionScope.loginUser.userType eq '고객사'}">
+	          <div class="col-xl-6 col-lg-6 ">
+	              <div class="card p-3">
+	                <div class="card-header align-items-center">
+	                  <h6 class="font-weight-bold text-primary"><i class="fas fa-fw fa-columns"></i> Notice </h6>
+	                </div>
+	                <div class="table-responsive">
+	                  <table class="table border mb-3">
+	                    <thead class="thead-light">
+	                      <tr>
+	                        <th>글번호 </th>
+	                        <th>제목 </th>
+	                        <th>작성자 </th>
+	                        <th>작성일 </th>
+	                        <th>상세보기 </th>
+	                      </tr>
+	                    </thead>
+	                    <tbody>
+	                    	<c:forEach var="list" items="${noticeList}" end="4">
+	                      <tr>
+	                        <td>${list.seq}</td>
+	                        <td>${list.ntcTtl} </td>
+	                        <td>${list.userId}</td>
+	                        <td>${list.ntcWrtDate}</td>
+	                        <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=${list.ntcNo}" class="btn btn-sm btn-primary">상세</a></td>
+	                      </tr>
+	                      </c:forEach>
+	                      </tbody>
+	                    </table>
+		              </div>
+		            </div>
+	            
+	          	</div>
+	          	<div class="col-xl-6 col-lg-6 ">
+	          	<div class="card p-3">
+	                <div class="card-header align-items-center">
+	                  <h6 class="font-weight-bold text-primary"><i class="fas fa-fw fa-sticky-note"></i>QnA </h6>
+	                </div>
+	                <div class="table-responsive">
+	                  <table class="table border mb-3">
+	                    <thead class="thead-light">
+	                      <tr>
+	                        <th>글번호 </th>
+	                        <th>제목 </th>
+	                        <th>작성자 </th>
+	                        <th>작성일 </th>
+	                        <th>상세보기 </th>
+	                      </tr>
+	                    </thead>
+	                    <tbody>
+	                      <tr>
+	                        <td><a href="#">0001</a></td>
+	                        <td>QnA1 </td>
+	                        <td>관리자</td>
+	                        <td>2023/04/14 </td>
+	                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
+	                      </tr>
+	                      <tr>
+	                        <td><a href="#">0002</a></td>
+	                        <td>QnA2 </td>
+	                        <td>관리자</td>
+	                        <td>2023/04/14 </td>
+	                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
+	                      </tr>
+	                      <tr>
+	                        <td><a href="#">0003</a></td>
+	                        <td>QnA3 </td>
+	                        <td>관리자</td>
+	                        <td>2023/04/14 </td>
+	                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
+	                      </tr>
+	                      <tr>
+	                        <td><a href="#">0003</a></td>
+	                        <td>QnA3 </td>
+	                        <td>관리자</td>
+	                        <td>2023/04/14 </td>
+	                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
+	                      </tr>
+	                      <tr>
+	                        <td><a href="#">0004</a></td>
+	                        <td>QnA3 </td>
+	                        <td>관리자</td>
+	                        <td>2023/04/14 </td>
+	                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
+	                      </tr>
+	                      </tbody>
+	                    </table>
+		              </div>
+		            </div>
+	          	</div>
+          	</c:if>
+          	
+          	<c:if test="${sessionScope.loginUser.userType eq '개발자'}">
+          		<div class="col-12 " id="devMiniView">
+          	 		<%@include file="/WEB-INF/views/home/devMiniView.jsp" %>
                 </div>
-                <div class="table-responsive">
-                  <table class="table border mb-3">
-                    <thead class="thead-light">
-                      <tr>
-                        <th>글번호 </th>
-                        <th>제목 </th>
-                        <th>작성자 </th>
-                        <th>작성일 </th>
-                        <th>상세보기 </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    	<c:forEach var="list" items="${noticeList}" end="4">
-                      <tr>
-                        <td>${list.seq}</td>
-                        <td>${list.ntcTtl} </td>
-                        <td>${list.userId}</td>
-                        <td>${list.ntcWrtDate}</td>
-                        <td><a href="${pageContext.request.contextPath}/notice/detail?ntcNo=${list.ntcNo}" class="btn btn-sm btn-primary">상세</a></td>
-                      </tr>
-                      </c:forEach>
-                      </tbody>
-                    </table>
-	              </div>
-	            </div>
-            
-          	</div>
-          	<div class="col-xl-6 col-lg-6 ">
-          	<div class="card p-3">
-                <div class="card-header align-items-center">
-                  <h6 class="font-weight-bold text-primary"><i class="fas fa-fw fa-sticky-note"></i>QnA </h6>
+
+          	</c:if>
+          	<c:if test="${sessionScope.loginUser.userType eq '관리자'}">
+          		<div class="col-12 " id="managerMiniView">
+          	 		<%@include file="/WEB-INF/views/home/managerMiniView.jsp" %>
                 </div>
-                <div class="table-responsive">
-                  <table class="table border mb-3">
-                    <thead class="thead-light">
-                      <tr>
-                        <th>글번호 </th>
-                        <th>제목 </th>
-                        <th>작성자 </th>
-                        <th>작성일 </th>
-                        <th>상세보기 </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><a href="#">0001</a></td>
-                        <td>QnA1 </td>
-                        <td>관리자</td>
-                        <td>2023/04/14 </td>
-                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">0002</a></td>
-                        <td>QnA2 </td>
-                        <td>관리자</td>
-                        <td>2023/04/14 </td>
-                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">0003</a></td>
-                        <td>QnA3 </td>
-                        <td>관리자</td>
-                        <td>2023/04/14 </td>
-                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">0003</a></td>
-                        <td>QnA3 </td>
-                        <td>관리자</td>
-                        <td>2023/04/14 </td>
-                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">0004</a></td>
-                        <td>QnA3 </td>
-                        <td>관리자</td>
-                        <td>2023/04/14 </td>
-                        <td><a href="${pageContext.request.contextPath }/qna/view?qstnNo=21" class="btn btn-sm btn-primary">상세</a></td>
-                      </tr>
-                      </tbody>
-                    </table>
-	              </div>
-	            </div>
-            
-          	</div>
+          	</c:if>
           </div>
           
           <!-- Row -->
