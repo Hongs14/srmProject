@@ -5,19 +5,9 @@ var eventsData = [{
     "url": "http://www.example.com/1",
     "type": "Tur",
     "minNight":"4days",
-    "price": {
-        "original": {
-            "price": 798.0000,
-            "priceType": "EUR"
-        },
-        "converted": {
-            "price": 2673,
-            "priceType": "TL"
-        }
-    },
+    
     "tooltipData": {
         "title": "요구분석",
-        "image": "resources/images/logoOnly.png",
         "desc": ["Atlas Global Havayolları Tarifeli Seferi ile ", " Türkçe Rehber ", " Vizesiz ", " 3 Gece - 4 Gün ", " Zaporojie (3)"],
         "dates": {
             "begin": "21 Temmuz 2016 Perşembe",
@@ -33,19 +23,8 @@ var eventsData = [{
     "url": "http://www.gezinomi.com/amsterdam-ilkbahar-yaz-turu",
     "type": "Tur",
     "minNight": "3",
-    "price": {
-        "original": {
-            "price": 1098.0000,
-            "priceType": "EUR"
-        },
-        "converted": {
-            "price": 3678,
-            "priceType": "TL"
-        }
-    },
     "tooltipData": {
         "title": "Amsterdam İlkbahar , Yaz Turu ",
-        "image": "http://cdn.gezinomi.com//amsterdam-ilkbahar-yaz-turu-1987--1-16.3.2015155554-b4.jpg",
         "desc": ["Türk Havayolları Tarifeli Seferi ile ", " Türkçe Rehber ", " Vizeli ", " 3 Gece - 4 Gün ", " Amsterdam (3)"],
         "dates": {
             "begin": "21 Temmuz 2016 Perşembe",
