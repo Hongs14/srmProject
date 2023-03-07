@@ -26,7 +26,33 @@
                 </form>
               </div>
             </li>
-           
+           <!-- sockJS -->
+			<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+			<script>
+				// 전역변수 설정
+				var socket  = null;
+				$(document).ready(function(){
+				    // 웹소켓 연결
+				    sock = new SockJS("<c:url value="/echo-ws"/>");
+				    socket = sock;
+				    // 데이터를 전달 받았을때 
+				    sock.onmessage = onMessage; // toast 생성
+				});
+				
+				// toast생성 및 추가
+				function onMessage(evt){
+				    var data = evt.data;
+				    // toast
+				    let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+				    toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+				    toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+				    toast += "<span aria-hidden='true'>&times;</span></button>";
+				    toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+				    $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
+				    $(".toast").toast({"animation": true, "autohide": false});
+				    $('.toast').toast('show');
+				};	
+			</script>
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -45,40 +71,25 @@
               </a>
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">읽지않은 알림</h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fas fa-donate text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
+                <h6 class="dropdown-header">받은 알림</h6>
+                <c:forEach var="alarmList" items="${alarmList}"  begin="0" end="2" step="1">                
+	                <a class="dropdown-item d-flex align-items-center" href="#">
+	                  <div class="mr-3">
+	                    <div class="icon-circle bg-primary">
+	                    	<c:if test="${alarmList.messageCheck eq 89}">
+		                      <i class="fas fa-check text-white"></i>
+	                    	</c:if>
+	                    	<c:if test="${alarmList.messageCheck eq 78 }">
+		                      <i class="fas fa-exclamation-triangle text-white"></i>
+	                    	</c:if>
+	                    </div>
+	                  </div>
+	                  <div>
+	                    <div class="small text-gray-500">${alarmList.messageDate}</div>
+	                    <span class="font-weight-bold">${alarmList.alarmTtl} : ${alarmList.message}</span>
+	                  </div>
+	                </a>
+                </c:forEach>
                 <a class="dropdown-item text-center small text-gray-500" href="${pageContext.request.contextPath}/alarm/list">Show All Alerts</a>
               </div>
             </li>

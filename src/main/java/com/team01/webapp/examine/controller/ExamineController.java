@@ -54,10 +54,15 @@ public class ExamineController {
 	 * @return
 	 */
 	@GetMapping(value="/list")
-	public String getExamineList(ExamineFilter examineFilter , Model model) {
+	public String getExamineList(ExamineFilter examineFilter , HttpSession session,Model model) {
 		log.info("실행");
 		
 		examineFilter = examineService.filterList(examineFilter);
+		//알림 수
+		int userNo = (Integer) session.getAttribute("userNo");
+		log.info("유저No : "+userNo);
+		int alarmCnt = alarmService.selectAlarmCount(userNo);
+		model.addAttribute("alarmCnt",alarmCnt);
 		model.addAttribute("examineFilter",examineFilter);
 		
 		return "examine/list";

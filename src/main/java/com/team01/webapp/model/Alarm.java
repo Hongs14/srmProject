@@ -13,6 +13,7 @@ public class Alarm {
 	private Date messageDate;
 	private String alarmPry;
 	private String alarmTtl;
+	private String alarmCategory;
 	
 	//SR
 	private String srTtl;

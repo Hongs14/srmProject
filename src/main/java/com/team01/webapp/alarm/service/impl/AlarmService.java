@@ -46,4 +46,11 @@ public class AlarmService implements IAlarmService{
 		alarmRepository.insertAlarm(alarmUser);
 	}
 
+	@Override
+	public void updateCheck(String srNo) {
+		log.info("실행");
+		alarmRepository.updateAlarmCheck(srNo);
+		
+	}
+
 }

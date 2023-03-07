@@ -18,4 +18,7 @@ public interface IAlarmRepository {
 	//고객사에게 알림
 	public void insertAlarm(Alarm alarm);
 	
+	//알림 체크
+	public void updateAlarmCheck(String srNo);
+	
 }

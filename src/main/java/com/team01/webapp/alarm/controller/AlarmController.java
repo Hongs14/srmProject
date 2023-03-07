@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
@@ -27,11 +29,24 @@ public class AlarmController extends TextWebSocketHandler {
 	@GetMapping("list")
 	public String alarmList(HttpSession session, Model model) {
 		log.info("실행");
-		int user = (Integer)session.getAttribute("userNo");
+		//알림 리스트
+		int userNo = (Integer) session.getAttribute("userNo");
+		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
 		
-		List<Alarm> alarmList = alarmService.selectAlarmList(user);
-		
+		//알림 수
+		int alarmCnt = alarmService.selectAlarmCount(userNo);
+		model.addAttribute("alarmCnt",alarmCnt);
 		model.addAttribute("alarmList",alarmList);
+		
+		return "alarm/list";
+	}
+	
+	@PostMapping(value="updateAlarmCheck", produces="application/json; charset=UTF-8")
+	public String updateAlarmCheck(@RequestBody Alarm alarm) {
+		log.info("실행");
+		log.info(alarm);
+		String srNo = alarm.getSrNo();
+		alarmService.updateCheck(srNo);
 		
 		return "alarm/list";
 	}

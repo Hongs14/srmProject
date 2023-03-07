@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.home.service.IHomeService;
+import com.team01.webapp.model.Alarm;
 import com.team01.webapp.model.Donut;
 import com.team01.webapp.model.Notice;
 import com.team01.webapp.model.SR;
@@ -63,11 +64,14 @@ public class HomeController {
 		
 		// Q n A 페이징 처리
 		
-		//알림 수
+		//알림 리스트
 		int userNo = (Integer) session.getAttribute("userNo");
-		log.info("유저N0 : "+userNo);
+		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
+		
+		//알림 수
 		int alarmCnt = alarmService.selectAlarmCount(userNo);
 		model.addAttribute("alarmCnt",alarmCnt);
+		model.addAttribute("alarmList",alarmList);
 		
 		return "home";
 	}

@@ -513,6 +513,122 @@
 								$("#noticeList").html(data)
 							});
 						}
+						
+						function getNoticeDetail(i) {
+							let ntcNo = i;
+							var str = location.href;
+						  	console.log(str);
+							var index = str.indexOf("?")+1;
+							console.log(index);
+						    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+						 
+						    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+						    if (index == 0) {
+						        return "";
+						    }
+						 
+						    // str의 값은 a=1&b=first&c=true
+						    str = str.substring(index, lastIndex); 
+						    console.log(str);
+
+						    var arr = str.split("=");
+						    console.log(arr);
+						    
+						    var sysNo = arr[1];
+						    console.log(sysNo);
+						    
+							$("#mainNoticeMenu").removeClass("d-sm-flex");
+							$("#mainNoticeMenu").hide();
+							$("#noticeMenu").show();
+							$("#mainNoitce").attr("class","col-lg-7");
+							$("#subNoticeDetailView").attr("class","col-lg-5");
+							
+							$.ajax({
+								url : sysNo+"/detail/"+ntcNo,
+								method : "get",
+								dataType : "html",
+								success : function(data) {
+									$("#subNoticeDetailView").html(data);
+								}
+							});
+						}
+						
+						function getNoticeWrite() {
+							var str = location.href;
+						  	console.log(str);
+							var index = str.indexOf("?")+1;
+							console.log(index);
+						    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+						 
+						    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+						    if (index == 0) {
+						        return "";
+						    }
+						 
+						    // str의 값은 a=1&b=first&c=true
+						    str = str.substring(index, lastIndex); 
+						    console.log(str);
+
+						    var arr = str.split("=");
+						    console.log(arr);
+						    
+						    var sysNo = arr[1];
+						    console.log(sysNo);
+						    
+							$("#mainNoticeMenu").removeClass("d-sm-flex");
+							$("#mainNoticeMenu").hide();
+							$("#noticeMenu").show();
+							$("#mainNoitce").attr("class","col-lg-7");
+							$("#subNoticeDetailView").attr("class","col-lg-5");
+							
+							$.ajax({
+								url : sysNo+"/write",
+								method : "get",
+								dataType : "html",
+								success : function(data) {
+									$("#subNoticeDetailView").html(data);
+								}
+							});
+						}
+						
+						function getNoticeUpdate(i) {
+							let ntcNo = i;
+							var str = location.href;
+						  	console.log(str);
+							var index = str.indexOf("?")+1;
+							console.log(index);
+						    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+						 
+						    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+						    if (index == 0) {
+						        return "";
+						    }
+						 
+						    // str의 값은 a=1&b=first&c=true
+						    str = str.substring(index, lastIndex); 
+						    console.log(str);
+
+						    var arr = str.split("=");
+						    console.log(arr);
+						    
+						    var sysNo = arr[1];
+						    console.log(sysNo);
+						    
+							$("#mainNoticeMenu").removeClass("d-sm-flex");
+							$("#mainNoticeMenu").hide();
+							$("#noticeMenu").show();
+							$("#mainNoitce").attr("class","col-lg-7");
+							$("#subNoticeDetailView").attr("class","col-lg-5");
+							
+							$.ajax({
+								url : sysNo+"/update/"+ntcNo,
+								method : "get",
+								dataType : "html",
+								success : function(data) {
+									$("#subNoticeDetailView").html(data);
+								}
+							});
+						}
 					</script>
 				</c:if>
 				

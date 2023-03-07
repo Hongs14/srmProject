@@ -14,4 +14,7 @@ public interface IAlarmService {
 	
 	//알림 추가
 	public void insertAlarm(String srNo);
+	
+	//알림 체크
+	public void updateCheck(String srNo);
 }
