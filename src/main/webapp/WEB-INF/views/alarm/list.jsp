@@ -55,78 +55,26 @@
 											<div class="row mb-5">
 												<table>
 													<tbody>
-														<tr style="cursor:pointer;">
-															<td>
-																<span class="col-3 " style="border-top:0; margin:0px;font-size:1.2rem;"><b>JHJ-SR-001</b></span>
-																<span>2023.03.05</span>
-																<br/>
-																<span class="col-3 ">SR 요청이 정상적으로 접수가 완료되었습니다.</span>
-																<hr/>
-															</td>
-															<td>
-																<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-															</td>
-														</tr>
-														<tr style="cursor:pointer;">
-															<td>
-																<span class="col-3 " style="border-top:0; margin:0px;font-size:1.2rem;"><b>JHJ-SR-002</b></span>
-																<span>2023.03.05</span>
-																<br/>
-																<span class="col-3 ">SR 요청이 정상적으로 접수가 완료되었습니다.</span>
-																<hr/>
-															</td>
-															<td>
-																<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-															</td>
-														</tr>
-														<tr style="cursor:pointer;">
-															<td>
-																<span class="col-3 " style="border-top:0; margin:0px;font-size:1.2rem;"><b>JHJ-SR-003</b></span>
-																<span>2023.03.05</span>
-																<br/>
-																<span class="col-3 ">SR 요청이 정상적으로 접수가 완료되었습니다.</span>
-																<hr/>
-															</td>
-															<td>
-																<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-															</td>
-														</tr>
-														<tr style="cursor:pointer;">
-															<td>
-																<span class="col-3 " style="border-top:0; margin:0px;font-size:1.2rem;"><b>JHJ-SR-004</b></span>
-																<span>2023.03.05</span>
-																<br/>
-																<span class="col-3 ">SR 요청이 정상적으로 접수가 완료되었습니다.</span>
-																<hr/>
-															</td>
-															<td>
-																<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-															</td>
-														</tr>
-														<tr style="cursor:pointer;">
-															<td>
-																<span class="col-3 " style="border-top:0; margin:0px;font-size:1.2rem;"><b>JHJ-SR-005</b></span>
-																<span>2023.03.05</span>
-																<br/>
-																<span class="col-3 ">SR 요청이 정상적으로 접수가 완료되었습니다.</span>
-																<hr/>
-															</td>
-															<td>
-																<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-															</td>
-														</tr>
-														<tr style="cursor:pointer;">
-															<td>
-																<span class="col-3 " style="border-top:0; margin:0px;font-size:1.2rem;"><b>JHJ-SR-006</b></span>
-																<span>2023.03.05</span>
-																<br/>
-																<span class="col-3 ">SR 요청이 정상적으로 접수가 완료되었습니다.</span>
-																<hr/>
-															</td>
-															<td>
-																<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-															</td>
-														</tr>
+														<c:forEach var="alarmList" items="${alarmList}">														
+															<tr style="cursor:pointer;">
+																<td onclick="updateCheck('${alarmList.srNo}')">
+																	<c:if test="${alarmList.messageCheck eq 89}">
+												                      <i class="fas fa-check"></i>
+											                    	</c:if>
+											                    	<c:if test="${alarmList.messageCheck eq 78 }">
+												                      <i class="fas fa-exclamation-triangle"></i>
+											                    	</c:if>
+																	<span class="col-3 " style="border-top:0; margin:0px;font-size:1.2rem;"><b>${alarmList.alarmTtl}</b></span>
+																	<span>${alarmList.messageDate}</span>
+																	<br/>
+																	<span class="col-3 ">${alarmList.message}</span>
+																	<hr/>
+																</td>
+																<td>
+																	<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+																</td>
+															</tr>
+														</c:forEach>
 													</tbody>
 												</table>
 											</div>
@@ -134,6 +82,25 @@
 									</div>
 								</div>
 							</div>
+							<script>
+								function updateCheck(i) {
+									var srNo = i;
+									let data = {srNo : srNo};
+									console.log(data);
+									
+									console.log(data);
+									
+									$.ajax({
+										url : "updateAlarmCheck",
+										method : "post",
+										data : JSON.stringify(data),
+										contentType: "application/json; charset=UTF-8"
+									}).done((data) => {
+										window.location.href = "${pageContext.request.contextPath}/request/list/"+srNo;
+									});
+								}	
+							
+							</script>
 
 	          			<!-- 로그아웃 모달 -->
 						<%@include file="/WEB-INF/views/common/logout.jsp" %>

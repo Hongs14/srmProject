@@ -54,55 +54,79 @@
 						<span>${examine.sysNm}</span> 
 					</div>
 				</div>
-				<hr/>
-
-				<div class="row mb-2 mr-0">
-					<div class="col-sm-2">
-						<span><b>SR 검토</b></span>
+				<c:if test="${sessionScope.loginUser.userOgdp eq examine.userOgdp}">
+					<hr/>
+					<div class="row mb-2 mr-0">
+						<div class="col-sm-2">
+							<span><b>SR 검토</b></span>
+						</div>
 					</div>
-				</div>
-				<hr>
-				<div class="row mb-2 mr-0">
-					<div class="col-6">
-			   			<span>요청구분</span>
-			   			<select class="form-control" id="srReqSe" name="srReqSe">
-			   				<option>개발(신규)</option>
-			   				<option>개발(개선)</option>
-			   			</select>
+					<hr>
+					<div class="row mb-2 mr-0">
+						<div class="col-6">
+				   			<span>요청구분</span>
+				   			<select class="form-control" id="srReqSe" name="srReqSe">
+				   				<option>개발(신규)</option>
+				   				<option>개발(개선)</option>
+				   			</select>
+						</div>
+						<div class="col-6">
+							<span>중요 여부</span>
+							<select class="form-control" id="srPry" name="srPry">
+			   					<option>상</option>
+				   				<option>중</option>
+				   				<option>하</option>
+				   			</select>
+						</div>
 					</div>
-					<div class="col-6">
-						<span>중요 여부</span>
-						<select class="form-control" id="srPry" name="srPry">
-		   					<option>상</option>
-			   				<option>중</option>
-			   				<option>하</option>
-			   			</select>
+		   			<div class="row mb-2 mr-0">
+		   				<div class="col-12">
+					   		<span>검토 상태</span>
+					   		<select class="form-control" id="sttsNm" name="sttsNm">
+					   			<option>검토중</option>
+					   			<option>반려</option>
+					   			<option>재검토</option>
+					   			<option>접수</option>
+					   		</select>
+		   				</div>
+		   			</div>
+		   			<div class="row mb-2 mr-0">
+		   				<div class="col-12">
+					   		<span>검토 의견</span>
+					   		<textarea class="form-control" rows="3" id="srOpnn" name="srOpnn">${examine.srOpnn}</textarea>
+		   				</div>
+		   			</div>
+					<!-- 하단 버튼들 -->				
+					<div id="buttons" class="m-3 text-right">
+						<button type="submit" class="btn btn-primary" id="alarmBtn">저장</button>
 					</div>
-				</div>
-	   			<div class="row mb-2 mr-0">
-	   				<div class="col-12">
-				   		<span>검토 상태</span>
-				   		<select class="form-control" id="sttsNm" name="sttsNm">
-				   			<option>검토중</option>
-				   			<option>반려</option>
-				   			<option>재검토</option>
-				   			<option>접수</option>
-				   		</select>
-	   				</div>
-	   			</div>
-	   			<div class="row mb-2 mr-0">
-	   				<div class="col-12">
-				   		<span>검토 의견</span>
-				   		<textarea class="form-control" rows="3" id="srOpnn" name="srOpnn">${examine.srOpnn}</textarea>
-	   				</div>
-	   			</div>
-				<!-- 하단 버튼들 -->
-				<div id="buttons" class="m-3 text-right">
-					<button type="submit" class="btn btn-primary">저장</button>
-				</div>
+				</c:if>
 			</form>
-   		
-   		
+   			<script>
+	   			$('#alarmBtn').click(function(e){
+	   			    let type = '70';
+	   			    let target = "${examine.srNo}";
+	   			    let content = "SR 요청건이 처리 되었습니다.";
+	   			    let url = '${pageContext.request.contextPath}/alarm/updateAlarmCheck';
+	   			    // 전송한 정보를 db에 저장	
+	   			    $.ajax({
+	   			        type: 'post',
+	   			        url: '${pageContext.request.contextPath}/alarm/updateAlarmCheck',
+	   			        dataType: 'text',
+	   			        data: {
+	   			            target: target,
+	   			            content: content,
+	   			            type: type,
+	   			            url: url
+	   			        },
+	   			        success: function(){    // db전송 성공시 실시간 알림 전송
+	   			            // 소켓에 전달되는 메시지
+	   			            // 위에 기술한 EchoHandler에서 ,(comma)를 이용하여 분리시킨다.
+	   			            socket.send("관리자,"+target+","+content+","+url);	
+	   			        }
+	   			    });
+	   			});
+   			</script>
    			<hr>
 			<div class="row mb-4">
 				<div class="col-sm-2">

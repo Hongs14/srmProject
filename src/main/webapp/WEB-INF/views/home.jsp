@@ -246,6 +246,7 @@
           		<div class="col-12 " id="devMiniView">
           	 		<%@include file="/WEB-INF/views/home/devMiniView.jsp" %>
                 </div>
+
           	</c:if>
           	<c:if test="${sessionScope.loginUser.userType eq '관리자'}">
           		<div class="col-12 " id="managerMiniView">

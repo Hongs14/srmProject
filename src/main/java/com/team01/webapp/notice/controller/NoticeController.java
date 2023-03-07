@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,10 +28,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team01.webapp.alarm.service.IAlarmService;
+import com.team01.webapp.model.Alarm;
 import com.team01.webapp.model.Notice;
 import com.team01.webapp.model.NoticeComment;
 import com.team01.webapp.model.NoticeFile;
-import com.team01.webapp.model.SrFile;
 import com.team01.webapp.notice.service.INoticeService;
 import com.team01.webapp.util.Pager;
 
@@ -43,6 +45,9 @@ public class NoticeController {
 	
 	@Autowired
 	INoticeService noticeService;
+	
+	@Autowired
+	IAlarmService alarmService;
 
 	/**
 	 * 공지사항 리스트 가져오기
@@ -51,10 +56,35 @@ public class NoticeController {
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
-	@GetMapping("/list/{sysNo}")
-	public String getNoticeList(@PathVariable String sysNo, Model model) {
+	@GetMapping("/list")
+	public String getNoticeList(HttpSession session,Model model) {
 		log.info("실행");
-		model.addAttribute(sysNo);
+		//알림 리스트
+		int userNo = (Integer) session.getAttribute("userNo");
+		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
+		
+		//알림 수
+		int alarmCnt = alarmService.selectAlarmCount(userNo);
+		model.addAttribute("alarmCnt",alarmCnt);
+		model.addAttribute("alarmList",alarmList);
+		model.addAttribute("command","de");
+		return "notice/list";
+	}
+	
+	@GetMapping("/list/{ntcNo}")
+	public String getNoticeDetailView(@PathVariable int ntcNo, HttpSession session,Model model) {
+		log.info("디테일 실행");
+		//알림 리스트
+		int userNo = (Integer) session.getAttribute("userNo");
+		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
+		
+		//알림 수
+		int alarmCnt = alarmService.selectAlarmCount(userNo);
+		model.addAttribute("alarmCnt",alarmCnt);
+		model.addAttribute("alarmList",alarmList);
+		model.addAttribute("ntcNo", ntcNo);
+		model.addAttribute("sysNo","KOREASOFT_SRM");
+		model.addAttribute("command", "detail");
 		return "notice/list";
 	}
 
