@@ -5,6 +5,10 @@
 <html lang="ko">
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
+	<script src="${pageContext.request.contextPath}/resources/tinymce2/tinymce.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/tinymce2/theme.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/tinymce2/tinymceinit.js"></script>
+	
 	<style>
 	
 	.col-lg-7 .requsetTtl{

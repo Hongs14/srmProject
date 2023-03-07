@@ -8,63 +8,93 @@
           </div>
           <div class="card-body">
             <div class="graph_container">
-			   <div id="demo"></div>
+			   <canvas id="myChart"></canvas>
 			</div>
           </div>
         </div>
 	</div>
    
 
- 	<canvas id="myChart"></canvas>
-    <script>
-        var ctx = document.getElementById("myChart");
-        
-        var chart = new Chart(ctx, {
-            type: 'horizontalBar',
-            data: {
-                labels: ['Task 1', 'Task 2', 'Task 3'],
-                datasets: [{
-                    label: 'Start',
-                    backgroundColor: 'rgba(0, 0, 255, 0.2)',
-                    data: [
-                        new Date('2023-03-01T00:00:00.000Z'),
-                        new Date('2023-03-05T00:00:00.000Z'),
-                        new Date('2023-03-10T00:00:00.000Z')
-                    ]
-                }, {
-                    label: 'End',
-                    backgroundColor: 'rgba(255, 0, 0, 0.2)',
-                    data: [
-                        new Date('2023-03-10T00:00:00.000Z'),
-                        new Date('2023-03-15T00:00:00.000Z'),
-                        new Date('2023-03-20T00:00:00.000Z')
-                    ]
-                }]
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                        type: 'time',
-                        time: {
-                            unit: 'day',
-                            displayFormats: {
-                                day: 'MMM D'
-                            }
-                        }
-                    }]
-                },
-                tooltips: {
-                    callbacks: {
-                        title: function(tooltipItem, data) {
-                            return data.labels[tooltipItem[0].index];
-                        },
-                        label: function(tooltipItem, data) {
-                            var datasetLabel = data.datasets[tooltipItem.datasetIndex].label;
-                            var date = new Date(tooltipItem.xLabel);
-                            return datasetLabel + ': ' + date.toLocaleDateString();
-                        }
-                    }
-                }
-            }
-        });
-    </script>
+ 	<script>
+ 	var ctx = document.getElementById("myChart");
+
+ 	var data = {
+ 	  labels: ["Task 1", "Task 2", "Task 3"],
+ 	  datasets: [
+ 	    {
+ 	      label: "Start Date",
+ 	      backgroundColor: "rgba(0, 0, 255, 0.2)",
+ 	      borderColor: "rgba(0, 0, 255, 1)",
+ 	      borderWidth: 1,
+ 	      pointRadius: 0,
+ 	      data: [
+ 	        {
+ 	          x: new Date("2022-01-01"),
+ 	          y: 0,
+ 	        },
+ 	        {
+ 	          x: new Date("2022-02-01"),
+ 	          y: 1,
+ 	        },
+ 	        {
+ 	          x: new Date("2022-03-01"),
+ 	          y: 2,
+ 	        },
+ 	      ],
+ 	    },
+ 	    {
+ 	      label: "Duration",
+ 	      backgroundColor: "rgba(255, 0, 0, 0.2)",
+ 	      borderColor: "rgba(255, 0, 0, 1)",
+ 	      borderWidth: 1,
+ 	      pointRadius: 0,
+ 	      data: [
+ 	        {
+ 	          x: new Date("2022-01-01"),
+ 	          y: 1,
+ 	        },
+ 	        {
+ 	          x: new Date("2022-02-01"),
+ 	          y: 2,
+ 	        },
+ 	        {
+ 	          x: new Date("2022-03-01"),
+ 	          y: 3,
+ 	        },
+ 	      ],
+ 	    },
+ 	  ],
+ 	};
+
+ 	var options = {
+ 	  scales: {
+ 	    xAxes: [
+ 	      {
+ 	        type: "time",
+ 	        time: {
+ 	          unit: "month",
+ 	        },
+ 	        ticks: {
+ 	          min: new Date("2021-12-01"),
+ 	          max: new Date("2022-04-01"),
+ 	        },
+ 	      },
+ 	    ],
+ 	    yAxes: [
+ 	      {
+ 	        ticks: {
+ 	          beginAtZero: true,
+ 	        },
+ 	      },
+ 	    ],
+ 	  },
+ 	};
+
+ 	var myChart = new Chart(ctx, {
+ 		plugins : [ChartDataLabels],
+ 	  type: "line",
+ 	  data: data,
+ 	  options: options,
+ 	});
+
+ 	</script>
