@@ -50,21 +50,21 @@
 					<c:forEach var="list" items="${progressRateList}">
 						<tr>
 							<c:if test="${list.progType != 5 && list.progType != 6}">
-								<td>
+								<th>
 									<a onclick="progressRateAdd('${list.progNo}')" data-toggle="modal" data-target="#progressRateModal">
 										${list.progTypeNm}
 									</a>
-								</td>
-								<td class="input-daterange p-3" style="width:170px;">
+								</th>
+								<th class="input-daterange p-3" style="width:170px;">
 									<input type="text" value="${list.progStartDate}" class="a form-control form-control-sm" id="start-${list.progNo}"/>
-								</td>
-								<td class="input-daterange p-3" style="width:170px;">
+								</th>
+								<th class="input-daterange p-3" style="width:170px;">
 									<input type="text" value="${list.progEndDate}" class="a form-control form-control-sm" id="end-${list.progNo}"/>
-								</td>
-								<td class="input-daterange p-3" style="width:100px;">
+								</th>
+								<th class="input-daterange p-3" style="width:100px;">
 									<input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="${list.progRate}" min="0" class="form-control form-control-sm" id="rate-${list.progNo}"/>
-								</td>
-								<td class="pl-5">
+								</th>
+								<th class="pl-5">
 									<c:if test="${list.progressFile[0].progFileNo != null}">
 										<div class="row d-flex flex-column text-left">
 											<c:forEach var="fileList" items="${list.progressFile}">
@@ -75,22 +75,22 @@
 											</c:forEach>
 										</div>
 									</c:if>
-								</td>
+								</th>
 							</c:if>
 							<c:if test="${list.progType == 5 || list.progType == 6}">
-								<td>
+								<th>
 									${list.progTypeNm}
-								</td>
-								<td>
+								</th>
+								<th>
 									${list.progStartDate}
-								</td>
-								<td>
+								</th>
+								<th>
 									${list.progEndDate}
-								</td>
-								<td>
+								</th>
+								<th>
 									${list.progRate}
-								</td>
-								<td>
+								</th>
+								<th>
 									<c:if test="${list.progressFile[0].progFileNo != null}">
 										<div class="row">
 											<c:forEach var="fileList" items="${list.progressFile}">
@@ -100,7 +100,7 @@
 											</c:forEach>
 										</div>
 									</c:if>
-								</td>
+								</th>
 							</c:if>
 						</tr>
 					</c:forEach>
@@ -108,19 +108,19 @@
 				<c:if test="${sttsNm == '완료요청' || sttsNm == '개발 완료' || !check}">
 					<c:forEach var="list" items="${progressRateList}">
 						<tr>
-							<td>
+							<th>
 								${list.progTypeNm}
-							</td>
-							<td>
+							</th>
+							<th>
 								${list.progStartDate}
-							</td>
-							<td>
+							</th>
+							<th>
 								${list.progEndDate}
-							</td>
-							<td>
+							</th>
+							<th>
 								${list.progRate}
-							</td>
-							<td>
+							</th>
+							<th>
 								<c:if test="${list.progressFile[0].progFileNo != null}">
 									<div class="row">
 										<c:forEach var="fileList" items="${list.progressFile}">
@@ -130,7 +130,7 @@
 										</c:forEach>
 									</div>
 								</c:if>
-							</td>
+							</th>
 						</tr>
 					</c:forEach>
 				</c:if>
