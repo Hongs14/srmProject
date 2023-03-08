@@ -60,6 +60,28 @@
 		WHERE QSTN.USER_NO = USERS.USER_NO AND QSTN.QSTN_NO =#{qstnNo}
 	</select>
 	
+	<select id="selectQstnFileDetail" parameterType="int" resultType="qstnFile">
+		SELECT
+			QSTN_FILE_NO AS "qstnFileNo",
+			QSTN_NO AS "qstnNo",
+			QSTN_FILE_PHYS_NM AS "qstnFilePhysNm",
+			QSTN_FILE_ACTL_NM AS "qstnFileActlNm",
+			QSTN_FILE_EXTN_NM AS "qstnFileExtnNm"
+		FROM QSTN_FILE
+		WHERE QSTN_NO = #{qstnNo}
+	</select>
+	
+	<select id="selectFileDownload" parameterType="int" resultType="qstnFile">
+		SELECT
+			QSTN_FILE_NO AS "qstnFileNo",
+			QSTN_NO AS "qstnNo",
+			QSTN_FILE_PHYS_NM AS "qstnFilePhysNm",
+			QSTN_FILE_ACTL_NM AS "qstnFileActlNm",
+			QSTN_FILE_EXTN_NM AS "qstnFileExtnNm"
+		FROM QSTN_FILE
+		WHERE QSTN_FILE_NO = #{qstnFileNo}
+	</select>
+	
 	<update id="countInqCnt" parameterType="int">
 		UPDATE QSTN
 		SET QSTN_INQ_CNT = QSTN_INQ_CNT+1
@@ -78,11 +100,18 @@
 		WHERE QC.USER_NO = U.USER_NO AND QC.QSTN_NO = #{qstnNo}
 		ORDER BY QSTN_CMNT_NO 
 	</select>
-	
+	<!-- 
+		Qna 게시글 작성
+	 -->
 	<insert id="insertQSTN" parameterType="qstn">
 		INSERT INTO QSTN VALUES(QSTNNO_SEQ.NEXTVAL, #{userNo}, #{qstnTtl}, #{qstnCn}, 0, SYSDATE, #{sysNo})
 	</insert>
-	
+	<insert id="insertQstnFileUpload" parameterType="qstn">
+		<![CDATA[
+			INSERT INTO QSTN_FILE(QSTN_FILE_NO, QSTN_NO, QSTN_FILE_PHYS_NM, QSTN_FILE_ACTL_NM, QSTN_FILE_EXTN_NM)
+			VALUES(QSTNFILENO_SEQ.NEXTVAL, QSTNNO_SEQ.NEXTVAL , #{qstnFilePhysNm}, #{qstnFileActlNm}, #{qstnFileExtnNm})
+		]]>
+	</insert>
 	
 	
 	<select id="selectComment" resultType="qstnComment">

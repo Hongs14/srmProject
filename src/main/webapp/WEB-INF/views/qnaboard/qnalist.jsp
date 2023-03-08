@@ -115,7 +115,7 @@
 						            <div class="card-header px-5 d-flex flex-row align-items-center justify-content-between">
 			                			<h6 class="m-0 font-weight-bold text-primary">질문 목록</h6>
 			                			<div class="d-sm-flex justify-content-end">
-			                				<a href="${pageContext.request.contextPath}/qna/write" class="btn-outline-primary btn-sm">Q&A 등록하기</a>
+			                				<a onclick="writeQstn()" class="btn-outline-primary btn-sm">Q&A 등록하기</a>
 			                  			</div>
 			                		</div> 
 			                		<div id="qstnlist" style="width: 100%;">
@@ -123,7 +123,7 @@
 			                		</div>
 			                	</div>
 					        </div>
-					   		<div id="qnaDetailView" style="width: 100%;"></div>
+					   		<div id="miniView" style="width: 100%;"></div>
 			        	</div> 
 						<!-- Row -->
 						
@@ -146,8 +146,9 @@
 				$('#dateStart').val(dateStart);
 			});
 				
-			//오늘 날짜 양식
+			
 			function getTimeStamp() {
+			//오늘 날짜 양식
 			  var d = new Date();
 	
 			  var s =
@@ -158,20 +159,22 @@
 			  return s;
 			}
 			
-			//작년 날짜 양식
+			
 			function getLastYearTimeStamp() {
+			//3개월전 날짜 양식
 				  var d = new Date();
 	
 				  var s =
-				    leadingZeros(d.getFullYear(), 4)-1 + '/' +
-				    leadingZeros(d.getMonth() + 1, 2) + '/' +
+				    leadingZeros(d.getFullYear(), 4) + '/' +
+				    leadingZeros(d.getMonth() + 1, 2)-3 + '/' +
 				    leadingZeros(d.getDate(), 2);
 	
 				  return s;
 			}
 	
-			//오늘 날짜 양식 (+두자리)
+			
 			function leadingZeros(n, digits) {
+			//오늘 날짜 양식 (+두자리)
 			  var zero = '';
 			  n = n.toString();
 	
@@ -230,11 +233,12 @@
 					
 					}).done((data) => {
 						$("#qstnlist").html(data);
-						console.log("성공!!!!!" +data);
 				});
 			
 			}
+			
 			function qnaDetail(i) {
+				//상세보기
 				let qstnNo = i;
 				$("#mainQstnMenu").removeClass("d-sm-flex");
 				$("#mainQstnMenu").hide();
@@ -250,11 +254,11 @@
 				let sysNo = "${sessionScope.loginUser.sysNo}";
 				
 				$.ajax({
-					url : '<c:url value="/qna/'+sysNo+'/view/'+qstnNo+'"/>',
+					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/view/'+qstnNo,
 					method : "get",
 					dataType : "html",
 					success : function(data) {
-						$("#qnaDetailView").html(data);
+						$("#miniView").html(data);
 					}
 				});
 			}
@@ -314,10 +318,29 @@
 								"overflow": "hidden",
 								"text-overflow": "ellipsis",
 								"display":"block"
-						 });
+						 	});
 						}						
 						
+					});
+			}
+			
+			function writeQstn(){
+				$("#mainQstnMenu").removeClass("d-sm-flex");
+				$("#mainQstnMenu").hide();
+				$("#qstnMenu").show();
+				$("#mainQstn").attr("class","col-lg-7");
+				$("#miniView").attr("class","col-lg-5");
+				let sysNo = "${sessionScope.loginUser.sysNo}";
+				
+				$.ajax({
+					url :"${pageContext.request.contextPath}/qna/"+sysNo+"/write",
+					type : "GET",
+					dataType : "html",
+					success : function(data) {
+						$('#miniView').html(data);
+					}
 				});
+				
 			}
 		</script>
  		<%@include file="/WEB-INF/views/common/bottom.jsp" %>
