@@ -119,16 +119,17 @@ public class ExamineController {
 	 * @return
 	 */
 	@PostMapping(value="/detail")
-	public String updateExamine(Examine examine) {
+	public String updateExamine(@RequestBody Examine examine) {
 		log.info("실행");
 		log.info(examine);
 		
 		examineService.updateExamine(examine);
 		
 		String srNo = examine.getSrNo();
+		
 		alarmService.insertAlarm(srNo);
 		
-		return "examine/list";
+		return "redirect:/examine/detail/"+srNo;
 	}
 	
 	@GetMapping("/fileDownload")
