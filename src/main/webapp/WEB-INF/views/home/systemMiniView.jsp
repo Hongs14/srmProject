@@ -58,6 +58,7 @@
 	</div>
 
              <script>
+             
              	labelse = [];
              	data = [];
              	<c:forEach var="list" items="${donutList}">
@@ -69,7 +70,7 @@
              
 				var ctx = document.getElementById("myPieChart");
 				var myPieChart = new Chart(ctx, {
-/* 				  plugins : [ChartDataLabels], */
+ 				  plugins : [ChartDataLabels],
 				  type: 'doughnut',
 				  data: {
 				    labels: labelse,
@@ -84,15 +85,13 @@
 				    maintainAspectRatio: false,
 				    cutoutPercentage: 60,
 				    plugins : {
-				    	tooltips: {
-					      backgroundColor: "rgb(255,255,255)",
-					      bodyFontColor: "#858796",
-					      borderColor: '#dddfeb',
+				    	tooltip: {
 					      borderWidth: 1,
 					      xPadding: 15,
 					      yPadding: 15,
 					      displayColors: false,
 					      caretPadding: 10,
+					      mode : 'point'
 					    },
 				    	legend: {
 	 						position : 'bottom',
@@ -102,8 +101,7 @@
 				    	},
 				    	datalabels : {
 				    		formatter : function (value, context) {
-				    			var idx = context.dataIndex; 
-				    			
+				    			var idx = context.dataIndex;
 				    			return context.chart.data.labels[idx] + value + "건";
 				    		},
 				    		display : 'auto',
