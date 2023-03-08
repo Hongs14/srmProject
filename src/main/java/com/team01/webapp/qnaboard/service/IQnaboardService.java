@@ -2,8 +2,11 @@ package com.team01.webapp.qnaboard.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.team01.webapp.model.QSTN;
 import com.team01.webapp.model.QSTNComment;
+import com.team01.webapp.model.QSTNFile;
 import com.team01.webapp.util.Pager;
 
 
@@ -21,6 +24,9 @@ public interface IQnaboardService {
 	public int writeQSTN(QSTN qstn);
 	
 	public int countInq(int qstnNo);
+	public List<MultipartFile> getQstnFileDetail(int qstnNo);
+	public QSTNFile selectFiledownload(int qstnNo);
+	public void qstnFileUpload(QSTN qstn);
 
 	
 	

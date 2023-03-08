@@ -160,4 +160,54 @@
 		AND sr.sr_cust_no = users.user_no
 		AND sr_no = #{srNo}
 	</select>
+	
+	<select id="selectSrData" parameterType="string" resultType="devMini">
+		SELECT
+		    sr_no AS "srNo",
+		    sr_type_nm AS "srTypeNm",
+		    SR_TTL AS "srTtl",
+		    SYS_NM AS "sysNm",
+		    USER_NM AS "srRequesterNm",
+		    SR_BGT AS "srBgt",
+		    SR_START_DATE AS "srStartDate"
+		FROM SR, SR_TYPE type, SYSTEM, USERS
+		WHERE sr.sr_type = type.sr_type_no
+		AND sr.sys_no = system.sys_no
+		AND sr.sr_cust_no = users.user_no
+		AND sr_no = #{srNo}
+	</select>
+	
+	<select id="selectProgressList" parameterType="string" resultType="progress">
+		SELECT
+			PROG_NO AS "progNo",
+		    PROG_TYPE_NM AS "progTypeNm",
+		    PROG_START_DATE AS "progStartDate",
+		    PROG_END_DATE AS "progEndDate"
+		FROM PROGRESS, PROG_TYPE type
+		WHERE PROGRESS.prog_type = type.prog_type_no
+		AND sr_no = #{srNo}
+        ORDER BY PROG_TYPE_NO ASC
+	</select>
+	
+	<select id="selectHrList" parameterType="string" resultType="hr">
+		SELECT
+		    USER_DP_NM AS "userDpNm",
+		    HR_LEADER AS "hrLeader",
+		    USER_NM AS "userNm",
+		    HR_START_DATE AS "hrStartDate",
+		    HR_END_DATE AS "hrEndDate",
+		    TASK_NM AS "taskNm"
+		FROM USERS, HR, TASK
+		WHERE USERS.user_no = HR.user_no
+		AND HR.task_no = task.task_no
+		AND sr_no = #{srNo}
+		ORDER BY hr_leader DESC
+	</select>
+	
+	<select id="selectFileCount" parameterType="string" resultType="int">
+		SELECT
+		    COUNT(PROG_FILE_NO)
+		FROM PROG_FILE
+		WHERE PROG_NO = #{progNo}
+	</select>
 </mapper>

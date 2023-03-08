@@ -245,8 +245,7 @@
 											</div>
 											<div class="col-sm-10">
 												<c:forEach items="${dlist.srDevelopFile}" var="file">
-												<%-- 	<span><a href="${pageContext.request.contextPath}/develop/file/${file.srFileNo}">${file.srFileActlNm}</a></span>&nbsp;&nbsp;--%>
-												<div><a href="${pageContext.request.contextPath}/develop/file/${file.srFileNo}">${file.srFileActlNm}</a></div>
+													<div><a href="${pageContext.request.contextPath}/develop/file/${file.srFileNo}">${file.srFileActlNm}</a></div>
 												 </c:forEach>
 											</div>
 										</div>
@@ -461,10 +460,10 @@
 														</div>
 													</div>
 													<div class="text-right my-3">
-														<c:if test="${dlist.sttsNo != 5}">
+														<c:if test="${dlist.sttsNo == 4}">
 															<button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter" class="btn btn-primary">저장</button>
 														</c:if>
-														<c:if test="${dlist.sttsNo == 5}">
+														<c:if test="${dlist.sttsNo == 9}">
 															<button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter" class="btn btn-primary">수정</button>
 														</c:if>
 													</div>
