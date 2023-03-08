@@ -150,6 +150,7 @@ public class ExamineService implements IExamineService {
 		
 	}
 	
+	//로그인 유저 정보 가져오기
 	@Override
 	public Users selectLoginUser(int userNo) {
 		

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,11 +55,13 @@
 											<div class="row mb-5"><button onclick="onMessage()">알림 전송</button> </div>
 											<div class="row mb-5">
 												<table>
-													<tbody>
-														<c:set var="alarmCnt" value="${alarmCnt}"/>
+													<tbody>												
 														<c:choose>
-															<c:when test="${alarmCnt != 0 }">															
-																<c:forEach var="alarmList" items="${alarmList}">										
+															<c:when test="${fn:length(alarmList) == 0 }">
+																<span>알림 내역이 없습니다.</span>
+															</c:when>
+															<c:otherwise>
+																<c:forEach var="alarmList" items="${alarmList}">
 																	<tr style="cursor:pointer;">
 																		<td onclick="updateCheck('${alarmList.srNo}')">
 																			<c:if test="${alarmList.messageCheck eq 89}">
@@ -79,13 +81,10 @@
 																		<td>
 																			<i class="fas fa-trash" data-toggle="modal" data-target="#alarmBtn" id="#modalScroll"></i>
 																		</td>
-																	</tr>
+																	</tr>																
 																</c:forEach>
-															</c:when>
-															<c:otherwise>
-																<span>알림 내역이 없습니다.</span>
 															</c:otherwise>
-														</c:choose>
+														</c:choose>										
 													</tbody>
 												</table>
 											</div>

@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team01.webapp.alarm.service.IAlarmService;
+import com.team01.webapp.model.Alarm;
 import com.team01.webapp.model.Request;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
@@ -46,6 +48,8 @@ public class RequestController {
 	@Autowired
 	IRequestService requestService;
 	
+	@Autowired
+	IAlarmService alarmService;
 	/**
 	 * 모든 SR리스트 조회
 	 * 
@@ -61,6 +65,20 @@ public class RequestController {
 		requestFilter = requestService.getFilterList(requestFilter);
 		model.addAttribute("requestfilter", requestFilter);
 		model.addAttribute("command", "list");
+		
+		//알람 리스트
+		int userNo = (Integer) session.getAttribute("userNo");
+		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
+		
+		//알림 수
+		Alarm alarm = new Alarm();
+		alarm.setUserNo(userNo);
+		alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
+		alarm.setUserType((String)session.getAttribute("userType"));
+		int alarmCnt = alarmService.selectAlarmCount(alarm);
+		model.addAttribute("alarmCnt",alarmCnt);
+		model.addAttribute("alarmList",alarmList);
+		
 		return "request/list";
 		
 	}
@@ -209,7 +227,7 @@ public class RequestController {
 			sr.setSysNo(requestService.getSysNo(userNo));
 			sr.setSttsNo(1);
 			srNo = requestService.writeRequest(sr);
-			
+			alarmService.insertAlarm(srNo,session);
 			//첨부 파일 유무 조사
 			List<MultipartFile> mf = sr.getRequestMFile();
 			if(mf!=null &&!mf.isEmpty()) {

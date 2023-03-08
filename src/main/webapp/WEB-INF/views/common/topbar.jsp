@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
           <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
             <i class="fa fa-bars"></i>
@@ -73,7 +74,7 @@
                <span class="badge badge-danger badge-counter">
                		<c:set var="alarmCnt" value="${alarmCnt}"/>
 					<c:choose>
-						<c:when test="${alarmCnt != null}">
+						<c:when test="${alarmCnt != 0}">
 		               		<c:out value="${alarmCnt}"/>						
 						</c:when>
 						<c:otherwise>
@@ -85,32 +86,31 @@
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">받은 알림</h6>
-                <c:set var="alarmCnt" value="${alarmCnt}"/>
-					<c:choose>
-						<c:when test="${alarmCnt != 0}">
-		               		<c:forEach var="alarmList" items="${alarmList}"  begin="0" end="2" step="1">                
-								<a class="dropdown-item d-flex align-items-center" onclick="updateCheck('${alarmList.srNo}')">
-									<div class="mr-3">
-										<div class="icon-circle bg-primary">
-											<c:if test="${alarmList.messageCheck eq 89}">
-												<i class="fas fa-check text-white"></i>
-											</c:if>
-											<c:if test="${alarmList.messageCheck eq 78 }">
-												<i class="fas fa-exclamation-triangle text-white"></i>
-											</c:if>
-										</div>
+				<c:choose>
+					<c:when test="${fn:length(alarmList) == 0 }">
+						<span class="dropdown-item d-flex align-items-center">알림 내역이 없습니다.</span>
+					</c:when>
+					<c:otherwise>
+	               		<c:forEach var="alarmList" items="${alarmList}"  begin="0" end="2" step="1">                
+							<a class="dropdown-item d-flex align-items-center" onclick="updateCheck('${alarmList.srNo}')">
+								<div class="mr-3">
+									<div class="icon-circle bg-primary">
+										<c:if test="${alarmList.messageCheck eq 89}">
+											<i class="fas fa-check text-white"></i>
+										</c:if>
+										<c:if test="${alarmList.messageCheck eq 78 }">
+											<i class="fas fa-exclamation-triangle text-white"></i>
+										</c:if>
 									</div>
-									<div>
-					                    <div class="small text-gray-500">${alarmList.messageDate}</div>
-					                    <span class="font-weight-bold">${alarmList.alarmTtl} : ${alarmList.message}</span>
-					                </div>
-				                </a>
-			                </c:forEach>					
-						</c:when>
-						<c:otherwise>
-							<span class="dropdown-item d-flex align-items-center">알림 내역이 없습니다.</span>
-						</c:otherwise>
-					</c:choose>	
+								</div>
+								<div>
+				                    <div class="small text-gray-500">${alarmList.messageDate}</div>
+				                    <span class="font-weight-bold">${alarmList.alarmTtl} : ${alarmList.message}</span>
+				                </div>
+			                </a>
+		                </c:forEach>					
+					</c:otherwise>
+				</c:choose>	
                 <a class="dropdown-item text-center small text-gray-500" href="${pageContext.request.contextPath}/alarm/list">Show All Alerts</a>
               </div>
             </li>
