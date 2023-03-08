@@ -30,11 +30,8 @@ public class AlarmController extends TextWebSocketHandler {
 	@GetMapping("list")
 	public String alarmList(HttpSession session, Model model) {
 		log.info("실행");
-		//알림 리스트
-		int userNo = (Integer) session.getAttribute("userNo");
-		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
-		
 		//알림 수
+		int userNo = (Integer) session.getAttribute("userNo");
 		Alarm alarm = new Alarm();
 		alarm.setUserNo(userNo);
 		alarm.setUserType((String)session.getAttribute("userType"));
@@ -44,6 +41,8 @@ public class AlarmController extends TextWebSocketHandler {
 		}else {			
 			alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
 		}
+		//알림 리스트
+		List<Alarm> alarmList = alarmService.selectAlarmList(alarm);
 		int alarmCnt = alarmService.selectAlarmCount(alarm);
 		model.addAttribute("alarmCnt",alarmCnt);
 		model.addAttribute("alarmList",alarmList);

@@ -19,7 +19,7 @@
 	</select>
 	
 	<!-- 전체 알림 리스트 -->
-	<select id="selectAlarmList" parameterType="int" resultType="alarm">
+	<select id="selectAlarmList" parameterType="alarm" resultType="alarm">
 		SELECT 
 		    sa.ALARM_NO AS "alarmNo",
 		    u.USER_NO AS "userNo",

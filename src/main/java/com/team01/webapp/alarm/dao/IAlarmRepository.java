@@ -11,7 +11,7 @@ public interface IAlarmRepository {
 	public int selectAlarmCount (Alarm alarm);
 	
 	//전체 알림 리스트
-	public List<Alarm> selectAlarmList(int userNo);
+	public List<Alarm> selectAlarmList(Alarm alarm);
 	
 	//해당 SR 고객사 찾기
 	public Alarm selectAlarm(String srNo);

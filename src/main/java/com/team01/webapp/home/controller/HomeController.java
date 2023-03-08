@@ -24,6 +24,7 @@ import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SystemInfo;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.notice.service.INoticeService;
+import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -44,6 +45,8 @@ public class HomeController {
 	@Autowired
 	IAlarmService alarmService;
 	
+	@Autowired
+	AlarmInfo alarmInfo;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Pager pager, Notice notice, Model model) {
@@ -70,24 +73,9 @@ public class HomeController {
 		
 		// Q n A 페이징 처리
 		
-		//알림 리스트
-		int userNo = (Integer) session.getAttribute("userNo");
-		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
 		
-		//알림 수
-		Alarm alarm = new Alarm();
-		alarm.setUserNo(userNo);
-		alarm.setUserType((String)session.getAttribute("userType"));
-		if(alarm.getUserType().equals("관리자")) {
-			Users loginUser = alarmService.selectLoginUser(userNo);
-			alarm.setSysNo("%"+loginUser.getSysNo()+"%");
-		}else {			
-			alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
-		}
-		log.info(alarm);
-		int alarmCnt = alarmService.selectAlarmCount(alarm);
-		model.addAttribute("alarmCnt",alarmCnt);
-		model.addAttribute("alarmList",alarmList);
+		//알람 수 및 리스트
+		alarmInfo.info(session, model); 
 		
 		return "home";
 	}

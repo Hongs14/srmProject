@@ -13,7 +13,7 @@ public interface IAlarmService {
 	public int selectAlarmCount(Alarm alarm);
 	
 	//전체 알림 리스트
-	public List<Alarm> selectAlarmList(int userNo);
+	public List<Alarm> selectAlarmList(Alarm alarm);
 	
 	//알림 추가
 	public void insertAlarm(String srNo, HttpSession session);
