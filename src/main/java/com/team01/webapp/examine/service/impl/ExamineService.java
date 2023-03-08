@@ -149,5 +149,13 @@ public class ExamineService implements IExamineService {
 		}
 		
 	}
+	
+	@Override
+	public Users selectLoginUser(int userNo) {
+		
+		Users loginUser = examineRepository.selectLoginUser(userNo);
+		
+		return loginUser;
+	}
 
 }

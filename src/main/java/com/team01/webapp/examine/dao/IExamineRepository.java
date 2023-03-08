@@ -73,4 +73,7 @@ public interface IExamineRepository {
 	public void updateExamine(Examine examine);
 	public void updateExamineProcessing(ExamineList examineList);
 	
+	//로그인한 유저 정보 가져오기
+	public Users selectLoginUser(int userNo);
+	
 }

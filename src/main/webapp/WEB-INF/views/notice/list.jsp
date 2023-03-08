@@ -6,14 +6,6 @@
 
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
-  	<script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-	<!-- Bootstrap Datepicker -->
-  	<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-  	<!-- RuangAdmin Javascript -->
-  	<script src="${pageContext.request.contextPath}/resources/js/ruang-admin.min.js"></script>
   	<style type="text/css">
   		.ajaxDetail span {
         	white-space:normal !important;
@@ -118,6 +110,7 @@
         				</div>
 					</div>
 					<div id="subNoticeDetailView" style="width: 100%;"></div>
+					<div id="msgStack"></div>
 				</div>
 				<script>
 					function getNoticeDetail(i) {

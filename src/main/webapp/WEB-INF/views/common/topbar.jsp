@@ -41,7 +41,7 @@
 				
 				// toast생성 및 추가
 				function onMessage(evt){
-				    var data = "안녕하세요";
+				    var data = "알림이 도착했습니다.";
 				    console.log(data);
 				    
 				    const now = new Date();	// 현재 날짜 및 시간
@@ -53,13 +53,18 @@
 				    // toast
 				    let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
 				    toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
-				    toast += "<small class='text-muted'>"+hours+ ":"+ minutes+"</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+				    toast += "<small class='text-muted'>"+hours+ ":"+ minutes+"</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close' onclick='removeToast()'>";
 				    toast += "<span aria-hidden='true'>&times;</span></button>";
 				    toast += "</div> <div class='toast-body'>" + data + "</div></div>";
 				    $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
 				    $(".toast").toast({"animation": true, "autohide": false});
 				    $('.toast').toast('show');
-				};	
+				};
+				
+				function removeToast() {
+					console.log("스택 지우기");
+					$("#msgStack *").remove();
+				}
 			</script>
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
@@ -84,7 +89,7 @@
 					<c:choose>
 						<c:when test="${alarmCnt != 0}">
 		               		<c:forEach var="alarmList" items="${alarmList}"  begin="0" end="2" step="1">                
-								<a class="dropdown-item d-flex align-items-center" href="#">
+								<a class="dropdown-item d-flex align-items-center" onclick="updateCheck('${alarmList.srNo}')">
 									<div class="mr-3">
 										<div class="icon-circle bg-primary">
 											<c:if test="${alarmList.messageCheck eq 89}">
@@ -105,7 +110,7 @@
 						<c:otherwise>
 							<span class="dropdown-item d-flex align-items-center">알림 내역이 없습니다.</span>
 						</c:otherwise>
-					</c:choose>		
+					</c:choose>	
                 <a class="dropdown-item text-center small text-gray-500" href="${pageContext.request.contextPath}/alarm/list">Show All Alerts</a>
               </div>
             </li>
