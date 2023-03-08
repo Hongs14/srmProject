@@ -23,6 +23,7 @@ public class ProgressDetail {
 	private String developerNm;
 	private Date srStartDate;
 	private Date srEndDate;
+	private String srDevCn;
 	
 	// 멀티 파일
 	private List<SrFile> srFile;
