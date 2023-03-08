@@ -213,7 +213,7 @@ public class ProgressController {
 		List<HR> developerList = progressService.developerList(hrList.get(0).getUserDpNm(), srNo);
 		model.addAttribute("developerList", developerList);
 		
-		ProgressDetail progressDetail = progressService.getSrSttsNm(hr.getSrNo());
+		ProgressDetail progressDetail = progressService.getSrSttsNm(srNo);
 		model.addAttribute("sttsNm", progressDetail.getSttsNm());
 		
 		String managerNo = progressService.managerNo(srNo);
@@ -671,6 +671,19 @@ public class ProgressController {
 		
 		model.addAttribute("changeRequestList", changeRequestList);
 		
+		int userNo = (int) session.getAttribute("userNo");
+		
+		ProgressDetail progressDetail = progressService.getSrSttsNm(hr.getSrNo());
+		model.addAttribute("sttsNm", progressDetail.getSttsNm());
+		
+		List<Integer> humanList = progressService.humanList(hr.getSrNo());
+		
+		boolean check = humanList.contains(userNo);
+		log.info("userNo : " + userNo);
+		log.info("humanList : " + humanList);
+		log.info("check : " + check);
+		model.addAttribute("check", check);
+		
 		return "progress/progressChangeRequestList";
 	}
 	
@@ -779,6 +792,11 @@ public class ProgressController {
 		changeRequest.setCrDdlnDate(list[0]);
 		
 		model.addAttribute("changeRequest", changeRequest);
+		
+		String managerNo = progressService.managerNo(changeRequest.getSrNo());
+		model.addAttribute("managerNo", managerNo);
+		
+		log.info(managerNo);
 		
 		return "progress/progressChangeRequestDetail";
 	}

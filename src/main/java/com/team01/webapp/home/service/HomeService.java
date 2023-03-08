@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.team01.webapp.home.dao.IHomeRepository;
 import com.team01.webapp.model.Donut;
+import com.team01.webapp.model.HR;
+import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SystemInfo;
+import com.team01.webapp.progress.dao.IProgressRepository;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -19,6 +22,9 @@ public class HomeService implements IHomeService{
 	
 	@Autowired
 	IHomeRepository homeRepository;
+	
+	@Autowired
+	IProgressRepository progressRepository;
 
 	@Override
 	public List<SystemInfo> getSystemMiniView(int userNo) {
@@ -63,6 +69,31 @@ public class HomeService implements IHomeService{
 	@Override
 	public List<Donut> getDonutListDeveloper(int userNo) {
 		return homeRepository.selectDonutListDeveloper(userNo);
+	}
+
+	@Override
+	public ProgressDetail selectDetailHome(String srNo) {
+		ProgressDetail progressDetail = progressRepository.selectProgressRequester(srNo);
+		
+		String sttsNm = progressDetail.getSttsNm();
+		
+		if(sttsNm.equals("요청") || sttsNm.equals("검토중") || sttsNm.equals("접수") || sttsNm.equals("반려") || sttsNm.equals("재검토")) {
+		
+		} else {
+			// 개발자 정보 담아주기
+			ProgressDetail progressDetailDeveloper = progressRepository.selectProgessdeveloper(srNo);
+			progressDetail.setDpNm(progressDetailDeveloper.getDpNm());
+			progressDetail.setDeveloperNm(progressDetailDeveloper.getDeveloperNm());
+			progressDetail.setSrStartDate(progressDetailDeveloper.getSrStartDate());
+			progressDetail.setSrEndDate(progressDetailDeveloper.getSrEndDate());
+		}
+		
+		return progressDetail;
+	}
+
+	@Override
+	public List<HR> DeveloperList(String srNo) {
+		return progressRepository.selectHumanResourceList(srNo);
 	}
 
 }
