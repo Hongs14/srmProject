@@ -22,9 +22,13 @@
 
 <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
 
-<script src="${pageContext.request.contextPath}/resources/vendor/chart.js/Chart.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/demo/chart-pie-demo.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vendor/chart.js/chartjs-plugin-datalabels.js"></script>
+<%-- <script src="${pageContext.request.contextPath}/resources/vendor/chart.js/Chart.js"></script> --%>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/gantt/dist/jquery-gantt.css">
 <script src="https://kit.fontawesome.com/95401d2f49.js" crossorigin="anonymous"></script>
+
+ <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+<%-- <script src="${pageContext.request.contextPath}/resources/js/demo/chart-pie-demo.js"></script> --%>
+<%-- <script src="${pageContext.request.contextPath}/resources/vendor/chart.js/chartjs-plugin-datalabels.js"></script> --%>
