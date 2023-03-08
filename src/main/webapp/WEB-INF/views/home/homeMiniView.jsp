@@ -19,9 +19,19 @@
 					</thead>
 					<tbody>
 						<c:forEach var="list" items="${srList}">
-						<tr >
-							<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srNo}</a></td>
-							<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}" class="srTtl">${list.srTtl}</a></td>
+						<tr>
+							<c:if test="${sessionScope.loginUser.userType eq '관리자'}">
+								<td><a onclick="managerMiniView('${list.srNo}')">${list.srNo}</a></td>
+								<td><a onclick="managerMiniView('${list.srNo}')">${list.srTtl}</a></td>
+							</c:if>
+							<c:if test="${sessionScope.loginUser.userType eq '고객사'}">
+								<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srNo}</a></td>
+								<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srTtl}</a></td>
+							</c:if>
+							<c:if test="${sessionScope.loginUser.userType eq '개발자'}">
+								<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srNo}</a></td>
+								<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srTtl}</a></td>
+							</c:if>
 							<td>${list.sysNm}</td>
 							<td style="width : 100px">
 								<c:choose>
@@ -84,6 +94,21 @@
 						</c:forEach>
 					</tbody>
 				</table>
+				
+				<script>
+					function managerMiniView(srNo) {
+						data = {srNo : srNo}
+						
+						$.ajax({
+							url : "managerMiniView",
+							method : "post",
+							data : JSON.stringify(data),
+							contentType: "application/json; charset=UTF-8"
+						}).done((data) => {
+							$('#managerMiniView').html(data);
+						})
+					}
+				</script>
 				
 				<c:if test="${pager.totalRows != 0}">
 					<div class="pager d-flex justify-content-center my-3">

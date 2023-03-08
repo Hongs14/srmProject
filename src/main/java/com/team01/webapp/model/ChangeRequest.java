@@ -25,4 +25,6 @@ public class ChangeRequest {
 	private MultipartFile changeRequestFile;
 	
 	private String date;
+	
+	private int choice;
 }

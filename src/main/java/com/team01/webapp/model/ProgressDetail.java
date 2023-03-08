@@ -15,6 +15,7 @@ public class ProgressDetail {
 	private String sttsNm;
 	private String userDpNm;
 	private String requesterNm;
+	private int srBgt;
 	private Date srRegDate;
 	private Date srDdlnDate;
 	private String srCn;

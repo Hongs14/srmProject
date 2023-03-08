@@ -276,7 +276,7 @@ public interface IProgressRepository {
 
 	void updateSr(ChangeRequest changeRequest);
 
-	void updateChangeRequest(@Param("crNo") int crNo, @Param("choice") int choice);
+	void updateChangeRequest(@Param("crNo") int crNo, @Param("choice") int choice, @Param("crComment") String crComment);
 
 	void updateDeveloperEndDate(@Param("userNo") int userNo, @Param("srNo") String srNo, @Param("hrEndDate") String crDdlnDate);
 	
