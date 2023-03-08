@@ -115,13 +115,15 @@
 						            <div class="card-header px-5 d-flex flex-row align-items-center justify-content-between">
 			                			<h6 class="m-0 font-weight-bold text-primary">질문 목록</h6>
 			                			<div class="d-sm-flex justify-content-end">
-			                				<a href="${pageContext.request.contextPath}/qna/write" class="btn-outline-primary btn-sm">Q&A 등록하기</a>
+			                				<a onclick="writeQstn()" class="btn-outline-primary btn-sm">Q&A 등록하기</a>
 			                  			</div>
 			                		</div> 
-			                		<div id="qstnlist" style="width: 100%;"></div>
+			                		<div id="qstnlist" style="width: 100%;">
+			                		
+			                		</div>
 			                	</div>
 					        </div>
-					   		<div id="qnaDetailView" style="width: 100%;"></div>
+					   		<div id="miniView" style="width: 100%;"></div>
 			        	</div> 
 						<!-- Row -->
 						
@@ -137,15 +139,16 @@
 			$(document).ready(function() {
 				var todayResult = getTimeStamp();
 				console.log(todayResult);
-				$('#dateEnd').val = todayResult;
+				$('#dateEnd').val(todayResult);
 				
 				var dateStart =getLastYearTimeStamp();
 				console.log(dateStart);
-				$('#dateStart').value = dateStart;
+				$('#dateStart').val(dateStart);
 			});
 				
-			//오늘 날짜 양식
+			
 			function getTimeStamp() {
+			//오늘 날짜 양식
 			  var d = new Date();
 	
 			  var s =
@@ -156,20 +159,22 @@
 			  return s;
 			}
 			
-			//작년 날짜 양식
+			
 			function getLastYearTimeStamp() {
+			//3개월전 날짜 양식
 				  var d = new Date();
 	
 				  var s =
-				    leadingZeros(d.getFullYear(), 4)-1 + '/' +
-				    leadingZeros(d.getMonth() + 1, 2) + '/' +
+				    leadingZeros(d.getFullYear(), 4) + '/' +
+				    leadingZeros((d.getMonth() +1)-2, 2) + '/' +
 				    leadingZeros(d.getDate(), 2);
 	
 				  return s;
 			}
 	
-			//오늘 날짜 양식 (+두자리)
+			
 			function leadingZeros(n, digits) {
+			//오늘 날짜 양식 (+두자리)
 			  var zero = '';
 			  n = n.toString();
 	
@@ -179,7 +184,6 @@
 			  }
 			  return zero + n;
 			}
-		
 		
 			$(document).ready(function(){
 				console.log("시작");
@@ -197,7 +201,7 @@
 				console.log(data);
 				
 				$.ajax({
-					url : '<c:url value="/qna/'+sysNo+'/filter/1"/>',
+					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/filter/1',
 					method : "post",
 					data : JSON.stringify(data),
 					contentType: "application/json; charset=UTF-8"
@@ -206,36 +210,11 @@
 				});
 			});
 			
-			function qnaDetail(i) {
-				let qstnNo = i;
-				$("#mainQstnMenu").removeClass("d-sm-flex");
-				$("#mainQstnMenu").hide();
-				$("#qstnMenu").show();
-				$("#mainQstn").attr("class","col-lg-7");
-				$("#qnaDetailView").attr("class","col-lg-5");
-				$(".qstnTtl").css({
-					"width" : "360px",
-					"overflow": "hidden",
-					"text-overflow": "ellipsis",
-					"display":"block"
-				});
-				
-				$.ajax({
-					url : '<c:url value="/qna/view/'+qstnNo+'"/>',
-					method : "get",
-					dataType : "html",
-					success : function(data) {
-						$("#qnaDetailView").html(data);
-					}
-				});
-			}
-			
 			function searchQnaList(pageNo){
 				console.log("검색조건 리스트 페이지 번호: "+pageNo);
 				var startDate = $("#dateStart").val();
 				var endDate = $("#dateEnd").val();
-				var sysNo = "${sessionScope.loginUser.sysNo}"
-				
+				var sysNo = "${sessionScope.loginUser.sysNo}";
 				var qstnTtl = $("#keyword").val();
 				
 				if(qstnTtl !== "") {
@@ -243,20 +222,43 @@
 				}
 
 				let data = {startDate : startDate, endDate : endDate, qstnTtl : qstnTtl, sysNo : sysNo};
+				
 				console.log(data);
 				
 				$.ajax({
-					url : '<c:url value="/qna/'+sysNo+'/filter/'+pageNo+'"/>',
+					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/filter/'+pageNo ,
 					method : "post",
 					data : JSON.stringify(data),
 					contentType: "application/json; charset=UTF-8",
 					
-					success : function(result){
-						$("#qstnList").html(data);
-					},
-					error : function(request, status, error) {
-						console.log("실패");
-						alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+					}).done((data) => {
+						$("#qstnlist").html(data);
+				});
+			
+			}
+			
+			function qnaDetail(i) {
+				//상세보기
+				let qstnNo = i;
+				$("#mainQstnMenu").removeClass("d-sm-flex");
+				$("#mainQstnMenu").hide();
+				$("#qstnMenu").show();
+				$("#mainQstn").attr("class","col-lg-7");
+				$("#miniView").attr("class","col-lg-5");
+				$(".qstnTtl").css({
+					"width" : "360px",
+					"overflow": "hidden",
+					"text-overflow": "ellipsis",
+					"display":"block"
+				});
+				let sysNo = "${sessionScope.loginUser.sysNo}";
+				
+				$.ajax({
+					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/view/'+qstnNo,
+					method : "get",
+					dataType : "html",
+					success : function(data) {
+						$("#miniView").html(data);
 					}
 				});
 			}
@@ -289,7 +291,7 @@
 			  	
 			  	var startDate = $("#dateStart").val();
 			  	var endDate = $("#dateEnd").val();
-				var sysNo = "${sessionScope.loginUser.sysNo}"
+				var sysNo = "${sessionScope.loginUser.sysNo}";
 				var qstnTtl = $("#keyword").val();
 			
 				if(qstnTtl !== "") {
@@ -302,13 +304,43 @@
 				console.log(data);
 				
 				$.ajax({
-					url : '<c:url value="/qna/'+sysNo+'/filter/1"/>',
+					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/filter/1' ,
 					method : "post",
 					data : JSON.stringify(data),
-					contentType: "application/json; charset=UTF-8"
-				}).done((data) => {
-					$("#qstnList").html(data);
-				}); 
+					contentType: "application/json; charset=UTF-8",
+					
+					}).done((data) => {
+						$("#qstnlist").html(data);
+						console.log($('#qstnCn'));
+						if($('#qstnCn')){
+							$(".qstnTtl").css({
+						 		"width" : "360px",
+								"overflow": "hidden",
+								"text-overflow": "ellipsis",
+								"display":"block"
+						 	});
+						}						
+						
+					});
+			}
+			
+			function writeQstn(){
+				$("#mainQstnMenu").removeClass("d-sm-flex");
+				$("#mainQstnMenu").hide();
+				$("#qstnMenu").show();
+				$("#mainQstn").attr("class","col-lg-7");
+				$("#miniView").attr("class","col-lg-5");
+				let sysNo = "${sessionScope.loginUser.sysNo}";
+				
+				$.ajax({
+					url :"${pageContext.request.contextPath}/qna/"+sysNo+"/write",
+					type : "GET",
+					dataType : "html",
+					success : function(data) {
+						$('#miniView').html(data);
+					}
+				});
+				
 			}
 		</script>
  		<%@include file="/WEB-INF/views/common/bottom.jsp" %>

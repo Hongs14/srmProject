@@ -62,26 +62,26 @@
 												    	
 												    		<c:set var="today" value="<%=new java.util.Date()%>"/>
 															<c:set var="today"><fmt:formatDate value="${today}" pattern="yyyyMMdd" /></c:set> 
-												    		
+												    		<!-- 
 												    		
 												    		<input type="text" value="" class="input-sm form-control form-control-sm col-sm-9" name="startDate" id="startDate" />
 								                    		
-								                    		<input type="text" class="input-sm form-control form-control-sm" name="endDate" id="endDate"/> 
+								                    		<input type="text" class="input-sm form-control form-control-sm" name="endDate" id="endDate"/>  -->
 											     	
 												    		
-												        	<%-- <label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
+												        	<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
 										            		<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="startDate" id="startDate" />
 								                    		<div class="input-group-prepend">
 								                    			<span class="input-group-text" style="height:31px;">~</span>
 								                    		</div>
-									                    	<input type="text" class="input-sm form-control form-control-sm" name="endDate" id="endDate"/> --%>
+									                    	<input type="text" class="input-sm form-control form-control-sm" name="endDate" id="endDate"/>
 											     		</div>
 									            	</div>
 									         	</div> 
 						                		<div class="col-sm-3">
 						                			<div class="form-group row">
 						                				<label class="col-sm-3 col-form-label-sm">진행상태</label>
-								                    	<select class="form-control form-control-sm col-sm-9" id="sttsNo">
+								                    	<select class="form-control form-control-sm col-sm-9 clear" id="sttsNo">
 								                        	<option value="0">전체</option>
 								                        	<option value="4">접수</option>
 								                        	<option value="9">개발 계획</option>
@@ -92,7 +92,7 @@
 						                		<div class="col-sm-4">
 						                			<div class="form-group row">
 						                				<label for="exampleFormControlSelect1 sysNo" class="col-sm-3 col-form-label-sm">관련시스템</label>
-								                    	<select class="form-control form-control-sm col-sm-9" id="sysNo" >
+								                    	<select class="form-control form-control-sm col-sm-9 clear" id="sysNo" >
 								                        	<option value="all">전체</option>
 				                        					<c:forEach var="system" items="${developFilter.sysNmList}">		                        	
 					                        					<option value="${system.sysNo}">${system.sysNm}</option>
@@ -112,7 +112,7 @@
 						                		<div class="col-sm-4">
 						                			<div class="form-group row">
 						                				<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">등록자 소속</label>
-								                    	<select class="form-control form-control-sm col-sm-9" id="userOgdp">
+								                    	<select class="form-control form-control-sm col-sm-9 clear" id="userOgdp">
 								                        	<option value="all" selected>전체</option>
 								                        	<c:forEach var="users" items="${developFilter.userOgdpList}">		                        	
 							                        			<option value="${users.userOgdp}">${users.userOgdp}</option>
@@ -123,7 +123,7 @@
 						                		<div class="col-sm-3">
 						                			<div class="form-group row">
 						                				<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">개발부서</label>
-								                    	<select class="form-control form-control-sm col-sm-9" id="srDevDp">
+								                    	<select class="form-control form-control-sm col-sm-9 clear" id="srDevDp">
 								                        	<option value="all" selected>전체</option>
 								                        	<c:forEach var="sr" items="${developFilter.srDevDpList}">		                        	
 					                        					<option value="${sr.srDevDp}">${sr.srDevDp}</option>
@@ -262,7 +262,11 @@
 											$('#srDevDp').find("select").find('option:first').prop('selected', true);
 											$('#userOgdp').find("select").find('option:first').prop('selected', true);
 											$('#keyword').val(""); */
-											$('select').find('option:first').attr('selected', 'selected');
+										
+											for(let i=0; i< $('.clear').length ; i++){
+												$($('.clear')[i]).find('option:first').prop('selected', true);
+											} 
+											 
 											
 										};
 							  		</script>	
