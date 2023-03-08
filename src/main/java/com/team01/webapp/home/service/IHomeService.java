@@ -3,6 +3,8 @@ package com.team01.webapp.home.service;
 import java.util.List;
 
 import com.team01.webapp.model.Donut;
+import com.team01.webapp.model.HR;
+import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SystemInfo;
 import com.team01.webapp.util.Pager;
@@ -20,5 +22,9 @@ public interface IHomeService {
 	List<SR> homeList(Pager pager, SR sr);
 
 	List<Donut> getDonutListDeveloper(int userNo);
+
+	ProgressDetail selectDetailHome(String srNo);
+
+	List<HR> DeveloperList(String srNo);
 
 }
