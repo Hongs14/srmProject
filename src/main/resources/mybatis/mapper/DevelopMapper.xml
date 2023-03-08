@@ -13,6 +13,7 @@
 		AND SR.STTS_NO = ST.STTS_NO
 		AND SR.SR_CUST_NO = U.USER_NO
 		AND SR.STTS_NO IN (4, 9)
+		AND sr.SR_REG_DATE BETWEEN TO_DATE(#{srRegStartDate},'YY-MM-DD')  AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+1
 		<if test="!sysNo.equals('all')">
 			AND sys.sys_no = #{sysNo}
 		</if>
@@ -24,11 +25,6 @@
 		</if>
 		<if test="!srDevDp.equals('all')">
 			AND	SR.SR_DEV_DP = #{srDevDp}
-		</if>
-		<if test="srRegStartDate neq null and srRegStartDate neq ''" >
-			 AND sr.SR_REG_DATE BETWEEN 
-                TO_DATE(#{srRegStartDate},'YY-MM-DD') 
-                AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+0.9
 		</if>
 		<if test="srTtl != ''">
 			AND  sr.SR_TTL like #{srTtl}
@@ -68,22 +64,21 @@
 			        user_nm AS "userNm", 
 			        user_ogdp AS "userOgdp", 
 			        user_dp_nm AS "userDpNm"
-			from(
-			    select rownum as rnum, sr_no, sr_cust_no, sys_no,sys_nm, stts_no, stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
-			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr_type, sr_dev_dp, user_type, user_nm, user_ogdp, user_dp_nm
-			    from(
-			      select  sr_no, sr_cust_no, sr.sys_no, system.sys_nm, sr.stts_no, sr_stts.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
-			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr.sr_type,  sr.sr_dev_dp, user_type, user_nm, user_ogdp, user_dp_nm
-			      from sr, sr_type, sr_stts, users, system
-			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no 
-			      	<if test="sttsNo == 4 or sttsNo == 9">
-			      		and sr.stts_no = #{sttsNo}
-			      	</if>
-			      	<if test="sttsNo == 0">
-			      		and sr.stts_no in (4, 9)
+			FROM(
+			    SELECT ROWNUM AS RNUM, SR_NO, SR_CUST_NO, SYS_NO,SYS_NM, STTS_NO, STTS_NM, SR_TTL, SR_CN, SR_REG_DATE, SR_PRY, SR_OPNN, SR_BGT, 
+			        SR_DEV_CN, SR_DDLN_DATE, SR_START_DATE, SR_END_DATE, SR_DEL_YN, SR_TYPE, SR_DEV_DP, USER_TYPE, USER_NM, USER_OGDP, USER_DP_NM
+			    FROM(
+			      SELECT  SR_NO, SR_CUST_NO, SR.SYS_NO, SYSTEM.SYS_NM, SR.STTS_NO, SR_STTS.STTS_NM, SR_TTL, SR_CN, SR_REG_DATE, SR_PRY, SR_OPNN, SR_BGT, 
+			        SR_DEV_CN, SR_DDLN_DATE, SR_START_DATE, SR_END_DATE, SR_DEL_YN, SR.SR_TYPE,  SR.SR_DEV_DP, USER_TYPE, USER_NM, USER_OGDP, USER_DP_NM
+			      FROM SR, SR_TYPE, SR_STTS, USERS, SYSTEM
+			      WHERE SR.STTS_NO = SR_STTS.STTS_NO AND SYSTEM.SYS_NO = SR.SYS_NO AND SR.SR_CUST_NO = USERS.USER_NO AND SR.SR_TYPE = SR_TYPE.SR_TYPE_NO 
+			      		AND SR.STTS_NO IN (4, 9)
+			      		 AND sr.SR_REG_DATE BETWEEN TO_DATE(#{srRegStartDate},'YY-MM-dd') AND TO_DATE(#{srRegEndDate},'YY-MM-dd')+1
+			      	<if test="sttsNo != 0">
+			      		AND SR.STTS_NO = #{sttsNo}
 			      	</if>
 			      	<if test="!sysNo.equals('all')">
-			      		AND sr.sys_no = #{sysNo}
+			      		AND SR.SYS_NO = #{sysNo}
 			      	</if>
 			      	<if test="!userOgdp.equals('all')">
 						AND user_ogdp = #{userOgdp}
@@ -91,11 +86,6 @@
 					<if test="!srDevDp.equals('all')">
 						AND	SR.SR_DEV_DP = #{srDevDp}
 					</if>
-					<if test="srRegStartDate neq null and srRegStartDate neq ''" >
-						 AND sr.SR_REG_DATE BETWEEN 
-			                TO_DATE(#{srRegStartDate},'YY-MM-dd') 
-			                AND TO_DATE(#{srRegEndDate},'YY-MM-dd')+0.9
-					</if> 
 					<if test="srTtl != ''">
 						AND  sr.SR_TTL like #{srTtl}
 					</if>
@@ -103,7 +93,6 @@
 						AND sr_cust_no= #{srCustNo}
 						AND USERS.USER_TYPE = #{userType}
 					</if>
-					
 			      	ORDER BY SR_STTS.STTS_NO, SR.SR_PRY, SR.SR_REG_DATE DESC
 			    ) aa
 				<![CDATA[
@@ -143,9 +132,9 @@
 		        user_jbps AS "userJbps",
 		        user_ogdp AS "userOgdp", 
 		        user_dp_nm AS "userDpNm"
-		 from sr s, sr_type, sr_stts, users, system
-		 where s.stts_no = sr_stts.stts_no and system.sys_no = s.sys_no and s.sr_cust_no = users.user_no 
-		    and s.sr_type = sr_type.sr_type_no and s.sr_no = #{srNo}
+		 FROM SR S, SR_TYPE, SR_STTS, USERS, SYSTEM
+		 WHERE S.STTS_NO = SR_STTS.STTS_NO AND SYSTEM.SYS_NO = S.SYS_NO AND S.SR_CUST_NO = USERS.USER_NO 
+		    AND S.SR_TYPE = SR_TYPE.SR_TYPE_NO AND S.SR_NO = #{SRNO}
 	</select>
 
 	<!-- 

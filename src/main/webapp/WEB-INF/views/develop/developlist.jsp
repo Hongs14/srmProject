@@ -59,16 +59,6 @@
 									        	<div class="col-sm-4">
 									            	<div class="form-group row" id="simple-date4" >
 												    	<div class="input-daterange input-group input-group-sm">
-												    	
-												    		<c:set var="today" value="<%=new java.util.Date()%>"/>
-															<c:set var="today"><fmt:formatDate value="${today}" pattern="yyyyMMdd" /></c:set> 
-												    		<!-- 
-												    		
-												    		<input type="text" value="" class="input-sm form-control form-control-sm col-sm-9" name="startDate" id="startDate" />
-								                    		
-								                    		<input type="text" class="input-sm form-control form-control-sm" name="endDate" id="endDate"/>  -->
-											     	
-												    		
 												        	<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
 										            		<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="startDate" id="startDate" />
 								                    		<div class="input-group-prepend">
@@ -168,6 +158,58 @@
 										</div>
 									</div>	
 		                			<script>
+			                			//오늘 날짜 디폴트로 입력
+			                			$(document).ready(function() {
+			                				var todayResult = getTimeStamp();
+			                				console.log(todayResult);
+			                				$('#endDate').val(todayResult);
+			                				
+			                				var dateStart =getLastYearTimeStamp();
+			                				console.log(dateStart);
+			                				$('#startDate').val(dateStart);
+			                			});
+			                				
+			                			
+			                			function getTimeStamp() {
+			                			//오늘 날짜 양식
+			                			  var d = new Date();
+			                	
+			                			  var s =
+			                			    leadingZeros(d.getFullYear(), 4) + '/' +
+			                			    leadingZeros(d.getMonth() + 1, 2) + '/' +
+			                			    leadingZeros(d.getDate(), 2);
+			                	
+			                			  return s;
+			                			}
+			                			
+			                			
+			                			function getLastYearTimeStamp() {
+			                			//3개월전 날짜 양식
+			                				  var d = new Date();
+			                	
+			                				  var s =
+			                				    leadingZeros(d.getFullYear(), 4) + '/' +
+			                				    leadingZeros((d.getMonth() +1)-2, 2) + '/' +
+			                				    leadingZeros(d.getDate(), 2);
+			                	
+			                				  return s;
+			                			}
+			                	
+			                			
+			                			function leadingZeros(n, digits) {
+			                			//오늘 날짜 양식 (+두자리)
+			                			  var zero = '';
+			                			  n = n.toString();
+			                	
+			                			  if (n.length < digits) {
+			                			    for (i = 0; i < digits - n.length; i++)
+			                			      zero += '0';
+			                			  }
+			                			  return zero + n;
+			                			}
+		                				
+		                			
+		                			
 										function selectAll(selectAll) {
 											const checkboxes = document.querySelectorAll('input[name="devleopCheck"]');
 										  	checkboxes.forEach((checkbox) => {
@@ -253,21 +295,11 @@
 										};
 										
 										function searchClear(){
-											console.log("실행");
-										/* 	$('#sttsNo').find("select").find('option:first').prop('selected', true);
-											$('#sttsNo').find("select").selectpicker('refresh');
-
-
-											$('#sysNo').find("select").find('option:first').prop('selected', true);
-											$('#srDevDp').find("select").find('option:first').prop('selected', true);
-											$('#userOgdp').find("select").find('option:first').prop('selected', true);
-											$('#keyword').val(""); */
+											console.log("검색조건 초기화");
 										
 											for(let i=0; i< $('.clear').length ; i++){
 												$($('.clear')[i]).find('option:first').prop('selected', true);
 											} 
-											 
-											
 										};
 							  		</script>	
 			                		<div id="ajaxList" style="width:100%"></div>

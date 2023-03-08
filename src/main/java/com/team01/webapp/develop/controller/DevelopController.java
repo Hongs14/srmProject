@@ -78,12 +78,11 @@ public class DevelopController {
 	public String getDevelopFilter(@PathVariable int pageNo, @RequestBody DevelopDto developDto, Model model, Pager pager) {
 		log.info("필터링한 목록");
 		log.info("pageNo "+pageNo);
-		pager = developService.returnPage(pageNo,pager,developDto);
+		pager = developService.returnPage(pageNo, pager, developDto);
 		log.info(pager);
 		List<DevelopDto> list = developService.getDevelopList(pager, developDto);
 		model.addAttribute("develop",list);
 		model.addAttribute("pager",pager);
-
 		return "develop/ajaxList";
 	}
 	
