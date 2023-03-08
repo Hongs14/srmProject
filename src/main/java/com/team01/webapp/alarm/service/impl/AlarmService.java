@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.team01.webapp.alarm.dao.IAlarmRepository;
 import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.model.Alarm;
+import com.team01.webapp.model.Users;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -22,9 +23,9 @@ public class AlarmService implements IAlarmService{
 	
 	//읽지 않은 알림 수
 	@Override
-	public int selectAlarmCount(int userNo) {
+	public int selectAlarmCount(Alarm alarm) {
 		log.info("실행");
-		int alarmCnt = alarmRepository.selectAlarmCount(userNo);
+		int alarmCnt = alarmRepository.selectAlarmCount(alarm);
 		
 		return alarmCnt;
 	}
@@ -57,11 +58,20 @@ public class AlarmService implements IAlarmService{
 		alarmRepository.updateAlarmCheck(srNo);
 		
 	}
-	
+	//알람 삭제
 	@Override
 	public void deleteAlarm(int alarmNo) {
 		log.info("실행");
 		alarmRepository.deleteAlarm(alarmNo);
+	}
+	
+	//로그인 유저 정보 가져오기
+	@Override
+	public Users selectLoginUser(int userNo) {
+		
+		Users loginUser = alarmRepository.selectLoginUser(userNo);
+		
+		return loginUser;
 	}
 
 }

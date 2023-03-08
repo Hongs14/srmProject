@@ -29,8 +29,8 @@
 								<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srTtl}</a></td>
 							</c:if>
 							<c:if test="${sessionScope.loginUser.userType eq '개발자'}">
-								<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srNo}</a></td>
-								<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srTtl}</a></td>
+								<td><a onclick="devMiniView('${list.srNo}')">${list.srNo}</a></td>
+								<td><a onclick="devMiniView('${list.srNo}')">${list.srTtl}</a></td>
 							</c:if>
 							<td>${list.sysNm}</td>
 							<td style="width : 100px">
@@ -117,6 +117,19 @@
 							contentType: "application/json; charset=UTF-8"
 						}).done((data) => {
 							$('#managerMiniView').html(data);
+						})
+					}
+					
+					function devMiniView(srNo) {
+						data = {srNo : srNo}
+						
+						$.ajax({
+							url : "devMiniView",
+							method : "post",
+							data : JSON.stringify(data),
+							contentType: "application/json; charset=UTF-8"
+						}).done((data) => {
+							$('#devMiniView').html(data);
 						})
 					}
 				</script>

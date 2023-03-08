@@ -121,10 +121,9 @@ public class ProgressController {
 		if(srProgressAjax.getChoice() == 2) {
 			String userType = (String) session.getAttribute("userType");
 			int userNo = (int) session.getAttribute("userNo");
-			srProgressAjax.setUserType(userType);
-			srProgressAjax.setUserNo(userNo);
 			
 			if(userType.equals("관리자")) {
+				log.info(srProgressAjax);
 				system = homeService.getSystemMiniViewDetail(userNo);
 				srProgressAjax.setAdminSysNo(system.get(0).getSysNo());
 			}
@@ -137,6 +136,8 @@ public class ProgressController {
 		log.info(pager);
 		
 		List<SrProgressList> list = progressService.ProgressList(pager, srProgressAjax);
+		
+		log.info(list);
 		
 		model.addAttribute("ProgressList", list);
 		model.addAttribute("pager", pager);

@@ -42,7 +42,7 @@ public class DevelopDto {
 
 	private Date srRegStartDate;
 	private Date srRegEndDate;
-	
+	public String hrLeader;
 	private int seq;
 	
 	//페이징 처리

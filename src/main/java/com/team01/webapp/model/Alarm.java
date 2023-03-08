@@ -24,6 +24,7 @@ public class Alarm {
 	private String userOgdp;
 	private String userDpNm;
 	private String userType;
+	private String sysNo;
 	
 	//SR Stauts
 	private String sttsNm;

@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team01.webapp.home.dao.IHomeRepository;
+import com.team01.webapp.model.DevMini;
 import com.team01.webapp.model.Donut;
 import com.team01.webapp.model.HR;
+import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SystemInfo;
@@ -99,6 +101,25 @@ public class HomeService implements IHomeService{
 	@Override
 	public List<HR> DeveloperList(String srNo) {
 		return progressRepository.selectHumanResourceList(srNo);
+	}
+
+	@Override
+	public DevMini getDevMini(DevMini devMini) {
+		devMini = homeRepository.selectSrData(devMini.getSrNo());
+		int count = 0;
+		int plus = 0;
+		List<Progress> progressList = homeRepository.selectProgressList(devMini.getSrNo());
+		devMini.setProgressList(progressList);
+		List<HR> hrList = homeRepository.selectHrList(devMini.getSrNo());
+		devMini.setHrList(hrList);
+		
+		for(int i=0; i<progressList.size(); i++) {
+			plus = homeRepository.selectFileCount(progressList.get(i).getProgNo());
+			count += plus;
+		}
+		devMini.setCount(count);
+		
+		return devMini;
 	}
 
 }

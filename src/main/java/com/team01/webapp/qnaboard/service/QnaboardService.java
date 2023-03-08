@@ -5,10 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.model.Notice;
+import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.model.QSTN;
 import com.team01.webapp.model.QSTNComment;
+import com.team01.webapp.model.QSTNFile;
 import com.team01.webapp.qnaboard.dao.IQnaboardRepository;
 import com.team01.webapp.util.Pager;
 
@@ -45,7 +48,11 @@ public class QnaboardService implements IQnaboardService {
 		
 		return list;
 	}
-
+	
+	/* Qna 상세보기
+	 * @author			정홍주
+	 * @param qstnNo	해당 질문 번호
+	 */
 	@Override
 	public QSTN getDetail(int qstnNo) {
 		//게시물 상세
@@ -54,10 +61,33 @@ public class QnaboardService implements IQnaboardService {
 		//조회수
 		int countInq = qnaboardRepository.countInqCnt(qstnNo);
 		
-		
 		return qstn;
 	}
 	
+	/* 상세조회 첨부파일 읽어오기
+	 * @author			정홍주
+	 * @param qstnNo	해당 질문 번호
+	 */
+	@Override
+	public List<MultipartFile> getQstnFileDetail(int qstnNo) {
+		List<MultipartFile> qstnFile = qnaboardRepository.selectQstnFileDetail(qstnNo);
+		return qstnFile;
+	}
+	
+	/* 첨부파일 다운로드
+	 * @author				정홍주
+	 * @param qstnFileNo	해당 파일 번호
+	 */
+	@Override
+	public QSTNFile selectFiledownload(int qstnFileNo) {
+		QSTNFile qstnFile = qnaboardRepository.selectFileDownload(qstnFileNo);
+		return qstnFile;
+	}
+	
+	/* 댓글수 증가하기
+	 * @author			정홍주
+	 * @param qstnNo	해당 질문 번호
+	 */
 	@Override
 	public int countInq(int qstnNo) {
 		//댓글 개수
@@ -74,6 +104,13 @@ public class QnaboardService implements IQnaboardService {
 		int result = qnaboardRepository.insertQSTN(qstn);
 		return result;
 	}
+	@Override
+	public void qstnFileUpload(QSTN qstn) {
+		log.info("실행");
+		qnaboardRepository.insertQstnFileUpload(qstn);
+		
+	}
+	
 
 	@Override
 	public QSTNComment writeComment(QSTNComment qComment) {

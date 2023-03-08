@@ -142,6 +142,15 @@
 								}).done((data) => {
 									$('#managerMiniView').html(data);
 								})
+								
+								$.ajax({
+									url : "devMiniView",
+									method : "post",
+									data : JSON.stringify(data),
+									contentType: "application/json; charset=UTF-8"
+								}).done((data) => {
+									$('#devMiniView').html(data);
+								})
 							});
 							
 							function homeMiniViewChange(sttsNo, pageNo) {
@@ -264,8 +273,10 @@
           	</c:if>
           	
           	<c:if test="${sessionScope.loginUser.userType eq '개발자'}">
-          		<div class="col-12 " id="devMiniView">
-          	 		<%@include file="/WEB-INF/views/home/devMiniView.jsp" %>
+          		<div class="col-12">
+          			<div id="devMiniView">
+          			
+          			</div>
                 </div>
 
           	</c:if>
