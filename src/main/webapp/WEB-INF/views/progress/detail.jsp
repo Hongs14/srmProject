@@ -254,11 +254,11 @@ border-top-right-radius: 10px;
 								<div class="card-body">
 									<!-- ajax 변경 부분-->
 									<div class="container-fluid mb-5">
-										<div id="progressDetailView" style="width:100%; min-height:350px"></div>
+										<div id="progressDetailView" style="width:100%; min-height:400px; max-height:400px"></div>
 									</div>
 								</div>
 							</div>
-							<div class="card mb-4" style="text-align:left">
+							<div class="card mb-4" style="text-align:left;">
 								<div class="card-header mt-2">
 									<h6 class="m-0 font-weight-bold text-primary"> <i class="fab fa-fw fa-wpforms"></i> SR 개발 내용 </h6>
 								</div>
