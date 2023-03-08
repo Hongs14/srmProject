@@ -74,7 +74,7 @@
         </div>
 	</li>
 	<li class="nav-item">
-	  <a class="nav-link collapsed" href="${pageContext.request.contextPath}/qna/list" data-toggle="collapse" data-target="#collapsePage2"
+	  <a class="nav-link collapsed" href="${pageContext.request.contextPath}/qna/list" data-toggle="collapse" data-target="#qnaIndex"
        aria-expanded="false" aria-controls="collapsePage">
 	    <i class="fas fa-fw fa-sticky-note"></i>
 	    <span>QnA게시판</span>
@@ -89,7 +89,7 @@
             <c:if test="${sessionScope.loginUser.userOgdp eq '사슈즈' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
 	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/SAS/list">사슈즈STORE Q&A</a>
             </c:if>
-            <c:if test="${sessionScope.loginUser.userOgdp eq '한국대학교LMS' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
+            <c:if test="${sessionScope.loginUser.userOgdp eq '한국대학교' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
 	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/KOR/list">한국대학교LMS Q&A</a>
             </c:if>
             <c:if test="${sessionScope.loginUser.userOgdp eq '오티아이' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
