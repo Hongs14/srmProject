@@ -91,7 +91,7 @@
 	                    </div>
 	                    <div class="form-group row row-cols-2 px-5 align-items-center">
 	                      <label class="font-weight-bold text-primary col-sm-2 text-right">비밀번호 재입력 </label>
-	                      <input type="password" class="form-control col-sm-10" id="userPswdRepeat" name="userPswdRepeat"
+	                      <input type="password" class="form-control col-sm-10" id="checkPswd" name="checkPswd"
 	                        placeholder="Repeat Password" required> 
 	                      <small id="passwordHelp" class="form-text text-muted">패스워드와 똑같은 값을 입력해 주세요</small>
 	                    </div>

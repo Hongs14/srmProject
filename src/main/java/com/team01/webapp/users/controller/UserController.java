@@ -23,6 +23,7 @@ public class UserController {
 	@Autowired
 	IUserService userService;
 	
+	
 	/**
 	 * 로그인 메서드
 	 * 
@@ -49,6 +50,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user/login", method = RequestMethod.POST)
 	public String login(Users user, HttpSession session, Model model) {
+		
 		log.info(user+" post 실행");
 		UserService.LoginResult loginResult = userService.login(user);
 		
@@ -108,7 +110,6 @@ public class UserController {
 	@RequestMapping(value="/user/join", method = RequestMethod.POST)
 	public String join(Users user, Model model, RedirectAttributes redirectAttributes) {
 		log.info(user.getUserPswd()+"실행");
-		
 		int result = userService.join(user);
 		if(result == UserService.JOIN_SUCCESS) {
 			redirectAttributes.addFlashAttribute("result", "success");
