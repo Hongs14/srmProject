@@ -112,6 +112,24 @@
 					</c:otherwise>
 				</c:choose>	
                 <a class="dropdown-item text-center small text-gray-500" href="${pageContext.request.contextPath}/alarm/list">Show All Alerts</a>
+                <script>
+					function updateCheck(i) {
+						var srNo = i;
+						let data = {srNo : srNo};
+						console.log(data);
+						
+						console.log(data);
+						
+						$.ajax({
+							url : "${pageContext.request.contextPath}/alarm/updateAlarmCheck",
+							method : "post",
+							data : JSON.stringify(data),
+							contentType: "application/json; charset=UTF-8"
+						}).done((data) => {
+							window.location.href = "${pageContext.request.contextPath}/request/list/"+srNo;
+						});
+					}	
+				</script>
               </div>
             </li>
             <li class="nav-item dropdown no-arrow mt-3">

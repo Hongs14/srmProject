@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.alarm.service.IAlarmService;
-import com.team01.webapp.model.Alarm;
 import com.team01.webapp.model.Request;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
@@ -36,6 +35,7 @@ import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.request.service.IRequestService;
+import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -50,6 +50,10 @@ public class RequestController {
 	
 	@Autowired
 	IAlarmService alarmService;
+	
+	@Autowired
+	AlarmInfo alarmInfo;
+	
 	/**
 	 * 모든 SR리스트 조회
 	 * 
@@ -66,18 +70,23 @@ public class RequestController {
 		model.addAttribute("requestfilter", requestFilter);
 		model.addAttribute("command", "list");
 		
-		//알람 리스트
-		int userNo = (Integer) session.getAttribute("userNo");
-		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
-		
 		//알림 수
+		/*int userNo = (Integer) session.getAttribute("userNo");
 		Alarm alarm = new Alarm();
 		alarm.setUserNo(userNo);
-		alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
 		alarm.setUserType((String)session.getAttribute("userType"));
+		if(alarm.getUserType().equals("관리자")) {
+			Users loginUser = alarmService.selectLoginUser(userNo);
+			alarm.setSysNo("%"+loginUser.getSysNo()+"%");
+		}else {			
+			alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
+		}
+		//알림 리스트
+		List<Alarm> alarmList = alarmService.selectAlarmList(alarm);
 		int alarmCnt = alarmService.selectAlarmCount(alarm);
 		model.addAttribute("alarmCnt",alarmCnt);
-		model.addAttribute("alarmList",alarmList);
+		model.addAttribute("alarmList",alarmList);*/
+		alarmInfo.info(session, model); 
 		
 		return "request/list";
 		
@@ -87,8 +96,8 @@ public class RequestController {
 	public String getDetailList(@PathVariable String srNo, HttpSession session, RequestFilter requestFilter, Model model) {
 		log.info("실행");
 		requestFilter = requestService.getFilterList(requestFilter);
+		alarmInfo.info(session, model); 
 		model.addAttribute("requestfilter", requestFilter);
-		
 		model.addAttribute("srNo", srNo);
 		model.addAttribute("command", "detail");
 		return "request/list";
@@ -227,7 +236,10 @@ public class RequestController {
 			sr.setSysNo(requestService.getSysNo(userNo));
 			sr.setSttsNo(1);
 			srNo = requestService.writeRequest(sr);
+			
+			//알람 DB에 저장
 			alarmService.insertAlarm(srNo,session);
+			
 			//첨부 파일 유무 조사
 			List<MultipartFile> mf = sr.getRequestMFile();
 			if(mf!=null &&!mf.isEmpty()) {

@@ -35,6 +35,7 @@ import com.team01.webapp.model.NoticeComment;
 import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.notice.service.INoticeService;
+import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -49,7 +50,9 @@ public class NoticeController {
 	
 	@Autowired
 	IAlarmService alarmService;
-
+	
+	@Autowired
+	AlarmInfo alarmInfo;
 	/**
 	 * 공지사항 리스트 가져오기
 	 * @author : 황건희
@@ -60,23 +63,10 @@ public class NoticeController {
 	@GetMapping("/list")
 	public String getNoticeList(HttpSession session,Model model) {
 		log.info("실행");
-		//알림 리스트
-		int userNo = (Integer) session.getAttribute("userNo");
-		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
 		
-		//알림 수
-		Alarm alarm = new Alarm();
-		alarm.setUserNo(userNo);
-		alarm.setUserType((String)session.getAttribute("userType"));
-		if(alarm.getUserType().equals("관리자")) {
-			Users loginUser = alarmService.selectLoginUser(userNo);
-			alarm.setSysNo("%"+loginUser.getSysNo()+"%");
-		}else {			
-			alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
-		}
-		int alarmCnt = alarmService.selectAlarmCount(alarm);
-		model.addAttribute("alarmCnt",alarmCnt);
-		model.addAttribute("alarmList",alarmList);
+		//알람 수 및 리스트
+		alarmInfo.info(session, model); 
+		
 		model.addAttribute("command","de");
 		return "notice/list";
 	}
@@ -84,11 +74,8 @@ public class NoticeController {
 	@GetMapping("/list/{ntcNo}")
 	public String getNoticeDetailView(@PathVariable int ntcNo, HttpSession session,Model model) {
 		log.info("디테일 실행");
-		//알림 리스트
-		int userNo = (Integer) session.getAttribute("userNo");
-		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
-		
 		//알림 수
+		int userNo = (Integer) session.getAttribute("userNo");
 		Alarm alarm = new Alarm();
 		alarm.setUserNo(userNo);
 		alarm.setUserType((String)session.getAttribute("userType"));
@@ -98,6 +85,8 @@ public class NoticeController {
 		}else {			
 			alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
 		}
+		//알림 리스트
+		List<Alarm> alarmList = alarmService.selectAlarmList(alarm);
 		int alarmCnt = alarmService.selectAlarmCount(alarm);
 		model.addAttribute("alarmCnt",alarmCnt);
 		model.addAttribute("alarmList",alarmList);
