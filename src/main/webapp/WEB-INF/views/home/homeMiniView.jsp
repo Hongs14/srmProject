@@ -53,6 +53,9 @@
 										<c:when test="${list.sttsNm eq '개발 완료'}">
 											<span class="badge badge-success">${list.sttsNm}</span>
 										</c:when>
+										<c:when test="${list.sttsNm eq '개발계획'}">
+											<span class="badge text-white" style="background-color:#476A6F;">${list.sttsNm}</span>
+										</c:when>
 										<c:otherwise>
 											<span class="badge badge-danger">${list.sttsNm}</span>
 										</c:otherwise>
@@ -82,6 +85,14 @@
 										<c:when test="${list.sttsNm eq '개발 완료'}">
 											<div class="progress-bar bg-success" role="progressbar" 
 											style="width:100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:when>
+										<c:when test="${list.sttsNm eq '개발계획'}">
+											<div class="progress-bar" role="progressbar" 
+											style="width:50%; background-color:#476A6F;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:when>
+										<c:when test="${list.sttsNm eq '계획조정'}">
+											<div class="progress-bar bg-danger" role="progressbar" 
+											style="width:70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
 										</c:when>
 										<c:otherwise>
 											<div class="progress-bar bg-danger" role="progressbar" 

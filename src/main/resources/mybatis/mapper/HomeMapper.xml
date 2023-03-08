@@ -139,4 +139,25 @@
 		WHERE rnum >= #{start}
 		]]>
 	</select>
+	
+	<select id="selectRequestSr" parameterType="string" resultType="progressDetail">
+		SELECT
+		    SR_NO AS "srNo",
+		    SR_TTL AS "srTtl",
+		    SR_STD AS "srStd",
+		    SYS_NM AS "sysNm",
+		    STTS_NM AS "sttsNm",
+		    USER_DP_NM AS "userDpNm",
+		    USER_NM AS "requesterNm",
+		    SR_REG_DATE AS "srRegDate",
+		    SR_DDLN_DATE AS "srDdlnDate",
+		    SR_CN AS "srCn",
+		    SR_PRY "srPry",
+		    SR_BGT "srBgt"
+		FROM SR sr,SYSTEM system, SR_STTS stts, USERS users
+		WHERE sr.sys_no = system.sys_no
+		AND sr.stts_no = stts.stts_no
+		AND sr.sr_cust_no = users.user_no
+		AND sr_no = #{srNo}
+	</select>
 </mapper>

@@ -120,29 +120,38 @@
 		            formData.append("changeRequestFile", filesArr[i]);
 		        }
 		    }
-		    var srNo = document.getElementById('srNo').value;
-		    formData.append("srNo", srNo);
 		    
-		    var crTtl = document.getElementById('crTtl').value;
-		    formData.append("crTtl", crTtl);
-		    
-		    var crCn = document.getElementById('crCn').value;
-		    formData.append("crCn", crCn);
-		    
-		    var crDdlnDate = document.getElementById('dateInput').value;
-		    formData.append("crDdlnDate", crDdlnDate);
-		    
-		    $.ajax({
-	   			type: "POST",
-				enctype: 'multipart/form-data',	// 필수
-				url: 'changeRequest',
-				data: formData,	// 필수
-				processData: false,	// 필수
-				contentType: false	// 필수
-		    }).done((data) => {
-		    	window.location.href = "${progress.srNo}";
-		    });
-		    
+		    if(formData.get("changeRequestFile") == null) {
+		    	$('#messageModal').modal('show');
+		    	$("#Modalmessage").text("파일을 선택해주세요.");
+		    } else {
+				var srNo = document.getElementById('srNo').value;
+			    formData.append("srNo", srNo);
+			    
+			    var crTtl = document.getElementById('crTtl').value;
+			    formData.append("crTtl", crTtl);
+			    
+			    var crCn = document.getElementById('crCn').value;
+			    formData.append("crCn", crCn);
+			    
+			    var crDdlnDate = document.getElementById('dateInput').value;
+			    formData.append("crDdlnDate", crDdlnDate);
+			    
+			    $.ajax({
+		   			type: "POST",
+					enctype: 'multipart/form-data',	// 필수
+					url: 'changeRequest',
+					data: formData,	// 필수
+					processData: false,	// 필수
+					contentType: false	// 필수
+			    }).done((data) => {
+			    	$('#messageModal').modal('show');
+			    	$("#Modalmessage").text("기간 추가가 신청 되었습니다.");
+			    	setTimeout(function() {
+			    		window.location.href = "${progress.srNo}";
+			    	}, 2000);
+			    });
+		    }		    
 		}
 	</script>
 	
