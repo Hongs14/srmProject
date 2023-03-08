@@ -61,6 +61,16 @@
 			</c:forEach>
 		</table>
 		
+		<c:if test="${empty ProgressList}">
+			<div class="p-5" style="white-space: normal; text-align:center;">
+				<div class="alert alert-secondary m-3 p-4" role="alert">
+					<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+					<br/>
+					<h3>SR 요청이 존재하지 않습니다</h3>
+				</div>
+			</div>
+		</c:if>
+		
 		<c:if test="${pager.totalRows != 0}">
 			<div class="pager d-flex justify-content-center my-3">
 				<div class="pagingButtonSet d-flex justify-content-center">
