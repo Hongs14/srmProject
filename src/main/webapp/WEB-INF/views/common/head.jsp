@@ -27,7 +27,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/gantt/dist/jquery-gantt.css">
 <script src="https://kit.fontawesome.com/95401d2f49.js" crossorigin="anonymous"></script>
 
- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
 <%-- <script src="${pageContext.request.contextPath}/resources/js/demo/chart-pie-demo.js"></script> --%>
