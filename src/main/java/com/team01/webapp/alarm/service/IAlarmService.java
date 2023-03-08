@@ -17,4 +17,7 @@ public interface IAlarmService {
 	
 	//알림 체크
 	public void updateCheck(String srNo);
+	
+	//알림 삭제
+	public void deleteAlarm(int alarmNo);
 }

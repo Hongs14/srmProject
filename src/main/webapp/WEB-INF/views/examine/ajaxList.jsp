@@ -60,27 +60,27 @@
 				</c:if>
 				<c:if test="${pager.totalRows >=1}">
 					<c:if test="${pager.pageNo > 5}">
-						<a onclick="examineListReset(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
+						<a onclick="examineList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
 					</c:if>
 					<c:if test="${pager.groupNo > 1}">
-						<a onclick="examineListReset(${pager.startPageNo-1})" type="button" class="btn btn-outline-info btn-sm m-1">이전</a>
+						<a onclick="examineList(${pager.startPageNo-1})" type="button" class="btn btn-outline-info btn-sm m-1">이전</a>
 					</c:if>
 	
 					<c:forEach var="i" begin="${pager.startPageNo}" end="${pager.endPageNo}">
 						<c:if test="${pager.pageNo != i}">
-							<a onclick="examineListReset(${i})" type="button" class="btn btn-outline-info btn-sm m-1">${i}</a>
+							<a onclick="examineList(${i})" type="button" class="btn btn-outline-info btn-sm m-1">${i}</a>
 						</c:if>
 						<c:if test="${pager.pageNo == i}">
-							<a onclick="examineListReset(${i})" type="button" class="btn btn-primary btn-sm m-1">${i}</a>
+							<a onclick="examineList(${i})" type="button" class="btn btn-primary btn-sm m-1">${i}</a>
 						</c:if>
 					</c:forEach>
 	
 					<c:if test="${pager.groupNo < pager.totalGroupNo }">
-						<a onclick="examineListReset(${pager.endPageNo+1})" type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
+						<a onclick="examineList(${pager.endPageNo+1})" type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
 	
 					</c:if>
 					<c:if test="${pager.totalPageNo > 5 }">
-						<a onclick="examineListReset(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
+						<a onclick="examineList(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
 					</c:if>
 				</c:if>
 			</div>

@@ -48,8 +48,21 @@ public class AlarmController extends TextWebSocketHandler {
 		String srNo = alarm.getSrNo();
 		alarmService.updateCheck(srNo);
 		
-		return "alarm/list";
+		return "redirect:/alarm/list";
 	}
+	
+	@PostMapping(value="delete", produces="application/json; charset=UTF-8")
+	public String deleteAlarm(@RequestBody Alarm alarm) {
+		log.info("실행");
+		
+		int alarmNo = alarm.getAlarmNo();
+		
+		alarmService.deleteAlarm(alarmNo);
+		
+		return "redirect:/alarm/list";
+	}
+	
+	
 }
 
 
