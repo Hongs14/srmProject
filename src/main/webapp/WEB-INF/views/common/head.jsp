@@ -31,4 +31,4 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
 <%-- <script src="${pageContext.request.contextPath}/resources/js/demo/chart-pie-demo.js"></script> --%>
-<%-- <script src="${pageContext.request.contextPath}/resources/vendor/chart.js/chartjs-plugin-datalabels.js"></script> --%>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>

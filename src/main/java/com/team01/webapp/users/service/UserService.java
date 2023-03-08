@@ -82,20 +82,20 @@ public class UserService implements IUserService {
 		
 		String sysNo = "";
 		switch(user.getUserOgdp()) {
-			case "레드주컴퍼니": 
-				sysNo="JHJ";
+			case "북북": 
+				sysNo="BOK";
 				break;
-			case "한국소프트SRM":
-				sysNo="KOREASOFT_SRM";
+			case "한국소프트":
+				sysNo="SRM";
 				break;
-			case "에이치알컴퍼니":
-				sysNo="KHR";
+			case "사슈즈":
+				sysNo="SAS";
 				break;
-			case "티에이치컴퍼니":
-				sysNo="KTH";
+			case "오티아이":
+				sysNo="OTI";
 				break;
-			case "지에이치컴퍼니":
-				sysNo="HGH";
+			case "한국대학교":
+				sysNo="KOR";
 				break;
 				
 		}
