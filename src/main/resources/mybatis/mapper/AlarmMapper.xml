@@ -64,6 +64,11 @@
 		SET MESSAGE_CHECK = 'Y'
 		WHERE SR_NO = #{srNo}
 	</update>
-
+	
+	<!-- 알릭 삭제 -->
+	<delete id="deleteAlarm" parameterType="int">
+		DELETE FROM SR_ALARM
+		WHERE ALARM_NO = #{alarmNo}
+	</delete>
 	
 </mapper>

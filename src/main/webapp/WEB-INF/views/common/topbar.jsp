@@ -41,11 +41,19 @@
 				
 				// toast생성 및 추가
 				function onMessage(evt){
-				    var data = evt.data;
+				    var data = "안녕하세요";
+				    console.log(data);
+				    
+				    const now = new Date();	// 현재 날짜 및 시간
+				    console.log(now);
+				    const hours = now.getHours();
+				    console.log(hours);
+				    const minutes = now.getMinutes();
+				    console.log(minutes);
 				    // toast
 				    let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
 				    toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
-				    toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+				    toast += "<small class='text-muted'>"+hours+ ":"+ minutes+"</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
 				    toast += "<span aria-hidden='true'>&times;</span></button>";
 				    toast += "</div> <div class='toast-body'>" + data + "</div></div>";
 				    $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
@@ -72,24 +80,32 @@
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">받은 알림</h6>
-                <c:forEach var="alarmList" items="${alarmList}"  begin="0" end="2" step="1">                
-	                <a class="dropdown-item d-flex align-items-center" href="#">
-	                  <div class="mr-3">
-	                    <div class="icon-circle bg-primary">
-	                    	<c:if test="${alarmList.messageCheck eq 89}">
-		                      <i class="fas fa-check text-white"></i>
-	                    	</c:if>
-	                    	<c:if test="${alarmList.messageCheck eq 78 }">
-		                      <i class="fas fa-exclamation-triangle text-white"></i>
-	                    	</c:if>
-	                    </div>
-	                  </div>
-	                  <div>
-	                    <div class="small text-gray-500">${alarmList.messageDate}</div>
-	                    <span class="font-weight-bold">${alarmList.alarmTtl} : ${alarmList.message}</span>
-	                  </div>
-	                </a>
-                </c:forEach>
+                <c:set var="alarmCnt" value="${alarmCnt}"/>
+					<c:choose>
+						<c:when test="${alarmCnt != 0}">
+		               		<c:forEach var="alarmList" items="${alarmList}"  begin="0" end="2" step="1">                
+								<a class="dropdown-item d-flex align-items-center" href="#">
+									<div class="mr-3">
+										<div class="icon-circle bg-primary">
+											<c:if test="${alarmList.messageCheck eq 89}">
+												<i class="fas fa-check text-white"></i>
+											</c:if>
+											<c:if test="${alarmList.messageCheck eq 78 }">
+												<i class="fas fa-exclamation-triangle text-white"></i>
+											</c:if>
+										</div>
+									</div>
+									<div>
+					                    <div class="small text-gray-500">${alarmList.messageDate}</div>
+					                    <span class="font-weight-bold">${alarmList.alarmTtl} : ${alarmList.message}</span>
+					                </div>
+				                </a>
+			                </c:forEach>					
+						</c:when>
+						<c:otherwise>
+							<span class="dropdown-item d-flex align-items-center">알림 내역이 없습니다.</span>
+						</c:otherwise>
+					</c:choose>		
                 <a class="dropdown-item text-center small text-gray-500" href="${pageContext.request.contextPath}/alarm/list">Show All Alerts</a>
               </div>
             </li>

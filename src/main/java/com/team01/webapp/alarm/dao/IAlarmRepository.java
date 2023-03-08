@@ -21,4 +21,6 @@ public interface IAlarmRepository {
 	//알림 체크
 	public void updateAlarmCheck(String srNo);
 	
+	//알림 삭제
+	public void deleteAlarm(int alarmNo);
 }

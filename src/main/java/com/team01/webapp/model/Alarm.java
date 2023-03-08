@@ -27,6 +27,4 @@ public class Alarm {
 	//SR Stauts
 	private String sttsNm;
 	
-	//seq
-	private int seq;
 }
