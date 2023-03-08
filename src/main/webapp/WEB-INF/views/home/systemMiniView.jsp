@@ -65,12 +65,11 @@
              		data.push(${list.count});
              	</c:forEach>
              	console.log(labelse);
-             	console.log(data);
              	
              
 				var ctx = document.getElementById("myPieChart");
 				var myPieChart = new Chart(ctx, {
-				  plugins : [ChartDataLabels],
+/* 				  plugins : [ChartDataLabels], */
 				  type: 'doughnut',
 				  data: {
 				    labels: labelse,

@@ -118,17 +118,18 @@ public class ExamineController {
 	 * @param examine	detailView.jsp에서 요청 검토 처리
 	 * @return
 	 */
-	@PostMapping(value="/detail")
-	public String updateExamine(Examine examine) {
+	@PostMapping(value="/detail", produces="application/json; charset=UTF-8")
+	public String updateExamine(@RequestBody Examine examine) {
 		log.info("실행");
 		log.info(examine);
 		
 		examineService.updateExamine(examine);
 		
 		String srNo = examine.getSrNo();
+		
 		alarmService.insertAlarm(srNo);
 		
-		return "examine/list";
+		return "redirect:/examine/detail/"+srNo;
 	}
 	
 	@GetMapping("/fileDownload")

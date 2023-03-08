@@ -52,29 +52,40 @@
 										</div>
 										<div class="myInfoWrapper p-5 container">
 											<div class="row mb-5  justify-content-center d-flex align-items-center alert alert-primary" >나의 알림 목록</div>
+											<div class="row mb-5"><button onclick="onMessage('안녕하세요')">알림 전송</button> </div>
 											<div class="row mb-5">
 												<table>
 													<tbody>
-														<c:forEach var="alarmList" items="${alarmList}">														
-															<tr style="cursor:pointer;">
-																<td onclick="updateCheck('${alarmList.srNo}')">
-																	<c:if test="${alarmList.messageCheck eq 89}">
-												                      <i class="fas fa-check"></i>
-											                    	</c:if>
-											                    	<c:if test="${alarmList.messageCheck eq 78 }">
-												                      <i class="fas fa-exclamation-triangle"></i>
-											                    	</c:if>
-																	<span class="col-3 " style="border-top:0; margin:0px;font-size:1.2rem;"><b>${alarmList.alarmTtl}</b></span>
-																	<span>${alarmList.messageDate}</span>
-																	<br/>
-																	<span class="col-3 ">${alarmList.message}</span>
-																	<hr/>
-																</td>
-																<td>
-																	<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-																</td>
-															</tr>
-														</c:forEach>
+														<c:set var="alarmCnt" value="${alarmCnt}"/>
+														<c:choose>
+															<c:when test="${alarmCnt != 0 }">															
+																<c:forEach var="alarmList" items="${alarmList}">										
+																	<tr style="cursor:pointer;">
+																		<td onclick="updateCheck('${alarmList.srNo}')">
+																			<c:if test="${alarmList.messageCheck eq 89}">
+														                      <i class="fas fa-check"></i>
+													                    	</c:if>
+													                    	<c:if test="${alarmList.messageCheck eq 78 }">
+														                      <i class="fas fa-exclamation-triangle"></i>
+													                    	</c:if>
+																			<span class="col-3 " style="border-top:0; margin:0px;font-size:1.2rem;"><b>${alarmList.alarmTtl}</b></span>
+																			<span>${alarmList.messageDate}</span>
+																			<br/>			
+																			<div class="col-3" style="font-size:0.7rem">${alarmList.srNo}</div>
+																			<input type="hidden" id="alarmNo" name="alarmNo" value="${alarmList.alarmNo}">
+																			<span class="col-3 ">${alarmList.message}</span>
+																			<hr/>
+																		</td>
+																		<td>
+																			<i class="fas fa-trash" data-toggle="modal" data-target="#alarmBtn" id="#modalScroll"></i>
+																		</td>
+																	</tr>
+																</c:forEach>
+															</c:when>
+															<c:otherwise>
+																<span>알림 내역이 없습니다.</span>
+															</c:otherwise>
+														</c:choose>
 													</tbody>
 												</table>
 											</div>
@@ -99,8 +110,57 @@
 										window.location.href = "${pageContext.request.contextPath}/request/list/"+srNo;
 									});
 								}	
-							
+								
+								
 							</script>
+							<div class="modal fade" id="alarmBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+								<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+									<div class="modal-content">
+										<div class="modal-header bg-primary">
+											<h5 class="modal-title" id="exampleModalScrollableTitle">
+									          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+									        	<small class="text-white">
+									        		<b>알람</b>
+									        	</small>
+											</h5>
+											<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body p-5" style="white-space: normal;">
+											<div class="alert alert-secondary m-3 p-2" role="alert">
+												<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+												<div>
+													<span>정말 삭제 하시겠습니까?</span>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="selectCheck()">네</button>
+											<button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<script>
+								function selectCheck() {
+									
+									var alarmNo = document.getElementById("alarmNo").value;
+									let data = {alarmNo : alarmNo}
+									console.log(data);
+									
+									$.ajax({
+										url : "delete",
+										method : "post",
+										data : JSON.stringify(data),
+										contentType : "application/json; charset=UTF-8"
+									}).done((data) => {
+										window.location.href ='/webapp/alarm/list';
+									})
+									
+								}
+							</script>
+							<div id="msgStack"></div>
 
 	          			<!-- 로그아웃 모달 -->
 						<%@include file="/WEB-INF/views/common/logout.jsp" %>
