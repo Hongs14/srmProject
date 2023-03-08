@@ -134,26 +134,6 @@ border-top-right-radius: 10px;
 												</div>
 											</div>
 										</c:if>
-										<hr />
-										<!-- 처리팀/담당자 -->
-										<div class="row">
-											<div class="col-6">
-												<span class="font-weight-bold ">처리 팀 : </span><span>${progressDetail.dpNm}</span>
-											</div>
-											<div class="col-6">
-												<span class="font-weight-bold ">담당자 : </span><span>${progressDetail.developerNm}</span>
-											</div>
-										</div>
-										<br/>
-										<!-- 계획시작일/계획 종료일 -->
-										<div class="row mb-3">
-											<div class="col-6">
-												<span class="font-weight-bold ">계획 시작일 : </span><span>${progressDetail.srStartDate}</span>
-											</div>
-											<div class="col-6">
-												<span class="font-weight-bold ">계획 종료일 : </span><span>${progressDetail.srEndDate}</span>
-											</div>
-										</div>
 									</div>
 								</div>
 							</div>
@@ -274,7 +254,41 @@ border-top-right-radius: 10px;
 								<div class="card-body">
 									<!-- ajax 변경 부분-->
 									<div class="container-fluid mb-5">
-										<div id="progressDetailView" style="width:100%; min-height:467px"></div>
+										<div id="progressDetailView" style="width:100%; min-height:350px"></div>
+									</div>
+								</div>
+							</div>
+							<div class="card mb-4" style="text-align:left">
+								<div class="card-header mt-2">
+									<h6 class="m-0 font-weight-bold text-primary"> <i class="fab fa-fw fa-wpforms"></i> SR 개발 내용 </h6>
+								</div>
+								<!-- 처리팀/담당자 -->
+								<div class="card-body">
+									<div class="row">
+										<div class="col-6">
+											<span class="font-weight-bold ">처리 팀 : </span><span>${progressDetail.dpNm}</span>
+										</div>
+										<div class="col-6">
+											<span class="font-weight-bold ">담당자 : </span><span>${progressDetail.developerNm}</span>
+										</div>
+									</div>
+									<br/>
+									<!-- 계획시작일/계획 종료일 -->
+									<div class="row mb-3">
+										<div class="col-6">
+											<span class="font-weight-bold ">계획 시작일 : </span><span>${progressDetail.srStartDate}</span>
+										</div>
+										<div class="col-6">
+											<span class="font-weight-bold ">계획 종료일 : </span><span>${progressDetail.srEndDate}</span>
+										</div>
+									</div>
+									<div class="row mb-1">
+										<div class="col-2">
+											<span class="font-weight-bold">개발 내용 </span>
+										</div>
+										<div class="col-10 border" style="min-height:100px;">
+											<span>${progressDetail.srDevCn}</span>
+										</div>
 									</div>
 								</div>
 							</div>
