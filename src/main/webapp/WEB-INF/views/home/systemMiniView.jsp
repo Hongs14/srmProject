@@ -82,24 +82,24 @@
 				  },
 				  options: {	
 				    maintainAspectRatio: false,
-				    tooltips: {
-				      backgroundColor: "rgb(255,255,255)",
-				      bodyFontColor: "#858796",
-				      borderColor: '#dddfeb',
-				      borderWidth: 1,
-				      xPadding: 15,
-				      yPadding: 15,
-				      displayColors: false,
-				      caretPadding: 10,
-				    },
-				    legend: {
-				    	position : 'bottom',
-				    	labels : {
-				    		boxWidth : 10
-				    	}
-				    },
 				    cutoutPercentage: 60,
 				    plugins : {
+				    	tooltips: {
+					      backgroundColor: "rgb(255,255,255)",
+					      bodyFontColor: "#858796",
+					      borderColor: '#dddfeb',
+					      borderWidth: 1,
+					      xPadding: 15,
+					      yPadding: 15,
+					      displayColors: false,
+					      caretPadding: 10,
+					    },
+				    	legend: {
+	 						position : 'bottom',
+					    	labels : {
+					    		boxWidth : 10
+					    	}
+				    	},
 				    	datalabels : {
 				    		formatter : function (value, context) {
 				    			var idx = context.dataIndex; 

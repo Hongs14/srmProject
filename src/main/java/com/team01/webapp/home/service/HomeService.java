@@ -77,6 +77,7 @@ public class HomeService implements IHomeService{
 		
 		if(progressDetail == null) {
 			progressDetail = homeRepository.selectRequestSr(srNo);
+			
 		}
 		
 		String sttsNm = progressDetail.getSttsNm();
