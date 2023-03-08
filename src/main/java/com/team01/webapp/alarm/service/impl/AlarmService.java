@@ -2,6 +2,8 @@ package com.team01.webapp.alarm.service.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,9 +40,11 @@ public class AlarmService implements IAlarmService{
 	
 	//알림 추가
 	@Override
-	public void insertAlarm(String srNo) {
+	public void insertAlarm(String srNo, HttpSession session) {
 		log.info("실행");
-		Alarm alarmUser = alarmRepository.selectAlarm(srNo);
+		Alarm alarmUser = new Alarm();
+		alarmUser.setUserType((String)session.getAttribute("userType"));
+		alarmUser = alarmRepository.selectAlarm(srNo);
 		log.info(alarmUser);
 		
 		alarmRepository.insertAlarm(alarmUser);
