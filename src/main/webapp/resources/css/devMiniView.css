@@ -21,7 +21,7 @@
 }
 
  .chartMenu {
-   width: 100vw;
+   width: 10vw;
    height: 40px;
    background: #1A1A1A;
    color: rgba(54, 162, 235, 1);
@@ -31,8 +31,8 @@
    font-size: 20px;
  }
  .chartCard {
-   width: 100vw;
-   height: calc(100vh - 40px);
+   width: 10vw;
+   height: calc(10vh - 40px);
    background: rgba(54, 162, 235, 0.2);
    display: flex;
    align-items: center;
