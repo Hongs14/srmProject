@@ -46,7 +46,7 @@
 					                			<div class="form-group row">
 					                				<label class="col-sm-3 col-form-label-sm" for="sysNo">시스템 구분</label>
 							                    	<select class="form-control form-control-sm col-sm-9" id="sysNo">
-														<option value="0">전체</option>
+														<option value="">전체</option>
 														<c:forEach var="item" items="${progressFilter.sysNmList}">
 															<option value="${item.sysNo}">${item.sysNm}</option>
 														</c:forEach>
@@ -187,11 +187,11 @@
 												}
 												
 												function progressFilterReset(){
-													$("#sysNo").val("0").prop("selected", true);
+													$("#sysNo").val("").prop("selected", true);
 													$("#srTypeNo").val("0").prop("selected", true);
 													$("#srSttsNo").val("0").prop("selected", true);
-													$("#srName").val(" ");
-													$("#srNo").val(" ");
+													$("#srName").val("");
+													$("#srNo").val("");
 												}
 											</script>
 											

@@ -2,6 +2,7 @@ package com.team01.webapp.home.service;
 
 import java.util.List;
 
+import com.team01.webapp.model.DevMini;
 import com.team01.webapp.model.Donut;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.ProgressDetail;
@@ -26,5 +27,7 @@ public interface IHomeService {
 	ProgressDetail selectDetailHome(String srNo);
 
 	List<HR> DeveloperList(String srNo);
+
+	DevMini getDevMini(DevMini devMini);
 
 }

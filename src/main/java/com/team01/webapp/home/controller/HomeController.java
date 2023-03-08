@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.home.service.IHomeService;
 import com.team01.webapp.model.Alarm;
+import com.team01.webapp.model.DevMini;
 import com.team01.webapp.model.Donut;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Notice;
@@ -21,7 +22,6 @@ import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SystemInfo;
 import com.team01.webapp.notice.service.INoticeService;
-import com.team01.webapp.progress.service.IProgressService;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -140,7 +140,7 @@ public class HomeController {
 	@RequestMapping(value = "/managerMiniView", method = RequestMethod.POST)
 	public String getManagerMiniView(@RequestBody SR sr, Model model) {
 		if(sr.getSrNo().equals("초기값")) {
-			return "home/managerMiniView";
+			
 		} else {
 			ProgressDetail progressdetail = homeService.selectDetailHome(sr.getSrNo());
 			model.addAttribute("progressdetail", progressdetail);
@@ -150,10 +150,20 @@ public class HomeController {
 			List<HR> hrList = homeService.DeveloperList(sr.getSrNo());
 			model.addAttribute("hrList", hrList);
 			log.info(hrList);
-			
-			
-			
-			return "home/managerMiniView";
 		}
+		
+		return "home/managerMiniView";
+	}
+	
+	@RequestMapping(value = "/devMiniView", method = RequestMethod.POST)
+	public String getDevMiniView(@RequestBody DevMini devMini, Model model) {
+		if(devMini.getSrNo().equals("초기값")) {
+			
+		} else {
+			devMini = homeService.getDevMini(devMini);
+			model.addAttribute("devMini", devMini);
+		}
+		
+		return "home/devMiniView";
 	}
 }
