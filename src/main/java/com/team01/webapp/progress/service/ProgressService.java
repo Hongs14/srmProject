@@ -415,15 +415,13 @@ public class ProgressService implements IProgressService {
 
 	@Transactional
 	public void changeRequestUpdate(ChangeRequest changeRequest) {
+		if(changeRequest.getChoice() == 1) {
+			List<HR> list = progressRepository.selectHumanResourceList(changeRequest.getSrNo());
+			progressRepository.updateDeveloperEndDate(list.get(0).getUserNo(), changeRequest.getSrNo(), changeRequest.getCrDdlnDate());
+		}
+		
 		progressRepository.updateSr(changeRequest);
-		
-		int choice = 1;
-		
-		progressRepository.updateChangeRequest(changeRequest.getCrNo(), choice);
-		
-		List<HR> list = progressRepository.selectHumanResourceList(changeRequest.getSrNo());
-		
-		progressRepository.updateDeveloperEndDate(list.get(0).getUserNo(), changeRequest.getSrNo(), changeRequest.getCrDdlnDate());
+		progressRepository.updateChangeRequest(changeRequest.getCrNo(), changeRequest.getChoice(), changeRequest.getCrComment());
 	}
 
 }

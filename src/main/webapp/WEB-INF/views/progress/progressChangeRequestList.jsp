@@ -7,9 +7,13 @@
 	<div class="table-responsive">
 		<div id="changeRequestModalView">
 			<div class="input-group-append float-right mb-3">
-				<button class="btn btn-primary btn-sm mr-2" type="button" onclick="changeRequest()">
-					기간 추가 신청
-				</button>
+				<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료' || sttsNm == '계획조정')}">
+					<c:if test="${check}">
+						<button class="btn btn-primary btn-sm mr-2" type="button" onclick="changeRequest()">
+							기간 추가 신청
+						</button>
+					</c:if>
+				</c:if>
 			</div>
 			<table class="table align-items-center table-flush table-hover">
 				<thead class="thead-light">

@@ -120,6 +120,18 @@
 										console.log(data);
 									}
 								});
+								
+								var srNo = '초기값';
+								data = {srNo : srNo}
+								
+								$.ajax({
+									url : "managerMiniView",
+									method : "post",
+									data : JSON.stringify(data),
+									contentType: "application/json; charset=UTF-8"
+								}).done((data) => {
+									$('#managerMiniView').html(data);
+								})
 							});
 							
 							function homeMiniViewChange(sttsNo, pageNo) {
@@ -248,8 +260,10 @@
 
           	</c:if>
           	<c:if test="${sessionScope.loginUser.userType eq '관리자'}">
-          		<div class="col-12 " id="managerMiniView">
-          	 		<%@include file="/WEB-INF/views/home/managerMiniView.jsp" %>
+          		<div class="col-12">
+          			<div id="managerMiniView">
+          			
+          			</div>
                 </div>
           	</c:if>
           </div>

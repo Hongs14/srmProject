@@ -225,5 +225,4 @@ public interface IProgressService {
 	public ChangeRequest getChangeRequestFile(int crNo);
 
 	public void changeRequestUpdate(ChangeRequest changeRequest);
-
 }
