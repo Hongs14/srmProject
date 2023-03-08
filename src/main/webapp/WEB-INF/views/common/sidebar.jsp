@@ -84,16 +84,16 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="${pageContext.request.contextPath}/qna/KOREASOFT_SRM/list">전체 Q&A</a>
             <c:if test="${sessionScope.loginUser.userOgdp eq '북북' or sessionScope.loginUser.userOgdp eq '한국소프트'}">            
-	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/JHJ/list">북북STORE Q&A</a>
+	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/BOK/list">북북STORE Q&A</a>
             </c:if>
             <c:if test="${sessionScope.loginUser.userOgdp eq '사슈즈' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
-	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/KTH/list">사슈즈STORE Q&A</a>
+	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/SAS/list">사슈즈STORE Q&A</a>
             </c:if>
             <c:if test="${sessionScope.loginUser.userOgdp eq '한국대학교LMS' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
-	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/KHR/list">한국대학교LMS Q&A</a>
+	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/KOR/list">한국대학교LMS Q&A</a>
             </c:if>
             <c:if test="${sessionScope.loginUser.userOgdp eq '오티아이' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
-	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/HGH/list">오티아이LMS Q&A</a>
+	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/OTI/list">오티아이LMS Q&A</a>
             </c:if>
           </div>
        </div>

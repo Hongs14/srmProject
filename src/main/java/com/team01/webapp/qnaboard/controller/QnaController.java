@@ -162,6 +162,7 @@ public class QnaController {
 	@PostMapping("{sysNo}/write")
 	public String writeQna(QSTN qstn, QSTNFile qstnFile) {
 		log.info(qstn.getSysNo()+"시스템 Qna작성하기");
+		log.info(qstn);
 		try {
 			qnaboardService.writeQSTN(qstn);
 			
@@ -174,16 +175,16 @@ public class QnaController {
 					qstnFile.setQstnFileActlNm(mf.get(i).getOriginalFilename());
 					//파일의 저장 이름 설정
 					String qstnFilePhysNm = new Date().getTime()+"-"+mf.get(i).getOriginalFilename();
+					log.info(qstnFilePhysNm);
 					qstnFile.setQstnFilePhysNm(qstnFilePhysNm);
 					//파일 타입 설정
 					String str = mf.get(i).getContentType();
-					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!"+str);
-					/*int beginIndex = str.indexOf("/");
+					int beginIndex = str.indexOf("/");
 					int endIndex = str.length();
-					String type = str.substring(beginIndex,endIndex);*/
-					qstnFile.setQstnFileExtnNm(str);
+					String type = str.substring(beginIndex,endIndex);
+					qstnFile.setQstnFileExtnNm(type);
 					qstnFile.setQstnNo(qstn.getQstnNo());		
-					
+					log.info("@@@@@@@@@@@@@@@@@@@@@"+qstnFile);
 					//서버 파일 시스템에 파일로 저장
 					String filePath = "C:/OTI/uploadfiles/qstn"+qstn.getQstnNo()+"/"+qstnFilePhysNm;
 					log.info("######################"+filePath);
@@ -207,7 +208,7 @@ public class QnaController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/qna/list";
+		return "redirect:/qna/"+qstn.getSysNo()+"/view/"+qstn.getQstnNo();
 	}
 	
 	//QNA수정하기

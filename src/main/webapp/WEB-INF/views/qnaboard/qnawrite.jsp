@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-
 	<div class="d-sm-flex align-items-center justify-content-between">
 		<div class="bg-primary px-3 py-2" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
 			<h6 class="mb-0 text-white">
@@ -52,11 +51,11 @@
 			   	</div>
 			   	<div class="row mt-2">
 					<span class="font-weight-bold col-sm-2">파일목록</span>
-					<div class="col-sm-9" id="inputFile">
+					<div class="col-sm-9" id="inputFile" style="border: 1px solid black">
 						<c:if test="${command eq 'update'}"> 
 							<c:forEach var="qstnFile" items="${qstnFile}">
 								<div id="file${requestFile.srFileNo}" class="filebox row">
-					              	<a class="delete col-1" onclick="deleteExistingFile('${requestFile.srFilePhysNm}','${requestFile.srFileNo}')"><i class="far fa-minus-square"></i></a>
+					              	<a class="delete col-1" onclick="deleteExistingFile('${qstnFile.qstnFilePhysNm}','${qstnFile.qstnFileNo}')"><i class="far fa-minus-square"></i></a>
 					                <a href="file?qstnFileNo=${qstnFile.qstnFileNo}">${qstnFile.qstnFileActlNm}</a>
 						        </div>
 		               		</c:forEach>
@@ -64,16 +63,16 @@
 					</div>
 				</div>
 			   	
-			   	<input type="hidden" name="userNo" value="${sessionScope.loginUser.userNo}">
-			   	<input type="hidden" name="userNm" value="${sessionScope.loginUser.userNm}">
-			   	<input type="hidden" name="sysNo" value="${sessionScope.loginUser.sysNo}">
+			   	<input type="hidden" id="userNo" name="userNo" value="${sessionScope.loginUser.userNo}">
+			   	<input type="hidden" id="userNm" name="userNm" value="${sessionScope.loginUser.userNm}">
+			   	<input type="hidden" id="sysNo" name="sysNo" value="${sessionScope.loginUser.sysNo}">
 			   	<!-- 작성완료/닫기 -->
 			   	<div class="row mt-3">
 			    	<div class="col-12">
 			    		<div class="d-sm-flex justify-content-end">
 			    		    <c:if test="${command ne 'update'}"><a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/qna/${sessionScope.loginUser.sysNo}/list">취소</a></c:if>
 					    	<c:if test="${command eq 'update'}"><button type="button" class="btn btn-outline-primary" onclick="getDetail('${qstn.qstnNo}')">취소</button></c:if>
-					      	<c:if test="${command ne 'update'}"><button type="submit" class="btn btn-primary" onclick="qstntWrite()">저장</button></c:if>
+					      	<c:if test="${command ne 'update'}"><button type="submit" class="btn btn-primary" onclick="QSTNWrite()">저장</button></c:if>
 					       	<c:if test="${command eq 'update'}"><button type="submit" class="btn btn-primary" onclick="qstnUpdate()">저장</button></c:if>
 						</div>	                	
 					</div>
@@ -129,11 +128,11 @@
 		        if (!filesArr[i].is_delete) {
 		        	console.log("삭제되지 않은 파일 담기");
 		        	console.log(filesArr[i]);
-		            formData.append("requestMFile", filesArr[i]);
+		            formData.append("qstnMFile", filesArr[i]);
 		        }
 		    }
-		    var sysNm = $('#sysNm').val();
-		    formData.append("sysNm",sysNm);
+		    var sysNo = $('#sysNo').val();
+		    formData.append("sysNo",sysNo);
 		    
 		    var qstnTtl = $('#qstnTtl').val();
 		    formData.append("qstnTtl", qstnTtl);
@@ -143,17 +142,18 @@
 		    
 		    var userNo = $('#userNo').val();
 		    formData.append("userNo", userNo);
+		    console.log(sysNo+" "+qstnTtl+" "+qstnCn+" "+userNo);
 		    
 		    $.ajax({
 				type: "POST",
 				enctype: 'multipart/form-data',	// 필수
-				url: 'write',
+				url: "${pageContext.request.contextPath}/qna/"+sysNo+"/write",
 				data: formData,	// 필수
 				processData: false,	// 필수
 				contentType: false	// 필수
 		    }).done((data) => {
-		    	$('#colNo2').html(data);
-		    	alret("전송완료");
+		    	$('#miniView').html(data);
+		    	console.log("전송완료");
 		    });
 		}
 		
@@ -213,7 +213,7 @@
 				contentType: false	// 필수
 		    }).done((data) => {
 		//    	console.log("update:: "+"srNo"+srNo+"sysNm"+sysNm+"srTtl"+srTtl+"srStd"+srStd+"srCn"+srCn+userNo);
-		    	$('#colNo2').html(data);
+		    	$('#miniView').html(data);
 		    });
 		    
 		}

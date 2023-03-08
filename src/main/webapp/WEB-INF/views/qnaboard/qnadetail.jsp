@@ -10,7 +10,7 @@
   			readComment();
   		});
 
-  		let countCmnt = ${qstn.countCmnt};
+  		let CountCmnt = ${qstn.countCmnt};
   		
   		function readComment(){
   			console.log("aa");
@@ -78,9 +78,9 @@
 				
         		$('#qComment').append(comment); 
         		/* $('#cmntCount').empty(); */
-        		console.log(countCmnt);
-        		$('#cmntCount').html('댓글('+(countCmnt+1)+')');
-        		countCmnt += 1;
+        		console.log(CountCmnt);
+        		$('#cmntCount').html('댓글('+(CountCmnt+1)+')');
+        		CountCmnt += 1;
         		$('#qnaCmntCn').val('');
 				
 			});
@@ -122,8 +122,8 @@
 				data: 'qstnCmntNo='+qstnCmntNo,
 			}).done((data) => {
 				console.log("성공");
-				$('#cmntCount').html('댓글('+(countCmnt-1)+')');
-        		countCmnt -= 1;
+				$('#cmntCount').html('댓글('+(CountCmnt-1)+')');
+        		CountCmnt -= 1;
 				$('#qComment').empty(); 
 				readComment();
 				

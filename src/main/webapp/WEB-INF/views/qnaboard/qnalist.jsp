@@ -166,7 +166,7 @@
 	
 				  var s =
 				    leadingZeros(d.getFullYear(), 4) + '/' +
-				    leadingZeros(d.getMonth() + 1, 2)-3 + '/' +
+				    leadingZeros((d.getMonth() +1)-2, 2) + '/' +
 				    leadingZeros(d.getDate(), 2);
 	
 				  return s;
@@ -244,7 +244,7 @@
 				$("#mainQstnMenu").hide();
 				$("#qstnMenu").show();
 				$("#mainQstn").attr("class","col-lg-7");
-				$("#qnaDetailView").attr("class","col-lg-5");
+				$("#miniView").attr("class","col-lg-5");
 				$(".qstnTtl").css({
 					"width" : "360px",
 					"overflow": "hidden",
