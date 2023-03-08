@@ -32,9 +32,9 @@ public class AlarmService implements IAlarmService{
 	
 	//전체 알림 리스트
 	@Override
-	public List<Alarm> selectAlarmList(int userNo) {
+	public List<Alarm> selectAlarmList(Alarm alarm) {
 		log.info("실행");
-		List<Alarm> alarmList = alarmRepository.selectAlarmList(userNo);
+		List<Alarm> alarmList = alarmRepository.selectAlarmList(alarm);
 		
 		return alarmList;
 	}

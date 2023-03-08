@@ -183,8 +183,9 @@
 		    SR_REG_DATE AS "srRegDate",
 		    SR_DDLN_DATE AS "srDdlnDate",
 		    SR_CN AS "srCn",
-		    SR_PRY "srPry",
-		    SR_BGT "srBgt"
+		    SR_PRY AS "srPry",
+		    SR_BGT AS "srBgt",
+		    SR_DEV_CN AS "srDevCn"
 		FROM SR sr, SR_TYPE type ,SYSTEM system, SR_STTS stts, USERS users
 		WHERE sr.sr_type = type.sr_type_no
 		AND sr.sys_no = system.sys_no

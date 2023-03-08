@@ -198,7 +198,7 @@
         					month: 'short',
         					day:'numeric'
         				});
-        				var Dates = formattedStartDate + ' ㅡ '+ formattedEndDate;
+        				var Dates = formattedStartDate + ' - '+ formattedEndDate;
         				return [ctx[0].label, Dates];
         			}
         		}
