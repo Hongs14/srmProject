@@ -25,7 +25,7 @@
 	                  	</div>
 	                  	
 						<div class="d-flex align-items-center mb-4">
-							<c:if test="${!(progressdetail.sttsNm == '반려' || progressdetail.sttsNm == '재검토')}">
+							<c:if test="${!(progressdetail.sttsNm == '반려' || progressdetail.sttsNm == '재검토' || progressdetail.sttsNm == '개발계획' || progressdetail.sttsNm == '계획조정')}">
 		                  		<c:set var="count" value="0"/>
 		                  		<c:forEach var="list" items="${list}">
 		                  			<c:if test="${list == progressdetail.sttsNm}">
@@ -177,6 +177,45 @@
 		                  			</div>
 	                  			</c:if>
 	                  		</c:if>
+	                  		<c:if test="${(progressdetail.sttsNm == '개발계획' || progressdetail.sttsNm == '계획조정')}">
+								<div class="d-flex flex-column">
+	                  				<div class="circle plan"><i class="fa-sharp fa-regular fa-pen-to-square"></i><p>요청</p></div>
+	                  				<span class="badge badge-secondary dateBadge">요청일자 <br> ${progressdetail.srRegDate}</span>
+	                  			</div>
+	                  			<i class="fa-solid fa-caret-right"></i>
+	                  			<div class="d-flex flex-column">
+	                  				<div class="circle plan"><i class="fa-solid fa-magnifying-glass"></i><p>검토중</p></div>
+	                  				<span class="dateBadge"></span>
+	                  			</div>
+	                  			<i class="fa-solid fa-caret-right"></i>
+	                  			<div class="d-flex flex-column">
+	                  				<div class="circle plan"><i class="fa-solid fa-file-circle-check"></i><p>접수</p></div>
+	                  				<span class="dateBadge"></span>
+	                  			</div>
+	                  			<i class="fa-solid fa-caret-right"></i>
+	                  			<c:if test="${progressdetail.sttsNm == '개발계획'}">
+		                  			<div class="d-flex flex-column">
+		                  				<div class="circle execute current"><i class="fa-regular fa-calendar-check"></i><p>개발계획</p></div>
+		                  				<span class="badge badge-secondary dateBadge">${progressdetail.srStartDate} ~<br>${progressdetail.srEndDate}</span> 
+		                  			</div>
+		                  		</c:if>
+	                  			<c:if test="${progressdetail.sttsNm == '계획조정'}">
+		                  			<div class="d-flex flex-column">
+		                  				<div class="circle execute current"><i class="fa-regular fa-calendar-plus"></i><p>계획조정</p></div>
+		                  				<span class="dateBadge"></span>
+		                  			</div>
+	                  			</c:if>
+	                  			<i class="fa-solid fa-caret-right"></i>
+         				        <div class="d-flex flex-column">
+	                  				<div class="circle evaluate"><i class="fa-solid fa-magnifying-glass-arrow-right"></i><p>완료요청</p></div>
+	                  				<span class="dateBadge"></span>
+	                  			</div>
+	                  			<i class="fa-solid fa-caret-right"></i>
+         				        <div class="d-flex flex-column">
+	                  				<div class="circle evaluate"><i class="fa-solid fa-square-check"></i><p>개발 완료</p></div>
+	                  				<span class="dateBadge"></span>
+	                  			</div>
+	                  		</c:if>
 						</div>
 						 <!-- 특수한 경우 -->
 						<!-- <i class="fa-solid fa-caret-right"></i>
@@ -194,13 +233,13 @@
 						
 			   </div>
 				<div id="devInfo" class="px-3">
-					<c:if test="${!empty hrList}">
-						<div class="devTable p-2">
+					<div class="devTable p-2" style="width:550px">
+						<c:if test="${!empty hrList}">
 							<div class="d-sm-flex justify-content-between align-items-start">
 								<h6 class="card-title card-title-dash">
 									<i class="fa-solid fa-users-gear mx-1"></i>${hrList.get(0).userDpNm}</h6>
 							</div>
-							<div class="table p-2" style="width: 500px;">
+							<div class="table p-2" style="width: 550px;">
 								<table class="table select-table">
 									<thead>
 										<tr>
@@ -237,8 +276,14 @@
 									</tbody>
 								</table>
 							</div>
-						</div>
-					</c:if>
+						</c:if>
+						<c:if test="${empty hrList}">
+							<div class="alert alert-secondary m-3 p-2" role="alert">
+								<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+								아직 개발자가 배정되지 않았습니다.
+							</div>
+						</c:if>
+					</div>
 				</div>
 			</div>
           </div>

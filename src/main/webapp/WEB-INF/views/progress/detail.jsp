@@ -280,6 +280,34 @@ border-top-right-radius: 10px;
 							</div>
 						</div>
 					</div>
+					
+					<!-- 메시지 모달 창 -->
+					<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+						<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+							<div class="modal-content">
+								<div class="modal-header bg-primary">
+									<h5 class="modal-title" id="exampleModalScrollableTitle">
+							          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+							        	<small class="text-white">
+							        		<b>삭제</b>
+							        	</small>
+									</h5>
+									<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body p-5" style="white-space: normal; text-align:center;">
+									<div class="alert alert-secondary m-3 p-2" role="alert">
+										<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+										<div id="Modalmessage"></div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
+								</div>
+							</div>
+						</div>
+					</div>
 
 
 
