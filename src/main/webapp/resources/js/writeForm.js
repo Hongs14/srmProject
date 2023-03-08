@@ -1,5 +1,4 @@
-
- //날짜 선택
+//날짜 선택
  $(document).ready(function () {
 	const today = new Date();
 	
@@ -12,11 +11,15 @@
      });
  });
  
-//오늘 날짜 디폴트로 입력
+//오늘 날짜, 작성양식 디폴트로 입력
 $(document).ready(function() {
 	var todayResult = getTimeStamp();
 	console.log(todayResult);
 	document.getElementById('dateInput').value = todayResult;
+	
+	var srCn = "1. 목적 : \n \n2. 개선 내용 : \n \n3. 고려 사항: ";
+	console.log(srCn);
+	document.getElementById('srCn').value = srCn;
 });
 	
 //오늘 날짜 양식

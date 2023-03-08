@@ -154,12 +154,12 @@
      	 <%@include file="/WEB-INF/views/common/footer.jsp" %>
      	 <script>
      	function optionChange1() {
-            var a = ['티에이치컴퍼니','레드주컴퍼니','에이치알컴퍼니','지에이치컴퍼니'];
-            var b = ['한국소프트SRM'];
+            var a = ['북북','사슈즈','오티아이','한국대학교'];
+            var b = ['한국소프트'];
             
             var a2 = ['전산팀','마케팅팀','기획팀','인사팀','회계팀','총무팀','영업팀','판매팀'];
             var b2 = ['개발1팀','개발2팀','개발3팀'];
-            var c2 = ['관리1팀','관리2팀','관리3팀'];
+            var c2 = ['관리팀'];
             
             var userType = document.querySelector('input[name="userType"]:checked').value;
             var userOgdpOptions;
@@ -189,7 +189,7 @@
           }
      	
     	$(document).ready(function () {
-    		 var a = ['티에이치컴퍼니','레드주컴퍼니','에이치알컴퍼니','지에이치컴퍼니'];
+    		 var a = ['북북','사슈즈','오티아이','한국대학교'];
     		 var a2 = ['전산팀','마케팅팀','기획팀','인사팀','회계팀','총무팀','영업팀','판매팀'];
          	 var userType = '고객사';
     		 var userOgdpOptions = a;

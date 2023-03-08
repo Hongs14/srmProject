@@ -111,9 +111,17 @@ public class RequestService implements IRequestService{
 		log.info("실행"+sr);
 		String srSysNo = sr.getSysNo(); 
 		String sysNo = "%"+srSysNo+"%";
-		int srSeq = Integer.parseInt(requestRepository.selectMaxSrNo(sysNo))+1;
-		String number = String.format("%05d", srSeq);
-		String srNo = srSysNo+"-SR-"+number;
+		String maxSrNo = requestRepository.selectMaxSrNo(sysNo);
+		String srNo = "";
+		String number = "";
+		int srSeq = 0;
+		if(maxSrNo == null) {
+			srNo = srSysNo+"-SR-00001";
+		}else {
+			srSeq = Integer.parseInt(requestRepository.selectMaxSrNo(sysNo))+1;
+			number = String.format("%05d", srSeq);
+			srNo = srSysNo+"-SR-"+number;
+		}
 		sr.setSrNo(srNo);
 		log.info("SR NO: "+srNo);
 		
