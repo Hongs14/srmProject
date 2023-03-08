@@ -151,6 +151,8 @@ public class HomeController {
 			model.addAttribute("hrList", hrList);
 			log.info(hrList);
 			
+			
+			
 			return "home/managerMiniView";
 		}
 	}

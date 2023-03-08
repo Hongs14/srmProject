@@ -160,7 +160,7 @@
 	                  			<i class="fa-solid fa-caret-right"></i>
 	                  			<c:if test="${progressdetail.sttsNm == '반려'}">
 		                  			<div class="d-flex flex-column">
-		                  				<div class="circle evaluate">
+		                  				<div class="circle execute current">
 		                  					<i class="fa-solid fa-file-circle-minus"></i>
 		                  					<p>${progressdetail.sttsNm}</p>
 		                  				</div>
@@ -169,7 +169,7 @@
 	                  			</c:if>
     				            <c:if test="${progressdetail.sttsNm == '재검토'}">
 		                  			<div class="d-flex flex-column">
-		                  				<div class="circle evaluate">
+		                  				<div class="circle execute current">
 		                  					<i class="fa-solid fa-file-circle-exclamation"></i>
 		                  					<p>${progressdetail.sttsNm}</p>
 		                  				</div>
@@ -193,57 +193,53 @@
 				   </div>
 						
 			   </div>
-			   <div id="devInfo" class="px-3">
-			   			
-	   			<div class="devTable p-2">
-                  	<div class="d-sm-flex justify-content-between align-items-start">
-	                    <h6 class="card-title card-title-dash"> <i class="fa-solid fa-users-gear mx-1"></i>${hrList.get(0).userDpNm}</h6>
-	                  </div>
-                  
-                  <div class="table p-2" style="width: 500px;">
-                    <table class="table select-table">
-                      <thead>
-                        <tr>
-                          <th>리더여부</th>
-                          <th>성명</th>
-                          <th>직무</th>
-                          <th>상태</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      	<c:forEach var="list" items="${hrList}">
-                      		<tr>
-                      			<td>
-                      				<c:if test="${list.hrLeader == 'Y'}">
-                      					<span class="badge badge-warning" style="font-size:100%">Leader</span>
-                      				</c:if>
-                      				<c:if test="${list.hrLeader != 'Y'}">
-                      					<span class="badge badge-secondary" style="font-size:100%">Dev</span>
-                      				</c:if>
-                      			</td>
-                      			<td>
-                      				<h6>${list.userNm}</h6>
-                      				<small>
-                      					<fmt:formatDate value="${list.hrStartDate}" pattern="yyyy-MM-dd"/>
-                      						~
-                      					<fmt:formatDate value="${list.hrEndDate}" pattern="yyyy-MM-dd"/>
-                      				</small>
-                      			</td>
-                      			<td>
-                      				<div>
-                      					<p class="badge badge-success" style="font-size:100%;">${list.taskNm}</p>
-                      				</div>
-                      			</td>
-                      			<td>
-                      				<p class="badge" style="font-size:100%;">대기</p>
-                      			</td>
-                      		</tr>
-                      	</c:forEach>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-			   </div>
+				<div id="devInfo" class="px-3">
+					<c:if test="${!empty hrList}">
+						<div class="devTable p-2">
+							<div class="d-sm-flex justify-content-between align-items-start">
+								<h6 class="card-title card-title-dash">
+									<i class="fa-solid fa-users-gear mx-1"></i>${hrList.get(0).userDpNm}</h6>
+							</div>
+							<div class="table p-2" style="width: 500px;">
+								<table class="table select-table">
+									<thead>
+										<tr>
+											<th>리더여부</th>
+											<th>성명</th>
+											<th>직무</th>
+											<th>상태</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="list" items="${hrList}">
+											<tr>
+												<td><c:if test="${list.hrLeader == 'Y'}">
+														<span class="badge badge-warning" style="font-size: 100%">Leader</span>
+													</c:if> <c:if test="${list.hrLeader != 'Y'}">
+														<span class="badge badge-secondary" style="font-size: 100%">Dev</span>
+													</c:if></td>
+												<td>
+													<h6>${list.userNm}</h6> <small> <fmt:formatDate
+															value="${list.hrStartDate}" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate
+															value="${list.hrEndDate}" pattern="yyyy-MM-dd" />
+												</small>
+												</td>
+												<td>
+													<div>
+														<p class="badge badge-success" style="font-size: 100%;">${list.taskNm}</p>
+													</div>
+												</td>
+												<td>
+													<p class="badge" style="font-size: 100%;">대기</p>
+												</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</c:if>
+				</div>
 			</div>
           </div>
         </div>
