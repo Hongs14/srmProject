@@ -464,7 +464,7 @@
 						success : function(data) {
 							$("#subExamineDetailView").html(data);
 						}
-					});
+					}); 	
 					
 				}
 			</script>

@@ -17,116 +17,90 @@
 <div class="card mb-4">
 	<div>
 		<div class="mb-1 mt-5 px-5" style="max-width:1050px">
- 			<form method="post" action="detail">
-	 			<div class="my-2">
-		  			<span class="text-primary font-weight-bold">SR No.</span> 
-		  			<span>${examine.srNo}</span>
-		  			<input type="hidden" id="srNo" name="srNo" value="${examine.srNo}">
-	 			</div>
-	   			<hr>
-	                			
-	       		<div class="row mb-2 mr-0" >
-					<div class="col-sm-2">
-						<span class="font-weight-bold">등록자: </span> 
-					</div>
-					<div class="col-sm-4">
-						<span>${examine.userNm}</span> 
-					</div>
-					<div class="col-sm-2">
-						<span class="font-weight-bold">소속: </span> 
-					</div>
-					<div class="col-sm-4">
-						<span>${examine.userOgdp}</span> 
-					</div>
+
+ 			<div class="my-2">
+	  			<span class="text-primary font-weight-bold">SR No.</span> 
+	  			<span>${examine.srNo}</span>
+	  			<input type="hidden" id="srNo" name="srNo" value="${examine.srNo}">
+ 			</div>
+   			<hr>
+                			
+       		<div class="row mb-2 mr-0" >
+				<div class="col-sm-2">
+					<span class="font-weight-bold">등록자: </span> 
 				</div>
-				
+				<div class="col-sm-4">
+					<span>${examine.userNm}</span> 
+				</div>
+				<div class="col-sm-2">
+					<span class="font-weight-bold">소속: </span> 
+				</div>
+				<div class="col-sm-4">
+					<span>${examine.userOgdp}</span> 
+				</div>
+			</div>
+			
+			<div class="row mb-2 mr-0">
+				<div class="col-sm-2">
+					<span class=" font-weight-bold">등록일: </span> 
+				</div>
+				<div class="col-sm-4">
+					<span>${examine.srRegDate}</span> 
+				</div>
+				<div class="col-sm-2">
+					<span class=" font-weight-bold">관련시스템: </span> 
+				</div>
+				<div class="col-sm-4">
+					<span>${examine.sysNm}</span> 
+				</div>
+			</div>
+			<c:if test="${sessionScope.loginUser.userOgdp eq examine.userOgdp}">
+				<hr/>
 				<div class="row mb-2 mr-0">
 					<div class="col-sm-2">
-						<span class=" font-weight-bold">등록일: </span> 
-					</div>
-					<div class="col-sm-4">
-						<span>${examine.srRegDate}</span> 
-					</div>
-					<div class="col-sm-2">
-						<span class=" font-weight-bold">관련시스템: </span> 
-					</div>
-					<div class="col-sm-4">
-						<span>${examine.sysNm}</span> 
+						<span><b>SR 검토</b></span>
 					</div>
 				</div>
-				<c:if test="${sessionScope.loginUser.userOgdp eq examine.userOgdp}">
-					<hr/>
-					<div class="row mb-2 mr-0">
-						<div class="col-sm-2">
-							<span><b>SR 검토</b></span>
-						</div>
+				<hr>
+				<div class="row mb-2 mr-0">
+					<div class="col-6">
+			   			<span>요청구분</span>
+			   			<select class="form-control" id="srReqSe" name="srReqSe">
+			   				<option>개발(신규)</option>
+			   				<option>개발(개선)</option>
+			   			</select>
 					</div>
-					<hr>
-					<div class="row mb-2 mr-0">
-						<div class="col-6">
-				   			<span>요청구분</span>
-				   			<select class="form-control" id="srReqSe" name="srReqSe">
-				   				<option>개발(신규)</option>
-				   				<option>개발(개선)</option>
-				   			</select>
-						</div>
-						<div class="col-6">
-							<span>중요 여부</span>
-							<select class="form-control" id="srPry" name="srPry">
-			   					<option>상</option>
-				   				<option>중</option>
-				   				<option>하</option>
-				   			</select>
-						</div>
+					<div class="col-6">
+						<span>중요 여부</span>
+						<select class="form-control" id="srPry" name="srPry">
+		   					<option>상</option>
+			   				<option>중</option>
+			   				<option>하</option>
+			   			</select>
 					</div>
-		   			<div class="row mb-2 mr-0">
-		   				<div class="col-12">
-					   		<span>검토 상태</span>
-					   		<select class="form-control" id="sttsNm" name="sttsNm">
-					   			<option>검토중</option>
-					   			<option>반려</option>
-					   			<option>재검토</option>
-					   			<option>접수</option>
-					   		</select>
-		   				</div>
-		   			</div>
-		   			<div class="row mb-2 mr-0">
-		   				<div class="col-12">
-					   		<span>검토 의견</span>
-					   		<textarea class="form-control" rows="3" id="srOpnn" name="srOpnn">${examine.srOpnn}</textarea>
-		   				</div>
-		   			</div>
-					<!-- 하단 버튼들 -->				
-					<div id="buttons" class="m-3 text-right">
-						<button type="submit" class="btn btn-primary" id="alarmBtn">저장</button>
-					</div>
-				</c:if>
-			</form>
-   			<script>
-	   			$('#alarmBtn').click(function(e){
-	   			    let type = '70';
-	   			    let target = "${examine.srNo}";
-	   			    let content = "SR 요청건이 처리 되었습니다.";
-	   			    let url = '${pageContext.request.contextPath}/alarm/updateAlarmCheck';
-	   			    // 전송한 정보를 db에 저장	
-	   			    $.ajax({
-	   			        type: 'post',
-	   			        url: '${pageContext.request.contextPath}/alarm/updateAlarmCheck',
-	   			        dataType: 'text',
-	   			        data: {
-	   			            target: target,
-	   			            content: content,
-	   			            type: type,
-	   			            url: url
-	   			        },
-	   			        success: function(){    // db전송 성공시 실시간 알림 전송
-	   			            // 소켓에 전달되는 메시지
-	   			            // 위에 기술한 EchoHandler에서 ,(comma)를 이용하여 분리시킨다.
-	   			            socket.send("관리자,"+target+","+content+","+url);	
-	   			        }
-	   			    });
-	   			});
-   			</script>
+				</div>
+	   			<div class="row mb-2 mr-0">
+	   				<div class="col-12">
+				   		<span>검토 상태</span>
+				   		<select class="form-control" id="sttsNm" name="sttsNm">
+				   			<option>검토중</option>
+				   			<option>반려</option>
+				   			<option>재검토</option>
+				   			<option>접수</option>
+				   		</select>
+	   				</div>
+	   			</div>
+	   			<div class="row mb-2 mr-0">
+	   				<div class="col-12">
+				   		<span>검토 의견</span>
+				   		<textarea class="form-control" rows="3" id="srOpnn" name="srOpnn">${examine.srOpnn}</textarea>
+	   				</div>
+	   			</div>
+				<!-- 하단 버튼들 -->				
+				<div id="buttons" class="m-3 text-right">
+					<button class="btn btn-primary" data-toggle="modal" data-target="#examineBtn" id="#modalScroll" onclick="alarmBtn()">저장</button>
+				</div>
+			</c:if>
    			<hr>
 			<div class="row mb-4">
 				<div class="col-sm-2">
@@ -168,3 +142,60 @@
 		</div> 
 	</div>
 </div>
+<div class="modal fade" id="examineBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+	<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+				<h5 class="modal-title" id="exampleModalScrollableTitle">
+		          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+		        	<small class="text-white">
+		        		<b>SR 검토 관리</b>
+		        	</small>
+				</h5>
+				<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body p-5" style="white-space: normal;">
+				<div class="alert alert-secondary m-3 p-2" role="alert">
+					<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+					<div id="message"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	function alarmBtn() {
+		
+		var srNo = document.getElementById("srNo").value;
+		var srOpnn = document.getElementById("srOpnn").value;
+		
+		var srReqSeSelect = document.getElementById("srReqSe");
+		var srPrySelect = document.getElementById("srPry");
+		var sttsNmSelect = document.getElementById("sttsNm");
+		
+		var srReqSe = srReqSeSelect.options[document.getElementById("srReqSe").selectedIndex].text;
+		var srPry = srPrySelect.options[document.getElementById("srPry").selectedIndex].text;
+		var sttsNm = sttsNmSelect.options[document.getElementById("sttsNm").selectedIndex].text;
+
+		let data = {srNo : srNo, srReqSe : srReqSe, srPry : srPry, sttsNm : sttsNm, srOpnn : srOpnn}
+		console.log(data);
+		
+		$.ajax({
+			url : "detail",
+			method : "post",
+			data : JSON.stringify(data),
+			contentType : "application/json; charset=UTF-8"
+		}).done((data) => {
+			$("#message").text("저장 되었습니다.");
+			setTimeout(function() {
+				window.location.href ='/webapp/examine/list';
+			}, 2000);
+		})
+		
+	}
+</script>

@@ -5,6 +5,10 @@
 <html lang="ko">
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
+	<script src="${pageContext.request.contextPath}/resources/tinymce2/tinymce.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/tinymce2/theme.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/tinymce2/tinymceinit.js"></script>
+	
 	<style>
 	
 	.col-lg-7 .requsetTtl{
@@ -149,8 +153,8 @@
 		                    	</select>
 		                	</div>
                 		</div>
-                		<div class="col-1">
-                			
+                		<div class="col-1 text-left px-1">
+							<button class="btn btn-outline-warning btn-sm" type="button" onclick="requestFilterReset()" >초기화 </button>
                 		</div>
                 		
                 	</div>
@@ -186,10 +190,8 @@
 		                   		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
 		                  	</div>
                 		</div>
-                		<div class="col-1">
-                			<div class="input-group-append float-right">
-								<button class="btn btn-primary btn-sm" type="button" onclick="requestList(1)" > 조회 <i class="fas fa-search fa-sm"></i></button>
-							</div>
+                		<div class="col-1 text-left px-1">
+							<button class="btn btn-primary btn-sm" type="button" onclick="requestList(1)" > 조회 <i class="fas fa-search fa-sm"></i></button>
                 		</div>
                 	</div>
                 </form>
@@ -250,7 +252,12 @@
 			<script>
 				
 				//오늘 날짜 디폴트로 입력
-				$(document).ready(function() {
+				$(document).ready(function(){
+					getFilterDate();		
+				}
+				);
+				
+				function getFilterDate(){
 					var todayResult = getTimeStamp();
 					console.log(todayResult);
 					document.getElementById('dateEnd').value = todayResult;
@@ -258,8 +265,7 @@
 					var dateStart =getLastYearTimeStamp();
 					console.log(dateStart);
 					document.getElementById('dateStart').value = dateStart;
-				});
-					
+				}
 				//오늘 날짜 양식
 				function getTimeStamp() {
 				  var d = new Date();
@@ -498,7 +504,14 @@
 					document.body.appendChild(form);
 					form.submit();
 				}
-				
+				function requestFilterReset(){
+					getFilterDate();
+					$("#sysNo").val("전체").prop("selected", true);
+					$("#userOgdp").val("전체").prop("selected", true);
+					$("#sttsNo").val("전체").prop("selected", true);
+					$("#sttsNo").val("전체").prop("selected", true);
+					$("#srDevDp").val("전체").prop("selected", true);
+				}
 				
 			</script>
           
