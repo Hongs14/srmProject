@@ -96,8 +96,8 @@ public class RequestController {
 	public String getDetailList(@PathVariable String srNo, HttpSession session, RequestFilter requestFilter, Model model) {
 		log.info("실행");
 		requestFilter = requestService.getFilterList(requestFilter);
+		alarmInfo.info(session, model); 
 		model.addAttribute("requestfilter", requestFilter);
-		
 		model.addAttribute("srNo", srNo);
 		model.addAttribute("command", "detail");
 		return "request/list";
