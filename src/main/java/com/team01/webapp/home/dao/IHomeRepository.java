@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.team01.webapp.model.Donut;
+import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SystemInfo;
 
@@ -22,5 +23,7 @@ public interface IHomeRepository {
 	List<SR> selectHomeList(SR sr);
 
 	List<Donut> selectDonutListDeveloper(int userNo);
+
+	ProgressDetail selectRequestSr(String srNo);
 
 }

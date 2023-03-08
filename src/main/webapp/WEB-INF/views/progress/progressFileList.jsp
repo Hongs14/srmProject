@@ -75,7 +75,7 @@
 		
 		var progressFile = new Array();
 		var checkbox = $("input[name=progressFileCheckBox]:checked");
-		
+		var count = 0;
 		// 체크된 박스의 값을 가져옴
 		checkbox.each(function(i) {
 			var tr = checkbox.parent().parent().eq(i);
@@ -87,19 +87,29 @@
 			let data = {progFilePhysNm : progFilePhysNm, progFileNo : progFileNo};
 			
 			progressFile.push(data);
+			count = 1;
 		});
 		
-		data = {srNo : srNo, progressFile : progressFile};
-		
-		console.log(data);
-		
-		$.ajax({
-			url : "progressFileRemove/",
-			method : "post",
-			data : JSON.stringify(data),
-			contentType: "application/json; charset=UTF-8"
-		}).done((data) => {
-			window.location.href = srNo;
-		});
+		if(count == 0) {
+			$('#messageModal').modal('show');
+	    	$("#Modalmessage").text("삭제할 파일을 선택해 주세요.");
+		} else {
+			data = {srNo : srNo, progressFile : progressFile};
+			
+			console.log(data);
+			
+			$.ajax({
+				url : "progressFileRemove/",
+				method : "post",
+				data : JSON.stringify(data),
+				contentType: "application/json; charset=UTF-8"
+			}).done((data) => {
+				$('#messageModal').modal('show');
+	    		$("#Modalmessage").text("선택하신 파일이 삭제되었습니다.");
+	    		setTimeout(function() {
+					window.location.href = srNo;
+				}, 2000);
+			});
+		}
 	}
 </script>

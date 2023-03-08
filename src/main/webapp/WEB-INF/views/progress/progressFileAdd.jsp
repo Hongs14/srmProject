@@ -101,24 +101,34 @@
 		        }
 		    }
 		    
-		    formData.append("srNo", "${srNo}");
+		    if(formData.get("progressattach") == null) {
+		    	$('#progressFileModal').modal('hide');
+		    	$('#messageModal').modal('show');
+		    	$("#Modalmessage").text("파일을 선택해 주세요");
+		    } else {
+		    	formData.append("srNo", "${srNo}");
 		    
-		    var progressTypeNoSelect = document.getElementById("progressType");
-		    var progressTypeNo = progressTypeNoSelect.options[document.getElementById("progressType").selectedIndex].value;
-		    
-		    formData.append("progTypeNo", progressTypeNo);
-		    
-		    $.ajax({
-				type: "POST",
-				enctype: 'multipart/form-data',	// 필수
-				url: 'progressFile/add',
-				data: formData,		// 필수
-				processData: false,	// 필수
-				contentType: false	// 필수
-		    }).done((data) => {
-		    	window.location.href = "${progress.srNo}";
-		    });
-		    
+			    var progressTypeNoSelect = document.getElementById("progressType");
+			    var progressTypeNo = progressTypeNoSelect.options[document.getElementById("progressType").selectedIndex].value;
+			    var progressTypeNm = progressTypeNoSelect.options[document.getElementById("progressType").selectedIndex].text;
+			    formData.append("progTypeNo", progressTypeNo);
+			    
+			    $.ajax({
+					type: "POST",
+					enctype: 'multipart/form-data',	// 필수
+					url: 'progressFile/add',
+					data: formData,		// 필수
+					processData: false,	// 필수
+					contentType: false	// 필수
+			    }).done((data) => {
+			    	$('#progressFileModal').modal('hide');
+   			    	$('#messageModal').modal('show');
+		    		$("#Modalmessage").text(progressTypeNm + "에 파일이 추가 되었습니다.");
+		    		setTimeout(function() {
+			    		window.location.href = "${progress.srNo}";
+			    	}, 2000);
+			    });
+		    }
 		}
 	</script>
 	

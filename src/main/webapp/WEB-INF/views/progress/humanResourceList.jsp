@@ -25,7 +25,7 @@
 				<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#HumanResourceUpdate" id="#modalScroll" onclick="developerUpdate()">
 					변경
 				</button>
-				<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#HumanResourceDelete" id="#modalScroll" onclick="developerDelete()">
+				<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#messageModal" id="#modalScroll" onclick="developerDelete()">
 					삭제
 				</button>
 			</c:if>
@@ -92,35 +92,6 @@
 			</div>
 		</div>
 	</div>
-	
-	<!-- 삭제 모달 창 -->
-	<div class="modal fade" id="HumanResourceDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
-			<div class="modal-content">
-				<div class="modal-header bg-primary">
-					<h5 class="modal-title" id="exampleModalScrollableTitle">
-			          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
-			        	<small class="text-white">
-			        		<b>삭제</b>
-			        	</small>
-					</h5>
-					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body p-5" style="white-space: normal;">
-					<div class="alert alert-secondary m-3 p-2" role="alert">
-						<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
-						<div id="message"></div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	
 	<!-- 추가 모달 창 -->
 	<div class="modal fade" id="HumanResourceAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
@@ -220,12 +191,12 @@
 				</div>
 				<div class="modal-footer">
 					<c:if test="${!empty developerList}">
-						<button type="button" class="btn btn-primary" id="selectDeveloper">등록</button>
+						<button type="button" class="btn btn-primary" onclick="selectDeveloper()" data-toggle="modal" data-target="#messageModal" id="#modalScroll">등록</button>
 					</c:if>
 					<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
 					<script>
-						$("#selectDeveloper").click(function(){
-							
+						function selectDeveloper() {
+							var count = 0;
 							var thArr = new Array();
 							var checkbox = $("input[name=developerCheckBox]:checked");
 							
@@ -244,19 +215,33 @@
 								let data = {srNo : srNo, userNo : userNo, taskNo : taskNo, hrStartDate : hrStartDate, hrEndDate : hrEndDate}
 								
 								thArr.push(data);
+								count = 1;
 							});
 							
-							data = {thArr : thArr};
-							
-							$.ajax({
-								url : "developerinsert/" + "${srNo}",
-								method : "post",
-								data : JSON.stringify(data),
-								contentType: "application/json; charset=UTF-8"
-							}).done((data) => {
-								window.location.href ='${srNo}';
-							});
-						});
+							if(count == 1) {
+								data = {thArr : thArr};
+								
+								$.ajax({
+									url : "developerinsert/" + "${srNo}",
+									method : "post",
+									data : JSON.stringify(data),
+									contentType: "application/json; charset=UTF-8"
+								}).done((data) => {
+									$('#HumanResourceAdd').modal('hide');
+									$("#Modalmessage").text("개발자가 추가 되었습니다.");
+									setTimeout(function() {
+										window.location.href ='${srNo}';
+									}, 2000);
+								});
+							} else {
+								$('#HumanResourceAdd').modal('hide');
+								$("#Modalmessage").text("개발자를 선택해 주세요.");
+								setTimeout(function() {
+									$('#messageModal').modal('hide');
+									$('#HumanResourceAdd').modal('show');
+								}, 2000);
+							}
+						};
 						
 						function developerUpdate() {
 							const customRadioNodeList = document.getElementsByName('customRadio');
@@ -306,7 +291,7 @@
 							});
 							
 							if(userNo == null) {
-								$("#message").text("삭제할 인력을 선택해 주세요.");
+								$("#Modalmessage").text("삭제할 인력을 선택해 주세요.");
 							} else {
 								var start = document.getElementById("startDate+"+userNo).innerText;
 								var end = document.getElementById("endDate+"+userNo).innerText;
@@ -317,10 +302,10 @@
 								var today = new Date();
 								
 								if(leader == 'Y') {
-									$("#message").text("리더라서 삭제할수 없습니다.");
+									$("#Modalmessage").text("리더라서 삭제할수 없습니다.");
 								} else {
 									if(startDate <= today) {
-										$("#message").text("이미 일을 시작했기 때문에 삭제할 수 없습니다.");
+										$("#Modalmessage").text("이미 일을 시작했기 때문에 삭제할 수 없습니다.");
 									} else {
 										var srNo = '${srNo}';
 										let data = {srNo : srNo, userNo : userNo};
@@ -331,7 +316,7 @@
 											data : JSON.stringify(data),
 											contentType : "application/json; charset=UTF-8"
 										}).done((data) => {
-											$("#message").text("삭제 되었습니다.");
+											$("#Modalmessage").text("삭제 되었습니다.");
 											setTimeout(function() {
 												window.location.href ='${srNo}';
 											}, 2000);

@@ -166,6 +166,7 @@
 					</div>
 				</div>
 				<div class="modal-footer" id="footer">
+					<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>
 				</div>
 			</div>
 		</div>
@@ -250,7 +251,11 @@
 			data : JSON.stringify(data),
 			contentType : "application/json; charset=UTF-8"
 		}).done((data) => {
-			window.location.href = "${progress.srNo}";
+			$('#messageModal').modal('show');
+	    	$("#Modalmessage").text("진척율이 저장 되었습니다.");
+	    	setTimeout(function() {
+	    		window.location.href = "${progress.srNo}";
+    		}, 2000);
 		});
 	}
 	

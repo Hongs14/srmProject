@@ -149,7 +149,12 @@
 				processData: false,	// 필수
 				contentType: false	// 필수
 		    }).done((data) => {
-		    	window.location.href = "${progress.srNo}";
+		    	$('#progressRateModal').modal('hide');
+		    	$('#messageModal').modal('show');
+		    	$("#Modalmessage").text("${progress.progTypeNm}(이)가 변경 되었습니다.");
+		    	setTimeout(function() {
+		    		window.location.href = "${progress.srNo}";
+		    	}, 2000);
 		    });
 		    
 		}

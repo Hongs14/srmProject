@@ -75,6 +75,10 @@ public class HomeService implements IHomeService{
 	public ProgressDetail selectDetailHome(String srNo) {
 		ProgressDetail progressDetail = progressRepository.selectProgressRequester(srNo);
 		
+		if(progressDetail == null) {
+			progressDetail = homeRepository.selectRequestSr(srNo);
+		}
+		
 		String sttsNm = progressDetail.getSttsNm();
 		
 		if(sttsNm.equals("요청") || sttsNm.equals("검토중") || sttsNm.equals("접수") || sttsNm.equals("반려") || sttsNm.equals("재검토")) {

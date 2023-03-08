@@ -86,7 +86,12 @@
 					data : JSON.stringify(data),
 					contentType : "application/json; charset=UTF-8"
 				}).done((data) => {
-					window.location.href = "${developer.srNo}";
+					$('#HumanResourceUpdate').modal('hide');
+					$('#messageModal').modal('show');
+					$("#Modalmessage").text("날짜가 수정 되었습니다.");
+					setTimeout(function() {
+						window.location.href = "${developer.srNo}";
+					}, 2000);
 				});
 			});
 		</script>
