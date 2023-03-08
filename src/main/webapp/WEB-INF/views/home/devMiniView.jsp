@@ -19,20 +19,22 @@
                 	
                 	<div class="progFile m-1">
 	                	<div style="background-color: rgba(255, 206, 86, 0.5); width: 300px; padding:10px; border-radius:5px;">
-	                		<h6><i class="fa-solid fa-users-gear mx-1"></i>산출물</h6>
-	                		<div class="d-flex justify-content-around">
-		                		<h4>총 3건</h4>
-								<a class=" btn btn-sm btn-primary">산출물</a>
+	                		<h6><i class="fa-regular fa-folder-open mx-1"></i>산출물</h6>
+	                		<div class="d-flex justify-content-between align-items-center">
+	                			<i class="fa-solid fa-angle-right fa-lg ml-3"></i>
+		                		<h4 class="p-0 m-0">총 <span style="color:#a80000;">3</span> 건</h4>
+								<a class=" btn btn-sm btn-primary"><i class="fa-solid fa-link mx-1"></i>산출물</a>
 	                		</div>
 	                	</div>
                 	</div>
                 </div>
                 	
 	               	<div class="chartBox d-flex">
+	               		<div style="width:600px">
 					     <canvas id="myChart"></canvas>
-					     
+					     </div>
 					     <div id="progFile">
-					     	<div class="d-sm-flex flex-column" style="background-color:#EAECF4; border-radius:5px;">
+					     	<div class="d-sm-flex flex-column mt-3" style="background-color:#EAECF4; border-radius:5px;">
 						     	<div class="d-flex p-1 align-items-center">
 							  		<span class="progIcon"><i class="fa-solid fa-user-tie m-1"></i></span> <small class="m-1">한국대학교스마트LMS ${progressdetail.sysNm}</small>
 						     	</div>
@@ -165,7 +167,35 @@
         plugins: {
         	legend:{
         		display:false
+        	},
+        	label:{
+        		display:false
+        	},
+        	tooltip: {
+        		displayColor: false, //컬러박스 지움
+        		callbacks:{
+        			label: (ctx)=>{
+        				return ''
+        			},
+        			title: (ctx)=>{
+        				var startDate = new Date(ctx[0].raw[0])
+        				var endDate = new Date(ctx[0].raw[1])
+        				var formattedStartDate = startDate.toLocaleString([],{
+        					year:'numeric',
+        					month: 'short',
+        					day:'numeric',
+        				});
+        				var formattedEndDate = endDate.toLocaleString([],{
+        					year:'numeric',
+        					month: 'short',
+        					day:'numeric',
+        				});
+        				var Dates = formattedStartDate + ' ㅡ '+ formattedEndDate;
+        				return [ctx[0].label, Dates];
+        			}
+        		}
         	}
+        	
         }
       }
     };
