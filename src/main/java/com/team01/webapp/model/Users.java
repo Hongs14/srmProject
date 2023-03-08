@@ -10,6 +10,7 @@ public class Users {
 	private int userNo;
 	private String userId;
 	private String userPswd;
+	private String checkPswd;
 	private String userJbps;
 	private String userNm;
 	private String userType;

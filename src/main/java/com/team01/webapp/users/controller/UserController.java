@@ -5,6 +5,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.users.service.IUserService;
 import com.team01.webapp.users.service.UserService;
+import com.team01.webapp.util.UserValidator;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -22,6 +25,14 @@ public class UserController {
 	
 	@Autowired
 	IUserService userService;
+	
+	@Autowired
+	private UserValidator userValidator;
+	
+	@InitBinder
+	private void InitBinder(WebDataBinder binder) {
+		binder.setValidator(userValidator);
+	}
 	
 	/**
 	 * 로그인 메서드
@@ -108,7 +119,6 @@ public class UserController {
 	@RequestMapping(value="/user/join", method = RequestMethod.POST)
 	public String join(Users user, Model model, RedirectAttributes redirectAttributes) {
 		log.info(user.getUserPswd()+"실행");
-		
 		int result = userService.join(user);
 		if(result == UserService.JOIN_SUCCESS) {
 			redirectAttributes.addFlashAttribute("result", "success");
