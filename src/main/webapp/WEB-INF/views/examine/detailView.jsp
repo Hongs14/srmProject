@@ -54,7 +54,7 @@
 					<span>${examine.sysNm}</span> 
 				</div>
 			</div>
-			<c:if test="${sessionScope.loginUser.userOgdp eq examine.userOgdp}">
+			<c:if test="${loginUser.sysNm eq examine.sysNm}">
 				<hr/>
 				<div class="row mb-2 mr-0">
 					<div class="col-sm-2">
@@ -184,6 +184,8 @@
 
 		let data = {srNo : srNo, srReqSe : srReqSe, srPry : srPry, sttsNm : sttsNm, srOpnn : srOpnn}
 		console.log(data);
+		
+		onMessage()
 		
 		$.ajax({
 			url : "detail",

@@ -250,4 +250,14 @@
 		WHERE SR_NO = #{srNo}
 	</update>
 	
+	<!-- 로그인한 유저 정보 가져오기 -->
+	<select id="selectLoginUser" parameterType="int" resultType="users">
+		SELECT 
+		    SYS_NM AS "sysNm",
+    		sys.SYS_NO AS "sysNo"
+		FROM USERS u, SYSTEM sys
+		WHERE u.USER_NO = sys.MANAGER_NO
+		AND u.USER_NO = #{userNo}
+	</select>
+	
 </mapper>

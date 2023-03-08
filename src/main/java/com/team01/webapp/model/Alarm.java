@@ -23,6 +23,7 @@ public class Alarm {
 	private String userNm;
 	private String userOgdp;
 	private String userDpNm;
+	private String userType;
 	
 	//SR Stauts
 	private String sttsNm;

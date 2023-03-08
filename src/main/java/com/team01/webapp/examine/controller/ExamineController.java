@@ -27,8 +27,8 @@ import com.team01.webapp.examine.service.IExamineService;
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.ExamineList;
-import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.model.SrFile;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -58,8 +58,13 @@ public class ExamineController {
 		log.info("실행");
 		
 		examineFilter = examineService.filterList(examineFilter);
-		//알림 수
+		
 		int userNo = (Integer) session.getAttribute("userNo");
+		
+		//로그인 유저 정보 가져오기
+		Users loginUser = examineService.selectLoginUser(userNo);
+		model.addAttribute("loginUser",loginUser);
+		//알림 수
 		log.info("유저No : "+userNo);
 		int alarmCnt = alarmService.selectAlarmCount(userNo);
 		model.addAttribute("alarmCnt",alarmCnt);
@@ -102,7 +107,12 @@ public class ExamineController {
 	@GetMapping(value="/detail/{srNo}")
 	public String getExamineDetail(@PathVariable String srNo, HttpSession session, Model model) {
 		log.info("실행");
-
+		
+		//로그인 유저 정보 가져오기
+		int userNo = (Integer) session.getAttribute("userNo");
+		Users loginUser = examineService.selectLoginUser(userNo);
+		model.addAttribute("loginUser",loginUser);
+		
 		Examine examine = examineService.getExamine(srNo);
 		List<MultipartFile> examineFileList = examineService.selectExamineFileList(srNo);
 		model.addAttribute("examine",examine);
@@ -119,7 +129,7 @@ public class ExamineController {
 	 * @return
 	 */
 	@PostMapping(value="/detail", produces="application/json; charset=UTF-8")
-	public String updateExamine(@RequestBody Examine examine) {
+	public String updateExamine(@RequestBody Examine examine,HttpSession session) {
 		log.info("실행");
 		log.info(examine);
 		
@@ -127,7 +137,7 @@ public class ExamineController {
 		
 		String srNo = examine.getSrNo();
 		
-		alarmService.insertAlarm(srNo);
+		alarmService.insertAlarm(srNo,session);
 		
 		return "redirect:/examine/detail/"+srNo;
 	}

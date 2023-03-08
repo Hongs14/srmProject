@@ -2,6 +2,8 @@ package com.team01.webapp.alarm.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.team01.webapp.model.Alarm;
 
 public interface IAlarmService {
@@ -13,7 +15,7 @@ public interface IAlarmService {
 	public List<Alarm> selectAlarmList(int userNo);
 	
 	//알림 추가
-	public void insertAlarm(String srNo);
+	public void insertAlarm(String srNo, HttpSession session);
 	
 	//알림 체크
 	public void updateCheck(String srNo);

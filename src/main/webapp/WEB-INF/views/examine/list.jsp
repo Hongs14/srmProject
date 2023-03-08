@@ -90,7 +90,7 @@
 		                				</div>
 		                				<div class="col-1">
 		                					<div class="input-group-append float-right">
-												<button class="btn btn-outline-warning btn-sm" type="button" onclick="examineListReset(1)" >초기화 </button>
+												<button class="btn btn-outline-warning btn-sm" type="button" onclick="examineListReset()" >초기화 </button>
 											</div>
 		                				</div>
 		                			</div>
@@ -132,12 +132,12 @@
 		                				<script>
 			                				$(document).ready(function () {
 												console.log("시작");
-												var sysNo = "${sessionScope.loginUser.sysNo}";
+												var sysNo = "${loginUser.sysNo}";
 												
 												if ( $('#mySrWork').prop('checked') ) {
 													
-													sysNo = "${sessionScope.loginUser.sysNo}";
-													
+													sysNo = "${loginUser.sysNo}";
+													console.log("sysNo");
 												}else{
 													sysNo="";
 												}
@@ -151,8 +151,23 @@
 												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 												var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
 
-												var srRegStartDate = document.getElementById("dateStart").value;
-												var srRegEndDate = document.getElementById("dateEnd").value;
+												let today = new Date();   
+												
+											  	let year = today.getFullYear(); // 년도
+											  	let month = today.getMonth() + 1;  // 월
+											  	let date = today.getDate();  // 날짜
+											  	
+											  	var defaltStartDate = ((year-1) + '/' + month + '/' + date);
+											  	var defaltEndDate = (year + '/' + month + '/' + date);
+											  	
+											  	console.log(defaltStartDate);
+											  	console.log(defaltEndDate);
+											  	
+											  	document.getElementById("dateStart").value = defaltStartDate;
+											  	document.getElementById("dateEnd").value = defaltEndDate;
+											  	
+											  	var srRegStartDate = document.getElementById("dateStart").value;
+											  	var srRegEndDate = document.getElementById("dateEnd").value;
 												
 												var srTtl = document.getElementById("keyword").value;
 												
@@ -186,12 +201,12 @@
 											function examineList(pageNo) {
 												console.log(pageNo);
 
-												var sysNo = "${sessionScope.loginUser.sysNo}";
+												var sysNo = "${loginUser.sysNo}";
 												
 												if ( $('#mySrWork').prop('checked') ) {
 													
-													sysNo = "${sessionScope.loginUser.sysNo}";
-													
+													sysNo = "${loginUser.sysNo}";
+													console.log("sysNo");
 												}else{
 													sysNo="";
 												}
@@ -206,8 +221,23 @@
 												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 												var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
 
-												var srRegStartDate = document.getElementById("dateStart").value;
-												var srRegEndDate = document.getElementById("dateEnd").value;
+												let today = new Date();   
+												
+											  	let year = today.getFullYear(); // 년도
+											  	let month = today.getMonth() + 1;  // 월
+											  	let date = today.getDate();  // 날짜
+											  	
+											  	var defaltStartDate = ((year-1) + '/' + month + '/' + date);
+											  	var defaltEndDate = (year + '/' + month + '/' + date);
+											  	
+											  	console.log(defaltStartDate);
+											  	console.log(defaltEndDate);
+											  	
+											  	document.getElementById("dateStart").value = defaltStartDate;
+											  	document.getElementById("dateEnd").value = defaltEndDate;
+											  	
+											  	var srRegStartDate = document.getElementById("dateStart").value;
+											  	var srRegEndDate = document.getElementById("dateEnd").value;
 												
 												var srTtl = document.getElementById("keyword").value;
 												
@@ -238,54 +268,28 @@
 												});
 											}
 											
-											function examineListReset(pageNo) {
-												console.log(pageNo);
-
-												var sysNo = "${sessionScope.loginUser.sysNo}";
+											function examineListReset() {
 												
-												if ( $('#mySrWork').prop('checked') ) {
-													
-													sysNo = "${sessionScope.loginUser.sysNo}";
-													
-												}else{
-													sysNo="";
-												}
+												let today = new Date();   
 												
-												var sysNm = "전체";
-												var sttsNo = "0";
-												var userOgdp = "전체";
-												var userDpNm = "전체";
-
-												var srRegStartDate = "";
-												var srRegEndDate = "";
+											  	let year = today.getFullYear(); // 년도
+											  	let month = today.getMonth() + 1;  // 월
+											  	let date = today.getDate();  // 날짜
+											  	
+											  	var defaltStartDate = ((year-1) + '/' + month + '/' + date);
+											  	var defaltEndDate = (year + '/' + month + '/' + date);
+											  	
+											  	console.log(defaltStartDate);
+											  	console.log(defaltEndDate);
+											  	
+											  	document.getElementById("dateStart").value = defaltStartDate;
+											  	document.getElementById("dateEnd").value = defaltEndDate;
 												
-												var srTtl = "";
-												
-												if(srTtl !== "") {
-													srTtl = "%" + srTtl + "%";
-												}
-												
-												console.log(sysNo);
-												console.log(sttsNo);
-												console.log(srTtl);
-												console.log(userOgdp);
-												console.log(userDpNm);
-												console.log(srRegStartDate);
-												console.log(srRegEndDate);
-												
-												let data = {sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
-														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
-												
-												console.log(data);
-												
-												$.ajax({
-													url : "filter/"+pageNo,
-													method : "post",
-													data : JSON.stringify(data),
-													contentType: "application/json; charset=UTF-8"
-												}).done((data) => {
-													window.location.href = "/webapp/examine/list";
-												});
+											  	$("#sysNm").val("0").prop("selected", true);
+												$("#sttsNo").val("0").prop("selected", true);
+												$("#userOgdp").val("0").prop("selected", true);
+												$("#userDpNm").val("0").prop("selected", true);
+												document.getElementById("keyword").value = "";
 											}
 										</script>
 	                				</div>
@@ -328,12 +332,12 @@
 									
 									function selectUnderReview() {
 										
-										var sysNo = "${sessionScope.loginUser.sysNo}";
-										
+										var sysNo = "${loginUser.sysNo}";
+										console.log("sysNo");
 										if ( $('#mySrWork').prop('checked') ) {
 											
-											sysNo = "${sessionScope.loginUser.sysNo}";
-											
+											sysNo = "${loginUser.sysNo}";
+											console.log("sysNo");
 										}else{
 											sysNo="";
 										}
@@ -382,12 +386,12 @@
 									}
 									
 									function selectreception() {
-										var sysNo = "${sessionScope.loginUser.sysNo}";
+										var sysNo = "${loginUser.sysNo}";
 										
 										if ( $('#mySrWork').prop('checked') ) {
 											
-											sysNo = "${sessionScope.loginUser.sysNo}";
-											
+											sysNo = "${loginUser.sysNo}";
+											console.log("sysNo");
 										}else{
 											sysNo="";
 										}
@@ -442,7 +446,7 @@
 					<div id="subExamineDetailView">
 						
 					</div>
-					
+					<div id="msgStack"></div>
 				</div>
 			</div>
 			<script>
@@ -468,7 +472,6 @@
 					
 				}
 			</script>
-			
 			<!-- 로그아웃 모달 -->
 			<%@include file="/WEB-INF/views/common/logout.jsp" %>
 			</div>
