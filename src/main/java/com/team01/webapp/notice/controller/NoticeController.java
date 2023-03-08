@@ -33,6 +33,7 @@ import com.team01.webapp.model.Alarm;
 import com.team01.webapp.model.Notice;
 import com.team01.webapp.model.NoticeComment;
 import com.team01.webapp.model.NoticeFile;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.notice.service.INoticeService;
 import com.team01.webapp.util.Pager;
 
@@ -64,7 +65,16 @@ public class NoticeController {
 		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
 		
 		//알림 수
-		int alarmCnt = alarmService.selectAlarmCount(userNo);
+		Alarm alarm = new Alarm();
+		alarm.setUserNo(userNo);
+		alarm.setUserType((String)session.getAttribute("userType"));
+		if(alarm.getUserType().equals("관리자")) {
+			Users loginUser = alarmService.selectLoginUser(userNo);
+			alarm.setSysNo("%"+loginUser.getSysNo()+"%");
+		}else {			
+			alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
+		}
+		int alarmCnt = alarmService.selectAlarmCount(alarm);
 		model.addAttribute("alarmCnt",alarmCnt);
 		model.addAttribute("alarmList",alarmList);
 		model.addAttribute("command","de");
@@ -79,7 +89,16 @@ public class NoticeController {
 		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
 		
 		//알림 수
-		int alarmCnt = alarmService.selectAlarmCount(userNo);
+		Alarm alarm = new Alarm();
+		alarm.setUserNo(userNo);
+		alarm.setUserType((String)session.getAttribute("userType"));
+		if(alarm.getUserType().equals("관리자")) {
+			Users loginUser = alarmService.selectLoginUser(userNo);
+			alarm.setSysNo("%"+loginUser.getSysNo()+"%");
+		}else {			
+			alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
+		}
+		int alarmCnt = alarmService.selectAlarmCount(alarm);
 		model.addAttribute("alarmCnt",alarmCnt);
 		model.addAttribute("alarmList",alarmList);
 		model.addAttribute("ntcNo", ntcNo);
@@ -125,6 +144,11 @@ public class NoticeController {
 		String sysNo = notice.getSysNo();
 		log.info(sysNo);
 		log.info(notice);
+		String content = notice.getNtcCn();
+		content = content.replace("\r\n", "<br>");
+		content = content.replace("\r", "<br>");
+		content = content.replace("\n", "<br>");
+		notice.setNtcCn(content);
 		noticeService.noticeWrite(notice);
 		//첨부 파일 유무 조사
 		List<MultipartFile> mf = notice.getNtcMFile();

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.team01.webapp.alarm.service.IAlarmService;
+import com.team01.webapp.examine.service.IExamineService;
 import com.team01.webapp.home.service.IHomeService;
 import com.team01.webapp.model.Alarm;
 import com.team01.webapp.model.DevMini;
@@ -21,6 +22,7 @@ import com.team01.webapp.model.Notice;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SystemInfo;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.notice.service.INoticeService;
 import com.team01.webapp.util.Pager;
 
@@ -41,6 +43,7 @@ public class HomeController {
 	
 	@Autowired
 	IAlarmService alarmService;
+	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Pager pager, Notice notice, Model model) {
@@ -72,7 +75,17 @@ public class HomeController {
 		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
 		
 		//알림 수
-		int alarmCnt = alarmService.selectAlarmCount(userNo);
+		Alarm alarm = new Alarm();
+		alarm.setUserNo(userNo);
+		alarm.setUserType((String)session.getAttribute("userType"));
+		if(alarm.getUserType().equals("관리자")) {
+			Users loginUser = alarmService.selectLoginUser(userNo);
+			alarm.setSysNo("%"+loginUser.getSysNo()+"%");
+		}else {			
+			alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
+		}
+		log.info(alarm);
+		int alarmCnt = alarmService.selectAlarmCount(alarm);
 		model.addAttribute("alarmCnt",alarmCnt);
 		model.addAttribute("alarmList",alarmList);
 		

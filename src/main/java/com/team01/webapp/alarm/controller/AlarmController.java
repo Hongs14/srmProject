@@ -15,6 +15,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.model.Alarm;
+import com.team01.webapp.model.Users;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -34,7 +35,16 @@ public class AlarmController extends TextWebSocketHandler {
 		List<Alarm> alarmList = alarmService.selectAlarmList(userNo);
 		
 		//알림 수
-		int alarmCnt = alarmService.selectAlarmCount(userNo);
+		Alarm alarm = new Alarm();
+		alarm.setUserNo(userNo);
+		alarm.setUserType((String)session.getAttribute("userType"));
+		if(alarm.getUserType().equals("관리자")) {
+			Users loginUser = alarmService.selectLoginUser(userNo);
+			alarm.setSysNo("%"+loginUser.getSysNo()+"%");
+		}else {			
+			alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
+		}
+		int alarmCnt = alarmService.selectAlarmCount(alarm);
 		model.addAttribute("alarmCnt",alarmCnt);
 		model.addAttribute("alarmList",alarmList);
 		

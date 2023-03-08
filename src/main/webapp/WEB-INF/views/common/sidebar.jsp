@@ -58,16 +58,16 @@
       	<div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar" style="">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list?sysNo=SRM">전체 공지사항</a>
-            <c:if test="${sessionScope.loginUser.userOgdp eq '북북STORE' or sessionScope.loginUser.userOgdp eq '한국소프트'}">            
+            <c:if test="${sessionScope.loginUser.userOgdp eq '북북' or sessionScope.loginUser.userOgdp eq '한국소프트'}">            
 	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list?sysNo=BOK">북북STORE 공지</a>
             </c:if>
-            <c:if test="${sessionScope.loginUser.userOgdp eq '한국대학교LMS' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
+            <c:if test="${sessionScope.loginUser.userOgdp eq '한국대학교' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
 	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list?sysNo=KOR">한국대학교LMS 공지</a>
             </c:if>
-            <c:if test="${sessionScope.loginUser.userOgdp eq '사슈즈STORE' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
+            <c:if test="${sessionScope.loginUser.userOgdp eq '사슈즈' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
 	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list?sysNo=SAS">사슈즈STORE 공지</a>
             </c:if>
-            <c:if test="${sessionScope.loginUser.userOgdp eq '오티아이LMS' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
+            <c:if test="${sessionScope.loginUser.userOgdp eq '오티아이' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
 	            <a class="collapse-item" href="${pageContext.request.contextPath}/notice/list?sysNo=OTI">오티아이LMS 공지</a>
             </c:if>
           </div>

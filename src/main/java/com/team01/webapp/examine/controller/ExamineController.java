@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.examine.service.IExamineService;
+import com.team01.webapp.model.Alarm;
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.ExamineList;
@@ -64,9 +65,19 @@ public class ExamineController {
 		//로그인 유저 정보 가져오기
 		Users loginUser = examineService.selectLoginUser(userNo);
 		model.addAttribute("loginUser",loginUser);
+		
 		//알림 수
 		log.info("유저No : "+userNo);
-		int alarmCnt = alarmService.selectAlarmCount(userNo);
+		Alarm alarm = new Alarm();
+		alarm.setUserNo(userNo);
+		alarm.setUserType((String)session.getAttribute("userType"));
+		if(alarm.getUserType().equals("관리자")) {
+			loginUser = alarmService.selectLoginUser(userNo);
+			alarm.setSysNo("%"+loginUser.getSysNo()+"%");
+		}else {			
+			alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
+		}
+		int alarmCnt = alarmService.selectAlarmCount(alarm);
 		model.addAttribute("alarmCnt",alarmCnt);
 		model.addAttribute("examineFilter",examineFilter);
 		
