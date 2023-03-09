@@ -39,6 +39,7 @@ import com.team01.webapp.model.ExamineList;
 import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.Users;
+import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -55,6 +56,8 @@ public class ExamineController {
 	@Autowired
 	IAlarmService alarmService;
 	
+	@Autowired
+	AlarmInfo alarmInfo;
 	
 	/**
 	 * SR요청에 대한 필터링 
@@ -75,21 +78,30 @@ public class ExamineController {
 		Users loginUser = examineService.selectLoginUser(userNo);
 		model.addAttribute("loginUser",loginUser);
 		
-		//알림 수
-		log.info("유저No : "+userNo);
-		Alarm alarm = new Alarm();
-		alarm.setUserNo(userNo);
-		alarm.setUserType((String)session.getAttribute("userType"));
-		if(alarm.getUserType().equals("관리자")) {
-			loginUser = alarmService.selectLoginUser(userNo);
-			alarm.setSysNo("%"+loginUser.getSysNo()+"%");
-		}else {			
-			alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
-		}
-		int alarmCnt = alarmService.selectAlarmCount(alarm);
-		model.addAttribute("alarmCnt",alarmCnt);
+		//알림 수 및 리스트
+		alarmInfo.info(session, model); 
 		model.addAttribute("examineFilter",examineFilter);
 		
+		return "examine/list";
+	}
+	
+	@GetMapping(value="/list/{srNo}")
+	public String getExamineDetail(@PathVariable String srNo, ExamineFilter examineFilter , HttpSession session,Model model) {
+		log.info("실행");
+		
+		examineFilter = examineService.filterList(examineFilter);
+		
+		int userNo = (Integer) session.getAttribute("userNo");
+		
+		//로그인 유저 정보 가져오기
+		Users loginUser = examineService.selectLoginUser(userNo);
+		model.addAttribute("loginUser",loginUser);
+		
+		//알림 수 및 리스트
+		alarmInfo.info(session, model); 
+		model.addAttribute("examineFilter",examineFilter);
+		model.addAttribute("srNo",srNo);
+		model.addAttribute("command","detail");
 		return "examine/list";
 	}
 	
