@@ -4,10 +4,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	<div>
         <div class="card shadow mb-4">
-          <div class="card-header pt-3">
-          	<h6 class="font-weight-bold text-primary"><img src="${pageContext.request.contextPath}/resources/images/gantt.png" style="width:30px; margin-right:10px;"> 개발자 일정</h6>
+          <div class="d-flex justify-content-between p-3">
+          	<span class="font-weight-bold text-primary"><img src="${pageContext.request.contextPath}/resources/images/gantt.png" style="width:30px; margin-right:10px;"> 개발자 일정</span>
+          	<c:if test="${!empty devMini.srNo}">
+	          	<a class=" btn btn-sm btn-primary" href="${pageContext.request.contextPath}/progress/detail/${devMini.srNo}">
+					<i class="fa-solid fa-link mx-1"></i>
+					진척관리
+				</a>
+          	</c:if>
           </div>
-          <div class="card-body d-flex pt-0">
+          <div class="card-body d-flex pt-0" id="devPlanDetail" style="display:none !important;">
 				<div id="chartWrapper" class="d-flex flex-column">
 				<div class="d-flex justify-content-between px-1">
 					<div class="d-sm-flex flex-column align-items-center">
@@ -23,29 +29,25 @@
 	                		<div class="d-flex justify-content-between align-items-center">
 	                			<i class="fa-solid fa-angle-right fa-lg ml-3"></i>
 		                		<h4 class="p-0 m-0">총 <span style="color:#a80000;">${devMini.count}</span> 건</h4>
-								<a class=" btn btn-sm btn-primary" href="${pageContext.request.contextPath}/progress/detail/${devMini.srNo}">
-									<i class="fa-solid fa-link mx-1"></i>
-									진척관리 페이지로 이동
-								</a>
 	                		</div>
 	                	</div>
                 	</div>
                 </div>
-                	
-	               	<div class="chartBox d-flex">
+                
+	               	<div class="chartBox d-flex justify-content-around">
 	               		<div style="width:600px">
 					     <canvas id="myChart"></canvas>
 					     </div>
 					     <div id="progFile">
 					     	<div class="d-sm-flex flex-column mt-3" style="background-color:#EAECF4; border-radius:5px;">
 						     	<div class="d-flex p-1 align-items-center">
-							  		<span class="progIcon"><i class="fa-solid fa-user-tie m-1"></i></span> <small class="m-1">${devMini.sysNm}</small>
+							  		<span class="progIcon"><i class="fa-solid fa-desktop m-1"></i></span><small class="m-1">${devMini.sysNm}</small>
 						     	</div>
 						     	<div class="d-flex p-1 align-items-center">
 							  		<span class="progIcon"><i class="fa-solid fa-user-tie m-1"></i></span> <small class="m-1">신청자: ${devMini.srRequesterNm}</small>
 						     	</div>
 						     	<div class="d-flex p-1 align-items-center">
-							  		<span class="progIcon"><i class="fa-solid fa-user-tie m-1"></i></span> <small class="m-1">예산: ${devMini.srBgt}만원</small>
+							  		<span class="progIcon"><i class="fa-solid fa-sack-dollar m-1"></i></span> <small class="m-1">예산: ${devMini.srBgt}만원</small>
 						     	</div>
 							</div>
 					     </div>
