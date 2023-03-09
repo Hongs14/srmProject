@@ -36,11 +36,28 @@
 		AND sa.SR_NO like #{sysNo}
 		<if test="userType.equals('고객사')">
 			AND sa.USER_NO = #{userNo}
+			AND s.STTS_NO != 8
+			AND s.STTS_NO != 10
 		</if>
 		<if test="userType.equals('관리자')">
-			AND s.STTS_NO = 1
+			AND s.STTS_NO != 2
+			AND s.STTS_NO != 3
+			AND s.STTS_NO != 4
+			AND s.STTS_NO != 5
+			AND s.STTS_NO != 6
+			AND s.STTS_NO != 7
 		</if>
-		ORDER BY MESSAGE_CHECK, MESSAGE_DATE DESC
+		<if test="userType.equals('개발자')">
+			AND s.STTS_NO != 1
+			AND s.STTS_NO != 2
+			AND s.STTS_NO != 3
+			AND s.STTS_NO != 4
+			AND s.STTS_NO != 5
+			AND s.STTS_NO != 7
+			AND s.STTS_NO != 8
+			AND s.STTS_NO != 9
+		</if>
+		ORDER BY MESSAGE_CHECK, DECODE(s.STTS_NO, 1, 8, 10, 2, 3, 4, 5, 6, 7, 9) ASC, MESSAGE_DATE DESC
 	</select>
 	
 	<!-- 해당 SR 고객사 찾기 -->
@@ -56,34 +73,10 @@
 	</select>
 	
 	<insert id="insertAlarm" parameterType="alarm">
-		<if test="sttsNm.equals('요청')">
-			INSERT INTO SR_ALARM( ALARM_NO, USER_NO, MESSAGE, MESSAGE_CHECK, MESSAGE_DATE, ALARM_PRY, ALARM_TTL, SR_NO, ALARM_CATEGORY)
-			VALUES(alarmno_seq.nextval,#{userNo},'SR 요청이 등록 되었습니다.','N',sysdate,'하', #{srTtl}, #{srNo},'SR상태변경')
-		</if>
-		<if test="sttsNm.equals('검토중')">
-			INSERT INTO SR_ALARM( ALARM_NO, USER_NO, MESSAGE, MESSAGE_CHECK, MESSAGE_DATE, ALARM_PRY, ALARM_TTL, SR_NO, ALARM_CATEGORY)
-			VALUES(alarmno_seq.nextval,#{userNo},'SR 요청이 검토중 입니다.','N',sysdate,'하', #{srTtl}, #{srNo},'SR상태변경')
-		</if>
-		<if test="sttsNm.equals('접수')">
-			INSERT INTO SR_ALARM( ALARM_NO, USER_NO, MESSAGE, MESSAGE_CHECK, MESSAGE_DATE, ALARM_PRY, ALARM_TTL, SR_NO, ALARM_CATEGORY)
-			VALUES(alarmno_seq.nextval,#{userNo},'SR 요청이 정상적으로 접수 되었습니다.','N',sysdate,'하', #{srTtl}, #{srNo},'SR상태변경')
-		</if>
-		<if test="sttsNm.equals('완료요청')">
-			INSERT INTO SR_ALARM( ALARM_NO, USER_NO, MESSAGE, MESSAGE_CHECK, MESSAGE_DATE, ALARM_PRY, ALARM_TTL, SR_NO, ALARM_CATEGORY)
-			VALUES(alarmno_seq.nextval,#{userNo},'SR 완료 요청 승인 바랍니다.','N',sysdate,'하', #{srTtl}, #{srNo},'SR상태변경')
-		</if>
-		<if test="sttsNm.equals('개발완료')">
-			INSERT INTO SR_ALARM( ALARM_NO, USER_NO, MESSAGE, MESSAGE_CHECK, MESSAGE_DATE, ALARM_PRY, ALARM_TTL, SR_NO, ALARM_CATEGORY)
-			VALUES(alarmno_seq.nextval,#{userNo},'SR 요청이 개발완료 되었습니다..','N',sysdate,'하', #{srTtl}, #{srNo},'SR상태변경')
-		</if>
-		<if test="sttsNm.equals('반려')">
-			INSERT INTO SR_ALARM( ALARM_NO, USER_NO, MESSAGE, MESSAGE_CHECK, MESSAGE_DATE, ALARM_PRY, ALARM_TTL, SR_NO, ALARM_CATEGORY)
-			VALUES(alarmno_seq.nextval,#{userNo},'SR 요청이 반려 되었습니다.','N',sysdate,'하', #{srTtl}, #{srNo},'SR상태변경')
-		</if>
-		<if test="sttsNm.equals('재검토')">
-			INSERT INTO SR_ALARM( ALARM_NO, USER_NO, MESSAGE, MESSAGE_CHECK, MESSAGE_DATE, ALARM_PRY, ALARM_TTL, SR_NO, ALARM_CATEGORY)
-			VALUES(alarmno_seq.nextval,#{userNo},'SR 요청이 재검토 되었습니다.','N',sysdate,'하', #{srTtl}, #{srNo},'SR상태변경')
-		</if>
+
+		INSERT INTO SR_ALARM( ALARM_NO, USER_NO, MESSAGE, MESSAGE_CHECK, MESSAGE_DATE, ALARM_PRY, ALARM_TTL, SR_NO, ALARM_CATEGORY)
+		VALUES(alarmno_seq.nextval,#{userNo}, #{message},'N',sysdate, #{alarmPry} , #{srTtl}, #{srNo}, #{alarmCategory})
+
 	</insert>
 	
 	<!-- 알림 체크 -->
