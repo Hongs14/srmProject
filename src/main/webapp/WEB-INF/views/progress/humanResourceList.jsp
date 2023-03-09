@@ -35,7 +35,9 @@
 			<thead class="thead-light">
 				<tr>
 					<c:if test="${userNo == managerNo}">
-						<th></th>
+						<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
+							<th></th>
+						</c:if>
 					</c:if>
 					<th>성명</th>
 					<th>부서 명</th>
@@ -50,12 +52,14 @@
 			<c:forEach var="list" items="${hrList}">
 				<tr>
 					<c:if test="${userNo == managerNo}">
-						<th>
-							<div class="custom-control custom-radio">
-								<input type="radio" id="SR+${list.userNo}" name="customRadio" class="custom-control-input" value="${list.userNo}">
-								<label class="custom-control-label" for="SR+${list.userNo}"></label>
-							</div>
-						</th>
+						<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
+							<th>
+								<div class="custom-control custom-radio">
+									<input type="radio" id="SR+${list.userNo}" name="customRadio" class="custom-control-input" value="${list.userNo}">
+									<label class="custom-control-label" for="SR+${list.userNo}"></label>
+								</div>
+							</th>
+						</c:if>
 					</c:if>
 					<th>${list.userNm}</th>
 					<th>${list.userDpNm}</th>

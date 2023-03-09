@@ -229,9 +229,9 @@
 													
 													progressArr.push(srNo);
 												}
-											});
+											});									
 											
-											if(progressArr) {
+											if(progressArr.length == 0) {
 										    	$('#ListExcelModal').modal('show');
 										    	$("#ListExcelModalMessage").text("SR을 선택해 주세요");
 											} else {
