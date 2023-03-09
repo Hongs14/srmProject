@@ -157,7 +157,7 @@
 			    leadingZeros(d.getDate(), 2);
 	
 			  return s;
-			}
+			};
 			
 			
 			function getLastYearTimeStamp() {
@@ -170,7 +170,7 @@
 				    leadingZeros(d.getDate(), 2);
 	
 				  return s;
-			}
+			};
 	
 			
 			function leadingZeros(n, digits) {
@@ -183,7 +183,7 @@
 			      zero += '0';
 			  }
 			  return zero + n;
-			}
+			};
 		
 			$(document).ready(function(){
 				console.log("시작");
@@ -235,7 +235,7 @@
 						$("#qstnlist").html(data);
 				});
 			
-			}
+			};
 			
 			function qnaDetail(i) {
 				//상세보기
@@ -245,12 +245,7 @@
 				$("#qstnMenu").show();
 				$("#mainQstn").attr("class","col-lg-7");
 				$("#miniView").attr("class","col-lg-5");
-				$(".qstnTtl").css({
-					"width" : "360px",
-					"overflow": "hidden",
-					"text-overflow": "ellipsis",
-					"display":"block"
-				});
+				resize();
 				let sysNo = "${sessionScope.loginUser.sysNo}";
 				
 				$.ajax({
@@ -261,7 +256,7 @@
 						$("#miniView").html(data);
 					}
 				});
-			}
+			};
 			
 			function RangeClick(range){
 				console.log(range);
@@ -312,17 +307,19 @@
 					}).done((data) => {
 						$("#qstnlist").html(data);
 						console.log($('#qstnCn'));
-						if($('#qstnCn')){
-							$(".qstnTtl").css({
-						 		"width" : "360px",
-								"overflow": "hidden",
-								"text-overflow": "ellipsis",
-								"display":"block"
-						 	});
-						}						
+						resize();					
 						
 					});
-			}
+			};
+			
+			function resize(){
+				$(".qstnTtl").css({
+			 		"width" : "360px",
+					"overflow": "hidden",
+					"text-overflow": "ellipsis",
+					"display":"block"
+			 	});
+			};
 			
 			function writeQstn(){
 				$("#mainQstnMenu").removeClass("d-sm-flex");
@@ -341,7 +338,7 @@
 					}
 				});
 				
-			}
+			};
 		</script>
  		<%@include file="/WEB-INF/views/common/bottom.jsp" %>
 	</body>

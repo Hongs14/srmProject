@@ -51,7 +51,7 @@ public class QnaController {
 	 * @return
 	 */
 	@GetMapping("/{sysNo}/list")
-	public String getQnaList(@PathVariable String sysNo, Model model) {
+	public String getQnaList(@PathVariable String sysNo, Model model){
 		log.info("qna목록보기");
 		return "qnaboard/qnalist";
 	}
@@ -175,18 +175,17 @@ public class QnaController {
 					qstnFile.setQstnFileActlNm(mf.get(i).getOriginalFilename());
 					//파일의 저장 이름 설정
 					String qstnFilePhysNm = new Date().getTime()+"-"+mf.get(i).getOriginalFilename();
-					log.info(qstnFilePhysNm);
 					qstnFile.setQstnFilePhysNm(qstnFilePhysNm);
 					//파일 타입 설정
 					String str = mf.get(i).getContentType();
 					int beginIndex = str.indexOf("/");
 					int endIndex = str.length();
-					String type = str.substring(beginIndex,endIndex);
+					String type = str.substring(beginIndex, endIndex);
 					qstnFile.setQstnFileExtnNm(type);
 					qstnFile.setQstnNo(qstn.getQstnNo());		
 					log.info("@@@@@@@@@@@@@@@@@@@@@"+qstnFile);
 					//서버 파일 시스템에 파일로 저장
-					String filePath = "C:/OTI/uploadfiles/qstn"+qstn.getQstnNo()+"/"+qstnFilePhysNm;
+					String filePath = "C:/OTI/uploadfiles/qstn/"+qstnFilePhysNm;
 					log.info("######################"+filePath);
 					File file = new File(filePath);
 					// 폴더가 없다면 생성

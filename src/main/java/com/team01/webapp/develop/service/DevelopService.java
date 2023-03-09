@@ -198,7 +198,7 @@ public class DevelopService implements IDevelopService{
 	public int updateDevelopSr(UpdateDevelop updateDevelop) {
 		try {
 			int check = developRepository.checkHr(updateDevelop.getSrNo());
-			
+			log.info(check);
 			int result1 = developRepository.updateSr(updateDevelop);
 			log.info("개발계획 수정 result1: "+result1); 
 			
@@ -235,24 +235,28 @@ public class DevelopService implements IDevelopService{
 	
 	@Transactional
 	public int insertProgress(String srNo){
-		log.info("Progress리스트 insert"+ srNo);
-		int srSeq = 0;
-		List<Progress> progNoList = new ArrayList<>();
-		srSeq = developRepository.selectMaxProgNo()+1;		
+		int row = 0;
+		try {
+			log.info("Progress리스트 insert"+ srNo);
+			int srSeq = 0;
+			List<Progress> progNoList = new ArrayList<>();
+			srSeq = developRepository.selectMaxProgNo()+1;		
+			
+			for(int i=0; i<6; i++) {
+				Progress progress = new Progress();
+				String progNo = "PROG-"+srSeq;
+				progress.setProgNo(progNo);
+				progress.setSrNo(srNo);
+				progress.setProgType(i+1);
+				progNoList.add(progress);
+				log.info(progress);
+				srSeq++;
+			}
 		
-		for(int i=0; i<6; i++) {
-			Progress progress = new Progress();
-			String progNo = "PROG-"+srSeq;
-			progress.setProgNo(progNo);
-			progress.setSrNo(srNo);
-			progress.setProgType(i+1);
-			progNoList.add(progress);
-			log.info(progress);
-			srSeq++;
+			row = developRepository.insertProg(progNoList);
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		
-		int row = developRepository.insertProg(progNoList);
-
 		return row;
 	}
 

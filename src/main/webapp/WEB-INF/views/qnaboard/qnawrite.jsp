@@ -30,27 +30,29 @@
 			<form onsubmit="return false;" method="post" enctype="multipart/form-data">
 			   	<!-- 글 제목 -->
 			   	<div class="row">
-			   		<div class="col-1 col-form-label"><h6 class="m-0 font-weight-bold text-primary">글제목</h6></div>
-			   		<div class="col-11">
+			   		<div class="col-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">글제목</h6></div>
+			   		<div class="col-10">
 			   			<input class="form-control" name="qstnTtl" id="qstnTtl" <c:if test="${command eq 'update'}">value="${qstn.qstnTtl}"</c:if>/>
 			   		</div>
 			   	</div>
 			   	<!-- 글 내용 -->
 			   	<div class="row mt-3">
-			   		<div class="col-1"><h6 class="m-0 font-weight-bold text-primary">글 내용</h6> </div>
-			   		<div class="col-11">
+			   		<div class="col-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">글 내용</h6> </div>
+			   		<div class="col-10">
 			   			<textarea class="form-control" rows="10" name="qstnCn" id="qstnCn">${qstn.qstnCn}</textarea>
 			   		</div>
 			   	</div>
 			   	<!-- 첨부파일 -->
 			   	<div class="row mt-3">
-			   		<div class="col-1"><h6 class="m-0 font-weight-bold text-primary">첨부파일</h6></div>
-			   		<div class="col-11">
-			   			<input type="file" class="custom-file-input form-control" id="qstnMFile" name="qstnMFile" onchange="addQstnFile(this)" multiple/>
+			   		<div class="col-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">첨부파일</h6></div>
+			   		<div class="col-10">
+		   				<input type="file" class="form-control custom-file-input" id="qstnMFile" name="qstnMFile" onchange="addQstnFile(this)" multiple>
+						<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
+			   		
 			   		</div>
 			   	</div>
-			   	<div class="row mt-2">
-					<span class="font-weight-bold col-sm-2">파일목록</span>
+			   <div class="row mt-2">
+					<span class="col-sm-2 m-0 font-weight-bold text-primary">파일목록</span>
 					<div class="col-sm-9" id="inputFile" style="border: 1px solid black">
 						<c:if test="${command eq 'update'}"> 
 							<c:forEach var="qstnFile" items="${qstnFile}">
@@ -61,7 +63,7 @@
 		               		</c:forEach>
 	               		</c:if>
 					</div>
-				</div>
+				</div> 
 			   	
 			   	<input type="hidden" id="userNo" name="userNo" value="${sessionScope.loginUser.userNo}">
 			   	<input type="hidden" id="userNm" name="userNm" value="${sessionScope.loginUser.userNm}">
