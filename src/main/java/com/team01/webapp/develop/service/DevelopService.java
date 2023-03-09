@@ -95,6 +95,12 @@ public class DevelopService implements IDevelopService{
 		List<DevelopDto> list = developRepository.selectDevelopList(developDto);
 		return list;
 	}
+	
+	@Override
+	public Users getLoginUserInfo(int userNo) {
+		Users info = developRepository.selectLoginUser(userNo);
+		return info;
+	}
 
 	/** SR개발 상세보기
 	* @author 		정홍주
@@ -248,6 +254,23 @@ public class DevelopService implements IDevelopService{
 		int row = developRepository.insertProg(progNoList);
 
 		return row;
+	}
+
+	/**엑셀파일 다운로드
+	 * @author				정홍주, 김태희
+	 * @param developSRArr	SR번호를 저장
+	 * @return				
+	 */
+	@Override
+	public List<DevelopDto> getPrintExcelList(List<String> developSRArr) {
+		List<DevelopDto> list =	new ArrayList<>();
+		DevelopDto develop = null;
+		for(int i=0; i<developSRArr.size(); i++){
+			develop = developRepository.selectDevelopContent(developSRArr.get(i));
+			list.add(develop);
+		}
+		log.info(list);
+		return list;
 	}
 
 }

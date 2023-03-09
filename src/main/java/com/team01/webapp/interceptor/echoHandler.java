@@ -28,7 +28,6 @@ public class echoHandler extends TextWebSocketHandler{
 		public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 			log.info("실행");
 			String senderId = getMemberId(session); // 접속한 유저의 http세션을 조회하여 id를 얻는 함수
-			log.info(senderId);
 			if(senderId!=null) {	// 로그인 값이 있는 경우만
 				log(senderId + " 연결 됨");
 				users.put(senderId, session);   // 로그인중 개별유저 저장
@@ -87,9 +86,7 @@ public class echoHandler extends TextWebSocketHandler{
 		private String getMemberId(WebSocketSession session) {
 			log.info("실행");
 			Map<String, Object> httpSession = session.getAttributes();
-			log.info(httpSession);
 			String userId = (String) httpSession.get("userId"); // 세션에 저장된 m_id 기준 조회
-			log.info(userId);
 			return userId==null? null: userId;
 		}
 	

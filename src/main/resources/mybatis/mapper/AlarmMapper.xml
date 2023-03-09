@@ -29,10 +29,12 @@
 		    sa.ALARM_PRY AS "alarmPry",
 		    sa.ALARM_TTL AS "alarmTtl",
 		    sa.ALARM_CATEGORY AS "alarmCategory",
-		    sa.SR_NO AS "srNo"
-		FROM SR_ALARM sa, SR s, USERS u
+		    sa.SR_NO AS "srNo",
+		    st.STTS_NM AS "sttsNM"
+		FROM SR_ALARM sa, SR s, USERS u, SR_STTS st
 		WHERE sa.SR_NO = s.SR_NO
 		AND u.USER_NO = sa.USER_NO
+		AND s.STTS_NO = st.STTS_NO
 		AND sa.SR_NO like #{sysNo}
 		<if test="userType.equals('고객사')">
 			AND sa.USER_NO = #{userNo}

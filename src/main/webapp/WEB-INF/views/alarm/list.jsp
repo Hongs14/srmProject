@@ -52,7 +52,7 @@
 										</div>
 										<div class="myInfoWrapper p-5 container">
 											<div class="row mb-5  justify-content-center d-flex align-items-center alert alert-primary" >나의 알림 목록</div>
-											<div class="row mb-5"><button onclick="onMessage()">알림 전송</button> </div>
+											<div class="row mb-5"><button onclick="onMessage()">알림 전송</button></div>
 											<div class="row mb-5">
 												<table>
 													<tbody>												
@@ -75,6 +75,7 @@
 																			<br/>			
 																			<div class="col-3" style="font-size:0.7rem">${alarmList.srNo}</div>
 																			<input type="hidden" id="alarmNo" name="alarmNo" value="${alarmList.alarmNo}">
+																			<input type="hidden" id="sttsNm" name="sttsNm" value="${alarmList.sttsNm}">
 																			<span class="col-3 ">${alarmList.message}</span>
 																			<hr/>
 																		</td>
@@ -95,10 +96,21 @@
 							<script>
 								function updateCheck(i) {
 									var srNo = i;
+									var sttsNm = document.getElementById("sttsNm").value;
+									console.log(sttsNm);
+									
+									let url = "";
+									
+									if(sttsNm == "완료요청"){
+										url = "${pageContext.request.contextPath}/progress/detail/2";	
+									}else{
+										url = "${pageContext.request.contextPath}/request/list/"+srNo;
+									}
+									console.log(url);
+									
 									let data = {srNo : srNo};
 									console.log(data);
 									
-									console.log(data);
 									
 									$.ajax({
 										url : "updateAlarmCheck",
@@ -106,7 +118,7 @@
 										data : JSON.stringify(data),
 										contentType: "application/json; charset=UTF-8"
 									}).done((data) => {
-										window.location.href = "${pageContext.request.contextPath}/request/list/"+srNo;
+										window.location.href = url;
 									});
 								}	
 							</script>

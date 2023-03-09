@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <!DOCTYPE html>
-	<div class="table-responsive p-3">
+	<div class="table-responsive p-2">
 		<table class="table align-items-center table-hover border">
 			<thead class="thead-light">
 				<tr>
@@ -36,8 +36,8 @@
 								${list.srNo}
 							</a>
 						</td>
-						<td style="width:300px; overflow:hidden; text-overflow: ellipsis; display:block;">
-							<a href="${pageContext.request.contextPath}/progress/detail/${list.srNo}" style="text-decoration: none;">
+						<td>
+							<a href="${pageContext.request.contextPath}/progress/detail/${list.srNo}" style="width:400px; overflow:hidden; text-overflow: ellipsis; display:block;text-decoration: none;">
 								${list.srTtl}
 							</a>
 						</td>

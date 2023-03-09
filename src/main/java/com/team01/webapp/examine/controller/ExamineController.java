@@ -2,14 +2,20 @@ package com.team01.webapp.examine.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +26,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.alarm.service.IAlarmService;
@@ -28,6 +36,7 @@ import com.team01.webapp.model.Alarm;
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.ExamineList;
+import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
@@ -208,6 +217,62 @@ public class ExamineController {
 		model.addAttribute("pager",pager);
 		
 		return "examine/ajaxList";
+	}
+	
+	//엑셀 다운로드
+	@PostMapping(value="/excelDownload")
+	public void excelDownload(@RequestParam List<String> examineArr, HttpServletResponse response) throws IOException {
+		log.info("실행");
+		log.info(examineArr);
+		XSSFWorkbook wb=null;
+		Sheet sheet=null;
+		Row row=null;
+		Cell cell=null; 
+		wb = new XSSFWorkbook();
+		sheet = wb.createSheet("freeBoard");
+        
+        String[] HeaderList = {"SR 번호", "제목", "관련시스템", "등록자", "소속회사", "부서", "상태", "등록일","중요"};
+        
+        //첫행   열 이름 표기 
+        int cellCount=0;
+        row = sheet.createRow(0);
+        for(int i=0; i<HeaderList.length; i++) {
+    		cell=row.createCell(cellCount++);
+    		cell.setCellValue(HeaderList[i]);
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+		List<Examine> list = examineService.getExamineExcelList(examineArr);
+		
+		for(int i=0; i<list.size(); i++) {
+			row=sheet.createRow(i+1);
+			cellCount = 0;
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrNo());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrTtl());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSysNm());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getUserNm());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getUserOgdp());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getUserDpNm());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSttsNm());
+			cell=row.createCell(cellCount++);
+			String srRegDate = simpleDateFormat.format(list.get(i).getSrRegDate());
+			cell.setCellValue(srRegDate);
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrPry());
+		}
+		
+		// 컨텐츠 타입과 파일명 지정
+		response.setContentType("ms-vnd/excel");
+		response.setHeader("Content-Disposition", "attachment;filename=testlist.xlsx");  //파일이름지정.
+		//response OutputStream에 엑셀 작성
+		wb.write(response.getOutputStream());
+		wb.close();
 	}
 	
 }

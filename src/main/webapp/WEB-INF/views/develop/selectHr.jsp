@@ -13,7 +13,7 @@
 		</div>
 		<div class="col-sm-3 text-center">
 			<select name="taskNo" class="form-control">
-				<option>작업구분</option>
+				<option disabled selected>작업구분</option>
 				<option value="2">설계</option>
 				<option value="1">개발</option>
 				<option value="3">테스트</option>

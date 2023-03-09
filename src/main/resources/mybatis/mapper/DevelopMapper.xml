@@ -208,7 +208,10 @@
     			SR_END_DATE=#{srEndDate}, SR_DEV_DP=#{srDevDp}
 		WHERE SR_NO=#{srNo}
 	</update>
-	
+	<!-- 
+		개발자 부서 조회
+		작성자 : 정홍주
+	 -->
 	<select id="selectNameByNo" parameterType="int" resultType="users">
 		SELECT USER_NO AS "userNo", USER_NM AS "userNm", USER_DP_NM AS "userDpNm"
 		FROM USERS
@@ -282,4 +285,9 @@
 		WHERE SR_FILE_NO = #{srFileNo}
 	</select>
 	
+	<select id="selectLoginUser" parameterType="int" resultType="users">
+		SELECT USER_NM AS "userNm", USER_NO AS "userNo", SYS_NO AS "sysNo", SYS_NM AS "sysNm"
+		FROM USERS, SYSTEM
+		WHERE USERS.USER_NO = SYSTEM.MANAGER_NO AND USER_NO = #{userNo}
+	</select>
 </mapper>
