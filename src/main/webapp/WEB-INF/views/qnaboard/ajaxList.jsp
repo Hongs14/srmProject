@@ -33,7 +33,7 @@
 		<div class="pagingButtonSet d-flex justify-content-center">
 			<c:if test="${pager.totalRows < 1}">
 				<h6 class="m-3">
-					SR 요청이 존재하지 않습니다.
+					게시글이 존재하지 않습니다.
 				</h6>
 			</c:if>
 			<c:if test="${pager.totalRows >=1}">

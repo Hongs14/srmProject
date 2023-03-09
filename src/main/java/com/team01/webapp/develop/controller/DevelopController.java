@@ -71,6 +71,10 @@ public class DevelopController {
 		
 		developFilter = developService.filterList(developFilter);
 		Users loginUser = developService.getLoginUserInfo((Integer) session.getAttribute("userNo"));
+		
+		//알림 수 및 리스트
+		alarmInfo.info(session, model);
+		
 		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("developFilter",developFilter);
 		return "develop/developlist";
@@ -95,9 +99,6 @@ public class DevelopController {
 		List<DevelopDto> list = developService.getDevelopList(pager, developDto);
 		model.addAttribute("develop",list);
 		model.addAttribute("pager",pager);
-		
-		//알림 수 및 리스트
-		alarmInfo.info(session, model);
 		
 		return "develop/ajaxList";
 	}
@@ -220,7 +221,7 @@ public class DevelopController {
 	     return "develop/selectHr";
 	  }
 	
-	/** 인력 저장
+	/** 인력리스트와 개발관리 저장
 	 * @author 					정홍주
 	 * @param updateDevelop		
 	 * @return
@@ -228,10 +229,6 @@ public class DevelopController {
 	@PostMapping(value="/updateHr")
     public String insertHrList(UpdateDevelop updateDevelop, HttpSession session){
 		log.info(updateDevelop);
-		if(updateDevelop.getSttsNo() == 9) {
-			
-		}
-		
 		int result = developService.updateDevelopSr(updateDevelop);
 		log.info("HR등록");
 		alarmService.insertAlarm(updateDevelop.getSrNo(), session);
