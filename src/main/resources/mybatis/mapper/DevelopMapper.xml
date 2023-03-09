@@ -201,7 +201,7 @@
 		SELECT COUNT(*) FROM HR WHERE SR_NO=#{srNo}
 	</select>
 	<delete id="deleteHr" parameterType="string">
-		DELETE FROM HR WHERE WR_NO=#{srNo}
+		DELETE FROM HR WHERE SR_NO=#{srNo}
 	</delete>
 	<update id="updateSr" parameterType="updateDevelop">
 		UPDATE SR SET SR_DEV_CN=#{srDevCn}, SR_BGT=#{srBgt}, STTS_NO = #{sttsNo}, SR_DDLN_DATE=#{srDdlnDate}, SR_START_DATE=#{srStartDate},

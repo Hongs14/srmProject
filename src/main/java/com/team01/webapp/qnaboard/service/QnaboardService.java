@@ -108,7 +108,6 @@ public class QnaboardService implements IQnaboardService {
 	public void qstnFileUpload(QSTN qstn) {
 		log.info("실행");
 		qnaboardRepository.insertQstnFileUpload(qstn);
-		
 	}
 	
 

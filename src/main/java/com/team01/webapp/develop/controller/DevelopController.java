@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.develop.service.IDevelopService;
 import com.team01.webapp.model.CheckBoxArr;
 import com.team01.webapp.model.DevelopFilter;
@@ -39,6 +40,7 @@ import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.UpdateDevelop;
 import com.team01.webapp.model.DevelopDto;
 import com.team01.webapp.model.Users;
+import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -51,6 +53,11 @@ public class DevelopController {
 	@Autowired
 	private IDevelopService developService;
 	
+	@Autowired 
+	private IAlarmService alarmService;
+	
+	@Autowired
+	AlarmInfo alarmInfo;
 	/**
 	 * SR개발관리 목록 
 	 * @author					정홍주
@@ -80,7 +87,7 @@ public class DevelopController {
 	 * @return
 	 */
 	@PostMapping(value="/filter/{pageNo}", produces="application/json; charset=UTF-8")
-	public String getDevelopFilter(@PathVariable int pageNo, @RequestBody DevelopDto developDto, Model model, Pager pager) {
+	public String getDevelopFilter(@PathVariable int pageNo, @RequestBody DevelopDto developDto, Model model, HttpSession session, Pager pager) {
 		log.info("필터링한 목록");
 		log.info("pageNo "+pageNo);
 		pager = developService.returnPage(pageNo, pager, developDto);
@@ -88,6 +95,10 @@ public class DevelopController {
 		List<DevelopDto> list = developService.getDevelopList(pager, developDto);
 		model.addAttribute("develop",list);
 		model.addAttribute("pager",pager);
+		
+		//알림 수 및 리스트
+		alarmInfo.info(session, model);
+		
 		return "develop/ajaxList";
 	}
 	
@@ -215,10 +226,16 @@ public class DevelopController {
 	 * @return
 	 */
 	@PostMapping(value="/updateHr")
-    public String insertHrList(UpdateDevelop updateDevelop){
+    public String insertHrList(UpdateDevelop updateDevelop, HttpSession session){
 		log.info(updateDevelop);
+		if(updateDevelop.getSttsNo() == 9) {
+			
+		}
+		
 		int result = developService.updateDevelopSr(updateDevelop);
 		log.info("HR등록");
+		alarmService.insertAlarm(updateDevelop.getSrNo(), session);
+		
 		return "redirect:/develop/list/1";
     }
 	
