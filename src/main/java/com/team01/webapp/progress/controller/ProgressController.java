@@ -49,6 +49,7 @@ import com.team01.webapp.model.SrProgressList;
 import com.team01.webapp.model.SystemInfo;
 import com.team01.webapp.model.Task;
 import com.team01.webapp.model.ThArr;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.progress.service.IProgressService;
 import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
@@ -129,9 +130,12 @@ public class ProgressController {
 		List<SystemInfo> system = null;
 		srProgressAjax.setAdminSysNo("");
 		
+		
 		if(srProgressAjax.getChoice() == 2) {
 			String userType = (String) session.getAttribute("userType");
 			int userNo = (int) session.getAttribute("userNo");
+			srProgressAjax.setUserType(userType);
+			srProgressAjax.setUserNo(userNo);
 			
 			if(userType.equals("관리자")) {
 				log.info(srProgressAjax);
@@ -230,6 +234,9 @@ public class ProgressController {
 		
 		String managerNo = progressService.managerNo(srNo);
 		model.addAttribute("managerNo", managerNo);
+		
+		Users userData = progressService.getSysUserData(progressDetail.getSysNo());
+		model.addAttribute("userData", userData);
 		
 		return "progress/humanResourceList";
 	}

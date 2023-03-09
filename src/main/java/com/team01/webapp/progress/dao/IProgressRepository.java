@@ -20,6 +20,7 @@ import com.team01.webapp.model.SrProgressList;
 import com.team01.webapp.model.System;
 import com.team01.webapp.model.Task;
 import com.team01.webapp.model.ThArr;
+import com.team01.webapp.model.Users;
 
 @Repository
 public interface IProgressRepository {
@@ -279,5 +280,7 @@ public interface IProgressRepository {
 	void updateChangeRequest(@Param("crNo") int crNo, @Param("choice") int choice, @Param("crComment") String crComment);
 
 	void updateDeveloperEndDate(@Param("userNo") int userNo, @Param("srNo") String srNo, @Param("hrEndDate") String crDdlnDate);
+
+	Users selectSysUserData(String sysNo);
 	
 }
