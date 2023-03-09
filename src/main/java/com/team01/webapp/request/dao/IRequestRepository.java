@@ -61,4 +61,6 @@ public interface IRequestRepository {
 	//요청 삭제
 	int deleteRequest(String srNo);
 
+	RequestList selectRequestSr(String string);
+
 }

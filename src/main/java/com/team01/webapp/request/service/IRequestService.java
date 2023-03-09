@@ -54,4 +54,6 @@ public interface IRequestService {
 		//요청 삭제처리
 		int deleteRequest(String srNo);
 
+		List<RequestList> getRequestExcelList(List<String> requestArr);
+
 }
