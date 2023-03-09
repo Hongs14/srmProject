@@ -41,7 +41,7 @@
 				});
 				
 				// toast생성 및 추가
-				function onMessage(evt){
+				function onMessage(){
 				    var data = "알림이 도착했습니다.";
 				    console.log(data);
 				    
