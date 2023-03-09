@@ -122,7 +122,6 @@
 				};
 				console.log("data"+data);
 				checkBoxArr.push(data);
-				/* $("input:checkbox[name='devName']").prop("checked", false); */
 			});
 	
 			console.log(checkBoxArr);
@@ -270,7 +269,7 @@
 																	<option value="${leader.userNo}" disabled selected>${leader.userNm} [${leader.userDpNm}&nbsp;${leader.userJbps}]</option>
 																</c:if>
 																<c:if test="${leader.userNo eq null}">
-																	<option value="" disabled selected></option>
+																	<option value="" disabled selected/>
 																</c:if>
 																<c:forEach var="users" items="${devlist}">
 																	<option value="${users.userNo}">${users.userNm} [${users.userDpNm}&nbsp;${users.userJbps}]</option>
@@ -303,7 +302,7 @@
 															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">개발 내용</h6>
 														</div>
 														<div class="col-sm-8 p-2">
-													 		<textarea name="srDevCn" id="srDevCn" style="width: 100%" required>${dlist.srDevCn}</textarea>
+													 		<textarea class="toggle" name="srDevCn" id="srDevCn" style="width: 100%; height:135px" required>${dlist.srDevCn}</textarea>
 														</div>
 													</div>
 													
@@ -344,7 +343,7 @@
 													</div>
 													<div class="text-right">
 														<input type="hidden" id="srNo" value="${dlist.srNo}" />
-														<button type="button" id="button" class="btn btn-sm btn-primary mr-4" onclick="registerDevelop()"> 등록 ▶</button>
+														<button type="button" id="button" class="btn btn-sm btn-primary mr-4 toggle" onclick="registerDevelop()"> 등록 ▶</button>
 													</div>
 												</div>
 											
@@ -362,7 +361,7 @@
 															</c:if>
 														</div>
 													</div>
-													<div class="mt-3" style="border: 1px solid gray; min-height: 400px;">
+													<div class="mt-3" style="border: 1px solid gray; min-height: 513px;">
 														<div class="row d-flex text-center m-0 p-o" style="border-bottom:1px solid black; background-color:#eaecf4;">
 															<div class="col-sm-1 text-primary">담당</div>
 															<div class="col-sm-1 text-primary">성명</div>
@@ -402,7 +401,10 @@
 																					<option value="${devlist.taskNo}" disabled selected>${devlist.taskNm}</option>
 																				</c:if>
 																			</c:forEach>
-																		</c:if>			
+																		</c:if>	
+																		<c:if test="${dlist.sttsNo != 9 }">
+																			<option disabled selected>작업구분</option>
+																		</c:if>		
 																		<option value="2">설계</option>
 																		<option value="1">개발</option>
 																		<option value="3">테스트</option>
@@ -469,10 +471,10 @@
 													</div>
 													<div class="text-right my-3">
 														<c:if test="${dlist.sttsNo == 4}">
-															<button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter" class="btn btn-primary">저장</button>
+															<button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter" class="btn btn-primary toggle">저장</button>
 														</c:if>
 														<c:if test="${dlist.sttsNo == 9}">
-															<button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter" class="btn btn-primary">수정</button>
+															<button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter" class="btn btn-primary toggle">수정</button>
 														</c:if>
 													</div>
 													<!-- 확인 모달 -->
@@ -556,15 +558,19 @@
 			let sttsNo = $("#sttsNo").val();
 			console.log(sttsNo);
 			if(sttsNo == '개발중' ){
-				
 				$(".noneUpdate").attr("disabled", true);
-			/* 	$("select").attr("disabled", true);
-				$("textarea").attr("disabled", true);
-				 */
 			}
 
 			$('.addlist').prop("disabled", true);
 			
+			if("${loginUser.sysNo}" != "${dlist.sysNo}"){
+				$('input').attr("readonly", true);
+				$('select').attr("disabled","disabled");
+				$(".toggle").hide();
+			}
+			
+			let srCn = "<개발내용> \n \n ";
+			$("#srDevCn").val(srCn);
 			
 		});
  	

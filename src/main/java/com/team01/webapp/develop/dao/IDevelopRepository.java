@@ -97,4 +97,6 @@ public interface IDevelopRepository {
 	public int checkHr(String srNo);
 	public int deleteHr(String srNo);
 
+	public Users selectLoginUser(int userNo);
+
 }
