@@ -9,7 +9,7 @@
           		SR 진척관리 확인<i class="fa-solid fa-caret-right m-1"></i>
           	</a>
           </div>
-          <div class="card-body pt-0">
+          <div class="card-body pt-0" id="managerMiniViewDetail" style="display:none;">
             <div class="d-flex">
 			   <div class="d-flex align-items-center">
 				   <div class="devStage px-5 py-3">
