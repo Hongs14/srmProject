@@ -50,7 +50,7 @@ public class AlarmController extends TextWebSocketHandler {
 		return "alarm/list";
 	}
 	
-	@PostMapping(value="updateAlarmCheck", produces="application/json; charset=UTF-8")
+	@PostMapping(value="updateAlarmCheck")
 	public String updateAlarmCheck(@RequestBody Alarm alarm) {
 		log.info("실행");
 		log.info(alarm);

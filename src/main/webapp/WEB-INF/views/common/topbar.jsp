@@ -100,27 +100,27 @@
 				</c:choose>	
                 <a class="dropdown-item text-center small text-gray-500" href="${pageContext.request.contextPath}/alarm/list">Show All Alerts</a>
                 <script>
-					function updateCheck(i) {
+	                function updateCheck(i) {
 						var srNo = i;
 						console.log(srNo);
-						var alarmNo = document.getElementById("alarmNo").innerHtml;
+						var alarmNo = document.getElementById("alarmNo").innerText;
 						console.log(alarmNo);
-						var sttsNm = document.getElementById("sttsNm").innerHtml;
+						var sttsNm = document.getElementById("sttsNm").innerText;
 						console.log(sttsNm);
 						
 						let data = {alarmNo : alarmNo};
 						let url = "";
-
+	
 						if(sttsNm == "완료요청"){
-							url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
-						}else{
-							url = "${pageContext.request.contextPath}/request/list/"+srNo;
+							url = "${pageContext.request.contextPath}/progress/detail/progressRateFinishRequest;
+						}else if(sttsNm == "요청"){
+							url = "${pageContext.request.contextPath}/examine/list/"+srNo;
 						}
 						
 						console.log(data);
 						
 						$.ajax({
-							url : "updateAlarmCheck",
+							url : "${pageContext.request.contextPath}/alarm/updateAlarmCheck",
 							method : "post",
 							data : JSON.stringify(data),
 							contentType: "application/json; charset=UTF-8"

@@ -97,9 +97,9 @@
 								function updateCheck(i) {
 									var srNo = i;
 									console.log(srNo);
-									var alarmNo = document.getElementById("alarmNo").innerHtml;
+									var alarmNo = document.getElementById("alarmNo").innerText;
 									console.log(alarmNo);
-									var sttsNm = document.getElementById("sttsNm").innerHtml;
+									var sttsNm = document.getElementById("sttsNm").innerText;
 									console.log(sttsNm);
 									
 									let data = {alarmNo : alarmNo};

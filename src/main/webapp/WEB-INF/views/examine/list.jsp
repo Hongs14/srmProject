@@ -227,7 +227,7 @@
 												console.log(data);
 												
 												$.ajax({
-													url : "filter/1",
+													url : "${pageContext.request.contextPath}/examine/filter/1",
 													method : "post",
 													data : JSON.stringify(data),
 													contentType: "application/json; charset=UTF-8"
@@ -282,7 +282,7 @@
 												console.log(data);
 												
 												$.ajax({
-													url : "filter/"+pageNo,
+													url : "${pageContext.request.contextPath}/examine/filter/"+pageNo,
 													method : "post",
 													data : JSON.stringify(data),
 													contentType: "application/json; charset=UTF-8"
@@ -397,7 +397,7 @@
 									  		console.log(data);
 									  		
 										  	$.ajax({
-										  		url : "processing",
+										  		url : "${pageContext.request.contextPath}/examine/processing",
 												method : "post",
 												data : JSON.stringify(data),
 												contentType: "application/json; charset=UTF-8"
@@ -451,7 +451,7 @@
 									  		console.log(data);
 									  		
 										  	$.ajax({
-										  		url : "processing",
+										  		url : "${pageContext.request.contextPath}/examine/processing",
 												method : "post",
 												data : JSON.stringify(data),
 												contentType: "application/json; charset=UTF-8"
@@ -468,7 +468,19 @@
 					<div id="subExamineDetailView">
 						
 					</div>
-					<div id="msgStack"></div>
+					<c:if test="${!empty command and command eq 'detail'}">
+		          		<input type="hidden" value="${srNo}" id="detailSrNo">
+		          	</c:if>
+		          	<c:if test="${!empty command and command eq 'detail'}">
+		          		<script>
+		          			$(document).ready(function(){
+		          				var srNo = $("#detailSrNo").val();
+			  					getSrDetail(srNo);
+				          	}
+				          	
+			          		);
+			          	</script>	
+			          </c:if>
 				</div>
 			</div>
 			<script>
@@ -484,7 +496,7 @@
 					$("#subExamineDetailView").attr("class","col-lg-5");
 					
 					$.ajax({
-						url : "detail/"+srNo,
+						url : "${pageContext.request.contextPath}/examine/detail/"+srNo,
 						method : "get",
 						dataType : "html",
 						success : function(data) {
