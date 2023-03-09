@@ -173,8 +173,7 @@
 						</div>
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item">SR 관리</li>
-							<li class="breadcrumb-item active" aria-current="page">SR
-								개발관리</li>
+							<li class="breadcrumb-item active" aria-current="page">SR 개발관리</li>
 						</ol>
 					</div>
 
@@ -246,7 +245,7 @@
 											<div class="col-sm-10">
 												<c:forEach items="${dlist.srDevelopFile}" var="file">
 													<div><a href="${pageContext.request.contextPath}/develop/file/${file.srFileNo}">${file.srFileActlNm}</a></div>
-												 </c:forEach>
+												</c:forEach>
 											</div>
 										</div>
 									</div>
@@ -295,7 +294,7 @@
 														<div class="col-sm-8">
 															<select id="sttsNo" name="sttsNo"  class="form-control noneUpdate">
 																<option value="5" selected>개발중</option>
-																<option value="9">개발 계획</option>
+																<option value="9">개발계획</option>
 															</select>
 														</div>
 													</div>
@@ -313,7 +312,7 @@
 															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">완료(예정)일</h6>
 														</div>
 														<div class="col-sm-8">
-															<input type="date" id="srDdlnDate" name="srDdlnDate" value="${dlist.srDdlnDate}" class="form-control" />
+															<input type="date" id="srDdlnDate" name="srDdlnDate" value="${dlist.srDdlnDate}" class="form-control" required/>
 														</div>
 													</div>
 													<div class="form-group row">
@@ -332,7 +331,7 @@
 															<h6 class="text-danger">*&nbsp;</h6><h6 class="m-0 font-weight-bold text-primary">계획 시작일</h6>
 														</div>
 														<div class="col-sm-8">
-															<input type="date" id="srStartDate" name="srStartDate" value="${dlist.srStartDate}" class="form-control" />
+															<input type="date" id="srStartDate" name="srStartDate" value="${dlist.srStartDate}" class="form-control" required/>
 														</div>
 													</div>
 													<div class="form-group row">
@@ -365,33 +364,39 @@
 													</div>
 													<div class="mt-3" style="border: 1px solid gray; min-height: 400px;">
 														<div class="row d-flex text-center m-0 p-o" style="border-bottom:1px solid black; background-color:#eaecf4;">
-															<div class="col-1 text-primary">성명</div>
-															<div class="col-2 text-primary">작업 할당</div>
-															<div class="col-4 text-primary">인력 투입일</div>
-															<div class="col-4 text-primary">인력 투입종료일</div>
+															<div class="col-sm-1 text-primary">담당</div>
+															<div class="col-sm-1 text-primary">성명</div>
+															<div class="col-sm-3 text-primary">작업 할당</div>
+															<div class="col-sm-3 text-primary">인력 투입일</div>
+															<div class="col-sm-3 text-primary">인력 투입종료일</div>
+															<div class="col-sm-1 text-primary"></div>
+															
 														</div>
 														<div id="leader" class="py-2">
 															<div class="row  d-flex text-center m-0">
-																<div class="col-sm-2 text-center">
-																	<div class="row">
-																		<c:if test="${dlist.hrLeader} != 4">
+																<div class="col-sm-1 text-center pt-2">
+																	<span class="badge badge-warning">Leader</span>
+																</div>
+																<div class="col-sm-1 text-center">
+																	<div class="d-flex justify-content-center pt-2">
+																		<c:if test="${dlist.sttsNo != 4}">
 																			<c:forEach items="${hrlist}" var="devlist" >
 																				<c:if test="${devlist.hrLeader eq 'Y'}">
-																					<i class="fas fa-flag"></i><div id="pickDevNm">${devlist.userNm}</div>
+																					<div id="pickDevNm">${devlist.userNm}</div>
 																					<input name="hrLeader" type="hidden" value="Y"/>
 																				</c:if>
 																			</c:forEach>
 																		</c:if>
 																		<c:if test="${dlist.sttsNo == 4}">
 																			<input name="userNo" id="leaderNo" type="hidden" value="" />
-																			<i class="fas fa-flag"></i><div id="pickDevNm"></div>
+																				<div id="pickDevNm"></div>
 																			<input name="hrLeader" type="hidden" value="Y"/>
 																		</c:if>
 																	</div>
 																</div>
-																<div class="col-sm-2 text-center">
-																	<select name="taskNo" class="form-control-sm mx-0" required>	
-																		<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
+																<div class="col-sm-3 text-center">
+																	<select name="taskNo" class="form-control mx-0" required>	
+																		<c:if test="${dlist.sttsNo == 9}">
 																			<c:forEach items="${hrlist}" var="devlist">
 																				<c:if test="${devlist.hrLeader eq 'Y'}">
 																					<option value="${devlist.taskNo}" disabled selected>${devlist.taskNm}</option>
@@ -403,31 +408,34 @@
 																		<option value="3">테스트</option>
 																	</select>
 																</div>
-																<div class="col-sm-4 text-center">
-																	<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
+																<div class="col-sm-3 text-center">
+																	<c:if test="${dlist.sttsNo == 9}">
 																		<c:forEach items="${hrlist}" var="devlist" >
-																			<c:if test="${devlist.hrLeader eq 'Y'}"><fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy-MM-dd"/></c:if>
+																			<c:if test="${devlist.hrLeader eq 'Y'}"><fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy/MM/dd"/></c:if>
 																		</c:forEach>
 																	</c:if>
 																	<c:if test="${dlist.sttsNo == 4}">
-																		<input name="hrStartDate" id="leaderSdate" type="date" class="form-control-sm" readonly />
+																		<input name="hrStartDate" id="leaderSdate" type="date" class="form-control" readonly />
 																	</c:if>
 																</div>
-																<div class="col-sm-4 text-center">
-																	<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
+																<div class="col-sm-3 text-center">
+																	<c:if test="${dlist.sttsNo == 9}">
 																		<c:forEach items="${hrlist}" var="devlist" >
-																			<c:if test="${devlist.hrLeader eq 'Y'}"><fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy-MM-dd"/></c:if>
+																			<c:if test="${devlist.hrLeader eq 'Y'}"><fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy/MM/dd"/></c:if>
 																		</c:forEach>
 																	</c:if>
 																	<c:if test="${dlist.sttsNo == 4}">
-																		<input name="hrEndDate" id="leaderEdate" type="date" class="form-control-sm" readonly />
+																		<input name="hrEndDate" id="leaderEdate" type="date" class="form-control" readonly />
 																	</c:if>
+																</div>
+																<div class="col-sm-1">
+																	&nbsp;
 																</div>
 															</div>
 														</div>
 														<hr class="my-0"/>
 														<div class="mt-2" id="HrList">
-															<c:if test="${dlist.sttsNo == 5 || dlist.sttsNo == 9}">
+															<c:if test="${dlist.sttsNo == 9}">
 																<c:forEach items="${hrlist}" var="devlist" >
 																	<div class="row  d-flex text-center m-0">
 																		<div class="col-sm-1">
@@ -445,11 +453,11 @@
 																				</select>
 																			</div>
 																			<div class="col-sm-4 text-center">
-																				<input name="hrStartDate" type="date" value="<fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy-MM-dd"/>" class="form-control-sm"/>
+																				<input name="hrStartDate" type="date" value="<fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy/MM/dd"/>" class="form-control-sm"/>
 																			</div>
 																				
 																			<div class="col-sm-4 text-center">
-																				<input name="hrEndDate" type="date" value="<fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy-MM-dd"/>" class="form-control-sm"/>
+																				<input name="hrEndDate" type="date" value="<fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy/MM/dd"/>" class="form-control-sm"/>
 																				<a href="#" class="deleteHr text-right" id='${users.userNo}' style="color: red;">x</a>
 																			</div>
 																			<hr class="my-0"/>

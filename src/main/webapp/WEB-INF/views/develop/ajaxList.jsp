@@ -34,9 +34,8 @@
 						<td>${develop.userOgdp}</td>
 						<td>${develop.srDevDp}</td>
 						<td>
-							<c:if test="${develop.sttsNm eq '접수'}"><span class="badge badge-outline-primary" style="font-size:100%; border: 1px solid black;">${develop.sttsNm}</span></c:if>
-							<c:if test="${develop.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${develop.sttsNm}</span></c:if>
-							<c:if test="${develop.sttsNm eq '개발계획'}"><span class="badge badge-outline-secondary" style="font-size:100%; border:1px solid orange;">${develop.sttsNm}</span></c:if>
+							<c:if test="${develop.sttsNm eq '접수'}"><span class="badge badge-warning" style="font-size:100%;">${develop.sttsNm}</span></c:if>
+							<c:if test="${develop.sttsNm eq '개발계획'}"><span class="badge text-white" style="background-color:#476A6F; font-size:100%">${develop.sttsNm}</span></c:if>
 						</td>
 						<td>${develop.srRegDate}</td>
 						<td>${develop.srDdlnDate}</td>
@@ -50,9 +49,14 @@
 			</tbody>
 		</table>
 		
-		<c:if test="${pager.totalRows != 0}">
-			<div class="pager d-flex justify-content-center my-3">
-				<div class="pagingButtonSet d-flex justify-content-center">
+		<div class="pager d-flex justify-content-center my-3">
+			<div class="pagingButtonSet d-flex justify-content-center">
+				<c:if test="${pager.totalRows < 1}">
+					<h6 class="m-3">
+						SR 요청이 존재하지 않습니다.
+					</h6>
+				</c:if>
+				<c:if test="${pager.totalRows >= 1}">
 					<c:if test="${pager.pageNo > 1 && pager.totalPageNo > 5 }">
 						<a onclick="developList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
 					</c:if>
@@ -76,9 +80,7 @@
 					<c:if test="${pager.pageNo < pager.totalPageNo && pager.totalPageNo > 5 }">
 						<a onclick="developList(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
 					</c:if>
-				</div>
+				</c:if>
 			</div>
-		</c:if>
-		
-		
+		</div>
 	</div>

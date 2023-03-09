@@ -21,12 +21,10 @@ public class DevelopDto {
 	private int srBgt;
 	private String srDevCn;
 	private String srReqSe;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date srDdlnDate;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-	private Date srStartDate;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-	private Date srEndDate;
+	private String srStartDate;
+//	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd")
+	private String srEndDate;
 	private String srViewYn;
 	private String srStd;
 	private String srDevDp;
@@ -39,8 +37,9 @@ public class DevelopDto {
 	private String sttsNm;
 	private String sysNm;
 	private String userType;
-
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd")
 	private Date srRegStartDate;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd")
 	private Date srRegEndDate;
 	public String hrLeader;
 	private int seq;
