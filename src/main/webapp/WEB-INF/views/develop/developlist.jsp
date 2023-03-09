@@ -18,11 +18,15 @@
 		</script>
 		<style>
 			.srdTtl{
-				width: 190px;
+				width: 230px;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				display:block;
 			}
+			
+			select option[disabled] {
+          		display: none;
+        	}
 		</style>
 	</head>
 
@@ -72,10 +76,9 @@
 						                			<div class="form-group row">
 						                				<label class="col-sm-3 col-form-label-sm">진행상태</label>
 								                    	<select class="form-control form-control-sm col-sm-9 clear" id="sttsNo">
-								                        	<option value="0">전체</option>
+								                        	<option value="0" selected>전체</option>
 								                        	<option value="4">접수</option>
 								                        	<option value="9">개발 계획</option>
-								                        	<option value="5">개발중</option>
 								                    	</select>
 								                	</div>
 						                		</div>
@@ -83,7 +86,7 @@
 						                			<div class="form-group row">
 						                				<label for="exampleFormControlSelect1 sysNo" class="col-sm-3 col-form-label-sm">관련시스템</label>
 								                    	<select class="form-control form-control-sm col-sm-9 clear" id="sysNo" >
-								                        	<option value="all">전체</option>
+								                        	<option value="all" selected>전체</option>
 				                        					<c:forEach var="system" items="${developFilter.sysNmList}">		                        	
 					                        					<option value="${system.sysNo}">${system.sysNm}</option>
 				                        					</c:forEach>
@@ -140,7 +143,7 @@
                             		<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 			                			<h5 class="m-0 font-weight-bold text-primary mb-1">SR 개발 목록</h5>
 			                			<div class="d-sm-flex justify-content-end">
-			                				<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
+			                				<button class="btn btn-sm btn-secondary" onclick="ExcelDownload()">엑셀 다운로드</button>
 			                  			</div>
 			                		</div>
 			                		<div>
@@ -180,12 +183,12 @@
 			                			
 			                			
 			                			function getLastYearTimeStamp() {
-			                			//3개월전 날짜 양식
+			                			//1년전 날짜 양식
 			                				  var d = new Date();
 			                	
 			                				  var s =
-			                				    leadingZeros(d.getFullYear(), 4) + '/' +
-			                				    leadingZeros((d.getMonth() +1)-2, 2) + '/' +
+			                				    leadingZeros(d.getFullYear()-1, 4) + '/' +
+			                				    leadingZeros(d.getMonth() +1, 2) + '/' +
 			                				    leadingZeros(d.getDate(), 2);
 			                	
 			                				  return s;
@@ -223,6 +226,7 @@
 										};
 										
 										$(document).ready(function () {
+											//처음 화면
 											var sysNo = $('#sysNo').val();
 											var sttsNo = $('#sttsNo').val();
 											var userOgdp = $('#userOgdp').val();
@@ -252,20 +256,19 @@
 										});
 									
 										function developList(pageNo) {
-											console.log("개발관리 리스트 불러오기")
-											/* var sysNo = $('#sysNo').val(); */
+											//조건별로 검색
+											console.log("개발관리 조건 리스트 불러오기")
+											var sysNo = $('#sysNo').val(); 
 											var sttsNo = $('#sttsNo').val();
 											var userOgdp = $('#userOgdp').val();
 											var srDevDp = $('#srDevDp').val();
 											var srRegStartDate = $('#startDate').val();
 											var srRegEndDate = $('#endDate').val();
-											/* var srCustNo =0;
-											var userType; */
+											
 											if($('#searchMySR').prop('checked')){
 												console.log("내 목록보기 체크");
-												var sysNo = "${sessionScope.loginUser.sysNo}";
-												/* srCustNo = $('#userNo').val();
-												userType = $('#userType').val(); */
+												var sysNo = "${loginUser.sysNo}";
+												console.log(sysNo);
 											}  else{
 												var sysNo = 'all';
 											}
@@ -277,7 +280,7 @@
 											};
 											
 											let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp: srDevDp,
-													srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl };
+													srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, sysNo: sysNo, srTtl : srTtl };
 											console.log(data);
 											
 											$.ajax({
@@ -288,6 +291,47 @@
 											}).done((data) => {
 												$("#ajaxList").html(data);
 											});
+										};
+										
+										function ExcelDownload(){
+											//엑셀 다운로드
+											let developSRArr = new Array();
+											let checkbox = $("input[name=devleopCheck]:checked");
+											
+											// 체크된 체크박스의 값을 가져옴
+											checkbox.each(function(i) {
+												let tr = checkbox.parent().parent().eq(i);
+												console.log(checkbox.parent().parent().eq(i));
+												let td = tr.children();
+											
+												if(td.eq(1).text() != 'SR번호') {
+													
+													let srNo = td.eq(1).text();
+													
+													developSRArr.push(srNo);
+												}
+												console.log(developSRArr);
+											});
+											
+										 	if(developSRArr.length == 0) {
+										    	$('#ListExcelModal').modal('show');
+										    	$("#ListExcelModalMessage").text("SR을 선택해 주세요");
+											} else {
+												var form = document.createElement('form');
+												form.setAttribute('method','post');
+												form.setAttribute('action', 'excelDownload');
+												document.charset = "utf-8";
+												
+												var hiddenField = document.createElement("input");
+												hiddenField.setAttribute('type', 'hidden');
+												hiddenField.setAttribute('name', 'developSRArr');
+												hiddenField.setAttribute('value', developSRArr);
+												form.appendChild(hiddenField);
+												
+												document.body.appendChild(form);
+												form.submit();
+											}
+											 
 										};
 										
 										function searchClear(){
@@ -304,6 +348,35 @@
            				</div>
            				<!-- row -->
 					</div>	
+					
+					<!-- 엑셀 선택 모달 -->
+					<div class="modal fade" id="ListExcelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+						<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+							<div class="modal-content">
+								<div class="modal-header bg-primary">
+									<h5 class="modal-title" id="exampleModalScrollableTitle">
+							          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+							        	<small class="text-white">
+							        		<b>엑셀 다운로드</b>
+							        	</small>
+									</h5>
+									<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body p-5" style="white-space: normal; text-align:center;">
+									<div class="alert alert-secondary m-3 p-2" role="alert">
+										<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+										<div id="ListExcelModalMessage"></div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 액셀 선택 모달 -->
 					
 		         	<!-- 로그아웃 모달 -->
 		           	<%@include file="/WEB-INF/views/common/logout.jsp" %>
