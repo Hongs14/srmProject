@@ -104,6 +104,8 @@
 									</div>
 								</div>
 								<div>
+									<span class="d-none" id="alarmNo">${alarmList.alarmNo}</span>
+									<span class="d-none" id="sttsNm">${alarmList.sttsNm}</span>
 				                    <div class="small text-gray-500">${alarmList.messageDate}</div>
 				                    <span class="font-weight-bold">${alarmList.alarmTtl} : ${alarmList.message}</span>
 				                </div>
@@ -115,18 +117,30 @@
                 <script>
 					function updateCheck(i) {
 						var srNo = i;
-						let data = {srNo : srNo};
-						console.log(data);
+						console.log(srNo);
+						var alarmNo = document.getElementById("alarmNo").innerHtml;
+						console.log(alarmNo);
+						var sttsNm = document.getElementById("sttsNm").innerHtml;
+						console.log(sttsNm);
+						
+						let data = {alarmNo : alarmNo};
+						let url = "";
+
+						if(sttsNm == "완료요청"){
+							url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
+						}else{
+							url = "${pageContext.request.contextPath}/request/list/"+srNo;
+						}
 						
 						console.log(data);
 						
 						$.ajax({
-							url : "${pageContext.request.contextPath}/alarm/updateAlarmCheck",
+							url : "updateAlarmCheck",
 							method : "post",
 							data : JSON.stringify(data),
 							contentType: "application/json; charset=UTF-8"
 						}).done((data) => {
-							window.location.href = "${pageContext.request.contextPath}/request/list/"+srNo;
+							window.location.href = url;
 						});
 					}	
 				</script>

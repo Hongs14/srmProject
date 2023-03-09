@@ -20,7 +20,7 @@ public interface IAlarmRepository {
 	public void insertAlarm(Alarm alarm);
 	
 	//알림 체크
-	public void updateAlarmCheck(String srNo);
+	public void updateAlarmCheck(int alarmNo);
 	
 	//알림 삭제
 	public void deleteAlarm(int alarmNo);
