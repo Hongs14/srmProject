@@ -282,7 +282,8 @@ border-top-right-radius: 10px;
 											<span class="font-weight-bold ">계획 종료일 : </span><span>${progressDetail.srEndDate}</span>
 										</div>
 									</div>
-									<div class="row mb-1">
+									<!-- 개발 내용 -->
+									<div class="row mb-1" style="white-space: normal !important;">
 										<div class="col-2">
 											<span class="font-weight-bold">개발 내용 </span>
 										</div>
