@@ -7,7 +7,7 @@
 	<div class="col-1">직책</div>
 	<div class="col-2">성명</div>
 	<div class="col-3">전화번호</div>
-	<div class="col-5">업무사항</div>
+	<div class="col-5">현재 업무사항</div>
 </div>
 <hr/>
 <c:forEach var="users" items="${devlistByDp}">

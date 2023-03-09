@@ -155,7 +155,7 @@
 		<![CDATA[
 			SELECT USER_NO AS "userNo", USER_NM AS "userNm", USER_JBPS AS "userJbps", USER_OGDP AS "userOgdp", USER_DP_NM AS "userDpNm" 
 	 		FROM USERS
-	 		WHERE USER_TYPE = '개발자' AND USER_JBPS <> '사원' AND USER_JBPS <> '주임' AND USER_DEL_YN='N'
+	 		WHERE USER_TYPE = '개발자' AND USER_DEL_YN='N'
  		]]>
 	</select>
 	

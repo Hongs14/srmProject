@@ -26,7 +26,7 @@
 		<div class="col-sm-3 text-center">
 			<input name="hrEndDate" type="date" class="form-control"/>
 		</div>
-		<div class="col-sm-1">
+		<div class="col-sm-1 pt-2">
 			<i class="fa-solid fa-delete-left deleteHr text-danger p-0" id='${users.userNo}' style="cursor:pointer;"></i>
 		</div>
 		<hr class="my-0"/>
