@@ -12,7 +12,7 @@
 	<style>
 	
 	.col-lg-7 .requsetTtl{
-		width: 100px;
+		width: 90px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display:block;
@@ -41,7 +41,7 @@
 		width: 70px;
 		display:block;
 	}
-	.col-lg-12 .srStts{
+	.srStts{
 		width: 50px;
 		display:block;
 	}
@@ -511,6 +511,7 @@
 					$("#sttsNo").val("전체").prop("selected", true);
 					$("#sttsNo").val("전체").prop("selected", true);
 					$("#srDevDp").val("전체").prop("selected", true);
+					$("#keyword").val("");
 				}
 				
 			</script>

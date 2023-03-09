@@ -20,20 +20,20 @@
 					<th>중요</th>
 				</tr>
 			</thead>
-			<tbody style="text-align: center;">
+			<tbody >
 				<c:forEach var="examine" items="${examine}">
 					<tr>
 						
 						<td>
 							<input type="checkbox" name="examineCheck" value="${examine.srNo}" onclick='checkSelectAll(this)'>
 						</td>
-						<td onclick ="getSrDetail('${examine.srNo}')" style="cursor:pointer;">${examine.srNo}</td>
-						<td onclick ="getSrDetail('${examine.srNo}')" style="cursor:pointer;">${examine.srTtl}</td>
+						<td><a onclick ="getSrDetail('${examine.srNo}')" style="cursor:pointer;">${examine.srNo}</a></td>
+						<td><a onclick ="getSrDetail('${examine.srNo}')" style="cursor:pointer;" class="srTtl">${examine.srTtl}</a></td>
 						<td>${examine.sysNm}</td>
 						<td>${examine.userNm}</td>
-						<td>${examine.userOgdp}</td>
+						<td><span class="userOgdp">${examine.userOgdp}</span></td>
 						<td>${examine.userDpNm}</td>
-						<td>
+						<td class="srStts">
 							<c:if test="${examine.sttsNm eq '요청'}"><span class="badge badge-dark" style="font-size:100%">${examine.sttsNm}</span></c:if>
 							<c:if test="${examine.sttsNm eq '검토중'}"><span class="badge badge-dark" style="font-size:100%">${examine.sttsNm}</span></c:if>
 							<c:if test="${examine.sttsNm eq '반려'}"><span class="badge badge-danger" style="font-size:100%">${examine.sttsNm}</span></c:if>

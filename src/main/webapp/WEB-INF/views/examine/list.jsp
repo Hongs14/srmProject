@@ -6,7 +6,49 @@
 
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
-
+	<style>
+	
+	.col-lg-7 .srTtl{
+		width: 90px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display:block;
+	}	
+    .col-lg-12 .srTtl{
+    	width: 400px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display:block;
+    }
+    .col-lg-7 .userOgdp{
+		width: 70px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display:block;
+	}
+	
+    .col-lg-12 .userOgdp{
+		width: 70px;
+		display:block;
+	}
+	.srStts{
+		width: 50px;
+		display:block;
+	}
+	
+	.detailView span {
+	  	white-space:normal !important;
+	  	font-size:14px;
+	 }
+	 #srExamineBox{
+	 	border: 2px solid #EAECF4;
+	 	border-radius: 5px;
+	 	margin: 20 0 20 0px;
+	 	padding: 10px;
+	 	padding-left:15px;
+	 	background-color:  #EAECF4;
+	 }
+	</style>
   	<script>
 	  	$(document).ready(function () {
 		    $('#simple-date4 .input-daterange').datepicker({        
@@ -50,14 +92,14 @@
 						</div>
 	            		<div class="card mb-4">
 	                		<!-- 검색 -->
-	                		<div class="mb-1 mt-5 px-5">
+	                		<div class="mb-1 mt-5 px-3">
 		                		<form class="navbar-search">
 		                			<div class="row text-right">
 		                				<div class="col-4">
 		                					<div class="form-group row" id="simple-date4" >
 					                			<div class="input-daterange input-group input-group-sm">
-					                				<label for="start" class="col-sm-4 col-form-label-sm">조회기간</label>
-					                    			<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart"/>
+					                				<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
+					                    			<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" id="dateStart"/>
 					                    			<div class="input-group-prepend">
 					                    				<span class="input-group-text" style="height:31px;">~</span>
 					                    			</div>
@@ -83,22 +125,20 @@
 				                    			<select class="form-control form-control-sm col-sm-8" id="sysNm">
 				                        			<option value="0">전체</option>
 				                        			<c:forEach var="system" items="${examineFilter.sysNmList}">		                        	
-					                        			<option value="${system.sysNo }">${system.sysNm}</option>
+					                        			<option value="${system.sysNo}">${system.sysNm}</option>
 				                        			</c:forEach>
 				                    			</select>
 				                			</div>
 		                				</div>
-		                				<div class="col-1">
-		                					<div class="input-group-append float-right">
-												<button class="btn btn-outline-warning btn-sm" type="button" onclick="examineListReset()" >초기화 </button>
-											</div>
+		                				<div class="col-1 text-left px-1">
+											<button class="btn btn-outline-warning btn-sm" type="button" onclick="examineListReset()" >초기화 </button>
 		                				</div>
 		                			</div>
 		                			<div class="row text-right">
 		                				<div class="col-4">
 		                					<div class="form-group row">
-		                						<label for="exampleFormControlSelect1" class="col-sm-4 col-form-label-sm">등록자 소속</label>
-				                    			<select class="form-control form-control-sm col-sm-8" id="userOgdp">
+		                						<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">등록자소속</label>
+				                    			<select id="userOgdp" class="form-control form-control-sm col-sm-9">
 				                        			<option value="0">전체</option>
 				                        			<c:forEach var="users" items="${examineFilter.userOgdpList}">		                        	
 					                        			<option>${users.userOgdp}</option>
@@ -124,10 +164,8 @@
 				                   				aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;" id="keyword">
 				                  			</div>
 		                				</div>
-		                				<div class="col-1">
-		                					<div class="input-group-append float-right">
-												<button class="btn btn-primary btn-sm" type="button" onclick="examineList(1)" >조회 <i class="fas fa-search fa-sm"></i></button>
-											</div>
+		                				<div class="col-1 text-left px-1">
+											<button class="btn btn-primary btn-sm" type="button" onclick="examineList(1)" >조회 <i class="fas fa-search fa-sm"></i></button>
 		                				</div>
 		                				<script>
 			                				$(document).ready(function () {
