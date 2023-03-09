@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.home.service.IHomeService;
 import com.team01.webapp.model.ChangeRequest;
 import com.team01.webapp.model.HR;
@@ -63,6 +64,9 @@ public class ProgressController {
 	
 	@Autowired
 	private IHomeService homeService;
+	
+	@Autowired
+	private IAlarmService alarmService;
 	
 	@Autowired
 	private AlarmInfo alarmInfo;
@@ -375,6 +379,8 @@ public class ProgressController {
 		
 		progressService.progressRateFinishRequest(srNo, progNo, choice);
 		
+		//알람 DB에 저장
+		alarmService.insertAlarm(srNo,session);
 		
 		session.setAttribute("message", 2);
 		

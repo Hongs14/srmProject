@@ -258,21 +258,6 @@
 												var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
 												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 												var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
-
-												let today = new Date();   
-												
-											  	let year = today.getFullYear(); // 년도
-											  	let month = today.getMonth() + 1;  // 월
-											  	let date = today.getDate();  // 날짜
-											  	
-											  	var defaltStartDate = ((year-1) + '/' + month + '/' + date);
-											  	var defaltEndDate = (year + '/' + month + '/' + date);
-											  	
-											  	console.log(defaltStartDate);
-											  	console.log(defaltEndDate);
-											  	
-											  	document.getElementById("dateStart").value = defaltStartDate;
-											  	document.getElementById("dateEnd").value = defaltEndDate;
 											  	
 											  	var srRegStartDate = document.getElementById("dateStart").value;
 											  	var srRegEndDate = document.getElementById("dateEnd").value;
@@ -340,7 +325,7 @@
 			                  	<div class="d-sm-flex justify-content-end">
 			                		<button class="btn btn-sm btn-primary mr-1" onclick='selectUnderReview()'>일괄 처리 (검토중)</button>
 			                		<button class="btn btn-sm btn-primary mr-1" onclick='selectreception()'>일괄 처리 (접수)</button>
-			                		<button class="btn btn-sm btn-primary ">엑셀 다운로드</button>
+			                		<button class="btn btn-sm btn-primary" onclick="excelDownload()">엑셀 다운로드</button>
 			                  	</div>
 			                </div>     
 		                  	<div class="custom-control custom-switch px-5 ml-3" style="width:180px; border-radius:3px; background-color:#eaecf4;">
@@ -476,7 +461,6 @@
 									  	});
 
 									}
-									
 								</script>
 			                </form>           
 						</div>
@@ -509,7 +493,74 @@
 					}); 	
 					
 				}
+				function excelDownload() {
+					
+					var examineArr = new Array();
+					var checkbox = $("input[name=examineCheck]:checked");
+					
+					// 체크된 체크박스의 값을 가져옴
+					checkbox.each(function(i) {
+						var tr = checkbox.parent().parent().eq(i);
+						var td = tr.children();
+						
+						if(td.eq(1).text() != 'SR 번호') {
+							
+							var srNo = td.eq(1).text();
+							
+							examineArr.push(srNo);
+						}
+					});
+					
+					console.log(examineArr);
+					
+					if(examineArr.length == 0) {
+				    	$('#ListExcelModal').modal('show');
+				    	$("#ListExcelModalMessage").text("SR을 선택해 주세요");
+					} else {
+						var form = document.createElement('form');
+						form.setAttribute('method','post');
+						form.setAttribute('action', 'excelDownload');
+						document.charset = "utf-8";
+						
+						var hiddenField = document.createElement("input");
+						hiddenField.setAttribute('type', 'hidden');
+						hiddenField.setAttribute('name', 'examineArr');
+						hiddenField.setAttribute('value', examineArr);
+						form.appendChild(hiddenField);
+						
+						document.body.appendChild(form);
+						form.submit();
+					}
+
+				}
 			</script>
+			<!-- 메시지 모달 창 -->
+			<div class="modal fade" id="ListExcelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+					<div class="modal-content">
+						<div class="modal-header bg-primary">
+							<h5 class="modal-title" id="exampleModalScrollableTitle">
+					          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+					        	<small class="text-white">
+					        		<b>삭제</b>
+					        	</small>
+							</h5>
+							<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body p-5" style="white-space: normal; text-align:center;">
+							<div class="alert alert-secondary m-3 p-2" role="alert">
+								<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+								<div id="ListExcelModalMessage"></div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			<!-- 로그아웃 모달 -->
 			<%@include file="/WEB-INF/views/common/logout.jsp" %>
 			</div>
