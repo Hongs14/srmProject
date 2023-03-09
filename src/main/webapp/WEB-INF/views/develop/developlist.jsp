@@ -48,12 +48,12 @@
           				</div>
 		
          				<!-- Row -->
-          				<div class="row">
+          				<div class="row text-right">
 							<div class="col-lg-12">
 	                    		<div class="card mb-4">
 	                           		
 	                           		<!-- 검색 -->
-	                                <div class="mb-1 mt-5 px-5">
+	                                <div class="mb-1 mt-5 px-3">
 								    	<form class="navbar-search">
 									    	<div class="row">
 									        	<div class="col-sm-4">
@@ -90,15 +90,13 @@
 								                    	</select>
 								                	</div>
 						                		</div>
-					                			<div class="col-sm-1">
-						                			<div class="input-group-append float-right">
-														<button class="btn btn-outline-warning btn-sm" type="button" onclick="searchClear()">
-															초기화 
-														</button>
-													</div>
+					                			<div class="col-sm-1 text-left">
+													<button class="btn btn-outline-warning btn-sm" type="button" onclick="searchClear()">
+														초기화 
+													</button>
 						                		</div>
 								           	</div>
-						                	<div class="row">
+						                	<div class="row text-right">
 						                		<div class="col-sm-4">
 						                			<div class="form-group row">
 						                				<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">등록자 소속</label>
@@ -128,12 +126,10 @@
 								                   		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;" id="keyword">
 								                  	</div>
 						                		</div>
-						                		<div class="col-sm-1">
-						                			<div class="input-group-append float-right">
-														<button class="btn btn-primary btn-sm" type="button" onclick="developList(1)">
-															조회 <i class="fas fa-search fa-sm"></i>
-														</button>
-													</div>
+						                		<div class="col-sm-1 text-left">
+													<button class="btn btn-primary btn-sm" type="button" onclick="developList(1)">
+														조회 <i class="fas fa-search fa-sm"></i>
+													</button>
 						                		</div>
 						                	</div>
 				                		</form>

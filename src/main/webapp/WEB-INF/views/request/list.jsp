@@ -212,15 +212,16 @@
 				<input type="hidden" id="userNo" value="${sessionScope.loginUser.userNo}">
 				<input type="hidden" id="userType" name="userType" value="${sessionScope.loginUser.userType}">
 				<div class="custom-control custom-switch px-5 ml-2" style="width:200px; border-radius:3px; background-color:#eaecf4;">
-				  <input type="checkbox" class="custom-control-input" id="searchMySR" onclick="requestList(1)"/>
-				  <label class="custom-control-label" for="searchMySR"><span class="text-primary">
-				  <c:if test="${sessionScope.loginUser.userType eq '고객사'}">
-				  	나의 SR 조회
-				  </c:if>
-				  <c:if test="${sessionScope.loginUser.userType eq '관리자' or sessionScope.loginUser.userType eq '개발자'}">
-				  	담당 SR 조회
-				  </c:if>
-				  <i class="fas fa-search fa-sm mx-2"></i></span></label>
+					  <input type="checkbox" class="custom-control-input" id="searchMySR" onclick="requestList(1)"/>
+					  
+					  <label class="custom-control-label" for="searchMySR"><span class="text-primary">
+					  <c:if test="${sessionScope.loginUser.userType eq '고객사'}">
+					  	나의 SR 조회
+					  </c:if>
+					  <c:if test="${sessionScope.loginUser.userType eq '관리자' or sessionScope.loginUser.userType eq '개발자'}">
+					  	담당 SR 조회
+					  </c:if>
+					  <i class="fas fa-search fa-sm mx-2"></i></span></label>
 				</div>
 				
 				<!-- ajaxList 들어가는 곳 -->
