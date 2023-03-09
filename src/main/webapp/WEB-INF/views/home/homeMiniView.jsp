@@ -9,7 +9,7 @@
 					<thead class="thead-light">
 						<tr>
 							<th>SR번호</th>
-							<th>제목</th>
+							<th style="width:180px">제목</th>
 							<th>관련 시스템</th>
 							<th>상태</th>
 							<th>완료예정일</th>
@@ -22,15 +22,21 @@
 						<tr>
 							<c:if test="${sessionScope.loginUser.userType eq '관리자'}">
 								<td><a onclick="managerMiniView('${list.srNo}')">${list.srNo}</a></td>
-								<td><a onclick="managerMiniView('${list.srNo}')">${list.srTtl}</a></td>
+								<td style="width:180px; overflow:hidden; text-overflow: ellipsis; display:block;">
+									<a onclick="managerMiniView('${list.srNo}')">${list.srTtl}</a>
+								</td>
 							</c:if>
 							<c:if test="${sessionScope.loginUser.userType eq '고객사'}">
 								<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srNo}</a></td>
-								<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srTtl}</a></td>
+								<td style="width:180px; overflow:hidden; text-overflow: ellipsis; display:block;">
+									<a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srTtl}</a>
+								</td>
 							</c:if>
 							<c:if test="${sessionScope.loginUser.userType eq '개발자'}">
 								<td><a onclick="devMiniView('${list.srNo}')">${list.srNo}</a></td>
-								<td><a onclick="devMiniView('${list.srNo}')">${list.srTtl}</a></td>
+								<td style="width:180px; overflow:hidden; text-overflow: ellipsis; display:block;">
+									<a onclick="devMiniView('${list.srNo}')">${list.srTtl}</a>
+								</td>
 							</c:if>
 							<td>${list.sysNm}</td>
 							<td style="width : 100px">

@@ -49,6 +49,7 @@ import com.team01.webapp.model.SystemInfo;
 import com.team01.webapp.model.Task;
 import com.team01.webapp.model.ThArr;
 import com.team01.webapp.progress.service.IProgressService;
+import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -63,6 +64,9 @@ public class ProgressController {
 	@Autowired
 	private IHomeService homeService;
 	
+	@Autowired
+	private AlarmInfo alarmInfo;
+	
 	/**
 	 * 리스트 된 필터링 불러오기
 	 * 
@@ -73,11 +77,14 @@ public class ProgressController {
 	 * @return					progress/list 로 return
 	 */
 	@RequestMapping(value="/progress/list/{pageNo}", method = RequestMethod.GET)
-	public String progressList(@PathVariable int pageNo, ProgressFilter progressfilter, Model model) {
+	public String progressList(@PathVariable int pageNo, ProgressFilter progressfilter, HttpSession session, Model model) {
 		
 		progressfilter = progressService.filterList(progressfilter);
 		
 		model.addAttribute("progressFilter", progressfilter);
+		
+		// 알림 수 및 리스트
+		alarmInfo.info(session, model);
 		
 		return "progress/list";
 	}
