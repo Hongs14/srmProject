@@ -24,6 +24,7 @@ import com.team01.webapp.model.SrProgressList;
 import com.team01.webapp.model.System;
 import com.team01.webapp.model.Task;
 import com.team01.webapp.model.ThArr;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.progress.dao.IProgressRepository;
 import com.team01.webapp.util.Pager;
 
@@ -422,6 +423,11 @@ public class ProgressService implements IProgressService {
 		
 		progressRepository.updateSr(changeRequest);
 		progressRepository.updateChangeRequest(changeRequest.getCrNo(), changeRequest.getChoice(), changeRequest.getCrComment());
+	}
+
+	@Override
+	public Users getSysUserData(String sysNo) {
+		return progressRepository.selectSysUserData(sysNo);
 	}
 
 }

@@ -35,19 +35,18 @@
 			<div style="border: 2px solid #e3e6f0; border-radius:5px;" class="p-2">
 				<div class="d-flex mb-1">
 					<span class="text-primary font-weight-bold p-2"><i class="fa-solid fa-circle-info mx-1"></i>시스템 정보</span>
-					<span class="p-2 text-center">사슈즈 스토어(스토어 명)</span> 
 				</div>
 				<div class="row px-5 mb-1">
 					<span class="col-sm-3 font-weight-bold"><i class="fa-solid fa-user-tie mr-2"></i>시스템 관리자:</span> 
-					<span class="col-sm-3">김태희</span> 
+					<span class="col-sm-3">${userData.userNm}</span> 
 					<span class="col-sm-3 font-weight-bold"><i class="fa-solid fa-wrench mr-2"></i>업데이트 일자:</span>
-					<span class="col-sm-3">2023/03/23</span>
+					<span class="col-sm-3">${userData.sysUpdtDate}</span>
 				</div>
 				<div class="row px-5 mb-1">
 					<span class="col-sm-3 font-weight-bold"><i class="fa-solid fa-mobile-screen-button mr-2"></i>관리자 연락처:</span> 
-					<span class="col-sm-3">010-123-1234</span> 
+					<span class="col-sm-3">${userData.userTelno}</span> 
 					<span class="col-sm-3 font-weight-bold"><i class="fa-solid fa-envelope mr-2"></i>관리자 메일:</span>
-					<span class="col-sm-3">xogml@srmmail.com</span>
+					<span class="col-sm-3">${userData.userEml}</span>
 				</div>
 			</div>
 		</div>
@@ -55,7 +54,9 @@
 			<thead class="thead-light">
 				<tr>
 					<c:if test="${userNo == managerNo}">
-						<th></th>
+						<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
+							<th></th>
+						</c:if>
 					</c:if>
 					<th>리더 여부</th>
 					<th>성명</th>
@@ -70,12 +71,14 @@
 			<c:forEach var="list" items="${hrList}">
 				<tr>
 					<c:if test="${userNo == managerNo}">
-						<th>
-							<div class="custom-control custom-radio">
-								<input type="radio" id="SR+${list.userNo}" name="customRadio" class="custom-control-input" value="${list.userNo}">
-								<label class="custom-control-label" for="SR+${list.userNo}"></label>
-							</div>
-						</th>
+						<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
+							<th>
+								<div class="custom-control custom-radio">
+									<input type="radio" id="SR+${list.userNo}" name="customRadio" class="custom-control-input" value="${list.userNo}">
+									<label class="custom-control-label" for="SR+${list.userNo}"></label>
+								</div>
+							</th>
+						</c:if>
 					</c:if>
 					<th id="leader+${list.userNo}">
 						<c:if test="${list.hrLeader eq 'Y'}">

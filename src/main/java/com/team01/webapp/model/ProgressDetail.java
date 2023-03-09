@@ -29,4 +29,5 @@ public class ProgressDetail {
 	private List<SrFile> srFile;
 	
 	private String srPry;
+	private String sysNo;
 }

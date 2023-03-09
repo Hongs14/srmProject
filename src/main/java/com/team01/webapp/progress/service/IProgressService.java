@@ -15,6 +15,7 @@ import com.team01.webapp.model.SrProgressAjax;
 import com.team01.webapp.model.SrProgressList;
 import com.team01.webapp.model.Task;
 import com.team01.webapp.model.ThArr;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
 
 public interface IProgressService {
@@ -225,4 +226,6 @@ public interface IProgressService {
 	public ChangeRequest getChangeRequestFile(int crNo);
 
 	public void changeRequestUpdate(ChangeRequest changeRequest);
+
+	public Users getSysUserData(String sysNo);
 }

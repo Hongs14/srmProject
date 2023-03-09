@@ -25,9 +25,8 @@
 		                		<h4 class="p-0 m-0">총 <span style="color:#a80000;">${devMini.count}</span> 건</h4>
 								<a class=" btn btn-sm btn-primary" href="${pageContext.request.contextPath}/progress/detail/${devMini.srNo}">
 									<i class="fa-solid fa-link mx-1"></i>
-								산출물
+									진척관리 페이지로 이동
 								</a>
-								<% session.setAttribute("message", "3"); %>
 	                		</div>
 	                	</div>
                 	</div>
