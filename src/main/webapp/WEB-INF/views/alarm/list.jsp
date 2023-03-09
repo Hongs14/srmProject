@@ -74,8 +74,8 @@
 																			<span>${alarmList.messageDate}</span>
 																			<br/>			
 																			<div class="col-3" style="font-size:0.7rem">${alarmList.srNo}</div>
-																			<input type="hidden" id="alarmNo" name="alarmNo" value="${alarmList.alarmNo}">
-																			<input type="hidden" id="sttsNm" name="sttsNm" value="${alarmList.sttsNm}">
+																			<span class="d-none" id="alarmNo">${alarmList.alarmNo}</span>
+																			<span class="d-none" id="sttsNm">${alarmList.sttsNm}</span>
 																			<span class="col-3 ">${alarmList.message}</span>
 																			<hr/>
 																		</td>
@@ -96,21 +96,22 @@
 							<script>
 								function updateCheck(i) {
 									var srNo = i;
-									var sttsNm = document.getElementById("sttsNm").value;
+									console.log(srNo);
+									var alarmNo = document.getElementById("alarmNo").innerHtml;
+									console.log(alarmNo);
+									var sttsNm = document.getElementById("sttsNm").innerHtml;
 									console.log(sttsNm);
 									
+									let data = {alarmNo : alarmNo};
 									let url = "";
-									
+
 									if(sttsNm == "완료요청"){
-										url = "${pageContext.request.contextPath}/progress/detail/2";	
+										url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
 									}else{
 										url = "${pageContext.request.contextPath}/request/list/"+srNo;
 									}
-									console.log(url);
 									
-									let data = {srNo : srNo};
 									console.log(data);
-									
 									
 									$.ajax({
 										url : "updateAlarmCheck",

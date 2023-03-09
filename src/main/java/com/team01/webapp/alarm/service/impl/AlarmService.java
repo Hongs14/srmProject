@@ -95,9 +95,9 @@ public class AlarmService implements IAlarmService{
 	
 	//알림 체크
 	@Override
-	public void updateCheck(String srNo) {
+	public void updateCheck(int alarmNo) {
 		log.info("실행");
-		alarmRepository.updateAlarmCheck(srNo);
+		alarmRepository.updateAlarmCheck(alarmNo);
 		
 	}
 	//알람 삭제

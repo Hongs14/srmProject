@@ -82,10 +82,10 @@
 	</insert>
 	
 	<!-- 알림 체크 -->
-	<update id="updateAlarmCheck" parameterType="String">
+	<update id="updateAlarmCheck" parameterType="int">
 		UPDATE SR_ALARM 
 		SET MESSAGE_CHECK = 'Y'
-		WHERE SR_NO = #{srNo}
+		WHERE ALARM_NO = #{alarmNo}
 	</update>
 	
 	<!-- 알릭 삭제 -->

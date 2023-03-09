@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <!DOCTYPE html>
-	<div class="table-responsive p-3">
-		<table class="table align-items-center table-flush table-hover">
-			<thead class="thead-light" style="text-align: center;">
+	<div class="table-responsive p-2">
+		<table class="table align-items-center table-flush table-hover text-left">
+			<thead class="thead-light">
 				<tr>	
 					<th>
 						<input type="checkbox" onclick='selectAll(this)' name="devleopCheck">
@@ -21,7 +21,7 @@
 					<th>중요도</th>
 				</tr>
 			</thead>
-			<tbody style="text-align: center;">
+			<tbody>
 				<c:forEach var="develop" items="${develop}">
 					<tr>
 						<td>
