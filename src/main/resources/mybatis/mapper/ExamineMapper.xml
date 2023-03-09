@@ -60,6 +60,10 @@
         AND sr.stts_no !=4
         AND sr.stts_no !=5
         AND sr.stts_no !=6
+        AND sr.stts_no !=7
+        AND sr.stts_no !=8
+        AND sr.stts_no !=9
+        AND sr.stts_no !=10
 		<if test="!sysNo.equals('')">
 			AND sys.sys_no = #{sysNo}
 		</if>
@@ -136,6 +140,10 @@
 		            AND s.stts_no !=4
 		            AND s.stts_no !=5
 		            AND s.stts_no !=6
+		            AND s.stts_no !=7
+			        AND s.stts_no !=8
+			        AND s.stts_no !=9
+			        AND s.stts_no !=10
 			       	<if test="sttsNo != 0">
 						AND st.stts_no = #{sttsNo}
 					</if>

@@ -19,7 +19,7 @@ public interface IAlarmService {
 	public void insertAlarm(String srNo, HttpSession session);
 	
 	//알림 체크
-	public void updateCheck(String srNo);
+	public void updateCheck(int alarmNo);
 	
 	//알림 삭제
 	public void deleteAlarm(int alarmNo);

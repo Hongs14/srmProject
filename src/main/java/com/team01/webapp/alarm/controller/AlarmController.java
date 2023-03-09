@@ -54,8 +54,8 @@ public class AlarmController extends TextWebSocketHandler {
 	public String updateAlarmCheck(@RequestBody Alarm alarm) {
 		log.info("실행");
 		log.info(alarm);
-		String srNo = alarm.getSrNo();
-		alarmService.updateCheck(srNo);
+		int alarmNo = alarm.getAlarmNo();
+		alarmService.updateCheck(alarmNo);
 		
 		return "redirect:/alarm/list";
 	}
