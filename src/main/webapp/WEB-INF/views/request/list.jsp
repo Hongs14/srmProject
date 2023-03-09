@@ -515,6 +515,39 @@
 					$("#keyword").val("");
 				}
 				
+				function excelDownload() {
+					var requestArr = new Array();
+					var checkbox = $("input[name=requestCheck]:checked");
+					
+					// 체크된 체크박스의 값을 가져옴
+					checkbox.each(function(i) {
+						var tr = checkbox.parent().parent().parent().eq(i);
+						var td = tr.children();
+						
+						if(td.eq(1).text() != 'SR번호') {
+							
+							var srNo = td.eq(1).text();
+							
+							requestArr.push(srNo);
+						}
+					});
+					
+					console.log(requestArr);
+					
+					var form = document.createElement('form');
+					form.setAttribute('method','post');
+					form.setAttribute('action', 'excelDownload');
+					document.charset = "utf-8";
+					
+					var hiddenField = document.createElement("input");
+					hiddenField.setAttribute('type', 'hidden');
+					hiddenField.setAttribute('name', 'requestArr');
+					hiddenField.setAttribute('value', requestArr);
+					form.appendChild(hiddenField);
+					
+					document.body.appendChild(form);
+					form.submit();
+				}
 			</script>
           
 

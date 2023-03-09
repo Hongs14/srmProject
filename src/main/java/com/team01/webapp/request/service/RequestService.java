@@ -1,6 +1,5 @@
 package com.team01.webapp.request.service;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.model.Request;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
@@ -177,6 +175,19 @@ public class RequestService implements IRequestService{
 	@Override
 	public int deleteRequest(String srNo) {
 		return requestRepository.deleteRequest(srNo);
+	}
+
+	@Override
+	public List<RequestList> getRequestExcelList(List<String> requestArr) {
+		RequestList requestSr = null;
+		ArrayList<RequestList> requestList = new ArrayList<>();
+		for(int i=0; i<requestArr.size(); i++) {
+			requestSr = requestRepository.selectRequestSr(requestArr.get(i));
+			requestList.add(requestSr);
+			log.info(requestSr);
+		}
+		
+		return requestList;
 	}
 
 	
