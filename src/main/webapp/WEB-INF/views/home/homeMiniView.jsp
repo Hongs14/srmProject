@@ -123,6 +123,7 @@
 							contentType: "application/json; charset=UTF-8"
 						}).done((data) => {
 							$('#managerMiniView').html(data);
+							$("#managerMiniViewDetail").show();
 						})
 					}
 					
