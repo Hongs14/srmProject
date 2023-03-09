@@ -48,6 +48,48 @@ public class AlarmService implements IAlarmService{
 		alarmUser = alarmRepository.selectAlarm(srNo);
 		log.info(alarmUser);
 		
+		if(alarmUser.getSttsNm().equals("요청")) {
+			alarmUser.setMessage("SR 요청이 등록 되었습니다.");
+			alarmUser.setAlarmPry("상");
+			alarmUser.setAlarmCategory("SR상태변경");
+		}else if(alarmUser.getSttsNm().equals("검토중")) {
+			alarmUser.setMessage("SR 요청이 검토중 입니다.");
+			alarmUser.setAlarmPry("하");
+			alarmUser.setAlarmCategory("SR상태변경");
+		}else if(alarmUser.getSttsNm().equals("접수")) {
+			alarmUser.setMessage("SR 요청이 정상적으로 접수 되었습니다.");
+			alarmUser.setAlarmPry("하");
+			alarmUser.setAlarmCategory("SR상태변경");
+		}else if(alarmUser.getSttsNm().equals("개발계획")) {
+			alarmUser.setMessage("SR 요청이 개발 계획 중 입니다.");
+			alarmUser.setAlarmPry("하");
+			alarmUser.setAlarmCategory("SR상태변경");
+		}else if(alarmUser.getSttsNm().equals("개발중")) {
+			alarmUser.setMessage("SR 요청이 개발중 입니다.");
+			alarmUser.setAlarmPry("하");
+			alarmUser.setAlarmCategory("업무배정");
+		}else if(alarmUser.getSttsNm().equals("완료요청")) {
+			alarmUser.setMessage("SR 완료 요청 승인 바랍니다.");
+			alarmUser.setAlarmPry("상");
+			alarmUser.setAlarmCategory("SR상태변경");
+		}else if(alarmUser.getSttsNm().equals("개발완료")) {
+			alarmUser.setMessage("SR 요청이 개발완료 되었습니다.");
+			alarmUser.setAlarmPry("하");
+			alarmUser.setAlarmCategory("SR상태변경");
+		}else if(alarmUser.getSttsNm().equals("반려")) {
+			alarmUser.setMessage("SR 요청이 반려 되었습니다.");
+			alarmUser.setAlarmPry("하");
+			alarmUser.setAlarmCategory("SR상태변경");
+		}else if(alarmUser.getSttsNm().equals("재검토")) {
+			alarmUser.setMessage("SR 요청이 재검토 되었습니다.");
+			alarmUser.setAlarmPry("하");
+			alarmUser.setAlarmCategory("SR상태변경");
+		}else {
+			alarmUser.setMessage("SR 요청에 대한 계획 조정 요청 입니다.");
+			alarmUser.setAlarmPry("상");
+			alarmUser.setAlarmCategory("SR상태변경");
+		}
+		
 		alarmRepository.insertAlarm(alarmUser);
 	}
 	
