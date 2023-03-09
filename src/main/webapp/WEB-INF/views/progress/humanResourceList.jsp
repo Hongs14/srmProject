@@ -15,28 +15,49 @@
 		      });  
 	  	});
 	</script>
-	<div class="table-responsive">
-	<div class="input-group-append float-right mb-3">
-		<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
-			<c:if test="${userNo == managerNo}">
-				<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#HumanResourceAdd" id="#modalScroll">
-					추가
-				</button>
-				<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#HumanResourceUpdate" id="#modalScroll" onclick="developerUpdate()">
-					변경
-				</button>
-				<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#messageModal" id="#modalScroll" onclick="developerDelete()">
-					삭제
-				</button>
+	<div class="humanResourceList">
+		<div class="input-group-append float-right mb-3">
+			<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
+				<c:if test="${userNo == managerNo}">
+					<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#HumanResourceAdd" id="#modalScroll">
+						추가
+					</button>
+					<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#HumanResourceUpdate" id="#modalScroll" onclick="developerUpdate()">
+						변경
+					</button>
+					<button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#messageModal" id="#modalScroll" onclick="developerDelete()">
+						삭제
+					</button>
+				</c:if>
 			</c:if>
-		</c:if>
-	</div>
+		</div>
+		<div id="systemView" class="mb-2 text-left">
+			<div style="border: 2px solid #e3e6f0; border-radius:5px;" class="p-2">
+				<div class="d-flex mb-1">
+					<span class="text-primary font-weight-bold p-2"><i class="fa-solid fa-circle-info mx-1"></i>시스템 정보</span>
+					<span class="p-2 text-center">사슈즈 스토어(스토어 명)</span> 
+				</div>
+				<div class="row px-5 mb-1">
+					<span class="col-sm-3 font-weight-bold"><i class="fa-solid fa-user-tie mr-2"></i>시스템 관리자:</span> 
+					<span class="col-sm-3">김태희</span> 
+					<span class="col-sm-3 font-weight-bold"><i class="fa-solid fa-wrench mr-2"></i>업데이트 일자:</span>
+					<span class="col-sm-3">2023/03/23</span>
+				</div>
+				<div class="row px-5 mb-1">
+					<span class="col-sm-3 font-weight-bold"><i class="fa-solid fa-mobile-screen-button mr-2"></i>관리자 연락처:</span> 
+					<span class="col-sm-3">010-123-1234</span> 
+					<span class="col-sm-3 font-weight-bold"><i class="fa-solid fa-envelope mr-2"></i>관리자 메일:</span>
+					<span class="col-sm-3">xogml@srmmail.com</span>
+				</div>
+			</div>
+		</div>
 		<table class="table align-items-center table-flush table-hover p-2">
 			<thead class="thead-light">
 				<tr>
 					<c:if test="${userNo == managerNo}">
 						<th></th>
 					</c:if>
+					<th>리더 여부</th>
 					<th>성명</th>
 					<th>부서 명</th>
 					<th>직책</th>
@@ -44,7 +65,6 @@
 					<th>담당업무</th>
 					<th>시작 날짜</th>
 					<th>끝 날짜</th>
-					<th>리더 여부</th>
 				</tr>
 			</thead>
 			<c:forEach var="list" items="${hrList}">
@@ -57,6 +77,14 @@
 							</div>
 						</th>
 					</c:if>
+					<th id="leader+${list.userNo}">
+						<c:if test="${list.hrLeader eq 'Y'}">
+							<span class="badge badge-warning">Leader</span>
+						</c:if>
+						<c:if test="${list.hrLeader eq 'N'}">
+							<span class="badge badge-secondary">Dev</span>
+						</c:if>
+					</th>
 					<th>${list.userNm}</th>
 					<th>${list.userDpNm}</th>
 					<th>${list.userJbps}</th>
@@ -68,7 +96,6 @@
 					<th id="endDate+${list.userNo}">
 						<fmt:formatDate value="${list.hrEndDate}" pattern="yyyy-MM-dd" />
 					</th>
-					<th id="leader+${list.userNo}">${list.hrLeader}</th>
 				</tr>
 			</c:forEach>
 		</table>

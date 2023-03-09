@@ -84,12 +84,10 @@
 			<div class="col-sm-2">
 				<span class="font-weight-bold">첨부파일: </span> 
 			</div>
-			<div class="col-sm-10">
-				<div class="custom-file">
-					<c:forEach var="requestFile" items="${srFile}">
+			<div class="col-sm-10 custom-file">
+				<c:forEach var="requestFile" items="${srFile}">
 						<span><a href="fileDownload?requestFileNo=${requestFile.srFileNo}&srNo=${sr.srNo}">${requestFile.srFileActlNm}</a></span>
-               		</c:forEach>
-				</div>
+           		</c:forEach>
 			</div>	
 		</div>
 		<!-- 하단 버튼들 -->

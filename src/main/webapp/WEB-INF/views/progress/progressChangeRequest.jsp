@@ -2,61 +2,54 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <!DOCTYPE html>
-	<div class="modal-header bg-primary">
-		<h5 class="modal-title" id="exampleModalScrollableTitle">
-			<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
-        	<small class="text-white">
-        		<b>기간 추가 신청</b>
-        	</small>
-		</h5>
-	</div>
-	<div class="card">
-		<div class="p-5">
-			<form method="post" onsubmit="return false;"  enctype="multipart/form-data">
-				<div class="row mb-2 mr-0" >
-					<label class="font-weight-bold col-sm-2">등록자 </label> 
-					<input class="col-sm-4" style="height:30px" disabled value="${sessionScope.loginUser.userNm}"/>
-					<label class="font-weight-bold col-sm-2" for="dateInput">계획 종료일</label>
-					<div class="form-group col-sm-4 px-0" id="simple-date1" >
-						<div class="input-group date" >
-							<div class="input-group-prepend">
-								<span class="input-group-text" id="crRegDate"><i class="fas fa-calendar" ></i></span>
-							</div>
-							<input type="text" class="form-control" id="dateInput" style="height:30px;">
+   	<div>
+   		<span class="text-primary"><i class="fa-regular fa-calendar-plus mr-1"></i><b>기간 추가 신청</b></span>
+   	</div>
+	<div class="p-5">
+		<form method="post" onsubmit="return false;"  enctype="multipart/form-data">
+			<div class="row mb-2 mr-0" >
+				<label class="font-weight-bold col-sm-2">등록자 </label> 
+				<input class="col-sm-4" style="height:30px" disabled value="${sessionScope.loginUser.userNm}"/>
+				<label class="font-weight-bold col-sm-2" for="dateInput">계획 종료일</label>
+				<div class="form-group col-sm-4 px-0" id="simple-date1" >
+					<div class="input-group date" >
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="crRegDate"><i class="fas fa-calendar" ></i></span>
 						</div>
+						<input type="text" class="form-control" id="dateInput" style="height:30px;">
 					</div>
 				</div>
-				<div class="row mb-2 align-items-center">
-					<label class=" font-weight-bold col-sm-3" for="srTtl">기간 추가 신청 제목</label> 
-					<input name="crTtl" id="crTtl"class="col-sm-9" type="text" class="form-control form-control-sm"/>
+			</div>
+			<div class="row mb-2 align-items-center">
+				<label class=" font-weight-bold col-sm-3" for="srTtl">기간 추가 신청 제목</label> 
+				<input name="crTtl" id="crTtl"class="col-sm-9" type="text" class="form-control form-control-sm"/>
+			</div>
+			<div class="row mb-2">
+				<label class=" font-weight-bold col-sm-2">신청 내용</label> 
+				<textarea name="crCn" id="crCn" rows="10" class="form-control form-control-sm col-sm-10" wrap="hard"></textarea>
+			</div>
+			<!-- 파일 첨부 -->
+			<div class="row mb-2">
+				<label class=" font-weight-bold col-sm-2" for="srFile">첨부파일 </label> 
+				<div class="custom-file col-sm-10">
+					<input type="file" class="custom-file-input form-control" name="changeRequestFile" onchange="addChangeFile(this)">
+					<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
 				</div>
-				<div class="row mb-2">
-					<label class=" font-weight-bold col-sm-2">신청 내용</label> 
-					<textarea name="crCn" id="crCn" rows="10" class="form-control form-control-sm col-sm-10" wrap="hard"></textarea>
+			</div>
+			<div class="row mb-2">
+				<label class=" font-weight-bold col-sm-2">파일목록 </label> 
+				<div class="col-sm-10" id="userfile">
+					
 				</div>
-				<!-- 파일 첨부 -->
-				<div class="row mb-2">
-					<label class=" font-weight-bold col-sm-2" for="srFile">첨부파일 </label> 
-					<div class="custom-file col-sm-10">
-						<input type="file" class="custom-file-input form-control" name="changeRequestFile" onchange="addChangeFile(this)">
-						<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
-					</div>
-				</div>
-				<div class="row mb-2">
-					<label class=" font-weight-bold col-sm-2">파일목록 </label> 
-					<div class="col-sm-10" id="userfile">
-						
-					</div>
-				</div>			
-				<input type="hidden" id="userNo" value="${userNo}"/>
-				<input type="hidden" id="srNo" value="${srNo}"/>
-				<div class="modal-footer justify-content-right mr-0">
-					<button type="submit" class="btn btn-primary" onclick="changeRequest()">
-						저장
-					</button>
-				</div>
-			</form>
-		</div>
+			</div>			
+			<input type="hidden" id="userNo" value="${userNo}"/>
+			<input type="hidden" id="srNo" value="${srNo}"/>
+			<div class="modal-footer justify-content-right mr-0">
+				<button type="submit" class="btn btn-primary" onclick="changeRequest()">
+					저장
+				</button>
+			</div>
+		</form>
 	</div>
 	
 	<script>

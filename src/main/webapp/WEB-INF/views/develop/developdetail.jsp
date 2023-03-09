@@ -11,7 +11,6 @@
 		select option[disabled] {
            display: none;
         }
-        
 	</style>
 	<script>
 		function selectDev(obj) {
