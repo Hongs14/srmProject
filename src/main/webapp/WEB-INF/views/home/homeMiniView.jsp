@@ -21,20 +21,20 @@
 						<c:forEach var="list" items="${srList}">
 						<tr>
 							<c:if test="${sessionScope.loginUser.userType eq '관리자'}">
-								<td><a onclick="managerMiniView('${list.srNo}')">${list.srNo}</a></td>
-								<td style="width:180px; overflow:hidden; text-overflow: ellipsis; display:block;">
+								<td><a onclick="managerMiniView('${list.srNo}')" style="cursor:pointer;">${list.srNo}</a></td>
+								<td style="width:180px; overflow:hidden; text-overflow: ellipsis; display:block; cursor:pointer;">
 									<a onclick="managerMiniView('${list.srNo}')">${list.srTtl}</a>
 								</td>
 							</c:if>
 							<c:if test="${sessionScope.loginUser.userType eq '고객사'}">
-								<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srNo}</a></td>
-								<td style="width:180px; overflow:hidden; text-overflow: ellipsis; display:block;">
+								<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}" style="cursor:pointer;">${list.srNo}</a></td>
+								<td style="width:180px; overflow:hidden; text-overflow: ellipsis; display:block; cursor:pointer;">
 									<a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srTtl}</a>
 								</td>
 							</c:if>
 							<c:if test="${sessionScope.loginUser.userType eq '개발자'}">
-								<td><a onclick="devMiniView('${list.srNo}')">${list.srNo}</a></td>
-								<td style="width:180px; overflow:hidden; text-overflow: ellipsis; display:block;">
+								<td><a onclick="devMiniView('${list.srNo}')" style="cursor:pointer;">${list.srNo}</a></td>
+								<td style="width:180px; overflow:hidden; text-overflow: ellipsis; display:block; cursor:pointer;">
 									<a onclick="devMiniView('${list.srNo}')">${list.srTtl}</a>
 								</td>
 							</c:if>
@@ -137,6 +137,7 @@
 							contentType: "application/json; charset=UTF-8"
 						}).done((data) => {
 							$('#devMiniView').html(data);
+							$("#devPlanDetail").show();
 						})
 					}
 				</script>

@@ -15,6 +15,24 @@
   			align-items:center;
   			min-height: 100vh;
   		}
+  	#bellIcon{
+  		 display: inline-block;
+		 width: 200px;
+		 height: 200px;
+		 border-radius: 50%;
+		 text-align: center;
+		 font-size: 15px;
+		 padding-top: 40px;
+		 background-color:#f1fafd;
+		 color:#ffed7e;
+		 border: 2px solid #68dafd;
+  	}
+  	#bellIcon>i{
+		font-size:100px;
+	}
+	.myInfoWrapper{
+		 background-color:#fff7d2;
+	}
 	</style>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
 </head>
@@ -43,17 +61,28 @@
 									</ol>
 								</div>
 								<div class="card">
-									<div class="card-body d-flex p-5">
-										<div class="userOgdp" style="border-right: 2px solid #757575; padding-right: 30px;">
-											<div class="p-3 pt-5">
-												<a class="badge badge-primary mb-3"  style="font-size:100%">나의 SR 알림</a>
-												<h3 style="border-bottom:1px solid #757575;">나의 SR 요청</h3>
+									<div class="card-body d-flex justify-content-between p-5">
+										<div class="alertIcon text-center">
+											<div id="bellIcon" class="mb-2">
+												<i class="fa-solid fa-bell"></i>
+											</div>
+											<div>
+												<hr>
+												<span class="text-primary h6"><b>알림 카테고리</b></span>
+											</div>
+											<div>
+												<button class="btn btn-outline-warning m-1">SR상태변경</button>
+												<button class="btn btn-outline-info m-1">업무배정</button>
+											</div>
+											<div>
+												<button class="btn btn-outline-primary m-1">문의결과</button>
+												<button class="btn btn-outline-danger m-1">요청결과</button>
 											</div>
 										</div>
-										<div class="myInfoWrapper p-5 container">
-											<div class="row mb-5  justify-content-center d-flex align-items-center alert alert-primary" >나의 알림 목록</div>
-											<div class="row mb-5"><button onclick="onMessage()">알림 전송</button></div>
-											<div class="row mb-5">
+										<div class="myInfoWrapper shadow">
+											<div style="background-color:#fff3ab; padding: 20px;">나의 알림 목록</div>
+											<!-- <div class="row mb-5"><button onclick="onMessage()">알림 전송</button></div> -->
+											<div class="row mb-5 p-5">
 												<table>
 													<tbody>												
 														<c:choose>
@@ -65,7 +94,7 @@
 																	<tr style="cursor:pointer;">
 																		<td onclick="updateCheck('${alarmList.srNo}')">
 																			<c:if test="${alarmList.messageCheck eq 89}">
-														                      <i class="fas fa-check"></i>
+																				<i class="fa-regular fa-square-check fa-lg"></i>
 													                    	</c:if>
 													                    	<c:if test="${alarmList.messageCheck eq 78 }">
 														                      <i class="fas fa-exclamation-triangle"></i>
