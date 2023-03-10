@@ -8,38 +8,68 @@
 				<table class="table table-hover border p-1" >
 					<thead class="thead-light">
 						<tr>
-							<th>SR번호</th>
-							<th style="width:180px">제목</th>
-							<th>관련 시스템</th>
-							<th>상태</th>
-							<th>완료예정일</th>
-							<th>중요</th>
-							<th>진척도</th>
+							<th style="width:130px">SR번호</th>
+							<th style="width:320px">제목</th>
+							<th style="width:110px">관련 시스템</th>
+							<th style="width:50px">상태</th>
+							<th style="width:100px">완료예정일</th>
+							<th style="width:40px">중요</th>
+							<th style="width:100px">진척도</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="list" items="${srList}">
+						<c:forEach var="list" items="${srList}" varStatus="status">
 						<tr>
 							<c:if test="${sessionScope.loginUser.userType eq '관리자'}">
-								<td><a onclick="managerMiniView('${list.srNo}')" style="cursor:pointer;">${list.srNo}</a></td>
-								<td style="width:180px; overflow:hidden; text-overflow: ellipsis; display:block; cursor:pointer;">
-									<a onclick="managerMiniView('${list.srNo}')">${list.srTtl}</a>
+								<td style="width:130px">
+									<a onclick="managerMiniView('${list.srNo}')" style="cursor:pointer;" id="srNo-${status.index}">
+										<b>
+											${list.srNo}
+										</b>
+									</a>
+								</td>
+								<td>
+									<a onclick="managerMiniView('${list.srNo}')" style="width:300px; overflow:hidden; text-overflow: ellipsis; display:block; cursor:pointer;">
+										<b>
+											${list.srTtl}
+										</b>
+									</a>
 								</td>
 							</c:if>
 							<c:if test="${sessionScope.loginUser.userType eq '고객사'}">
-								<td><a href="${pageContext.request.contextPath}/request/list/${list.srNo}" style="cursor:pointer;">${list.srNo}</a></td>
-								<td style="width:180px; overflow:hidden; text-overflow: ellipsis; display:block; cursor:pointer;">
-									<a href="${pageContext.request.contextPath}/request/list/${list.srNo}">${list.srTtl}</a>
+								<td style="width:130px;">
+									<a href="${pageContext.request.contextPath}/request/list/${list.srNo}" style="cursor:pointer; text-decoration:none;">
+										<b>
+											${list.srNo}
+										</b>
+									</a>
+								</td>
+								<td>
+									<a href="${pageContext.request.contextPath}/request/list/${list.srNo}" style="width:300px; overflow:hidden; text-overflow: ellipsis; display:block; cursor:pointer; text-decoration:none;">
+										<b>
+											${list.srTtl}
+										</b>
+									</a>
 								</td>
 							</c:if>
 							<c:if test="${sessionScope.loginUser.userType eq '개발자'}">
-								<td><a onclick="devMiniView('${list.srNo}')" style="cursor:pointer;">${list.srNo}</a></td>
-								<td style="width:180px; overflow:hidden; text-overflow: ellipsis; display:block; cursor:pointer;">
-									<a onclick="devMiniView('${list.srNo}')">${list.srTtl}</a>
+								<td style="width:130px">
+									<a onclick="devMiniView('${list.srNo}')" style="cursor:pointer;">
+										<b>
+											${list.srNo}
+										</b>
+									</a>
+								</td>
+								<td>
+									<a onclick="devMiniView('${list.srNo}')" style="width:300px; overflow:hidden; text-overflow: ellipsis; display:block; cursor:pointer;">
+										<b>
+											${list.srTtl}
+										</b>
+									</a>
 								</td>
 							</c:if>
-							<td>${list.sysNm}</td>
-							<td style="width : 100px">
+							<td style="width:110px">${list.sysNm}</td>
+							<td style="width:50px">
 								<c:choose>
 										<c:when test="${list.sttsNm eq '요청'}">
 											<span class="badge badge-outline-secondary" style="border: 1px solid gray;">${list.sttsNm}</span>
@@ -67,9 +97,13 @@
 										</c:otherwise>
 									</c:choose>
 							</td>
-							<td>${list.srRegDate}</td>
-							<td>${list.srPry}</td>
-							<td>
+							<td style="width:100px">${list.srRegDate}</td>
+							<td style="width:40px">
+								<c:if test="${list.srPry eq '상'}"><span class="badge badge-danger" style="font-size:100%">${list.srPry}</span></c:if>
+								<c:if test="${list.srPry eq '중'}"><span class="badge badge-primary" style="font-size:100%">${list.srPry}</span></c:if>
+								<c:if test="${list.srPry eq '하'}"><span class="badge badge-secondary" style="font-size:100%">${list.srPry}</span></c:if>
+							</td>
+							<td style="width:100px">
 								<div class="progress">
 									<c:choose>
 										<c:when test="${list.sttsNm eq '검토중'}">

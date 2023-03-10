@@ -50,7 +50,7 @@
 		</c:if>
 	<!-- 모달 창 -->
 	<div class="modal fade" id="progressFileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+		<div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
 				<div id="progressFileModalView"></div>
 			</div>

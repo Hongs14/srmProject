@@ -65,8 +65,6 @@
              		labelse.push('${list.sttsNm}');
              		data.push(${list.count});
              	</c:forEach>
-             	console.log(labelse);
-             	
              
 				var ctx = document.getElementById("myPieChart");
 				var myPieChart = new Chart(ctx, {
@@ -113,4 +111,11 @@
 				    },
 				  },
 				});
+				
+				document.getElementById("myPieChart").onclick = function(evt) {
+					const points = myPieChart.getElementsAtEventForMode(evt, 'index', { intersect: true }, true);
+					var i = points[0].index;
+					console.log('${system[0].sysNo}');
+					console.log(labelse[i]);
+				};
             </script>

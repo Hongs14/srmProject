@@ -23,6 +23,8 @@ public class HR {
 	private String taskNm;
 	private String srTtl;
 	
+	private String status;
+	
 	private List<DeveloperSR> srList;
 	
 }

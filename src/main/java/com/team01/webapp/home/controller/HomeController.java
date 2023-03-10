@@ -1,5 +1,6 @@
 package com.team01.webapp.home.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -77,6 +78,35 @@ public class HomeController {
 		//알람 수 및 리스트
 		alarmInfo.info(session, model); 
 		
+		// 기본 값 넣어주기
+		SR sr = new SR();
+		int userNo = (int) session.getAttribute("userNo");
+		sr.setSrCustNo(userNo);
+		String userType = (String) session.getAttribute("userType");
+		sr.setUserType(userType);
+		sr.setPageNo(1);
+		List<SystemInfo> system = null;
+		
+		if(userType.equals("고객사")) {
+			system = homeService.getSystemMiniView(userNo);
+			sr.setSysNo(system.get(0).getSysNo());
+		} else if(userType.equals("개발자")) {
+			
+		} else {
+			system = homeService.getSystemMiniViewDetail(userNo);
+			sr.setSysNo(system.get(0).getSysNo());
+		}
+		
+		pager = homeService.returnPage(sr.getPageNo(), pager, sr);
+		
+		List<SR> srList = homeService.homeList(pager, sr);
+		
+		if(srList.size() == 0) {
+			model.addAttribute("firstSrNo", "초기값");
+		} else {
+			model.addAttribute("firstSrNo", srList.get(0).getSrNo());
+		}
+		
 		return "home";
 	}
 
@@ -127,10 +157,6 @@ public class HomeController {
 		
 		List<SR> srList = homeService.homeList(pager, sr);
 		
-		for(int i=0; i<srList.size(); i++) {
-			log.info(srList.get(i).getSrNo());
-		}
-		
 		model.addAttribute("srList", srList);
 		model.addAttribute("pager", pager);
 		model.addAttribute("sttsNo", sr.getSttsNo());
@@ -149,8 +175,25 @@ public class HomeController {
 			model.addAttribute("list", list);
 			
 			List<HR> hrList = homeService.DeveloperList(sr.getSrNo());
+			Date sysdate = new Date();
+			
+			boolean startresult;
+			boolean endresult;
+			for(int i=0; i<hrList.size(); i++) {
+				startresult = hrList.get(i).getHrStartDate().after(sysdate);
+				endresult = hrList.get(i).getHrEndDate().after(sysdate);
+				
+				if(startresult) {
+					hrList.get(i).setStatus("대기");
+				} else {
+					if(endresult) {
+						hrList.get(i).setStatus("근무중");
+					} else {
+						hrList.get(i).setStatus("근무 완료");
+					}
+				}
+			}
 			model.addAttribute("hrList", hrList);
-			log.info(hrList);
 		}
 		
 		return "home/managerMiniView";
@@ -161,7 +204,28 @@ public class HomeController {
 		if(devMini.getSrNo().equals("초기값")) {
 			
 		} else {
+			Date sysdate = new Date();
+			
 			devMini = homeService.getDevMini(devMini);
+			model.addAttribute("devMini", devMini);
+			
+			boolean startresult;
+			boolean endresult;
+			for(int i=0; i<devMini.getHrList().size(); i++) {
+				startresult = devMini.getHrList().get(i).getHrStartDate().after(sysdate);
+				endresult = devMini.getHrList().get(i).getHrEndDate().after(sysdate);
+				
+				if(startresult) {
+					devMini.getHrList().get(i).setStatus("대기");
+				} else {
+					if(endresult) {
+						devMini.getHrList().get(i).setStatus("근무중");
+					} else {
+						devMini.getHrList().get(i).setStatus("근무 완료");
+					}
+				}
+			}
+			
 			model.addAttribute("devMini", devMini);
 		}
 		
