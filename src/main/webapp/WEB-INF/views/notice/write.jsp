@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <script>
@@ -40,11 +39,11 @@
 				<div class="col-4 ml-3">
 					<div class="form-group">
 						<select class="form-control" id="sysNo" name="sysNo">
-							<option value="KOREASOFT_SRM">한국소프트SRM</option>
-							<option value="JHJ">JHJ시스템</option>
-							<option value="KHR">KHR시스템</option>
-							<option value="KTH">KTH시스템</option>
-							<option value="HGH">HGH시스템</option>
+							<option>한국소프트</option>
+							<option>북북</option>
+							<option>한국대학교</option>
+							<option>사슈즈</option>
+							<option>오티아이</option>
 						</select>
 					</div>
 				</div>
@@ -98,7 +97,7 @@
 				<div class="col-12">
 					<div class="d-sm-flex justify-content-end">
 						<button class="btn btn-sm btn-primary mr-1" onclick="noticeWrite()">작성완료</button>
-						<button class="btn btn-sm btn-danger mr-1">닫기</button>
+						<a href="${pageContext.request.contextPath}/notice/list?sysNo=SRM" class="btn btn-sm btn-danger">닫기</a>
 					</div>	                	
 				</div>
 			</div>
@@ -214,7 +213,7 @@
 	$.ajax({
 		type: "POST",
 		enctype: 'multipart/form-data',	// 필수
-		url: sysNo+'/write',
+		url: '${pageContext.request.contextPath}/notice/write',
 		data: formData,		// 필수
 		processData: false,	// 필수
 		contentType: false	// 필수

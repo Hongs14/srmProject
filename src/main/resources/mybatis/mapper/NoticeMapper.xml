@@ -64,7 +64,8 @@
 		    NTC_TTL AS "ntcTtl",
 		    NTC_INQ_CNT AS "ntcInqCnt",
 	    	NTC_WRT_DATE AS "ntcWrtDate",
-	    	NTC_PRY AS "ntcPry"
+	    	NTC_PRY AS "ntcPry",
+	    	SYS_NO AS "sysNo"
 		FROM(
 		    SELECT 
 		        NTC_NO,
@@ -73,6 +74,7 @@
 		        NTC_WRT_DATE,
 		        NTC_PRY,
 		        USER_ID,
+		        SYS_NO,
 		        ROWNUM as RNUM
 
 		    FROM(
@@ -82,7 +84,8 @@
 		            n.NTC_INQ_CNT,
 		            n.NTC_WRT_DATE,
 		            n.NTC_PRY,
-		            u.USER_ID
+		            u.USER_ID,
+		            n.SYS_NO
 		        FROM NOTICE n, USERS u
 		        WHERE n.user_no = u.user_no
 		        <if test="startDate.equals('')">

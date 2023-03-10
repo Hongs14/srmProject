@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -198,15 +198,24 @@
 	                      </tr>
 	                    </thead>
 	                    <tbody>
-	                    	<c:forEach var="list" items="${noticeList}" end="4">
-	                      <tr>
-	                        <td>${list.seq}</td>
-	                        <td>${list.ntcTtl} </td>
-	                        <td>${list.userId}</td>
-	                        <td>${list.ntcWrtDate}</td>
-	                        <td><a href="${pageContext.request.contextPath}/notice/list/${list.ntcNo}" class="btn btn-sm btn-primary">상세</a></td>
-	                      </tr>
-	                      </c:forEach>
+	                    	<c:choose>
+	                    		<c:when test="${fn:length(noticeList) == 0 }">
+	                    			<tr>
+	                    				<td colspan="5" class="text-center">해당 공지사항이 없습니다.</td>
+	                    			</tr>
+	                    		</c:when>
+	                    		<c:otherwise>	                    		
+			                    	<c:forEach var="list" items="${noticeList}" end="4">
+				                      <tr>
+				                        <td>${list.seq}</td>
+				                        <td>${list.ntcTtl} </td>
+				                        <td>${list.userId}</td>
+				                        <td>${list.ntcWrtDate}</td>
+				                        <td><a href="${pageContext.request.contextPath}/notice/list/${list.ntcNo}?sysNo=${list.sysNo}" class="btn btn-sm btn-primary">상세</a></td>
+				                      </tr>
+			                      </c:forEach>
+	                    		</c:otherwise>
+	                    	</c:choose>
 	                      </tbody>
 	                    </table>
 		              </div>

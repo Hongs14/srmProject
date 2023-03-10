@@ -14,6 +14,8 @@
   			justify-content: center;
   			align-items:center;
   			min-height: 100vh;
+  			min-width: 300px;
+  			max-widht: 350px;
   		}
   	#bellIcon{
   		 display: inline-block;
@@ -24,8 +26,7 @@
 		 font-size: 15px;
 		 padding-top: 40px;
 		 background-color:#f1fafd;
-		 color:#ffed7e;
-		 border: 2px solid #68dafd;
+		 color:#ffcc00;
   	}
   	#bellIcon>i{
 		font-size:100px;
@@ -79,7 +80,7 @@
 												<button class="btn btn-outline-danger m-1">요청결과</button>
 											</div>
 										</div>
-										<div class="myInfoWrapper shadow">
+										<div class="myInfoWrapper shadow-sm">
 											<div style="background-color:#fff3ab; padding: 20px;">나의 알림 목록</div>
 											<!-- <div class="row mb-5"><button onclick="onMessage()">알림 전송</button></div> -->
 											<div class="row mb-5 p-5">
@@ -136,6 +137,8 @@
 
 									if(sttsNm == "완료요청"){
 										url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
+									}else if(sttsNm == "요청"){
+										url = "${pageContext.request.contextPath}/examine/list/"+srNo;
 									}else{
 										url = "${pageContext.request.contextPath}/request/list/"+srNo;
 									}

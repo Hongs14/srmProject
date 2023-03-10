@@ -13,7 +13,7 @@
 		let noticeNo ='${notice.ntcNo}';
 	  	console.log(noticeNo);
 	  	$.ajax({
-			url:"read/comment"
+			url:"${pageContext.request.contextPath}/notice/read/comment"
 			,type:"get"
 			,data: 'ntcNo='+noticeNo
 			,success:function(data){
@@ -50,7 +50,7 @@
 		let data = {userNo: ntcWriterNo, ntcNo: ntcNo, ntcCmntCn: content};
 		console.log(data);
 		$.ajax({
-			url: "write/comment",
+			url: "${pageContext.request.contextPath}/notice/write/comment",
 			method: "post",
 			data: JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
@@ -95,7 +95,7 @@
 		let ntcCmntNo = i;
 		let data = {ntcCmntNo: ntcCmntNo, ntcCmntCn: content};  
 		$.ajax({
-			url: "update/comment",
+			url: "${pageContext.request.contextPath}/notice/update/comment",
 			method: "post",
 			data: JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
@@ -111,7 +111,7 @@
 		console.log("댓글삭제"+i);
 		let ntcCmntNo = i;
 		$.ajax({
-			url: "delete/comment",
+			url: "${pageContext.request.contextPath}/notice/delete/comment",
 			method: "get",
 			data: 'ntcCmntNo='+ntcCmntNo,
 		}).done((data) => {
@@ -249,7 +249,7 @@
      			
 		$.ajax({
 			type: "post",
-			url: sysNo+'/updateAjax/'+ntcNo,
+			url: '${pageContext.request.contextPath}/notice/updateAjax/'+ntcNo,
 			data : JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
 	    }).done((data) => {
@@ -294,7 +294,7 @@
 
 		$.ajax({
 			type: "post",
-			url: 'deleteFile/'+ntcFileNo+'/'+ntcNo,
+			url: '${pageContext.request.contextPath}/notice/deleteFile/'+ntcFileNo+'/'+ntcNo,
 			data : JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
 	    }).done((data) => {
@@ -346,7 +346,7 @@
 	    $.ajax({
 			type: "POST",
 			enctype: 'multipart/form-data',	// 필수
-			url: sysNo+'/update',
+			url: '${pageContext.request.contextPath}/notice/update',
 			data: formData,		// 필수
 			processData: false,	// 필수
 			contentType: false	// 필수
