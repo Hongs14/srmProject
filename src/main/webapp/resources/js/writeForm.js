@@ -124,7 +124,7 @@ function requestWrite() {
 		contentType: false	// 필수
     }).done((data) => {
     	$('#colNo2').html(data);
-    	alret("전송완료");
+    	onMessage();	
     });
     
 }

@@ -46,7 +46,9 @@ public class AlarmService implements IAlarmService{
 		Alarm alarmUser = new Alarm();
 		alarmUser.setUserType((String)session.getAttribute("userType"));
 		alarmUser = alarmRepository.selectAlarm(srNo);
-		log.info(alarmUser);
+		
+		String choice = (String)session.getAttribute("choice");
+		log.info(choice);
 		
 		if(alarmUser.getSttsNm().equals("요청")) {
 			alarmUser.setMessage("SR 요청이 등록 되었습니다.");
@@ -68,14 +70,16 @@ public class AlarmService implements IAlarmService{
 			alarmUser.setMessage("SR 요청이 개발중 입니다.");
 			alarmUser.setAlarmPry("하");
 			alarmUser.setAlarmCategory("업무배정");
-		}else if(alarmUser.getSttsNm().equals("완료요청")) {
+		}else if(alarmUser.getSttsNm().equals("완료요청") && choice.equals("1")) {
 			alarmUser.setMessage("SR 완료 요청 승인 바랍니다.");
 			alarmUser.setAlarmPry("상");
 			alarmUser.setAlarmCategory("SR상태변경");
-		}else if(alarmUser.getSttsNm().equals("개발완료")) {
+			log.info(alarmUser);
+		}else if(alarmUser.getSttsNm().equals("개발 완료") && choice.equals("2")) {
 			alarmUser.setMessage("SR 요청이 개발완료 되었습니다.");
 			alarmUser.setAlarmPry("하");
 			alarmUser.setAlarmCategory("요청결과");
+			log.info(alarmUser);
 		}else if(alarmUser.getSttsNm().equals("반려")) {
 			alarmUser.setMessage("SR 요청이 반려 되었습니다.");
 			alarmUser.setAlarmPry("하");

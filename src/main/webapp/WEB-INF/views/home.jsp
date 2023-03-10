@@ -297,7 +297,6 @@
                 </div>
           	</c:if>
           </div>
-          <div id="msgStack"></div>
           <!-- Row -->
 			
           

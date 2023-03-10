@@ -101,7 +101,7 @@
 						    <div class="card-header px-5 d-flex flex-row align-items-center justify-content-between">
 								<h6 class="m-0 font-weight-bold text-primary">공지사항 목록</h6>
 								<div class="d-sm-flex justify-content-end">
-									<c:if test="${sessionScope.loginUser.userNm eq '관리자'}">
+									<c:if test="${sessionScope.loginUser.userType eq '관리자'}">
 										<a class="btn btn-sm btn-secondary mr-3" onclick="getNoticeWrite()">글작성</a>
 									</c:if>
 								</div>

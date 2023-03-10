@@ -30,40 +30,18 @@
 				    sock.onmessage = onMessage; // toast 생성
 				});
 				
-				/*  toast생성 및 추가 */
 				function onMessage(){
-				    var data = "알림이 도착했습니다.";
-				    console.log(data);
-				    
-				    const now = new Date();	// 현재 날짜 및 시간
-				    console.log(now);
-				    const hours = now.getHours();
-				    console.log(hours);
-				    const minutes = now.getMinutes();
-				    console.log(minutes);
-				    // toast
-				    let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
-				    toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
-				    toast += "<small class='text-muted'>"+hours+ ":"+ minutes+"</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close' onclick='removeToast()'>";
-				    toast += "<span aria-hidden='true'>&times;</span></button>";
-				    toast += "</div> <div class='toast-body'>" + data + "</div></div>";
-				    $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
-				    $(".toast").toast({"animation": true, "autohide": false});
-				    $('.toast').toast('show');
-				    
-				  	$.ajax({
-				  		url : "${pageContext.request.contextPath}/alarm/list",
+					console.log("message 실행");
+					
+					$.ajax({
+						url : "${pageContext.request.contextPath}/alarm/list",
 						method : "get",
-						data : JSON.stringify(data),
-						contentType: "application/json; charset=UTF-8"
-					})
+					}).done((data) => {
+						console.log("message 실행 완료");
+					});
 				    
 				};
 				
-				function removeToast() {
-					console.log("스택 지우기");
-					$("#msgStack *").remove();
-				} 
 			</script>
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
@@ -120,13 +98,15 @@
 						console.log(alarmNo);
 						var sttsNm = document.getElementById("sttsNm").innerText;
 						console.log(sttsNm);
+						var userType="${sessionScope.loginUser.userType}";
+						console.log(userType);
 						
 						let data = {alarmNo : alarmNo};
 						let url = "";
 	
 						if(sttsNm == "완료요청"){
 							url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
-						}else if(sttsNm == "요청"){
+						}else if(sttsNm == "요청" && userType == "관리자"){
 							url = "${pageContext.request.contextPath}/examine/list/"+srNo;
 						}else{
 							url = "${pageContext.request.contextPath}/request/list/"+srNo;
