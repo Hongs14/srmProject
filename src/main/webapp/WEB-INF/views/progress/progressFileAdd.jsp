@@ -14,34 +14,28 @@
 		</button>
 	</div>
 	<div class="modal-body" style="white-space: normal;">
-		<div class="row">
-			<div class="col-4 p-3">
-				<div class="form-group row">
-             		<label class="col-sm-3 col-form-label-sm font-weight-bold" for="progressType">산출물 구분</label>
-                   	<select class="form-control form-control-sm col-sm-9" id="progressType">
-						<c:forEach var="list" items="${progressTypeList}" end="3">
-							<option value="${list.progTypeNo}">${list.progTypeNm}</option>
-						</c:forEach>
-                   	</select>
-               	</div>
-			</div>
-			<div class="col-8">
-				<div class="p-3">
-					<form method="POST" onsubmit="return false;" enctype="multipart/form-data">
-						<div class="row mb-2">
-							<span class=" font-weight-bold col-sm-2">첨부파일: </span> 
-							<div class="custom-file col-sm-9">
-								<input type="file" name="progressattach" class="custom-file-input form-control" onchange="addProgressRateFile(this);" multiple/> 
-								<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
-							</div>
-						</div>
-						<div class="row mb-2">
-							<span class=" font-weight-bold col-sm-2">파일목록: </span> 
-							<div class="col-sm-9" id="userfile"></div>
-						</div>
-					</form>
+		<div class="p-3">
+			<div class="form-group row">
+				<label class="col-3 col-form-label font-weight-bold" for="progressType">산출물 구분</label>
+				<select class="col-3 form-control" id="progressType">
+					<c:forEach var="list" items="${progressTypeList}" end="3">
+						<option value="${list.progTypeNo}">${list.progTypeNm}</option>
+					</c:forEach>
+				</select>
+            </div>
+			<form method="POST" onsubmit="return false;" enctype="multipart/form-data">
+				<div class="row mb-2">
+					<span class=" font-weight-bold col-3">첨부파일: </span> 
+					<div class="custom-file col-9">
+						<input type="file" name="progressattach" class="custom-file-input form-control" onchange="addProgressRateFile(this);" multiple/> 
+						<label class="custom-file-label text-truncate" for="customFile" style="text-align:left">파일 선택</label>
+					</div>
 				</div>
-			</div>
+				<div class="row mb-2">
+					<span class=" font-weight-bold col-3">파일목록: </span> 
+					<div class="col-9" id="userfile"></div>
+				</div>
+			</form>
 		</div>
 	</div>
 	<div class="modal-footer">

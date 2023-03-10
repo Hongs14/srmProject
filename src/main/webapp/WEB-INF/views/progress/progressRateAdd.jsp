@@ -61,7 +61,7 @@
 					<span class=" font-weight-bold col-sm-2">첨부파일: </span> 
 					<div class="custom-file col-sm-9">
 						<input type="file" name="progressattach" class="custom-file-input form-control" onchange="addProgressRateFile(this);" multiple/> 
-						<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
+						<label class="custom-file-label text-truncate" for="customFile" style="text-align:left">파일 선택</label>
 					</div>
 				</div>
 				<div class="row mb-2">

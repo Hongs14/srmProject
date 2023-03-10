@@ -131,7 +131,8 @@
 									}
 								});
 								
-								var srNo = '초기값';
+								var srNo = '${firstSrNo}';
+								console.log(srNo);
 								data = {srNo : srNo}
 								
 								$.ajax({
@@ -141,6 +142,7 @@
 									contentType: "application/json; charset=UTF-8"
 								}).done((data) => {
 									$('#managerMiniView').html(data);
+									$("#managerMiniViewDetail").show();
 								})
 								
 								$.ajax({
@@ -150,6 +152,7 @@
 									contentType: "application/json; charset=UTF-8"
 								}).done((data) => {
 									$('#devMiniView').html(data);
+									$("#devPlanDetail").show();
 								})
 							});
 							
