@@ -8,11 +8,13 @@
 		FROM SR_ALARM sa, SR s, USERS u
 		WHERE sa.SR_NO = s.SR_NO
 		AND u.USER_NO = sa.USER_NO
-		AND sa.SR_NO like #{sysNo}
 		<if test="userType.equals('고객사')">
+			AND sa.SR_NO like #{sysNo}
 			AND sa.USER_NO = #{userNo}
+			AND s.STTS_NO != 8
 		</if>
 		<if test="userType.equals('관리자')">
+			AND sa.SR_NO like #{sysNo}
 			AND s.STTS_NO != 2
 			AND s.STTS_NO != 3
 			AND s.STTS_NO != 4
@@ -50,13 +52,14 @@
 		WHERE sa.SR_NO = s.SR_NO
 		AND u.USER_NO = sa.USER_NO
 		AND s.STTS_NO = st.STTS_NO
-		AND sa.SR_NO like #{sysNo}
 		<if test="userType.equals('고객사')">
+			AND sa.SR_NO like #{sysNo}
 			AND sa.USER_NO = #{userNo}
 			AND s.STTS_NO != 8
 			AND s.STTS_NO != 10
 		</if>
 		<if test="userType.equals('관리자')">
+			AND sa.SR_NO like #{sysNo}
 			AND s.STTS_NO != 2
 			AND s.STTS_NO != 3
 			AND s.STTS_NO != 4

@@ -112,9 +112,11 @@
 						let url = "";
 	
 						if(sttsNm == "완료요청"){
-							url = "${pageContext.request.contextPath}/progress/detail/progressRateFinishRequest;
+							url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
 						}else if(sttsNm == "요청"){
 							url = "${pageContext.request.contextPath}/examine/list/"+srNo;
+						}else{
+							url = "${pageContext.request.contextPath}/request/list/"+srNo;
 						}
 						
 						console.log(data);

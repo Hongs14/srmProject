@@ -62,7 +62,7 @@ public class HomeController {
 		notice.setNtcTtl("");
 		notice.setStartDate("");
 		notice.setEndDate("");
-		notice.setSysNo("KOREASOFT_SRM");
+		notice.setSysNo((String)session.getAttribute("sysNo"));
 		
 		pager = noticeService.returnPage(pageNo,pager,notice);
 		
