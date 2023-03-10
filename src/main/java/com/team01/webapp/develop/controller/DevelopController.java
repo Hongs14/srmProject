@@ -229,9 +229,9 @@ public class DevelopController {
 	@PostMapping(value="/updateHr")
     public String insertHrList(UpdateDevelop updateDevelop, HttpSession session){
 		log.info(updateDevelop);
-//		int result = developService.updateDevelopSr(updateDevelop);
-//		log.info("HR등록");
-//		alarmService.insertAlarm(updateDevelop.getSrNo(), session);
+		int result = developService.updateDevelopSr(updateDevelop);
+		log.info("HR등록 성공시 1 / 실패시 0: "+ result);
+		alarmService.insertAlarm(updateDevelop.getSrNo(), session);
 		
 		return "redirect:/develop/list/1";
     }

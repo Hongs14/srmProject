@@ -120,7 +120,6 @@
 				console.log("data"+data);
 				checkBoxArr.push(data);
 			});
-	
 			console.log(checkBoxArr);
 	
 			$.ajax({
@@ -247,7 +246,7 @@
 									<div class="mr-3 mt-3"><h6 class="text-danger text-right">*는 필수입력항목</h6></div>
 									<div class="d-flex flex-column">
 										<div class="align-items-center justify-content-between mt-1 px-5">
-											<form action='<c:url value="/develop/updateHr"/>' method="post">
+											<form action="${pageContext.request.contextPath}/develop/updateHr" method="post" id="updateHrForm">
 												<div class="row">
 													<div class="col-5">
 														<div class="form-group row">
@@ -354,7 +353,7 @@
 														</div>
 														<div class="mt-3" style="border: 1px solid gray; min-height: 513px;">
 															<div class="row d-flex text-center m-0 p-o" style="border-bottom:1px solid black; background-color:#eaecf4;">
-																<div class="col-sm-1 ">담당</div>
+																<div class="col-sm-1 ">역할</div>
 																<div class="col-sm-1 ">성명</div>
 																<div class="col-sm-3 ">작업 할당</div>
 																<div class="col-sm-3 ">인력 투입일</div>
@@ -374,7 +373,7 @@
 																				<c:forEach items="${hrlist}" var="devlist" >
 																					<c:if test="${devlist.hrLeader eq 'Y'}">
 																						<div id="pickDevNm">${devlist.userNm}</div>
-																						<input type="hidden" id="userNo" value="${devlist.userNo}"/>
+																						<input type="hidden" name="userNo" id="userNo" value="${devlist.userNo}"/>
 																						<input name="hrLeader" type="hidden" value="Y"/>
 																					</c:if>
 																				</c:forEach>
@@ -391,16 +390,19 @@
 																			<c:if test="${dlist.sttsNo == 9}">
 																				<c:forEach items="${hrlist}" var="devlist">
 																					<c:if test="${devlist.hrLeader eq 'Y'}">
-																						<option value="${devlist.taskNo}" disabled selected>${devlist.taskNm}</option>
+																						<option value="${devlist.taskNo}" class="taskNo" disabled selected>${devlist.taskNm}</option>
 																					</c:if>
 																				</c:forEach>
+																				<option value="2">설계</option>
+																				<option value="1">개발</option>
+																				<option value="3">테스트</option>
 																			</c:if>	
 																			<c:if test="${dlist.sttsNo != 9 }">
 																				<option disabled selected>작업구분</option>
+																				<option value="2">설계</option>
+																				<option value="1">개발</option>
+																				<option value="3">테스트</option>
 																			</c:if>		
-																			<option value="2">설계</option>
-																			<option value="1">개발</option>
-																			<option value="3">테스트</option>
 																		</select>
 																	</div>
 																	<div class="col-sm-3 text-center">
@@ -419,7 +421,7 @@
 																		<c:if test="${dlist.sttsNo == 9}">
 																			<c:forEach items="${hrlist}" var="devlist" >
 																				<c:if test="${devlist.hrLeader eq 'Y'}">
-																					<input name="hrStartDate" id="leaderSdate" value="<fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy-MM-dd"/>" type="date" class="form-control" readonly />
+																					<input name="hrEndDate" id="leaderSdate" value="<fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy-MM-dd"/>" type="date" class="form-control" readonly />
 																				</c:if>
 																			</c:forEach>
 																		</c:if>
@@ -450,22 +452,23 @@
 																					<div class="d-flex justify-content-center pt-2">
 																						${devlist.userNm}
 																						<input type="hidden" name="userNo" value="${devlist.userNo}"/>
+																						<input type="hidden" name="hrLeader" value="N"/>
 																					</div>
 																				</div>
 																				<div class="col-sm-3 text-center">
 																					<select name="taskNo" class="form-control">
-																						<option value="${devlist.taskNo}" disabled selected>${devlist.taskNm}</option>
+																						<option value="${devlist.taskNo}" class="taskNo" disabled selected>${devlist.taskNm}</option>
 																						<option value="2">설계</option>
 																						<option value="1">개발</option>
 																						<option value="3">테스트</option>
 																					</select>
 																				</div>
 																				<div class="col-sm-3 text-center">
-																					<input name="hrStartDate" type="date" value="<fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy/MM/dd"/>" class="form-control"/>
+																					<input name="hrStartDate" type="date" value="<fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy-MM-dd"/>" class="form-control"/>
 																				</div>
 																					
 																				<div class="col-sm-3 text-center">
-																					<input name="hrEndDate" type="date" value="<fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy/MM/dd"/>" class="form-control"/>
+																					<input name="hrEndDate" type="date" value="<fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy-MM-dd"/>" class="form-control"/>
 																				</div>
 																				<div class="col-sm-1 mt-2">
 																					<i class="fa-solid fa-delete-left deleteHr text-danger p-0" id='${users.userNo}' style="cursor:pointer;"></i>
@@ -503,7 +506,7 @@
 												                	</div>
 												                	<div class="modal-footer">
 												                  		<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
-												                  		<button type="submit" class="btn btn-primary">제출</button>
+												                  		<button type="button" class="btn btn-primary" onclick="falseDisabled()">제출</button>
 												                	</div>
 												              	</div>
 												            </div>
@@ -582,10 +585,12 @@
 				$("#srDevCn").val(srCn);
 			}
 			
-			
-			
 		});
- 	
+	 	
+ 		function falseDisabled(){
+ 			$(".taskNo").prop("disabled", false);
+ 			$("#updateHrForm").submit();
+ 		}
 	</script>
 	
 </body>

@@ -199,10 +199,12 @@ public class DevelopService implements IDevelopService{
 		try {
 			int check = developRepository.checkHr(updateDevelop.getSrNo());
 			log.info(check);
+			//SR테이블에 저장
 			int result1 = developRepository.updateSr(updateDevelop);
 			int result3 = 0;
 			log.info("개발계획 수정 result1: "+result1); 
 			
+			//HR테이블에 저장
 			List<HR> listHR = new ArrayList<>();
 			for(int i=0; i<updateDevelop.getUserNo().length; i++) {
 				HR hr = new HR();
@@ -221,6 +223,8 @@ public class DevelopService implements IDevelopService{
 				log.info("HR리스트 삭제 result2: "+ result2);
 				result3 =developRepository.insertHrRow(listHR);
 				log.info("HR리스트 삽입 result3: "+ result3);
+				result3 = insertProgress(updateDevelop.getSrNo());
+				log.info("progress삽입 완료");
 			} else {
 				int result2 =developRepository.insertHrRow(listHR);
 				log.info("HR리스트 삽입 result2: "+ result2);
@@ -228,8 +232,8 @@ public class DevelopService implements IDevelopService{
 				if(updateDevelop.getSttsNo() == 5) {
 					result3 = insertProgress(updateDevelop.getSrNo());
 					log.info("progress삽입 완료");
+					log.info("Progress 삽입 result3"+result3);
 				}
-				log.info("Progress 삽입 result3"+result3);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -241,7 +245,7 @@ public class DevelopService implements IDevelopService{
 	public int insertProgress(String srNo){
 		int row = 0;
 		try {
-			log.info("Progress리스트 insert"+ srNo);
+			log.info("Progress INSERT: "+ srNo);
 			int srSeq = 0;
 			List<Progress> progNoList = new ArrayList<>();
 			srSeq = developRepository.selectMaxProgNo()+1;		
