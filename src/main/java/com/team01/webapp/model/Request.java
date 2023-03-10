@@ -13,5 +13,6 @@ public class Request {
 	private String sysNm;
 	private String srTtl;
 	private String srStd;
-	private String srCn;	
+	private String srCn;
+	private String sttsNm;
 }

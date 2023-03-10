@@ -127,9 +127,10 @@
 						<input type="hidden" value="${user.userId}" name="userId"/>
 					<div class="card-footer">
 						<div class="text-center">
-							<a type="button" class="btn btn-primary btn-sm" onclick= "updateInfo()" id="updateInfo_fun">수정하기</a>
-			       			<button type="submit" class="btn btn-primary btn-sm" id="updateInfo_submit" style="display: none;">저장</button>
-							<a class="btn btn-info btn-sm" data-toggle="modal" data-target="#unregister">회원탈퇴</a>
+							<a type="button" class="btn btn-primary " onclick= "updateInfo()" id="updateInfo_fun">수정하기</a>
+			       			<button type="submit" class="btn btn-primary " id="updateInfo_submit" style="display: none;">저장</button>
+			       			<button type="button" class="btn btn-warning " onclick="updateCancel()" id="updateCancelBtn" style="display: none;">취소</button>
+							<a class="btn btn-info " data-toggle="modal" data-target="#unregister">회원탈퇴</a>
 						</div>
 					</div>
 					</form>
@@ -243,6 +244,15 @@
 	$(".updatable").addClass("border");
 	$("#updateInfo_fun").hide();
 	$("#updateInfo_submit").show();	
+	$("#updateCancelBtn").show();	
+ }
+ function updateCancel(){
+	$("#updateInfo_submit").hide();	
+	$("#updateCancelBtn").hide();	
+	$("#updateInfo_fun").show();
+	$(".updatable").attr("disabled",true);
+	$(".updatable").removeClass("border");
+	
  }
  </script>
 </body>

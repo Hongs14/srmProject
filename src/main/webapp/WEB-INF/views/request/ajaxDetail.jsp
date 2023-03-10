@@ -17,9 +17,24 @@
 </div>
 <div class="card mb-4 ajaxDetail">
 	<div class="mb-4 mt-4 px-5" style="max-width:850px">
-		<div class="my-2" id="sr_no">
-  			<span class="text-primary font-weight-bold">SR No.</span> 
-  			<span>${sr.srNo}</span>
+	
+		<div class="row mb-2 mr-0" id="sr_no">
+			<div class="col-6">
+	  			<span class="text-primary font-weight-bold">SR No.</span>  
+	  			<span>${sr.srNo}</span>
+			</div>
+			<div class="col-6 text-right">
+				<c:if test="${sr.sttsNm eq '요청'}"><span class="badge badge-dark" style="font-size:100%">${sr.sttsNm}</span></c:if>
+				<c:if test="${sr.sttsNm eq '검토중'}"><span class="badge badge-dark" style="font-size:100%">${sr.sttsNm}</span></c:if>
+				<c:if test="${sr.sttsNm eq '접수'}"><span class="badge badge-outline-primary" style="font-size:100%; border: 1px solid black;">${sr.sttsNm}</span></c:if>
+				<c:if test="${sr.sttsNm eq '개발계획'}"><span class="badge badge-info" style="font-size:100%">${sr.sttsNm}</span></c:if>
+				<c:if test="${sr.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${sr.sttsNm}</span></c:if>
+				<c:if test="${sr.sttsNm eq '개발 완료'}"><span class="badge badge-success" style="font-size:100%">개발완료</span></c:if>
+				<c:if test="${sr.sttsNm eq '반려'}"><span class="badge badge-danger" style="font-size:100%">${sr.sttsNm}</span></c:if>
+				<c:if test="${sr.sttsNm eq '재검토'}"><span class="badge badge-warning" style="font-size:100%">${sr.sttsNm}</span></c:if>
+				<c:if test="${sr.sttsNm eq '완료요청'}"><span class="badge text-white" style="font-size:100%; background-color:#a33bff;">${sr.sttsNm}</span></c:if>
+				<c:if test="${sr.sttsNm eq '계획조정'}"><span class="badge text-white" style="font-size:100%; background-color:#78380c;">${sr.sttsNm}</span></c:if>
+			</div>
 		</div>
   		<hr>
                			
