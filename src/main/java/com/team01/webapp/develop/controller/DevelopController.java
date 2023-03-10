@@ -124,6 +124,8 @@ public class DevelopController {
 		log.info("devList"+devList);
 		model.addAttribute("hrlist",hrlist);
 		model.addAttribute("leader", leader);
+		//알림 수 및 리스트
+		alarmInfo.info(session, model);
 		
 		return "develop/developdetail";
 	}
@@ -228,7 +230,7 @@ public class DevelopController {
     public String insertHrList(UpdateDevelop updateDevelop, HttpSession session){
 		log.info(updateDevelop);
 		int result = developService.updateDevelopSr(updateDevelop);
-		log.info("HR등록");
+		log.info("HR등록 성공시 1 / 실패시 0: "+ result);
 		alarmService.insertAlarm(updateDevelop.getSrNo(), session);
 		
 		return "redirect:/develop/list/1";
