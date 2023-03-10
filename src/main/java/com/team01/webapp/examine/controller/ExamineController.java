@@ -26,17 +26,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
 import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.examine.service.IExamineService;
-import com.team01.webapp.model.Alarm;
+import com.team01.webapp.interceptor.EchoHandler;
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.ExamineList;
-import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.util.AlarmInfo;
@@ -161,7 +161,7 @@ public class ExamineController {
 	 * @return
 	 */
 	@PostMapping(value="/detail", produces="application/json; charset=UTF-8")
-	public String updateExamine(@RequestBody Examine examine,HttpSession session) {
+	public String updateExamine(@RequestBody Examine examine,HttpSession session)throws Exception {
 		log.info("실행");
 		log.info(examine);
 		
@@ -170,6 +170,7 @@ public class ExamineController {
 		String srNo = examine.getSrNo();
 		
 		alarmService.insertAlarm(srNo,session);
+		
 		
 		return "redirect:/examine/detail/"+srNo;
 	}

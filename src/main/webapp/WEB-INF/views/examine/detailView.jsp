@@ -186,7 +186,7 @@
 		let data = {srNo : srNo, srReqSe : srReqSe, srPry : srPry, sttsNm : sttsNm, srOpnn : srOpnn}
 		console.log(data);
 		
-		onMessage()
+		onMessage();
 		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/examine/detail",

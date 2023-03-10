@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	
-	<beans:bean id="echoHandler" class="com.team01.webapp.interceptor.echoHandler" />
+	<beans:bean id="echoHandler" class="com.team01.webapp.interceptor.EchoHandler" />
 	<websocket:handlers>
 	    <websocket:mapping handler="echoHandler" path="/echo-ws" />
 	    <websocket:handshake-interceptors>

@@ -297,9 +297,9 @@
                 </div>
           	</c:if>
           </div>
-          
+          <div id="msgStack"></div>
           <!-- Row -->
-
+			
           
 
           <!-- 로그아웃 모달 -->

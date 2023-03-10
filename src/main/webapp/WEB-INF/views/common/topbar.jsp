@@ -21,11 +21,16 @@
 				    // 웹소켓 연결
 				    sock = new SockJS("<c:url value="/echo-ws"/>");
 				    socket = sock;
+				    
+				    sock.onopen = function() {
+			            console.log('Info: connection opened.');
+			        };
+				    
 				    // 데이터를 전달 받았을때 
 				    sock.onmessage = onMessage; // toast 생성
 				});
 				
-				// toast생성 및 추가
+				/*  toast생성 및 추가 */
 				function onMessage(){
 				    var data = "알림이 도착했습니다.";
 				    console.log(data);
@@ -45,18 +50,26 @@
 				    $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
 				    $(".toast").toast({"animation": true, "autohide": false});
 				    $('.toast').toast('show');
+				    
+				  	$.ajax({
+				  		url : "${pageContext.request.contextPath}/alarm/list",
+						method : "get",
+						data : JSON.stringify(data),
+						contentType: "application/json; charset=UTF-8"
+					})
+				    
 				};
 				
 				function removeToast() {
 					console.log("스택 지우기");
 					$("#msgStack *").remove();
-				}
+				} 
 			</script>
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
-               <span class="badge badge-danger badge-counter">
+               <span class="badge badge-danger badge-counter" id="alarmCount">
                		<c:set var="alarmCnt" value="${alarmCnt}"/>
 					<c:choose>
 						<c:when test="${alarmCnt != 0}">
