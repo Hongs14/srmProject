@@ -19,8 +19,10 @@ public class UserService implements IUserService {
 		SUCCESS, WRONG_ID, WRONG_PASSWORD
 	}
 	
+	
 	public static final int JOIN_SUCCESS=0;
 	public static final int JOIN_FAIL=1;
+	public static final int JOIN_DUPLICATED=2;
 	
 	@Autowired
 	IUserRepository userRepository;
@@ -135,6 +137,16 @@ public class UserService implements IUserService {
 	public Users getMyInfo(String userId) {
 		log.info("실행");
 		return userRepository.selectByUserId(userId);
+	}
+
+
+	@Override
+	public int checkId(String userId) {
+		Users dbUser = getUser(userId);
+		if(dbUser != null) {
+			return JOIN_DUPLICATED;
+		}
+		return 0;
 	}
 
 

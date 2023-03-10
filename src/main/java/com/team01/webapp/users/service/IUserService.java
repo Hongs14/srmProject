@@ -16,4 +16,6 @@ public interface IUserService {
 	int updateUserInfo(Users user);
 
 	Users getMyInfo(String userId);
+
+	int checkId(String userId);
 }
