@@ -81,7 +81,7 @@
    			<div class="row mb-2 mr-0">
    				<div class="col-12">
 			   		<span>검토 상태</span>
-			   		<select class="form-control form-control-sm" id="sttsNm" name="sttsNm">
+			   		<select class="form-control form-control-sm" id="examineSttsNm" name="examineSttsNm">
 			   			<option>검토중</option>
 			   			<option>반려</option>
 			   			<option>재검토</option>
@@ -174,26 +174,29 @@
 		
 		var srReqSeSelect = document.getElementById("srReqSe");
 		var srPrySelect = document.getElementById("srPry");
-		var sttsNmSelect = document.getElementById("sttsNm");
+		var sttsNmSelect = document.getElementById("examineSttsNm");
 		
 		var srReqSe = srReqSeSelect.options[document.getElementById("srReqSe").selectedIndex].text;
+		console.log(srReqSe);
 		var srPry = srPrySelect.options[document.getElementById("srPry").selectedIndex].text;
-		var sttsNm = sttsNmSelect.options[document.getElementById("sttsNm").selectedIndex].text;
-
+		console.log(srPry);
+		var sttsNm = sttsNmSelect.options[document.getElementById("examineSttsNm").selectedIndex].text;
+		console.log(sttsNm);
+		
 		let data = {srNo : srNo, srReqSe : srReqSe, srPry : srPry, sttsNm : sttsNm, srOpnn : srOpnn}
 		console.log(data);
 		
 		onMessage()
 		
 		$.ajax({
-			url : "detail",
+			url : "${pageContext.request.contextPath}/examine/detail",
 			method : "post",
 			data : JSON.stringify(data),
 			contentType : "application/json; charset=UTF-8"
 		}).done((data) => {
 			$("#message").text("저장 되었습니다.");
 			setTimeout(function() {
-				window.location.href ='/webapp/examine/list';
+				window.location.href ='${pageContext.request.contextPath}/examine/list';
 			}, 2000);
 		})
 		
