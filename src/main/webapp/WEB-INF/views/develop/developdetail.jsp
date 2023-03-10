@@ -282,8 +282,7 @@
 															</div>
 															<div class="col-sm-8">
 																<select id="sttsNo" name="sttsNo"  class="form-control noneUpdate">
-																	<option value="5" selected>개발중</option>
-																	<option value="9">개발계획</option>
+																	<option value="9" selected>개발계획</option>
 																</select>
 															</div>
 														</div>
