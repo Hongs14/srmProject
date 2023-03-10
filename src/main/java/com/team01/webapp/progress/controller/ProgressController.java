@@ -389,10 +389,11 @@ public class ProgressController {
 		
 		progressService.progressRateFinishRequest(srNo, progNo, choice);
 		
-		//알람 DB에 저장
-		alarmService.insertAlarm(srNo,session);
-		
 		session.setAttribute("message", 2);
+
+		//알람 DB에 저장
+		session.setAttribute("choice", choice);
+		alarmService.insertAlarm(srNo,session);
 		
 		return "redirect:/progress/detail/" + progress.getSrNo();
 	}

@@ -122,7 +122,6 @@
 										</div>
 									</div>
 								</div>
-								<div id="msgStack"></div>
 							</div>
 							<script>
 								function updateCheck(i) {

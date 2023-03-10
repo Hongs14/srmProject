@@ -7,7 +7,8 @@
 	-->
 	
 	<select id="selectExamineListAllCount" resultType="int">
-		SELECT COUNT(*) FROM NOTICE
+		SELECT COUNT(*) FROM SR
+		WHERE SR_DEL_YN = 'N'
 	</select>
 	
 	<!-- 요청 진행 상태 리스트 
@@ -64,6 +65,7 @@
         AND sr.stts_no !=8
         AND sr.stts_no !=9
         AND sr.stts_no !=10
+        AND sr.SR_DEL_YN = 'N'
 		<if test="!sysNo.equals('')">
 			AND sys.sys_no = #{sysNo}
 		</if>
@@ -167,6 +169,7 @@
 					<if test="srTtl != ''">
 						AND  s.SR_TTL like #{srTtl}
 					</if>
+					AND s.SR_DEL_YN = 'N'
 			       	ORDER BY DECODE(s.STTS_NO, 1, 2) ASC ,s.SR_PRY, s.SR_REG_DATE DESC
 			    )
 			    <![CDATA[
