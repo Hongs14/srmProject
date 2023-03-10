@@ -103,11 +103,14 @@ public class ProgressController {
 	 * @return				progress/detail 로 return
 	 */
 	@RequestMapping(value="/progress/detail/{srNo}", method = RequestMethod.GET)
-	public String progressDetail(@PathVariable String srNo, Model model) {
+	public String progressDetail(@PathVariable String srNo, HttpSession session, Model model) {
 		
 		ProgressDetail progressdetail = progressService.selectDetail(srNo);
 		
 		model.addAttribute("progressDetail", progressdetail);
+		
+		// 알림 수 및 리스트
+		alarmInfo.info(session, model);
 		
 		return "progress/detail";
 	}

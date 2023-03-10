@@ -138,7 +138,7 @@
 		</table>
 	<!-- 모달 창 -->
 	<div class="modal fade" id="progressRateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+		<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
 				<div id="progressRateModalView"></div>
 			</div>
@@ -171,6 +171,33 @@
 			</div>
 		</div>
 	</div>
+	<!-- 진척율 업데이트 메시지 모달 창 -->
+	<div class="modal fade" id="rateMessageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title" id="exampleModalScrollableTitle">
+						<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+			        	<small class="text-white">
+			        		<b>삭제</b>
+			        	</small>
+					</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body p-5" style="white-space: normal; text-align:center;">
+					<div class="alert alert-secondary m-3 p-2" role="alert">
+						<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+						<div id="rateModalMessage"></div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="rateUpdateModalShow()">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -188,7 +215,7 @@
 			var progRateArr = new Array();
 		
 			<c:forEach var="list" items="${progressRateList}" begin="0" end="3">
-				progRateArr.push(${list.progRate})
+				progRateArr.push(${list.progRate});
 			</c:forEach>
 			
 			var a = null;
@@ -245,18 +272,37 @@
 		
 		data = {srNo : srNo, progressArr : progressArr}
 		
-		$.ajax({
-			url : "progressRateAllAdd",
-			method : "post",
-			data : JSON.stringify(data),
-			contentType : "application/json; charset=UTF-8"
-		}).done((data) => {
+		var start = 0;
+		var end = 0;
+		var falseArr = new Array();
+		
+		<c:forEach var="list" items="${progressRateList}" end="3" varStatus="status">
+			progRate = progressArr[${status.index}].progRate;
+			start = (${status.index} * 20);
+			end = ((${status.index}+1) * 20);
+			
+			if(!(((start < progRate) && (progRate <= end)) || progRate == 0)) {
+				falseArr.push('${list.progTypeNm}');
+			}
+		</c:forEach>
+		
+		if(falseArr.length == 0) {
+			$.ajax({
+				url : "progressRateAllAdd",
+				method : "post",
+				data : JSON.stringify(data),
+				contentType : "application/json; charset=UTF-8"
+			}).done((data) => {
+				$('#messageModal').modal('show');
+		    	$("#Modalmessage").text("진척율이 저장 되었습니다.");
+		    	setTimeout(function() {
+		    		window.location.href = "${progress.srNo}";
+	    		}, 2000);
+			});
+		} else {
 			$('#messageModal').modal('show');
-	    	$("#Modalmessage").text("진척율이 저장 되었습니다.");
-	    	setTimeout(function() {
-	    		window.location.href = "${progress.srNo}";
-    		}, 2000);
-		});
+			$("#Modalmessage").text(falseArr + ' 진척율이 너무 크거나 작습니다.');
+		}
 	}
 	
 	function progressRateFinishRequest(choice) {
@@ -264,11 +310,11 @@
 		
 		if(choice == 1) {
 			<c:forEach var="list" items="${progressRateList}" begin="4" end="4">
-				progNo = "${list.progNo}"
+				progNo = "${list.progNo}";
 			</c:forEach>
 		} else {
 			<c:forEach var="list" items="${progressRateList}" begin="5" end="5">
-				progNo = "${list.progNo}"
+				progNo = "${list.progNo}";
 			</c:forEach>
 		}
 		
@@ -282,5 +328,10 @@
 		}).done((data) => {
 			window.location.href = "${progress.srNo}";
 		});
+	}
+	
+	function rateUpdateModalShow() {
+	    $('#progressRateModal').modal('show');
+	   	$('#rateMessageModal').modal('hide');
 	}
 </script>

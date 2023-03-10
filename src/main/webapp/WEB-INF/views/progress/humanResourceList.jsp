@@ -331,7 +331,7 @@
 								var endDate = new Date(end);
 								var today = new Date();
 								
-								if(leader == 'Y') {
+								if(leader == 'Leader') {
 									$("#Modalmessage").text("리더라서 삭제할수 없습니다.");
 								} else {
 									if(startDate <= today) {

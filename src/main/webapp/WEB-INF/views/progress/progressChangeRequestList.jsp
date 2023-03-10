@@ -9,6 +9,7 @@
 			<div class="input-group-append float-right mb-3">
 				<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료' || sttsNm == '계획조정')}">
 					<c:if test="${check}">
+						<a type="button" class="btn btn-primary btn-sm mr-2" href="${pageContext.request.contextPath}/resources/text/extension_application.hwp">기간연장신청서 다운로드</a>
 						<button class="btn btn-primary btn-sm mr-2" type="button" onclick="changeRequest()">
 							기간 추가 신청
 						</button>
