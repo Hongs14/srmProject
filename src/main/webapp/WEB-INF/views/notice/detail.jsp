@@ -197,7 +197,7 @@
 			<a href="${pageContext.request.contextPath}/notice/list?sysNo=${notice.sysNo}" class="btn btn-primary mr-1">목록</a>
 			<c:if test="${sessionScope.loginUser.userNm eq '관리자'}">
 				<a onclick="getNoticeUpdate('${notice.ntcNo}')" class="btn btn-primary mr-1">수정</a>
-				<form method="post" action="${notice.sysNo}/delete" enctype="multipart/form-data">
+				<form method="post" action="${pageContext.request.contextPath}/notice/delete" enctype="multipart/form-data">
 					<input type="hidden" id="ntcNo" name="ntcNo" value="${notice.ntcNo}"/>
 					<input type="hidden" id="sysNo" name="sysNo" value="${notice.sysNo}"/>
 					<button type="submit" class="btn btn-primary">삭제</button>
