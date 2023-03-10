@@ -9,6 +9,13 @@
           		SR 진척관리 확인<i class="fa-solid fa-caret-right m-1"></i>
           	</a>
           </div>
+          <c:if test="${empty progressdetail.srNo}">
+	          <div class="d-flex justify-content-center align-items-center pt-2">
+	          	<div class="p-3" style="background-color:#EAECF4; border-radius:5px;">
+	          		<h6><i class="fa-solid fa-quote-left fa-xs mr-2"></i>SR 번호를 클릭하시면 일정상세를 확인할 수 있습니다.<i class="fa-solid fa-quote-right fa-xs ml-2"></i></h6>
+	          	</div>
+	          </div>
+          </c:if>
           <div class="card-body pt-0" id="managerMiniViewDetail" style="display:none;">
             <div class="d-flex">
 			   <div class="d-flex align-items-center">

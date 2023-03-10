@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	<div>
-        <div class="card shadow mb-4">
+        <div class="card shadow mb-4" style="min-height: 200px;">
           <div class="d-flex justify-content-between p-3">
           	<span class="font-weight-bold text-primary"><img src="${pageContext.request.contextPath}/resources/images/gantt.png" style="width:30px; margin-right:10px;"> 개발자 일정</span>
           	<c:if test="${!empty devMini.srNo}">
@@ -13,6 +13,13 @@
 				</a>
           	</c:if>
           </div>
+          <c:if test="${empty devMini.srNo}">
+	          <div class="d-flex justify-content-center align-items-center pt-2">
+	          	<div class="p-3" style="background-color:#EAECF4; border-radius:5px;">
+	          		<h6><i class="fa-solid fa-quote-left fa-xs mr-2"></i>SR 번호를 클릭하시면 일정상세를 확인할 수 있습니다.<i class="fa-solid fa-quote-right fa-xs ml-2"></i></h6>
+	          	</div>
+	          </div>
+          </c:if>
           <div class="card-body d-flex pt-0" id="devPlanDetail" style="display:none !important;">
 				<div id="chartWrapper" class="d-flex flex-column">
 				<div class="d-flex justify-content-between px-1">
