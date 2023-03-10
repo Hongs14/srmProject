@@ -16,30 +16,8 @@
 	function readComment(){
 		let noticeNo ='${notice.ntcNo}';
 	  	console.log(noticeNo);
-	  	
-	  	var str = location.href;
-	  	console.log(str);
-		var index = str.indexOf("?")+1;
-		console.log(index);
-	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
-	 
-	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
-	    if (index == 0) {
-	        return "";
-	    }
-	 
-	    // str의 값은 a=1&b=first&c=true
-	    str = str.substring(index, lastIndex); 
-	    console.log(str);
-
-	    var arr = str.split("=");
-	    console.log(arr);
-	    
-	    var sysNo = arr[1];
-	    console.log(sysNo);
-	  	
 	  	$.ajax({
-			url: sysNo+"/read/comment"
+			url:"${pageContext.request.contextPath}/notice/read/comment"
 			,type:"get"
 			,data: 'ntcNo='+noticeNo
 			,success:function(data){
@@ -72,32 +50,11 @@
 		let ntcWriterNo = '${sessionScope.loginUser.userNo}';
 		let ntcwriter = '${sessionScope.loginUser.userId}';
 		let ntcNo = '${notice.ntcNo}';
-		
+				
 		let data = {userNo: ntcWriterNo, ntcNo: ntcNo, ntcCmntCn: content};
 		console.log(data);
-		
-		var str = location.href;
-	  	console.log(str);
-		var index = str.indexOf("?")+1;
-		console.log(index);
-	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
-	 
-	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
-	    if (index == 0) {
-	        return "";
-	    }
-	 
-	    str = str.substring(index, lastIndex); 
-	    console.log(str);
-
-	    var arr = str.split("=");
-	    console.log(arr);
-	    
-	    var sysNo = arr[1];
-	    console.log(sysNo);
-		
 		$.ajax({
-			url: sysNo+"/write/comment",
+			url: "${pageContext.request.contextPath}/notice/write/comment",
 			method: "post",
 			data: JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
@@ -141,29 +98,8 @@
 		let content = $('#commentContent'+i).val();
 		let ntcCmntNo = i;
 		let data = {ntcCmntNo: ntcCmntNo, ntcCmntCn: content};  
-		
-		var str = location.href;
-	  	console.log(str);
-		var index = str.indexOf("?")+1;
-		console.log(index);
-	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
-	 
-	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
-	    if (index == 0) {
-	        return "";
-	    }
-	 
-	    str = str.substring(index, lastIndex); 
-	    console.log(str);
-
-	    var arr = str.split("=");
-	    console.log(arr);
-	    
-	    var sysNo = arr[1];
-	    console.log(sysNo);
-		
 		$.ajax({
-			url: sysNo+"/update/comment",
+			url: "${pageContext.request.contextPath}/notice/update/comment",
 			method: "post",
 			data: JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
@@ -178,30 +114,8 @@
 	function deleteComment(i){
 		console.log("댓글삭제"+i);
 		let ntcCmntNo = i;
-		
-		var str = location.href;
-	  	console.log(str);
-		var index = str.indexOf("?")+1;
-		console.log(index);
-	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
-	 
-	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
-	    if (index == 0) {
-	        return "";
-	    }
-	 
-	    // str의 값은 a=1&b=first&c=true
-	    str = str.substring(index, lastIndex); 
-	    console.log(str);
-
-	    var arr = str.split("=");
-	    console.log(arr);
-	    
-	    var sysNo = arr[1];
-	    console.log(sysNo);
-		
 		$.ajax({
-			url: sysNo+"/delete/comment",
+			url: "${pageContext.request.contextPath}/notice/delete/comment",
 			method: "get",
 			data: 'ntcCmntNo='+ntcCmntNo,
 		}).done((data) => {
@@ -275,7 +189,7 @@
 			</div>
 			<div class="col-sm-10">	
 				<c:forEach var="noticeFile" items="${noticeFile}">
-					<span><a href="${notice.sysNo}/fileDownload?ntcFileNo=${noticeFile.ntcFileNo}">${noticeFile.ntcFileActlNm}</a></span>
+					<span><a href="${pageContext.request.contextPath}/notice/fileDownload?ntcFileNo=${noticeFile.ntcFileNo}">${noticeFile.ntcFileActlNm}</a></span>
 				</c:forEach>	                            		
 			</div>
 		</div>			                            		
