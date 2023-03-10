@@ -22,9 +22,13 @@ public class DevelopDto {
 	private String srDevCn;
 	private String srReqSe;
 	private Date srDdlnDate;
-	private String srStartDate;
+	
+//	private String srStartDate;
+	private Date srStartDate;
 //	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy/MM/dd")
-	private String srEndDate;
+//	private String srEndDate;
+	private Date srEndDate;
+	
 	private String srViewYn;
 	private String srStd;
 	private String srDevDp;
