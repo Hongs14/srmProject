@@ -200,6 +200,7 @@ public class DevelopService implements IDevelopService{
 			int check = developRepository.checkHr(updateDevelop.getSrNo());
 			log.info(check);
 			int result1 = developRepository.updateSr(updateDevelop);
+			int result3 = 0;
 			log.info("개발계획 수정 result1: "+result1); 
 			
 			List<HR> listHR = new ArrayList<>();
@@ -218,13 +219,16 @@ public class DevelopService implements IDevelopService{
 			if(check > 0) {
 				int result2 = developRepository.deleteHr(updateDevelop.getSrNo());
 				log.info("HR리스트 삭제 result2: "+ result2);
-				int result3 =developRepository.insertHrRow(listHR);
+				result3 =developRepository.insertHrRow(listHR);
 				log.info("HR리스트 삽입 result3: "+ result3);
 			} else {
 				int result2 =developRepository.insertHrRow(listHR);
 				log.info("HR리스트 삽입 result2: "+ result2);
-				 
-				int result3 = insertProgress(updateDevelop.getSrNo());
+				
+				if(updateDevelop.getSttsNo() == 5) {
+					result3 = insertProgress(updateDevelop.getSrNo());
+					log.info("progress삽입 완료");
+				}
 				log.info("Progress 삽입 result3"+result3);
 			}
 		} catch(Exception e) {

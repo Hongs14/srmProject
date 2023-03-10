@@ -269,6 +269,7 @@
 	<select id="selectSrFileList" parameterType="string" resultType="srFile">
 		SELECT
 		    SR_FILE_NO AS "srFileNo",
+		    SR_NO AS "srNo",
 		    SR_FILE_PHYS_NM AS "srFilePhysNm",
 		    SR_FILE_EXTN_NM AS "srFileExtnNm",
 		    SR_FILE_ACTL_NM AS "srFileActlNm"
@@ -278,6 +279,8 @@
 	
 	<select id="selectSrFile" parameterType="int" resultType="srFile">
 		SELECT
+			SR_FILE_NO AS "srFileNo",
+			SR_NO AS "srNo",
 		    SR_FILE_PHYS_NM AS "srFilePhysNm",
 		    SR_FILE_EXTN_NM AS "srFileExtnNm",
 		    SR_FILE_ACTL_NM AS "srFileActlNm"

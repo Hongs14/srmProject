@@ -71,6 +71,10 @@ public class DevelopController {
 		
 		developFilter = developService.filterList(developFilter);
 		Users loginUser = developService.getLoginUserInfo((Integer) session.getAttribute("userNo"));
+		
+		//알림 수 및 리스트
+		alarmInfo.info(session, model);
+		
 		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("developFilter",developFilter);
 		return "develop/developlist";
@@ -95,9 +99,6 @@ public class DevelopController {
 		List<DevelopDto> list = developService.getDevelopList(pager, developDto);
 		model.addAttribute("develop",list);
 		model.addAttribute("pager",pager);
-		
-		//알림 수 및 리스트
-		alarmInfo.info(session, model);
 		
 		return "develop/ajaxList";
 	}
@@ -132,11 +133,10 @@ public class DevelopController {
 		log.info("파일 다운로드");
 		
 		SrFile srFile = developService.getSrFile(srFileNo);
-		
+		log.info(srFile);
 		String originalName = srFile.getSrFileActlNm();
 		String savedName = srFile.getSrFilePhysNm();
 		String contentType = srFile.getSrFileExtnNm();
-		log.info("userAgent: "+userAgent);
 		
 		// originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩
 		if(userAgent.contains("Trident") || userAgent.contains("MSIE")) {
@@ -150,17 +150,16 @@ public class DevelopController {
 		response.setContentType(contentType);
 		
 		// 응답 바디에 파일 데이터 싣기
-		String filePath = "C:/OTI/uploadfiles/" + savedName;
-			
-			File file = new File(filePath);
-			
-			if(file.exists()) {
-				InputStream is = new FileInputStream(file);
-				OutputStream os = response.getOutputStream();
-				FileCopyUtils.copy(is, os);
-				os.flush();
-				os.close();
-				is.close();
+		String filePath = "C:/OTI/uploadfiles/request/"+srFile.getSrNo()+"/"+ savedName;
+		log.info("filePath: "+filePath);
+		File file = new File(filePath);
+		if(file.exists()) {
+			InputStream is = new FileInputStream(file);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			os.flush();
+			os.close();
+			is.close();
 		}
 	}
 	
@@ -220,7 +219,7 @@ public class DevelopController {
 	     return "develop/selectHr";
 	  }
 	
-	/** 인력 저장
+	/** 인력리스트와 개발관리 저장
 	 * @author 					정홍주
 	 * @param updateDevelop		
 	 * @return
@@ -228,10 +227,6 @@ public class DevelopController {
 	@PostMapping(value="/updateHr")
     public String insertHrList(UpdateDevelop updateDevelop, HttpSession session){
 		log.info(updateDevelop);
-		if(updateDevelop.getSttsNo() == 9) {
-			
-		}
-		
 		int result = developService.updateDevelopSr(updateDevelop);
 		log.info("HR등록");
 		alarmService.insertAlarm(updateDevelop.getSrNo(), session);
