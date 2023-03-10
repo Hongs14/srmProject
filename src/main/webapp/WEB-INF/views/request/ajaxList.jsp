@@ -15,7 +15,7 @@
 					<th>제목</th>
 					<th>관련시스템</th>
 					<th>등록자</th>
-					<th>소속회사</th>
+					<th class="userOgdpColumn">소속회사</th>
 					<th>개발부서</th>
 					<th>상태</th>
 					<th>등록일</th>
@@ -33,9 +33,9 @@
 						</td>
 						<td><a onclick="getSrDetail('${request.srNo}')" style="cursor:pointer;" class="srNo">${request.srNo}</a></td>
 						<td><a onclick="getSrDetail('${request.srNo}')" style="cursor:pointer;"><span class="requsetTtl">${request.srTtl}</span></a></td>
-						<td>${request.sysNm}</td>
+						<td><span class="sysNm">${request.sysNm}</span></td>
 						<td>${request.userNm}</td>
-						<td><span class="userOgdp">${request.userOgdp}</span></td>
+						<td class="userOgdpColumn"><span class="userOgdp">${request.userOgdp}</span></td>
 						<td>${request.srDevDp}</td>
 						<td>
 						<span class="srStts">

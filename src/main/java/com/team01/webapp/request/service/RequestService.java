@@ -81,7 +81,7 @@ public class RequestService implements IRequestService{
 		int totalListNum = requestRepository.selectTotalRequestCount(requestAjax);
 		log.info("totalListNum: "+ totalListNum);
 		int pagerNo = Integer.parseInt(pageNo);
-		pager = new Pager(10, 5, totalListNum, pagerNo);
+		pager = new Pager(7, 5, totalListNum, pagerNo);
 		return pager;
 	}
 	

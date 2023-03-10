@@ -19,6 +19,7 @@
 		  	$(document).ready(function(){
 		  	 	$("#welcomeModal").modal();
 		  	});
+		  	
 	  	</script>
   	</c:if>
 </head>
@@ -70,45 +71,38 @@
 		        <div class="card shadow-sm m-5">
 		          <div class="card-body p-0 d-flex">
 		                <div class="login-form">
-			                  <div class="text-center">
-			                    <h3 class="text-gray-900 mb-4">LOGIN</h3>
-			                  </div>
-			                  
-			                  <form class="user d-flex flex-column m-5" method="post" action="<c:url value='/user/login'/>">
-			                    <div class="form-group mb-4">
-			                      <input type="text" class="form-control" id="userId" name="userId" placeholder="ID" required>
-			                      <c:if test="${!empty result and result eq 'wrongId'}"><small style="color:red;">ID를 잘못 입력하셨습니다.</small></c:if>
-			                    </div>
-			                    <div class="form-group mb-4">
-			                      <input type="password" class="form-control" id="userPswd" name="userPswd" placeholder="Password" required>
-			                      <c:if test="${!empty result and result eq 'wrongPassword'}"><small style="color:red;">패스워드를 잘못 입력하셨습니다.</small></c:if>
-			                    </div>
-			                    <div class="form-group mb-1">
-				                    <button type="submit" class="btn btn-primary btn-block" >로그인 </button>
-			                    </div>
-			                  </form>
-			                  
+		                	<div id="recoveryWrapper">
+				                  <div class="text-center">
+				                    <h3 class="text-gray-900 mb-4">아이디 / 비밀번호 찾기</h3>
+				                  </div>
+				                  <div id="recoveryWrapper" style="width: 400px; height: 300px;">
+					                  <div class="recoveryBtns d-flex flex-column" id="recoveryBtns">
+					                  	<button class="btn btn-primary my-5 mx-4" onclick="findId()">아이디 찾기</button>
+					                  	<button class="btn btn-primary m-4">비밀번호찾기</button>
+					                  </div>
+					                  
+					                  <div id="findIdWrapper" style="display: none;">
+					                  	ddddd
+					                  </div>
+				                  </div>
+			                   </div>
+			                  <hr>
 			                  <div class="text-center">
 			                    <a class="font-weight-bold small" href="${pageContext.request.contextPath}/user/join">회원가입</a>
 			                    <span> | </span>
-			                    <a class="font-weight-bold small" href="${pageContext.request.contextPath}/user/recovery">아이디&비밀번호 찾기 </a>
+			                    <a class="font-weight-bold small"  href="${pageContext.request.contextPath}/user/login">로그인하기 </a>
 			                  </div>
 		                  </div> 
-		                  
-		                  <div class="m-0 p-0 bg-primary">
-		                  	<div class="brand-icon" >
-					          <img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:50px; margin:50px 30px 20px 30px;">
-					        </div>
-					        <h3 class="text-white" style="margin:0px 30px;">SRM </h3>
-					        <h3 class="text-white" style="margin:0px 30px;">SYSTEM</h3>
-					        <h6 class="text-light" style="margin:5px 30px 50px 30px;">OTI Team01</h6>
-		                  </div>
 		                  <hr>
-			             <div>
-			             
-			             </div>
-			            </div>
-		          	</div>
+			            <script>
+			            function findId(){
+			            	console.log($('.recoveryBtns').html());
+			            	$(".recoveryBtns").css("display","none");
+			            	$("#findIdWrapper").show();
+			            }
+			            </script>
+			       </div>
+		        </div>
 		      </div>
 		    </div>
           </div>
