@@ -75,7 +75,7 @@ public class AlarmService implements IAlarmService{
 		}else if(alarmUser.getSttsNm().equals("개발완료")) {
 			alarmUser.setMessage("SR 요청이 개발완료 되었습니다.");
 			alarmUser.setAlarmPry("하");
-			alarmUser.setAlarmCategory("SR상태변경");
+			alarmUser.setAlarmCategory("요청결과");
 		}else if(alarmUser.getSttsNm().equals("반려")) {
 			alarmUser.setMessage("SR 요청이 반려 되었습니다.");
 			alarmUser.setAlarmPry("하");
@@ -84,7 +84,7 @@ public class AlarmService implements IAlarmService{
 			alarmUser.setMessage("SR 요청이 재검토 되었습니다.");
 			alarmUser.setAlarmPry("하");
 			alarmUser.setAlarmCategory("SR상태변경");
-		}else {
+		}else if(alarmUser.getSttsNm().equals("계획조정")) {
 			alarmUser.setMessage("SR 요청에 대한 계획 조정 요청 입니다.");
 			alarmUser.setAlarmPry("상");
 			alarmUser.setAlarmCategory("SR상태변경");

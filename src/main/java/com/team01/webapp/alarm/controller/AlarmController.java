@@ -65,7 +65,7 @@ public class AlarmController extends TextWebSocketHandler {
 		log.info("실행");
 		
 		int alarmNo = alarm.getAlarmNo();
-		
+		log.info(alarmNo);
 		alarmService.deleteAlarm(alarmNo);
 		
 		return "redirect:/alarm/list";

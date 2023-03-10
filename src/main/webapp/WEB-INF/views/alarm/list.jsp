@@ -122,6 +122,7 @@
 										</div>
 									</div>
 								</div>
+								<div id="msgStack"></div>
 							</div>
 							<script>
 								function updateCheck(i) {
@@ -187,22 +188,22 @@
 							<script>
 								function selectCheck() {
 									
-									var alarmNo = document.getElementById("alarmNo").value;
+									var alarmNo = document.getElementById("alarmNo").innerText;
+									console.log(alarmNo);
 									let data = {alarmNo : alarmNo}
 									console.log(data);
 									
 									$.ajax({
-										url : "delete",
+										url : "${pageContext.request.contextPath}/alarm/delete",
 										method : "post",
 										data : JSON.stringify(data),
 										contentType : "application/json; charset=UTF-8"
 									}).done((data) => {
-										window.location.href ='/webapp/alarm/list';
+										window.location.href ='${pageContext.request.contextPath}/alarm/list';
 									})
 									
 								}
 							</script>
-							<div id="msgStack"></div>
 	          			<!-- 로그아웃 모달 -->
 						<%@include file="/WEB-INF/views/common/logout.jsp" %>
 					</div>

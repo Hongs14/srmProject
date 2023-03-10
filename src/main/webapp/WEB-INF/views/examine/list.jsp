@@ -482,6 +482,7 @@
 			          	</script>	
 			          </c:if>
 				</div>
+				<div id="msgStack"></div>
 			</div>
 			<script>
 				function getSrDetail(i) {

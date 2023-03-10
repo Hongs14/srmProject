@@ -1,5 +1,6 @@
 package com.team01.webapp.interceptor;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class echoHandler extends TextWebSocketHandler{
+public class EchoHandler extends TextWebSocketHandler{
 		
 		//로그인 한 전체
 		List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
