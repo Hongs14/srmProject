@@ -133,11 +133,10 @@ public class DevelopController {
 		log.info("파일 다운로드");
 		
 		SrFile srFile = developService.getSrFile(srFileNo);
-		
+		log.info(srFile);
 		String originalName = srFile.getSrFileActlNm();
 		String savedName = srFile.getSrFilePhysNm();
 		String contentType = srFile.getSrFileExtnNm();
-		log.info("userAgent: "+userAgent);
 		
 		// originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩
 		if(userAgent.contains("Trident") || userAgent.contains("MSIE")) {
@@ -151,17 +150,16 @@ public class DevelopController {
 		response.setContentType(contentType);
 		
 		// 응답 바디에 파일 데이터 싣기
-		String filePath = "C:/OTI/uploadfiles/" + savedName;
-			
-			File file = new File(filePath);
-			
-			if(file.exists()) {
-				InputStream is = new FileInputStream(file);
-				OutputStream os = response.getOutputStream();
-				FileCopyUtils.copy(is, os);
-				os.flush();
-				os.close();
-				is.close();
+		String filePath = "C:/OTI/uploadfiles/request/"+srFile.getSrNo()+"/"+ savedName;
+		log.info("filePath: "+filePath);
+		File file = new File(filePath);
+		if(file.exists()) {
+			InputStream is = new FileInputStream(file);
+			OutputStream os = response.getOutputStream();
+			FileCopyUtils.copy(is, os);
+			os.flush();
+			os.close();
+			is.close();
 		}
 	}
 	
