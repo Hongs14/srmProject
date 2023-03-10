@@ -185,4 +185,10 @@ public class UserController {
 			log.info("변경행수: "+rows);
 			return "redirect:/user/myinfo/"+user.getUserId();
 	}
+	
+	
+	@RequestMapping(value="/user/recovery", method = RequestMethod.GET)
+	public String recovery() {
+		return "user/recovery";
+	}
 }

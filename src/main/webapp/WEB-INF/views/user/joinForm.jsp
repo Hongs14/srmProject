@@ -169,20 +169,14 @@
 	                      </select>
 	                      <small id="userDpNmHelp"></small>
 	                    </div>
-	                    
-	                    
 	                 	 <br>
-	                    <div class="form-group px-5 mx-5 my-2">
-	                      <button type="button" class="btn btn-primary btn-lg btn-block signupbtn" onclick="submitJoinInfo()">가입</button>
+	                 	<hr>
+	                 	<br>
+	                    <div class="px-5 mx-5 my-2 d-flex justify-content-center">
+	                      <button type="button" class="btn btn-success btn-lg signupbtn"  style="width:500px;"onclick="submitJoinInfo()">가입</button>
+	                      <a type="button" class="btn btn-warning btn-lg mx-2"  style="width:500px;" href="${pageContext.request.contextPath}/user/login">취소</a>
 	                    </div>
 	                  </form>
-	                 <hr>
-	                  <div class="text-center">
-	                    <a class="font-weight-bold small" href="${pageContext.request.contextPath}/user/login">이미 계정을 가지고 계신가요?</a>
-	                    <a class="btn btn-sm btn-success mx-2" href="${pageContext.request.contextPath}/user/login">로그인페이지로 이동</a>
-	                  </div>
-	                  <div class="text-center">
-	                  </div>
 	                </div>
 		          </div>
 		        </div>
@@ -346,7 +340,7 @@
     	  
     	  /* 이메일 정규식 유효성 검증 */
     	  function emailRegCheck() {
-    		  emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    		  var emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     		  
     		  var userEmail = $("#userEml").val();
     		  
@@ -374,7 +368,7 @@
     	  }
     	  /* 핸드폰번호 정규식 유효성 검증 */
     	  function userTelnoRegCheck() {
-    		  userTelnoReg = /^(010|011)-\d{3,4}-\d{4}$/;
+    		  var userTelnoReg = /^(010|011)-\d{3,4}-\d{4}$/;
     		  
     		  var telno = $("#userTelno").val();
     		  

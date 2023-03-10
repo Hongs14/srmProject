@@ -24,17 +24,25 @@
 		display:block;
     }
     .srNo{
-		width: 120px;
+		width: 110px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display:block;
 	}	
-   
+   	.sysNm{
+   		width: 110px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display:block;
+   	}
 	.col-lg-7 .userOgdp{
 		width: 70px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display:block;
+	}
+	.col-lg-7 .userOgdpColumn{
+		display: none;
 	}
 	
     .col-lg-12 .userOgdp{
@@ -553,6 +561,9 @@
 
           <!-- 로그아웃 모달 -->
            <%@include file="/WEB-INF/views/common/logout.jsp" %>
+           
+      
+			
         </div>
         <!---Container Fluid-->
       </div>
