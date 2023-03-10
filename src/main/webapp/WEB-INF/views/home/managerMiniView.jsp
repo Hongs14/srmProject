@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	<div>
-        <div class="card shadow mb-4">
+        <div class="card shadow mb-4" style="min-height: 200px;">
           <div class="card-header d-sm-flex justify-content-between align-items-center">
           	<h6 class="font-weight-bold text-primary"><img src="${pageContext.request.contextPath}/resources/images/gantt.png" style="width:30px; margin-right:10px;">SR 진행현황</h6>
           	<a class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/request/list/${progressdetail.srNo}">
