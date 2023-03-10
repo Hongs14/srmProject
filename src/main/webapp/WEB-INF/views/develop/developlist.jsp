@@ -143,7 +143,7 @@
                             		<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 			                			<h5 class="m-0 font-weight-bold text-primary mb-1">SR 개발 목록</h5>
 			                			<div class="d-sm-flex justify-content-end">
-			                				<button class="btn btn-sm btn-secondary" onclick="ExcelDownload()">엑셀 다운로드</button>
+			                				<button class="btn btn-sm btn-primary" onclick="ExcelDownload()">엑셀 다운로드</button>
 			                  			</div>
 			                		</div>
 			                		<div>

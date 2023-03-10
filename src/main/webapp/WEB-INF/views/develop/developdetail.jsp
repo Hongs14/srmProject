@@ -449,6 +449,7 @@
 																				<div class="col-sm-1 text-center">
 																					<div class="d-flex justify-content-center pt-2">
 																						${devlist.userNm}
+																						<input type="hidden" name="userNo" value="${devlist.userNo}"/>
 																					</div>
 																				</div>
 																				<div class="col-sm-3 text-center">
