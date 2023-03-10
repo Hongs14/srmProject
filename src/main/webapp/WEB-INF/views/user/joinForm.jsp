@@ -20,13 +20,13 @@
     </style>
     
    
-    <c:if test="${result eq 'wrongJoin'}">
+    <%-- <c:if test="${result eq 'wrongJoin'}">
 	  	<script>
 		  	$(document).ready(function(){
 		  	 	$("#wrongJoin").modal();
 		  	});
 	  	</script>
-  	</c:if>
+  	</c:if> --%>
 </head>
 
 <body id="page-top">
@@ -77,12 +77,12 @@
 		        <div class="card shadow-sm my-5">
 		          <div class="card-body p-5">
 	                <div class="join-form">
-	                  <div class="text-center">
-	                    <h1 class="h4 text-gray-900 mb-4">회원 가입</h1>
+	                  <div class="text-center p-2">
+	                    <h3 class="text-gray-900 mb-4"><b>회원 가입</b></h3>
 	                  </div>
 	                  <hr>
 	                  
-	                  <form action="${pageContext.request.contextPath}/user/join"method="post">
+	                  <form action="${pageContext.request.contextPath}/user/join" class="needs-validation" method="post" id="joinForm" novalidate>
 	                  
 	                  <h6 class="m-3 px-5 mt-5 font-weight-bold text-primary">가입 타입 선택 </h6>
 	                  	<div class="container mb-5 border p-5">
@@ -105,28 +105,29 @@
 	                    <div class="form-group row px-5 align-items-center">
 	                      <label class="font-weight-bold text-primary col-sm-2 text-right">이름 </label>
 	                      <input type="text" class="form-control col-sm-10" id="userNm" name="userNm" placeholder="Name" required>
+	                      <small id="userNmHelp"></small>
 	                    </div>
 	                    
 	                    <div class="form-group row row-cols-2 px-5 align-items-center">
 	                      <label class="font-weight-bold text-primary col-sm-2 text-right">이메일 </label>
 	                      <input type="email" class="form-control col-sm-10" id="userEml" name="userEml" aria-describedby="emailHelp"
-	                        placeholder="Email Address" required>
+	                        placeholder="Email Address" oninput="emailRegCheck()"required>
 	                       <small id="emailHelp" class="form-text text-muted">예) user@naver.com, user@daum.net</small>
 	                    </div>
 	                    <div class="form-group row row-cols-2 px-5 align-items-center">
 	                      <label class="font-weight-bold text-primary col-sm-2 text-right">전화번호 </label>
-	                      <input type="tel" class="form-control col-sm-10" id="userTelno" name="userTelno" placeholder="PhoneNumber"required>
-	                      <small id="telNoHelp" class="form-text text-muted">예) 010-123-1234, 010-1234-1234</small>
+	                      <input type="tel" class="form-control col-sm-10" id="userTelno" name="userTelno" placeholder="PhoneNumber" oninput="userTelnoRegCheck()" required>
+	                      <small id="telNoHelp" class="form-text text-muted">예) 010-123-1234, 011-1234-1234</small>
 	                    </div>
 	                    <div class="form-group row row-cols-2 px-5 align-items-center">
 	                      <label class="font-weight-bold text-primary col-sm-2 text-right">아이디 </label>
 	                      <input type="text" class="form-control col-sm-10" id="userId" name="userId" placeholder="Id" oninput="checkId()" required>
-	                      <small id="userPswdHelp" class="form-text text-muted">알파벳 대소문자, 숫자를 혼용해서 4자 이상 10자 이하</small><span id="userCheckHelp" class="text-danger small"></span>
+	                      <small id="userIdHelp" class="form-text text-muted">알파벳 대소문자, 숫자를 혼용해서 4자 이상 10자 이하</small><span id="userCheckHelp" class="text-danger small"></span>
 	                    </div>
 	                    <div class="form-group row row-cols-2 px-5 align-items-center">
 	                      <label class="font-weight-bold text-primary col-sm-2 text-right">비밀번호 </label>
 	                      <input type="password" class="form-control col-sm-10" id="userPswd" name="userPswd" placeholder="Password" oninput="checkPswdAgain()" required>
-	                      <small id="passwordHelp" class="form-text text-muted">알파벳 대소문자, 숫자를 혼용해서 8자 이상 25자 이하</small>
+	                      <small id="passwordHelp" class="form-text text-muted">특수문자 포함,알파벳 대소문자,숫자를 혼용해서 8자 이상 25자 이하</small>
 	                    </div>
 	                    <div class="form-group row row-cols-2 px-5 align-items-center">
 	                      <label class="font-weight-bold text-primary col-sm-2 text-right">비밀번호 재입력 </label>
@@ -140,6 +141,7 @@
 	                      <select type="text" class="form-control col-sm-10" id="userOgdp" name="userOgdp" required>
 	                      	<option value="" disabled selected>소속 회사 선택</option>
 	                      </select>
+	                      <small id="userOgdpHelp"></small>
 	                    </div>
 	                    
 	                    <div class="form-group row row-cols-2 px-5 align-items-center">
@@ -157,6 +159,7 @@
 	                      	<option>전무</option>
 	                      	<option>사장</option>
 	                      </select>
+	                      <small id="userJbpsHelp"></small>
 	                    </div>
 	                    
 	                    <div class="form-group row row-cols-2 px-5 align-items-center">
@@ -164,17 +167,19 @@
 	                      <select type="text" class="form-control col-sm-10" id="userDpNm" name="userDpNm" required>
 	                      	<option value="" disabled selected>소속 부서 선택</option>
 	                      </select>
+	                      <small id="userDpNmHelp"></small>
 	                    </div>
 	                    
 	                    
 	                 	 <br>
 	                    <div class="form-group px-5 mx-5 my-2">
-	                      <button type="submit" class="btn btn-primary btn-lg btn-block signupbtn" disabled="disabled">가입</button>
+	                      <button type="button" class="btn btn-primary btn-lg btn-block signupbtn" onclick="submitJoinInfo()">가입</button>
 	                    </div>
 	                  </form>
 	                 <hr>
 	                  <div class="text-center">
 	                    <a class="font-weight-bold small" href="${pageContext.request.contextPath}/user/login">이미 계정을 가지고 계신가요?</a>
+	                    <a class="btn btn-sm btn-success mx-2" href="${pageContext.request.contextPath}/user/login">로그인페이지로 이동</a>
 	                  </div>
 	                  <div class="text-center">
 	                  </div>
@@ -190,6 +195,9 @@
       </div>
       <!-- Footer -->
      	 <%@include file="/WEB-INF/views/common/footer.jsp" %>
+     	 
+     	
+
      	 <script>
      	 
      	function optionChange1() {
@@ -246,39 +254,49 @@
             }
     		
     	});
+    	/* 회원가입 유효성 검증을 위한 변수들 */
     	var idCheck = 0;
    	    var pswdCheck = 0;
-   	    //아이디 체크하여 가입버튼 비활성화, 중복확인.
+   	    var emlCheck = 0;
+   	    var emptyCheck = 0;
+   	    var telnoCheck = 0;
+   	    
+   	    /* 아이디 중복여부 및 정규식 유효성 검증*/
    	    function checkId() {
    	        var userId = $('#userId').val();
-   	        console.log(userId);
    	        $.ajax({
    	            data : {
    	                userId : userId
    	            },
    	            url : "${pageContext.request.contextPath}/user/checkid",
    	            success : function(data) {
+   	            	
+   	            	var idRegCheck = /^[a-zA-Z0-9]{4,10}$/;
+   	            	
    	                if(userId=="" && data=='success') {
-   	                    $(".signupbtn").prop("disabled", true);
-   	                    $(".signupbtn").css("background-color", "#aaaaaa");
    	                    $("#userId").css("background-color", "#FFCECE");
    	                 	$("#userCheckHelp").html("");
    	                    idCheck = 0;
    	                } else if (data == 'success') {
    	                    $("#userId").css("background-color", "#d4e6d4");
    	                    $("#userCheckHelp").removeClass("text-danger");
-   	                    $("#userCheckHelp").addClass("text-warning");
+   	                    $("#userCheckHelp").addClass("text-muted");
    	                    $("#userCheckHelp").html(" ** 사용가능한 아이디입니다.");
-   	                    idCheck = 1;
-   	                    if(idCheck==1 && pswdCheck == 1) {
-   	                        $(".signupbtn").prop("disabled", false);
-   	                        $(".signupbtn").css("background-color", "#4CAF50");
-   	                    } 
+   	                	$("#userIdHelp").removeClass("text-danger");
+	                    $("#userIdHelp").addClass("text-muted");
+   	                    if(idRegCheck.test(userId)){
+	   	                    idCheck = 1;
+   	                    } else if(!idRegCheck.test(userId)){
+   	                    	$("#userId").css("background-color", "#FFCECE");
+   	   	                 	$("#userIdHelp").removeClass("text-muted");
+   		                    $("#userIdHelp").addClass("text-danger");
+   		                	$("#userCheckHelp").html("");
+   	   	                    idCheck = 0;
+   	                    }
+   	                    
    	                } else if (data == 'duplicated') {
-   	                    $(".signupbtn").prop("disabled", true);
-   	                    $(".signupbtn").css("background-color", "#aaaaaa");
    	                    $("#userId").css("background-color", "#FFCECE");
-   	                 	$("#userCheckHelp").removeClass("text-warning");
+   	                 	$("#userCheckHelp").removeClass("text-muted");
 	                    $("#userCheckHelp").addClass("text-danger");
    	                	 $("#userCheckHelp").html(" ** 중복된 아이디입니다.");
    	                    idCheck = 0;
@@ -286,15 +304,12 @@
    	            }
    	        });
    	    }
-    	  //재입력 비밀번호 체크하여 가입버튼 비활성화 또는 맞지않음을 알림.
+    	  /* 재입력 비밀번호 검증 및 비밀번호 정규식 검증 */
     	  function checkPswdAgain() {
    		  	var pswdRegCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
    			var inputed = $('#userPswd').val();
 	        var reinputed = $('#checkPswd').val();
-	        console.log(inputed);
-	        console.log(reinputed);
     	        if(reinputed=="" && (inputed != reinputed || inputed == reinputed)){
-    	            $(".signupbtn").prop("disabled", true);
     	            $(".signupbtn").css("background-color", "#aaaaaa");
     	            $("#checkPswd").css("background-color", "#FFCECE");
     	            $("#checkPswdHelp").html("패스워드와 똑같은 값을 입력해 주세요");
@@ -308,14 +323,8 @@
     	        	$("#checkPswdHelp").removeClass("text-danger");
 	       		 	$("#checkPswdHelp").addClass("text-muted");
     	            pswdCheck = 1;
-    	            if(idCheck==1 && pwdCheck == 1) {
-    	                $(".signupbtn").prop("disabled", false);
-    	                $(".signupbtn").css("background-color", "#4CAF50");
-    	            }
     	        } else if (inputed != reinputed) {
     	            pswdCheck = 0;
-    	            $(".signupbtn").prop("disabled", true);
-    	            $(".signupbtn").css("background-color", "#aaaaaa");
     	            $("#checkPswd").css("background-color", "#FFCECE");
     	            $("#checkPswdHelp").html("패스워드와 똑같은 값을 입력해 주세요");
     	            $("#checkPswdHelp").removeClass("text-muted");
@@ -323,7 +332,7 @@
     	        }
     	        
     	       
-    	        /* 비밀번호 정규화 검증 */
+    	        /* 비밀번호 정규식 검증 */
     	        if(!pswdRegCheck.test(inputed)){
        		  		$("#passwordHelp").removeClass("text-muted");
        		  		$("#passwordHelp").addClass("text-danger");
@@ -334,25 +343,137 @@
 	       		 	pswdCheck = 1;
        		  	}
     	    }
+    	  
+    	  /* 이메일 정규식 유효성 검증 */
     	  function emailRegCheck() {
-    		  emailReg1 = /^(\w+)@(\w+)[.](\w+)$/ig;
-    		  emailReg2 = /^(\w+)@(\w+)[.](\w+)[.](\w+)$/ig;
+    		  emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     		  
     		  var userEmail = $("#userEml").val();
-    		  if(emailReg1.test(userEmail) || emailReg2.test(userEmail)){
-    			  $("#emailHelp").html("이메일 형식으로 입력하세요.");
-    			  $("#emailHelp").removeClass("text-muted");
-    			  $("#emailHelp").addClass("text-danger");
-    		  }else{
-    			  $("#emailHelp").html("올바른 이메일 형식입니다.")
+    		  
+    		  if(userEmail!= ""){
+    			  
+    			  if(!emailReg.test(userEmail)){
+        			  $("#emailHelp").html("이메일 형식으로 입력하세요.");
+        			  $("#emailHelp").removeClass("text-muted");
+        			  $("#emailHelp").addClass("text-danger");
+        			  emlCheck = 0;
+        		  }else{
+        			  $("#emailHelp").html("올바른 이메일 형식입니다.")
+        			  $("#emailHelp").removeClass("text-danger");
+        			  $("#emailHelp").addClass("text-muted");
+        			  emlCheck = 1;
+        		  }
+    			  
+    		  } else if(userEmail == ""){
+    			  $("#emailHelp").html("예) user@naver.com, user@daum.net");
     			  $("#emailHelp").removeClass("text-danger");
     			  $("#emailHelp").addClass("text-muted");
+    			  emlCheck = 0;
+    		  }
+    		  
+    	  }
+    	  /* 핸드폰번호 정규식 유효성 검증 */
+    	  function userTelnoRegCheck() {
+    		  userTelnoReg = /^(010|011)-\d{3,4}-\d{4}$/;
+    		  
+    		  var telno = $("#userTelno").val();
+    		  
+    		  if(telno != ""){
+    			  
+    			  if(!userTelnoReg.test(telno)){
+        			  $("#telNoHelp").removeClass("text-muted");
+        			  $("#telNoHelp").addClass("text-danger");
+        			  telnoCheck = 0;
+        		  }else{
+        			  $("#telNoHelp").removeClass("text-danger");
+        			  $("#telNoHelp").addClass("text-muted");
+        			  telnoCheck = 1;
+        		  }
+    			  
+    		  } else if(telno == ""){
+    			  $("#telNoHelp").removeClass("text-danger");
+    			  $("#telNoHelp").addClass("text-muted");
+    			  telnoCheck = 0;
     		  }
     		  
     	  }
     	  
+    	  /* 회원가입 폼 전체 유효성 검증 및 form submit */
+    	  function submitJoinInfo(){
+    		 var joinForm = $("#joinForm");
+    		 var userNm = $("#userNm").val();
+    		 var userEml = $("#userEml").val();
+    		 var userTelno = $("#userTelno").val();
+    		 var userId = $("#userId").val();
+    		 var userPswd = $("#userPswd").val();
+    		 var checkPswd = $("#checkPswd").val();
+    		 var userJbps =  $("#userJbps").val();
+    		 var userOgdp = $("#userOgdp").val();
+    		 var userDpNm = $("#userDpNm").val();
+    		 
+    		 if(userNm == ""){
+    			 $("#userNmHelp").html("성함을 입력해주세요");
+    			 $("#userNmHelp").addClass("text-danger");
+    			 emptyCheck = 0;
+    		 }
+    		 if(userEml == ""){
+    			 $("#emailHelp").html("이메일을 입력해주세요(예) user@naver.com)");
+    			 $("#emailHelp").removeClass("text-muted");
+    			 $("#emailHelp").addClass("text-danger");
+    			 emptyCheck = 0;
+    		 }
+    		 if(userTelno == ""){
+    			 $("#telNoHelp").html("연락처를 입력해주세요(예) 010-123-1234, 011-1234-1234)");
+    			 $("#telNoHelp").removeClass("text-muted");
+    			 $("#telNoHelp").addClass("text-danger");
+    			 emptyCheck = 0;
+    		 }
+    		 if(userId == ""){
+    			 $("#userIdHelp").html("아이디를 입력해주세요(알파벳 대소문자, 숫자를 혼용해서 4자 이상 10자 이하)");
+    			 $("#userIdHelp").removeClass("text-muted");
+    			 $("#userIdHelp").addClass("text-danger");
+    			 emptyCheck = 0;
+    		 }
+    		 if(userPswd == ""){
+    			 $("#passwordHelp").html("비밀번호를 입력해주세요(특수문자 포함,알파벳 대소문자,숫자를 혼용해서 8자 이상 25자 이하)");
+    			 $("#passwordHelp").removeClass("text-muted");
+    			 $("#passwordHelp").addClass("text-danger");
+    			 emptyCheck = 0;
+    		 }
+    		 if(userJbps == null){
+    			 $("#userJbpsHelp").html("직급을 선택해주세요");
+    			 $("#userJbpsHelp").addClass("text-danger");
+    			 emptyCheck = 0;
+    		 }
+    		 if(userOgdp == null){
+    			 $("#userOgdpHelp").html("소속을 선택해주세요");
+    			 $("#userOgdpHelp").addClass("text-danger");
+    			 emptyCheck = 0;
+    		 }
+    		 if(userDpNm == null){
+    			 $("#userDpNmHelp").html("부서를 선택해주세요");
+    			 $("#userDpNmHelp").addClass("text-danger");
+    			 emptyCheck = 0;
+    		 }
+    		 emptyCheck = 1;
+    		
+    		 if(idCheck != 1 || pswdCheck != 1 || emlCheck != 1 || emptyCheck != 1 || telnoCheck != 1) {
+	   			console.log("회원가입 실패");
+	   			var body = document.getElementsByTagName("body")[0];
+	   			window.scroll({
+	   	            behavior: 'smooth',
+	   	            left: 0,
+	   	            top:body.offsetTop
+	   	        });
+    		 }
+    		 if(idCheck == 1 && pswdCheck == 1 && emlCheck == 1 && emptyCheck == 1 && telnoCheck == 1){
+    			 joinForm.submit();
+    		 }
+    	  }
+    	  
     	  	
      	 </script>
+     	 
      <!-- Footer -->
     </div>
   </div>

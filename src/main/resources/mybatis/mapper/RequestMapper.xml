@@ -211,13 +211,15 @@
 	        sys_nm as "sysNm",
 	        sr_ttl as "srTtl",
 	        sr_std as "srStd",
+	        stts_nm as "sttsNm",
 	        sr_cn as "srCn"
 		FROM
-	        SR s, USERS u, SYSTEM sys
+	        SR s, USERS u, SYSTEM sys, SR_STTS st
 		WHERE 
 	        s.sr_cust_no = u.user_no and
-	        sys.sys_no = s.sys_no
-	        and sr_no = #{srNo}
+	        sys.sys_no = s.sys_no and
+	        st.stts_no = s.stts_no and 
+	        sr_no = #{srNo}
 	</select>
 	
 	<select id="selectRequestFileDetail" parameterType="string" resultType="srFile">
