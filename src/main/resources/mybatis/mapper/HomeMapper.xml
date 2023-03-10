@@ -21,6 +21,7 @@
 		FROM SR sr, SR_STTS stts
 		WHERE sr.stts_no = stts.stts_no
 		AND SYS_NO = #{sysNo}
+		AND TO_CHAR(SR_REG_DATE, 'YYYY') = TO_CHAR(sysdate, 'YYYY')
 		GROUP BY stts.STTS_NO, STTS_NM
 		ORDER BY stts.STTS_NO ASC
 	</select>
@@ -58,6 +59,7 @@
 	    </if>
 		WHERE sr.sys_no = system.sys_no
 		AND stts.stts_no = sr.stts_no
+		AND TO_CHAR(SR_REG_DATE, 'YYYY') = TO_CHAR(sysdate, 'YYYY')
 	    <if test="userType.equals('고객사')">
 	    	AND SR_CUST_NO = #{srCustNo}
 	    	AND sr.sys_no = #{sysNo}
@@ -114,6 +116,7 @@
 					    </if>
 					    WHERE sr.sys_no = system.sys_no
 					    AND stts.stts_no = sr.stts_no
+					    AND TO_CHAR(SR_REG_DATE, 'YYYY') = TO_CHAR(sysdate, 'YYYY')
 					    <if test="userType.equals('고객사')">
 					    	AND SR_CUST_NO = #{srCustNo}
 					    	AND sr.sys_no = #{sysNo}
