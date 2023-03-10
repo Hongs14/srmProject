@@ -5,9 +5,8 @@
 	<!-- 읽지 않은 알림 수 -->
 	<select id="selectAlarmCount" parameterType="alarm" resultType="int">
 		SELECT COUNT(ALARM_NO)
-		FROM SR_ALARM sa, SR s, USERS u
+		FROM SR_ALARM sa, SR s
 		WHERE sa.SR_NO = s.SR_NO
-		AND u.USER_NO = sa.USER_NO
 		<if test="userType.equals('고객사')">
 			AND sa.SR_NO like #{sysNo}
 			AND sa.USER_NO = #{userNo}
@@ -15,6 +14,7 @@
 		</if>
 		<if test="userType.equals('관리자')">
 			AND sa.SR_NO like #{sysNo}
+			AND s.STTS_NO != 2
 			AND s.STTS_NO != 3
 			AND s.STTS_NO != 4
 			AND s.STTS_NO != 5
@@ -26,7 +26,6 @@
 			AND s.STTS_NO != 2
 			AND s.STTS_NO != 3
 			AND s.STTS_NO != 4
-			AND s.STTS_NO != 5
 			AND s.STTS_NO != 7
 			AND s.STTS_NO != 8
 			AND s.STTS_NO != 9
@@ -39,7 +38,7 @@
 	<select id="selectAlarmList" parameterType="alarm" resultType="alarm">
 		SELECT 
 		    sa.ALARM_NO AS "alarmNo",
-		    u.USER_NO AS "userNo",
+		    sa.USER_NO AS "userNo",
 		    sa.MESSAGE AS "message",
 		    sa.MESSAGE_CHECK AS "messageCheck",
 		    sa.MESSAGE_DATE AS "messageDate",
@@ -48,9 +47,8 @@
 		    sa.ALARM_CATEGORY AS "alarmCategory",
 		    sa.SR_NO AS "srNo",
 		    st.STTS_NM AS "sttsNM"
-		FROM SR_ALARM sa, SR s, USERS u, SR_STTS st
+		FROM SR_ALARM sa, SR s,SR_STTS st
 		WHERE sa.SR_NO = s.SR_NO
-		AND u.USER_NO = sa.USER_NO
 		AND s.STTS_NO = st.STTS_NO
 		<if test="userType.equals('고객사')">
 			AND sa.SR_NO like #{sysNo}
@@ -60,6 +58,7 @@
 		</if>
 		<if test="userType.equals('관리자')">
 			AND sa.SR_NO like #{sysNo}
+			AND s.STTS_NO != 2
 			AND s.STTS_NO != 3
 			AND s.STTS_NO != 4
 			AND s.STTS_NO != 5
@@ -71,10 +70,16 @@
 			AND s.STTS_NO != 2
 			AND s.STTS_NO != 3
 			AND s.STTS_NO != 4
-			AND s.STTS_NO != 5
 			AND s.STTS_NO != 7
 			AND s.STTS_NO != 8
 			AND s.STTS_NO != 9
+			AND h.USER_NO = #{userNo}
+			AND 
+			   ( CASE 
+			        WHEN s.STTS_NO = 5 THEN 'SR 요청이 개발중 입니다.'
+			        WHEN s.STTS_NO = 6 THEN 'SR 요청이 개발완료 되었습니다.'
+			        WHEN s.STTS_NO = 10 THEN 'SR 요청에 대한 계획 조정 요청 입니다.'
+			    END) = sa.MESSAGE
 		</if>
 		AND s.SR_DEL_YN = 'N'
 		ORDER BY MESSAGE_CHECK, DECODE(s.STTS_NO, 1, 8, 10, 2, 3, 4, 5, 6, 7, 9) ASC, MESSAGE_DATE DESC

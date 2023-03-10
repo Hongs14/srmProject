@@ -99,11 +99,13 @@
 		                					<div class="form-group row" id="simple-date4" >
 					                			<div class="input-daterange input-group input-group-sm">
 					                				<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
-					                    			<input type="text" class="input-sm form-control form-control-sm col-sm-9" name="start" id="dateStart"/>
-					                    			<div class="input-group-prepend">
-					                    				<span class="input-group-text" style="height:31px;">~</span>
-					                    			</div>
-					                    			<input type="text" class="input-sm form-control form-control-sm" name="end" id="dateEnd"/>
+					                				<div class="col-sm-9 d-flex">
+						                    			<input type="text" class="input-sm form-control form-control-sm" name="start" id="dateStart"/>
+						                    			<div class="input-group-prepend">
+						                    				<span class="input-group-text" style="height:31px;">~</span>
+						                    			</div>
+						                    			<input type="text" class="input-sm form-control form-control-sm" name="end" id="dateEnd"/>
+					                				</div>
 					                    		</div>
 					            			</div>
 		                				</div>
@@ -138,12 +140,14 @@
 		                				<div class="col-4">
 		                					<div class="form-group row">
 		                						<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">등록자소속</label>
-				                    			<select id="userOgdp" class="form-control form-control-sm col-sm-9">
-				                        			<option value="0">전체</option>
-				                        			<c:forEach var="users" items="${examineFilter.userOgdpList}">		                        	
-					                        			<option>${users.userOgdp}</option>
-				                        			</c:forEach>
-				                    			</select>
+				                    			<div class="col-sm-9">
+					                    			<select id="userOgdp" class="form-control form-control-sm">
+					                        			<option value="0">전체</option>
+					                        			<c:forEach var="users" items="${examineFilter.userOgdpList}">		                        	
+						                        			<option>${users.userOgdp}</option>
+					                        			</c:forEach>
+					                    			</select>
+				                    			</div>
 				                			</div>
 		                				</div>
 		                				<div class="col-3">
