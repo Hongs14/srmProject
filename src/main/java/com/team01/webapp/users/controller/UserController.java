@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team01.webapp.model.Users;
@@ -114,9 +116,27 @@ public class UserController {
 		if(result == UserService.JOIN_SUCCESS) {
 			redirectAttributes.addFlashAttribute("result", "success");
 			return "redirect:/user/login";
+		}else if (result == UserService.JOIN_DUPLICATED){
+			model.addAttribute("result", "duplicatedId");
+			return "user/joinForm";
 		}else {
 			model.addAttribute("result", "wrongJoin");
 			return "user/joinForm";
+			
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping("/user/checkid")
+	public String checkId(@RequestParam String userId)	 {
+		log.info(userId+"실행");
+		int result = userService.checkId(userId);
+		if(result == UserService.JOIN_DUPLICATED) {
+			log.info("중복 아이디");
+			return "duplicated";
+		}else {
+			log.info("중복이 아닌 아이디");
+			return "success";
 		}
 	}
 	
