@@ -239,6 +239,7 @@
 				htmlData += '</button>'
 				htmlData += '<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>';
 				$('#footer').append(htmlData)
+				onMessage();
 			} else {
 				$("#message").text(a);
 			}
@@ -252,6 +253,7 @@
 			htmlData += '</button>'
 			htmlData += '<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>';
 			$('#footer').append(htmlData)
+			onMessage();
 		}
 	}
 	
