@@ -16,4 +16,5 @@
 		@Resource, @Autowired, @Inject, @Value 자동 인식 -->
 		<context:component-scan base-package="com.team01.webapp"/>
 	<!-- <context:component-scan base-package="com.team01.webapp.qnaboard.service"/> -->
+	
 </beans:beans>
