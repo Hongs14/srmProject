@@ -17,15 +17,23 @@
 
 	<div class="table-responsive p-1">
 	<div class="input-group-append float-right mb-3">
-		<button class="btn btn-primary btn-sm mr-2" type="button" onclick="progressRateALLAdd()">
-			저장
-		</button>
-		<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFinishRequestModal" onclick="progressRequestModal(1)">
-			완료 요청
-		</button>
-		<button class="btn btn-warning btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFinishRequestModal" onclick="progressRequestModal(2)">
-			개발 완료 승인
-		</button>
+		<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
+			<c:if test="${check}">
+				<button class="btn btn-primary btn-sm mr-2" type="button" onclick="progressRateALLAdd()">
+					저장
+				</button>
+				<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFinishRequestModal" onclick="progressRequestModal(1)">
+					완료 요청
+				</button>
+			</c:if>
+		</c:if>
+		<c:if test="${sttsNm == '완료요청'}">
+			<c:if test="${userNo == managerNo}">
+				<button class="btn btn-warning btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFinishRequestModal" onclick="progressRequestModal(2)">
+					개발 완료 승인
+				</button>
+			</c:if>
+		</c:if>
 	</div>
 		<table class="table align-items-center table-flush table-hover">
 			<thead class="thead-light">
@@ -38,68 +46,99 @@
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach var="list" items="${progressRateList}">
-				<tr>
-					<c:if test="${list.progType != 5 && list.progType != 6}">
-						<td>
-							<a onclick="progressRateAdd('${list.progNo}')" data-toggle="modal" data-target="#progressRateModal">
+				<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료') && check}">
+					<c:forEach var="list" items="${progressRateList}">
+						<tr>
+							<c:if test="${list.progType != 5 && list.progType != 6}">
+								<th>
+									<a onclick="progressRateAdd('${list.progNo}')" data-toggle="modal" data-target="#progressRateModal">
+										${list.progTypeNm}
+									</a>
+								</th>
+								<th class="input-daterange p-3" style="width:170px;">
+									<input type="text" value="${list.progStartDate}" class="a form-control form-control-sm" id="start-${list.progNo}"/>
+								</th>
+								<th class="input-daterange p-3" style="width:170px;">
+									<input type="text" value="${list.progEndDate}" class="a form-control form-control-sm" id="end-${list.progNo}"/>
+								</th>
+								<th class="input-daterange p-3" style="width:100px;">
+									<input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="${list.progRate}" min="0" class="form-control form-control-sm" id="rate-${list.progNo}"/>
+								</th>
+								<th class="pl-5">
+									<c:if test="${list.progressFile[0].progFileNo != null}">
+										<div class="row d-flex flex-column text-left">
+											<c:forEach var="fileList" items="${list.progressFile}">
+										
+												<a href="progressFiledownload/${list.srNo}/?progFileNo=${fileList.progFileNo}">
+													<span>[${fileList.progFileActlNm}]</span>
+												</a>
+											</c:forEach>
+										</div>
+									</c:if>
+								</th>
+							</c:if>
+							<c:if test="${list.progType == 5 || list.progType == 6}">
+								<th>
+									${list.progTypeNm}
+								</th>
+								<th>
+									${list.progStartDate}
+								</th>
+								<th>
+									${list.progEndDate}
+								</th>
+								<th>
+									${list.progRate}
+								</th>
+								<th>
+									<c:if test="${list.progressFile[0].progFileNo != null}">
+										<div class="row">
+											<c:forEach var="fileList" items="${list.progressFile}">
+												<a href="progressFiledownload/${list.srNo}/?progFileNo=${fileList.progFileNo}">
+													<span>[${fileList.progFileActlNm}]</span>
+												</a>
+											</c:forEach>
+										</div>
+									</c:if>
+								</th>
+							</c:if>
+						</tr>
+					</c:forEach>
+				</c:if>
+				<c:if test="${sttsNm == '완료요청' || sttsNm == '개발 완료' || !check}">
+					<c:forEach var="list" items="${progressRateList}">
+						<tr>
+							<th>
 								${list.progTypeNm}
-							</a>
-						</td>
-						<td class="input-daterange p-3" style="width:170px;">
-							<input type="text" value="${list.progStartDate}" class="a form-control form-control-sm" id="start-${list.progNo}"/>
-						</td>
-						<td class="input-daterange p-3" style="width:170px;">
-							<input type="text" value="${list.progEndDate}" class="a form-control form-control-sm" id="end-${list.progNo}"/>
-						</td>
-						<td class="input-daterange p-3" style="width:100px;">
-							<input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="${list.progRate}" min="0" class="form-control form-control-sm" id="rate-${list.progNo}"/>
-						</td>
-						<td>
-							<c:if test="${list.progressFile[0].progFileNo != null}">
-								<div class="row d-flex flex-column text-left">
-									<c:forEach var="fileList" items="${list.progressFile}">
-								
-										<a href="progressFiledownload/${list.srNo}/?progFileNo=${fileList.progFileNo}">
-											<span>[${fileList.progFileActlNm}]</span>
-										</a>
-									</c:forEach>
-								</div>
-							</c:if>
-						</td>
-					</c:if>
-					<c:if test="${list.progType == 5 || list.progType == 6}">
-						<th>
-							${list.progTypeNm}
-						</th>
-						<th>
-							${list.progStartDate}
-						</th>
-						<th>
-							${list.progEndDate}
-						</th>
-						<th>
-							${list.progRate}
-						</th>
-						<th>
-							<c:if test="${list.progressFile[0].progFileNo != null}">
-								<div class="row">
-									<c:forEach var="fileList" items="${list.progressFile}">
-										<a href="progressFiledownload/${list.srNo}/?progFileNo=${fileList.progFileNo}">
-											<span>[${fileList.progFileActlNm}]</span>
-										</a>
-									</c:forEach>
-								</div>
-							</c:if>
-						</th>
-					</c:if>
-				</tr>
-			</c:forEach>
+							</th>
+							<th>
+								${list.progStartDate}
+							</th>
+							<th>
+								${list.progEndDate}
+							</th>
+							<th>
+								${list.progRate}
+							</th>
+							<th>
+								<c:if test="${list.progressFile[0].progFileNo != null}">
+									<div class="row">
+										<c:forEach var="fileList" items="${list.progressFile}">
+											<a href="progressFiledownload/${list.srNo}/?progFileNo=${fileList.progFileNo}">
+												<span>[${fileList.progFileActlNm}]</span>
+											</a>
+										</c:forEach>
+									</div>
+								</c:if>
+							</th>
+						</tr>
+					</c:forEach>
+				</c:if>
 			</tbody>
 		</table>
 	<!-- 모달 창 -->
 	<div class="modal fade" id="progressRateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+		<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
 				<div id="progressRateModalView"></div>
 			</div>
@@ -120,17 +159,41 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body justify-content-center text-center p-5">
-					<div class="d-flex align-items-center">
-						<div id="iconWrapper" class="mr-4">
-							<i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#FFA426;"></i>
-						</div>
-						<div id="dialogWrapper" class="text-left">
-							<h5 id="message"></h5>
-						</div>
+				<div class="modal-body p-5" style="white-space: normal;">
+					<div class="alert alert-secondary m-3 p-2" role="alert">
+						<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+						<div id="message"></div>
 					</div>
 				</div>
 				<div class="modal-footer" id="footer">
+					<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 진척율 업데이트 메시지 모달 창 -->
+	<div class="modal fade" id="rateMessageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title" id="exampleModalScrollableTitle">
+						<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+			        	<small class="text-white">
+			        		<b>삭제</b>
+			        	</small>
+					</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body p-5" style="white-space: normal; text-align:center;">
+					<div class="alert alert-secondary m-3 p-2" role="alert">
+						<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+						<div id="rateModalMessage"></div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="rateUpdateModalShow()">닫기</button>
 				</div>
 			</div>
 		</div>
@@ -149,29 +212,48 @@
 	
 	function progressRequestModal(choice) {
 		if(choice == 1) {
-			<c:forEach var="list" items="${progressRateList}" begin="3" end="3">
-				progRate = ${list.progRate}
+			var progRateArr = new Array();
+		
+			<c:forEach var="list" items="${progressRateList}" begin="0" end="3">
+				progRateArr.push(${list.progRate});
 			</c:forEach>
 			
-			if(progRate == 80) {
+			var a = null;
+			
+			if(progRateArr[0] != 20) {
+				a = "요구정의가 끝나지 않아서 요청하실 수 없습니다.";
+			} else if(progRateArr[1] != 40) {
+				a = "분석/설계가 끝나지 않아서 요청하실 수 없습니다.";
+			} else if(progRateArr[2] != 60) {
+				a = "구현이 끝나지 않아서 요청하실 수 없습니다.";
+			} else if(progRateArr[3] != 80) {
+				a = "테스트가 끝나지 않아서 요청하실 수  없습니다.";
+			} 
+			
+			if(a == null) {
 				$("#message").text("요청하시겠습니까?");
 				$('#footer').empty();
 				let htmlData = '';
-				htmlData += '<button class="btn btn-primary btn-sm mr-2" type="button" onclick="progressRateFinishRequest(1)">'
+				htmlData += '<button class="btn btn-primary mr-2" type="button" onclick="progressRateFinishRequest(1)">'
 				htmlData += "네"
 				htmlData += '</button>'
+				htmlData += '<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>';
 				$('#footer').append(htmlData)
+				onMessage();
 			} else {
-				$("#message").text("테스트 종료값인 80이 아니라서 요청할 수 없습니다.");
+				$("#message").text(a);
 			}
+			
 		} else {
 			$("#message").text("승인하시겠습니까?");
 			$('#footer').empty();
 			let htmlData = '';
-			htmlData += '<button class="btn btn-primary btn-sm mr-2" type="button" onclick="progressRateFinishRequest(2)">'
+			htmlData += '<button class="btn btn-primary mr-2" type="button" onclick="progressRateFinishRequest(2)">'
 			htmlData += "네"
 			htmlData += '</button>'
+			htmlData += '<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>';
 			$('#footer').append(htmlData)
+			onMessage();
 		}
 	}
 	
@@ -192,14 +274,37 @@
 		
 		data = {srNo : srNo, progressArr : progressArr}
 		
-		$.ajax({
-			url : "progressRateAllAdd",
-			method : "post",
-			data : JSON.stringify(data),
-			contentType : "application/json; charset=UTF-8"
-		}).done((data) => {
-			window.location.href = "${progress.srNo}";
-		});
+		var start = 0;
+		var end = 0;
+		var falseArr = new Array();
+		
+		<c:forEach var="list" items="${progressRateList}" end="3" varStatus="status">
+			progRate = progressArr[${status.index}].progRate;
+			start = (${status.index} * 20);
+			end = ((${status.index}+1) * 20);
+			
+			if(!(((start < progRate) && (progRate <= end)) || progRate == 0)) {
+				falseArr.push('${list.progTypeNm}');
+			}
+		</c:forEach>
+		
+		if(falseArr.length == 0) {
+			$.ajax({
+				url : "progressRateAllAdd",
+				method : "post",
+				data : JSON.stringify(data),
+				contentType : "application/json; charset=UTF-8"
+			}).done((data) => {
+				$('#messageModal').modal('show');
+		    	$("#Modalmessage").text("진척율이 저장 되었습니다.");
+		    	setTimeout(function() {
+		    		window.location.href = "${progress.srNo}";
+	    		}, 2000);
+			});
+		} else {
+			$('#messageModal').modal('show');
+			$("#Modalmessage").text(falseArr + ' 진척율이 너무 크거나 작습니다.');
+		}
 	}
 	
 	function progressRateFinishRequest(choice) {
@@ -207,11 +312,11 @@
 		
 		if(choice == 1) {
 			<c:forEach var="list" items="${progressRateList}" begin="4" end="4">
-				progNo = "${list.progNo}"
+				progNo = "${list.progNo}";
 			</c:forEach>
 		} else {
 			<c:forEach var="list" items="${progressRateList}" begin="5" end="5">
-				progNo = "${list.progNo}"
+				progNo = "${list.progNo}";
 			</c:forEach>
 		}
 		
@@ -225,5 +330,10 @@
 		}).done((data) => {
 			window.location.href = "${progress.srNo}";
 		});
+	}
+	
+	function rateUpdateModalShow() {
+	    $('#progressRateModal').modal('show');
+	   	$('#rateMessageModal').modal('hide');
 	}
 </script>

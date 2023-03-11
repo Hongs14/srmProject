@@ -48,7 +48,7 @@
 					<li class="breadcrumb-item active" aria-current="page">나의 정보 상세</li>
 				</ol>
 			</div>
-              <div class="card">
+              <div class="card mb-5">
                 <div class="card-body d-flex p-5">
                 	<div class="userOgdp" style="border-right: 2px solid #757575; padding-right: 30px;">
                 		<div class="p-3 pt-5">
@@ -75,11 +75,13 @@
 						</div>
 						<div class="row mb-5">
 							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userEml">EMAIL </label>
-							<input class="col-9 updatable" id="userEml" name="userEml" class="mx-2" style="border:0; font-size:1.2rem;" value="${user.userEml}" disabled>
+							<input class="col-9 updatable" id="userEml" name="userEml" class="mx-2" style="border:0; font-size:1.2rem;" value="${user.userEml}" oninput="emailRegCheck()" disabled>
+							 <small id="emailHelp" class="form-text text-muted" style="display:none;">예) user@naver.com, user@daum.net</small>
 						</div>
 						<div class="row mb-5">
 							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userTelno">연락처 </label>
-							<input class="col-9 updatable" id="userTelno" name="userTelno" class="mx-2" style="border:0; font-size:1.2rem;" value="${user.userTelno}" disabled>
+							<input class="col-9 updatable" id="userTelno" name="userTelno" class="mx-2" style="border:0; font-size:1.2rem;" value="${user.userTelno}" oninput="userTelnoRegCheck()" disabled>
+							<small id="telNoHelp" class="form-text text-muted" style="display:none;">예) 010-123-1234, 011-1234-1234</small>
 						</div>
 						<div class="row mb-5">
 							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userDpNm">부서 </label>
@@ -127,9 +129,10 @@
 						<input type="hidden" value="${user.userId}" name="userId"/>
 					<div class="card-footer">
 						<div class="text-center">
-							<a type="button" class="btn btn-primary btn-sm" onclick= "updateInfo()" id="updateInfo_fun">수정하기</a>
-			       			<button type="submit" class="btn btn-primary btn-sm" id="updateInfo_submit" style="display: none;">저장</button>
-							<a class="btn btn-info btn-sm" data-toggle="modal" data-target="#unregister">회원탈퇴</a>
+							<a type="button" class="btn btn-primary " onclick= "updateInfo()" id="updateInfo_fun">수정하기</a>
+			       			<button type="button" class="btn btn-primary " id="updateInfo_submit" style="display: none;" onclick="submitUpdateInfo()">저장</button>
+			       			<button type="button" class="btn btn-warning " onclick="updateCancel()" id="updateCancelBtn" style="display: none;">취소</button>
+							<a class="btn btn-info " data-toggle="modal" data-target="#unregister">회원탈퇴</a>
 						</div>
 					</div>
 					</form>
@@ -229,8 +232,8 @@
         <!---Container Fluid-->
       </div>
       </div>
-     <%@include file="/WEB-INF/views/common/footer.jsp" %>
       <!-- Footer -->
+     <%@include file="/WEB-INF/views/common/footer.jsp" %>
     </div>
     </div>
  <%@include file="/WEB-INF/views/common/bottom.jsp" %>
@@ -243,7 +246,108 @@
 	$(".updatable").addClass("border");
 	$("#updateInfo_fun").hide();
 	$("#updateInfo_submit").show();	
+	$("#updateCancelBtn").show();	
  }
+ function updateCancel(){
+	$("#updateInfo_submit").hide();	
+	$("#updateCancelBtn").hide();	
+	$("#updateInfo_fun").show();
+	$(".updatable").attr("disabled",true);
+	$(".updatable").removeClass("border");
+	
+ }
+ /* 회원가입 유효성 검증을 위한 변수들 */
+    var emlCheck = 0;
+    var emptyCheck = 0;
+    var telnoCheck = 0;
+    /* 이메일 정규식 유효성 검증 */
+	  function emailRegCheck() {
+		  var emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		  
+		  var userEmail = $("#userEml").val();
+		  $("#emailHelp").show();
+		  if(userEmail!= ""){
+			  
+			  if(!emailReg.test(userEmail)){
+  			  $("#emailHelp").html("이메일 형식으로 입력하세요.");
+  			  $("#emailHelp").removeClass("text-muted");
+  			  $("#emailHelp").addClass("text-danger");
+  			  emlCheck = 0;
+  		  }else{
+  			  $("#emailHelp").html("올바른 이메일 형식입니다.")
+  			  $("#emailHelp").removeClass("text-danger");
+  			  $("#emailHelp").addClass("text-muted");
+  			  emlCheck = 1;
+  		  }
+			  
+		  } else if(userEmail == ""){
+			  $("#emailHelp").html("예) user@naver.com, user@daum.net");
+			  $("#emailHelp").removeClass("text-danger");
+			  $("#emailHelp").addClass("text-muted");
+			  emlCheck = 0;
+		  }
+		  
+	  }
+	  /* 핸드폰번호 정규식 유효성 검증 */
+	  function userTelnoRegCheck() {
+		  var userTelnoReg = /^(010|011)-\d{3,4}-\d{4}$/;
+		  $("#telNoHelp").show();
+		  
+		  var telno = $("#userTelno").val();
+		  
+		  if(telno != ""){
+			  
+			  if(!userTelnoReg.test(telno)){
+  			  $("#telNoHelp").removeClass("text-muted");
+  			  $("#telNoHelp").addClass("text-danger");
+  			  telnoCheck = 0;
+  		  }else{
+  			  $("#telNoHelp").removeClass("text-danger");
+  			  $("#telNoHelp").addClass("text-muted");
+  			  telnoCheck = 1;
+  		  }
+			  
+		  } else if(telno == ""){
+			  $("#telNoHelp").removeClass("text-danger");
+			  $("#telNoHelp").addClass("text-muted");
+			  telnoCheck = 0;
+		  }
+		  
+	  }
+	  
+	  function submitUpdateInfo(){
+ 		 var userEml = $("#userEml").val();
+ 		 var userTelno = $("#userTelno").val();
+ 		
+ 		 if(userEml == ""){
+ 			 $("#emailHelp").html("이메일을 입력해주세요(예) user@naver.com)");
+ 			 $("#emailHelp").removeClass("text-muted");
+ 			 $("#emailHelp").addClass("text-danger");
+ 			 emptyCheck = 0;
+ 		 }
+ 		 if(userTelno == ""){
+ 			 $("#telNoHelp").html("연락처를 입력해주세요(예) 010-123-1234, 011-1234-1234)");
+ 			 $("#telNoHelp").removeClass("text-muted");
+ 			 $("#telNoHelp").addClass("text-danger");
+ 			 emptyCheck = 0;
+ 		 }
+ 		 
+ 		 emptyCheck = 1;
+ 		
+ 		 if(emlCheck != 1 || emptyCheck != 1 || telnoCheck != 1) {
+	   			console.log("회원정보수정 실패");
+	   			var body = document.getElementsByTagName("body")[0];
+	   			window.scroll({
+	   	            behavior: 'smooth',
+	   	            left: 0,
+	   	            top:body.offsetTop
+	   	        });
+ 		 }
+ 		 if(emlCheck == 1 && emptyCheck == 1 && telnoCheck == 1){
+ 			 $(".myInfoWrapper").submit();
+ 		 }
+ 	  }
+	  
  </script>
 </body>
 

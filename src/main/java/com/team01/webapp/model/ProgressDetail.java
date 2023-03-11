@@ -15,6 +15,7 @@ public class ProgressDetail {
 	private String sttsNm;
 	private String userDpNm;
 	private String requesterNm;
+	private int srBgt;
 	private Date srRegDate;
 	private Date srDdlnDate;
 	private String srCn;
@@ -22,9 +23,11 @@ public class ProgressDetail {
 	private String developerNm;
 	private Date srStartDate;
 	private Date srEndDate;
+	private String srDevCn;
 	
 	// 멀티 파일
 	private List<SrFile> srFile;
 	
 	private String srPry;
+	private String sysNo;
 }

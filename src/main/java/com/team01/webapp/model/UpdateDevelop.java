@@ -32,9 +32,7 @@ public class UpdateDevelop {
 	private int[] userNo;
 	private String[] hrLeader;
 	private int[] taskNo;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date[] hrStartDate;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date[] hrEndDate;
 }
 

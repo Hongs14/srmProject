@@ -1,77 +1,129 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
           <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
       <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                 <!-- <i class="fas fa-search fa-fw"></i>  -->
-              </a>
               <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                 aria-labelledby="searchDropdown">
                 <form class="navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-1 small" placeholder="What do you want to look for?"
-                      aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <!-- <i class="fas fa-search fa-sm"></i> -->
-                      </button>
-                    </div>
-                  </div>
                 </form>
               </div>
-            </li>
-           
+           <!-- sockJS -->
+			<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+			<script>
+				// 전역변수 설정
+				var socket  = null;
+				$(document).ready(function(){
+				    // 웹소켓 연결
+				    sock = new SockJS("<c:url value="/echo-ws"/>");
+				    socket = sock;
+				    
+				    sock.onopen = function() {
+			            console.log('Info: connection opened.');
+			        };
+				    
+				    // 데이터를 전달 받았을때 
+				    sock.onmessage = onMessage; // toast 생성
+				});
+				
+				function onMessage(){
+					console.log("message 실행");
+					
+					$.ajax({
+						url : "${pageContext.request.contextPath}/alarm/list",
+						method : "get",
+					}).done((data) => {
+						console.log("message 실행 완료");
+					});
+				    
+				};
+				
+			</script>
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
-               <span class="badge badge-danger badge-counter">3</span>
+               <span class="badge badge-danger badge-counter" id="alarmCount">
+               		<c:set var="alarmCnt" value="${alarmCnt}"/>
+					<c:choose>
+						<c:when test="${alarmCnt != 0}">
+		               		<c:out value="${alarmCnt}"/>						
+						</c:when>
+						<c:otherwise>
+							0
+						</c:otherwise>
+					</c:choose>
+               </span>
               </a>
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                  Alerts Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fas fa-donate text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                <h6 class="dropdown-header">받은 알림</h6>
+				<c:choose>
+					<c:when test="${fn:length(alarmList) == 0 }">
+						<span class="dropdown-item d-flex align-items-center">알림 내역이 없습니다.</span>
+					</c:when>
+					<c:otherwise>
+	               		<c:forEach var="alarmList" items="${alarmList}"  begin="0" end="2" step="1">                
+							<a class="dropdown-item d-flex align-items-center" onclick="updateCheck('${alarmList.srNo}')">
+								<div class="mr-3">
+									<div class="icon-circle bg-primary">
+										<c:if test="${alarmList.messageCheck eq 89}">
+											<i class="fas fa-check text-white"></i>
+										</c:if>
+										<c:if test="${alarmList.messageCheck eq 78 }">
+											<i class="fas fa-exclamation-triangle text-white"></i>
+										</c:if>
+									</div>
+								</div>
+								<div>
+									<span class="d-none" id="alarmNo">${alarmList.alarmNo}</span>
+									<span class="d-none" id="sttsNm">${alarmList.sttsNm}</span>
+				                    <div class="small text-gray-500">${alarmList.messageDate}</div>
+				                    <span class="font-weight-bold">${alarmList.alarmTtl} : ${alarmList.message}</span>
+				                </div>
+			                </a>
+		                </c:forEach>					
+					</c:otherwise>
+				</c:choose>	
+                <a class="dropdown-item text-center small text-gray-500" href="${pageContext.request.contextPath}/alarm/list">Show All Alerts</a>
+                <script>
+	                function updateCheck(i) {
+						var srNo = i;
+						console.log(srNo);
+						var alarmNo = document.getElementById("alarmNo").innerText;
+						console.log(alarmNo);
+						var sttsNm = document.getElementById("sttsNm").innerText;
+						console.log(sttsNm);
+						var userType="${sessionScope.loginUser.userType}";
+						console.log(userType);
+						
+						let data = {alarmNo : alarmNo};
+						let url = "";
+	
+						if(sttsNm == "완료요청"){
+							url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
+						}else if(sttsNm == "요청" && userType == "관리자"){
+							url = "${pageContext.request.contextPath}/examine/list/"+srNo;
+						}else{
+							url = "${pageContext.request.contextPath}/request/list/"+srNo;
+						}
+						
+						console.log(data);
+						
+						$.ajax({
+							url : "${pageContext.request.contextPath}/alarm/updateAlarmCheck",
+							method : "post",
+							data : JSON.stringify(data),
+							contentType: "application/json; charset=UTF-8"
+						}).done((data) => {
+							window.location.href = url;
+						});
+					}	
+				</script>
               </div>
             </li>
             <li class="nav-item dropdown no-arrow mt-3">

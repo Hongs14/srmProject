@@ -12,7 +12,8 @@
 		WHERE SR.SYS_NO = SYS.SYS_NO
 		AND SR.STTS_NO = ST.STTS_NO
 		AND SR.SR_CUST_NO = U.USER_NO
-		AND SR.STTS_NO IN (4,5)
+		AND SR.STTS_NO IN (4, 9)
+		AND sr.SR_REG_DATE BETWEEN TO_DATE(#{srRegStartDate},'YY-MM-DD')  AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+1
 		<if test="!sysNo.equals('all')">
 			AND sys.sys_no = #{sysNo}
 		</if>
@@ -24,11 +25,6 @@
 		</if>
 		<if test="!srDevDp.equals('all')">
 			AND	SR.SR_DEV_DP = #{srDevDp}
-		</if>
-		<if test="srRegStartDate neq null and srRegStartDate neq ''" >
-			 AND sr.SR_REG_DATE BETWEEN 
-                TO_DATE(#{srRegStartDate},'YY-MM-DD') 
-                AND TO_DATE(#{srRegEndDate},'YY-MM-DD')+0.9
 		</if>
 		<if test="srTtl != ''">
 			AND  sr.SR_TTL like #{srTtl}
@@ -68,22 +64,21 @@
 			        user_nm AS "userNm", 
 			        user_ogdp AS "userOgdp", 
 			        user_dp_nm AS "userDpNm"
-			from(
-			    select rownum as rnum, sr_no, sr_cust_no, sys_no,sys_nm, stts_no, stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
-			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr_type, sr_dev_dp, user_type, user_nm, user_ogdp, user_dp_nm
-			    from(
-			      select  sr_no, sr_cust_no, sr.sys_no, system.sys_nm, sr.stts_no, sr_stts.stts_nm, sr_ttl, sr_cn, sr_reg_date, sr_pry, sr_opnn, sr_bgt, 
-			        sr_dev_cn, sr_ddln_date, sr_start_date, sr_end_date, sr_del_yn, sr.sr_type,  sr.sr_dev_dp, user_type, user_nm, user_ogdp, user_dp_nm
-			      from sr, sr_type, sr_stts, users, system
-			      where sr.stts_no = sr_stts.stts_no and system.sys_no = sr.sys_no and sr.sr_cust_no = users.user_no and sr.sr_type = sr_type.sr_type_no 
-			      	<if test="sttsNo == 4 or sttsNo == 5">
-			      		and sr.stts_no = #{sttsNo}
-			      	</if>
-			      	<if test="sttsNo == 0">
-			      		and sr.stts_no in (4, 5)
+			FROM(
+			    SELECT ROWNUM AS RNUM, SR_NO, SR_CUST_NO, SYS_NO,SYS_NM, STTS_NO, STTS_NM, SR_TTL, SR_CN, SR_REG_DATE, SR_PRY, SR_OPNN, SR_BGT, 
+			        SR_DEV_CN, SR_DDLN_DATE, SR_START_DATE, SR_END_DATE, SR_DEL_YN, SR_TYPE, SR_DEV_DP, USER_TYPE, USER_NM, USER_OGDP, USER_DP_NM
+			    FROM(
+			      SELECT  SR_NO, SR_CUST_NO, SR.SYS_NO, SYSTEM.SYS_NM, SR.STTS_NO, SR_STTS.STTS_NM, SR_TTL, SR_CN, SR_REG_DATE, SR_PRY, SR_OPNN, SR_BGT, 
+			        SR_DEV_CN, SR_DDLN_DATE, SR_START_DATE, SR_END_DATE, SR_DEL_YN, SR.SR_TYPE,  SR.SR_DEV_DP, USER_TYPE, USER_NM, USER_OGDP, USER_DP_NM
+			      FROM SR, SR_TYPE, SR_STTS, USERS, SYSTEM
+			      WHERE SR.STTS_NO = SR_STTS.STTS_NO AND SYSTEM.SYS_NO = SR.SYS_NO AND SR.SR_CUST_NO = USERS.USER_NO AND SR.SR_TYPE = SR_TYPE.SR_TYPE_NO 
+			      		AND SR.STTS_NO IN (4, 9)
+			      		 AND sr.SR_REG_DATE BETWEEN TO_DATE(#{srRegStartDate},'YY-MM-dd') AND TO_DATE(#{srRegEndDate},'YY-MM-dd')+1
+			      	<if test="sttsNo != 0">
+			      		AND SR.STTS_NO = #{sttsNo}
 			      	</if>
 			      	<if test="!sysNo.equals('all')">
-			      		AND sr.sys_no = #{sysNo}
+			      		AND SR.SYS_NO = #{sysNo}
 			      	</if>
 			      	<if test="!userOgdp.equals('all')">
 						AND user_ogdp = #{userOgdp}
@@ -91,11 +86,6 @@
 					<if test="!srDevDp.equals('all')">
 						AND	SR.SR_DEV_DP = #{srDevDp}
 					</if>
-					<if test="srRegStartDate neq null and srRegStartDate neq ''" >
-						 AND sr.SR_REG_DATE BETWEEN 
-			                TO_DATE(#{srRegStartDate},'YY-MM-dd') 
-			                AND TO_DATE(#{srRegEndDate},'YY-MM-dd')+0.9
-					</if> 
 					<if test="srTtl != ''">
 						AND  sr.SR_TTL like #{srTtl}
 					</if>
@@ -103,8 +93,7 @@
 						AND sr_cust_no= #{srCustNo}
 						AND USERS.USER_TYPE = #{userType}
 					</if>
-					
-			      	ORDER BY SR_STTS.STTS_NO, SR.SR_PRY, SR.SR_REG_DATE
+			      	ORDER BY SR_STTS.STTS_NO, SR.SR_PRY, SR.SR_REG_DATE DESC
 			    ) aa
 				<![CDATA[
 					where rownum <= #{endRowNo}
@@ -140,11 +129,12 @@
 		        sr_type AS "srType",
 		        sr_dev_dp as "srDevDp",
 		        user_nm AS "userNm", 
+		        user_jbps AS "userJbps",
 		        user_ogdp AS "userOgdp", 
 		        user_dp_nm AS "userDpNm"
-		 from sr s, sr_type, sr_stts, users, system
-		 where s.stts_no = sr_stts.stts_no and system.sys_no = s.sys_no and s.sr_cust_no = users.user_no 
-		    and s.sr_type = sr_type.sr_type_no and s.sr_no = #{srNo}
+		 FROM SR S, SR_TYPE, SR_STTS, USERS, SYSTEM
+		 WHERE S.STTS_NO = SR_STTS.STTS_NO AND SYSTEM.SYS_NO = S.SYS_NO AND S.SR_CUST_NO = USERS.USER_NO 
+		    AND S.SR_TYPE = SR_TYPE.SR_TYPE_NO AND S.SR_NO = #{SRNO}
 	</select>
 
 	<!-- 
@@ -162,9 +152,11 @@
 		작성자: 정홍주
 	 -->
 	<select id="devList" resultType="users">
-		SELECT USER_NO AS "userNo", USER_NM AS "userNm", USER_OGDP AS "userOgdp", USER_DP_NM AS "userDpNm" 
- 		FROM USERS
- 		WHERE USER_TYPE = '개발자' AND USER_DEL_YN='N'
+		<![CDATA[
+			SELECT USER_NO AS "userNo", USER_NM AS "userNm", USER_JBPS AS "userJbps", USER_OGDP AS "userOgdp", USER_DP_NM AS "userDpNm" 
+	 		FROM USERS
+	 		WHERE USER_TYPE = '개발자' AND USER_DEL_YN='N'
+ 		]]>
 	</select>
 	
 	<!-- 
@@ -187,24 +179,43 @@
         		HR_END_DATE AS "hrEndDate", 
         		TASK_NM AS "taskNm"
 		FROM HR, TASK, USERS, SR
-		WHERE USERS.USER_TYPE = '개발자' AND SR.SR_NO = HR.SR_NO AND USERS.USER_DP_NM = #{userDpNm} AND USERS.USER_NO=#{userNo} AND USERS.USER_NO = HR.USER_NO
+		WHERE USERS.USER_TYPE = '개발자' AND USER_DEL_YN='N' AND SR.SR_NO = HR.SR_NO AND USERS.USER_DP_NM = #{userDpNm} AND USERS.USER_NO=#{userNo} AND USERS.USER_NO = HR.USER_NO
 			 AND HR.TASK_NO = TASK.TASK_NO  AND (HR_START_DATE BETWEEN #{hrStartDate} AND #{hrEndDate} OR HR_END_DATE BETWEEN #{hrStartDate} AND #{hrEndDate})
+	</select>
+	
+	<!-- 
+		개발담당자 조회
+		작성자 : 정홍주
+	 -->
+	<select id="selectLeader" parameterType="string" resultType="users">
+		SELECT USERS.USER_NO AS "userNo", USERS.USER_NM AS "userNm", USERS.USER_DP_NM AS "userDpNm", USERS.USER_JBPS AS "userJbps"
+		FROM USERS, HR
+		WHERE USERS.USER_NO = HR.USER_NO AND HR_LEADER = 'Y' AND SR_NO=#{srNo}
 	</select>
 	
 	<!-- 
 		SR에 개발계획  update하기
 		작성자: 정홍주
 	 -->
+	<select id="checkHr" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM HR WHERE SR_NO=#{srNo}
+	</select>
+	<delete id="deleteHr" parameterType="string">
+		DELETE FROM HR WHERE SR_NO=#{srNo}
+	</delete>
 	<update id="updateSr" parameterType="updateDevelop">
 		UPDATE SR SET SR_DEV_CN=#{srDevCn}, SR_BGT=#{srBgt}, STTS_NO = #{sttsNo}, SR_DDLN_DATE=#{srDdlnDate}, SR_START_DATE=#{srStartDate},
     			SR_END_DATE=#{srEndDate}, SR_DEV_DP=#{srDevDp}
 		WHERE SR_NO=#{srNo}
 	</update>
-	
+	<!-- 
+		개발자 부서 조회
+		작성자 : 정홍주
+	 -->
 	<select id="selectNameByNo" parameterType="int" resultType="users">
 		SELECT USER_NO AS "userNo", USER_NM AS "userNm", USER_DP_NM AS "userDpNm"
 		FROM USERS
-		WHERE USER_NO = #{userNo}
+		WHERE USER_NO = #{userNo} AND USER_DEL_YN='N'
 	</select>
 	
 	<insert id="insertHrRow"  parameterType="java.util.List">
@@ -245,7 +256,7 @@
 		SELECT 
 		    DISTINCT(USER_OGDP) AS "userOgdp"
 		FROM USERS
-		WHERE USER_TYPE='고객사'
+		WHERE USER_TYPE='고객사' AND USER_DEL_YN='N'
 	</select>
 	
 	<select id="selectDevDpList" resultType="sr">
@@ -258,6 +269,7 @@
 	<select id="selectSrFileList" parameterType="string" resultType="srFile">
 		SELECT
 		    SR_FILE_NO AS "srFileNo",
+		    SR_NO AS "srNo",
 		    SR_FILE_PHYS_NM AS "srFilePhysNm",
 		    SR_FILE_EXTN_NM AS "srFileExtnNm",
 		    SR_FILE_ACTL_NM AS "srFileActlNm"
@@ -267,6 +279,8 @@
 	
 	<select id="selectSrFile" parameterType="int" resultType="srFile">
 		SELECT
+			SR_FILE_NO AS "srFileNo",
+			SR_NO AS "srNo",
 		    SR_FILE_PHYS_NM AS "srFilePhysNm",
 		    SR_FILE_EXTN_NM AS "srFileExtnNm",
 		    SR_FILE_ACTL_NM AS "srFileActlNm"
@@ -274,4 +288,9 @@
 		WHERE SR_FILE_NO = #{srFileNo}
 	</select>
 	
+	<select id="selectLoginUser" parameterType="int" resultType="users">
+		SELECT USER_NM AS "userNm", USER_NO AS "userNo", SYS_NO AS "sysNo", SYS_NM AS "sysNm"
+		FROM USERS, SYSTEM
+		WHERE USERS.USER_NO = SYSTEM.MANAGER_NO AND USER_NO = #{userNo}
+	</select>
 </mapper>

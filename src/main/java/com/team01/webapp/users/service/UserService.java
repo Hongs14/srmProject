@@ -19,8 +19,10 @@ public class UserService implements IUserService {
 		SUCCESS, WRONG_ID, WRONG_PASSWORD
 	}
 	
+	
 	public static final int JOIN_SUCCESS=0;
 	public static final int JOIN_FAIL=1;
+	public static final int JOIN_DUPLICATED=2;
 	
 	@Autowired
 	IUserRepository userRepository;
@@ -82,20 +84,20 @@ public class UserService implements IUserService {
 		
 		String sysNo = "";
 		switch(user.getUserOgdp()) {
-			case "레드주컴퍼니": 
-				sysNo="JHJ";
+			case "북북": 
+				sysNo="BOK";
 				break;
-			case "한국소프트SRM":
-				sysNo="KOREASOFT_SRM";
+			case "한국소프트":
+				sysNo="SRM";
 				break;
-			case "에이치알컴퍼니":
-				sysNo="KHR";
+			case "사슈즈":
+				sysNo="SAS";
 				break;
-			case "티에이치컴퍼니":
-				sysNo="KTH";
+			case "오티아이":
+				sysNo="OTI";
 				break;
-			case "지에이치컴퍼니":
-				sysNo="HGH";
+			case "한국대학교":
+				sysNo="KOR";
 				break;
 				
 		}
@@ -135,6 +137,16 @@ public class UserService implements IUserService {
 	public Users getMyInfo(String userId) {
 		log.info("실행");
 		return userRepository.selectByUserId(userId);
+	}
+
+
+	@Override
+	public int checkId(String userId) {
+		Users dbUser = getUser(userId);
+		if(dbUser != null) {
+			return JOIN_DUPLICATED;
+		}
+		return 0;
 	}
 
 

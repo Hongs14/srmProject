@@ -38,5 +38,8 @@
 	<typeAlias type="com.team01.webapp.model.DevelopDto" alias="developDto"/>
 	<typeAlias type="com.team01.webapp.model.Donut" alias="donut"/>
 	<typeAlias type="com.team01.webapp.model.UpdateDevelop" alias="updateDevelop"/>
+	<typeAlias type="com.team01.webapp.model.ChangeRequest" alias="changeRequest"/>
+	<typeAlias type="com.team01.webapp.model.Alarm" alias="alarm"/>
+	<typeAlias type="com.team01.webapp.model.DevMini" alias="devMini"/>
 </typeAliases>
 </configuration>

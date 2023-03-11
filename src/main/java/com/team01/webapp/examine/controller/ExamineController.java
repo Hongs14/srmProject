@@ -2,14 +2,20 @@ package com.team01.webapp.examine.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,14 +26,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
+import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.examine.service.IExamineService;
+import com.team01.webapp.interceptor.EchoHandler;
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.ExamineList;
-import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.model.SrFile;
+import com.team01.webapp.model.Users;
+import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -41,6 +53,11 @@ public class ExamineController {
 	@Autowired
 	IExamineService examineService;
 	
+	@Autowired
+	IAlarmService alarmService;
+	
+	@Autowired
+	AlarmInfo alarmInfo;
 	
 	/**
 	 * SR요청에 대한 필터링 
@@ -50,12 +67,41 @@ public class ExamineController {
 	 * @return
 	 */
 	@GetMapping(value="/list")
-	public String getExamineList(ExamineFilter examineFilter , Model model) {
+	public String getExamineList(ExamineFilter examineFilter , HttpSession session,Model model) {
 		log.info("실행");
 		
 		examineFilter = examineService.filterList(examineFilter);
+		
+		int userNo = (Integer) session.getAttribute("userNo");
+		
+		//로그인 유저 정보 가져오기
+		Users loginUser = examineService.selectLoginUser(userNo);
+		model.addAttribute("loginUser",loginUser);
+		
+		//알림 수 및 리스트
+		alarmInfo.info(session, model); 
 		model.addAttribute("examineFilter",examineFilter);
 		
+		return "examine/list";
+	}
+	
+	@GetMapping(value="/list/{srNo}")
+	public String getExamineDetail(@PathVariable String srNo, ExamineFilter examineFilter , HttpSession session,Model model) {
+		log.info("실행");
+		
+		examineFilter = examineService.filterList(examineFilter);
+		
+		int userNo = (Integer) session.getAttribute("userNo");
+		
+		//로그인 유저 정보 가져오기
+		Users loginUser = examineService.selectLoginUser(userNo);
+		model.addAttribute("loginUser",loginUser);
+		
+		//알림 수 및 리스트
+		alarmInfo.info(session, model); 
+		model.addAttribute("examineFilter",examineFilter);
+		model.addAttribute("srNo",srNo);
+		model.addAttribute("command","detail");
 		return "examine/list";
 	}
 	
@@ -93,7 +139,12 @@ public class ExamineController {
 	@GetMapping(value="/detail/{srNo}")
 	public String getExamineDetail(@PathVariable String srNo, HttpSession session, Model model) {
 		log.info("실행");
-
+		
+		//로그인 유저 정보 가져오기
+		int userNo = (Integer) session.getAttribute("userNo");
+		Users loginUser = examineService.selectLoginUser(userNo);
+		model.addAttribute("loginUser",loginUser);
+		
 		Examine examine = examineService.getExamine(srNo);
 		List<MultipartFile> examineFileList = examineService.selectExamineFileList(srNo);
 		model.addAttribute("examine",examine);
@@ -109,14 +160,19 @@ public class ExamineController {
 	 * @param examine	detailView.jsp에서 요청 검토 처리
 	 * @return
 	 */
-	@PostMapping(value="/detail")
-	public String updateExamine(Examine examine) {
+	@PostMapping(value="/detail", produces="application/json; charset=UTF-8")
+	public String updateExamine(@RequestBody Examine examine,HttpSession session)throws Exception {
 		log.info("실행");
 		log.info(examine);
 		
 		examineService.updateExamine(examine);
 		
-		return "examine/list";
+		String srNo = examine.getSrNo();
+		
+		alarmService.insertAlarm(srNo,session);
+		
+		
+		return "redirect:/examine/detail/"+srNo;
 	}
 	
 	@GetMapping("/fileDownload")
@@ -145,7 +201,7 @@ public class ExamineController {
 		response.setContentType(contentType);
 		
 		//응답 바디에 파일 데이터 실기
-		String filePath = "C:/OTI/uploadfiles/examine/"+srFile.getSrNo()+"/"+savedName;
+		String filePath = "C:/OTI/uploadfiles/request/"+srFile.getSrNo()+"/"+savedName;
 		File file = new File(filePath);
 		log.info("file: "+ file);
 				
@@ -174,6 +230,62 @@ public class ExamineController {
 		model.addAttribute("pager",pager);
 		
 		return "examine/ajaxList";
+	}
+	
+	//엑셀 다운로드
+	@PostMapping(value="/excelDownload")
+	public void excelDownload(@RequestParam List<String> examineArr, HttpServletResponse response) throws IOException {
+		log.info("실행");
+		log.info(examineArr);
+		XSSFWorkbook wb=null;
+		Sheet sheet=null;
+		Row row=null;
+		Cell cell=null; 
+		wb = new XSSFWorkbook();
+		sheet = wb.createSheet("freeBoard");
+        
+        String[] HeaderList = {"SR 번호", "제목", "관련시스템", "등록자", "소속회사", "부서", "상태", "등록일","중요"};
+        
+        //첫행   열 이름 표기 
+        int cellCount=0;
+        row = sheet.createRow(0);
+        for(int i=0; i<HeaderList.length; i++) {
+    		cell=row.createCell(cellCount++);
+    		cell.setCellValue(HeaderList[i]);
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+		List<Examine> list = examineService.getExamineExcelList(examineArr);
+		
+		for(int i=0; i<list.size(); i++) {
+			row=sheet.createRow(i+1);
+			cellCount = 0;
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrNo());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrTtl());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSysNm());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getUserNm());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getUserOgdp());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getUserDpNm());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSttsNm());
+			cell=row.createCell(cellCount++);
+			String srRegDate = simpleDateFormat.format(list.get(i).getSrRegDate());
+			cell.setCellValue(srRegDate);
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrPry());
+		}
+		
+		// 컨텐츠 타입과 파일명 지정
+		response.setContentType("ms-vnd/excel");
+		response.setHeader("Content-Disposition", "attachment;filename=testlist.xlsx");  //파일이름지정.
+		//response OutputStream에 엑셀 작성
+		wb.write(response.getOutputStream());
+		wb.close();
 	}
 	
 }

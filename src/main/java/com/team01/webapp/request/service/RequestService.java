@@ -1,6 +1,5 @@
 package com.team01.webapp.request.service;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.model.Request;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
@@ -83,7 +81,7 @@ public class RequestService implements IRequestService{
 		int totalListNum = requestRepository.selectTotalRequestCount(requestAjax);
 		log.info("totalListNum: "+ totalListNum);
 		int pagerNo = Integer.parseInt(pageNo);
-		pager = new Pager(10, 5, totalListNum, pagerNo);
+		pager = new Pager(7, 5, totalListNum, pagerNo);
 		return pager;
 	}
 	
@@ -111,9 +109,17 @@ public class RequestService implements IRequestService{
 		log.info("실행"+sr);
 		String srSysNo = sr.getSysNo(); 
 		String sysNo = "%"+srSysNo+"%";
-		int srSeq = Integer.parseInt(requestRepository.selectMaxSrNo(sysNo))+1;
-		String number = String.format("%05d", srSeq);
-		String srNo = srSysNo+"-SR-"+number;
+		String maxSrNo = requestRepository.selectMaxSrNo(sysNo);
+		String srNo = "";
+		String number = "";
+		int srSeq = 0;
+		if(maxSrNo == null) {
+			srNo = srSysNo+"-SR-00001";
+		}else {
+			srSeq = Integer.parseInt(requestRepository.selectMaxSrNo(sysNo))+1;
+			number = String.format("%05d", srSeq);
+			srNo = srSysNo+"-SR-"+number;
+		}
 		sr.setSrNo(srNo);
 		log.info("SR NO: "+srNo);
 		
@@ -169,6 +175,19 @@ public class RequestService implements IRequestService{
 	@Override
 	public int deleteRequest(String srNo) {
 		return requestRepository.deleteRequest(srNo);
+	}
+
+	@Override
+	public List<RequestList> getRequestExcelList(List<String> requestArr) {
+		RequestList requestSr = null;
+		ArrayList<RequestList> requestList = new ArrayList<>();
+		for(int i=0; i<requestArr.size(); i++) {
+			requestSr = requestRepository.selectRequestSr(requestArr.get(i));
+			requestList.add(requestSr);
+			log.info(requestSr);
+		}
+		
+		return requestList;
 	}
 
 	

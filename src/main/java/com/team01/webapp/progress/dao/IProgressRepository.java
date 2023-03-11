@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.team01.webapp.model.ChangeRequest;
 import com.team01.webapp.model.DeveloperSR;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
@@ -19,6 +20,7 @@ import com.team01.webapp.model.SrProgressList;
 import com.team01.webapp.model.System;
 import com.team01.webapp.model.Task;
 import com.team01.webapp.model.ThArr;
+import com.team01.webapp.model.Users;
 
 @Repository
 public interface IProgressRepository {
@@ -262,5 +264,23 @@ public interface IProgressRepository {
 	void updateProgressFinishRequest(@Param("srNo") String srNo, @Param("choice") String choice);
 
 	void updateProgressRateFinishRequest(@Param("progNo") String progNo, @Param("choice") String choice);
+
+	String selectManagerNo(String srNo);
+
+	void insertChangeRequest(ChangeRequest changeRequest);
+
+	List<ChangeRequest> selectChangeRequestList(String srNo);
+
+	ChangeRequest selectChangeRequestFile(int crNo);
+
+	void updateSrStts(String srNo);
+
+	void updateSr(ChangeRequest changeRequest);
+
+	void updateChangeRequest(@Param("crNo") int crNo, @Param("choice") int choice, @Param("crComment") String crComment);
+
+	void updateDeveloperEndDate(@Param("userNo") int userNo, @Param("srNo") String srNo, @Param("hrEndDate") String crDdlnDate);
+
+	Users selectSysUserData(String sysNo);
 	
 }

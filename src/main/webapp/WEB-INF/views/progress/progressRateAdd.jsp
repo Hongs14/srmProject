@@ -32,7 +32,7 @@
 						<th> 작업 구분 </th>
 						<th> 시작일 </th>
 						<th> 종료일 </th>
-						<th> 진척율 </th>
+						<th style="width:70px"> 진척율 </th>
 					</tr>
 				</thead>
 				<tbody>
@@ -49,7 +49,7 @@
 							</div>
 						</td>
 						<td>
-							<input type="number" value="${progress.progRate}" min="0" id="progRate"/>
+							<input type="text" value="${progress.progRate}" id="progRate" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="text-align: center;" class="form-control form-control-sm"/>
 						</td>
 					</tr>
 				</tbody>
@@ -61,7 +61,7 @@
 					<span class=" font-weight-bold col-sm-2">첨부파일: </span> 
 					<div class="custom-file col-sm-9">
 						<input type="file" name="progressattach" class="custom-file-input form-control" onchange="addProgressRateFile(this);" multiple/> 
-						<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
+						<label class="custom-file-label text-truncate" for="customFile" style="text-align:left">파일 선택</label>
 					</div>
 				</div>
 				<div class="row mb-2">
@@ -78,6 +78,7 @@
 	
 	<input type="hidden" name="progNo" value="${progress.progNo}"/>
 	<input type="hidden" name="srNo" value="${progress.srNo}"/>
+	
 	<script>
 		var fileNo = 0;
 		var filesArr = new Array();
@@ -141,16 +142,34 @@
 		    var progRate = document.getElementById("progRate").value;
 		    formData.append("progRate", progRate);
 		    
-		    $.ajax({
-				type: "POST",
-				enctype: 'multipart/form-data',	// 필수
-				url: 'progressRate/update',
-				data: formData,		// 필수
-				processData: false,	// 필수
-				contentType: false	// 필수
-		    }).done((data) => {
-		    	window.location.href = "${progress.srNo}";
-		    });
+		    var progTypeNoStart = ((${progress.progType} - 1) * 20);
+		    var progTypeNoEnd = (${progress.progType} * 20);
+		    
+		    if((progTypeNoStart < progRate) && (progRate <= progTypeNoEnd)) {
+			    $.ajax({
+					type: "POST",
+					enctype: 'multipart/form-data',	// 필수
+					url: 'progressRate/update',
+					data: formData,		// 필수
+					processData: false,	// 필수
+					contentType: false	// 필수
+			    }).done((data) => {
+			    	$('#progressRateModal').modal('hide');
+			    	$('#messageModal').modal('show');
+			    	$("#Modalmessage").text("${progress.progTypeNm}(이)가 변경 되었습니다.");
+			    	setTimeout(function() {
+			    		window.location.href = "${progress.srNo}";
+			    	}, 2000);
+			    });
+		    } else {
+ 			    $('#progressRateModal').modal('hide');
+	    		$('#rateMessageModal').modal('show');
+	    		$('#rateModalMessage').text(progTypeNoStart + '보다 크거나 ' + progTypeNoEnd + '보다 작아야 합니다.');
+		    	setTimeout(function() {
+	 			    $('#progressRateModal').modal('show');
+		    		$('#rateMessageModal').modal('hide');
+		    	}, 1000);
+		    }
 		    
 		}
 	</script>

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <!DOCTYPE html>
-	<div class="table-responsive p-3">
+	<div class="table-responsive p-2">
 		<table class="table align-items-center table-hover border">
 			<thead class="thead-light">
 				<tr>
@@ -36,8 +36,8 @@
 								${list.srNo}
 							</a>
 						</td>
-						<td style="width:300px; overflow:hidden; text-overflow: ellipsis; display:block;">
-							<a href="${pageContext.request.contextPath}/progress/detail/${list.srNo}" style="text-decoration: none;">
+						<td>
+							<a href="${pageContext.request.contextPath}/progress/detail/${list.srNo}" style="width:400px; overflow:hidden; text-overflow: ellipsis; display:block;text-decoration: none;">
 								${list.srTtl}
 							</a>
 						</td>
@@ -49,6 +49,7 @@
 							<c:if test="${list.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${list.sttsNm}</span></c:if>
 							<c:if test="${list.sttsNm eq '개발 완료'}"><span class="badge badge-success" style="font-size:100%">${list.sttsNm}</span></c:if>
 							<c:if test="${list.sttsNm eq '완료요청'}"><span class="badge text-white" style="font-size:100%; background-color:#a33bff;">${list.sttsNm}</span></c:if>
+							<c:if test="${list.sttsNm eq '계획조정'}"><span class="badge text-white" style="font-size:100%; background-color:#78380c;">${list.sttsNm}</span></c:if>
 						</td>
 						<td>
 							<c:if test="${list.srPry eq '상'}"><span class="badge badge-danger" style="font-size:100%">${list.srPry}</span></c:if>
@@ -60,11 +61,23 @@
 			</c:forEach>
 		</table>
 		
+		<c:if test="${empty ProgressList}">
+			<div class="p-5" style="white-space: normal; text-align:center;">
+				<div class="alert alert-secondary m-3 p-4" role="alert">
+					<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+					<br/>
+					<h3>SR 요청이 존재하지 않습니다</h3>
+				</div>
+			</div>
+		</c:if>
+		
 		<c:if test="${pager.totalRows != 0}">
 			<div class="pager d-flex justify-content-center my-3">
 				<div class="pagingButtonSet d-flex justify-content-center">
 					<c:if test="${pager.totalPageNo > 5}">
-						<a onclick="progressList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
+						<c:if test="${pager.pageNo > 1}">
+							<a onclick="progressList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
+						</c:if>
 					</c:if>
 					<c:if test="${pager.groupNo > 1}">
 						<a onclick="progressList(${pager.startPageNo-1})" type="button" class="btn btn-outline-info btn-sm m-1">이전</a>
@@ -84,7 +97,9 @@
 	
 					</c:if>
 					<c:if test="${pager.totalPageNo > 5}">
-						<a onclick="progressList(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
+						<c:if test="${pager.pageNo < pager.totalPageNo }">
+							<a onclick="progressList(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
+						</c:if>
 					</c:if>
 				</div>
 			</div>

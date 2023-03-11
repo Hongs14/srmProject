@@ -2,34 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team01.webapp.qnaboard.dao.IQnaboardRepository">
 	
-	<select id="selectQnaboardList" resultType="qstn" parameterType="pager">
-		<![CDATA[
-			SELECT 
-					rnum ,
-					QSTN_NO AS 	"qstnNo",
-					QSTN_TTL AS "qstnTtl",
-					QSTN_INQ_CNT AS "qstnInqCnt",
-					QSTN_WRT_DATE AS "qstnWrtDate",
-					USER_NM AS "userNm"			
-			from(
-				   	select rownum as rnum, qstn_no, qstn_ttl, qstn_cn, qstn_inq_cnt, qstn_wrt_date, user_no, user_nm
-				   	from(
-				      select qstn_no, qstn_ttl, qstn_cn, qstn_inq_cnt, qstn_wrt_date, qstn.user_no, user_nm
-				      from qstn, users
-			          where qstn.user_no = users.user_no
-				      order by qstn_no desc
-				    ) 
-			    where rownum <= #{endRowNo}
-				)
-			where rnum >= #{startRowNo}
+	<select id="selectQstnList" resultType="qstn" parameterType="qstn">
+		SELECT 
+		    rnum AS "rnum",
+		    QSTN_NO AS 	"qstnNo",
+		    QSTN_TTL AS "qstnTtl",
+		    QSTN_INQ_CNT AS "qstnInqCnt",
+		    QSTN_WRT_DATE AS "qstnWrtDate",	
+		    USER_NO AS "userNo",
+		    USER_NM AS "userNm"
+		FROM(
+			SELECT ROWNUM AS RNUM, QSTN_NO, QSTN_TTL, QSTN_INQ_CNT, QSTN_WRT_DATE, USER_NO, USER_NM
+		        FROM(
+		        	SELECT QSTN_NO, QSTN_TTL, QSTN_INQ_CNT, QSTN_WRT_DATE, QSTN.USER_NO, USER_NM
+		         	FROM QSTN, USERS  
+		         	WHERE QSTN.USER_NO = USERS.USER_NO  
+		         	AND SYS_NO = #{sysNo}
+		          	AND QSTN_WRT_DATE BETWEEN 
+                		TO_DATE(#{startDate},'YY-MM-DD') 
+                		AND TO_DATE(#{endDate},'YY-MM-DD')+0.9
+					<if test="qstnTtl != ''">
+						AND QSTN_TTL like #{qstnTtl}
+					</if>
+		        	ORDER BY QSTN_NO DESC
+		        ) 
+		   <![CDATA[
+		    where rownum <= #{endRowNo}
+		   ]]>
+		    )
+		<![CDATA[ 
+		where rnum >= #{startRowNo}
 		]]>
 	</select>
 	
-	<select id="totalRow" resultType="int">
-		select count(*) from qstn
+	<select id="totalRow" parameterType="qstn" resultType="int">
+		SELECT COUNT(*) FROM QSTN 	
+		WHERE SYS_NO=#{sysNo}
+		
+		 AND QSTN_WRT_DATE BETWEEN 
+                TO_DATE(#{startDate},'YY-MM-DD') 
+                AND TO_DATE(#{endDate},'YY-MM-DD')+0.9
+	
+		<if test="qstnTtl != ''">
+			AND QSTN_TTL like #{qstnTtl}
+			AND SYS_NO = #{sysNo}
+		</if>
 	</select>
 	
-	<select id="getDetail" parameterType="int" resultType="qstn">
+	<select id="selectDetail" parameterType="int" resultType="qstn">
 		SELECT QSTN_NO AS "qstnNo", 
 				USER_NM AS "userNm", 
 				QSTN_TTL AS "qstnTtl", 
@@ -40,7 +60,36 @@
 		WHERE QSTN.USER_NO = USERS.USER_NO AND QSTN.QSTN_NO =#{qstnNo}
 	</select>
 	
-	<select id="getCommentList" parameterType="int" resultType="qstnComment">
+	<select id="selectQstnFileDetail" parameterType="int" resultType="qstnFile">
+		SELECT
+			QSTN_FILE_NO AS "qstnFileNo",
+			QSTN_NO AS "qstnNo",
+			QSTN_FILE_PHYS_NM AS "qstnFilePhysNm",
+			QSTN_FILE_ACTL_NM AS "qstnFileActlNm",
+			QSTN_FILE_EXTN_NM AS "qstnFileExtnNm"
+		FROM QSTN_FILE
+		WHERE QSTN_NO = #{qstnNo}
+	</select>
+	
+	<select id="selectFileDownload" parameterType="int" resultType="qstnFile">
+		SELECT
+			QSTN_FILE_NO AS "qstnFileNo",
+			QSTN_NO AS "qstnNo",
+			QSTN_FILE_PHYS_NM AS "qstnFilePhysNm",
+			QSTN_FILE_ACTL_NM AS "qstnFileActlNm",
+			QSTN_FILE_EXTN_NM AS "qstnFileExtnNm"
+		FROM QSTN_FILE
+		WHERE QSTN_FILE_NO = #{qstnFileNo}
+	</select>
+	
+	<update id="countInqCnt" parameterType="int">
+		UPDATE QSTN
+		SET QSTN_INQ_CNT = QSTN_INQ_CNT+1
+		WHERE QSTN_NO = #{qstnNo} 
+		
+	</update>
+	
+	<select id="selectCommentList" parameterType="int" resultType="qstnComment">
 		SELECT QSTN_CMNT_NO AS qstnCmntNo, 
 				QSTN_NO AS qstnNo, 
 				QC.USER_NO AS userNo, 
@@ -51,8 +100,21 @@
 		WHERE QC.USER_NO = U.USER_NO AND QC.QSTN_NO = #{qstnNo}
 		ORDER BY QSTN_CMNT_NO 
 	</select>
+	<!-- 
+		Qna 게시글 작성
+	 -->
+	<insert id="insertQSTN" parameterType="qstn">
+		INSERT INTO QSTN VALUES(QSTNNO_SEQ.NEXTVAL, #{userNo}, #{qstnTtl}, #{qstnCn}, 0, SYSDATE, #{sysNo})
+	</insert>
+	<insert id="insertQstnFileUpload" parameterType="qstn">
+		<![CDATA[
+			INSERT INTO QSTN_FILE(QSTN_FILE_NO, QSTN_NO, QSTN_FILE_PHYS_NM, QSTN_FILE_ACTL_NM, QSTN_FILE_EXTN_NM)
+			VALUES(QSTNFILENO_SEQ.NEXTVAL, QSTNNO_SEQ.NEXTVAL , #{qstnFilePhysNm}, #{qstnFileActlNm}, #{qstnFileExtnNm})
+		]]>
+	</insert>
 	
-	<select id="getComment" resultType="qstnComment">
+	
+	<select id="selectComment" resultType="qstnComment">
 		select rownum, QSTN_CMNT_NO AS qstnCmntNo, 
 				QSTN_NO AS qstnNo, 
 				aa.USER_NO AS userNo, 
@@ -70,7 +132,7 @@
 		SELECT COUNT(*) FROM QSTN_COMMENT WHERE QSTN_NO = #{qstnNo}
 	</select>
 	
-	<insert id="writeComment" parameterType="qstnComment">
+	<insert id="insertComment" parameterType="qstnComment">
 		INSERT INTO QSTN_COMMENT VALUES(QSTNCMNTNO_SEQ.NEXTVAL, #{qstnNo}, #{userNo}, #{qstnCmntCn}, SYSDATE)
 	</insert>
 	
@@ -82,8 +144,4 @@
 	<delete id="deleteComment" parameterType="int">
 		DELETE FROM QSTN_COMMENT WHERE QSTN_CMNT_NO = #{qstnCmntNp}
 	</delete>
-	
-	<insert id="insertQSTN" parameterType="qstn">
-		INSERT INTO QSTN VALUES(QSTNNO_SEQ.NEXTVAL, #{userNo}, #{qstnTtl}, #{qstnCn}, 0, SYSDATE, #{sysNo})
-	</insert>
 </mapper>

@@ -21,6 +21,7 @@
 		FROM SR sr, SR_STTS stts
 		WHERE sr.stts_no = stts.stts_no
 		AND SYS_NO = #{sysNo}
+		AND TO_CHAR(SR_REG_DATE, 'YYYY') = TO_CHAR(sysdate, 'YYYY')
 		GROUP BY stts.STTS_NO, STTS_NM
 		ORDER BY stts.STTS_NO ASC
 	</select>
@@ -58,6 +59,7 @@
 	    </if>
 		WHERE sr.sys_no = system.sys_no
 		AND stts.stts_no = sr.stts_no
+		AND TO_CHAR(SR_REG_DATE, 'YYYY') = TO_CHAR(sysdate, 'YYYY')
 	    <if test="userType.equals('고객사')">
 	    	AND SR_CUST_NO = #{srCustNo}
 	    	AND sr.sys_no = #{sysNo}
@@ -114,6 +116,7 @@
 					    </if>
 					    WHERE sr.sys_no = system.sys_no
 					    AND stts.stts_no = sr.stts_no
+					    AND TO_CHAR(SR_REG_DATE, 'YYYY') = TO_CHAR(sysdate, 'YYYY')
 					    <if test="userType.equals('고객사')">
 					    	AND SR_CUST_NO = #{srCustNo}
 					    	AND sr.sys_no = #{sysNo}
@@ -138,5 +141,76 @@
 		<![CDATA[
 		WHERE rnum >= #{start}
 		]]>
+	</select>
+	
+	<select id="selectRequestSr" parameterType="string" resultType="progressDetail">
+		SELECT
+		    SR_NO AS "srNo",
+		    SR_TTL AS "srTtl",
+		    SR_STD AS "srStd",
+		    SYS_NM AS "sysNm",
+		    STTS_NM AS "sttsNm",
+		    USER_DP_NM AS "userDpNm",
+		    USER_NM AS "requesterNm",
+		    SR_REG_DATE AS "srRegDate",
+		    SR_DDLN_DATE AS "srDdlnDate",
+		    SR_CN AS "srCn",
+		    SR_PRY "srPry",
+		    SR_BGT "srBgt"
+		FROM SR sr,SYSTEM system, SR_STTS stts, USERS users
+		WHERE sr.sys_no = system.sys_no
+		AND sr.stts_no = stts.stts_no
+		AND sr.sr_cust_no = users.user_no
+		AND sr_no = #{srNo}
+	</select>
+	
+	<select id="selectSrData" parameterType="string" resultType="devMini">
+		SELECT
+		    sr_no AS "srNo",
+		    sr_type_nm AS "srTypeNm",
+		    SR_TTL AS "srTtl",
+		    SYS_NM AS "sysNm",
+		    USER_NM AS "srRequesterNm",
+		    SR_BGT AS "srBgt",
+		    SR_START_DATE AS "srStartDate"
+		FROM SR, SR_TYPE type, SYSTEM, USERS
+		WHERE sr.sr_type = type.sr_type_no
+		AND sr.sys_no = system.sys_no
+		AND sr.sr_cust_no = users.user_no
+		AND sr_no = #{srNo}
+	</select>
+	
+	<select id="selectProgressList" parameterType="string" resultType="progress">
+		SELECT
+			PROG_NO AS "progNo",
+		    PROG_TYPE_NM AS "progTypeNm",
+		    PROG_START_DATE AS "progStartDate",
+		    PROG_END_DATE AS "progEndDate"
+		FROM PROGRESS, PROG_TYPE type
+		WHERE PROGRESS.prog_type = type.prog_type_no
+		AND sr_no = #{srNo}
+        ORDER BY PROG_TYPE_NO ASC
+	</select>
+	
+	<select id="selectHrList" parameterType="string" resultType="hr">
+		SELECT
+		    USER_DP_NM AS "userDpNm",
+		    HR_LEADER AS "hrLeader",
+		    USER_NM AS "userNm",
+		    HR_START_DATE AS "hrStartDate",
+		    HR_END_DATE AS "hrEndDate",
+		    TASK_NM AS "taskNm"
+		FROM USERS, HR, TASK
+		WHERE USERS.user_no = HR.user_no
+		AND HR.task_no = task.task_no
+		AND sr_no = #{srNo}
+		ORDER BY hr_leader DESC
+	</select>
+	
+	<select id="selectFileCount" parameterType="string" resultType="int">
+		SELECT
+		    COUNT(PROG_FILE_NO)
+		FROM PROG_FILE
+		WHERE PROG_NO = #{progNo}
 	</select>
 </mapper>

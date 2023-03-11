@@ -13,7 +13,7 @@
 		let noticeNo ='${notice.ntcNo}';
 	  	console.log(noticeNo);
 	  	$.ajax({
-			url:"read/comment"
+			url:"${pageContext.request.contextPath}/notice/read/comment"
 			,type:"get"
 			,data: 'ntcNo='+noticeNo
 			,success:function(data){
@@ -50,7 +50,7 @@
 		let data = {userNo: ntcWriterNo, ntcNo: ntcNo, ntcCmntCn: content};
 		console.log(data);
 		$.ajax({
-			url: "write/comment",
+			url: "${pageContext.request.contextPath}/notice/write/comment",
 			method: "post",
 			data: JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
@@ -95,7 +95,7 @@
 		let ntcCmntNo = i;
 		let data = {ntcCmntNo: ntcCmntNo, ntcCmntCn: content};  
 		$.ajax({
-			url: "update/comment",
+			url: "${pageContext.request.contextPath}/notice/update/comment",
 			method: "post",
 			data: JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
@@ -111,7 +111,7 @@
 		console.log("댓글삭제"+i);
 		let ntcCmntNo = i;
 		$.ajax({
-			url: "delete/comment",
+			url: "${pageContext.request.contextPath}/notice/delete/comment",
 			method: "get",
 			data: 'ntcCmntNo='+ntcCmntNo,
 		}).done((data) => {
@@ -223,13 +223,33 @@
 <script>
 	$(document).ready(function () {
 		var ntcNo = document.getElementById('ntcNo').value;
-     			
+		var str = location.href;
+	  	console.log(str);
+		var index = str.indexOf("?")+1;
+		console.log(index);
+	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+	 
+	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+	    if (index == 0) {
+	        return "";
+	    }
+	 
+	    // str의 값은 a=1&b=first&c=true
+	    str = str.substring(index, lastIndex); 
+	    console.log(str);
+
+	    var arr = str.split("=");
+	    console.log(arr);
+	    
+	    var sysNo = arr[1];
+	    console.log(sysNo);
+	    
 		let data = {ntcNo : ntcNo};
 		console.log(data);
      			
 		$.ajax({
 			type: "post",
-			url: 'updateAjax/'+ntcNo,
+			url: '${pageContext.request.contextPath}/notice/updateAjax/'+ntcNo,
 			data : JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
 	    }).done((data) => {
@@ -274,7 +294,7 @@
 
 		$.ajax({
 			type: "post",
-			url: 'deleteFile/'+ntcFileNo+'/'+ntcNo,
+			url: '${pageContext.request.contextPath}/notice/deleteFile/'+ntcFileNo+'/'+ntcNo,
 			data : JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
 	    }).done((data) => {
@@ -296,7 +316,25 @@
 	        }
 	    }
 	    
-	    var sysNo = "${sysNo}";
+	    var str = location.href;
+	  	console.log(str);
+		var index = str.indexOf("?")+1;
+		console.log(index);
+	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
+	 
+	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
+	    if (index == 0) {
+	        return "";
+	    }
+	 
+	    // str의 값은 a=1&b=first&c=true
+	    str = str.substring(index, lastIndex); 
+	    console.log(str);
+
+	    var arr = str.split("=");
+	    console.log(arr);
+	    
+	    var sysNo = arr[1];
 	    console.log(sysNo);
 	    
 	    var ntcCn = document.getElementById('ntcCn').value;
@@ -308,12 +346,12 @@
 	    $.ajax({
 			type: "POST",
 			enctype: 'multipart/form-data',	// 필수
-			url: 'update',
+			url: '${pageContext.request.contextPath}/notice/update',
 			data: formData,		// 필수
 			processData: false,	// 필수
 			contentType: false	// 필수
 	    }).done((data) => {
-	    	window.location.href = "/webapp/notice/list/KOREASOFT_SRM";
+	    	window.location.href = "/webapp/notice/list?sysNo="+sysNo;
 	    });
 	    
 	}

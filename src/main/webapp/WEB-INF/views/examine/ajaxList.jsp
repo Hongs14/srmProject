@@ -20,20 +20,20 @@
 					<th>중요</th>
 				</tr>
 			</thead>
-			<tbody style="text-align: center;">
+			<tbody >
 				<c:forEach var="examine" items="${examine}">
 					<tr>
 						
 						<td>
 							<input type="checkbox" name="examineCheck" value="${examine.srNo}" onclick='checkSelectAll(this)'>
 						</td>
-						<td onclick ="getSrDetail('${examine.srNo}')">${examine.srNo}</td>
-						<td onclick ="getSrDetail('${examine.srNo}')">${examine.srTtl}</td>
+						<td><a onclick ="getSrDetail('${examine.srNo}')" style="cursor:pointer;">${examine.srNo}</a></td>
+						<td><a onclick ="getSrDetail('${examine.srNo}')" style="cursor:pointer;" class="srTtl">${examine.srTtl}</a></td>
 						<td>${examine.sysNm}</td>
 						<td>${examine.userNm}</td>
-						<td>${examine.userOgdp}</td>
+						<td><span class="userOgdp">${examine.userOgdp}</span></td>
 						<td>${examine.userDpNm}</td>
-						<td>
+						<td class="srStts">
 							<c:if test="${examine.sttsNm eq '요청'}"><span class="badge badge-dark" style="font-size:100%">${examine.sttsNm}</span></c:if>
 							<c:if test="${examine.sttsNm eq '검토중'}"><span class="badge badge-dark" style="font-size:100%">${examine.sttsNm}</span></c:if>
 							<c:if test="${examine.sttsNm eq '반려'}"><span class="badge badge-danger" style="font-size:100%">${examine.sttsNm}</span></c:if>
@@ -51,10 +51,15 @@
 			</tbody>
 		</table>
 		
-		<c:if test="${pager.totalRows != 0}">
-			<div class="pager d-flex justify-content-center my-3">
-				<div class="pagingButtonSet d-flex justify-content-center">
-					<c:if test="${pager.pageNo > 1}">
+		<div class="pager d-flex justify-content-center my-3">
+			<div class="pagingButtonSet d-flex justify-content-center">
+				<c:if test="${pager.totalRows < 1}">
+					<h6 class="m-3">
+						SR 요청이 존재하지 않습니다.
+					</h6>
+				</c:if>
+				<c:if test="${pager.totalRows >=1}">
+					<c:if test="${pager.pageNo > 5}">
 						<a onclick="examineList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
 					</c:if>
 					<c:if test="${pager.groupNo > 1}">
@@ -74,12 +79,12 @@
 						<a onclick="examineList(${pager.endPageNo+1})" type="button" class="btn btn-outline-info btn-sm m-1">다음</a>
 	
 					</c:if>
-					<c:if test="${pager.pageNo < pager.totalPageNo }">
+					<c:if test="${pager.totalPageNo > 5 }">
 						<a onclick="examineList(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
 					</c:if>
-				</div>
+				</c:if>
 			</div>
-		</c:if>
+		</div>
 		
 		
 	</div>

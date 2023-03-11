@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<div class="px-3">
+	<div>
         <div class="card shadow mb-4">
           <div class="card-header py-3">
            	<div class="table-responsive">
@@ -11,7 +11,7 @@
 							<thead class="thead-light">
 								  <tr>
 								    <th>
-								    	<i class="far fa-fw fa-window-maximize"></i>
+								    	<i class="fa-solid fa-chart-pie"></i>
 								    	${list.sysNm} 
 								    </th>
 								  </tr>
@@ -56,56 +56,50 @@
           </div>
         </div>
 	</div>
- <script src="${pageContext.request.contextPath}/resources/vendor/chart.js/Chart.js"></script>
- <script src="${pageContext.request.contextPath}/resources/js/demo/chart-pie-demo.js"></script>
- <script src="${pageContext.request.contextPath}/resources/vendor/chart.js/chartjs-plugin-datalabels.js"></script>
+
              <script>
+             
              	labelse = [];
              	data = [];
              	<c:forEach var="list" items="${donutList}">
              		labelse.push('${list.sttsNm}');
              		data.push(${list.count});
              	</c:forEach>
-             	console.log(labelse);
-             	console.log(data);
-             	
              
 				var ctx = document.getElementById("myPieChart");
 				var myPieChart = new Chart(ctx, {
-				  plugins : [ChartDataLabels],
+ 				  plugins : [ChartDataLabels],
 				  type: 'doughnut',
 				  data: {
 				    labels: labelse,
 				    datasets: [{
 				      data: data,
-				      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#4e73df', '#1cc88a', '#36b9cc'],
+				      /* 6e707e회색, ffa426주황 , #eaecf4연연청, 66bb6a초록, a11811빨강, 36b9cc하늘 ,#ffd59a연주황,#3f5195보라*/
+				      backgroundColor: ['#eaecf4','#a11811','#6e707e', '#36b9cc', '#66bb6a',  '#ffd59a','#3f5195'],
 				      hoverBorderColor: "rgba(234, 236, 244, 1)",
 				    }],
 				  },
-				  options: {
+				  options: {	
 				    maintainAspectRatio: false,
-				    tooltips: {
-				      backgroundColor: "rgb(255,255,255)",
-				      bodyFontColor: "#858796",
-				      borderColor: '#dddfeb',
-				      borderWidth: 1,
-				      xPadding: 15,
-				      yPadding: 15,
-				      displayColors: false,
-				      caretPadding: 10,
-				    },
-				    legend: {
-				    	position : 'bottom',
-				    	labels : {
-				    		boxWidth : 10
-				    	}
-				    },
 				    cutoutPercentage: 60,
 				    plugins : {
+				    	tooltip: {
+					      borderWidth: 1,
+					      xPadding: 15,
+					      yPadding: 15,
+					      displayColors: false,
+					      caretPadding: 10,
+					      mode : 'point'
+					    },
+				    	legend: {
+	 						position : 'bottom',
+					    	labels : {
+					    		boxWidth : 10
+					    	}
+				    	},
 				    	datalabels : {
 				    		formatter : function (value, context) {
-				    			var idx = context.dataIndex; 
-				    			
+				    			var idx = context.dataIndex;
 				    			return context.chart.data.labels[idx] + value + "건";
 				    		},
 				    		display : 'auto',
@@ -117,4 +111,11 @@
 				    },
 				  },
 				});
+				
+				document.getElementById("myPieChart").onclick = function(evt) {
+					const points = myPieChart.getElementsAtEventForMode(evt, 'index', { intersect: true }, true);
+					var i = points[0].index;
+					console.log('${system[0].sysNo}');
+					console.log(labelse[i]);
+				};
             </script>

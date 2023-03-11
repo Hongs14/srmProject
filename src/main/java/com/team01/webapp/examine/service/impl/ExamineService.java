@@ -12,6 +12,7 @@ import com.team01.webapp.examine.service.IExamineService;
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.ExamineList;
+import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.System;
@@ -147,6 +148,30 @@ public class ExamineService implements IExamineService {
 		if(examinelist.getSrNo() != null) {			
 			examineRepository.updateExamineProcessing(examinelist);
 		}
+		
+	}
+	
+	//로그인 유저 정보 가져오기
+	@Override
+	public Users selectLoginUser(int userNo) {
+		
+		Users loginUser = examineRepository.selectLoginUser(userNo);
+		
+		return loginUser;
+	}
+	
+	//엑셀 다운로드
+	@Override
+	public List<Examine> getExamineExcelList(List<String> examineArr){
+		log.info("실행");
+		Examine examine = null;
+		ArrayList<Examine> examineList = new ArrayList<>();
+		for(int i=0; i<examineArr.size(); i++) {
+			examine = examineRepository.selectExamine(examineArr.get(i));
+			examineList.add(examine);
+			log.info(examine);
+		}
+		return examineList;
 		
 	}
 

@@ -7,7 +7,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.ExamineList;
+import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SrFile;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
 
 public interface IExamineService {
@@ -62,4 +64,9 @@ public interface IExamineService {
 	public void updateExamine(Examine examine);
 	public void updateExamineProcessing(ExamineList examinelist);
 	
+	//로그인한 유저 정보 가져오기
+	public Users selectLoginUser(int userNo);
+	
+	//엑셀 다운로드
+	public List<Examine> getExamineExcelList(List<String> examineArr);
 }

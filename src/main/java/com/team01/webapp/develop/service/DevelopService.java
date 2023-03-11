@@ -79,8 +79,7 @@ public class DevelopService implements IDevelopService{
 		return developFilter;
 	}
 	
-	/**
-	 * SR 개발 리스트 가져오기
+	/** SR 개발 리스트 가져오기
 	 * @author				정홍주
 	 * @param examinelist	SR리스트 가져오기
 	 * @param pager			페이징 처리
@@ -95,6 +94,12 @@ public class DevelopService implements IDevelopService{
 		developDto.setEndRowNo(end);
 		List<DevelopDto> list = developRepository.selectDevelopList(developDto);
 		return list;
+	}
+	
+	@Override
+	public Users getLoginUserInfo(int userNo) {
+		Users info = developRepository.selectLoginUser(userNo);
+		return info;
 	}
 
 	/** SR개발 상세보기
@@ -116,7 +121,7 @@ public class DevelopService implements IDevelopService{
 		return hrlist;
 	}
 	
-	/** 파일 얻기
+	/** 파일 읽어오기
 	* @author 			정홍주
 	* @param srFileNo	첨부파일 번호
 	*/
@@ -147,6 +152,15 @@ public class DevelopService implements IDevelopService{
 		List<Users> user = developRepository.selectNameByNo(userNo);
 		return user;
 	}
+	
+	@Override
+	public Users getLeader(String srNo) {
+		log.info("개발담당자 불러오기");
+		Users user = developRepository.selectLeader(srNo);
+		return user;
+	}
+	
+	
 
 	/** 개발자 리스트 불러오기(모달창)
 	 * @author 			 정홍주
@@ -183,9 +197,14 @@ public class DevelopService implements IDevelopService{
 	@Transactional
 	public int updateDevelopSr(UpdateDevelop updateDevelop) {
 		try {
+			int check = developRepository.checkHr(updateDevelop.getSrNo());
+			log.info(check);
+			//SR테이블에 저장
 			int result1 = developRepository.updateSr(updateDevelop);
+			int result3 = 0;
 			log.info("개발계획 수정 result1: "+result1); 
 			
+			//HR테이블에 저장
 			List<HR> listHR = new ArrayList<>();
 			for(int i=0; i<updateDevelop.getUserNo().length; i++) {
 				HR hr = new HR();
@@ -198,13 +217,24 @@ public class DevelopService implements IDevelopService{
 				listHR.add(hr);
 			}
 			log.info(listHR);
-			int result2 =developRepository.insertHrRow(listHR);
-			log.info("HR리스트 삽입 result2: "+ result2);
-			 
-			int result3 = insertProgress(updateDevelop.getSrNo());
-			log.info("Progress 삽입 result3"+result3);
 			
-	
+			if(check > 0) {
+				int result2 = developRepository.deleteHr(updateDevelop.getSrNo());
+				log.info("HR리스트 삭제 result2: "+ result2);
+				result3 =developRepository.insertHrRow(listHR);
+				log.info("HR리스트 삽입 result3: "+ result3);
+				result3 = insertProgress(updateDevelop.getSrNo());
+				log.info("progress삽입 완료");
+			} else {
+				int result2 =developRepository.insertHrRow(listHR);
+				log.info("HR리스트 삽입 result2: "+ result2);
+				
+				if(updateDevelop.getSttsNo() == 5) {
+					result3 = insertProgress(updateDevelop.getSrNo());
+					log.info("progress삽입 완료");
+					log.info("Progress 삽입 result3"+result3);
+				}
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -213,26 +243,46 @@ public class DevelopService implements IDevelopService{
 	
 	@Transactional
 	public int insertProgress(String srNo){
-		log.info("Progress리스트 insert"+ srNo);
-		int srSeq = 0;
-		List<Progress> progNoList = new ArrayList<>();
-		srSeq = developRepository.selectMaxProgNo()+1;		
+		int row = 0;
+		try {
+			log.info("Progress INSERT: "+ srNo);
+			int srSeq = 0;
+			List<Progress> progNoList = new ArrayList<>();
+			srSeq = developRepository.selectMaxProgNo()+1;		
+			
+			for(int i=0; i<6; i++) {
+				Progress progress = new Progress();
+				String progNo = "PROG-"+srSeq;
+				progress.setProgNo(progNo);
+				progress.setSrNo(srNo);
+				progress.setProgType(i+1);
+				progNoList.add(progress);
+				log.info(progress);
+				srSeq++;
+			}
 		
-		for(int i=0; i<6; i++) {
-			Progress progress = new Progress();
-			String progNo = "PROG-"+srSeq;
-			progress.setProgNo(progNo);
-			progress.setSrNo(srNo);
-			progress.setProgType(i+1);
-			progNoList.add(progress);
-			log.info(progress);
-			srSeq++;
+			row = developRepository.insertProg(progNoList);
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		
-		int row = developRepository.insertProg(progNoList);
-
 		return row;
 	}
 
+	/**엑셀파일 다운로드
+	 * @author				정홍주, 김태희
+	 * @param developSRArr	SR번호를 저장
+	 * @return				
+	 */
+	@Override
+	public List<DevelopDto> getPrintExcelList(List<String> developSRArr) {
+		List<DevelopDto> list =	new ArrayList<>();
+		DevelopDto develop = null;
+		for(int i=0; i<developSRArr.size(); i++){
+			develop = developRepository.selectDevelopContent(developSRArr.get(i));
+			list.add(develop);
+		}
+		log.info(list);
+		return list;
+	}
 
 }

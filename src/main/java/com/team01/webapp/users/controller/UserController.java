@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team01.webapp.model.Users;
 import com.team01.webapp.users.service.IUserService;
@@ -21,6 +24,7 @@ public class UserController {
 	
 	@Autowired
 	IUserService userService;
+	
 	
 	/**
 	 * 로그인 메서드
@@ -48,6 +52,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user/login", method = RequestMethod.POST)
 	public String login(Users user, HttpSession session, Model model) {
+		
 		log.info(user+" post 실행");
 		UserService.LoginResult loginResult = userService.login(user);
 		
@@ -63,7 +68,8 @@ public class UserController {
 			session.setAttribute("loginUser", user);
 			session.setAttribute("userType", user.getUserType());
 			session.setAttribute("userNo", user.getUserNo());
-
+			session.setAttribute("userId", user.getUserId());
+			session.setAttribute("sysNo", user.getSysNo());
 			log.info(user);
 			return "redirect:/home";
 		}
@@ -89,9 +95,9 @@ public class UserController {
 	 * @return	로그인폼으로 이동
 	 */
 	@RequestMapping(value = "/user/join", method = RequestMethod.GET)
-	public String join() {
+	public String join(Model model) {
 		log.info("정보 로그 실행");
-		
+		log.info(model.getAttribute("result"));
 		return "user/joinForm";
 	}
 
@@ -104,15 +110,33 @@ public class UserController {
 	 * @return		뷰로 이동
 	 */
 	@RequestMapping(value="/user/join", method = RequestMethod.POST)
-	public String join(Users user, Model model) {
+	public String join(Users user, Model model, RedirectAttributes redirectAttributes) {
 		log.info(user.getUserPswd()+"실행");
-		
 		int result = userService.join(user);
 		if(result == UserService.JOIN_SUCCESS) {
+			redirectAttributes.addFlashAttribute("result", "success");
 			return "redirect:/user/login";
+		}else if (result == UserService.JOIN_DUPLICATED){
+			model.addAttribute("result", "duplicatedId");
+			return "user/joinForm";
 		}else {
 			model.addAttribute("result", "wrongJoin");
 			return "user/joinForm";
+			
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping("/user/checkid")
+	public String checkId(@RequestParam String userId)	 {
+		log.info(userId+"실행");
+		int result = userService.checkId(userId);
+		if(result == UserService.JOIN_DUPLICATED) {
+			log.info("중복 아이디");
+			return "duplicated";
+		}else {
+			log.info("중복이 아닌 아이디");
+			return "success";
 		}
 	}
 	
@@ -160,5 +184,11 @@ public class UserController {
 			int rows = userService.updateUserInfo(user);
 			log.info("변경행수: "+rows);
 			return "redirect:/user/myinfo/"+user.getUserId();
+	}
+	
+	
+	@RequestMapping(value="/user/recovery", method = RequestMethod.GET)
+	public String recovery() {
+		return "user/recovery";
 	}
 }

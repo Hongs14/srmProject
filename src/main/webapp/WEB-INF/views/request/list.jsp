@@ -5,28 +5,71 @@
 <html lang="ko">
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
+	<script src="${pageContext.request.contextPath}/resources/tinymce2/tinymce.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/tinymce2/theme.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/tinymce2/tinymceinit.js"></script>
+	
 	<style>
 	
-	.requsetTtl{
-		width: 190px;
+	.col-lg-7 .requsetTtl{
+		width: 90px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display:block;
 	}	
-	
-	#requestList > .table th, 
-	#requestList > .table td {
-    	padding: 0.5rem;
-    }
     .col-lg-12 .requsetTtl{
-    	width: 300px;
+    	width: 400px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display:block;
     }
+    .srNo{
+		width: 110px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display:block;
+	}	
+   	.sysNm{
+   		width: 110px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display:block;
+   	}
+	.col-lg-7 .userOgdp{
+		width: 70px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display:block;
+	}
+	.col-lg-7 .userOgdpColumn{
+		display: none;
+	}
+	
+    .col-lg-12 .userOgdp{
+		width: 70px;
+		display:block;
+	}
+	.srStts{
+		width: 50px;
+		display:block;
+	}
+	#requestList > .table th, 
+	#requestList > .table td {
+    	padding: 0.5rem;
+    }
+    
     .ajaxDetail span {
 	  	white-space:normal !important;
+	  	font-size:14px;
 	 }
+	 #colNo2 label,
+	 #colNo2 input {
+	  	white-space:normal !important;
+	  	font-size:14px;
+	 }
+	  #colNo2 label{
+	  	font-weight: 700 !important;
+	  }
     
 	</style>
   	
@@ -39,7 +82,6 @@
 		        todayBtn: 'linked',
 		      });  
 	  	});
-	  	
 	  	
   	</script>
   	
@@ -119,8 +161,8 @@
 		                    	</select>
 		                	</div>
                 		</div>
-                		<div class="col-1">
-                			
+                		<div class="col-1 text-left px-1">
+							<button class="btn btn-outline-warning btn-sm" type="button" onclick="requestFilterReset()" >초기화 </button>
                 		</div>
                 		
                 	</div>
@@ -156,12 +198,8 @@
 		                   		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
 		                  	</div>
                 		</div>
-                		<div class="col-1">
-                			<div class="input-group-append float-right">
-								<button class="btn btn-primary btn-sm" type="button" onclick="requestList(1)" >
-									조회 <i class="fas fa-search fa-sm"></i>
-								</button>
-							</div>
+                		<div class="col-1 text-left px-1">
+							<button class="btn btn-primary btn-sm" type="button" onclick="requestList(1)" > 조회 <i class="fas fa-search fa-sm"></i></button>
                 		</div>
                 	</div>
                 </form>
@@ -174,7 +212,7 @@
 					<c:if test="${sessionScope.loginUser.userType eq '고객사'}">
                  		<a class="btn btn-sm btn-secondary mr-1" onclick="getWriteForm()"> 요청등록 </a>
                  	</c:if>
-						<button class="btn btn-sm btn-secondary ">엑셀 다운로드</button>
+						<button class="btn btn-sm btn-secondary" onclick="excelDownload()">엑셀 다운로드</button>
 					</div>
 				</div>
 				
@@ -182,15 +220,16 @@
 				<input type="hidden" id="userNo" value="${sessionScope.loginUser.userNo}">
 				<input type="hidden" id="userType" name="userType" value="${sessionScope.loginUser.userType}">
 				<div class="custom-control custom-switch px-5 ml-2" style="width:200px; border-radius:3px; background-color:#eaecf4;">
-				  <input type="checkbox" class="custom-control-input" id="searchMySR" onclick="requestList(1)"/>
-				  <label class="custom-control-label" for="searchMySR"><span class="text-primary">
-				  <c:if test="${sessionScope.loginUser.userType eq '고객사'}">
-				  	나의 SR 조회
-				  </c:if>
-				  <c:if test="${sessionScope.loginUser.userType eq '관리자' or sessionScope.loginUser.userType eq '개발자'}">
-				  	담당 SR 조회
-				  </c:if>
-				  <i class="fas fa-search fa-sm mx-2"></i></span></label>
+					  <input type="checkbox" class="custom-control-input" id="searchMySR" onclick="requestList(1)"/>
+					  
+					  <label class="custom-control-label" for="searchMySR"><span class="text-primary">
+					  <c:if test="${sessionScope.loginUser.userType eq '고객사'}">
+					  	나의 SR 조회
+					  </c:if>
+					  <c:if test="${sessionScope.loginUser.userType eq '관리자' or sessionScope.loginUser.userType eq '개발자'}">
+					  	담당 SR 조회
+					  </c:if>
+					  <i class="fas fa-search fa-sm mx-2"></i></span></label>
 				</div>
 				
 				<!-- ajaxList 들어가는 곳 -->
@@ -204,10 +243,74 @@
           <div id="colNo2">
           
           </div>
-          
+          <c:if test="${!empty command and command eq 'detail'}">
+          	<input type="hidden" value="${srNo}" id="detailSrNo">
+          </c:if>
           </div>
           <!-- Row -->
+          <c:if test="${!empty command and command eq 'detail'}">
+	          <script>
+	          	$(document).ready(function(){
+	          		var srNo = $("#detailSrNo").val();
+		  			getSrDetail(srNo);
+		          }
+	          	
+	          	);
+	          </script>
+          </c:if>
 			<script>
+				
+				//오늘 날짜 디폴트로 입력
+				$(document).ready(function(){
+					getFilterDate();		
+				}
+				);
+				
+				function getFilterDate(){
+					var todayResult = getTimeStamp();
+					console.log(todayResult);
+					document.getElementById('dateEnd').value = todayResult;
+					
+					var dateStart =getLastYearTimeStamp();
+					console.log(dateStart);
+					document.getElementById('dateStart').value = dateStart;
+				}
+				//오늘 날짜 양식
+				function getTimeStamp() {
+				  var d = new Date();
+	
+				  var s =
+				    leadingZeros(d.getFullYear(), 4) + '/' +
+				    leadingZeros(d.getMonth() + 1, 2) + '/' +
+				    leadingZeros(d.getDate(), 2);
+	
+				  return s;
+				}
+				//작년 날짜 양식
+				function getLastYearTimeStamp() {
+					  var d = new Date();
+	
+					  var s =
+					    leadingZeros(d.getFullYear(), 4)-1 + '/' +
+					    leadingZeros(d.getMonth() + 1, 2) + '/' +
+					    leadingZeros(d.getDate(), 2);
+	
+					  return s;
+					}
+	
+	
+	
+				//오늘 날짜 양식 (+두자리)
+				function leadingZeros(n, digits) {
+				  var zero = '';
+				  n = n.toString();
+	
+				  if (n.length < digits) {
+				    for (i = 0; i < digits - n.length; i++)
+				      zero += '0';
+				  }
+				  return zero + n;
+				}
 				$(document).ready(function () {
 					console.log("시작");
 					var sysNoSelect = document.getElementById("sysNo");
@@ -231,7 +334,7 @@
 					
 					
 					$.ajax({
-						url : "filter/1",
+						url : "${pageContext.request.contextPath}/request/filter/1",
 						method : "post",
 						data : JSON.stringify(data),
 						contentType: "application/json; charset=UTF-8"
@@ -295,12 +398,13 @@
 								srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 					
 					$.ajax({
-						url : "filter/"+pageNo,
+						url : "${pageContext.request.contextPath}/request/filter/"+pageNo,
 						method : "post",
 						data : JSON.stringify(data),
 						contentType: "application/json; charset=UTF-8"
 					}).done((data) => {
 						$("#ajaxList").html(data);
+						
 					});
 				}
 				
@@ -314,7 +418,7 @@
 					$("#colNo2").attr("class","col-lg-5");
 					
 					$.ajax({
-						url : "detail/"+srNo,
+						url : "${pageContext.request.contextPath}/request/detail/"+srNo,
 						type : "GET",
 						dataType : "html",
 						success : function(data) {
@@ -323,7 +427,6 @@
 					});
 					
 				}
-				
 				function getWriteForm(){
 					$("#srMenu").removeClass("d-sm-flex");
 					$("#srMenu").hide();
@@ -332,7 +435,7 @@
 					$("#colNo2").attr("class","col-lg-5");
 					
 					$.ajax({
-						url :"write",
+						url :"${pageContext.request.contextPath}/request/write",
 						type : "GET",
 						dataType : "html",
 						success : function(data) {
@@ -350,7 +453,7 @@
 					$("#colNo2").attr("class","col-lg-5");
 					
 					$.ajax({
-						url :"update/"+srNo,
+						url :"${pageContext.request.contextPath}/request/update/"+srNo,
 						type : "GET",
 						dataType : "html",
 						success : function(data) {
@@ -359,13 +462,108 @@
 					});
 					
 				}
+				function selectAll(selectAll) {
+					const checkboxes = document.querySelectorAll('input[name="requestCheck"]');
+				  
+				  	checkboxes.forEach((checkbox) => {
+				    	checkbox.checked = selectAll.checked
+				  	})
+					
+				}
 				
+				function checkSelectAll(checkbox)  {
+				  const selectall 
+				    = document.querySelector('input[name="requestCheck"]');
+				  
+				  if(checkbox.checked === false)  {
+				    selectall.checked = false;
+				  }
+				}
 				
+				function excelDownload() {
+					var requestArr = new Array();
+					var checkbox = $("input[name=requestCheck]:checked");
+					
+					// 체크된 체크박스의 값을 가져옴
+					checkbox.each(function(i) {
+						var tr = checkbox.parent().parent().parent().eq(i);
+						var td = tr.children();
+						
+						if(td.eq(1).text() != 'SR 번호') {
+							
+							var srNo = td.eq(1).text();
+							
+							progressArr.push(srNo);
+						}
+					});
+					
+					console.log(progressArr)
+					
+					var form = document.createElement('form');
+					form.setAttribute('method','post');
+					form.setAttribute('action', 'excelDownload');
+					document.charset = "utf-8";
+					
+					var hiddenField = document.createElement("input");
+					hiddenField.setAttribute('type', 'hidden');
+					hiddenField.setAttribute('name', 'requestArr');
+					hiddenField.setAttribute('value', requestArr);
+					form.appendChild(hiddenField);
+					
+					document.body.appendChild(form);
+					form.submit();
+				}
+				function requestFilterReset(){
+					getFilterDate();
+					$("#sysNo").val("전체").prop("selected", true);
+					$("#userOgdp").val("전체").prop("selected", true);
+					$("#sttsNo").val("전체").prop("selected", true);
+					$("#sttsNo").val("전체").prop("selected", true);
+					$("#srDevDp").val("전체").prop("selected", true);
+					$("#keyword").val("");
+				}
+				
+				function excelDownload() {
+					var requestArr = new Array();
+					var checkbox = $("input[name=requestCheck]:checked");
+					
+					// 체크된 체크박스의 값을 가져옴
+					checkbox.each(function(i) {
+						var tr = checkbox.parent().parent().parent().eq(i);
+						var td = tr.children();
+						
+						if(td.eq(1).text() != 'SR번호') {
+							
+							var srNo = td.eq(1).text();
+							
+							requestArr.push(srNo);
+						}
+					});
+					
+					console.log(requestArr);
+					
+					var form = document.createElement('form');
+					form.setAttribute('method','post');
+					form.setAttribute('action', 'excelDownload');
+					document.charset = "utf-8";
+					
+					var hiddenField = document.createElement("input");
+					hiddenField.setAttribute('type', 'hidden');
+					hiddenField.setAttribute('name', 'requestArr');
+					hiddenField.setAttribute('value', requestArr);
+					form.appendChild(hiddenField);
+					
+					document.body.appendChild(form);
+					form.submit();
+				}
 			</script>
           
 
           <!-- 로그아웃 모달 -->
            <%@include file="/WEB-INF/views/common/logout.jsp" %>
+           
+      
+			
         </div>
         <!---Container Fluid-->
       </div>

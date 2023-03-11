@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<% pageContext.setAttribute("replaceChar", "\n"); %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +17,7 @@
 		let noticeNo ='${notice.ntcNo}';
 	  	console.log(noticeNo);
 	  	$.ajax({
-			url:"read/comment"
+			url:"${pageContext.request.contextPath}/notice/read/comment"
 			,type:"get"
 			,data: 'ntcNo='+noticeNo
 			,success:function(data){
@@ -52,7 +54,7 @@
 		let data = {userNo: ntcWriterNo, ntcNo: ntcNo, ntcCmntCn: content};
 		console.log(data);
 		$.ajax({
-			url: "write/comment",
+			url: "${pageContext.request.contextPath}/notice/write/comment",
 			method: "post",
 			data: JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
@@ -97,7 +99,7 @@
 		let ntcCmntNo = i;
 		let data = {ntcCmntNo: ntcCmntNo, ntcCmntCn: content};  
 		$.ajax({
-			url: "update/comment",
+			url: "${pageContext.request.contextPath}/notice/update/comment",
 			method: "post",
 			data: JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
@@ -113,7 +115,7 @@
 		console.log("댓글삭제"+i);
 		let ntcCmntNo = i;
 		$.ajax({
-			url: "delete/comment",
+			url: "${pageContext.request.contextPath}/notice/delete/comment",
 			method: "get",
 			data: 'ntcCmntNo='+ntcCmntNo,
 		}).done((data) => {
@@ -177,8 +179,8 @@
 			<div class="form-group col-sm-2 ">
 				<label class="col-form-label">내용</label>
 			</div>
-			<div class="col-sm-10">
-				<span>${notice.ntcCn}</span>
+			<div class="col-sm-10"> 
+				<span>${fn: replace(notice.ntcCn, replaceChar,"")}</span>
 			</div>
 		</div>
 		<div class="row mb-2">
@@ -187,15 +189,15 @@
 			</div>
 			<div class="col-sm-10">	
 				<c:forEach var="noticeFile" items="${noticeFile}">
-					<span><a href="fileDownload?ntcFileNo=${noticeFile.ntcFileNo}">${noticeFile.ntcFileActlNm}</a></span>
+					<span><a href="${pageContext.request.contextPath}/notice/fileDownload?ntcFileNo=${noticeFile.ntcFileNo}">${noticeFile.ntcFileActlNm}</a></span>
 				</c:forEach>	                            		
 			</div>
 		</div>			                            		
 		<div class="d-sm-flex justify-content-end">
-			<a href="${pageContext.request.contextPath}/notice/list/${notice.sysNo}" class="btn btn-primary mr-1">목록</a>
+			<a href="${pageContext.request.contextPath}/notice/list?sysNo=${notice.sysNo}" class="btn btn-primary mr-1">목록</a>
 			<c:if test="${sessionScope.loginUser.userNm eq '관리자'}">
 				<a onclick="getNoticeUpdate('${notice.ntcNo}')" class="btn btn-primary mr-1">수정</a>
-				<form method="post" action="delete" enctype="multipart/form-data">
+				<form method="post" action="${pageContext.request.contextPath}/notice/delete" enctype="multipart/form-data">
 					<input type="hidden" id="ntcNo" name="ntcNo" value="${notice.ntcNo}"/>
 					<input type="hidden" id="sysNo" name="sysNo" value="${notice.sysNo}"/>
 					<button type="submit" class="btn btn-primary">삭제</button>

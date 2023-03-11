@@ -211,13 +211,15 @@
 	        sys_nm as "sysNm",
 	        sr_ttl as "srTtl",
 	        sr_std as "srStd",
+	        stts_nm as "sttsNm",
 	        sr_cn as "srCn"
 		FROM
-	        SR s, USERS u, SYSTEM sys
+	        SR s, USERS u, SYSTEM sys, SR_STTS st
 		WHERE 
 	        s.sr_cust_no = u.user_no and
-	        sys.sys_no = s.sys_no
-	        and sr_no = #{srNo}
+	        sys.sys_no = s.sys_no and
+	        st.stts_no = s.stts_no and 
+	        sr_no = #{srNo}
 	</select>
 	
 	<select id="selectRequestFileDetail" parameterType="string" resultType="srFile">
@@ -269,4 +271,23 @@
 		WHERE 
 			SR_NO=#{srNo}
 	</update>
+	
+	<select id="selectRequestSr" parameterType="string" resultType="requestList">
+		SELECT
+		    s.SR_NO AS "srNo",
+		    s.SR_TTL AS "srTtl",
+		    SYS_NM AS "sysNm",
+		    u.USER_NM AS "userNm",
+		    u.USER_OGDP AS "userOgdp",
+		    s.SR_DEV_DP AS "srDevDp",
+		    st.STTS_NM AS "sttsNm",
+		    s.SR_REG_DATE AS "srRegDate",
+		    s.SR_PRY As "srPry"
+		FROM SR s ,USERS u,  SR_STTS st, SYSTEM sys
+		WHERE s.SR_CUST_NO = u.USER_NO
+		AND s.STTS_NO = st.STTS_NO
+		AND s.SYS_NO = sys.SYS_NO
+		AND s.SR_DEL_YN = 'N'
+		AND s.SR_NO = #{srNo}
+	</select>
 </mapper>

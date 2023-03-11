@@ -6,12 +6,16 @@
 <!DOCTYPE html>
 	<div class="table-responsive">
 	<div class="input-group-append float-right mb-3">
-		<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFileModal" id="#modalScroll" onclick="progressFileAdd()">
-			추가
-		</button>
-		<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressRateModal" id="#modalScroll" onclick="progressFileDelete()">
-			삭제
-		</button>
+		<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
+			<c:if test="${check}">
+				<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFileModal" id="#modalScroll" onclick="progressFileAdd()">
+					추가
+				</button>
+				<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressRateModal" id="#modalScroll" onclick="progressFileDelete()">
+					삭제
+				</button>
+			</c:if>
+		</c:if>
 	</div>
 		<table class="table align-items-center table-flush table-hover">
 			<thead class="thead-light">
@@ -39,9 +43,14 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<c:if test="${empty progressFileList}">
+			<h2 class="m-3">
+				등록된 산출물이 없습니다
+			</h2>
+		</c:if>
 	<!-- 모달 창 -->
 	<div class="modal fade" id="progressFileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+		<div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
 				<div id="progressFileModalView"></div>
 			</div>
@@ -66,7 +75,7 @@
 		
 		var progressFile = new Array();
 		var checkbox = $("input[name=progressFileCheckBox]:checked");
-		
+		var count = 0;
 		// 체크된 박스의 값을 가져옴
 		checkbox.each(function(i) {
 			var tr = checkbox.parent().parent().eq(i);
@@ -78,19 +87,29 @@
 			let data = {progFilePhysNm : progFilePhysNm, progFileNo : progFileNo};
 			
 			progressFile.push(data);
+			count = 1;
 		});
 		
-		data = {srNo : srNo, progressFile : progressFile};
-		
-		console.log(data);
-		
-		$.ajax({
-			url : "progressFileRemove/",
-			method : "post",
-			data : JSON.stringify(data),
-			contentType: "application/json; charset=UTF-8"
-		}).done((data) => {
-			window.location.href = srNo;
-		});
+		if(count == 0) {
+			$('#messageModal').modal('show');
+	    	$("#Modalmessage").text("삭제할 파일을 선택해 주세요.");
+		} else {
+			data = {srNo : srNo, progressFile : progressFile};
+			
+			console.log(data);
+			
+			$.ajax({
+				url : "progressFileRemove/",
+				method : "post",
+				data : JSON.stringify(data),
+				contentType: "application/json; charset=UTF-8"
+			}).done((data) => {
+				$('#messageModal').modal('show');
+	    		$("#Modalmessage").text("선택하신 파일이 삭제되었습니다.");
+	    		setTimeout(function() {
+					window.location.href = srNo;
+				}, 2000);
+			});
+		}
 	}
 </script>

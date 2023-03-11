@@ -21,3 +21,15 @@
 <link href="${pageContext.request.contextPath}/resources/vendor/clock-picker/clockpicker.css" rel="stylesheet">
 
 <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
+
+<%-- <script src="${pageContext.request.contextPath}/resources/vendor/chart.js/Chart.js"></script> --%>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/gantt/dist/jquery-gantt.css">
+<script src="https://kit.fontawesome.com/95401d2f49.js" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.js"></script>
+
+<%-- <script src="${pageContext.request.contextPath}/resources/js/demo/chart-pie-demo.js"></script> --%>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>

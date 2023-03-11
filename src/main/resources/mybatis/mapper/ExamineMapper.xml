@@ -7,7 +7,8 @@
 	-->
 	
 	<select id="selectExamineListAllCount" resultType="int">
-		SELECT COUNT(*) FROM NOTICE
+		SELECT COUNT(*) FROM SR
+		WHERE SR_DEL_YN = 'N'
 	</select>
 	
 	<!-- 요청 진행 상태 리스트 
@@ -60,6 +61,11 @@
         AND sr.stts_no !=4
         AND sr.stts_no !=5
         AND sr.stts_no !=6
+        AND sr.stts_no !=7
+        AND sr.stts_no !=8
+        AND sr.stts_no !=9
+        AND sr.stts_no !=10
+        AND sr.SR_DEL_YN = 'N'
 		<if test="!sysNo.equals('')">
 			AND sys.sys_no = #{sysNo}
 		</if>
@@ -69,7 +75,7 @@
 		<if test="!userOgdp.equals('전체')">
 			AND u.user_ogdp = #{userOgdp}
 		</if>
-		<if test="!userOgdp.equals('전체')">
+		<if test="!userDpNm.equals('전체')">
 			AND u.user_dp_nm = #{userDpNm}
 		</if>
 		<if test="!srRegStartDate.equals('')" >
@@ -136,6 +142,10 @@
 		            AND s.stts_no !=4
 		            AND s.stts_no !=5
 		            AND s.stts_no !=6
+		            AND s.stts_no !=7
+			        AND s.stts_no !=8
+			        AND s.stts_no !=9
+			        AND s.stts_no !=10
 			       	<if test="sttsNo != 0">
 						AND st.stts_no = #{sttsNo}
 					</if>
@@ -159,6 +169,7 @@
 					<if test="srTtl != ''">
 						AND  s.SR_TTL like #{srTtl}
 					</if>
+					AND s.SR_DEL_YN = 'N'
 			       	ORDER BY DECODE(s.STTS_NO, 1, 2) ASC ,s.SR_PRY, s.SR_REG_DATE DESC
 			    )
 			    <![CDATA[
@@ -249,5 +260,15 @@
 		)
 		WHERE SR_NO = #{srNo}
 	</update>
+	
+	<!-- 로그인한 유저 정보 가져오기 -->
+	<select id="selectLoginUser" parameterType="int" resultType="users">
+		SELECT 
+		    SYS_NM AS "sysNm",
+    		sys.SYS_NO AS "sysNo"
+		FROM USERS u, SYSTEM sys
+		WHERE u.USER_NO = sys.MANAGER_NO
+		AND u.USER_NO = #{userNo}
+	</select>
 	
 </mapper>

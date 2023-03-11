@@ -39,9 +39,9 @@
 						<div class="col-lg-12">
 							<div class="card mb-4">
 				         		<!-- 검색 -->
-				                <div class="mb-1 mt-5 px-5">
+				                <div class="mb-1 mt-5 px-3">
 									<form class="navbar-search">
-					                	<div class="row">
+					                	<div class="row text-right">
 					                		<div class="col-4">
 					                			<div class="form-group row">
 					                				<label class="col-sm-3 col-form-label-sm" for="sysNo">시스템 구분</label>
@@ -75,21 +75,23 @@
 							                    	</select>
 							                	</div>
 					                		</div>
-					                		<div class="col-1">
-					                			
+					                		<div class="col-1 text-left">
+				                				<button class="btn btn-outline-warning btn-sm" type="button" onclick="progressFilterReset()" >
+				                					초기화
+				                				</button>
 					                		</div>
 					                	</div>
-										<div class="row">
+										<div class="row text-right">
 											<div class="col-4">
 							                	<div class="form-group row">
-							                		<label class="col-sm-3 col-form-label-sm">SR 제목</label>
+							                		<label class="col-sm-3 col-form-label-sm">SR   제목</label>
 							                    	<input id="srName" type="text" class="form-control form-control-sm col-sm-9 bg-light" 
 							                   		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
 							                  	</div>
 					                		</div>
 					                		<div class="col-4">
 							                	<div class="form-group row">
-							                		<label class="col-sm-3 col-form-label-sm">SR 번호</label>
+							                		<label class="col-sm-3 col-form-label-sm">SR   번호</label>
 							                    	<input id="srNo" type="text" class="form-control form-control-sm col-sm-9 bg-light" 
 							                   		aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;">
 							                  	</div>
@@ -97,12 +99,10 @@
 					                		<div class="col-3">
 					                		
 					                		</div>
-											<div class="col-1">
-												<div class="input-group-append float-right">
-													<button class="btn btn-primary btn-sm" type="button" onclick="progressList(1)">
-														조회 <i class="fas fa-search fa-sm"></i>
-													</button>
-												</div>
+											<div class="col-1 text-left">
+												<button class="btn btn-primary btn-sm" type="button" onclick="progressList(1)">
+													조회 <i class="fas fa-search fa-sm"></i>
+												</button>
 											</div>
 											<script>
 												
@@ -181,25 +181,33 @@
 														$("#progressListView").html(data)
 													});
 												}
+												
+												function progressFilterReset(){
+													$("#sysNo").val("").prop("selected", true);
+													$("#srTypeNo").val("0").prop("selected", true);
+													$("#srSttsNo").val("0").prop("selected", true);
+													$("#srName").val("");
+													$("#srNo").val("");
+												}
 											</script>
 											
 										</div>
 									</form>
 				                </div>
 								<hr/>
-								<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-									<h5 class="m-0 font-weight-bold text-primary">SR 진척 목록</h5>
+								<div class="p-3 d-flex flex-row align-items-center justify-content-between">
+									<h5 class="m-0 font-weight-bold text-primary mb-1">SR 진척 목록</h5>
 									<div class="d-sm-flex justify-content-end">
 										<button class="btn btn-sm btn-primary" onclick="excelDownload()">엑셀 다운로드</button>
 									</div>
 								</div>
 									
-									<div class="custom-control custom-switch px-5 ml-2" style="width:180px; border-radius:3px; background-color:#eaecf4;">
-										<input type="checkbox" class="custom-control-input" id="searchMySR" onclick="progressList(1)"/>
-										<label class="custom-control-label" for="searchMySR">
-											<span class="text-primary">나의 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span>
-										</label>
-									</div>
+								<div class="custom-control custom-switch px-5 ml-2" style="width:180px; border-radius:3px; background-color:#eaecf4;">
+									<input type="checkbox" class="custom-control-input" id="searchMySR" onclick="progressList(1)"/>
+									<label class="custom-control-label" for="searchMySR">
+										<span class="text-primary">담당 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span>
+									</label>
+								</div>
 									
 									<script>
 										function excelDownload() {
@@ -217,27 +225,58 @@
 													
 													progressArr.push(srNo);
 												}
-											});
+											});									
 											
-											console.log(progressArr)
-											
-											var form = document.createElement('form');
-											form.setAttribute('method','post');
-											form.setAttribute('action', 'excelDownload');
-											document.charset = "utf-8";
-											
-											var hiddenField = document.createElement("input");
-											hiddenField.setAttribute('type', 'hidden');
-											hiddenField.setAttribute('name', 'progressArr');
-											hiddenField.setAttribute('value', progressArr);
-											form.appendChild(hiddenField);
-											
-											document.body.appendChild(form);
-											form.submit();
+											if(progressArr.length == 0) {
+										    	$('#ListExcelModal').modal('show');
+										    	$("#ListExcelModalMessage").text("SR을 선택해 주세요");
+											} else {
+												var form = document.createElement('form');
+												form.setAttribute('method','post');
+												form.setAttribute('action', 'excelDownload');
+												document.charset = "utf-8";
+												
+												var hiddenField = document.createElement("input");
+												hiddenField.setAttribute('type', 'hidden');
+												hiddenField.setAttribute('name', 'progressArr');
+												hiddenField.setAttribute('value', progressArr);
+												form.appendChild(hiddenField);
+												
+												document.body.appendChild(form);
+												form.submit();
+											}
 										}
 										
 									</script>
 								<div id="progressListView" style="width:100%"></div>
+							</div>
+						</div>
+					</div>
+					
+					<!-- 메시지 모달 창 -->
+					<div class="modal fade" id="ListExcelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+						<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+							<div class="modal-content">
+								<div class="modal-header bg-primary">
+									<h5 class="modal-title" id="exampleModalScrollableTitle">
+							          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+							        	<small class="text-white">
+							        		<b>삭제</b>
+							        	</small>
+									</h5>
+									<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body p-5" style="white-space: normal; text-align:center;">
+									<div class="alert alert-secondary m-3 p-2" role="alert">
+										<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+										<div id="ListExcelModalMessage"></div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
+								</div>
 							</div>
 						</div>
 					</div>

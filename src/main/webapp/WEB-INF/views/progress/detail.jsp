@@ -5,20 +5,24 @@
 <html lang="ko">
 <style>
 #prog_tabs .nav-link{
-background-color:#EFEFEF;
-color: black;
-border-top-left-radius: 10px; 
-border-top-right-radius: 10px;
-
+	background-color:#EFEFEF;
+	color: black;
+	border-top-left-radius: 10px; 
+	border-top-right-radius: 10px;
 }
-	#prog_tabs .nav-link.active{
-	background-color:#406882;
-	color:white;
-	}
+#prog_tabs .nav-link.active{
+background-color:#406882;
+color:white;
+}
 
-	.ajaxDetail span {
-        white-space:normal !important;
-    }
+.ajaxDetail span {
+   white-space:normal !important;
+   font-size:14px;
+}
+.collapsed:active{
+ background-color: green;
+}
+
 </style>
 <head>
 	<%@include file="/WEB-INF/views/common/head.jsp"%>
@@ -30,7 +34,7 @@ border-top-right-radius: 10px;
 		<%@include file="/WEB-INF/views/common/sidebar.jsp"%>
 
 		<div id="content-wrapper" class="d-flex flex-column">
-			<div id="content">
+			<div id="content">	
 
 				<!-- TopBar -->
 				<%@include file="/WEB-INF/views/common/topbar.jsp"%>
@@ -48,179 +52,242 @@ border-top-right-radius: 10px;
 
 							</div>
 							<div class="ajaxDetail card mb-4">
-								<div class="card-header mt-2">
-									<h6 class="m-0 font-weight-bold text-primary"> <i class="fab fa-fw fa-wpforms"></i> SR 검토 상세</h6>
-								</div>
-								<div class="card-body">
-									<!-- 진척 상세 -->
-									<div class="container-fluid">
-										<!-- 번호/구분 -->
-										<div class="row">
-											<div class="col-3">
-												<span class="font-weight-bold">SR 번호 : </span>
-											</div>
-											<div class="col-3">
-												<span> ${progressDetail.srNo}</span>
-											</div>
-											<div class="col-3">
-												<span class="font-weight-bold">요청 구분 : </span>
-											</div>
-											<div class="col-3">
-												<span> ${progressDetail.srTypeNm}</span>
-											</div>
+							<!-- 진척 상세 -->
+								<div class="mb-4 mt-4 px-5">
+									<!-- 번호/구분 -->
+									<div class="row mb-2 mr-0">
+										<div class="col-6">
+								  			<span class="text-primary font-weight-bold">SR No.</span> 
+								  			<span> ${progressDetail.srNo}</span>
 										</div>
-										<hr/>
-										<!-- 시스템 구분/업무 구분 -->
-										<div class="row">
-											<div class="col-3">
-												<span class="font-weight-bold">시스템 구분: </span>
-											</div>
-											<div class="col-3">
-												<span class="pl-4"> ${progressDetail.sysNm}</span>
-											</div>
-											<div class="col-3">
-												<span class="font-weight-bold">진행 상태: </span>
-											</div>
-											<div class="col-3">
-												<span class="pl-1">  ${progressDetail.sttsNm}</span>
-											</div>
+										<div class="col-6 text-right">
+											<span class="font-weight-bold">요청구분 - </span><span class="badge badge-warning"> ${progressDetail.srTypeNm}</span>
 										</div>
-										<br/>
-										<!-- 요청팀/요청자 -->
-										<div class="row">
-											<div class="col-6">
-												<span class="font-weight-bold ">요청 팀: </span><span>${progressDetail.userDpNm}</span>
-											</div>
-											<div class="col-6">
-												<span class="font-weight-bold ">요청자: </span><span>${progressDetail.requesterNm}</span>
-											</div>
+									</div>
+									<hr/>
+									<!-- -->
+									<div class="row mb-2 mr-0">
+										<div class="col-sm-2">
+											<span class="font-weight-bold">등록자 : </span> 
 										</div>
-										<br/>
-										<!-- 등록일/ 완료 예정 일 -->
-										<div class="row">
-											<div class="col-6">
-												<span class="font-weight-bold ">등록일: </span><span>${progressDetail.srRegDate}</span>
-											</div>
-											<div class="col-6">
-												<span class="font-weight-bold ">완료 예정일: </span><span>${progressDetail.srDdlnDate}</span>
-											</div>
+										<div class="col-sm-3">
+											<span>${progressDetail.requesterNm}</span>
 										</div>
-										<br/>
-										<!-- SR 제목 -->
-										<div class="row">
-											<div class="col-2">
-												<span class="font-weight-bold">SR 제목: </span>
-											</div>
-											<div class="col-10">
-												<span> ${progressDetail.srTtl}</span>
-											</div>
+										<div class="col-sm-3">
+											<span class=" font-weight-bold">진행상태 :  </span> 
 										</div>
-										<br>
-										<!-- 관련 근거(목적) -->
-										<div class="row">
-											<div class="col-4">
-												<span class="font-weight-bold">관련근거(목적): </span>
-											</div>
-											<div class="col-8">
-												<span>${progressDetail.srStd}</span>
-											</div>
+										<div class="col-sm-4">
+											<span> ${progressDetail.sttsNm}</span>
 										</div>
-										<br>
-										<!-- SR 내용 -->
-										<div class="row mb-1">
-											<div class="col-2">
-												<span class="font-weight-bold ">SR 내용 </span>
-											</div>
-											<div class="col-10 border" style="min-height:100px;">
-												<span>${progressDetail.srCn}~~~~~~~~~~~~~~~~</span>
-											</div>
+									</div>
+									<!-- 등록자팀/등록자 -->
+									<div class="row mb-2 mr-0" >
+										<div class="col-sm-2">
+											<span class="font-weight-bold">요청팀 : </span> 
 										</div>
-										<br/>
-										<!-- 첨부파일 -->
-										<c:if test="${progressDetail.srFile[0].srFileNo != null}">
-											<div class="row">
-												<div class="col-12">
-													<span class="font-weight-bold ">첨부 파일</span>
-													<div>
-													<c:forEach var="filelist" items="${progressDetail.srFile}">
-														<a href="filedownload?srFileNo=${filelist.srFileNo}">
-															<span class="font-weight-bold ">${filelist.srFileActlNm}.${filelist.srFileExtnNm}</span>
-															<br/>
-														</a>
-													</c:forEach>
+										<div class="col-sm-3">
+											<span>${progressDetail.userDpNm}</span>
+										</div>
+										<div class="col-sm-3">
+											<span class="font-weight-bold">관련시스템 : </span> 
+										</div>
+										<div class="col-sm-4">
+											<span> ${progressDetail.sysNm}</span>
+										</div>
+									</div>
+									
+									<!-- 등록일/ 완료 예정 일 -->
+									<div class="row mb-2 mr-0">
+										<div class="col-sm-2">
+											<span class=" font-weight-bold">등록일 : </span> 
+										</div>
+										<div class="col-sm-3">
+											<span>${progressDetail.srRegDate}</span> 
+										</div>
+										<div class="col-sm-3">
+											<span class=" font-weight-bold">완료예정일 : </span> 
+										</div>
+										<div class="col-sm-4">
+											<span>${progressDetail.srDdlnDate}</span> 
+										</div>
+									</div>
+									<hr/>
+									<!-- SR 상세 / 개발 상세 아코디언 -->
+									<div class="accordion" id="accordion">
+									    <div id="headingOne">
+									      <h6 class="collapsed p-2 d-flex justify-content-between"
+									      data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" 
+									      style="cursor: pointer; border-radius:5px; background-color: #EAECF4; border: 1px solid #e3e6f0;">
+									          <b>SR 상세</b> <i class="fa-solid fa-caret-down"></i>
+									      </h6>
+									    </div>
+									    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+									        <!-- SR 제목 -->
+											<div class="row mb-4">
+												<div class="col-sm-2">
+													<span class=" font-weight-bold">SR 제목: </span> 
+												</div>
+												<div class="col-sm-10 border-bottom border-light" style="white-space: normal !important;">
+													<span> ${progressDetail.srTtl}</span>
+												</div>
+											</div>	
+									      	<!-- 관련 근거(목적) -->
+												<div class="row mb-4">
+													<div class="col-sm-2">
+														<span class="font-weight-bold">관련근거: </span> 
+													</div>
+													<div class="col-sm-10 border-bottom border-light">
+														<span>${progressDetail.srStd}</span> 
 													</div>
 												</div>
-											</div>
-										</c:if>
-										<hr />
-										<!-- 처리팀/담당자 -->
-										<div class="row">
-											<div class="col-6">
-												<span class="font-weight-bold ">처리 팀 : </span><span>${progressDetail.dpNm}</span>
-											</div>
-											<div class="col-6">
-												<span class="font-weight-bold ">담당자 : </span><span>${progressDetail.developerNm}</span>
-											</div>
-										</div>
-										<br/>
-										<!-- 계획시작일/계획 종료일 -->
-										<div class="row mb-3">
-											<div class="col-6">
-												<span class="font-weight-bold ">계획 시작일 : </span><span>${progressDetail.srStartDate}</span>
-											</div>
-											<div class="col-6">
-												<span class="font-weight-bold ">계획 종료일 : </span><span>${progressDetail.srEndDate}</span>
-											</div>
-										</div>
+												<!-- SR 내용 -->
+												<div class="row mb-1">
+													<div class="col-2">
+														<span class="font-weight-bold">SR 내용 </span>
+													</div>
+													<div class="col-10 border p-2" style="min-height:100px; white-space: normal !important;">
+														<span>${progressDetail.srCn}</span>
+													</div>
+												</div>
+												<!-- 첨부파일 -->
+												<c:if test="${progressDetail.srFile[0].srFileNo != null}">
+													<div class="row mb-2">
+														<div class="col-sm-2">
+															<span class="font-weight-bold">첨부파일: </span> 
+														</div>
+														<div class="col-sm-10 custom-file">
+															<c:forEach var="filelist" items="${progressDetail.srFile}">
+																<a href="filedownload?srFileNo=${filelist.srFileNo}">
+																	<span class="font-weight-bold ">${filelist.srFileActlNm}</span>
+																	<br/>
+																</a>
+															</c:forEach>
+														</div>
+													</div>
+												</c:if>
+									    </div>
+									  	
+									  	<div id="headingTwo">
+									      <h6 class="collapsed p-2 d-flex justify-content-between"
+									      data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" 
+									      style="cursor: pointer; border-radius:5px; background-color: #EAECF4; border: 1px solid #e3e6f0;">
+									          	<b>개발 상세</b> <i class="fa-solid fa-caret-down"></i>
+									      </h6>
+									    </div>
+									
+									    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+									        	<!-- 처리팀/담당자 -->
+												<div class="row mb-2" >
+													<div class="col-sm-2">
+														<span class="font-weight-bold">개발팀 : </span> 
+													</div>
+													<div class="col-sm-3">
+														<span>${progressDetail.dpNm}</span>
+													</div>
+													<div class="col-sm-3">
+														<span class="font-weight-bold">계획 시작일 : </span> 
+													</div>
+													<div class="col-sm-4">
+														<span>${progressDetail.srStartDate}</span>
+													</div>
+												</div>	
+												<!-- 계획시작일/계획 종료일 -->
+												<div class="row mb-2" >
+													<div class="col-sm-2">
+														<span class="font-weight-bold">팀 리더 :</span> 
+													</div>
+													<div class="col-sm-3">
+														<span> ${progressDetail.developerNm}</span>
+													</div>
+													<div class="col-sm-3">
+														<span class="font-weight-bold">계획 종료일 : </span> 
+													</div>
+													<div class="col-sm-4">
+														<span>${progressDetail.srEndDate}</span>
+													</div>
+												</div>	
+												<!-- 개발 내용 -->
+												<div class="row mb-1" style="white-space: normal !important;">
+													<div class="col-2">
+														<span class="font-weight-bold">개발 내용 </span>
+													</div>
+													<div class="col-10 border p-2" style="min-height:200px;">
+														<span>${progressDetail.srDevCn}</span>
+													</div>
+												</div>
+									    </div>
 									</div>
 								</div>
 							</div>
 						</div>
 						
 						<div class="col-lg-7">
-						<div class="d-flex justify-content-between flex-lg-nowrap" id="prog_tabs">
-							<ul class="nav nav-tabs" role="tablist">
-							<c:choose>
-								<c:when test="${message == 2}">
-									<li class="nav-item">
-										<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link active" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
-									</li>
-								</c:when>
-								<c:when test="${message == 3}">
-									<li class="nav-item">
-										<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link active" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
-									</li>
-								</c:when>
-								<c:otherwise>
-									<li class="nav-item">
-										<a class="nav-link active" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
-									</li>
-								</c:otherwise>
-							</c:choose>
-							</ul>
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item">SR 관리</li>
-								<li class="breadcrumb-item active" aria-current="page">SR 진척관리</li>
-							</ol>
-						</div>
+							<div class="d-flex justify-content-between flex-lg-nowrap" id="prog_tabs">
+								<ul class="nav nav-tabs" role="tablist">
+								<c:choose>
+									<c:when test="${message == 2}">
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link active" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(4)">SR 계획조정</a>
+										</li>
+									</c:when>
+									<c:when test="${message == 3}">
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link active" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(4)">SR 계획조정</a>
+										</li>
+									</c:when>
+									<c:when test="${message == 4}">
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link active" data-toggle="pill" onclick="progressDetail(4)">SR 계획조정</a>
+										</li>
+									</c:when>
+									<c:otherwise>
+										<li class="nav-item">
+											<a class="nav-link active" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(4)">SR 계획조정</a>
+										</li>
+									</c:otherwise>
+								</c:choose>
+								</ul>
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item">SR 관리</li>
+									<li class="breadcrumb-item active" aria-current="page">SR 진척관리</li>
+								</ol>
+							</div>
 							<div class="card mb-4" style="text-align:center">
 								<script>
 									$(document).ready(function () {
@@ -269,8 +336,36 @@ border-top-right-radius: 10px;
 								<div class="card-body">
 									<!-- ajax 변경 부분-->
 									<div class="container-fluid mb-5">
-										<div id="progressDetailView" style="width:100%"></div>
+										<div id="progressDetailView" style="width:100%; min-height:200px; max-height:400px"></div>
 									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!-- 메시지 모달 창 -->
+					<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+						<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+							<div class="modal-content">
+								<div class="modal-header bg-primary">
+									<h5 class="modal-title" id="exampleModalScrollableTitle">
+							          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+							        	<small class="text-white">
+							        		<b>삭제</b>
+							        	</small>
+									</h5>
+									<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body p-5" style="white-space: normal; text-align:center;">
+									<div class="alert alert-secondary m-3 p-2" role="alert">
+										<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+										<div id="Modalmessage"></div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
 								</div>
 							</div>
 						</div>

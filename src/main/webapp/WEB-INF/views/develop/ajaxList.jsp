@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <!DOCTYPE html>
-	<div class="table-responsive p-3">
-		<table class="table align-items-center table-flush table-hover">
-			<thead class="thead-light" style="text-align: center;">
+	<div class="table-responsive p-2">
+		<table class="table align-items-center table-flush table-hover text-left">
+			<thead class="thead-light">
 				<tr>	
 					<th>
 						<input type="checkbox" onclick='selectAll(this)' name="devleopCheck">
@@ -21,21 +21,21 @@
 					<th>중요도</th>
 				</tr>
 			</thead>
-			<tbody style="text-align: center;">
+			<tbody>
 				<c:forEach var="develop" items="${develop}">
 					<tr>
 						<td>
-							<input type="checkbox" name="devleopCheck" value="${develop.srNo}">
+							<input type="checkbox" onclick="checkSelectAll(this)" name="devleopCheck" value="${develop.srNo}">
 						</td>
 						<td><a href="${pageContext.request.contextPath}/develop/view/${develop.srNo}">${develop.srNo}</a></td>
-		                <td><a href="${pageContext.request.contextPath}/develop/view/${develop.srNo}">${develop.srTtl}</a></td>
+		                <td><a href="${pageContext.request.contextPath}/develop/view/${develop.srNo}" class="srdTtl">${develop.srTtl}</a></td>
                        	<td>${develop.sysNm}</td>
 						<td>${develop.userNm}</td>
 						<td>${develop.userOgdp}</td>
 						<td>${develop.srDevDp}</td>
 						<td>
-							<c:if test="${develop.sttsNm eq '접수'}"><span class="badge badge-outline-primary" style="font-size:100%; border: 1px solid black;">${develop.sttsNm}</span></c:if>
-							<c:if test="${develop.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${develop.sttsNm}</span></c:if>
+							<c:if test="${develop.sttsNm eq '접수'}"><span class="badge badge-warning" style="font-size:100%;">${develop.sttsNm}</span></c:if>
+							<c:if test="${develop.sttsNm eq '개발계획'}"><span class="badge text-white" style="background-color:#476A6F; font-size:100%">${develop.sttsNm}</span></c:if>
 						</td>
 						<td>${develop.srRegDate}</td>
 						<td>${develop.srDdlnDate}</td>
@@ -49,10 +49,15 @@
 			</tbody>
 		</table>
 		
-		<c:if test="${pager.totalRows != 0}">
-			<div class="pager d-flex justify-content-center my-3">
-				<div class="pagingButtonSet d-flex justify-content-center">
-					<c:if test="${pager.pageNo > 1}">
+		<div class="pager d-flex justify-content-center my-3">
+			<div class="pagingButtonSet d-flex justify-content-center">
+				<c:if test="${pager.totalRows < 1}">
+					<h6 class="m-3">
+						SR 요청이 존재하지 않습니다.
+					</h6>
+				</c:if>
+				<c:if test="${pager.totalRows >= 1}">
+					<c:if test="${pager.pageNo > 1 && pager.totalPageNo > 5 }">
 						<a onclick="developList(1)" type="button" class="btn btn-outline-primary btn-sm m-1">처음</a>
 					</c:if>
 					<c:if test="${pager.groupNo > 1}">
@@ -75,9 +80,7 @@
 					<c:if test="${pager.pageNo < pager.totalPageNo && pager.totalPageNo > 5 }">
 						<a onclick="developList(${pager.totalPageNo})" type="button" class="btn btn-outline-primary btn-sm m-1">맨끝</a>
 					</c:if>
-				</div>
+				</c:if>
 			</div>
-		</c:if>
-		
-		
+		</div>
 	</div>

@@ -80,6 +80,18 @@ public class NoticeService implements INoticeService{
 	@Override
 	public void noticeWrite(Notice notice) {
 		log.info("실행");
+		if(notice.getSysNo().equals("한국소프트")) {
+			notice.setSysNo("SRM");
+		}else if(notice.getSysNo().equals("북북")) {
+			notice.setSysNo("BOK");
+		}else if(notice.getSysNo().equals("사슈즈")) {
+			notice.setSysNo("SAS");
+		}else if(notice.getSysNo().equals("한국대학교")) {
+			notice.setSysNo("KOR");
+		}else if(notice.getSysNo().equals("오티아이")) {
+			notice.setSysNo("OTI");
+		}
+		
 		int noticeWrite = noticeRepository.insertNoticeWrite(notice);
 	}
 	
@@ -147,14 +159,16 @@ public class NoticeService implements INoticeService{
 	public void noticeUpdate(Notice notice) {
 		log.info("실행");
 		int ntcNo = notice.getNtcNo();
+		log.info(ntcNo);
 		String ntcCn = notice.getNtcCn();
 		noticeRepository.updateNotice(ntcNo,ntcCn);
-		
+		log.info("실행");
 	}
 	@Override
 	public void noticeUpdate(Notice notice,NoticeFile noticeFile) {
 		log.info("실행");
 		int ntcNo = notice.getNtcNo();
+		log.info(ntcNo);
 		String ntcCn = notice.getNtcCn();
 		noticeRepository.updateNotice(ntcNo,ntcCn);
 		

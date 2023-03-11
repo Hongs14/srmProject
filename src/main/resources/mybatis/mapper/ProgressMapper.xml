@@ -34,7 +34,7 @@
 		    STTS_NO AS "sttsNo",
 		    STTS_NM AS "sttsNm"
 		FROM SR_STTS
-		WHERE STTS_NO = 5 OR STTS_NO = 6 OR STTS_NO = 8
+		WHERE STTS_NO = 5 OR STTS_NO = 6 OR STTS_NO = 8 OR STTS_NO = 10
 	</select>
 	
 	<!--
@@ -73,7 +73,7 @@
 			<if test="adminSysNo != ''">
 				AND sr.sys_no = #{adminSysNo}
 			</if>
-			AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8)
+			AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8 or sr.stts_no = 10)
 			GROUP BY SR.SR_NO
 		)
 	</select>
@@ -152,10 +152,10 @@
 							<if test="adminSysNo != ''">
 								AND sr.sys_no = #{adminSysNo}
 							</if>
-							AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8)
+							AND (sr.stts_no = 5 or sr.stts_no = 6 or sr.stts_no = 8 or sr.stts_no = 10)
 							GROUP BY SR.SR_NO, SYS_NM, SR_TYPE_NM, SR_TTL, USER_NM, SR_DDLN_DATE, STTS_NM, SR.STTS_NO, SR_PRY
 						)
-					ORDER BY DECODE(STTS_NO, 8, 1, 5, 2) ASC, SR_PRY, SR_DDLN_DATE DESC
+					ORDER BY DECODE(STTS_NO, 8, 1, 10, 2, 5, 3) ASC, SR_PRY, SR_DDLN_DATE DESC
 				)
 			<![CDATA[
 			WHERE rownum <= #{end}
@@ -183,7 +183,10 @@
 		    SR_REG_DATE AS "srRegDate",
 		    SR_DDLN_DATE AS "srDdlnDate",
 		    SR_CN AS "srCn",
-		    SR_PRY "srPry"
+		    SR_PRY AS "srPry",
+		    SR_BGT AS "srBgt",
+		    SR_DEV_CN AS "srDevCn",
+		    SR.SYS_NO AS "sysNo"
 		FROM SR sr, SR_TYPE type ,SYSTEM system, SR_STTS stts, USERS users
 		WHERE sr.sr_type = type.sr_type_no
 		AND sr.sys_no = system.sys_no
@@ -424,7 +427,7 @@
 		WHERE PROG_NO = #{progNo}
 	</update>
 	<!-- 
-		진척율 파일 정보 조회
+		진척율 파일 정보 조회1
 		작성자 : 김태희
 	-->
 	<select id="selectProgressRateFile" parameterType="string" resultType="progressFile">
@@ -439,7 +442,7 @@
 	</select>
 	
 	<!-- 
-		진척율 파일 정보 조회
+		진척율 파일 정보 조회2
 		작성자 : 김태희
 	-->
 	<select id="selectProgressFile" parameterType="string" resultType="progressFile">
@@ -530,4 +533,103 @@
 		    </if>
 		WHERE PROG_NO = #{progNo}
 	</update>
+	
+	<select id="selectManagerNo" parameterType="string" resultType="string">
+		SELECT
+		    MANAGER_NO
+		FROM SYSTEM, SR
+		WHERE SYSTEM.SYS_NO = SR.SYS_NO
+		AND SR_NO = #{srNo}
+	</select>
+	
+	<insert id="insertChangeRequest" parameterType="changeRequest">
+		INSERT INTO CHANGE_REQUEST
+        (CR_NO, CR_REG_DATE, SR_NO, USER_NO, CR_TTL, CR_CN, CR_RESULT, CR_FILE_PHYS_NM, CR_FILE_EXTN_NM, CR_FILE_ACTL_NM, CR_DDLN_DATE)
+    VALUES
+        (crno_seq.nextval, sysdate, #{srNo}, #{userNo}, #{crTtl}, #{crCn}, '미처리', #{crFilePhysNm}, #{crFileExtnNm}, #{crFileActlNm}, #{crDdlnDate})
+	</insert>
+	
+	<select id="selectChangeRequestList" parameterType="string" resultType="changeRequest">
+		SELECT
+			CR_NO AS "crNo",
+		    CR_TTL AS "crTtl",
+		    CR_REG_DATE AS "crRegDate",
+		    CR_RESULT AS "crResult",
+		    CR_FILE_PHYS_NM AS "crFilePhysNm",
+		    CR_FILE_EXTN_NM AS "crFileExtnNm",
+		    CR_FILE_ACTL_NM AS "crFileActlNm"
+		FROM CHANGE_REQUEST
+		WHERE SR_NO = #{srNo}
+	</select>
+	
+	<select id="selectChangeRequestFile" parameterType="int" resultType="changeRequest">
+		SELECT
+			CR_NO AS "crNo",
+			CR_REG_DATE AS "crRegDate",
+			SR_NO AS "srNo",
+			request.USER_NO AS "userNo",
+            USER_NM AS "userNm",
+			CR_TTL AS "crTtl",
+			CR_CN AS "crCn",
+			CR_RESULT AS "crResult",
+			CR_COMMENT AS "crComment",
+		    CR_FILE_PHYS_NM AS "crFilePhysNm",
+		    CR_FILE_EXTN_NM AS "crFileExtnNm",
+		    CR_FILE_ACTL_NM AS "crFileActlNm",
+		    CR_DDLN_DATE AS "crDdlnDate"
+		FROM CHANGE_REQUEST request, USERS users
+        WHERE request.user_no = users.user_no
+		AND CR_NO = #{crNo}
+	</select>
+	
+	<update id="updateSrStts" parameterType="string">
+		UPDATE SR
+		SET 
+		    STTS_NO = 10
+		WHERE SR_NO = #{srNo}
+	</update>
+	
+	<update id="updateSr" parameterType="changeRequest">
+		UPDATE SR
+		SET
+			STTS_NO = 5
+			<if test="choice == 1">
+			,
+			SR_DDLN_DATE = #{date},
+			SR_END_DATE = #{crDdlnDate}
+			</if>
+		WHERE SR_NO = #{srNo}	
+	</update>
+	
+	<update id="updateChangeRequest" parameterType="map">
+		UPDATE CHANGE_REQUEST
+		SET
+			<if test="choice == 1">
+		    CR_RESULT = '승인'
+		    </if>
+		    <if test="choice == 2">
+		    CR_RESULT = '반려',
+		    CR_COMMENT = #{crComment}
+		    </if>
+		WHERE CR_NO = #{crNo}
+	</update>
+	
+	<update id="updateDeveloperEndDate" parameterType="map">
+		UPDATE HR
+		SET 
+		    HR_END_DATE = #{hrEndDate}
+		WHERE SR_NO = #{srNo}
+		AND USER_NO = #{userNo}
+	</update>
+	
+	<select id="selectSysUserData" parameterType="string" resultType="users">
+		SELECT
+		    USER_NM AS "userNm",
+		    SYS_UPDT_DATE AS "sysUpdtDate",
+		    USER_TELNO AS "userTelNo",
+		    USER_EML AS "userEml"
+		FROM USERS, SYSTEM
+		WHERE USERS.user_no = SYSTEM.manager_no
+		AND SYS_NO = #{sysNo}
+	</select>
 </mapper>

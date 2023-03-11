@@ -2,17 +2,23 @@ package com.team01.webapp.request.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +31,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team01.webapp.alarm.service.IAlarmService;
+import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.Request;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
@@ -34,6 +43,7 @@ import com.team01.webapp.model.RequestList;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.request.service.IRequestService;
+import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -45,6 +55,12 @@ public class RequestController {
 	
 	@Autowired
 	IRequestService requestService;
+	
+	@Autowired
+	IAlarmService alarmService;
+	
+	@Autowired
+	AlarmInfo alarmInfo;
 	
 	/**
 	 * 모든 SR리스트 조회
@@ -60,6 +76,26 @@ public class RequestController {
 		log.info("실행");
 		requestFilter = requestService.getFilterList(requestFilter);
 		model.addAttribute("requestfilter", requestFilter);
+		model.addAttribute("command", "list");
+		
+		//알림 수 및 리스트
+		alarmInfo.info(session, model); 
+		
+		return "request/list";
+		
+	}
+	
+	@RequestMapping(value="/list/{srNo}", method = RequestMethod.GET)
+	public String getDetailList(@PathVariable String srNo, HttpSession session, RequestFilter requestFilter, Model model) {
+		log.info("실행");
+		requestFilter = requestService.getFilterList(requestFilter);
+		
+		//알림 수 및 리스트
+		alarmInfo.info(session, model); 
+		
+		model.addAttribute("requestfilter", requestFilter);
+		model.addAttribute("srNo", srNo);
+		model.addAttribute("command", "detail");
 		return "request/list";
 		
 	}
@@ -196,6 +232,9 @@ public class RequestController {
 			sr.setSysNo(requestService.getSysNo(userNo));
 			sr.setSttsNo(1);
 			srNo = requestService.writeRequest(sr);
+			
+			//알람 DB에 저장
+			alarmService.insertAlarm(srNo,session);
 			
 			//첨부 파일 유무 조사
 			List<MultipartFile> mf = sr.getRequestMFile();
@@ -340,5 +379,60 @@ public class RequestController {
 		int rows = requestService.deleteRequest(srNo);
 		return "redirect:/request/list";
 	}
-
+	
+	@RequestMapping(value="/excelDownload", method=RequestMethod.POST)
+	public void excelDownload(@RequestParam List<String> requestArr, HttpServletResponse response) throws IOException {
+		XSSFWorkbook wb=null;
+		Sheet sheet=null;
+		Row row=null;
+		Cell cell=null; 
+		wb = new XSSFWorkbook();
+		sheet = wb.createSheet("freeBoard");
+		
+		String[] HeaderList = {"SR번호", "제목", "관련시스템", "등록자", "소속회사", "개발부서", "상태", "등록일", "중요"};
+		
+        //첫행   열 이름 표기 
+        int cellCount=0;
+        row = sheet.createRow(0);
+        for(int i=0; i<HeaderList.length; i++) {
+    		cell=row.createCell(cellCount++);
+    		cell.setCellValue(HeaderList[i]);
+        }
+        
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+		
+        List<RequestList> list = requestService.getRequestExcelList(requestArr);
+        
+		for(int i=0; i<list.size(); i++) {
+			row=sheet.createRow(i+1);
+			cellCount = 0;
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrNo());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrTtl());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSysNm());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getUserNm());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getUserOgdp());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrDevDp());
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSttsNm());
+			cell=row.createCell(cellCount++);
+			String SrRegDate = simpleDateFormat.format(list.get(i).getSrRegDate()); 
+			cell.setCellValue(SrRegDate);
+			cell=row.createCell(cellCount++);
+			cell.setCellValue(list.get(i).getSrPry());
+		}
+		
+		// 컨텐츠 타입과 파일명 지정
+		response.setContentType("ms-vnd/excel");
+		response.setHeader("Content-Disposition", "attachment;filename=testlist.xlsx");  //파일이름지정.
+		//response OutputStream에 엑셀 작성
+		wb.write(response.getOutputStream());
+		wb.close();
+		
+	}
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.team01.webapp.model.ChangeRequest;
 import com.team01.webapp.model.DeveloperSR;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
@@ -23,6 +24,7 @@ import com.team01.webapp.model.SrProgressList;
 import com.team01.webapp.model.System;
 import com.team01.webapp.model.Task;
 import com.team01.webapp.model.ThArr;
+import com.team01.webapp.model.Users;
 import com.team01.webapp.progress.dao.IProgressRepository;
 import com.team01.webapp.util.Pager;
 
@@ -372,6 +374,60 @@ public class ProgressService implements IProgressService {
 		}
 		
 		return ProgressDetailList;
+	}
+
+	@Override
+	public ProgressDetail getSrSttsNm(String srNo) {
+		return progressRepository.selectProgressRequester(srNo);
+	}
+
+	@Override
+	public String managerNo(String srNo) {
+		return progressRepository.selectManagerNo(srNo);
+	}
+
+	@Override
+	public List<Integer> humanList(String srNo) {
+		List<HR> hrList = progressRepository.selectHumanResourceList(srNo);
+		List<Integer> humanList = new ArrayList<Integer>();
+		
+		for(int i=0; i<hrList.size(); i++) {
+			humanList.add(hrList.get(i).getUserNo());
+		}
+		
+		return humanList;
+	}
+
+	@Transactional
+	public void changeRequest(ChangeRequest changeRequest) {
+		progressRepository.insertChangeRequest(changeRequest);
+		progressRepository.updateSrStts(changeRequest.getSrNo());
+	}
+
+	@Override
+	public List<ChangeRequest> getChangeRequestList(String srNo) {
+		return progressRepository.selectChangeRequestList(srNo);
+	}
+
+	@Override
+	public ChangeRequest getChangeRequestFile(int crNo) {
+		return progressRepository.selectChangeRequestFile(crNo);
+	}
+
+	@Transactional
+	public void changeRequestUpdate(ChangeRequest changeRequest) {
+		if(changeRequest.getChoice() == 1) {
+			List<HR> list = progressRepository.selectHumanResourceList(changeRequest.getSrNo());
+			progressRepository.updateDeveloperEndDate(list.get(0).getUserNo(), changeRequest.getSrNo(), changeRequest.getCrDdlnDate());
+		}
+		
+		progressRepository.updateSr(changeRequest);
+		progressRepository.updateChangeRequest(changeRequest.getCrNo(), changeRequest.getChoice(), changeRequest.getCrComment());
+	}
+
+	@Override
+	public Users getSysUserData(String sysNo) {
+		return progressRepository.selectSysUserData(sysNo);
 	}
 
 }
