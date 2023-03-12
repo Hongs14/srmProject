@@ -14,8 +14,6 @@
   			justify-content: center;
   			align-items:center;
   			min-height: 100vh;
-  			min-width: 300px;
-  			max-widht: 350px;
   		}
   	#bellIcon{
   		 display: inline-block;
@@ -33,6 +31,10 @@
 	}
 	.myInfoWrapper{
 		 background-color:#fff7d2;
+		 width: 450px;
+	}
+	.myInfoWrapper span{
+		white-space: normal;
 	}
 	</style>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
@@ -209,7 +211,6 @@
 	        	<!---Container Fluid-->
 				</div>
 			</div>
-			<%@include file="/WEB-INF/views/common/footer.jsp" %>
 	    <!-- Footer -->
 		</div>
 	</div>
