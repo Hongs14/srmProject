@@ -330,7 +330,7 @@
     	        if(!pswdRegCheck.test(inputed)){
        		  		$("#passwordHelp").removeClass("text-muted");
        		  		$("#passwordHelp").addClass("text-danger");
-       		  	 	pwdCheck = 0;
+       		  		pswdCheck = 0;
        		  	}else if(pswdRegCheck.test(inputed)){
 	       		  	$("#passwordHelp").removeClass("text-danger");
 	       		 	$("#passwordHelp").addClass("text-muted");
