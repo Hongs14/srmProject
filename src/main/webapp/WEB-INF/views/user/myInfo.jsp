@@ -316,9 +316,16 @@
 	  }
 	  
 	  function submitUpdateInfo(){
+		 
  		 var userEml = $("#userEml").val();
  		 var userTelno = $("#userTelno").val();
+ 		 
+ 		if(userEml !="" || userTelno != ""){
+ 			emailRegCheck();
+ 			userTelnoRegCheck();
+ 		}
  		
+ 		 
  		 if(userEml == ""){
  			 $("#emailHelp").html("이메일을 입력해주세요(예) user@naver.com)");
  			 $("#emailHelp").removeClass("text-muted");
@@ -336,6 +343,9 @@
  		
  		 if(emlCheck != 1 || emptyCheck != 1 || telnoCheck != 1) {
 	   			console.log("회원정보수정 실패");
+	   			console.log("emlCheck"+emlCheck);
+	   			console.log("emptyCheck"+emptyCheck);
+	   			console.log(telnoCheck);
 	   			var body = document.getElementsByTagName("body")[0];
 	   			window.scroll({
 	   	            behavior: 'smooth',

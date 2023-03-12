@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.team01.webapp.mail.service.IMailService;
-import com.team01.webapp.mail.service.MailService;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.users.service.IUserService;
 import com.team01.webapp.users.service.UserService;
@@ -27,9 +25,6 @@ public class UserController {
 	
 	@Autowired
 	IUserService userService;
-	
-	@Autowired
-	IMailService mailService;
 	
 	
 	/**

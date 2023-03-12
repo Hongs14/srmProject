@@ -123,11 +123,15 @@ function requestWrite() {
 		processData: false,	// 필수
 		contentType: false	// 필수
     }).done((data) => {
+    	$("#requestModal").modal();
+    	$("#modalHeadText").text("SR 요청");
+    	$("#modalBodyText").text("SR 요청이 완료되었습니다.");
     	$('#colNo2').html(data);
-    	onMessage();	
+    	console.log("작성완료");
     });
     
 }
+
 
 let fileNmArray = [];
 
@@ -184,10 +188,12 @@ function requestUpdate() {
 		processData: false,	// 필수
 		contentType: false	// 필수
     }).done((data) => {
-//    	console.log("update:: "+"srNo"+srNo+"sysNm"+sysNm+"srTtl"+srTtl+"srStd"+srStd+"srCn"+srCn+userNo);
     	$('#colNo2').html(data);
+    	$("#requestModal").modal();
+    	$("#modalHeadText").text("SR 수정");
+    	$("#modalBodyText").text("SR 수정이 완료되었습니다.");
     });
-    
-    
-    
 }
+
+
+
