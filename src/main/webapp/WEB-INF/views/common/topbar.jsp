@@ -34,7 +34,11 @@
 			
 			function onMessage(){
 				console.log("message 실행");
-				countUp();
+				
+				let userType = "${sessionScope.loginUser.userType}";
+				if(userType != '관리자'){
+					countUp();					
+				}
 			};
 			
 			function countUp() {
@@ -77,7 +81,7 @@
 										<c:if test="${alarmList.messageCheck eq 89}">
 											<i class="fas fa-check text-white"></i>
 										</c:if>
-										<c:if test="${alarmList.messageCheck eq 78 }">
+										<c:if test="${alarmList.messageCheck eq 78}">
 											<i class="fas fa-exclamation-triangle text-white"></i>
 										</c:if>
 									</div>

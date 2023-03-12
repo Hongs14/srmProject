@@ -193,6 +193,8 @@
 			contentType : "application/json; charset=UTF-8"
 		}).done((data) => {
 			$("#message").text("저장 되었습니다.");
+	    	let msg = '알림이 도착하였습니다.'
+    		socket.send(msg);
 		})
 		
 	}
