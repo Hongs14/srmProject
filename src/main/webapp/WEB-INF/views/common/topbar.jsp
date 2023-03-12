@@ -1,48 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
           <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
       <ul class="navbar-nav ml-auto">
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                aria-labelledby="searchDropdown">
-                <form class="navbar-search">
-                </form>
-              </div>
-           <!-- sockJS -->
-			<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-			<script>
-				// 전역변수 설정
-				var socket  = null;
-				$(document).ready(function(){
-				    // 웹소켓 연결
-				    sock = new SockJS("<c:url value="/echo-ws"/>");
-				    socket = sock;
-				    
-				    sock.onopen = function() {
-			            console.log('Info: connection opened.');
-			        };
-				    
-				    // 데이터를 전달 받았을때 
-				    sock.onmessage = onMessage; // toast 생성
-				});
+      	<div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+      		<form class="navbar-search"></form>
+      	</div>
+		<!-- sockJS -->
+		<script>
+			// 전역변수 설정
+			var socket  = null;
+			$(document).ready(function(){
+			    // 웹소켓 연결
+			    sock = new SockJS("<c:url value="/echo-ws"/>");
+			    socket = sock;
+			    
+			    sock.onopen = function() {
+		           console.log('Info: connection opened.');
+		       };
+			    // 데이터를 전달 받았을때 
+			    sock.onmessage = onMessage; 
+			    
+			    sock.onclose = function (event) {
+		           console.log('Info: connection closed.');
+		       };
+			
+			});
+			
+			function onMessage(){
+				console.log("message 실행");
+				countUp();
+			};
+			
+			function countUp() {
+
+				var count = document.getElementById("count").innerText;
+				let num1 = parseInt(count);
+				num1++;
+				document.getElementById("count").innerText=num1;
 				
-				function onMessage(){
-					console.log("message 실행");
-					
-					$.ajax({
-						url : "${pageContext.request.contextPath}/alarm/list",
-						method : "get",
-					}).done((data) => {
-						console.log("message 실행 완료");
-					});
-				    
-				};
-				
-			</script>
+			}
+		</script>
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -51,7 +54,7 @@
                		<c:set var="alarmCnt" value="${alarmCnt}"/>
 					<c:choose>
 						<c:when test="${alarmCnt != 0}">
-		               		<c:out value="${alarmCnt}"/>						
+		               		<div id="count">${alarmCnt}</div>			
 						</c:when>
 						<c:otherwise>
 							0

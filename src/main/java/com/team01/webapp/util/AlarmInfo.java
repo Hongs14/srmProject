@@ -26,6 +26,7 @@ public class AlarmInfo {
 		if(alarm.getUserType().equals("관리자")) {
 			Users loginUser = alarmService.selectLoginUser(userNo);
 			alarm.setSysNo("%"+loginUser.getSysNo()+"%");
+			model.addAttribute("sysNo",loginUser.getSysNo());
 		}else {			
 			alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
 		}

@@ -103,7 +103,11 @@
 								<div class="d-sm-flex justify-content-end">
 									<c:if test="${sessionScope.loginUser.userType eq '관리자'}">
 										<a class="btn btn-sm btn-primary mr-3" onclick="getNoticeWrite()">글작성</a>
+										<c:if test="${sysNo eq param.sysNo or param.sysNo eq 'SRM'}">										
+											<a class="btn btn-sm btn-primary mr-3" onclick="getNoticeWrite()">글작성</a>
+										</c:if>									
 									</c:if>
+
 								</div>
 							</div> 
 							<div id="noticeList" style="width: 100%;"></div>

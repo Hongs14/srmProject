@@ -47,9 +47,10 @@
 		    sa.ALARM_CATEGORY AS "alarmCategory",
 		    sa.SR_NO AS "srNo",
 		    st.STTS_NM AS "sttsNM"
-		FROM SR_ALARM sa, SR s,SR_STTS st
-		WHERE sa.SR_NO = s.SR_NO
-		AND s.STTS_NO = st.STTS_NO
+		FROM SR_ALARM sa, SR s,SR_STTS st, HR h
+		WHERE sa.SR_NO = s.SR_NO(+)
+		AND s.STTS_NO = st.STTS_NO(+)
+		AND s.SR_NO = h.SR_NO(+)
 		<if test="userType.equals('고객사')">
 			AND sa.SR_NO like #{sysNo}
 			AND sa.USER_NO = #{userNo}

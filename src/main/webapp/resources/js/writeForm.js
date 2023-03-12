@@ -114,7 +114,6 @@ function requestWrite() {
     
     var userNo = document.getElementById('userNo').value;
     formData.append("userNo",userNo);
-    
     $.ajax({
 		type: "POST",
 		enctype: 'multipart/form-data',	// 필수
@@ -128,6 +127,8 @@ function requestWrite() {
     	$("#modalBodyText").text("SR 요청이 완료되었습니다.");
     	$('#colNo2').html(data);
     	console.log("작성완료");
+    	let msg = '알림이 도착하였습니다.'
+		socket.send(msg);
     });
     
 }

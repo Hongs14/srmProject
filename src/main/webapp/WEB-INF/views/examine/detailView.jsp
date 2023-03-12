@@ -186,8 +186,6 @@
 		let data = {srNo : srNo, srReqSe : srReqSe, srPry : srPry, sttsNm : sttsNm, srOpnn : srOpnn}
 		console.log(data);
 		
-		onMessage();
-		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/examine/detail",
 			method : "post",
@@ -195,9 +193,6 @@
 			contentType : "application/json; charset=UTF-8"
 		}).done((data) => {
 			$("#message").text("저장 되었습니다.");
-			setTimeout(function() {
-				window.location.href ='${pageContext.request.contextPath}/examine/list';
-			}, 2000);
 		})
 		
 	}

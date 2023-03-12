@@ -66,7 +66,6 @@ public class NoticeController {
 		
 		//알람 수 및 리스트
 		alarmInfo.info(session, model); 
-		
 		return "notice/list";
 	}
 	

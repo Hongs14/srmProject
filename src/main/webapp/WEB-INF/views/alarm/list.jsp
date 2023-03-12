@@ -50,7 +50,7 @@
    					<%@include file="/WEB-INF/views/common/topbar.jsp" %>
    					<!-- 메인 컨테이너 Container Fluid-->
    					<div class="container-fluid " id="container-wrapper">
-   					
+   					<div id="msgStack"></div>
    						<!-- Row -->
    						<div class="row" id="myInfoWrapper">
    							<div class="col-lg-7 container">
@@ -84,7 +84,6 @@
 										</div>
 										<div class="myInfoWrapper shadow-sm">
 											<div style="background-color:#fff3ab; padding: 20px;">나의 알림 목록</div>
-											<!-- <div class="row mb-5"><button onclick="onMessage()">알림 전송</button></div> -->
 											<div class="row mb-5 p-5">
 												<table>
 													<tbody>												
@@ -156,6 +155,7 @@
 										window.location.href = url;
 									});
 								}	
+								
 							</script>
 							<div class="modal fade" id="alarmBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 								<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
