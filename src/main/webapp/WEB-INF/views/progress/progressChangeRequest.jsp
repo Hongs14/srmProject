@@ -3,15 +3,17 @@
     
 <!DOCTYPE html>
    	<div>
-   		<span class="text-primary"><i class="fa-regular fa-calendar-plus mr-1"></i><b>기간 추가 신청</b></span>
+   		<span class="text-primary">
+   			<i class="fa-regular fa-calendar-plus mr-1"></i><b>기간 추가 신청</b>
+   		</span>
    	</div>
-	<div class="p-5">
+	<div class="p-3">
 		<form method="post" onsubmit="return false;"  enctype="multipart/form-data">
-			<div class="row mb-2 mr-0" >
+			<div class="row mb-2 mr-0">
 				<label class="font-weight-bold col-sm-2">등록자 </label> 
 				<input class="col-sm-4" style="height:30px" disabled value="${sessionScope.loginUser.userNm}"/>
-				<label class="font-weight-bold col-sm-2" for="dateInput">계획 종료일</label>
-				<div class="form-group col-sm-4 px-0" id="simple-date1" >
+				<label class="font-weight-bold col-sm-2" for="dateInput">계획종료일</label>
+				<div class="form-group col-sm-4 " id="simple-date1" >
 					<div class="input-group date" >
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="crRegDate"><i class="fas fa-calendar" ></i></span>
@@ -21,8 +23,8 @@
 				</div>
 			</div>
 			<div class="row mb-2 align-items-center">
-				<label class=" font-weight-bold col-sm-3" for="srTtl">기간 추가 신청 제목</label> 
-				<input name="crTtl" id="crTtl"class="col-sm-9" type="text" class="form-control form-control-sm"/>
+				<label class=" font-weight-bold col-sm-2" for="srTtl">제목</label> 
+				<input name="crTtl" id="crTtl"class="col-sm-10" type="text" class="form-control form-control-sm"/>
 			</div>
 			<div class="row mb-2">
 				<label class=" font-weight-bold col-sm-2">신청 내용</label> 

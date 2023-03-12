@@ -336,7 +336,7 @@ color:white;
 								<div class="card-body">
 									<!-- ajax 변경 부분-->
 									<div class="container-fluid mb-5">
-										<div id="progressDetailView" style="width:100%; min-height:200px; max-height:400px"></div>
+										<div id="progressDetailView" style="width:100%; min-height:200px;"></div>
 									</div>
 								</div>
 							</div>

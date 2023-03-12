@@ -10,7 +10,7 @@
         	</small>
 		</h5>
 	</div>
-	<div class="modal-body" style="white-space: normal;">
+	<div class="modal-body" style="white-space: normal; min-height:300px;">
 		<div class="p-5" style="text-align:left">
 			<!-- 등록자, 계획 변경 날짜 -->
 			<div class="row">
