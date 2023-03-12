@@ -118,7 +118,7 @@ function requestWrite() {
     $.ajax({
 		type: "POST",
 		enctype: 'multipart/form-data',	// 필수
-		url: 'write',
+		url: "write",
 		data: formData,	// 필수
 		processData: false,	// 필수
 		contentType: false	// 필수
@@ -179,7 +179,7 @@ function requestUpdate() {
     $.ajax({
 		type: "POST",
 		enctype: 'multipart/form-data',	// 필수
-		url: 'update',
+		url: "update",
 		data: formData,		// 필수
 		processData: false,	// 필수
 		contentType: false	// 필수

@@ -70,6 +70,26 @@
 		WHERE 
 			USER_NO = #{userNo}
 	</update>
-
+	
+	
+	<select id="selectUserId" parameterType="users" resultType="users">
+		SELECT 
+		     user_id as "userId",
+		     user_no as "userNo"
+		  FROM 
+			users
+		  WHERE user_nm = #{userNm}
+		  AND user_eml = #{userEml}
+		  AND user_del_yn != 'Y'
+	</select>
+	
+	<update id="updatePswd" parameterType="map">
+		UPDATE
+			USERS
+		SET 
+			user_pswd = #{securePswd} 
+		WHERE 
+			USER_NO = #{userNo}
+	</update>
 	
 </mapper>
