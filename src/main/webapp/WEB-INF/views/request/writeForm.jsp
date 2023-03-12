@@ -102,5 +102,6 @@
 		    </div>
 		</form>
 		<script src="${pageContext.request.contextPath}/resources/js/writeForm.js"></script>
+		
 	</div>
 </div>

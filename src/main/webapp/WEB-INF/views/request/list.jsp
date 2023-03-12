@@ -10,6 +10,9 @@
 	<script src="${pageContext.request.contextPath}/resources/tinymce2/tinymceinit.js"></script>
 	
 	<style>
+	.modal{
+		z-index:1050;
+	}
 	
 	.col-lg-7 .requsetTtl{
 		width: 90px;
@@ -88,6 +91,38 @@
 </head>
 
 <body id="page-top">
+
+<!-- 메시지 모달 -->
+ <div class="modal" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document" style="max-width:450px;">
+     <div class="modal-content">
+       <div class="modal-header bg-primary">
+         	<h5 class="modal-title" id="requestModalLabel"> 
+	          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+	        	<small class="text-white"><b id="modalHeadText">알림</b></small>
+	        </h5>
+         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body justify-content-center text-center p-5">
+	       <div class="d-flex align-items-center">
+		       <div id="iconWrapper" class="mr-4">
+			       	<i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#FFA426;"></i>
+		       </div>
+		       <div id="dialogWrapper" class="text-left">
+			     <h5 id="modalBodyText">요청이 처리되었습니다.</h5>
+		       </div>
+	       </div>
+       </div>
+       <div class="modal-footer justify-content-center text-center">
+         <button type="button" id="modalcloseBtn" class="btn btn-outline-primary mx-2"  data-dismiss="modal" >확인</button>
+       </div>
+     </div>
+   </div>
+ </div>
+<!-- 메시지 모달 -->
+
   <div id="wrapper">
     <!-- Sidebar -->
    	<%@include file="/WEB-INF/views/common/sidebar.jsp" %>
@@ -254,7 +289,6 @@
 	          		var srNo = $("#detailSrNo").val();
 		  			getSrDetail(srNo);
 		          }
-	          	
 	          	);
 	          </script>
           </c:if>
