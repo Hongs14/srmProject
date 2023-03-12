@@ -68,36 +68,43 @@
 		        <div class="card shadow-sm m-5">
 		          <div class="card-body p-0 d-flex">
 		                <div class="login-form">
+		                	<div class="d-flex justify-content-start align-items-center">
+			                    <img src="${pageContext.request.contextPath}/resources/images/logoOnlyBlue.png"" style="width:40px;">
+			                    <div class="p-2">
+			                    	<small class="text-gray-900" style="font-size:4px;">KOREA SOFT SRM</small>
+			                    	<h6>한국소프트SRM</h6>
+			                    </div> 
+			                  </div>
 		                	<div id="recoveryWrapper">
-				                  <div class="text-center">
-				                    <h3 class="text-gray-900 mb-4">비밀번호 찾기</h3>
-				                  </div>
-				                  <div id="recoveryWrapper" style="width: 400px; height: 300px;">
-					                  <div class="recoveryBtns d-flex flex-column" id="recoveryBtns">
+		                		<h2  class="text-center my-2">비밀번호 찾기</h2>
+					            <small  class="my-2">회원가입시 작성하셨던 이메일로 <br> 임시 비밀번호를 전송해드리겠습니다.</small>
+				                <div style="width: 400px; height: 250px; margin-top:30px;">
+					               <div class="recoveryBtns d-flex flex-column" id="recoveryBtns">
 					                  <form id="findPswdForm">
-					                  	<div class="h5">회원가입시 작성하셨던 이메일로 <br> 임시 비밀번호를 전송해드리겠습니다.</div>
-					                  	<div class="form-group row px-5 align-items-center">
+					                  	<div class="form-group row align-items-center mb-4">
 					                      <label class="font-weight-bold text-primary col-sm-2 text-right">이름 </label>
 					                      <input type="text" class="form-control col-sm-10" id="userNm" name="userNm" placeholder="Name" required>
-					                      <small id="userNmHelp" class="text-danger"></small>
+					                      <small id="userNmHelp" class="text-danger ml-3 pl-5"></small>
 					                    </div>
-					                  	 <div class="form-group row row-cols-2 px-5 align-items-center">
+					                  	 <div class="form-group row row-cols-2 align-items-center mb-4">
 					                      <label class="font-weight-bold text-primary col-sm-2 text-right">이메일 </label>
 					                      <input type="email" class="form-control col-sm-10" id="userEml" name="userEml" aria-describedby="emailHelp"
 					                        placeholder="Email Address" required>
-					                       <small id="emailHelp" class="form-text text-muted">회원가입시 입력했던 이메일을 기입해주세요.</small>
+					                       <small id="emailHelp" class="form-text text-muted ml-3 pl-5">회원가입시 작성했던 이메일을 기입해주세요.</small>
 					                    </div>
-					                   	<button type="button" class="btn btn-primary" onclick="findPswd()">비밀번호 찾기</button>
+					                    <div class="d-flex justify-content-center">
+						                   	<button type="button" class="btn btn-primary" onclick="findPswd()">비밀번호 찾기</button>
+					                    </div>
 					                  </form>
-					                  </div>
+					                </div>
+				                 </div>
+				                  <hr>
+				                  <div class="text-center">
+				                    <a class="font-weight-bold small" href="${pageContext.request.contextPath}/user/join">회원가입</a>
+				                    <span> | </span>
+				                    <a class="font-weight-bold small"  href="${pageContext.request.contextPath}/user/login">로그인하기 </a>
 				                  </div>
 			                   </div>
-			                  <hr>
-			                  <div class="text-center">
-			                    <a class="font-weight-bold small" href="${pageContext.request.contextPath}/user/join">회원가입</a>
-			                    <span> | </span>
-			                    <a class="font-weight-bold small"  href="${pageContext.request.contextPath}/user/login">로그인하기 </a>
-			                  </div>
 		                  </div> 
 		                  <hr>
 		                  

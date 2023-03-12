@@ -193,8 +193,8 @@ public class UserService implements IUserService {
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
 		    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
  
-		    messageHelper.setFrom("koreasoftsrm@gmail.com"); // 보내는사람 이메일 여기선 google 메일서버 사용하는 아이디를 작성하면됨
-		    messageHelper.setTo("gmlfbf5102@naver.com"); // 받는사람 이메일
+		    messageHelper.setFrom("koreasoftsrm@gmail.com"); // 보내는사람 이메일 
+		    messageHelper.setTo("gmlfbf5102@naver.com"); // 받는사람 이메일 userEml로 변경해야한다!!!!!!!
 		    messageHelper.setSubject("[코리아소프트SRM] 임시 비밀번호 발급 안내"); // 메일제목
 		    messageHelper.setText("고객님의 임시 비밀번호 안내 메일입니다. \n 계정: "+userEml + "\n 임시 비밀번호: "+tempPswd+"\n -임시 비밀번호 발급 요청에 의해 재발급된 임시 비밀번호입니다. \n -임시 비밀번호로 로그인 후 비밀번호를 변경해주세요."); // 메일 내용
  
@@ -205,6 +205,51 @@ public class UserService implements IUserService {
 		
 		return 1;
 	}
+	
+	@Override
+	public int getPswd(Users user) throws Exception {
+		log.info("user: "+user);
+		try {
+			PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+			String securePswd = pe.encode(user.getUserPswd());
+			Users dbUser = getUser(user.getUserId());
+			if(dbUser == null) {
+				return 0;
+			}else {
+				boolean checkPass =pe.matches(user.getUserPswd(), dbUser.getUserPswd());
+				if(checkPass == false) {
+					return 0;
+				}
+			}
+			log.info(securePswd);
+			log.info("dbUser:" + dbUser);
+			
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return 1;
+	}
+
+	@Override
+	@Transactional
+	public int updatePswd(Users user) throws Exception{
+		log.info("user: "+user);
+		int rows = 0;
+		try {
+			int userNo = user.getUserNo();
+			PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+			String securePswd = pe.encode(user.getUserPswd());
+			rows = userRepository.updatePswd(securePswd, userNo);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return rows;
+	}
+
+
+	
 
 
 }
