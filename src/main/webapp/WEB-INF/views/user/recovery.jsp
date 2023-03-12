@@ -77,12 +77,8 @@
 				                  </div>
 				                  <div id="recoveryWrapper" style="width: 400px; height: 300px;">
 					                  <div class="recoveryBtns d-flex flex-column" id="recoveryBtns">
-					                  	<button class="btn btn-primary my-5 mx-4" onclick="findId()">아이디 찾기</button>
-					                  	<button class="btn btn-primary m-4">비밀번호찾기</button>
-					                  </div>
-					                  
-					                  <div id="findIdWrapper" style="display: none;">
-					                  	ddddd
+					                  	<a class="btn btn-primary my-5 mx-4" href="${pageContext.request.contextPath}/user/id_recovery">아이디 찾기</a>
+					                  	<a class="btn btn-primary m-4" href="${pageContext.request.contextPath}/user/pswd_recovery">비밀번호찾기</a>
 					                  </div>
 				                  </div>
 			                   </div>
@@ -94,13 +90,6 @@
 			                  </div>
 		                  </div> 
 		                  <hr>
-			            <script>
-			            function findId(){
-			            	console.log($('.recoveryBtns').html());
-			            	$(".recoveryBtns").css("display","none");
-			            	$("#findIdWrapper").show();
-			            }
-			            </script>
 			       </div>
 		        </div>
 		      </div>

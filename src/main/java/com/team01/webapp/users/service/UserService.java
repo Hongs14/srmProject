@@ -1,6 +1,12 @@
 package com.team01.webapp.users.service;
 
+import java.util.UUID;
+
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +32,9 @@ public class UserService implements IUserService {
 	
 	@Autowired
 	IUserRepository userRepository;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@Override
 	public LoginResult login(Users user) {
@@ -147,6 +156,54 @@ public class UserService implements IUserService {
 			return JOIN_DUPLICATED;
 		}
 		return 0;
+	}
+
+
+	@Override
+	public String findUserId(Users user) throws Exception {
+		log.info(user);
+		user = userRepository.selectUserId(user);
+		return user.getUserId();
+	}
+
+
+	@Override
+	@Transactional
+	public int sendRecoveryMail(Users user) throws Exception {
+		log.info("user: "+user);
+		try {
+			String userEml = user.getUserEml();
+			Users dbUser = userRepository.selectUserId(user);
+			String userId = dbUser.getUserId();
+			int userNo = dbUser.getUserNo();
+			log.info("userNo: "+userNo);
+			if(userId == "" || userId == null) {
+				return 0;
+			}
+			
+			String tempPswd = UUID.randomUUID().toString().replace("-", "");
+			tempPswd = tempPswd.substring(0, 10);
+			log.info(tempPswd);
+			
+			PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+			String securePswd = pe.encode(tempPswd);
+			
+			userRepository.updatePswd(securePswd, userNo);
+			
+			MimeMessage mimeMessage = mailSender.createMimeMessage();
+		    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+ 
+		    messageHelper.setFrom("koreasoftsrm@gmail.com"); // 보내는사람 이메일 여기선 google 메일서버 사용하는 아이디를 작성하면됨
+		    messageHelper.setTo("gmlfbf5102@naver.com"); // 받는사람 이메일
+		    messageHelper.setSubject("[코리아소프트SRM] 임시 비밀번호 발급 안내"); // 메일제목
+		    messageHelper.setText("고객님의 임시 비밀번호 안내 메일입니다. \n 계정: "+userEml + "\n 임시 비밀번호: "+tempPswd+"\n -임시 비밀번호 발급 요청에 의해 재발급된 임시 비밀번호입니다. \n -임시 비밀번호로 로그인 후 비밀번호를 변경해주세요."); // 메일 내용
+ 
+		    mailSender.send(mimeMessage);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return 1;
 	}
 
 

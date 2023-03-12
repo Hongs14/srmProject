@@ -1,6 +1,7 @@
 package com.team01.webapp.users.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.team01.webapp.model.UserSystem;
 import com.team01.webapp.model.Users;
@@ -37,6 +38,12 @@ public interface IUserRepository {
 	public int updateUnregister(int userNo);
 
 	public int updateUserInfo(Users user);
+
+	public Users selectUserId(Users user);
+
+	public int updatePswd(String securePswd);
+
+	public int updatePswd(@Param("securePswd") String securePswd, @Param("userNo") int userNo);
 
 
 }
