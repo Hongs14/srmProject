@@ -581,6 +581,7 @@
 			<%@include file="/WEB-INF/views/common/logout.jsp" %>
 			</div>
 	        <!---Container Fluid-->
+	        <%@include file="/WEB-INF/views/common/footer.jsp" %>
 		</div>
 
     </div>

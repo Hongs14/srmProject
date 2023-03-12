@@ -22,4 +22,8 @@ public interface IUserService {
 	String findUserId(Users user) throws Exception;
 
 	int sendRecoveryMail(Users user) throws Exception;
+
+	int updatePswd(Users user) throws Exception;
+
+	int getPswd(Users user) throws Exception;
 }

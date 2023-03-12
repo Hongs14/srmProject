@@ -227,4 +227,33 @@ public class UserController {
 			return "false";
 		}
 	}
+	@RequestMapping(value="/user/check_pswd", method = RequestMethod.POST)
+	public @ResponseBody String checkPswd(@RequestBody Users user) {
+		int rows = 0;
+		try {
+			rows = userService.getPswd(user);
+			log.info("결과: "+rows);
+			if(rows == 1) {
+				return "success";
+			}else {
+				return "false";
+			}
+		}catch(Exception e) {
+			log.info(e.getMessage());
+			return "false";
+		}
+	}
+	
+	@RequestMapping(value="/user/update_pswd", method = RequestMethod.POST)
+	public @ResponseBody String updatePswd(@RequestBody Users user) {
+		int rows = 0;
+		try {
+			rows = userService.updatePswd(user);
+			log.info("변경 행수: "+rows);
+			return "success";
+		}catch(Exception e) {
+			log.info(e.getMessage());
+			return "false";
+		}
+	}
 }

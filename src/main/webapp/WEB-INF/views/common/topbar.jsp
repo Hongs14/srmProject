@@ -151,9 +151,6 @@
                 <a class="dropdown-item" href="${pageContext.request.contextPath}/user/myinfo/${sessionScope.loginUser.userId}">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>나의 정보 확인
                 </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>설정
-                </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>로그아웃 

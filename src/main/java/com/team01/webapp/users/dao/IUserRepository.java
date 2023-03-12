@@ -45,5 +45,5 @@ public interface IUserRepository {
 
 	public int updatePswd(@Param("securePswd") String securePswd, @Param("userNo") int userNo);
 
-
+	
 }
