@@ -378,7 +378,7 @@ color:white;
 				</div>
 				<!---Container Fluid-->
 			</div>
-
+			<%@include file="/WEB-INF/views/common/footer.jsp" %>
 		</div>
 	</div>
 	<%@include file="/WEB-INF/views/common/bottom.jsp"%>

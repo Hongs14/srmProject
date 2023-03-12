@@ -239,7 +239,7 @@
 				       <div class="modal-header bg-primary">
 				         	<h5 class="modal-title" id="userModalLabel"> 
 					          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
-					        	<small class="text-white"><b>비밀번호 변경</b></small>
+					        	<small class="text-white"><b>알림</b></small>
 					        </h5>
 				         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 				           <span aria-hidden="true">&times;</span>
@@ -250,8 +250,8 @@
 						       <div id="iconWrapper" class="mr-4">
 							       	<i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#FFA426;"></i>
 						       </div>
-						       <div id="dialogWrapper" class="text-left">
-							     <h5>비밀번호를 변경하였습니다.</h5>
+						       <div class="text-left">
+							     <h5 id="dialogWrapper">비밀번호를 변경하였습니다.</h5>
 						       </div>
 					       </div>
 				       </div>
@@ -378,19 +378,23 @@
  		 emptyCheck = 1;
  		
  		 if(emlCheck != 1 || emptyCheck != 1 || telnoCheck != 1) {
-	   			console.log("회원정보수정 실패");
-	   			console.log("emlCheck"+emlCheck);
-	   			console.log("emptyCheck"+emptyCheck);
-	   			console.log(telnoCheck);
-	   			var body = document.getElementsByTagName("body")[0];
-	   			window.scroll({
-	   	            behavior: 'smooth',
-	   	            left: 0,
-	   	            top:body.offsetTop
-	   	        });
+   			console.log("회원정보수정 실패");
+   			console.log("emlCheck"+emlCheck);
+   			console.log("emptyCheck"+emptyCheck);
+   			console.log(telnoCheck);
+   			var body = document.getElementsByTagName("body")[0];
+   			window.scroll({
+   	            behavior: 'smooth',
+   	            left: 0,
+   	            top:body.offsetTop
+   	        });
  		 }
  		 if(emlCheck == 1 && emptyCheck == 1 && telnoCheck == 1){
- 			 $(".myInfoWrapper").submit();
+			$(".myInfoWrapper").submit();
+			$("#dialogWrapper").text("회원정보를 수정하였습니다.");
+ 			$("#userModal").modal();
+	    	console.log("변경완료");
+ 			 
  		 }
  	  }
 	/* 비밀번호 수정 */
@@ -458,6 +462,7 @@
     		}).done((data) => {
     			console.log(data);
     			$("#updatePswd").modal('hide');
+    			 $("#dialogWrapper").text("비밀번호를 변경하였습니다.");
     			$("#userModal").modal();
     	    	console.log("변경완료");
     		});

@@ -563,6 +563,7 @@
 				</div>
 				<!---Container Fluid-->
 			</div>
+			<%@include file="/WEB-INF/views/common/footer.jsp" %>
 		</div>
 		<!-- Footer -->
 	</div>
