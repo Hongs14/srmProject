@@ -82,7 +82,7 @@
 	
 	   <div id="qnaIndex" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar" style="">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/KOREASOFT_SRM/list">전체 Q&A</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/SRM/list">전체 Q&A</a>
             <c:if test="${sessionScope.loginUser.userOgdp eq '북북' or sessionScope.loginUser.userOgdp eq '한국소프트'}">            
 	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/BOK/list">북북STORE Q&A</a>
             </c:if>

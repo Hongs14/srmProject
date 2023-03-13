@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,7 @@ import com.team01.webapp.model.QSTN;
 import com.team01.webapp.model.QSTNComment;
 import com.team01.webapp.model.QSTNFile;
 import com.team01.webapp.qnaboard.service.IQnaboardService;
+import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
@@ -43,6 +45,9 @@ public class QnaController {
 	@Autowired
 	private IQnaboardService qnaboardService;
 	
+	@Autowired
+	AlarmInfo alarmInfo;
+	
 
 	/**QnA목록 보기
 	 * @author 			 정홍주
@@ -51,8 +56,15 @@ public class QnaController {
 	 * @return
 	 */
 	@GetMapping("/{sysNo}/list")
-	public String getQnaList(@PathVariable String sysNo, Model model){
+	public String getQnaList(@PathVariable String sysNo, HttpSession session, Model model){
 		log.info("qna목록보기");
+		//알림 수 및 리스트
+		alarmInfo.info(session, model);
+		
+		if(sysNo == "SRM") {
+			sysNo = "SRM";
+		}
+		model.addAttribute("urlSysNo", sysNo);
 		return "qnaboard/qnalist";
 	}
 	
@@ -65,9 +77,14 @@ public class QnaController {
 	 * @return
 	 */
 	@PostMapping(value="/{sysNo}/filter/{pageNo}", produces="application/json; charset=UTF-8")
-	public String getQnaList(@PathVariable int pageNo, @RequestBody QSTN qstn, Model model,Pager pager) {
+	public String getQnaList(@PathVariable int pageNo, @PathVariable String sysNo, @RequestBody QSTN qstn,  Model model,Pager pager) {
 		log.info("qstn 목록 필터링");
 		log.info(qstn);
+		log.info("!!!!!!!!!!!!!!!!!!"+sysNo);
+		if(qstn.getSysNo() == "SRM") {
+			qstn.setSysNo("SRM");
+			//여기 수정
+		}
 		pager = qnaboardService.returnPage(pageNo,pager,qstn);
 		List<QSTN> qnalist = qnaboardService.getQstnList(pager,qstn);
 		model.addAttribute("qnalist", qnalist); 

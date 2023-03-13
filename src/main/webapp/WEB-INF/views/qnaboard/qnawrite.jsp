@@ -74,7 +74,7 @@
 			    		<div class="d-sm-flex justify-content-end">
 			    		    <c:if test="${command ne 'update'}"><a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/qna/${sessionScope.loginUser.sysNo}/list">취소</a></c:if>
 					    	<c:if test="${command eq 'update'}"><button type="button" class="btn btn-outline-primary" onclick="getDetail('${qstn.qstnNo}')">취소</button></c:if>
-					      	<c:if test="${command ne 'update'}"><button type="submit" class="btn btn-primary" onclick="QSTNWrite()">저장</button></c:if>
+					      	<c:if test="${command ne 'update'}"><button type="submit" class="btn btn-primary" onclick="qstnWrite()">저장</button></c:if>
 					       	<c:if test="${command eq 'update'}"><button type="submit" class="btn btn-primary" onclick="qstnUpdate()">저장</button></c:if>
 						</div>	                	
 					</div>
@@ -85,16 +85,16 @@
 	
 	<script>
 		//파일 js
-		var fileNo = 0;
-		var filesArr = new Array();
+		let fileNo = 0;
+		let filesArr = new Array();
 		
-		/* 첨부파일 추가 */
 		function addQstnFile(obj){
-			var maxFileCnt = 5; // 첨부파일 최대 개수
-			var curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
+			//첨부파일 추가 
+			let maxFileCnt = 5; // 첨부파일 최대 개수
+			let curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
 			console.log(curFileCnt);
 			for (const file of obj.files) {
-				var reader = new FileReader();
+				let reader = new FileReader();
 				reader.onload = function() {
 					filesArr.push(file);
 				};
@@ -113,19 +113,20 @@
 		    document.querySelector("input[type=file]").value = "";
 		}
 		
-		/* 첨부파일 삭제 */
+		
 		function deleteFile(num) {
+			// 첨부파일 삭제 
 			document.querySelector("#file" + num).remove();
 			filesArr[num].is_delete = true;
 		}
 		
-		/* ajax 처리 */
-		function QSTNWrite() {
+		function qstnWrite() {
+			//QSTN 작성
 			console.log("Qna 파일 작성");
 			// 폼 데이터 담기
-			var form = document.querySelector("form");
-		    var formData = new FormData(form);
-		    for (var i = 0; i < filesArr.length; i++) {
+			let form = document.querySelector("form");
+		    let formData = new FormData(form);
+		    for (let i = 0; i < filesArr.length; i++) {
 		        // 삭제되지 않은 파일만 폼데이터에 담기
 		        if (!filesArr[i].is_delete) {
 		        	console.log("삭제되지 않은 파일 담기");
@@ -133,16 +134,16 @@
 		            formData.append("qstnMFile", filesArr[i]);
 		        }
 		    }
-		    var sysNo = $('#sysNo').val();
-		    formData.append("sysNo",sysNo);
+		    let sysNo = $('#sysNo').val();
+		    formData.append("sysNo", sysNo);
 		    
-		    var qstnTtl = $('#qstnTtl').val();
+		    let qstnTtl = $('#qstnTtl').val();
 		    formData.append("qstnTtl", qstnTtl);
 		    
-		    var qstnCn = $('#qstnCn').val();
+		    let qstnCn = $('#qstnCn').val();
 		    formData.append("qstnCn", qstnCn);
 		    
-		    var userNo = $('#userNo').val();
+		    let userNo = $('#userNo').val();
 		    formData.append("userNo", userNo);
 		    console.log(sysNo+" "+qstnTtl+" "+qstnCn+" "+userNo);
 		    
@@ -169,41 +170,42 @@
 			document.querySelector("#file" + qstnFileNo).remove();
 		}
 		
-		/* ajax 업데이트 처리 */
-		function requestUpdate() {
+		
+		function qstnUpdate() {
+			//update기능
 			// 폼 데이터 담기
-			var form = document.querySelector("form");
-		    var formData = new FormData(form);
-		    for (var i = 0; i < filesArr.length; i++) {
+			let form = document.querySelector("form");
+		    let formData = new FormData(form);
+		    for (let i = 0; i < filesArr.length; i++) {
 		        // 삭제되지 않은 파일만 폼데이터에 담기
 		        if (!filesArr[i].is_delete) {
 		        	console.log("돌아감");
 		        	console.log(filesArr[i]);
-		            formData.append("requestMFile", filesArr[i]);
+		            formData.append("qstnMFile", filesArr[i]);
 		        }
 		    }
 		    
-		    for (var j = 0; j< fileNmArray.length; j++){
+		    for (let j = 0; j< fileNmArray.length; j++){
 		    	console.log(fileNmArray[j]);
 		    	formData.append("deleteFile",fileNmArray[j]);
 		    }
-		    var srRegDate=document.getElementById('srRegDate').value;
-		    var srNo = document.getElementById('srNo').value;
+		    let srRegDate=$('#srRegDate').value;
+		    let srNo = $('#srNo').value;
 		    formData.append("srNo",srNo);
-		    var sysNm=document.getElementById('sysNm').value;
+		    let sysNm=$('#sysNm').value;
 		    formData.append("sysNm",sysNm);
 		    
-		    var srTtl = document.getElementById('srTtl').value;
+		    let srTtl = $('#srTtl').value;
 		    formData.append("srTtl",srTtl);
 		    
 		    if($('#srStd').val() !== ""){
-		    	var srStd = $('#srStd').val();
+		    	let srStd = $('#srStd').val();
 		    	formData.append("srStd",srStd);
 		    }
-		    var srCn = document.getElementById('srCn').value;
+		    let srCn = $('#srCn').value;
 		    formData.append("srCn",srCn);
 		    
-		    var userNo = document.getElementById('userNo').value;
+		    let userNo = $('#userNo').value;
 		    formData.append("userNo",userNo);
 		    
 		    $.ajax({
@@ -215,7 +217,7 @@
 				contentType: false	// 필수
 		    }).done((data) => {
 		//    	console.log("update:: "+"srNo"+srNo+"sysNm"+sysNm+"srTtl"+srTtl+"srStd"+srStd+"srCn"+srCn+userNo);
-		    	$('#miniView').html(data);
+		    	window.location.href = "/webapp/qna/"+sysNo+"/list/1";
 		    });
 		    
 		}
