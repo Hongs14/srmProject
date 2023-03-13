@@ -132,7 +132,7 @@
 	                        AND user_no = #{srCustNo}
 					    </if>
 				    )
-				ORDER BY SR_PRY, SR_REG_DATE, SR_NO
+				ORDER BY SR_PRY, SR_REG_DATE DESC, SR_NO
 			)
 			<![CDATA[
 				WHERE rownum <= #{end}
