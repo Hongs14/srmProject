@@ -350,13 +350,23 @@
 					var sttsNo = 0;
 					
 					var homeSttsNo = '${homeSttsNo}';
+					var homeSysNo = '${homeSysNo}';
+					
+					var choice = 0;
 					
 					if(homeSttsNo != '') {
-						sysNo = '${homeSysNo}';
-						sttsNo = '${homeSttsNo}';
+						if(homeSysNo != '') {
+							sysNo = '${homeSysNo}';
+							$("#sysNo").val(sysNo).prop("selected", true);
+						}
+						sttsNo = homeSttsNo;
 						$("#sttsNo").val(sttsNo).prop("selected", true);
-						$("#sysNo").val(sysNo).prop("selected", true);
 						$('#searchMySR').prop('checked', true);
+						var sysNoSelect = document.getElementById("sysNo");
+						sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+						choice = 1;
+						requestList(1);
+						
 					} else {
 						var sysNoSelect = document.getElementById("sysNo");
 						sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
@@ -379,17 +389,17 @@
 			 		
 					let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp : srDevDp, srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 					
-					
-					$.ajax({
-						url : "${pageContext.request.contextPath}/request/filter/1",
-						method : "post",
-						data : JSON.stringify(data),
-						contentType: "application/json; charset=UTF-8"
-					}).done((data) => {
-						$("#ajaxList").html(data)
-					});
-					
-					
+					if(choice == 0) {
+						$.ajax({
+							url : "${pageContext.request.contextPath}/request/filter/1",
+							method : "post",
+							data : JSON.stringify(data),
+							contentType: "application/json; charset=UTF-8"
+						}).done((data) => {
+							$("#ajaxList").html(data)
+						});
+					}
+										
 				});
 				
 				var checkMySR = 0;
