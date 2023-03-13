@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.users.service.IUserService;
 import com.team01.webapp.users.service.UserService;
+import com.team01.webapp.util.AlarmInfo;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -26,6 +27,8 @@ public class UserController {
 	@Autowired
 	IUserService userService;
 	
+	@Autowired
+	AlarmInfo alarmInfo;
 	
 	/**
 	 * 로그인 메서드
@@ -148,8 +151,10 @@ public class UserController {
 	 * @return	나의 정보 뷰로 이동
 	 */
 	@RequestMapping(value = "/user/myinfo/{userId}", method = RequestMethod.GET)
-	public String myinfo(@PathVariable String userId, Model model) {
+	public String myinfo(@PathVariable String userId, HttpSession session, Model model) {
 		log.info("실행");
+		//알림 수 및 리스트
+		alarmInfo.info(session, model); 
 		Users user = userService.getMyInfo(userId);
 		model.addAttribute("user", user);
 		log.info("user: "+user);

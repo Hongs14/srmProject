@@ -108,11 +108,12 @@
 		<!-- 하단 버튼들 -->
 		<div id="buttons" class="m-3 text-right">
 			<a href='<c:url value="/request/list"/>'><button type="button" class="btn btn-primary btn-sm">글목록</button></a>
-			<a><button type="button" onclick="getUpdateForm('${sr.srNo}')"class="btn btn-primary btn-sm">수정</button></a>
 			
 			<!-- 삭제 modal 버튼-->
-			<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#deleteFun">삭제</button>
-		
+			<c:if test="${sr.sttsNm eq '요청' and sessionScope.userNo eq sr.srCustNo}">
+				<a><button type="button" onclick="getUpdateForm('${sr.srNo}')"class="btn btn-primary btn-sm">수정</button></a>
+				<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#deleteFun">삭제</button>
+			</c:if>
 			<!-- Modal -->
 			<div class="modal" id="deleteFun" tabindex="-1" role="dialog" aria-labelledby="deleteFunLabel" aria-hidden="true">
 			   <div class="modal-dialog" role="document" style="max-width:450px;">

@@ -8,6 +8,7 @@ import lombok.Data;
 public class Request {
 	private String srNo;
 	private String userNm;
+	private int srCustNo;
 	private String userOgdp;
 	private Date srRegDate;
 	private String sysNm;

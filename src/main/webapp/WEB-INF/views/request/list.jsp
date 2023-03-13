@@ -245,7 +245,7 @@
                    	<h5 class="m-0 font-weight-bold text-primary mb-1">SR 요청 목록</h5>
 					<div class="d-sm-flex justify-content-end">
 					<c:if test="${sessionScope.loginUser.userType eq '고객사'}">
-                 		<a class="btn btn-sm btn-secondary mr-1" onclick="getWriteForm()"> 요청등록 </a>
+                 		<a class="btn btn-sm btn-primary mr-1" onclick="getWriteForm()"> 요청등록 </a>
                  	</c:if>
 						<button class="btn btn-sm btn-primary" onclick="excelDownload()">엑셀 다운로드</button>
 					</div>
