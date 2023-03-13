@@ -1,5 +1,6 @@
 package com.team01.webapp.alarm.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -34,7 +35,15 @@ public class AlarmService implements IAlarmService{
 	@Override
 	public List<Alarm> selectAlarmList(Alarm alarm) {
 		log.info("실행");
-		List<Alarm> alarmList = alarmRepository.selectAlarmList(alarm);
+		log.info(alarm);
+		List<Alarm> alarmList = new ArrayList<>();
+		if(alarm.getUserType().equals("개발자")) {
+			for(int i=1; i<=10; i++) {				
+				alarmList = alarmRepository.selectAlarmList(alarm);
+			}
+		}else {
+			alarmList = alarmRepository.selectAlarmList(alarm);
+		}
 		
 		return alarmList;
 	}
