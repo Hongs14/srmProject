@@ -9,7 +9,10 @@
   	<style type="text/css">
   		.ajaxDetail span {
         	white-space:normal !important;
-    }
+    	}
+    	.bgChange{
+			background-color: rgba(0, 0, 0, 0.075);
+		}
   	</style>
 
     
@@ -191,6 +194,10 @@
 							contentType: "application/json; charset=UTF-8"
 						}).done((data) => {
 							$("#noticeList").html(data)
+							var ntcNo = "${ntcNo}";
+							console.log("공지사항 디테일 No"+ntcNo);
+							var bg = "bgChange-"+ntcNo;
+							$('#' + bg).addClass("bgChange");
 						});
 					});
 					
@@ -489,6 +496,9 @@
 					    var sysNo = arr[1];
 					    console.log(sysNo);
 					    
+					    var className = $(".bg");
+	                  	className.removeClass("bgChange")
+					    
 						$("#mainNoticeMenu").removeClass("d-sm-flex");
 						$("#mainNoticeMenu").hide();
 						$("#noticeMenu").show();
@@ -501,6 +511,9 @@
 							dataType : "html",
 							success : function(data) {
 								$("#subNoticeDetailView").html(data);
+								var bg = "bgChange-"+ntcNo;
+								$('#' + bg).addClass("bgChange");
+								console.log(bg+"실행1");
 							}
 						});
 					}
@@ -509,6 +522,10 @@
 				<script>
 					function getNoticeDetail(i) {
 						let ntcNo = i;
+						
+					 	var className = $(".bg");
+	                  	className.removeClass("bgChange")
+						
 						$("#mainNoticeMenu").removeClass("d-sm-flex");
 						$("#mainNoticeMenu").hide();
 						$("#noticeMenu").show();
@@ -521,6 +538,9 @@
 							dataType : "html",
 							success : function(data) {
 								$("#subNoticeDetailView").html(data);
+								var bg = "bgChange-"+ntcNo;
+								$('#' + bg).addClass("bgChange");
+								console.log(bg+"실행2");
 							}
 						});
 					}

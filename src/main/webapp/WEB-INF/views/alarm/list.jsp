@@ -74,12 +74,11 @@
 												<span class="text-primary h6"><b>알림 카테고리</b></span>
 											</div>
 											<div>
-												<button class="btn btn-outline-warning m-1">SR상태변경</button>
-												<button class="btn btn-outline-info m-1">업무배정</button>
+												<button class="btn btn-outline-warning m-1" onclick="srSttsChange()">SR상태변경</button>
+												<button class="btn btn-outline-info m-1" onclick="assigned()">업무배정</button>
 											</div>
 											<div>
-												<button class="btn btn-outline-primary m-1">문의결과</button>
-												<button class="btn btn-outline-danger m-1">요청결과</button>
+												<button class="btn btn-outline-danger m-1" onclick="requestResult()">요청결과</button>
 											</div>
 										</div>
 										<div class="myInfoWrapper shadow-sm">
@@ -156,6 +155,19 @@
 									});
 								}	
 								
+								function srSttsChange() {
+									
+								}
+								
+								function assigned(){
+									
+								}
+								
+								function requestResult() {
+									
+								}
+								
+								
 							</script>
 							<div class="modal fade" id="alarmBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 								<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
@@ -202,7 +214,6 @@
 									}).done((data) => {
 										window.location.href ='${pageContext.request.contextPath}/alarm/list';
 									})
-									
 								}
 							</script>
 	          			<!-- 로그아웃 모달 -->

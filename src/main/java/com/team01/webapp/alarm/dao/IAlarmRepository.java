@@ -13,6 +13,9 @@ public interface IAlarmRepository {
 	//전체 알림 리스트
 	public List<Alarm> selectAlarmList(Alarm alarm);
 	
+	//카테고리 알림 리스트
+	public List<Alarm> selectCategoryAlarm(Alarm alarm);
+	
 	//해당 SR 고객사 찾기
 	public Alarm selectAlarm(String srNo);
 	
