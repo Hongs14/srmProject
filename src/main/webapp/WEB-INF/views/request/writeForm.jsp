@@ -24,7 +24,7 @@
 		<form method="post" onsubmit="return false;"  enctype="multipart/form-data">
 			<c:if test="${command eq 'update'}">
 				<div class="my-2" id="sr_no">
-		  			<span class="text-primary font-weight-bold">SR N0.</span> 
+		  			<span class="text-primary font-weight-bold">SR No.</span> 
 		  			<span>${sr.srNo}</span>
 		  			<input id="srNo" type="hidden" name="srNo" value="${sr.srNo}"/>
 	 			</div>

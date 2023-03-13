@@ -28,15 +28,15 @@
 	<div class="card-body">
 		<!-- 글 제목 -->
 		<form method="post" onsubmit="return false;" enctype="multipart/form-data">
-			<div class="row">
-				<div class="col-1">글제목  </div>
-				<div class="col-10 ml-3">
-					<textarea class="form-control" rows="1" id="ntcTtl" name="ntcTtl"></textarea>
+			<div class="row px-2">
+				<div class="col-2 my-2">글제목  </div>
+				<div class="col-10">
+					<input class="form-control"id="ntcTtl" name="ntcTtl"/>
 				</div>
 			</div>
-			<div class="row mt-2">
-				<div class="col-1">카테고리</div>
-				<div class="col-4 ml-3">
+			<div class="row mt-2 px-2">
+				<div class="col-2 my-2">카테고리</div>
+				<div class="col-4">
 					<div class="form-group">
 						<select class="form-control" id="sysNo" name="sysNo">
 							<option>한국소프트</option>
@@ -47,8 +47,8 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-1 my-2">중요 여부</div>
-				<div class="col-4 ml-3">
+				<div class="col-2 my-2">중요 여부</div>
+				<div class="col-4">
 					<div class="form-group">
 						<select class="form-control" id="ntcPry" name="ntcPry">
 							<option value="Yes">Yes</option>
@@ -57,35 +57,35 @@
 					</div>
 				</div>
 			</div>
-			<div class="row mt-1">
+			<div class="row mt-1 px-2">
 				<div class="form-group row" id="simple-date4" >
           			<div class="input-daterange input-group input-group-sm">
-          				<label for="start" class="col-sm-4 col-form-label-sm">조회기간</label>
-              			<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="datePryStart"/>
+          				<div class="col-4">조회기간</div>
+              			<input type="text" class="input form-control form-control col-8" name="start" id="datePryStart"/>
               			<div class="input-group-prepend">
               				<span class="input-group-text" style="height:31px;">~</span>
               			</div>
-              			<input type="text" class="input-sm form-control form-control-sm" name="end" id="datePryEnd"/>
+              			<input type="text" class="input form-control form-control" name="end" id="datePryEnd"/>
               		</div>
       			</div>
 			</div>
 			<!-- 글 내용 -->
-			<div class="row mt-1">
-				<div class="col-1">글 내용 </div>
-				<div class="col-10 ml-3">
+			<div class="row mt-1 px-2">
+				<div class="col-2">글 내용 </div>
+				<div class="col-10">
 					<textarea class="form-control" rows="10" id="ntcCn" name="ntcCn"></textarea>
 				</div>
 			</div>
 			<!-- 첨부파일 -->
-			<div class="row mt-2">
-				<div class="col-1">첨부파일</div>
-				<div class="col-10 ml-4">
+			<div class="row mt-2 px-4">
+				<div class="col-2 my-2">첨부파일</div>
+				<div class="col-10">
 					<input type="file" class="custom-file-input form-control" id="ntcMFile" name="ntcMFile" onchange="addNoticeFile(this)" multiple> 
 					<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
 				</div>
 			</div>
-			<div class="row mt-2">
-				<span class="font-weight-bold col-sm-2">파일목록</span>
+			<div class="row mt-2 px-2">
+				<span class="col-sm-2 my-2">파일목록</span>
 				<div class="col-sm-9" id="userfile"></div>
 			</div>
 			<!-- userNo -->	                	

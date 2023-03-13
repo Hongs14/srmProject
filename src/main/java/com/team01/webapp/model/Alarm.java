@@ -28,5 +28,5 @@ public class Alarm {
 	
 	//SR Stauts
 	private String sttsNm;
-	
+	private int sttsNo;
 }

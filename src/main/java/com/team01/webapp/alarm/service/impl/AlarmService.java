@@ -36,15 +36,8 @@ public class AlarmService implements IAlarmService{
 	public List<Alarm> selectAlarmList(Alarm alarm) {
 		log.info("실행");
 		log.info(alarm);
-		List<Alarm> alarmList = new ArrayList<>();
-		if(alarm.getUserType().equals("개발자")) {
-			for(int i=1; i<=10; i++) {				
-				alarmList = alarmRepository.selectAlarmList(alarm);
-			}
-		}else {
-			alarmList = alarmRepository.selectAlarmList(alarm);
-		}
-		
+		List<Alarm> alarmList = alarmRepository.selectAlarmList(alarm);
+		log.info(alarmList);
 		return alarmList;
 	}
 	
