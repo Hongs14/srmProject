@@ -91,8 +91,8 @@
    			</div>
    			<div class="row mb-2 mr-0">
    				<div class="col-12">
-			   		<span id="srOpnnTtl">검토 의견</span>
-			   		<textarea class="form-control" rows="3" id="srOpnn" name="srOpnn">${examine.srOpnn}</textarea>
+			   		<span id="srOpnnTtl" class="d-none">검토 의견</span>
+			   		<textarea class="form-control d-none" rows="3" id="srOpnn" name="srOpnn">${examine.srOpnn}</textarea>
    				</div>
    			</div>
 			<div id="buttons" class="m-3 text-right">
@@ -106,7 +106,10 @@
 				var sttsNm = sttsNmSelect.options[document.getElementById("examineSttsNm").selectedIndex].text;
 				console.log(sttsNm);
 				
-				if(sttsNm == "접수"){
+				if(sttsNm == "접수" ){
+					$('#srOpnn').addClass('d-none');
+					$('#srOpnnTtl').addClass('d-none');
+				}else if(sttsNm == "검토중"){
 					$('#srOpnn').addClass('d-none');
 					$('#srOpnnTtl').addClass('d-none');
 				}else{

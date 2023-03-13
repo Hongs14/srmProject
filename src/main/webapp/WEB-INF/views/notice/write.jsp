@@ -53,7 +53,7 @@
 			</div>
 			<div class="form-group row px-2 align-items-center" id="simple-date4" >
        			<label class="col-2" for="dateInput">
-       			중요표시<br>개시기간
+       			중요표시<br>공지기간
    				</label>
    				<div class="col-sm-10" id="simple-date1" >
    				<div class="form-group ">
