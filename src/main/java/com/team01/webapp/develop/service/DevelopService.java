@@ -232,6 +232,26 @@ public class DevelopService implements IDevelopService{
 				log.info("HR리스트 삭제없이 삽입 result2: "+ result2);
 			
 			}
+			if(updateDevelop.getSttsNo() == 5) {
+				int srSeq = 0;
+				List<Progress> progNoList = new ArrayList<>();
+				srSeq = developRepository.selectMaxProgNo()+1;	
+				for(int i=0; i<6; i++) {
+					Progress progress = new Progress();
+					String progNo = "PROG-"+srSeq;
+					progress.setProgNo(progNo);
+					progress.setSrNo(updateDevelop.getSrNo());
+					progress.setProgType(i+1);
+					progNoList.add(progress);
+					log.info(progress);
+					srSeq++;
+				}
+			
+				int row = developRepository.insertProg(progNoList);
+				if(row == 1) {
+					log.info("삽입 성공");
+				}
+			}
 			
 			if(result1 > 0 && result2 > 0 && result3 > 0) {
 				result = 1;
