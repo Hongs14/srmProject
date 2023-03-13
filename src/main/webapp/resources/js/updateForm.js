@@ -120,7 +120,9 @@ function requestUpdate(srNo) {
 		processData: false,	// 필수
 		contentType: false	// 필수
     }).done((data) => {
-    	window.location.href = "/webapp/request/list";
+    	setTimeout(function() {
+    		window.location.href = "/webapp/request/list";
+		}, 2000);
     });
     
 }

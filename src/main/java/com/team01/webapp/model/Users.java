@@ -20,6 +20,7 @@ public class Users {
 	private String userTelno;
 	private char userDelYn;
 	private String userDpNm;
+	private char userPswdTempYn;
 	
 	private String sysNm;
 	private List<HR> devList;
