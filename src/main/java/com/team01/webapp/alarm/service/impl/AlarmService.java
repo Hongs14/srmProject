@@ -43,9 +43,10 @@ public class AlarmService implements IAlarmService{
 	
 	@Override
 	public List<Alarm> selectCategoryAlarm(Alarm alarm){
+		log.info(alarm);
 		log.info("실행");
 		List<Alarm> categoryAlarm = alarmRepository.selectCategoryAlarm(alarm);
-		
+		log.info(categoryAlarm);
 		return categoryAlarm;
 	}
 	
