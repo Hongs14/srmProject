@@ -80,7 +80,7 @@
 	
 	<div class="table-responsive p-1">
 	<div class="input-group-append float-right mb-3">
-		<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
+		<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료' || sttsNm == '계획조정')}">
 			<c:if test="${check}">
 				<button class="btn btn-primary btn-sm mr-2" type="button" onclick="progressRateALLAdd()">
 					저장
@@ -109,7 +109,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료') && check}">
+				<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료' || sttsNm == '계획조정') && check}">
 					<c:forEach var="list" items="${progressRateList}">
 						<tr>
 							<c:if test="${list.progType != 5 && list.progType != 6}">
@@ -168,7 +168,7 @@
 						</tr>
 					</c:forEach>
 				</c:if>
-				<c:if test="${sttsNm == '완료요청' || sttsNm == '개발 완료' || !check}">
+				<c:if test="${sttsNm == '완료요청' || sttsNm == '개발 완료' || sttsNm == '계획조정' || !check}">
 					<c:forEach var="list" items="${progressRateList}">
 						<tr>
 							<th>

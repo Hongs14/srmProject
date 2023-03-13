@@ -4,6 +4,15 @@
 <% session.removeAttribute("message"); %>
     
 <!DOCTYPE html>
+	<!-- 모달 창 -->
+	<div class="modal fade" id="ChangeRequestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+		<div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div id="changeRequestModal"></div>
+			</div>
+		</div>
+	</div>
+
 	<div class="table-responsive">
 		<div id="changeRequestModalView">
 			<div class="input-group-append float-right mb-3">
@@ -40,14 +49,6 @@
 					</c:forEach>
 				</tbody>
 			</table>
-		</div>
-	</div>
-	<!-- 모달 창 -->
-	<div class="modal fade" id="ChangeRequestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-		<div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
-			<div class="modal-content">
-				<div id="changeRequestModal"></div>
-			</div>
 		</div>
 	</div>
 
