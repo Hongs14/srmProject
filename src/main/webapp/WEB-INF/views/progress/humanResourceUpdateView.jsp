@@ -73,11 +73,6 @@
 				var hrStartDate = document.getElementById("start").value;
 				var hrEndDate = document.getElementById("end").value;
 				
-				console.log(srNo);
-				console.log(userNo);
-				console.log(hrStartDate);
-				console.log(hrEndDate);"src/main/webapp/WEB-INF/views/progress/progressListView.jsp"
-				
 				let data = {srNo : srNo, userNo : userNo, hrStartDate : hrStartDate, hrEndDate : hrEndDate};
 				
 				$.ajax({

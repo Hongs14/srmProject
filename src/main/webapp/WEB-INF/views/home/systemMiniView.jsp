@@ -58,7 +58,6 @@
 	</div>
 
              <script>
-             
              	labelse = [];
              	data = [];
              	<c:forEach var="list" items="${donutList}">
@@ -115,7 +114,33 @@
 				document.getElementById("myPieChart").onclick = function(evt) {
 					const points = myPieChart.getElementsAtEventForMode(evt, 'index', { intersect: true }, true);
 					var i = points[0].index;
-					console.log('${system[0].sysNo}');
-					console.log(labelse[i]);
+					
+					sttsNoList = [];
+	             	<c:forEach var="list" items="${donutList}">
+	             		sttsNoList.push('${list.sttsNo}');
+	             	</c:forEach>
+	             	
+					var sttsNo = sttsNoList[i];
+					var sysNo = '${system[0].sysNo}';
+					
+					var form = document.createElement('form');
+					form.setAttribute('method','post');
+					form.setAttribute('action', '${pageContext.request.contextPath}/list');
+					document.charset = "utf-8";
+					
+					var hiddenField = document.createElement("input");
+					hiddenField.setAttribute('type', 'hidden');
+					hiddenField.setAttribute('name', 'sttsNo');
+					hiddenField.setAttribute('value', sttsNo);
+					form.appendChild(hiddenField);
+					var hiddenField2 = document.createElement("input");
+					hiddenField2.setAttribute('type', 'hidden');
+					hiddenField2.setAttribute('name', 'sysNo');
+					hiddenField2.setAttribute('value', sysNo);
+					form.appendChild(hiddenField2);
+					
+					document.body.appendChild(form);
+					form.submit();
+					
 				};
             </script>

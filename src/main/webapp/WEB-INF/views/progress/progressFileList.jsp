@@ -4,6 +4,15 @@
 <% session.removeAttribute("message"); %>
     
 <!DOCTYPE html>
+	<!-- 모달 창 -->
+	<div class="modal fade" id="progressFileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+		<div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div id="progressFileModalView"></div>
+			</div>
+		</div>
+	</div>
+
 	<div class="table-responsive">
 	<div class="input-group-append float-right mb-3">
 		<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
@@ -48,15 +57,7 @@
 				등록된 산출물이 없습니다
 			</h2>
 		</c:if>
-	<!-- 모달 창 -->
-	<div class="modal fade" id="progressFileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-		<div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
-			<div class="modal-content">
-				<div id="progressFileModalView"></div>
-			</div>
-		</div>
 	</div>
-</div>
 
 <script>
 	function progressFileAdd() {
@@ -95,8 +96,6 @@
 	    	$("#Modalmessage").text("삭제할 파일을 선택해 주세요.");
 		} else {
 			data = {srNo : srNo, progressFile : progressFile};
-			
-			console.log(data);
 			
 			$.ajax({
 				url : "progressFileRemove/",

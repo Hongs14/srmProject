@@ -297,10 +297,8 @@ color:white;
 										} else {
 											message = "${message}"
 										}
-										console.log(message);
 									
 										var srNo = '${progressDetail.srNo}';
-										console.log(srNo);
 										
 										let data = {srNo : srNo};
 
@@ -315,13 +313,9 @@ color:white;
 									});
 								
 									function progressDetail(choice) {
-										console.log(choice);
 										var srNo = '${progressDetail.srNo}';
-										console.log(srNo);
 										
 										let data = {srNo : srNo};
-										
-										console.log(data);
 										
 										$.ajax({
 											url : "progressajax/" + choice,

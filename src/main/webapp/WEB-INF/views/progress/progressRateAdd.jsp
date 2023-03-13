@@ -123,8 +123,6 @@
 		    for (var i = 0; i < filesArr.length; i++) {
 		        // 삭제되지 않은 파일만 폼데이터에 담기
 		        if (!filesArr[i].is_delete) {
-		        	console.log("돌아감");
-		        	console.log(filesArr[i]);
 		            formData.append("progressattach", filesArr[i]);
 		        }
 		    }
