@@ -26,19 +26,13 @@
 <div class="card mb-4">                
 	<!-- 게시글 작성 -->
 	<div class="card-body">
-		<!-- 글 제목 -->
+		
 		<form method="post" onsubmit="return false;" enctype="multipart/form-data">
-			<div class="row px-2">
-				<div class="col-2 my-2">글제목  </div>
-				<div class="col-10">
-					<input class="form-control"id="ntcTtl" name="ntcTtl"/>
-				</div>
-			</div>
-			<div class="row mt-2 px-2">
-				<div class="col-2 my-2">카테고리</div>
-				<div class="col-4">
+			<div class="row mb-2 px-2 align-items-center">
+				<div class="col-2">카테고리</div>
+				<div class="col-4 pt-3">
 					<div class="form-group">
-						<select class="form-control" id="sysNo" name="sysNo">
+						<select class="form-control form-control-sm" id="sysNo" name="sysNo">
 							<option>한국소프트</option>
 							<option>북북</option>
 							<option>한국대학교</option>
@@ -47,53 +41,67 @@
 						</select>
 					</div>
 				</div>
-				<div class="col-2 my-2">중요 여부</div>
-				<div class="col-4">
+				<div class="col-2">중요 여부</div>
+				<div class="col-4 pt-3">
 					<div class="form-group">
-						<select class="form-control" id="ntcPry" name="ntcPry">
+						<select class="form-control form-control-sm" id="ntcPry" name="ntcPry">
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
 						</select>
 					</div>
 				</div>
 			</div>
-			<div class="row mt-1 px-2">
-				<div class="form-group row" id="simple-date4" >
-          			<div class="input-daterange input-group input-group-sm">
-          				<div class="col-4">조회기간</div>
-              			<input type="text" class="input form-control form-control col-8" name="start" id="datePryStart"/>
-              			<div class="input-group-prepend">
-              				<span class="input-group-text" style="height:31px;">~</span>
-              			</div>
-              			<input type="text" class="input form-control form-control" name="end" id="datePryEnd"/>
-              		</div>
-      			</div>
+			<div class="form-group row px-2 align-items-center" id="simple-date4" >
+       			<label class="col-2" for="dateInput">
+       			중요표시<br>개시기간
+   				</label>
+   				<div class="col-sm-10" id="simple-date1" >
+   				<div class="form-group ">
+	   				<div class="input-daterange input-group input-group-sm"> 
+	           			<input type="text" class="input-sm form-control form-control-sm" name="start" id="datePryStart"/>
+	           			<div class="input-group-prepend">
+	           				<span class="input-group-text" style="height:31px; border-radius:0px;">~</span>
+	           			</div>
+	           			<input type="text" class="input-sm form-control form-control-sm" name="end" id="datePryEnd"/>
+	           		</div>
+	           	</div>
+           		</div>
+			</div>
+			
+			<hr>
+			<!-- 글 제목 -->
+			<div class="row px-2 mb-3 align-items-center">
+				<div class="col-2">공지 제목  </div>
+				<div class="col-10">
+					<input class="form-control form-control-sm"id="ntcTtl" name="ntcTtl"/>
+				</div>
 			</div>
 			<!-- 글 내용 -->
-			<div class="row mt-1 px-2">
-				<div class="col-2">글 내용 </div>
+			<div class="row mb-2 px-2">
+				<div class="col-2">공지 내용 </div>
 				<div class="col-10">
 					<textarea class="form-control" rows="10" id="ntcCn" name="ntcCn"></textarea>
 				</div>
 			</div>
 			<!-- 첨부파일 -->
-			<div class="row mt-2 px-4">
-				<div class="col-2 my-2">첨부파일</div>
-				<div class="col-10">
+			<div class="row mb-2 px-2 align-items-center">
+				<label class="col-2" for="srFile">첨부파일 </label> 
+				<div class="custom-file col-10">
 					<input type="file" class="custom-file-input form-control" id="ntcMFile" name="ntcMFile" onchange="addNoticeFile(this)" multiple> 
-					<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
+					<label class="custom-file-label text-truncate text-right" for="ntcMFile" style="max-width:442px; margin-left:12px;">파일 선택</label>
 				</div>
 			</div>
-			<div class="row mt-2 px-2">
+			
+			<div class="row mb-2 px-2 align-items-center">
 				<span class="col-sm-2 my-2">파일목록</span>
-				<div class="col-sm-9" id="userfile"></div>
+				<div class="col-sm-10" id="userfile"></div>
 			</div>
 			<!-- userNo -->	                	
 			<div>
 				<input type="hidden" id="userNo" name="userNo" value="${sessionScope.loginUser.userNo}">
 			</div>
 			<!-- 작성완료/닫기 -->
-			<div class="row mt-2">
+			<div class="row mt-2 align-items-center">
 				<div class="col-12">
 					<div class="d-sm-flex justify-content-end">
 						<button class="btn btn-sm btn-primary mr-1" onclick="noticeWrite()">작성완료</button>
