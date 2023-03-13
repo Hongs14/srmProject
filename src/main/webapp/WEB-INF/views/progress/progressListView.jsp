@@ -33,12 +33,16 @@
 						</td>
 						<td>
 							<a href="${pageContext.request.contextPath}/progress/detail/${list.srNo}" style="text-decoration: none;">
-								${list.srNo}
+								<b>
+									${list.srNo}
+								</b>
 							</a>
 						</td>
 						<td>
 							<a href="${pageContext.request.contextPath}/progress/detail/${list.srNo}" style="width:400px; overflow:hidden; text-overflow: ellipsis; display:block;text-decoration: none;">
-								${list.srTtl}
+								<b>
+									${list.srTtl}
+								</b>
 							</a>
 						</td>
 						<td>${list.srTypeNm}</td>

@@ -156,12 +156,42 @@ color:white;
 															<span class="font-weight-bold">첨부파일: </span> 
 														</div>
 														<div class="col-sm-10 custom-file">
-															<c:forEach var="filelist" items="${progressDetail.srFile}">
-																<a href="filedownload?srFileNo=${filelist.srFileNo}">
-																	<span class="font-weight-bold ">${filelist.srFileActlNm}</span>
-																	<br/>
-																</a>
-															</c:forEach>
+															<table>
+																<c:forEach var="filelist" items="${progressDetail.srFile}">
+																	<tr>
+																		<th>
+																			<c:choose>
+																				<c:when test="${filelist.srFileExtnNm == '/jpeg' || filelist.srFileExtnNm == '/png' || filelist.srFileExtnNm == '/gif'}">
+																					<i class="fa-sharp fa-solid fa-file-image"></i>
+																				</c:when>
+																				<c:when test="${filelist.srFileExtnNm == '/dos' || ilelist.srFileExtnNm == '/docx'}">
+																					<i class="fa-sharp fa-solid fa-file-word"></i>
+																				</c:when>
+																				<c:when test="${filelist.srFileExtnNm == '/xls' || ilelist.srFileExtnNm == '/xlsx'}">
+																					<i class="fa-sharp fa-solid fa-file-excel"></i>
+																				</c:when>
+																				<c:when test="${filelist.srFileExtnNm == '/ppt' || ilelist.srFileExtnNm == '/pptx'}">
+																					<i class="fa-sharp fa-solid fa-file-pdf"></i>
+																				</c:when>
+																				<c:when test="${filelist.srFileExtnNm == '/alz' || filelist.srFileExtnNm == '/7z' || filelist.srFileExtnNm == '/zip' || filelist.srFileExtnNm == '/egg'}">
+																					<i class="fa-sharp fa-solid fa-file-zipper"></i>
+																				</c:when>
+																				<c:when test="${filelist.srFileExtnNm == '/pdf'}">
+																					<i class="fa-sharp fa-solid fa-file-powerpoint"></i>
+																				</c:when>
+																				<c:otherwise>
+																					<i class="fa-sharp fa-solid fa-file"></i>
+																				</c:otherwise>
+																			</c:choose>
+																		</th>
+																		<td>
+																			<a href="filedownload?srFileNo=${filelist.srFileNo}">
+																				<span class="font-weight-bold">${filelist.srFileActlNm}</span>
+																			</a>
+																		</td>
+																	</tr>
+																</c:forEach>
+															</table>
 														</div>
 													</div>
 												</c:if>
