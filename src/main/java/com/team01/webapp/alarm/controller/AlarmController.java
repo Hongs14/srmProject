@@ -49,20 +49,15 @@ public class AlarmController extends TextWebSocketHandler {
 		int alarmCnt = alarmService.selectAlarmCount(alarm);
 		model.addAttribute("alarmCnt",alarmCnt);
 		model.addAttribute("alarmList",alarmList);
-		
 		return "alarm/list";
 	}
 	
 	@PostMapping(value="categoryAlarm", produces="application/json; charset=UTF-8")
 	public String selectCategoryAlarm(@RequestBody Alarm alarm, Model model) {
-		log.info(alarm);
 		log.info("실행");
-		List<Alarm> alarmList = alarmService.selectCategoryAlarm(alarm);
-		log.info(alarmList);
-		int alarmCnt = alarmService.selectAlarmCount(alarm);
-		model.addAttribute("alarmList",alarmList);
-		model.addAttribute("alarmCnt",alarmCnt);
-		model.addAttribute("command","category");
+		List<Alarm> categoryAlarm = alarmService.selectCategoryAlarm(alarm);
+		log.info(categoryAlarm);
+		model.addAttribute("categoryAlarm",categoryAlarm);
 		return "alarm/categoryList";
 	}
 	
