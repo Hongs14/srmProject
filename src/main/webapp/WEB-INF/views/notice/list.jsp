@@ -42,7 +42,7 @@
 
 			<div class="container-fluid" id="container-wrapper">
    				<div class="d-sm-flex align-items-end justify-content-between" id="mainNoticeMenu">
-  					<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px;">
+  					<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:100px;">
 						<h6 class="mb-0 text-white">공지사항</h6>
 					</div>
 					<ol class="breadcrumb">
@@ -53,7 +53,7 @@
 				<!-- Row -->
    				<div class="row">
 					<div id="mainNoitce" class="col-lg-12">
-						<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:115px; display:none;"  id="noticeMenu">
+						<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:100px; display:none;"  id="noticeMenu">
 							<h6 class="mb-0 text-white">공지사항</h6>
 						</div>
                			<div class="card mb-4">
