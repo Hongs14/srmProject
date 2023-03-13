@@ -87,46 +87,51 @@
 										</div>
 									</div>
 									<div class="d-flex px-5 justify-content-center">
-										<div class="myInfoWrapper shadow-sm">
-													<table class="table table-hover">
-														<tbody>												
-															<c:choose>
-																<c:when test="${fn:length(alarmList) == 0 }">
-																	<div class="alert alert-secondary m-3 p-2" role="alert">
-																		<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
-																		알림 내역이 없습니다.
-																	</div>
-																</c:when>
-																<c:otherwise>
-																	<c:forEach var="alarmList" items="${alarmList}">
-																		<tr style="cursor:pointer;">
-																			<td class="row border-bottom" onclick="updateCheck('${alarmList.srNo}')" style="border-top: 0; ">
-																				<div class="col-2 text-center mt-3">
-																					<c:if test="${alarmList.messageCheck eq 89}">
-																						<i class="fa-regular fa-square-check icon"></i>
-															                    	</c:if>
-															                    	<c:if test="${alarmList.messageCheck eq 78 }">
-																                     	<i class="fas fa-exclamation-triangle icon"></i>
-															                    	</c:if>
-														                    	</div>
-														                    	<div class="col-9">
-														                    		<span style="border-top:0; margin:0px;font-size:1.2rem;"><b>${alarmList.alarmTtl}</b></span>
-																					<span>${alarmList.messageDate}</span>
-																					<br/>			
-																					<div style="font-size:0.7rem">${alarmList.srNo}</div>
-																					<span class="d-none" id="alarmNo">${alarmList.alarmNo}</span>
-																					<span class="d-none" id="sttsNm">${alarmList.sttsNm}</span>
-																					<span >${alarmList.message}</span>
-														                    	</div>
-																				<i class="fas fa-trash col-1" data-toggle="modal" data-target="#alarmBtn" id="#modalScroll"></i>
-																			</td>
-																		</tr>																
-																	</c:forEach>
-																</c:otherwise>
-															</c:choose>										
-														</tbody>
-													</table>
-											</div>
+										<div class="myInfoWrapper shadow-sm mb-5">
+											<table class="table table-hover">
+												<tbody>
+													<c:if test="${command ne 'category' }">
+														<c:choose>
+															<c:when test="${fn:length(alarmList) == 0 }">
+																<div class="alert alert-secondary m-3 p-2" role="alert">
+																	<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+																	알림 내역이 없습니다.
+																</div>
+															</c:when>
+															<c:otherwise>
+																<c:forEach var="alarmList" items="${alarmList}">
+																	<tr style="cursor:pointer;">
+																		<td class="row border-bottom" onclick="updateCheck('${alarmList.srNo}')" style="border-top: 0; ">
+																			<div class="col-2 text-center mt-3">
+																				<c:if test="${alarmList.messageCheck eq 89}">
+																					<i class="fa-regular fa-square-check icon"></i>
+														                    	</c:if>
+														                    	<c:if test="${alarmList.messageCheck eq 78 }">
+															                     	<i class="fas fa-exclamation-triangle icon"></i>
+														                    	</c:if>
+													                    	</div>
+													                    	<div class="col-9">
+													                    		<span style="border-top:0; margin:0px;font-size:1.2rem;"><b>${alarmList.alarmTtl}</b></span>
+																				<span>${alarmList.messageDate}</span>
+																				<br/>			
+																				<div style="font-size:0.7rem">${alarmList.srNo}</div>
+																				<span class="d-none" id="alarmNo">${alarmList.alarmNo}</span>
+																				<span class="d-none" id="sttsNm">${alarmList.sttsNm}</span>
+																				<span >${alarmList.message}</span>
+													                    	</div>
+																			<i class="fas fa-trash col-1" data-toggle="modal" data-target="#alarmBtn" id="#modalScroll"></i>
+																		</td>
+																	</tr>																
+																</c:forEach>
+															</c:otherwise>
+														</c:choose>										
+													</c:if>
+													<c:if test="${!empty command and command eq 'category'}">
+														<div id="categoryList"></div>
+													</c:if>												
+												</tbody>
+											</table>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -163,15 +168,62 @@
 								}	
 								
 								function srSttsChange() {
+									var sysNo = "${sysNo}";
+									var userNo = "${sessionScope.loginUser.userNo}";
+									var alarmCategory = "SR상태변경";
+									var userType = "${userType}";
+									
+									let data = {sysNo : sysNo, userNo : userNo, alarmCategory : alarmCategory, userType : userType};
+									
+									
+									$.ajax({
+										url : "categoryAlarm",
+										method : "post",
+										data : JSON.stringify(data),
+										contentType: "application/json; charset=UTF-8"
+									}).done((data) => {
+										$("#categoryList").html(data);
+										console.log(data);
+									});
 									
 								}
 								
 								function assigned(){
+									var sysNo = "${sysNo}";
+									var userNo = "${sessionScope.loginUser.userNo}";
+									var alarmCategory = "업무배정";
+									var userType = "${userType}";
 									
+									let data = {sysNo : sysNo, userNo : userNo, alarmCategory : alarmCategory, userType : userType};
+									console.log(data);
+									
+									$.ajax({
+										url : "categoryAlarm",
+										method : "post",
+										data : JSON.stringify(data),
+										contentType: "application/json; charset=UTF-8"
+									}).done((data) => {
+										$("#categoryList").html(data)
+									});
 								}
 								
 								function requestResult() {
+									var sysNo = "${sysNo}";
+									var userNo = "${sessionScope.loginUser.userNo}";
+									var alarmCategory = "요청결과";
+									var userType = "${userType}";
 									
+									let data = {sysNo : sysNo, userNo : userNo, alarmCategory : alarmCategory, userType : userType};
+									console.log(data);
+									
+									$.ajax({
+										url : "categoryAlarm",
+										method : "post",
+										data : JSON.stringify(data),
+										contentType: "application/json; charset=UTF-8"
+									}).done((data) => {
+										$("#categoryList").html(data)
+									});
 								}
 								
 								

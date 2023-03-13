@@ -53,6 +53,19 @@ public class AlarmController extends TextWebSocketHandler {
 		return "alarm/list";
 	}
 	
+	@PostMapping(value="categoryAlarm", produces="application/json; charset=UTF-8")
+	public String selectCategoryAlarm(@RequestBody Alarm alarm, Model model) {
+		log.info(alarm);
+		log.info("실행");
+		List<Alarm> alarmList = alarmService.selectCategoryAlarm(alarm);
+		log.info(alarmList);
+		int alarmCnt = alarmService.selectAlarmCount(alarm);
+		model.addAttribute("alarmList",alarmList);
+		model.addAttribute("alarmCnt",alarmCnt);
+		model.addAttribute("command","category");
+		return "alarm/categoryList";
+	}
+	
 	@PostMapping(value="updateAlarmCheck")
 	public String updateAlarmCheck(@RequestBody Alarm alarm) {
 		log.info("실행");
@@ -72,16 +85,6 @@ public class AlarmController extends TextWebSocketHandler {
 		alarmService.deleteAlarm(alarmNo);
 		
 		return "redirect:/alarm/list";
-	}
-	
-	@PostMapping(value="categoryAlarm", produces="application/json; charset=UTF-8")
-	public String selectCategoryAlarm(@RequestBody Alarm alarm, Model model) {
-		log.info("실행");
-		List<Alarm> alarmList = alarmService.selectCategoryAlarm(alarm);
-		log.info(alarmList);
-		model.addAttribute("alarmList",alarmList);
-		
-		return "alarm/categoryList";
 	}
 	
 	
