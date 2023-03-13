@@ -35,7 +35,9 @@
 		width: 50px;
 		display:block;
 	}
-	
+	.col-lg-7 .userOgdpColumn{
+		display: none;
+	}
 	.detailView span {
 	  	white-space:normal !important;
 	  	font-size:14px;

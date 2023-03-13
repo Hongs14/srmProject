@@ -81,7 +81,7 @@
    			<div class="row mb-2 mr-0">
    				<div class="col-12">
 			   		<span>검토 상태</span>
-			   		<select class="form-control form-control-sm" id="examineSttsNm" name="examineSttsNm">
+			   		<select class="form-control form-control-sm" id="examineSttsNm" name="examineSttsNm" onchange="sttsNmChange()">
 			   			<option>검토중</option>
 			   			<option>반려</option>
 			   			<option>재검토</option>
@@ -91,7 +91,7 @@
    			</div>
    			<div class="row mb-2 mr-0">
    				<div class="col-12">
-			   		<span>검토 의견</span>
+			   		<span id="srOpnnTtl">검토 의견</span>
 			   		<textarea class="form-control" rows="3" id="srOpnn" name="srOpnn">${examine.srOpnn}</textarea>
    				</div>
    			</div>
@@ -100,6 +100,22 @@
 			</div>
   			</div>
 		</c:if>
+		<script>
+			function sttsNmChange() {
+				var sttsNmSelect = document.getElementById("examineSttsNm");
+				var sttsNm = sttsNmSelect.options[document.getElementById("examineSttsNm").selectedIndex].text;
+				console.log(sttsNm);
+				
+				if(sttsNm == "접수"){
+					$('#srOpnn').addClass('d-none');
+					$('#srOpnnTtl').addClass('d-none');
+				}else{
+					$('#srOpnn').removeClass('d-none');
+					$('#srOpnnTtl').removeClass('d-none');
+				}
+				
+			}
+		</script>
 		<hr>
 		<div class="row mb-4">
 			<div class="col-sm-2">
@@ -195,6 +211,9 @@
 			$("#message").text("저장 되었습니다.");
 	    	let msg = '알림이 도착하였습니다.'
     		socket.send(msg);
+	    	setTimeout(function() {
+	    		window.location.href = "${pageContext.request.contextPath}/examine/list";
+	    	}, 2000);
 		})
 		
 	}

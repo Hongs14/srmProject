@@ -147,47 +147,47 @@
 
 
 <div class="card mb-4 ajaxDetail">
-	<div class="card-header">
-		<div class="d-flex flex-row align-items-center justify-content-between">
-			<div>
-				<h6 class="m-0 font-weight-bold text-primary mb-3">공지사항 No.${notice.ntcNo}</h6>
-			</div>
-			<div>
-				<span>조회수 : ${notice.ntcInqCnt} </span>
-			</div>
+	<div class="d-flex flex-row align-items-center justify-content-between px-3 pt-3">
+		<div>
+			<small class="m-0 font-weight-bold text-primary">공지사항 No.${notice.ntcNo}</small>
 		</div>
 		<div>
-			<h4 class="m-0 font-weight-bold text-primary">제목 :${notice.ntcTtl} </h4>
+			<small>조회수 : ${notice.ntcInqCnt} </small>
 		</div>
-		<hr/>
-	</div>   
-	<div class="mx-3 p-3 d-flex flex-column">
-		<div class="row mb-2">
-			<div class="form-group col-sm-2 ">
+	</div>
+	<div class=" p-3 d-flex flex-column">
+		<div class="row align-items-center mb-1 ">
+			<div class=" col-sm-2 text-center">
 				<label class="col-form-label">작성자</label>
 			</div>
-			<div class="col-sm-10">
+			<div class="col-sm-4">
 				<span>${notice.userId}</span>
 			</div>
-		</div>	
-		<div class="row mb-2">
-			<div class="form-group col-sm-2 ">
+			<div class=" col-sm-2 text-center">
 				<label class="col-form-label">작성일</label>
 			</div>
-			<div class="col-sm-10">
+			<div class="col-sm-4">
 				<span>${notice.ntcWrtDate}</span>
 			</div>
-		</div>
-		<div class="row mb-2">
-			<div class="form-group col-sm-2 ">
+		</div>	
+		<div class="row align-items-center mb-2">
+			<div class="col-sm-2 text-center">
+				<label class="col-form-label">제목</label>
+			</div>
+			<div class="col-sm-10">
+				<span class="font-weight-bold text-primary col-form-label">${notice.ntcTtl}</span>
+			</div>
+		</div>	
+		<div class="row mb-1">
+			<div class=" col-sm-2 text-center">
 				<label class="col-form-label">내용</label>
 			</div>
-			<div class="col-sm-10"> 
+			<div class="col-sm-10 border p-2" style="height:300px; overflow-y: scroll;" > 
 				<span>${fn: replace(notice.ntcCn, replaceChar,"")}</span>
 			</div>
 		</div>
-		<div class="row mb-2">
-			<div class="form-group col-sm-2 ">
+		<div class="row align-items-center">
+			<div class=" col-sm-2 text-center">
 				<label class="col-form-label">첨부파일</label>
 			</div>
 			<div class="col-sm-10">	
@@ -212,23 +212,25 @@
 	</div>
 </div>
 <!-- 댓글 -->
-<div class="card  p-4">
+<div class="card p-4 mb-4">
 	<div id="cmntCount" class="mx-3 mb-2">댓글<span>(${notice.countCmnt})</span></div>
-	<div class="mx-3 p-1" >
-		<div class="row  justify-content-between">
-			<div class="col-sm-2 form-group">
-				${sessionScope.loginUser.userId}
-			</div>
-			<div class="col-sm-8 ">
-				<textarea  class="form-control" id="ntcCmntCn"></textarea>
-			</div>
-			<div class="col-sm-2 text-right">
-				<button type="button" class="btn btn-primary btn-sm" onclick="writeComment();">등록하기</button>
+	<div class="cmnts" style="overflow-y: scroll; height:200px;">
+		<div class="mx-3 p-1" >
+			<div class="row  justify-content-between">
+				<div class="col-sm-2 form-group">
+					${sessionScope.loginUser.userId}
+				</div>
+				<div class="col-sm-8 ">
+					<textarea  class="form-control" id="ntcCmntCn"></textarea>
+				</div>
+				<div class="col-sm-2 text-right">
+					<button type="button" class="btn btn-primary btn-sm" onclick="writeComment();">등록하기</button>
+				</div>
 			</div>
 		</div>
+		<div class="px-4" id="ntcComment">              		
+		</div>  
 	</div>
-		<div class="px-4" id="ntcComment" >              		
-	</div>  
 </div> 	
 
 
