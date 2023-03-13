@@ -62,6 +62,7 @@ public class UserService implements IUserService {
 		user.setUserEml(dbUser.getUserEml());
 		user.setUserTelno(dbUser.getUserTelno());
 		user.setUserDpNm(dbUser.getUserDpNm());
+		user.setUserPswdTempYn(dbUser.getUserPswdTempYn());
 		UserSystem userSystem = userRepository.selectSystemByUserNo(user.getUserNo());
 		log.info("userSystem: "+userSystem);
 		String sysNo = userSystem.getSysNo();
@@ -187,8 +188,8 @@ public class UserService implements IUserService {
 			
 			PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 			String securePswd = pe.encode(tempPswd);
-			
-			userRepository.updatePswd(securePswd, userNo);
+			char userPswdTempYn = 'Y';
+			userRepository.updatePswd(securePswd, userNo, userPswdTempYn);
 			
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
 		    MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -240,7 +241,8 @@ public class UserService implements IUserService {
 			int userNo = user.getUserNo();
 			PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 			String securePswd = pe.encode(user.getUserPswd());
-			rows = userRepository.updatePswd(securePswd, userNo);
+			char userPswdTempYn = 'N';
+			rows = userRepository.updatePswd(securePswd, userNo,userPswdTempYn);
 		} catch (Exception e) {
 			throw e;
 		}

@@ -213,7 +213,8 @@
 	        sr_ttl as "srTtl",
 	        sr_std as "srStd",
 	        stts_nm as "sttsNm",
-	        sr_cn as "srCn"
+	        sr_cn as "srCn",
+	        sr_opnn as "srOpnn"
 		FROM
 	        SR s, USERS u, SYSTEM sys, SR_STTS st
 		WHERE 
@@ -252,6 +253,7 @@
 			SR_REG_DATE=SYSDATE,
 			SR_TTL=#{srTtl},
 			SR_CN=#{srCn},
+			STTS_NO = 1,
 			SR_STD=#{srStd,jdbcType=VARCHAR}
 		WHERE 
 			SR_NO=#{srNo}

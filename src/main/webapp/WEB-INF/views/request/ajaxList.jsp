@@ -24,15 +24,15 @@
 			</thead>
 			<tbody>
 				<c:forEach var="request" items="${requestLists}">
-					<tr>
+					<tr id="sr-${request.srNo}" class="srList">
 						<td class="pr-0">
 	                       <div class="custom-control custom-checkbox">
 	                  			<input type="checkbox" class="custom-control-input" id="customCheck${request.srNo}" name="requestCheck" onclick='checkSelectAll(this)'>
 	                  			<label class="custom-control-label" for="customCheck${request.srNo}"></label>
 	                		</div>
 						</td>
-						<td><a onclick="getSrDetail('${request.srNo}')" style="cursor:pointer;" class="srNo">${request.srNo}</a></td>
-						<td><a onclick="getSrDetail('${request.srNo}')" style="cursor:pointer;"><span class="requsetTtl">${request.srTtl}</span></a></td>
+						<td><a onclick="getSrDetail('${request.srNo}')" style="cursor:pointer;" class="srNo font-weight-bold">${request.srNo}</a></td>
+						<td><a onclick="getSrDetail('${request.srNo}')" style="cursor:pointer;"><span class="requsetTtl font-weight-bold">${request.srTtl}</span></a></td>
 						<td><span class="sysNm">${request.sysNm}</span></td>
 						<td>${request.userNm}</td>
 						<td class="userOgdpColumn"><span class="userOgdp">${request.userOgdp}</span></td>

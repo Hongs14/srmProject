@@ -105,6 +105,26 @@
            		</c:forEach>
 			</div>	
 		</div>
+		<c:if test="${sr.sttsNm eq '반려'}">
+			<div class="row mb-4" style="min-height:50px; border-radius:5px; border:2px solid #f7d0ce;">
+				<div class="col-sm-2 text-center" style="background:#f7d0ce;">
+					<span class=" font-weight-bold"><i class="fas fa-exclamation-triangle" style="font-size:30px; color:#FFA426;"></i><br>반려사유</span> 
+				</div>
+				<div class="col-sm-10 border-bottom border-light">
+					<span>${sr.srOpnn}</span> 
+				</div>
+			</div>
+		</c:if>
+		<c:if test="${sr.sttsNm eq '재검토'}">
+			<div class="row mb-4" style="min-height:50px; border-radius:5px; border:2px solid #f7d0ce;">
+				<div class="col-sm-2 text-center" style="background:#f7d0ce;">
+					<span class=" font-weight-bold"><i class="fas fa-exclamation-triangle" style="font-size:30px; color:#FFA426;"></i><br>검토의견</span> 
+				</div>
+				<div class="col-sm-10 border-bottom border-light">
+					<span>${sr.srOpnn}</span> 
+				</div>
+			</div>
+		</c:if>
 		<!-- 하단 버튼들 -->
 		<div id="buttons" class="m-3 text-right">
 			<a href='<c:url value="/request/list"/>'><button type="button" class="btn btn-primary btn-sm">글목록</button></a>
@@ -113,6 +133,9 @@
 			<c:if test="${sr.sttsNm eq '요청' and sessionScope.userNo eq sr.srCustNo}">
 				<a><button type="button" onclick="getUpdateForm('${sr.srNo}')"class="btn btn-primary btn-sm">수정</button></a>
 				<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#deleteFun">삭제</button>
+			</c:if>
+			<c:if test="${sr.sttsNm eq '재검토' and sessionScope.userNo eq sr.srCustNo}">
+				<a><button type="button" onclick="getUpdateForm('${sr.srNo}')"class="btn btn-warning btn-sm">재작성</button></a>
 			</c:if>
 			<!-- Modal -->
 			<div class="modal" id="deleteFun" tabindex="-1" role="dialog" aria-labelledby="deleteFunLabel" aria-hidden="true">

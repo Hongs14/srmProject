@@ -11,7 +11,7 @@
 							<th style="width:130px">SR번호</th>
 							<th style="width:320px">제목</th>
 							<th style="width:110px">관련 시스템</th>
-							<th style="width:70px">상태</th>
+							<th style="width:90px">상태</th>
 							<th style="width:100px">완료예정일</th>
 							<th style="width:40px">중요</th>
 							<th style="width:100px">진척도</th>
@@ -19,7 +19,7 @@
 					</thead>
 					<tbody>
 						<c:forEach var="list" items="${srList}" varStatus="status">
-						<tr>
+						<tr id="bg-${list.srNo}" class="homeSrList">
 							<c:if test="${sessionScope.loginUser.userType eq '관리자'}">
 								<td style="width:130px">
 									<a onclick="managerMiniView('${list.srNo}')" style="cursor:pointer;" id="srNo-${status.index}">
@@ -69,39 +69,39 @@
 								</td>
 							</c:if>
 							<td style="width:110px">${list.sysNm}</td>
-							<td style="width:70px">
+							<td style="width:90px">
 								<c:choose>
 										<c:when test="${list.sttsNm eq '요청'}">
-											<span class="badge badge-outline-secondary" style="border: 1px solid gray;">${list.sttsNm}</span>
+											<span class="badge badge-outline-secondary" style="border: 1px solid gray; font-size:90%;">${list.sttsNm}</span>
 										</c:when>
 										<c:when test="${list.sttsNm eq '검토중'}">
-											<span class="badge badge-secondary">${list.sttsNm}</span>
+											<span class="badge badge-secondary" style="font-size:90%">${list.sttsNm}</span>
 										</c:when>
 										<c:when test="${list.sttsNm eq '접수'}">
-											<span class="badge badge-warning">${list.sttsNm}</span>
+											<span class="badge badge-warning" style="font-size:90%">${list.sttsNm}</span>
 										</c:when>
 										<c:when test="${list.sttsNm eq '개발중'}">
-											<span class="badge badge-info">${list.sttsNm}</span>
+											<span class="badge badge-info" style="font-size:90%">${list.sttsNm}</span>
 										</c:when>
 										<c:when test="${list.sttsNm eq '완료요청'}">
-											<span class="badge text-white" style="background-color:#a33bff;">${list.sttsNm}</span>
+											<span class="badge text-white" style="background-color:#a33bff; font-size:90%;">${list.sttsNm}</span>
 										</c:when>
 										<c:when test="${list.sttsNm eq '개발 완료'}">
-											<span class="badge badge-success">${list.sttsNm}</span>
+											<span class="badge badge-success" style="font-size:90%">${list.sttsNm}</span>
 										</c:when>
 										<c:when test="${list.sttsNm eq '개발계획'}">
-											<span class="badge text-white" style="background-color:#476A6F;">${list.sttsNm}</span>
+											<span class="badge text-white" style="background-color:#476A6F; font-size:90%;">${list.sttsNm}</span>
 										</c:when>
 										<c:otherwise>
-											<span class="badge badge-danger">${list.sttsNm}</span>
+											<span class="badge badge-danger" style="font-size:90%">${list.sttsNm}</span>
 										</c:otherwise>
 									</c:choose>
 							</td>
 							<td style="width:100px">${list.srRegDate}</td>
 							<td style="width:40px">
-								<c:if test="${list.srPry eq '상'}"><span class="badge badge-danger" style="font-size:100%">${list.srPry}</span></c:if>
-								<c:if test="${list.srPry eq '중'}"><span class="badge badge-primary" style="font-size:100%">${list.srPry}</span></c:if>
-								<c:if test="${list.srPry eq '하'}"><span class="badge badge-secondary" style="font-size:100%">${list.srPry}</span></c:if>
+								<c:if test="${list.srPry eq '상'}"><span class="badge badge-danger" style="font-size:90%">${list.srPry}</span></c:if>
+								<c:if test="${list.srPry eq '중'}"><span class="badge badge-primary" style="font-size:90%">${list.srPry}</span></c:if>
+								<c:if test="${list.srPry eq '하'}"><span class="badge badge-secondary" style="font-size:90%">${list.srPry}</span></c:if>
 							</td>
 							<td style="width:100px">
 								<div class="progress">
@@ -148,6 +148,9 @@
 				
 				<script>
 					function managerMiniView(srNo) {
+						var className = $(".homeSrList");
+						className.removeClass("on");
+						
 						data = {srNo : srNo}
 						
 						$.ajax({
@@ -158,10 +161,16 @@
 						}).done((data) => {
 							$('#managerMiniView').html(data);
 							$("#managerMiniViewDetail").show();
+							var bg = "bg-" + srNo;
+							$('#' + bg).addClass("on");
 						})
+						
 					}
 					
 					function devMiniView(srNo) {
+						var className = $(".homeSrList");
+						className.removeClass("on");
+					
 						data = {srNo : srNo}
 						
 						$.ajax({
@@ -172,6 +181,8 @@
 						}).done((data) => {
 							$('#devMiniView').html(data);
 							$("#devPlanDetail").show();
+							var bg = "bg-" + srNo;
+							$('#' + bg).addClass("on");
 						})
 					}
 				</script>

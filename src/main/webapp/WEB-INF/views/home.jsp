@@ -36,9 +36,11 @@
 		.row {
 			white-space: normal;
 		}
-		
+
+		.on {
+			background-color: rgba(0, 0, 0, 0.075);
+		}
     </style>
- 
   	
 </head>
 
@@ -142,6 +144,8 @@
 								}).done((data) => {
 									$('#managerMiniView').html(data);
 									$("#managerMiniViewDetail").show();
+									var bg = "bg-" + srNo;
+									$('#' + bg).addClass("on");
 								})
 								
 								$.ajax({
@@ -152,7 +156,10 @@
 								}).done((data) => {
 									$('#devMiniView').html(data);
 									$("#devPlanDetail").show();
+									var bg = "bg-" + srNo;
+									$('#' + bg).addClass("on");
 								})
+								
 							});
 							
 							function homeMiniViewChange(sttsNo, pageNo) {
