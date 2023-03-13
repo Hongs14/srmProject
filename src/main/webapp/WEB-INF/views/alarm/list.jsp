@@ -82,7 +82,6 @@
 											<div>
 												<button class="btn btn-outline-warning m-1">SR상태변경</button>
 												<button class="btn btn-outline-info m-1">업무배정</button>
-												<button class="btn btn-outline-primary m-1">문의결과</button>
 												<button class="btn btn-outline-danger m-1">요청결과</button>
 											</div>
 										</div>
