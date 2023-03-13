@@ -13,7 +13,7 @@
 					<th>제목</th>
 					<th>관련시스템</th>
 					<th>등록자</th>
-					<th>소속</th>
+					<th class="userOgdpColumn">소속회사</th>
 					<th>부서</th>
 					<th>상태</th>
 					<th>등록일</th>
@@ -31,7 +31,7 @@
 						<td><a onclick ="getSrDetail('${examine.srNo}')" style="cursor:pointer;" class="srTtl">${examine.srTtl}</a></td>
 						<td>${examine.sysNm}</td>
 						<td>${examine.userNm}</td>
-						<td><span class="userOgdp">${examine.userOgdp}</span></td>
+						<td class="userOgdpColumn"><span class="userOgdp">${examine.userOgdp}</span></td>
 						<td>${examine.userDpNm}</td>
 						<td class="srStts">
 							<c:if test="${examine.sttsNm eq '요청'}"><span class="badge badge-dark" style="font-size:100%">${examine.sttsNm}</span></c:if>
