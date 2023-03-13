@@ -114,7 +114,7 @@
 						<tr>
 							<c:if test="${list.progType != 5 && list.progType != 6}">
 								<th>
-									<a onclick="progressRateAdd('${list.progNo}')" data-toggle="modal" data-target="#progressRateModal">
+									<a onclick="progressRateAdd('${list.progNo}')" data-toggle="modal" data-target="#progressRateModal" style="cursor:pointer;">
 										${list.progTypeNm}
 									</a>
 								</th>
