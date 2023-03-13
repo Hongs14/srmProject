@@ -105,11 +105,33 @@ public class QnaboardService implements IQnaboardService {
 		return result;
 	}
 	@Override
-	public void qstnFileUpload(QSTN qstn) {
-		log.info("실행");
-		qnaboardRepository.insertQstnFileUpload(qstn);
+	public void qstnFileUpload(QSTNFile qstnFile) {
+		log.info("파일 업로드실행");
+		log.info(qstnFile);
+		qnaboardRepository.insertQstnFileUpload(qstnFile);
 	}
 	
+	
+	@Override
+	public int changeQstn(QSTN qstn) {
+		int result = 0;
+		qnaboardRepository.updateQstn(qstn);
+		return result;
+	}
+	
+	@Transactional
+	public int changeQstnFile(QSTN qstn, QSTNFile qstnFile) {
+		int result = 0;
+		qnaboardRepository.updateQstn(qstn);
+		qnaboardRepository.updateQstnFile(qstnFile);
+		return result;
+	}
+	
+	public int eraseQstn(int qstnNo) {
+		int result = 0;
+		qnaboardRepository.deleteQstn(qstnNo);
+		return result;
+	}
 
 	@Override
 	public QSTNComment writeComment(QSTNComment qComment) {

@@ -2,6 +2,7 @@ package com.team01.webapp.qnaboard.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.model.QSTN;
@@ -12,8 +13,8 @@ import com.team01.webapp.util.Pager;
 
 public interface IQnaboardService {
 	
-	public List<QSTN> getQstnList(Pager pager, QSTN qstn);
-	public Pager returnPage(int pageNo, Pager pager, QSTN qstn);
+	public List<QSTN> getQstnList(@Param("pager") Pager pager, @Param("qstn") QSTN qstn);
+	public Pager returnPage(@Param("int") int pageNo, @Param("pager") Pager pager, @Param("qstn") QSTN qstn);
 	
 	public QSTN getDetail(int qstnNo);
 
@@ -26,7 +27,11 @@ public interface IQnaboardService {
 	public int countInq(int qstnNo);
 	public List<MultipartFile> getQstnFileDetail(int qstnNo);
 	public QSTNFile selectFiledownload(int qstnNo);
-	public void qstnFileUpload(QSTN qstn);
+	public void qstnFileUpload(QSTNFile qstnFile);
+	public int changeQstn(QSTN qstn);
+	public int changeQstnFile(@Param("qstn") QSTN qstn, @Param("qstnFile") QSTNFile qstnFile);
+	public int eraseQstn(int qstnNo);
+	
 
 	
 	

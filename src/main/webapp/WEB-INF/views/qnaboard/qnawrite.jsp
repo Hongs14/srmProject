@@ -27,7 +27,7 @@
 	    
 		<!-- 게시글 작성 -->
 		<div class="card-body">
-			<form onsubmit="return false;" method="post" enctype="multipart/form-data">
+			<form onsubmit="return false;" method="post" id="qstnUpdateForm" enctype="multipart/form-data">
 			   	<!-- 글 제목 -->
 			   	<div class="row">
 			   		<div class="col-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">글제목</h6></div>
@@ -56,7 +56,7 @@
 					<div class="col-sm-9" id="inputFile" style="border: 1px solid black">
 						<c:if test="${command eq 'update'}"> 
 							<c:forEach var="qstnFile" items="${qstnFile}">
-								<div id="file${requestFile.srFileNo}" class="filebox row">
+								<div id="file${qstnFile.qstnFileNo}" class="filebox row">
 					              	<a class="delete col-1" onclick="deleteExistingFile('${qstnFile.qstnFilePhysNm}','${qstnFile.qstnFileNo}')"><i class="far fa-minus-square"></i></a>
 					                <a href="file?qstnFileNo=${qstnFile.qstnFileNo}">${qstnFile.qstnFileActlNm}</a>
 						        </div>
@@ -65,17 +65,18 @@
 					</div>
 				</div> 
 			   	
+			   	<input type="hidden" id="qstnNo" name="qstnNo" value="${qstn.qstnNo}"/>
 			   	<input type="hidden" id="userNo" name="userNo" value="${sessionScope.loginUser.userNo}">
 			   	<input type="hidden" id="userNm" name="userNm" value="${sessionScope.loginUser.userNm}">
 			   	<input type="hidden" id="sysNo" name="sysNo" value="${sessionScope.loginUser.sysNo}">
 			   	<!-- 작성완료/닫기 -->
 			   	<div class="row mt-3">
 			    	<div class="col-12">
-			    		<div class="d-sm-flex justify-content-end">
+			    		<div class="text-right">
 			    		    <c:if test="${command ne 'update'}"><a type="button" class="btn btn-outline-primary" href="${pageContext.request.contextPath}/qna/${sessionScope.loginUser.sysNo}/list">취소</a></c:if>
 					    	<c:if test="${command eq 'update'}"><button type="button" class="btn btn-outline-primary" onclick="getDetail('${qstn.qstnNo}')">취소</button></c:if>
 					      	<c:if test="${command ne 'update'}"><button type="submit" class="btn btn-primary" onclick="qstnWrite()">저장</button></c:if>
-					       	<c:if test="${command eq 'update'}"><button type="submit" class="btn btn-primary" onclick="qstnUpdate()">저장</button></c:if>
+					       	<c:if test="${command eq 'update'}"><button type="submit" class="btn btn-primary" onclick="qstnUpdate()">수정</button></c:if>
 						</div>	                	
 					</div>
 			    </div>
@@ -156,7 +157,9 @@
 				contentType: false	// 필수
 		    }).done((data) => {
 		    	$('#miniView').html(data);
-		    	console.log("전송완료");
+		    	$("#qstnModal").modal();
+		    	$("#modalHeader").html("<b>Qna작성</b>");
+		    	$("#modalBody").html("<h4>작성이 완료되었습니다.</h4>"); 
 		    });
 		}
 		
@@ -179,7 +182,6 @@
 		    for (let i = 0; i < filesArr.length; i++) {
 		        // 삭제되지 않은 파일만 폼데이터에 담기
 		        if (!filesArr[i].is_delete) {
-		        	console.log("돌아감");
 		        	console.log(filesArr[i]);
 		            formData.append("qstnMFile", filesArr[i]);
 		        }
@@ -189,38 +191,54 @@
 		    	console.log(fileNmArray[j]);
 		    	formData.append("deleteFile",fileNmArray[j]);
 		    }
-		    let srRegDate=$('#srRegDate').value;
-		    let srNo = $('#srNo').value;
-		    formData.append("srNo",srNo);
-		    let sysNm=$('#sysNm').value;
-		    formData.append("sysNm",sysNm);
+		 	
+		    let sysNo = $('#sysNo').val();
+		    formData.append("sysNo", sysNo);
 		    
-		    let srTtl = $('#srTtl').value;
-		    formData.append("srTtl",srTtl);
+		    let qstnCn = $('#qstnCn').val();
+		    formData.append("qstnCn",qstnCn);
 		    
-		    if($('#srStd').val() !== ""){
-		    	let srStd = $('#srStd').val();
-		    	formData.append("srStd",srStd);
-		    }
-		    let srCn = $('#srCn').value;
-		    formData.append("srCn",srCn);
+		    let qstnTtl = $('#qstnTtl').val();
+		    formData.append("qstnTtl",qstnTtl);
 		    
-		    let userNo = $('#userNo').value;
-		    formData.append("userNo",userNo);
+		    let qstnNo = $('#qstnNo').val();
+		    formData.append("qstnNo",qstnNo);
+		    
+		    console.log(sysNo+" "+qstnCn+" "+qstnTtl+" "+qstnNo);
 		    
 		    $.ajax({
 				type: "POST",
 				enctype: 'multipart/form-data',	// 필수
-				url: 'update',
+				url: '${pageContext.request.contextPath}/qna/'+sysNo+'/update',
 				data: formData,		// 필수
 				processData: false,	// 필수
 				contentType: false	// 필수
 		    }).done((data) => {
-		//    	console.log("update:: "+"srNo"+srNo+"sysNm"+sysNm+"srTtl"+srTtl+"srStd"+srStd+"srCn"+srCn+userNo);
-		    	window.location.href = "/webapp/qna/"+sysNo+"/list/1";
+		     	$("#qstnModal").modal();
+		    	$("#modalHeader").html("<b>Qna수정</b>");
+		    	$("#modalBody").html("<h4>수정이 완료되었습니다.</h4>"); 
+		    	$('#miniView').html(data);
+		    	
 		    });
 		    
 		}
+		
+		function getDetail(qstnNo){
+			$("#mainQstnMenu").removeClass("d-sm-flex");
+			$("#mainQstnMenu").hide();
+			$("#qstnMenu").show();
+			$("#mainQstn").attr("class","col-lg-7");
+			$("#miniView").attr("class","col-lg-5");
+			let sysNo = $('#sysNo').val();
+			
+			$.ajax({
+				type:"GET",
+				url: '${pageContext.request.contextPath}/qna/'+sysNo+'/view/'+qstnNo,
+				dataType : "html"
+			}).done((data) =>{
+				$('#miniView').html(data);
+			})
+		};
 	</script>
 	
 </html>

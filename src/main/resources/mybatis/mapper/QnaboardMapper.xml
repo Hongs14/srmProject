@@ -69,10 +69,12 @@
 	<select id="selectDetail" parameterType="int" resultType="qstn">
 		SELECT QSTN_NO AS "qstnNo", 
 				USER_NM AS "userNm", 
+				USERS.USER_NO AS "userNo",
 				QSTN_TTL AS "qstnTtl", 
 				QSTN_CN AS "qstnCn", 
 				QSTN_INQ_CNT AS "qstnInqCnt", 
-				QSTN_WRT_DATE AS "qstnWrtDate"
+				QSTN_WRT_DATE AS "qstnWrtDate",
+				QSTN.SYS_NO AS "sysNo"
 		FROM QSTN, USERS
 		WHERE QSTN.USER_NO = USERS.USER_NO AND QSTN.QSTN_NO =#{qstnNo}
 	</select>
@@ -121,14 +123,39 @@
 		Qna 게시글 작성
 	 -->
 	<insert id="insertQSTN" parameterType="qstn">
-		INSERT INTO QSTN VALUES(QSTNNO_SEQ.NEXTVAL, #{userNo}, #{qstnTtl}, #{qstnCn}, 0, SYSDATE, #{sysNo})
+		<selectKey keyProperty="qstnNo" resultType="int" order="BEFORE">
+			SELECT QSTNNO_SEQ.nextval FROM dual
+		</selectKey>
+		INSERT INTO QSTN VALUES(#{qstnNo}, #{userNo}, #{qstnTtl}, #{qstnCn}, 0, SYSDATE, #{sysNo})
 	</insert>
-	<insert id="insertQstnFileUpload" parameterType="qstn">
+	
+	<insert id="insertQstnFileUpload" parameterType="qstnFile">
 		<![CDATA[
 			INSERT INTO QSTN_FILE(QSTN_FILE_NO, QSTN_NO, QSTN_FILE_PHYS_NM, QSTN_FILE_ACTL_NM, QSTN_FILE_EXTN_NM)
-			VALUES(QSTNFILENO_SEQ.NEXTVAL, QSTNNO_SEQ.NEXTVAL , #{qstnFilePhysNm}, #{qstnFileActlNm}, #{qstnFileExtnNm})
+			VALUES(QSTNFILENO_SEQ.NEXTVAL, #{qstnNo}, #{qstnFilePhysNm}, #{qstnFileActlNm}, #{qstnFileExtnNm})
 		]]>
 	</insert>
+	
+	<!-- 
+		Qna게시글 수정
+		작성자  : 정홍주
+	 -->
+	<update id="updateQstn" parameterType="qstn">
+		UPDATE QSTN SET QSTN_TTL = #{qstnTtl}, QSTN_CN = #{qstnCn}
+		WHERE QSTN_NO = #{qstnNo}
+	</update>
+	
+	<update id="updateQstnFile" parameterType="qstnFile">
+		UPDATE QSTN_FILE SET
+			QSTN_FILE_ACTL_NM = #{qstnFileActlNm},
+			QSTN_FILE_PHYS_NM = #{qstnFilePhysNm},
+			QSTN_FILE_EXTN_NM = #{qstnFileExtnNm}
+		WHERE QSTN_NO = #{qstnNo}
+	</update>
+	
+	<delete id="deleteQstn" parameterType="int">
+		DELETE FROM QSTN WHERE QSTN_NO = #{qstnNo}
+	</delete>
 	
 	
 	<select id="selectComment" resultType="qstnComment">

@@ -77,7 +77,6 @@
 				comment += '<textarea id="commentContent'+item.qstnCmntNo+'" disabled="disabled" style="border: none; resize:none; width:90%">'+item.qstnCmntCn+'</textarea>';
 				
         		$('#qComment').append(comment); 
-        		/* $('#cmntCount').empty(); */
         		console.log(qCountCmnt);
         		$('#cmntCount').html('댓글('+(qCountCmnt+1)+')');
         		qCountCmnt += 1;
@@ -95,6 +94,7 @@
 		};
 
 		function udpateComplete(i){
+			//댓글 수정
 			console.log("댓글수정 ajax");
 			console.log(i);
 			let content = $('#commentContent'+i).val();
@@ -114,6 +114,7 @@
 		};
 		
 		function deleteComment(i){
+			//댓글 삭제
 			console.log("댓글삭제"+i);
 			let qstnCmntNo = i;
 			$.ajax({
@@ -129,6 +130,32 @@
 				
 			});
 		};
+		
+		function updateQstn(qstnNo){
+			$("#mainQstnMenu").removeClass("d-sm-flex");
+			$("#mainQstnMenu").hide();
+			$("#qstnMenu").show();
+			$("#mainQstn").attr("class","col-lg-7");
+			$("#miniView").attr("class","col-lg-5");
+			let sysNo = $('#sysNo').val();
+			$.ajax({ 
+				url: "${pageContext.request.contextPath}/qna/"+sysNo+"/update?qstnNo="+qstnNo,
+				method: "GET",
+				dataType : "html"
+			}).done((data)=>{
+				$('#miniView').html(data);
+			});
+		}
+		
+		function deleteQstn(qstnNo){
+	    	$("#modalHeader").html("<b>Qna삭제</b>");
+	    	$("#modalBody").html("<h4>삭제하시겠습니까?</h4>"); 
+	    	$("#qstnModal").modal('show');
+	    	let sysNo = $('#sysNo').val();
+	    	$('#qstnSubmit').on("click", function(){
+	    		console.log("삭제");
+	    	});
+		}
 	</script>
 
     <!-- 메인 컨테이너 Container Fluid-->
@@ -176,7 +203,7 @@
              		<div class="form-group col-sm-2 ">
              			<label class="col-form-label">내용</label>
              		</div>
-             		<div class="col-sm-10  mt-2 textDetail" style="border: 1px solid black" id="qstnCn">
+             		<div class="col-sm-10  mt-2 textDetail" id="qstnCn" style="border: 1px solid black; height: 150px; overflow-y:scroll;"  >
              			${qstn.qstnCn}
              		</div>
            		</div>
@@ -191,10 +218,12 @@
             			</div>
            		</div>
            		<div class="text-right"> 
-           			<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/qna/list'">목록</button>
+           			<input type="hidden" id="sysNo" name="sysNo" value="${qstn.sysNo}"/>
+           			<input type="hidden" id="qstnNo" name="qstnNo" value="${qstn.qstnNo}"/>
+           			<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/qna/${qstn.sysNo}/list'">목록</button>
            			<c:if test="${qstn.userNo eq sessionScope.loginUser.userNo}">
-           				<input type="button" class="btn btn-primary" value="수정" onclick="location.href='${pageContext.request.contextPath}/qna/update'"/>
-           				<button class="btn btn-primary">삭제</button>
+           				<input type="button" class="btn btn-primary" value="수정" onclick="updateQstn(${qstn.qstnNo})"/>
+           				<button type="button" class="btn btn-primary" onclick="deleteQstn(${qstn.qstnNo})">삭제</button>
            			</c:if>
            			
            		</div>
