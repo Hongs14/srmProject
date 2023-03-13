@@ -115,7 +115,7 @@
 						            <div class="card-header px-5 d-flex flex-row align-items-center justify-content-between">
 			                			<h6 class="m-0 font-weight-bold text-primary">질문 목록</h6>
 			                			<div class="d-sm-flex justify-content-end">
-			                				<a onclick="writeQstn()" class="btn-outline-primary btn-sm">Q&A 등록하기</a>
+			                				<a onclick="writeQstn()" class="btn btn-primary btn-sm">Q&A 등록하기</a>
 			                  			</div>
 			                		</div> 
 			                		<div id="qstnlist" style="width: 100%;">
@@ -132,6 +132,7 @@
 					</div>
 			        <!---Container Fluid-->
 				</div>
+				<%@include file="/WEB-INF/views/common/footer.jsp" %>
 			</div>
 		</div>
 		<script>

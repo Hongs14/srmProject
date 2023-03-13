@@ -377,7 +377,13 @@ public class RequestController {
 	public String deleteRequest(@PathVariable String srNo, Model model) {
 		log.info("실행");
 		int rows = requestService.deleteRequest(srNo);
+		if(rows == 1) {
+			model.addAttribute("result", "success");
+			return "redirect:/request/list";
+		}
+		model.addAttribute("result", "false");
 		return "redirect:/request/list";
+		
 	}
 	
 	@RequestMapping(value="/excelDownload", method=RequestMethod.POST)

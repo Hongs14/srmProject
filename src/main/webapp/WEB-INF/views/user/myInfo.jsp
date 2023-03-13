@@ -6,14 +6,14 @@
 <head>
 	<style>
 	.text-primary {
-	font-size: 2rem;
+		font-size: 2rem;
 	}
 	
 	#myInfoWrapper{
-  			justify-content: center;
-  			align-items:center;
-  			min-height: 100vh;
-  		}
+		justify-content: center;
+		align-items:center;
+		min-height: 100vh;
+	}
 	</style>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
 </head>
@@ -71,6 +71,7 @@
 						<div class="row mb-5">
 							<label class="col-3" style="border-top:0; margin:0px;font-size:1.2rem;" for="userPswd">비밀번호 </label>
 							<input class="col-7" type="password" placeholder="password" id="userPswd"class="mx-2" style="border:0; font-size:1.2rem;" disabled>
+							<input type="hidden" id="originPswd" value="${user.userPswd}">
 							<a class="btn btn-outline-warning btn-sm col-2" data-toggle="modal" data-target="#updatePswd">수정하기</a>
 						</div>
 						<div class="row mb-5">
@@ -125,7 +126,7 @@
 		                      	<option>사장</option>
 		                      </select>
 						</div>
-						<input type="hidden" value="${user.userNo}" name="userNo"/>
+						<input type="hidden" value="${user.userNo}" name="userNo" id="userNo"/>
 						<input type="hidden" value="${user.userId}" name="userId"/>
 					<div class="card-footer">
 						<div class="text-center">
@@ -146,7 +147,7 @@
           
 			<!-- Modal -->
 			<div class="modal fade" id="updatePswd" tabindex="-1" aria-labelledby="updatePswdFunLabel" aria-hidden="true">
-			  <div class="modal-dialog" style="width:400px">
+			  <div class="modal-dialog" style="width:600px">
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <h5 class="modal-title" id="updatePswdFunLabel">비밀번호 변경</h5>
@@ -154,42 +155,48 @@
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
-			      <div class="modal-body">
+			      <div class="modal-body p-5">
 			      <form>
 			      	<div class="row">
-			      		<div class="col-sm-4">
-			      			<span>현재 비밀번호</span>
+			      		<div class="col-sm-3">
+			      			<label class="text-right" for="currentPswd">현재 비밀번호 </label>
 			      		</div>
-			      		<div class="col-sm-8">
-			      			<input type="password" required/>
-			      			<div class="invalid-feedback">
-			      				현재 비밀번호를 입력해주세요.
-			      			</div>
+			      		<div class="col-sm-9">
+				      		<div class="form-group">
+				      			<input type="password"  class="form-control" id="currentPswd" placeholder="Password" required/>
+				      			<small id="currentPswdHelp" class="form-text text-danger"></small>
+				      		</div>
 			      		</div>
 			      	</div>
 			      	<br>
 			      	<div class="row">
-			      		<div class="col-sm-4">
-			      			<span>새로운 비밀번호</span>
+			      		<div class="col-sm-3">
+			      			<label class="text-right" for="newPswd">비밀번호 </label>
 			      		</div>
-			      		<div class="col-sm-8">
-			      			<input type="password" class="mb-1"required/>
-			      			<div class="invalid-feedback">
-			      				비밀번호를 입력해주세요.
-			      			</div>
-			      			<br>
-			      			<input type="password" class="mb-1" required/>
-			      			<div class="invalid-feedback">
-			      				비밀번호를 입력해주세요.
-			      			</div>
+			      		<div class="col-sm-9">
+			      			<div class="form-group">
+		                      <input type="password" class="form-control" id="newPswd" name="userPswd" placeholder="Password" required>
+		                      <small id="passwordHelp" class="form-text text-muted">특수문자 포함,알파벳 대소문자,숫자를 혼용해서 8자 이상 25자 이하</small>
+		                    </div>
 			      		</div>
+			      	</div>
+			      	<div class="row">
+			      		<div class="col-sm-3">
+			      			<label class="text-right" for="checkPswd">비밀번호 재입력 </label>
+			      		</div>
+			      		<div class="col-sm-9">
+				      		<div class="form-group">
+			                      <input type="password" class="form-control" id="checkPswd"  name="checkPswd" placeholder="Repeat Password" required> 
+			                      <small id="checkPswdHelp" class="form-text text-muted">패스워드와 똑같은 값을 입력해 주세요</small>
+		                    </div>
+	                    </div>
 			      	</div>
 			      </form>
 			      	
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-			        <button class="btn btn-primary">비밀번호 수정</button>
+			        <button class="btn btn-primary" id="checkPswdBtn" onclick="updatePswd()">비밀번호 수정</button>
 			      </div>
 			    </div>
 			  </div>
@@ -225,6 +232,35 @@
 			     </div>
 			   </div>
 			 </div>
+			 <!-- User Modal -->
+	          <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+				   <div class="modal-dialog" role="document" style="max-width:400px;">
+				     <div class="modal-content">
+				       <div class="modal-header bg-primary">
+				         	<h5 class="modal-title" id="userModalLabel"> 
+					          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+					        	<small class="text-white"><b>알림</b></small>
+					        </h5>
+				         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+				           <span aria-hidden="true">&times;</span>
+				         </button>
+				       </div>
+				       <div class="modal-body justify-content-center text-center p-5">
+					       <div class="d-flex align-items-center">
+						       <div id="iconWrapper" class="mr-4">
+							       	<i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#FFA426;"></i>
+						       </div>
+						       <div class="text-left">
+							     <h5 id="dialogWrapper">비밀번호를 변경하였습니다.</h5>
+						       </div>
+					       </div>
+				       </div>
+				       <div class="modal-footer justify-content-center text-center">
+				         <button type="button" class="btn btn-outline-primary mx-2" data-dismiss="modal">확인</button>
+				       </div>
+				     </div>
+				   </div>
+				 </div>
 
           <!-- 로그아웃 모달 -->
            <%@include file="/WEB-INF/views/common/logout.jsp" %>
@@ -316,9 +352,16 @@
 	  }
 	  
 	  function submitUpdateInfo(){
+		 
  		 var userEml = $("#userEml").val();
  		 var userTelno = $("#userTelno").val();
+ 		 
+ 		if(userEml !="" || userTelno != ""){
+ 			emailRegCheck();
+ 			userTelnoRegCheck();
+ 		}
  		
+ 		 
  		 if(userEml == ""){
  			 $("#emailHelp").html("이메일을 입력해주세요(예) user@naver.com)");
  			 $("#emailHelp").removeClass("text-muted");
@@ -335,18 +378,123 @@
  		 emptyCheck = 1;
  		
  		 if(emlCheck != 1 || emptyCheck != 1 || telnoCheck != 1) {
-	   			console.log("회원정보수정 실패");
-	   			var body = document.getElementsByTagName("body")[0];
-	   			window.scroll({
-	   	            behavior: 'smooth',
-	   	            left: 0,
-	   	            top:body.offsetTop
-	   	        });
+   			console.log("회원정보수정 실패");
+   			console.log("emlCheck"+emlCheck);
+   			console.log("emptyCheck"+emptyCheck);
+   			console.log(telnoCheck);
+   			var body = document.getElementsByTagName("body")[0];
+   			window.scroll({
+   	            behavior: 'smooth',
+   	            left: 0,
+   	            top:body.offsetTop
+   	        });
  		 }
  		 if(emlCheck == 1 && emptyCheck == 1 && telnoCheck == 1){
- 			 $(".myInfoWrapper").submit();
+			$(".myInfoWrapper").submit();
+			$("#dialogWrapper").text("회원정보를 수정하였습니다.");
+ 			$("#userModal").modal();
+	    	console.log("변경완료");
+ 			 
  		 }
  	  }
+	/* 비밀번호 수정 */
+	function updatePswd(){
+		var userNo = $("#userNo").val();
+		var pswdConfirm = 0;
+		var pswdCheckAgain = 0;
+		
+		console.log("updatePswd 실행");
+		pswdConfirm = checkPswdFun(userNo);
+		
+		/* 비밀번호 재입력 확인 */
+	  	var inputed = $('#newPswd').val();
+        var reinputed = $('#checkPswd').val();
+        console.log(inputed);
+        console.log(reinputed);
+        
+        if(reinputed=="" && (inputed != reinputed || inputed == reinputed)){
+            $(".signupbtn").css("background-color", "#aaaaaa");
+            $("#checkPswd").css("background-color", "#FFCECE");
+            $("#checkPswdHelp").html("패스워드와 똑같은 값을 입력해 주세요");
+            $("#checkPswdHelp").removeClass("text-muted");
+	  		$("#checkPswdHelp").addClass("text-danger");
+	  		pswdCheckAgain = 0;
+        } else if (inputed == reinputed) {
+            $("#checkPswd").css("background-color", "#d4e6d4");
+            $("#checkPswdHelp").html("비밀번호를 동일하게 입력하였습니다.");
+        	$("#checkPswdHelp").removeClass("text-danger");
+      		 	$("#checkPswdHelp").addClass("text-muted");
+      		pswdCheckAgain = 1;
+	            
+        } else if (inputed != reinputed) {
+            $("#checkPswd").css("background-color", "#FFCECE");
+            $("#checkPswdHelp").html("패스워드와 똑같은 값을 입력해 주세요");
+            $("#checkPswdHelp").removeClass("text-muted");
+		  	$("#checkPswdHelp").addClass("text-danger");
+        	pswdCheckAgain = 0;
+        }
+	        
+	       
+        /* 비밀번호 정규식 검증 */
+	  	var pswdRegCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+        if(!pswdRegCheck.test(inputed)){
+	  		$("#passwordHelp").removeClass("text-muted");
+	  		$("#passwordHelp").addClass("text-danger");
+	  		pswdCheckAgain = 0;
+	  	 	
+	  	}else if(pswdRegCheck.test(inputed)){
+ 		  	$("#passwordHelp").removeClass("text-danger");
+ 		 	$("#passwordHelp").addClass("text-muted");
+ 		 	pswdCheckAgain = 1;
+	  	}
+		
+		console.log("pswdConfirm"+pswdConfirm+" | pswdCheckAgain: "+pswdCheckAgain);
+		
+		let data = {userPswd: inputed, userNo:userNo};
+		/* 비밀번호 업데이트 */
+        if(pswdCheckAgain == 1 && pswdConfirm == 1){
+        	$.ajax({
+    			url : "${pageContext.request.contextPath}/user/update_pswd",
+    			method : "post",
+    			async :false,
+    			data : JSON.stringify(data),
+    			contentType: "application/json; charset=UTF-8"
+    		}).done((data) => {
+    			console.log(data);
+    			$("#updatePswd").modal('hide');
+    			 $("#dialogWrapper").text("비밀번호를 변경하였습니다.");
+    			$("#userModal").modal();
+    	    	console.log("변경완료");
+    		});
+        }
+	}
+	
+	/* 현재 비밀번호 확인 */
+	function checkPswdFun(userNo){
+		var userId = $("#userId").val();
+	  	var currentPswd = $("#currentPswd").val();
+	  	console.log(userNo+", "+currentPswd);
+	  	
+	  	let data = {userPswd: currentPswd, userId:userId};
+	  	$.ajax({
+			url : "${pageContext.request.contextPath}/user/check_pswd",
+			method : "post",
+			async :false,
+			data : JSON.stringify(data),
+			contentType: "application/json; charset=UTF-8"
+		}).done((data) => {
+			console.log(data);
+			if(data == 'success'){
+				pswdConfirm = 1;
+				$("#currentPswdHelp").text("");
+			}else if(data == 'false'){
+				pswdConfirm = 0;
+				$("#currentPswdHelp").text("비밀번호를 다시 확인해주세요.");
+			}
+		});
+	  	return pswdConfirm;
+	}
+	
 	  
  </script>
 </body>

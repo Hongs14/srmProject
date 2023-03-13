@@ -407,6 +407,8 @@
 												contentType: "application/json; charset=UTF-8"
 											}).done((data) => {
 												$("#ajaxList").html(data);
+												let msg = "알림이 도착했습니다.";
+												socket.send(msg);
 											});
 									  	});
 
@@ -461,6 +463,8 @@
 												contentType: "application/json; charset=UTF-8"
 											}).done((data) => {
 												$("#ajaxList").html(data);
+												let msg = "알림이 도착했습니다.";
+												socket.send(msg);
 											});
 									  	});
 
@@ -581,6 +585,7 @@
 			<%@include file="/WEB-INF/views/common/logout.jsp" %>
 			</div>
 	        <!---Container Fluid-->
+	        <%@include file="/WEB-INF/views/common/footer.jsp" %>
 		</div>
 
     </div>

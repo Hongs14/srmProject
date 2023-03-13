@@ -114,20 +114,25 @@ function requestWrite() {
     
     var userNo = document.getElementById('userNo').value;
     formData.append("userNo",userNo);
-    
     $.ajax({
 		type: "POST",
 		enctype: 'multipart/form-data',	// 필수
-		url: 'write',
+		url: "write",
 		data: formData,	// 필수
 		processData: false,	// 필수
 		contentType: false	// 필수
     }).done((data) => {
+    	$("#requestModal").modal();
+    	$("#modalHeadText").text("SR 요청");
+    	$("#modalBodyText").text("SR 요청이 완료되었습니다.");
     	$('#colNo2').html(data);
-    	onMessage();	
+    	console.log("작성완료");
+    	let msg = '알림이 도착하였습니다.'
+		socket.send(msg);
     });
     
 }
+
 
 let fileNmArray = [];
 
@@ -179,15 +184,17 @@ function requestUpdate() {
     $.ajax({
 		type: "POST",
 		enctype: 'multipart/form-data',	// 필수
-		url: 'update',
+		url: "update",
 		data: formData,		// 필수
 		processData: false,	// 필수
 		contentType: false	// 필수
     }).done((data) => {
-//    	console.log("update:: "+"srNo"+srNo+"sysNm"+sysNm+"srTtl"+srTtl+"srStd"+srStd+"srCn"+srCn+userNo);
     	$('#colNo2').html(data);
+    	$("#requestModal").modal();
+    	$("#modalHeadText").text("SR 수정");
+    	$("#modalBodyText").text("SR 수정이 완료되었습니다.");
     });
-    
-    
-    
 }
+
+
+

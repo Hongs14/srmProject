@@ -5,8 +5,10 @@
 	<!-- 읽지 않은 알림 수 -->
 	<select id="selectAlarmCount" parameterType="alarm" resultType="int">
 		SELECT COUNT(ALARM_NO)
-		FROM SR_ALARM sa, SR s
-		WHERE sa.SR_NO = s.SR_NO
+		FROM SR_ALARM sa, SR s,SR_STTS st, HR h
+		WHERE sa.SR_NO = s.SR_NO(+)
+		AND s.STTS_NO = st.STTS_NO(+)
+		AND s.SR_NO = h.SR_NO(+)
 		<if test="userType.equals('고객사')">
 			AND sa.SR_NO like #{sysNo}
 			AND sa.USER_NO = #{userNo}
@@ -29,6 +31,13 @@
 			AND s.STTS_NO != 7
 			AND s.STTS_NO != 8
 			AND s.STTS_NO != 9
+			AND h.USER_NO = #{userNo}
+			AND 
+			   ( CASE 
+			        WHEN s.STTS_NO = 5 THEN 'SR 요청이 개발중 입니다.'
+			        WHEN s.STTS_NO = 6 THEN 'SR 요청이 개발완료 되었습니다.'
+			        WHEN s.STTS_NO = 10 THEN 'SR 요청에 대한 계획 조정 요청 입니다.'
+			    END) = sa.MESSAGE
 		</if>
 		AND MESSAGE_CHECK = 'N'
 		AND s.SR_DEL_YN = 'N'
@@ -47,9 +56,10 @@
 		    sa.ALARM_CATEGORY AS "alarmCategory",
 		    sa.SR_NO AS "srNo",
 		    st.STTS_NM AS "sttsNM"
-		FROM SR_ALARM sa, SR s,SR_STTS st
-		WHERE sa.SR_NO = s.SR_NO
-		AND s.STTS_NO = st.STTS_NO
+		FROM SR_ALARM sa, SR s,SR_STTS st, HR h
+		WHERE sa.SR_NO = s.SR_NO(+)
+		AND s.STTS_NO = st.STTS_NO(+)
+		AND s.SR_NO = h.SR_NO(+)
 		<if test="userType.equals('고객사')">
 			AND sa.SR_NO like #{sysNo}
 			AND sa.USER_NO = #{userNo}

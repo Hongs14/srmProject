@@ -53,6 +53,9 @@
 				
 		let data = {userNo: ntcWriterNo, ntcNo: ntcNo, ntcCmntCn: content};
 		console.log(data);
+		console.debug("noticeDetail.jsp::socket",socket);
+		console.debug("noticeDetail.jsp::content",content);
+		socket.send(content);
 		$.ajax({
 			url: "${pageContext.request.contextPath}/notice/write/comment",
 			method: "post",
@@ -73,7 +76,7 @@
 			comment += 	'</div>';
 			comment +='</div>';
 			comment += '<textarea id="commentContent'+item.ntcCmntNo+'" disabled="disabled" style="border: none; resize:none; width:90%">'+item.ntcCmntCn+'</textarea>';
-					
+				
 	        $('#ntcComment').append(comment); 
 	        $('#cmntCount').empty();
 	        $('#cmntCount').append('댓글('+(${notice.countCmnt}+1)+')');

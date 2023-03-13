@@ -1,48 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
           <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
       <ul class="navbar-nav ml-auto">
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                aria-labelledby="searchDropdown">
-                <form class="navbar-search">
-                </form>
-              </div>
-           <!-- sockJS -->
-			<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-			<script>
-				// 전역변수 설정
-				var socket  = null;
-				$(document).ready(function(){
-				    // 웹소켓 연결
-				    sock = new SockJS("<c:url value="/echo-ws"/>");
-				    socket = sock;
-				    
-				    sock.onopen = function() {
-			            console.log('Info: connection opened.');
-			        };
-				    
-				    // 데이터를 전달 받았을때 
-				    sock.onmessage = onMessage; // toast 생성
-				});
+      	<div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+      		<form class="navbar-search"></form>
+      	</div>
+		<!-- sockJS -->
+		<script>
+			// 전역변수 설정
+			var socket  = null;
+			$(document).ready(function(){
+			    // 웹소켓 연결
+			    sock = new SockJS("<c:url value="/echo-ws"/>");
+			    socket = sock;
+			    
+			    sock.onopen = function() {
+		           console.log('Info: connection opened.');
+		       };
+			    // 데이터를 전달 받았을때 
+			    sock.onmessage = onMessage; 
+			    
+			    sock.onclose = function (event) {
+		           console.log('Info: connection closed.');
+		       };
+			
+			});
+			
+			function onMessage(){
+				console.log("message 실행");
 				
-				function onMessage(){
-					console.log("message 실행");
-					
-					$.ajax({
-						url : "${pageContext.request.contextPath}/alarm/list",
-						method : "get",
-					}).done((data) => {
-						console.log("message 실행 완료");
-					});
-				    
-				};
+				let userType = "${sessionScope.loginUser.userType}";
+				if(userType != '관리자'){
+					countUp();					
+				}
+			};
+			
+			function countUp() {
+
+				var count = document.getElementById("count").innerText;
+				let num1 = parseInt(count);
+				num1++;
+				document.getElementById("count").innerText=num1;
 				
-			</script>
+			}
+		</script>
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -51,7 +58,7 @@
                		<c:set var="alarmCnt" value="${alarmCnt}"/>
 					<c:choose>
 						<c:when test="${alarmCnt != 0}">
-		               		<c:out value="${alarmCnt}"/>						
+		               		<div id="count">${alarmCnt}</div>			
 						</c:when>
 						<c:otherwise>
 							0
@@ -74,7 +81,7 @@
 										<c:if test="${alarmList.messageCheck eq 89}">
 											<i class="fas fa-check text-white"></i>
 										</c:if>
-										<c:if test="${alarmList.messageCheck eq 78 }">
+										<c:if test="${alarmList.messageCheck eq 78}">
 											<i class="fas fa-exclamation-triangle text-white"></i>
 										</c:if>
 									</div>
@@ -147,9 +154,6 @@
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="${pageContext.request.contextPath}/user/myinfo/${sessionScope.loginUser.userId}">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>나의 정보 확인
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>설정
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">

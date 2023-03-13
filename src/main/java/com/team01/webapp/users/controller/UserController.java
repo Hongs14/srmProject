@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -167,6 +168,7 @@ public class UserController {
 		log.info("unregister 실행"+ userNo);
 		
 		int rows = userService.unregister(userNo);
+		log.info("변경 행수: " + rows);
 		return "redirect:/";
 	}
 	
@@ -180,15 +182,78 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user/update", method = RequestMethod.POST)
 	public String update(Users user, Model model ) {
-			log.info("user: "+user);
-			int rows = userService.updateUserInfo(user);
-			log.info("변경행수: "+rows);
-			return "redirect:/user/myinfo/"+user.getUserId();
+		log.info("user: "+user);
+		int rows = userService.updateUserInfo(user);
+		log.info("변경행수: "+rows);
+		return "redirect:/user/myinfo/"+user.getUserId();
 	}
 	
 	
 	@RequestMapping(value="/user/recovery", method = RequestMethod.GET)
 	public String recovery() {
 		return "user/recovery";
+	}
+	
+	@RequestMapping(value="/user/id_recovery", method = RequestMethod.GET)
+	public String idRecovery() {
+		return "user/idRecovery";
+	}
+	
+	@RequestMapping(value="/user/id_recovery", method = RequestMethod.POST)
+	public @ResponseBody String idRecovery(@RequestBody Users user) {
+		log.info("실행"+user);
+		String userId="";
+		try {
+			userId = userService.findUserId(user);
+		} catch (Exception e) {
+			log.info(e.getMessage());
+		}
+		return userId;
+	}
+	@RequestMapping(value="/user/pswd_recovery", method = RequestMethod.GET)
+	public String pswdRecovery() {
+		return "user/pswdRecovery";
+	}
+	
+	@RequestMapping(value="/user/pswd_recovery", method = RequestMethod.POST)
+	public @ResponseBody String pswdRecovery(@RequestBody Users user) {
+		int rows = 0;
+		try {
+			rows = userService.sendRecoveryMail(user);
+			log.info("변경 행수: "+rows);
+			return "success";
+		}catch(Exception e) {
+			log.info(e.getMessage());
+			return "false";
+		}
+	}
+	@RequestMapping(value="/user/check_pswd", method = RequestMethod.POST)
+	public @ResponseBody String checkPswd(@RequestBody Users user) {
+		int rows = 0;
+		try {
+			rows = userService.getPswd(user);
+			log.info("결과: "+rows);
+			if(rows == 1) {
+				return "success";
+			}else {
+				return "false";
+			}
+		}catch(Exception e) {
+			log.info(e.getMessage());
+			return "false";
+		}
+	}
+	
+	@RequestMapping(value="/user/update_pswd", method = RequestMethod.POST)
+	public @ResponseBody String updatePswd(@RequestBody Users user) {
+		int rows = 0;
+		try {
+			rows = userService.updatePswd(user);
+			log.info("변경 행수: "+rows);
+			return "success";
+		}catch(Exception e) {
+			log.info(e.getMessage());
+			return "false";
+		}
 	}
 }
