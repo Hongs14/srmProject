@@ -73,6 +73,9 @@
 	  #colNo2 label{
 	  	font-weight: 700 !important;
 	  }
+	  .on {
+         background-color: rgba(0, 0, 0, 0.075);
+      }
     
 	</style>
   	
@@ -474,12 +477,16 @@
 					$("#colNo1").attr("class","col-lg-7");
 					$("#colNo2").attr("class","col-lg-5");
 					
+					$(".srList").removeClass("on");
+					
 					$.ajax({
 						url : "${pageContext.request.contextPath}/request/detail/"+srNo,
 						type : "GET",
 						dataType : "html",
 						success : function(data) {
 							$('#colNo2').html(data);
+							var detailOn = "sr-"+i;
+							$('#' + detailOn).addClass("on");
 						}
 					});
 					

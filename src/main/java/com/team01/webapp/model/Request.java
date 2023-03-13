@@ -16,4 +16,5 @@ public class Request {
 	private String srStd;
 	private String srCn;
 	private String sttsNm;
+	private String srOpnn;
 }

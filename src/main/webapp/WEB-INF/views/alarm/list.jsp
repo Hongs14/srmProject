@@ -11,27 +11,32 @@
 	}
 	
 	#myInfoWrapper{
-  			justify-content: center;
-  			align-items:center;
-  			min-height: 100vh;
-  		}
+		justify-content: center;
+		align-items:center;
+		min-height: 100vh;
+  	}
   	#bellIcon{
   		 display: inline-block;
-		 width: 200px;
-		 height: 200px;
+		 width: 50px;
+		 height: 50px;
 		 border-radius: 50%;
 		 text-align: center;
 		 font-size: 15px;
-		 padding-top: 40px;
-		 background-color:#f1fafd;
+		 padding-top: 5px;
+		 background-color:#214763;
+		 border:1px solid #214763;
 		 color:#ffcc00;
   	}
   	#bellIcon>i{
-		font-size:100px;
+		font-size:35px;
 	}
 	.myInfoWrapper{
-		 background-color:#fff7d2;
-		 width: 450px;
+		background-color:rgb(255, 247, 209, 0.5);
+		 width: 650px;
+		 padding: 20px;
+	}
+	table .icon {
+		font-size: 30px;
 	}
 	.myInfoWrapper span{
 		white-space: normal;
@@ -54,73 +59,75 @@
    						<!-- Row -->
    						<div class="row" id="myInfoWrapper">
    							<div class="col-lg-7 container">
-   								<div class="d-sm-flex align-items-end justify-content-between">
+   								<div class="d-sm-flex align-items-center justify-content-between">
    									<div class="bg-primary px-3 py-2" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
 										<h6 class="mb-0 text-white">알림 센터</h6>
 									</div>
 									<ol class="breadcrumb">
-										<li class="breadcrumb-item"><b>알림 센터</b></li>
-										<li class="breadcrumb-item active" aria-current="page">나의 알림</li>
+										<li class="breadcrumb-item"><b>나의 알림 확인하기</b></li>
 									</ol>
 								</div>
 								<div class="card">
-									<div class="card-body d-flex justify-content-between p-5">
-										<div class="alertIcon text-center">
-											<div id="bellIcon" class="mb-2">
+									<div class="d-flex justify-content-between p-5 border-bottom mb-4">
+										<div class="alertIcon text-center align-items-center">
+											<div id="bellIcon">
 												<i class="fa-solid fa-bell"></i>
 											</div>
+											<span class="h2 m-2 font-weight-bold"> 알림 </span>
+										</div>
+										<div class="text-left">
 											<div>
-												<hr>
-												<span class="text-primary h6"><b>알림 카테고리</b></span>
+												<span class="text-primary h5 m-2">알림 카테고리</span>
 											</div>
 											<div>
 												<button class="btn btn-outline-warning m-1">SR상태변경</button>
 												<button class="btn btn-outline-info m-1">업무배정</button>
-											</div>
-											<div>
 												<button class="btn btn-outline-primary m-1">문의결과</button>
 												<button class="btn btn-outline-danger m-1">요청결과</button>
 											</div>
 										</div>
+									</div>
+									<div class="d-flex px-5 justify-content-center">
 										<div class="myInfoWrapper shadow-sm">
-											<div style="background-color:#fff3ab; padding: 20px;">나의 알림 목록</div>
-											<div class="row mb-5 p-5">
-												<table>
-													<tbody>												
-														<c:choose>
-															<c:when test="${fn:length(alarmList) == 0 }">
-																<span>알림 내역이 없습니다.</span>
-															</c:when>
-															<c:otherwise>
-																<c:forEach var="alarmList" items="${alarmList}">
-																	<tr style="cursor:pointer;">
-																		<td onclick="updateCheck('${alarmList.srNo}')">
-																			<c:if test="${alarmList.messageCheck eq 89}">
-																				<i class="fa-regular fa-square-check fa-lg"></i>
-													                    	</c:if>
-													                    	<c:if test="${alarmList.messageCheck eq 78 }">
-														                      <i class="fas fa-exclamation-triangle"></i>
-													                    	</c:if>
-																			<span class="col-3 " style="border-top:0; margin:0px;font-size:1.2rem;"><b>${alarmList.alarmTtl}</b></span>
-																			<span>${alarmList.messageDate}</span>
-																			<br/>			
-																			<div class="col-3" style="font-size:0.7rem">${alarmList.srNo}</div>
-																			<span class="d-none" id="alarmNo">${alarmList.alarmNo}</span>
-																			<span class="d-none" id="sttsNm">${alarmList.sttsNm}</span>
-																			<span class="col-3 ">${alarmList.message}</span>
-																			<hr/>
-																		</td>
-																		<td>
-																			<i class="fas fa-trash" data-toggle="modal" data-target="#alarmBtn" id="#modalScroll"></i>
-																		</td>
-																	</tr>																
-																</c:forEach>
-															</c:otherwise>
-														</c:choose>										
-													</tbody>
-												</table>
+													<table class="table table-hover">
+														<tbody>												
+															<c:choose>
+																<c:when test="${fn:length(alarmList) == 0 }">
+																	<div class="alert alert-secondary m-3 p-2" role="alert">
+																		<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+																		알림 내역이 없습니다.
+																	</div>
+																</c:when>
+																<c:otherwise>
+																	<c:forEach var="alarmList" items="${alarmList}">
+																		<tr style="cursor:pointer;">
+																			<td class="row border-bottom" onclick="updateCheck('${alarmList.srNo}')" style="border-top: 0; ">
+																				<div class="col-2 text-center mt-3">
+																					<c:if test="${alarmList.messageCheck eq 89}">
+																						<i class="fa-regular fa-square-check icon"></i>
+															                    	</c:if>
+															                    	<c:if test="${alarmList.messageCheck eq 78 }">
+																                     	<i class="fas fa-exclamation-triangle icon"></i>
+															                    	</c:if>
+														                    	</div>
+														                    	<div class="col-9">
+														                    		<span style="border-top:0; margin:0px;font-size:1.2rem;"><b>${alarmList.alarmTtl}</b></span>
+																					<span>${alarmList.messageDate}</span>
+																					<br/>			
+																					<div style="font-size:0.7rem">${alarmList.srNo}</div>
+																					<span class="d-none" id="alarmNo">${alarmList.alarmNo}</span>
+																					<span class="d-none" id="sttsNm">${alarmList.sttsNm}</span>
+																					<span >${alarmList.message}</span>
+														                    	</div>
+																				<i class="fas fa-trash col-1" data-toggle="modal" data-target="#alarmBtn" id="#modalScroll"></i>
+																			</td>
+																		</tr>																
+																	</c:forEach>
+																</c:otherwise>
+															</c:choose>										
+														</tbody>
+													</table>
 											</div>
-										</div>
 									</div>
 								</div>
 							</div>

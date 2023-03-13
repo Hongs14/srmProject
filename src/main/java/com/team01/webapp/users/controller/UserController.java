@@ -75,6 +75,9 @@ public class UserController {
 			session.setAttribute("userId", user.getUserId());
 			session.setAttribute("sysNo", user.getSysNo());
 			log.info(user);
+			if(user.getUserPswdTempYn()=='Y') {
+				return "user/tempPswd";
+			}
 			return "redirect:/home";
 		}
 	}

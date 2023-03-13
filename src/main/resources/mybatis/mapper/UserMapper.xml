@@ -15,7 +15,8 @@
 		     user_ogdp as "userOgdp", 
 		     user_eml as "userEml", 
 		     user_telno as "userTelno", 
-		     user_dp_nm as "userDpNm"
+		     user_dp_nm as "userDpNm",
+		     user_pswd_temp_yn as "userPswdTempYn"
 		     
 		  FROM 
 			users
@@ -87,7 +88,8 @@
 		UPDATE
 			USERS
 		SET 
-			user_pswd = #{securePswd} 
+			user_pswd = #{securePswd} ,
+			user_pswd_temp_yn = #{userPswdTempYn} 
 		WHERE 
 			USER_NO = #{userNo}
 	</update>

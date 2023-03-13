@@ -18,15 +18,6 @@
         .form-group > select { max-width: 780px;}
         .form-group > small {padding-left:150px;}
     </style>
-    
-   
-    <%-- <c:if test="${result eq 'wrongJoin'}">
-	  	<script>
-		  	$(document).ready(function(){
-		  	 	$("#wrongJoin").modal();
-		  	});
-	  	</script>
-  	</c:if> --%>
 </head>
 
 <body id="page-top">
@@ -195,7 +186,7 @@
      	 <script>
      	 
      	function optionChange1() {
-            var a = ['북북','사슈즈','오티아이','한국대학교'];
+            var a = ['북북출판사','사슈즈','오티아이','한국대학교'];
             var b = ['한국소프트'];
             
             var a2 = ['전산팀','마케팅팀','기획팀','인사팀','회계팀','총무팀','영업팀','판매팀'];
@@ -230,7 +221,7 @@
           }
      	
     	$(document).ready(function () {
-    		 var a = ['북북','사슈즈','오티아이','한국대학교'];
+    		 var a = ['북북출판사','사슈즈','오티아이','한국대학교'];
     		 var a2 = ['전산팀','마케팅팀','기획팀','인사팀','회계팀','총무팀','영업팀','판매팀'];
          	 var userType = '고객사';
     		 var userOgdpOptions = a;
