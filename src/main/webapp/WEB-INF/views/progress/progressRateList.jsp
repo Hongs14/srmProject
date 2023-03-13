@@ -14,7 +14,70 @@
 		      });  
 	  	});
 	</script>
-
+	
+	<!-- 모달 창 -->
+	<div class="modal fade" id="progressRateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div id="progressRateModalView"></div>
+			</div>
+		</div>
+	</div>
+	<!-- 완료 요청 모달 -->
+	<div class="modal fade" id="progressFinishRequestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+		<div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title" id="exampleModalLabelLogout">
+			          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+			        	<small class="text-white">
+			        		<b>요청 신청</b>
+			        	</small>
+					</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body p-5" style="white-space: normal;">
+					<div class="alert alert-secondary m-3 p-2" role="alert">
+						<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+						<div id="message"></div>
+					</div>
+				</div>
+				<div class="modal-footer" id="footer">
+					<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 진척율 업데이트 메시지 모달 창 -->
+	<div class="modal fade" id="rateMessageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title" id="exampleModalScrollableTitle">
+						<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+			        	<small class="text-white">
+			        		<b>삭제</b>
+			        	</small>
+					</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body p-5" style="white-space: normal; text-align:center;">
+					<div class="alert alert-secondary m-3 p-2" role="alert">
+						<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+						<div id="rateModalMessage"></div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="rateUpdateModalShow()">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<div class="table-responsive p-1">
 	<div class="input-group-append float-right mb-3">
 		<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
@@ -136,69 +199,7 @@
 				</c:if>
 			</tbody>
 		</table>
-	<!-- 모달 창 -->
-	<div class="modal fade" id="progressRateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
-			<div class="modal-content">
-				<div id="progressRateModalView"></div>
-			</div>
-		</div>
 	</div>
-	<!-- 완료 요청 모달 -->
-	<div class="modal fade" id="progressFinishRequestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-		<div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
-			<div class="modal-content">
-				<div class="modal-header bg-primary">
-					<h5 class="modal-title" id="exampleModalLabelLogout">
-			          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
-			        	<small class="text-white">
-			        		<b>요청 신청</b>
-			        	</small>
-					</h5>
-					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body p-5" style="white-space: normal;">
-					<div class="alert alert-secondary m-3 p-2" role="alert">
-						<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
-						<div id="message"></div>
-					</div>
-				</div>
-				<div class="modal-footer" id="footer">
-					<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- 진척율 업데이트 메시지 모달 창 -->
-	<div class="modal fade" id="rateMessageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
-			<div class="modal-content">
-				<div class="modal-header bg-primary">
-					<h5 class="modal-title" id="exampleModalScrollableTitle">
-						<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
-			        	<small class="text-white">
-			        		<b>삭제</b>
-			        	</small>
-					</h5>
-					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body p-5" style="white-space: normal; text-align:center;">
-					<div class="alert alert-secondary m-3 p-2" role="alert">
-						<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
-						<div id="rateModalMessage"></div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="rateUpdateModalShow()">닫기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 
 <script>
 	function progressRateAdd(progNo) {

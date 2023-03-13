@@ -77,7 +77,6 @@
 			$('#userfile').empty();
 			var maxFileCnt = 1; // 첨부파일 최대 개수
 			var curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
-			console.log(curFileCnt);
 			for (const file of obj.files) {
 				var reader = new FileReader();
 				reader.onload = function() {

@@ -11,20 +11,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.team01.webapp.alarm.service.IAlarmService;
-import com.team01.webapp.examine.service.IExamineService;
 import com.team01.webapp.home.service.IHomeService;
-import com.team01.webapp.model.Alarm;
 import com.team01.webapp.model.DevMini;
 import com.team01.webapp.model.Donut;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Notice;
 import com.team01.webapp.model.ProgressDetail;
+import com.team01.webapp.model.RequestFilter;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SystemInfo;
-import com.team01.webapp.model.Users;
 import com.team01.webapp.notice.service.INoticeService;
+import com.team01.webapp.request.service.IRequestService;
 import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
 
@@ -48,6 +48,9 @@ public class HomeController {
 	
 	@Autowired
 	AlarmInfo alarmInfo;
+	
+	@Autowired
+	IRequestService requestService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Pager pager, Notice notice, Model model) {
@@ -230,5 +233,21 @@ public class HomeController {
 		}
 		
 		return "home/devMiniView";
+	}
+	
+	@RequestMapping(value="/list", method = RequestMethod.POST)
+	public String getHomeRequestFilter(HttpSession session, @RequestParam(value="sttsNo") int sttsNo, @RequestParam(value="sysNo") String sysNo, RequestFilter requestFilter, Model model) {
+		
+		requestFilter = requestService.getFilterList(requestFilter);
+		model.addAttribute("requestfilter", requestFilter);
+		model.addAttribute("command", "list");
+		model.addAttribute("homeSttsNo", sttsNo);
+		model.addAttribute("homeSysNo", sysNo);
+		
+		//알림 수 및 리스트
+		alarmInfo.info(session, model); 
+		
+		return "request/list";
+		
 	}
 }

@@ -346,14 +346,27 @@
 				  return zero + n;
 				}
 				$(document).ready(function () {
-					console.log("시작");
-					var sysNoSelect = document.getElementById("sysNo");
-					var sttsNoSelect = document.getElementById("sttsNo");
+					var sysNo = 0;
+					var sttsNo = 0;
+					
+					var homeSttsNo = '${homeSttsNo}';
+					
+					if(homeSttsNo != '') {
+						sysNo = '${homeSysNo}';
+						sttsNo = '${homeSttsNo}';
+						$("#sttsNo").val(sttsNo).prop("selected", true);
+						$("#sysNo").val(sysNo).prop("selected", true);
+						$('#searchMySR').prop('checked', true);
+					} else {
+						var sysNoSelect = document.getElementById("sysNo");
+						sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
+						var sttsNoSelect = document.getElementById("sttsNo");
+						sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;	
+					}
+					
 					var userOgdpSelect = document.getElementById("userOgdp");
 					var srDevDpSelect = document.getElementById("srDevDp");
 					
-					var sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
-					var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
 					var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].value;
 			 		var srDevDp = srDevDpSelect.options[document.getElementById("srDevDp").selectedIndex].value;  
 			 		
