@@ -141,7 +141,7 @@ color:white;
 													</div>
 												</div>
 												<!-- SR 내용 -->
-												<div class="row mb-1">
+												<div class="row mb-4">
 													<div class="col-2">
 														<span class="font-weight-bold">SR 내용 </span>
 													</div>
@@ -151,7 +151,7 @@ color:white;
 												</div>
 												<!-- 첨부파일 -->
 												<c:if test="${progressDetail.srFile[0].srFileNo != null}">
-													<div class="row mb-2">
+													<div class="row mb-4">
 														<div class="col-sm-2">
 															<span class="font-weight-bold">첨부파일: </span> 
 														</div>
@@ -257,58 +257,58 @@ color:white;
 								<c:choose>
 									<c:when test="${message == 2}">
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)" style="cursor:pointer;">SR 인적자원관리</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link active" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
+											<a class="nav-link active" data-toggle="pill" onclick="progressDetail(2)" style="cursor:pointer;">SR 진척율</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)" style="cursor:pointer;">SR 산출물</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="pill" onclick="progressDetail(4)">SR 계획조정</a>
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(4)" style="cursor:pointer;">SR 계획조정</a>
 										</li>
 									</c:when>
 									<c:when test="${message == 3}">
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)" style="cursor:pointer;">SR 인적자원관리</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)" style="cursor:pointer;">SR 진척율</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link active" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+											<a class="nav-link active" data-toggle="pill" onclick="progressDetail(3)" style="cursor:pointer;">SR 산출물</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="pill" onclick="progressDetail(4)">SR 계획조정</a>
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(4)" style="cursor:pointer;">SR 계획조정</a>
 										</li>
 									</c:when>
 									<c:when test="${message == 4}">
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(1)" style="cursor:pointer;">SR 인적자원관리</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)" style="cursor:pointer;">SR 진척율</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)" style="cursor:pointer;">SR 산출물</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link active" data-toggle="pill" onclick="progressDetail(4)">SR 계획조정</a>
+											<a class="nav-link active" data-toggle="pill" onclick="progressDetail(4)" style="cursor:pointer;">SR 계획조정</a>
 										</li>
 									</c:when>
 									<c:otherwise>
 										<li class="nav-item">
-											<a class="nav-link active" data-toggle="pill" onclick="progressDetail(1)">SR 인적자원관리</a>
+											<a class="nav-link active" data-toggle="pill" onclick="progressDetail(1)" style="cursor:pointer;">SR 인적자원관리</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)">SR 진척율</a>
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(2)" style="cursor:pointer;">SR 진척율</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)">SR 산출물</a>
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(3)" style="cursor:pointer;">SR 산출물</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="pill" onclick="progressDetail(4)">SR 계획조정</a>
+											<a class="nav-link" data-toggle="pill" onclick="progressDetail(4)" style="cursor:pointer;">SR 계획조정</a>
 										</li>
 									</c:otherwise>
 								</c:choose>
