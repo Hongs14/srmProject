@@ -12,140 +12,7 @@
            display: none;
         }
 	</style>
-	<script>
-		function selectDev(obj) {
-			//개발담당자 선택
-			let pickDp = obj.value.toString();
 	
-			$.ajax({
-				url : '<c:url value="/develop/devLeader?userNo=' + pickDp + '"/>',
-				method : "get",
-				dataType : "json",
-				success : function(data) {
-					console.log(data);
-					console.log(data[0].userDpNm);
-					$('#HrList').empty();
-					$('#srDevDp').val(data[0].userDpNm);
-					$('#pickDevNm').empty();
-					$('#leaderNo').val(data[0].userNo);
-					$('#pickDevNm').append(data[0].userNm);
-			
-					$('.addlist').prop("disabled", true);
-				},
-				error : function(request, status, error) {
-					console.log("실패");
-					alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
-				}
-			});
-		};
-		
-		function selectAll(selectAll) {
-			//전체 체크하기
-			const checkboxes = document.querySelectorAll('input[class="selectall"]');
-		  	checkboxes.forEach((checkbox) => {
-		    	checkbox.checked = selectAll.checked
-		  	});
-		  	
-		};
-		
-		function checkSelectAll(checkbox)  {
-			//체크 해제
-			const selectall  = document.querySelector('input[class="selectall"]');
-		  
-		  	if(checkbox.checked === false)  {
-		    	selectall.checked = false;
-		  	}
-		};
-
-		function registerDevelop(){
-			console.log("개발계획 등록");
-			let srDevDp = $('#srDevDp').val();
-			let srDdlnDate = $('#srDdlnDate').val();
-			let srStartDate = $('#srStartDate').val();
-			let srEndDate = $('#srEndDate').val();
-			
-			$('#selectDev').empty();
-			$('#selectDev').append('<h3>[' + srDevDp + '] 등록하기 </h3>');
-			$('#leaderSdate').val(srStartDate);
-			$('#leaderEdate').val(srEndDate);
-			$('.addlist').prop("disabled", false);
-
-			selectList();
-	
-		}
-	
-		function selectList() {
-			//모달리스트 띄우기
-			let userDpNm = $('#srDevDp').val();
-			let startDate = $('#srStartDate').val();
-			let endDate = $('#srEndDate').val(); 
-			let userNo = $('#srDLeader').val();
-			console.log(userNo);
-			let data = {
-				userDpNm : userDpNm,
-				userNo : userNo,
-				hrStartDate : startDate,
-				hrEndDate : endDate
-			};
-			console.log(data);
-	
-			$.ajax({
-				url : '<c:url value="/develop/devlist"/>',
-				type : "post",
-				dataType : "html",
-				data : JSON.stringify(data),
-				contentType : "application/json; charset=UTF-8",
-				success : function(data) {
-					console.log(data);
-					$("#modalContent").html(data);
-				},
-				error : function(request, status, error) {
-					
-				}
-			});
-		};
-	
-		function submitDev() {
-			//HR리스트에 일반개발자 등록
-			var checkBoxArr = [];
-			var srNo = '${dlist.srNo}';
-			console.log("aAAAAAAAA"+srNo);
-			$("input:checkbox[name='devName']:checked").each(function(i) {
-				//체크박스값 배열에 넣기
-				var userNo = $(this).val();
-				var data = {
-					userNo : userNo,
-					srNo : srNo
-				};
-				console.log("data"+data);
-				checkBoxArr.push(data);
-			});
-			console.log(checkBoxArr);
-	
-			$.ajax({
-				url : '<c:url value="/develop/selectNm"/>',
-				type : 'post',
-				data : JSON.stringify(checkBoxArr),
-				contentType : "application/json; charset=UTF-8",
-				success : function(data) {
-					console.log(data);
-					$('#HrList').html(data);
-				}
-			});
-	
-		};
-		
-		$(document).on('click', '.deleteHr', function(){
-			//리스트 지우기
-			let userNo = $(this).parent().parent().find('input').val();
-			console.log($(this).parent().parent().find('input').val());
-			console.log('hr삭제하기');
-			$(this).parent().parent().remove();
-			$("#" + userNo).prop("checked", false);
-			$("#allcheck").prop("checked", false);
-		})
-
-	</script>
 
 </head>
 
@@ -265,6 +132,7 @@
 																		<option value="${users.userNo}">${users.userNm} [${users.userDpNm}&nbsp;${users.userJbps}]</option>
 																	</c:forEach>
 																</select>
+																<div id="messageDev" class="validate" style="color: red;"></div>
 															</div>
 														</div>
 														<div class="form-group row">
@@ -282,8 +150,7 @@
 															</div>
 															<div class="col-sm-8">
 																<select id="sttsNo" name="sttsNo"  class="form-control noneUpdate">
-																	<option value="5" selected>개발중</option>
-																	<option value="9">개발계획</option>
+																	<option value="9" selected>개발계획</option>
 																</select>
 															</div>
 														</div>
@@ -293,6 +160,7 @@
 															</div>
 															<div class="col-sm-8 p-2">
 														 		<textarea class="toggle" name="srDevCn" id="srDevCn" style="width: 100%; height:135px" required>${dlist.srDevCn}</textarea>
+																<div id="messageDevCn" class="validate" style="color: red"></div>
 															</div>
 														</div>
 														
@@ -302,6 +170,7 @@
 															</div>
 															<div class="col-sm-8">
 																<input type="date" id="srDdlnDate" name="srDdlnDate" value="${dlist.srDdlnDate}" class="form-control" required/>
+																<div id="messageDdln" class="validate" style="color: red"></div>
 															</div>
 														</div>
 														<div class="form-group row">
@@ -321,7 +190,9 @@
 															</div>
 															<div class="col-sm-8">
 																<input type="date" id="srStartDate" name="srStartDate" value="${dlist.srStartDate}" class="form-control" required/>
+																<div id="messageStartDate" class="validate" style="color: red"></div>
 															</div>
+															
 														</div>
 														<div class="form-group row">
 															<div class="col-sm-4 col-form-label row">
@@ -329,11 +200,12 @@
 															</div>
 															<div class="col-sm-8">
 																<input type="date" id="srEndDate" name="srEndDate" value="${dlist.srEndDate}" class="form-control" required />
+																<div id="messageEndDate" class="validate" style="color: red"></div>
 															</div>
 														</div>
 														<div class="text-right">
 															<input type="hidden" id="srNo" value="${dlist.srNo}" />
-															<button type="button" id="button" class="btn btn-sm btn-primary mr-4 toggle" onclick="registerDevelop()"> 등록 ▶</button>
+															<button type="button" id="button" class="btn btn-sm btn-primary mr-4 toggle" data-toggle="modal" data-target="#checkEffectiveness" onclick="registerDevelop()"> 등록 ▶</button>
 														</div>
 													</div>
 												
@@ -386,7 +258,7 @@
 																		</div>
 																	</div>
 																	<div class="col-sm-3 text-center">
-																		<select name="taskNo" class="form-control mx-0" required>	
+																		<select name="taskNo" class="selectTaskNo form-control mx-0" required>	
 																			<c:if test="${dlist.sttsNo == 9}">
 																				<c:forEach items="${hrlist}" var="devlist">
 																					<c:if test="${devlist.hrLeader eq 'Y'}">
@@ -409,7 +281,7 @@
 																		<c:if test="${dlist.sttsNo == 9}">
 																			<c:forEach items="${hrlist}" var="devlist" >
 																				<c:if test="${devlist.hrLeader eq 'Y'}">
-																					<input name="hrStartDate" id="leaderSdate" value="<fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy-MM-dd"/>" type="date" class="form-control" readonly />
+																					<input name="hrStartDate" onchange="setDate()" id="leaderSdate" value="<fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy-MM-dd"/>" type="date" class="form-control" readonly />
 																				</c:if>
 																			</c:forEach>
 																		</c:if>
@@ -483,7 +355,7 @@
 														</div>
 														<div class="text-right my-3">
 															<c:if test="${dlist.sttsNo == 4}">
-																<button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter" class="btn btn-primary toggle">저장</button>
+																<button type="button" data-toggle="modal" onclick="checkSubmit()" data-target="#checkEffectiveness" id="#modalCenter" class="btn btn-primary toggle modalCenter" disabled="disabled">저장</button>
 															</c:if>
 															<c:if test="${dlist.sttsNo == 9}">
 																<button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter" class="btn btn-primary toggle">수정</button>
@@ -550,6 +422,37 @@
 												</div>
 											</div>
 											<!-- 모달 끝-->
+											<!-- 선택 모달 -->
+											<div class="modal fade" id="checkEffectiveness" tabindex="-1" role="dialog"
+									            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+									 			<div class="modal-dialog modal-dialog-centered" role="document">
+									            	<div class="modal-content">
+								                		<div class="modal-header bg-primary">
+											         		<h5 class="modal-title" id="exampleModalLabelLogout"> 
+												          		<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+												        		<small id="selectDev" class="text-white"><b></b></small>
+												        	</h5>
+											         		<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+											           			<span aria-hidden="true">&times;</span>
+											         		</button>
+												       	</div>
+												       	<div class="modal-body justify-content-center text-center p-5">
+													    	<div class="d-flex align-items-center">
+														    	<div id="iconWrapper" class="mr-4">
+																	<i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#FFA426;"></i>
+														       </div>
+														       <div id="checkBody" class="text-left">
+														       </div>
+													       </div>
+												       </div>
+									                	<div class="modal-footer">
+									                  		<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
+									                  		<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+									                	</div>
+									              	</div>
+									            </div>
+									 		</div>
+											<!-- 모달 끝 -->
 										</div>
 									</div>
 								
@@ -586,12 +489,289 @@
 				$("#srDevCn").val(srCn);
 			}
 			
+			//현재날짜부터 선택 가능
+ 			let today = new Date();   
+ 			let sysdate =
+ 			    leadingZeros(today.getFullYear(), 4) + '-' +
+ 			    leadingZeros(today.getMonth() + 1, 2) + '-' +
+ 			    leadingZeros(today.getDate(), 2);
+ 			
+			console.log(sysdate); 			
+ 			$('#srDdlnDate').attr("min", sysdate);
+ 			$('#srStartDate').attr("min", sysdate);
+ 			$('#srEndDate').attr("min", sysdate);
+ 			
 		});
 	 	
  		function falseDisabled(){
  			$(".taskNo").prop("disabled", false);
  			$("#updateHrForm").submit();
- 		}
+ 		};
+ 		
+ 		function leadingZeros(n, digits) {
+			//오늘 날짜 양식 (+두자리)
+			  var zero = '';
+			  n = n.toString();
+	
+			  if (n.length < digits) {
+			    for (i = 0; i < digits - n.length; i++)
+			      zero += '0';
+			  }
+			  return zero + n;
+		};
+ 		
+ 		$('#srDdlnDate').on('change', function() {
+ 			let end = $('#srDdlnDate').val();
+ 			//현재날짜 구하기
+ 			let today = new Date();   
+ 			let sysdate =
+ 			    leadingZeros(today.getFullYear(), 4) + '-' +
+ 			    leadingZeros(today.getMonth() + 1, 2) + '-' +
+ 			    leadingZeros(today.getDate(), 2);
+ 			
+			console.log(sysdate); 			
+ 			console.log($('#srDdlnDate').val());
+ 			//날짜 범위 구하기
+ 			$('#srStartDate').attr("min", sysdate);
+ 			$('#srStartDate').attr("max", end);
+ 			
+ 			$('#srEndDate').attr("min", sysdate);
+ 			$('#srEndDate').attr("max", end);
+ 			$('#srEndDate').val(end);
+ 			
+ 			$('#messageDdln').remove();
+ 			$('#messageEndDate').remove();
+ 			
+ 		});
+ 		
+ 		$('#srStartDate').on('change', function(){
+ 			//시작날짜 범위 지정
+ 			let min = $('#srStartDate').val();
+ 			$('#srEndDate').attr("min", min);
+ 			$('#messageStartDate').remove();
+ 			$('input[name=hrStartDate]').attr("min", min);
+ 		});
+ 	
+		function selectDev(obj) {
+			//개발담당자 선택
+			let pickDp = obj.value.toString();
+	
+			$.ajax({
+				url : '<c:url value="/develop/devLeader?userNo=' + pickDp + '"/>',
+				method : "get",
+				dataType : "json",
+				success : function(data) {
+					console.log(data);
+					console.log(data[0].userDpNm);
+					$('#HrList').empty();
+					$('#srDevDp').val(data[0].userDpNm);
+					$('#pickDevNm').empty();
+					$('#leaderNo').val(data[0].userNo);
+					$('#pickDevNm').append(data[0].userNm);
+			
+					$('.addlist').prop("disabled", true);
+					if($('#messageDev').val() != "" || $('#messageDev').val() != null || $('#messageDev').val() != undefined){
+						$('#messageDev').remove();
+					}
+				},
+				error : function(request, status, error) {
+					console.log("실패");
+					alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+				}
+			});
+		};
+		
+		function selectAll(selectAll) {
+			//전체 체크하기
+			const checkboxes = document.querySelectorAll('input[class="selectall"]');
+		  	checkboxes.forEach((checkbox) => {
+		    	checkbox.checked = selectAll.checked
+		  	});
+		  	
+		};
+		
+		function checkSelectAll(checkbox)  {
+			//체크 해제
+			const selectall  = document.querySelector('input[class="selectall"]');
+		  
+		  	if(checkbox.checked === false) {
+		    	selectall.checked = false;
+		  	}
+		};
+
+		function registerDevelop(){
+			//SR개발계획 등록
+			console.log("개발계획 등록");
+			let srDevDp = $('#srDevDp').val();
+			let srDdlnDate = $('#srDdlnDate').val();
+			let srStartDate = $('#srStartDate').val();
+			let srEndDate = $('#srEndDate').val();
+			
+			let srCn = $('#srDevCn').val();
+		
+			
+			let check = true;
+			if(srDevDp == null || srDevDp === undefined || srDevDp === ""){
+				check = false;
+				console.log("srDevdp: "+check);
+				$('#messageDev').html("<small>*개발자를 선택해주세요</small>");
+			} 
+			if (srDdlnDate == null || srDdlnDate === undefined || srDdlnDate ==="") {
+				check = false;
+				console.log("srDdlnDate: "+check);
+				$('#messageDdln').html("<small>*완료예정날짜를 선택해주세요.</small>")
+			}
+
+			if (srStartDate == null || srStartDate === undefined || srStartDate==="") {
+			  	check = false;
+			  	console.log("srStartDate: "+check);
+			  	$('#messageStartDate').html("<small>*계획시작날짜를 선택해주세요.</small>");
+			}
+
+			if (srEndDate == null || srEndDate === undefined || srEndDate==="") {
+			  	check = false;
+			  	console.log("srEndDate: "+check);
+			  	$('#messageEndDate').html("<small>*계획종료날짜를 선택해주세요.</small>");
+			}
+			if (srCn == null || srCn === undefined || srCn==="") {
+			  	check = false;
+			  	console.log("srCn: "+check);
+			  	$('#messageDevCn').html("<small>*내용을 작성해주세요.</small>");
+			}
+			
+			$('#selectDev').empty();
+			$('#selectDev').append('<h3>[' + srDevDp + '] 등록하기 </h3>');
+			$('#leaderSdate').val(srStartDate);
+			$('#leaderEdate').val(srEndDate);
+			console.log("AAAAAAAAAAAAAAAAAAAA"+srStartDate);
+			
+			$('#hrStartDate').prop("min", srStartDate);
+			$('#hrStartDate').prop("max", srEndDate);
+			
+			$('#hrEndDate').attr("min", srStartDate);
+			$('#hrEndDate').attr("max", srDdlnDate);
+			
+			selectList(check);
+	
+		}
+	
+		function selectList(check) {
+			//모달리스트 띄우기
+			
+			let userNo = $('#srDLeader option:first').val();
+			if(userNo == "" || userNo == undefined || userNo == null){
+				userNo = $('#srDLeader').val();
+			}
+			let userDpNm = $('#srDevDp').val();
+			let startDate = $('#srStartDate').val();
+			let endDate = $('#srEndDate').val(); 
+			console.log($('#srDLeader option:first').val());
+			console.log(userNo);
+			let data = {
+				userDpNm : userDpNm,
+				userNo : userNo,
+				hrStartDate : startDate,
+				hrEndDate : endDate
+			};
+			console.log(data);
+	
+			$.ajax({
+				url : '<c:url value="/develop/devlist"/>',
+				type : "post",
+				dataType : "html",
+				data : JSON.stringify(data),
+				contentType : "application/json; charset=UTF-8",
+				success : function(data) {
+					console.log(data);
+					let message = "등록 되었습니다.";
+					$('.validate').remove();
+					$("#checkBody").html(message);
+					$("#modalContent").html(data);
+					$('.addlist').prop("disabled", false);
+					$('.modalCenter').prop("disabled",false);
+				},
+				error : function(request, status, error) {
+					if(!check){
+						let message = "다시 입력해주세요.";
+						$("#checkBody").html(message);
+					}
+				}
+				 	
+			});
+		};
+	
+		function submitDev() {
+			//HR리스트에 일반개발자 등록
+			var checkBoxArr = [];
+			var srNo = '${dlist.srNo}';
+			console.log(srNo);
+			$("input:checkbox[name='devName']:checked").each(function(i) {
+				//체크박스값 배열에 넣기
+				var userNo = $(this).val();
+				var data = {
+					userNo : userNo,
+					srNo : srNo
+				};
+				console.log("data"+data);
+				checkBoxArr.push(data);
+			});
+			console.log(checkBoxArr);
+	
+			$.ajax({
+				url : '<c:url value="/develop/selectNm"/>',
+				type : 'post',
+				data : JSON.stringify(checkBoxArr),
+				contentType : "application/json; charset=UTF-8",
+				success : function(data) {
+					console.log(data);
+					$('#HrList').html(data);
+				}
+			});
+	
+		};
+		
+		$(document).on('click', '.deleteHr', function(){
+			//리스트 지우기
+			let userNo = $(this).parent().parent().find('input').val();
+			console.log($(this).parent().parent().find('input').val());
+			console.log('hr삭제하기');
+			$(this).parent().parent().remove();
+			$("#" + userNo).prop("checked", false);
+			$("#allcheck").prop("checked", false);
+		})
+
+		function checkSubmit() {
+			let check = 0;
+	
+			for(let i = 0;i<$("select[name=taskNo]").length;i++){
+				if(($("select[name='taskNo']").eq(i).val() === undefined || $("select[name='taskNo']").eq(i).val() == null || $("select[name='taskNo']").eq(i).val() === "")){
+					check++;
+					console.log("taskNo" + i +" = " + check);
+				} 
+				
+				if(($("input[name='hrStartDate']").eq(i).val() === undefined || $("input[name='hrStartDate']").eq(i).val() == null || $("input[name='hrStartDate']").eq(i).val() === "")){
+					check++;
+					console.log("hrStartDate" + i +" = " + check);
+				} 
+					
+				if(($("input[name='hrEndDate']").eq(i).val() === undefined || $("input[name='hrEndDate']").eq(i).val() == null || $("input[name='hrEndDate']").eq(i).val() === "")){
+					check++;
+					console.log("hrEndDate" + i +" = " + check);
+				}
+			}
+			
+			console.log(check);
+			
+			if(check == 0){
+				$('.modalCenter').attr("data-dismiss","modal");
+				$('.modalCenter').attr("data-target","#exampleModalCenter");
+				$('.modalCenter').attr("data-toggle", "modal");
+				
+			} else{
+				$('#checkBody').html('다시 확인해주세요.');
+			}
+		}
+		
 	</script>
 	
 </body>

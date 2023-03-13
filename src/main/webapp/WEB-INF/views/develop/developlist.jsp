@@ -159,15 +159,18 @@
 		                			<script>
 			                			//오늘 날짜 디폴트로 입력
 			                			$(document).ready(function() {
-			                				var todayResult = getTimeStamp();
-			                				console.log(todayResult);
-			                				$('#endDate').val(todayResult);
-			                				
-			                				var dateStart =getLastYearTimeStamp();
-			                				console.log(dateStart);
-			                				$('#startDate').val(dateStart);
-			                			});
-			                				
+											getDateFilter();
+										});
+											
+										function getDateFilter(){
+											var todayResult = getTimeStamp();
+											console.log(todayResult);
+											$('#endDate').val(todayResult);
+											
+											var dateStart =getLastYearTimeStamp();
+											console.log(dateStart);
+											$('#startDate').val(dateStart);
+										};
 			                			
 			                			function getTimeStamp() {
 			                			//오늘 날짜 양식
@@ -206,8 +209,6 @@
 			                			  }
 			                			  return zero + n;
 			                			}
-		                				
-		                			
 		                			
 										function selectAll(selectAll) {
 											const checkboxes = document.querySelectorAll('input[name="devleopCheck"]');
@@ -257,21 +258,23 @@
 									
 										function developList(pageNo) {
 											//조건별로 검색
-											console.log("개발관리 조건 리스트 불러오기")
-											var sysNo = $('#sysNo').val(); 
+											var sysNo = 0;
+											console.log("개발관리 조건 리스트 불러오기");
+											
+											sysNo = $('#sysNo').val();
+											
+											if($('#searchMySR').prop('checked')){
+												console.log("내 목록보기 체크");
+												sysNo = "${loginUser.sysNo}";
+												console.log(sysNo);
+											}  
+										
+											
 											var sttsNo = $('#sttsNo').val();
 											var userOgdp = $('#userOgdp').val();
 											var srDevDp = $('#srDevDp').val();
 											var srRegStartDate = $('#startDate').val();
 											var srRegEndDate = $('#endDate').val();
-											
-											if($('#searchMySR').prop('checked')){
-												console.log("내 목록보기 체크");
-												var sysNo = "${loginUser.sysNo}";
-												console.log(sysNo);
-											}  else{
-												var sysNo = 'all';
-											}
 											
 											var srTtl = $('#keyword').val();
 											
@@ -317,12 +320,12 @@
 										    	$('#ListExcelModal').modal('show');
 										    	$("#ListExcelModalMessage").text("SR을 선택해 주세요");
 											} else {
-												var form = document.createElement('form');
+												let form = document.createElement('form');
 												form.setAttribute('method','post');
 												form.setAttribute('action', 'excelDownload');
 												document.charset = "utf-8";
 												
-												var hiddenField = document.createElement("input");
+												let hiddenField = document.createElement("input");
 												hiddenField.setAttribute('type', 'hidden');
 												hiddenField.setAttribute('name', 'developSRArr');
 												hiddenField.setAttribute('value', developSRArr);
@@ -340,6 +343,10 @@
 											for(let i=0; i< $('.clear').length ; i++){
 												$($('.clear')[i]).find('option:first').prop('selected', true);
 											} 
+											
+											$("#keyword").val("");
+											getDateFilter();
+											
 										};
 							  		</script>	
 			                		<div id="ajaxList" style="width:100%"></div>

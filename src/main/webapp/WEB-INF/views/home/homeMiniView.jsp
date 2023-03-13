@@ -11,7 +11,7 @@
 							<th style="width:130px">SR번호</th>
 							<th style="width:320px">제목</th>
 							<th style="width:110px">관련 시스템</th>
-							<th style="width:50px">상태</th>
+							<th style="width:70px">상태</th>
 							<th style="width:100px">완료예정일</th>
 							<th style="width:40px">중요</th>
 							<th style="width:100px">진척도</th>
@@ -28,7 +28,7 @@
 										</b>
 									</a>
 								</td>
-								<td>
+								<td style="width:50px;">
 									<a onclick="managerMiniView('${list.srNo}')" style="width:300px; overflow:hidden; text-overflow: ellipsis; display:block; cursor:pointer;">
 										<b>
 											${list.srTtl}
@@ -44,7 +44,7 @@
 										</b>
 									</a>
 								</td>
-								<td>
+								<td style="width:50px;">
 									<a href="${pageContext.request.contextPath}/request/list/${list.srNo}" style="width:300px; overflow:hidden; text-overflow: ellipsis; display:block; cursor:pointer; text-decoration:none;">
 										<b>
 											${list.srTtl}
@@ -69,7 +69,7 @@
 								</td>
 							</c:if>
 							<td style="width:110px">${list.sysNm}</td>
-							<td style="width:50px">
+							<td style="width:70px">
 								<c:choose>
 										<c:when test="${list.sttsNm eq '요청'}">
 											<span class="badge badge-outline-secondary" style="border: 1px solid gray;">${list.sttsNm}</span>

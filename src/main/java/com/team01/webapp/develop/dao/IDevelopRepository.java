@@ -99,4 +99,7 @@ public interface IDevelopRepository {
 
 	public Users selectLoginUser(int userNo);
 
+	public void updateSttsNo(String srNo);
+	public List<String> selectSrNo();
+
 }

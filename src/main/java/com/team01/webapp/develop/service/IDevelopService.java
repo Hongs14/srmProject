@@ -39,5 +39,6 @@ public interface IDevelopService {
 	public Users getLeader(String srNo);
 	public Users getLoginUserInfo(int userNo);
 	public List<DevelopDto> getPrintExcelList(List<String> developSRArr);
+	public int changeStatus();
 	
 }

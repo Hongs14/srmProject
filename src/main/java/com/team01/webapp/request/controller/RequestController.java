@@ -72,7 +72,7 @@ public class RequestController {
 	 * @return				list뷰로 이동
 	 */
 	@RequestMapping(value="/list", method = RequestMethod.GET)
-	public String getRequestFilter( HttpSession session, RequestFilter requestFilter, Model model) {
+	public String getRequestFilter(HttpSession session, RequestFilter requestFilter, Model model) {
 		log.info("실행");
 		requestFilter = requestService.getFilterList(requestFilter);
 		model.addAttribute("requestfilter", requestFilter);

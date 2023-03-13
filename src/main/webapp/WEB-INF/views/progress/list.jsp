@@ -147,8 +147,6 @@
 														choice = 1;
 													}
 													
-													console.log(choice)
-													
 													var sysNoSelect = document.getElementById("sysNo");
 													var srTypeNoSelect = document.getElementById("srTypeNo");
 													var srSttsNoSelect = document.getElementById("srSttsNo");
@@ -169,8 +167,6 @@
 													}
 													
 													let data = {sysNo : sysNo, srTypeNo : srTypeNo, srSttsNo : srSttsNo, srName : srName, srNo : srNo, choice : choice};
-													
-													console.log(data);
 													
 													$.ajax({
 														url : "progressajax/" + pageNo,

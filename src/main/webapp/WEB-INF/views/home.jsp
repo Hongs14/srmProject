@@ -132,7 +132,6 @@
 								});
 								
 								var srNo = '${firstSrNo}';
-								console.log(srNo);
 								data = {srNo : srNo}
 								
 								$.ajax({

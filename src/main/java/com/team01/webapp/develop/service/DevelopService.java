@@ -196,12 +196,15 @@ public class DevelopService implements IDevelopService{
 	 */
 	@Transactional
 	public int updateDevelopSr(UpdateDevelop updateDevelop) {
-		try {
+			int result = 0;
+	
 			int check = developRepository.checkHr(updateDevelop.getSrNo());
 			log.info(check);
 			//SR테이블에 저장
 			int result1 = developRepository.updateSr(updateDevelop);
-			int result3 = 0;
+			int result2 = 0;
+			int result3 = 1;
+			
 			log.info("개발계획 수정 result1: "+result1); 
 			
 			//HR테이블에 저장
@@ -219,26 +222,22 @@ public class DevelopService implements IDevelopService{
 			log.info(listHR);
 			
 			if(check > 0) {
-				int result2 = developRepository.deleteHr(updateDevelop.getSrNo());
+				result2 = developRepository.deleteHr(updateDevelop.getSrNo());
 				log.info("HR리스트 삭제 result2: "+ result2);
 				result3 =developRepository.insertHrRow(listHR);
 				log.info("HR리스트 삽입 result3: "+ result3);
-				result3 = insertProgress(updateDevelop.getSrNo());
-				log.info("progress삽입 완료");
-			} else {
-				int result2 =developRepository.insertHrRow(listHR);
-				log.info("HR리스트 삽입 result2: "+ result2);
 				
-				if(updateDevelop.getSttsNo() == 5) {
-					result3 = insertProgress(updateDevelop.getSrNo());
-					log.info("progress삽입 완료");
-					log.info("Progress 삽입 result3"+result3);
-				}
+			} else {
+				result2 =developRepository.insertHrRow(listHR);
+				log.info("HR리스트 삭제없이 삽입 result2: "+ result2);
+			
 			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return 1;
+			
+			if(result1 > 0 && result2 > 0 && result3 > 0) {
+				result = 1;
+			}
+		
+		return result;
 	}
 	
 	@Transactional
@@ -249,7 +248,7 @@ public class DevelopService implements IDevelopService{
 			int srSeq = 0;
 			List<Progress> progNoList = new ArrayList<>();
 			srSeq = developRepository.selectMaxProgNo()+1;		
-			
+			developRepository.updateSttsNo(srNo);
 			for(int i=0; i<6; i++) {
 				Progress progress = new Progress();
 				String progNo = "PROG-"+srSeq;
@@ -283,6 +282,24 @@ public class DevelopService implements IDevelopService{
 		}
 		log.info(list);
 		return list;
+	}
+	
+	/**해당 날짜에 상태 변경
+	 * @author		정홍주 
+	 * @return				
+	 */
+	@Override
+	public int changeStatus() {
+		log.info("스케줄러 실행");
+		List<String> list = developRepository.selectSrNo();
+		log.info(list);
+		int result = 0;
+		for(int k = 0; k <list.size(); k++) {
+			String srNo = list.get(k);
+			log.info(srNo);
+			result =  insertProgress(srNo);
+		}
+		return result;
 	}
 
 }
