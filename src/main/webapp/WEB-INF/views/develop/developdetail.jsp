@@ -151,6 +151,7 @@
 															<div class="col-sm-8">
 																<select id="sttsNo" name="sttsNo"  class="form-control noneUpdate">
 																	<option value="9" selected>개발계획</option>
+																	<option value="5">개발중</option>
 																</select>
 															</div>
 														</div>
@@ -430,7 +431,7 @@
 								                		<div class="modal-header bg-primary">
 											         		<h5 class="modal-title" id="exampleModalLabelLogout"> 
 												          		<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
-												        		<small id="selectDev" class="text-white"><b></b></small>
+												        		<small id="selectDev" class="text-white"><b>확인</b></small>
 												        	</h5>
 											         		<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 											           			<span aria-hidden="true">&times;</span>
@@ -507,6 +508,15 @@
  			$(".taskNo").prop("disabled", false);
  			$("#updateHrForm").submit();
  		};
+ 		
+ 		function getToday(){
+ 			let today = new Date();   
+ 			let sysdate =
+ 			    leadingZeros(today.getFullYear(), 4) + '-' +
+ 			    leadingZeros(today.getMonth() + 1, 2) + '-' +
+ 			    leadingZeros(today.getDate(), 2);
+ 			return sysdate;
+ 		}
  		
  		function leadingZeros(n, digits) {
 			//오늘 날짜 양식 (+두자리)
@@ -741,8 +751,23 @@
 		})
 
 		function checkSubmit() {
+			
 			let check = 0;
-	
+			let sysdate = getToday();
+			let rightaway = false;
+			//개발중인지 체크
+			if($('#sttsNo').val() === '5'){
+				if($('#srStartDate').val() === sysdate){
+					rightaway = true;
+				}
+			}
+			
+			console.log(sysdate == $('#srStartDate').val());
+			console.log("$('#sttsNo').val(): "+$('#sttsNo').val());
+			console.log("sysdate: "+ sysdate);
+			console.log("$('#srStartDate').val(): "+$('#srStartDate').val());
+			console.log("rightaway: "+rightaway);
+			
 			for(let i = 0;i<$("select[name=taskNo]").length;i++){
 				if(($("select[name='taskNo']").eq(i).val() === undefined || $("select[name='taskNo']").eq(i).val() == null || $("select[name='taskNo']").eq(i).val() === "")){
 					check++;
@@ -760,15 +785,25 @@
 				}
 			}
 			
-			console.log(check);
+			console.log("check: "+ check);
 			
-			if(check == 0){
+			
+			
+			 if(check == 0 && rightaway == true) {
 				$('.modalCenter').attr("data-dismiss","modal");
 				$('.modalCenter').attr("data-target","#exampleModalCenter");
 				$('.modalCenter').attr("data-toggle", "modal");
 				
-			} else{
-				$('#checkBody').html('다시 확인해주세요.');
+			} else if(check == 0 && rightaway == false){
+				$('#checkBody').html('<h5>날짜를 확인해주세요.</h5>');
+				
+			} else if(check == 0){
+				$('.modalCenter').attr("data-dismiss","modal");
+				$('.modalCenter').attr("data-target","#exampleModalCenter");
+				$('.modalCenter').attr("data-toggle", "modal");
+				
+			}  else{
+				$('#checkBody').html('<h5>다시 확인해주세요.</h5>');
 			}
 		}
 		

@@ -83,7 +83,6 @@
 			               									<div class="input-group-prepend">
 			               										<span class="input-group-text" style="height:31px;">~</span>
 			           										</div>
-			           										<input type="hidden" value=""/>
 			            									<input type="text" class="input-sm form-control form-control-sm" name="endDate" id="dateEnd" value=""/>
 														</div>
 			   										</div>

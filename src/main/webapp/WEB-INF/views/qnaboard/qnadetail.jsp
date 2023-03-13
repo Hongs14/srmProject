@@ -10,7 +10,7 @@
   			readComment();
   		});
 
-  		let CountCmnt = ${qstn.countCmnt};
+  		let qCountCmnt = 0;
   		
   		function readComment(){
   			console.log("aa");
@@ -78,9 +78,9 @@
 				
         		$('#qComment').append(comment); 
         		/* $('#cmntCount').empty(); */
-        		console.log(CountCmnt);
-        		$('#cmntCount').html('댓글('+(CountCmnt+1)+')');
-        		CountCmnt += 1;
+        		console.log(qCountCmnt);
+        		$('#cmntCount').html('댓글('+(qCountCmnt+1)+')');
+        		qCountCmnt += 1;
         		$('#qnaCmntCn').val('');
 				
 			});
@@ -122,8 +122,8 @@
 				data: 'qstnCmntNo='+qstnCmntNo,
 			}).done((data) => {
 				console.log("성공");
-				$('#cmntCount').html('댓글('+(CountCmnt-1)+')');
-        		CountCmnt -= 1;
+				$('#cmntCount').html('댓글('+(qCountCmnt-1)+')');
+        		qCountCmnt -= 1;
 				$('#qComment').empty(); 
 				readComment();
 				
@@ -156,19 +156,19 @@
         </div>   
         <div class="mx-3 p-3 d-flex flex-column">
        		<form>
-        		<div class="row mb-2">
+        		<div class="row">
          			<div class="form-group col-sm-2 ">
          				<label class="col-form-label">작성자</label>
          			</div>
-	         		<div class="col-sm-10">
+	         		<div class="col-sm-10 mt-2">
 	         			${qstn.userNm}
 	         		</div>
-        		</div>	
+        		</div>
            		<div class="row mb-2">
              		<div class="form-group col-sm-2  d-flex align-text-center">
              			<label class="col-form-label">작성일</label>
              		</div>
-             		<div class="col-sm-10 d-flex align-text-center">
+             		<div class="col-sm-10  mt-2">
              			${qstn.qstnWrtDate}
              		</div>
            		</div>
@@ -176,7 +176,7 @@
              		<div class="form-group col-sm-2 ">
              			<label class="col-form-label">내용</label>
              		</div>
-             		<div class="col-sm-10 textDetail" id="qstnCn">
+             		<div class="col-sm-10  mt-2 textDetail" style="border: 1px solid black" id="qstnCn">
              			${qstn.qstnCn}
              		</div>
            		</div>
@@ -192,8 +192,11 @@
            		</div>
            		<div class="text-right"> 
            			<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/qna/list'">목록</button>
-           			<input type="button" class="btn btn-primary" value="수정" onclick="location.href='${pageContext.request.contextPath}/qna/update'"/>
-           			<button class="btn btn-primary">삭제</button>
+           			<c:if test="${qstn.userNo eq sessionScope.loginUser.userNo}">
+           				<input type="button" class="btn btn-primary" value="수정" onclick="location.href='${pageContext.request.contextPath}/qna/update'"/>
+           				<button class="btn btn-primary">삭제</button>
+           			</c:if>
+           			
            		</div>
 			</form>
 		</div>
