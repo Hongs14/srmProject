@@ -206,6 +206,7 @@
 		SELECT
 	        sr_no as "srNo", 
 	        user_nm as "userNm",
+	        sr_cust_no as "srCustNo",
 	        user_ogdp as "userOgdp",
 	        sr_reg_date as "srRegDate", 
 	        sys_nm as "sysNm",

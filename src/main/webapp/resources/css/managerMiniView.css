@@ -50,13 +50,13 @@
 /* 실행 중인 업무 */
 .current {
   border: 5px solid #428bca; /* 파란색 테두리 */
-  animation:circle 3s 0s infinite alternate;
+  animation:circle 2s 0s infinite alternate;
   outline: 1px solid transparent;
 }
 	
 
 @keyframes circle {/* circle이라는 애니메이션 키프래임 만들기*/
 	 0%  {border: 5px solid white;}
-	 50% {border: 5px solid #428bca;}
+	 70% {border: 5px solid #ffa426;}
 	 100%  {border: 5px solid white;}
 }

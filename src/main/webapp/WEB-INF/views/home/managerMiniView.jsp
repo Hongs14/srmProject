@@ -6,7 +6,7 @@
           <div class="card-header d-sm-flex justify-content-between align-items-center">
           	<h6 class="font-weight-bold text-primary"><img src="${pageContext.request.contextPath}/resources/images/gantt.png" style="width:30px; margin-right:10px;">SR 진행현황</h6>
           	<a class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/request/list/${progressdetail.srNo}">
-          		SR 진척관리 확인<i class="fa-solid fa-caret-right m-1"></i>
+          		SR 요청 확인<i class="fa-solid fa-caret-right m-1"></i>
           	</a>
           </div>
           <c:if test="${empty progressdetail.srNo}">
@@ -225,11 +225,6 @@
 		                  			</div>
 		                  		</c:if>
 							</div>
-							 <!-- 특수한 경우 -->
-							<!-- <i class="fa-solid fa-caret-right"></i>
-							<div class="circle evaluate"><i class="fa-solid fa-file-circle-minus"></i><p>반려</p></div> 평가 단계
-							<i class="fa-solid fa-caret-right"></i>
-							<div class="circle evaluate"><i class="fa-solid fa-file-circle-exclamation"></i><p>재검토</p></div> 평가 단계 -->
 							
 						   <div class="d-flex justify-content-between p-3" style="background-color:#EAECF4; border-radius:5px;">
 						  		<span><i class="fa-solid fa-user-tie m-1"></i> 관련 시스템: ${progressdetail.sysNm}</span>
