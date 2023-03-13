@@ -9,7 +9,7 @@
 
 <script>
 	$(document).ready(function(){
-		console.log("시작");
+		console.log("댓글시작");
 	  	readComment();
 	});
 	  		

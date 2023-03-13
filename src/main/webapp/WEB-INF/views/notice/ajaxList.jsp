@@ -20,10 +20,10 @@
 			<c:forEach var="notice" items="${noticeListAjax}">
 				<c:choose>
 					<c:when test="${notice.ntcPry eq 'Yes'}">
-						<tr onclick="getNoticeDetail('${notice.ntcNo}')" style="cursor:pointer; background-color: RGB(239 240 240);">
+						<tr onclick="getNoticeDetail('${notice.ntcNo}')" style="cursor:pointer;" id="bgChange-${notice.ntcNo}" class="bg">
 					</c:when>
 					<c:when test="${notice.ntcPry ne 'Yes'}">
-						<tr onclick="getNoticeDetail('${notice.ntcNo}')" style="cursor:pointer;">
+						<tr onclick="getNoticeDetail('${notice.ntcNo}')" style="cursor:pointer;" id="bgChange-${notice.ntcNo}" class="bg">
 					</c:when>
 				</c:choose>
 					<td>

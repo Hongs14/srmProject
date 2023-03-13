@@ -35,11 +35,14 @@ public class AlarmController extends TextWebSocketHandler {
 		Alarm alarm = new Alarm();
 		alarm.setUserNo(userNo);
 		alarm.setUserType((String)session.getAttribute("userType"));
+		model.addAttribute("userType",alarm.getUserType());
 		if(alarm.getUserType().equals("관리자")) {
 			Users loginUser = alarmService.selectLoginUser(userNo);
 			alarm.setSysNo("%"+loginUser.getSysNo()+"%");
+			model.addAttribute("sysNo",alarm.getSysNo());
 		}else {			
 			alarm.setSysNo("%"+(String)session.getAttribute("sysNo")+"%");
+			model.addAttribute("sysNo",alarm.getSysNo());
 		}
 		//알림 리스트
 		List<Alarm> alarmList = alarmService.selectAlarmList(alarm);
@@ -69,6 +72,16 @@ public class AlarmController extends TextWebSocketHandler {
 		alarmService.deleteAlarm(alarmNo);
 		
 		return "redirect:/alarm/list";
+	}
+	
+	@PostMapping(value="categoryAlarm", produces="application/json; charset=UTF-8")
+	public String selectCategoryAlarm(@RequestBody Alarm alarm, Model model) {
+		log.info("실행");
+		List<Alarm> alarmList = alarmService.selectCategoryAlarm(alarm);
+		log.info(alarmList);
+		model.addAttribute("alarmList",alarmList);
+		
+		return "alarm/categoryList";
 	}
 	
 	

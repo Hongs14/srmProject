@@ -41,6 +41,14 @@ public class AlarmService implements IAlarmService{
 		return alarmList;
 	}
 	
+	@Override
+	public List<Alarm> selectCategoryAlarm(Alarm alarm){
+		log.info("실행");
+		List<Alarm> categoryAlarm = alarmRepository.selectCategoryAlarm(alarm);
+		
+		return categoryAlarm;
+	}
+	
 	//알림 추가
 	@Override
 	public void insertAlarm(String srNo, HttpSession session) {

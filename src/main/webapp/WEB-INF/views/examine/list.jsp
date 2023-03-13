@@ -7,6 +7,9 @@
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
 	<style>
+	.bgChange{
+		background-color: rgba(0, 0, 0, 0.075);
+	}
 	
 	.col-lg-7 .srTtl{
 		width: 90px;
@@ -505,12 +508,21 @@
 					$("#mainExamine").attr("class","col-lg-7");
 					$("#subExamineDetailView").attr("class","col-lg-5");
 					
+					var className = $(".bg");
+                  	className.removeClass("bgChange")
+					
 					$.ajax({
 						url : "${pageContext.request.contextPath}/examine/detail/"+srNo,
 						method : "get",
 						dataType : "html",
 						success : function(data) {
 							$("#subExamineDetailView").html(data);
+							
+							var bg = "bgChange-"+srNo;
+							$('#' + bg).addClass("bgChange");
+								
+							
+							
 						}
 					}); 	
 					

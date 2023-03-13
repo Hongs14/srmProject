@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 	<div class="table-responsive p-3">
 		<table class="table align-items-center table-flush table-hover">
-			<thead class="thead-light" style="text-align: center;">
+			<thead class="thead-light" style="text-align: left;">
 				<tr>	
 					<th>
 						<input type="checkbox" onclick='selectAll(this)' name="selectall">
@@ -22,13 +22,12 @@
 			</thead>
 			<tbody >
 				<c:forEach var="examine" items="${examine}">
-					<tr>
-						
+					<tr id="bgChange-${examine.srNo}" class="bg" >
 						<td>
 							<input type="checkbox" name="examineCheck" value="${examine.srNo}" onclick='checkSelectAll(this)'>
 						</td>
-						<td><a onclick ="getSrDetail('${examine.srNo}')" style="cursor:pointer;">${examine.srNo}</a></td>
-						<td><a onclick ="getSrDetail('${examine.srNo}')" style="cursor:pointer;" class="srTtl">${examine.srTtl}</a></td>
+						<td><a onclick ="getSrDetail('${examine.srNo}')" style="cursor:pointer;"><b>${examine.srNo}</b></a></td>
+						<td><a onclick ="getSrDetail('${examine.srNo}')" style="cursor:pointer;" class="srTtl"><b>${examine.srTtl}</b></a></td>
 						<td>${examine.sysNm}</td>
 						<td>${examine.userNm}</td>
 						<td class="userOgdpColumn"><span class="userOgdp">${examine.userOgdp}</span></td>

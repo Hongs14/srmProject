@@ -15,6 +15,9 @@ public interface IAlarmService {
 	//전체 알림 리스트
 	public List<Alarm> selectAlarmList(Alarm alarm);
 	
+	//카테고리 알림 리스트 
+	public List<Alarm> selectCategoryAlarm(Alarm alarm);
+	
 	//알림 추가
 	public void insertAlarm(String srNo, HttpSession session);
 	
