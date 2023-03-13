@@ -40,9 +40,11 @@ public class AlarmService implements IAlarmService{
 		if(alarm.getUserType().equals("개발자")) {
 			for(int i=1; i<=10; i++) {				
 				alarmList = alarmRepository.selectAlarmList(alarm);
+				log.info(alarmList);
 			}
 		}else {
 			alarmList = alarmRepository.selectAlarmList(alarm);
+			log.info(alarmList);
 		}
 		
 		return alarmList;
