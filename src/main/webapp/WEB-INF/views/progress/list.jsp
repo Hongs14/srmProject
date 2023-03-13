@@ -55,7 +55,9 @@
 					                		</div>
 					                		<div class="col-4">
 					                			<div class="form-group row">
-					                				<label class="col-sm-3 col-form-label-sm" for="sysNo">업무 구분</label>
+					                				<label class="col-sm-3 col-form-label-sm" for="sysNo">
+					                					업무 구분
+					                				</label>
 							                    	<select class="form-control form-control-sm col-sm-9" id="srTypeNo">
 														<option value="0">전체</option>
 														<c:forEach var="item" items="${progressFilter.srTypeList}">

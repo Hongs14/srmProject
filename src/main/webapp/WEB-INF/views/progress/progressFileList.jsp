@@ -53,9 +53,10 @@
 			</c:forEach>
 		</table>
 		<c:if test="${empty progressFileList}">
-			<h2 class="m-3">
-				등록된 산출물이 없습니다
-			</h2>
+			<div class="alert alert-secondary m-3 p-2" role="alert">
+				<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+					등록된 산출물이 없습니다.
+			</div>
 		</c:if>
 	</div>
 
