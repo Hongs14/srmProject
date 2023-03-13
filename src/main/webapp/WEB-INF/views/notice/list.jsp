@@ -58,13 +58,13 @@
 						</div>
                			<div class="card mb-4">
                   			<!-- 검색 -->
-            				<div class="mb-1 mt-5 px-5">
+            				<div class="mb-1 mt-5 px-3">
 								<form class="navbar-search">
 									<div class="row text-right">
 	   									<div class="col-4">
 	       									<div class="form-group row" id="simple-date4" >
 	  											<div class="input-daterange input-group input-group-sm text-right">
-	      											<label for="start" class="col-sm-4 col-form-label-sm">조회기간</label>
+	      											<label for="start" class="col-sm-3 col-form-label-sm">조회기간</label>
 	         										<input type="text" class="input-sm form-control form-control-sm col-sm-8" name="start" id="dateStart" value=""/>
 	               									<div class="input-group-prepend">
 	               										<span class="input-group-text" style="height:31px;">~</span>
@@ -78,11 +78,11 @@
 												<input type="button" class="btn btn-sm btn-primary" value="1주일 전" onclick="nWeekClick(1)">
 												<input type="button" class="btn btn-sm btn-primary" value="1개월 전" onclick="nMonthClick(1)">
 	    								</div>
-	    								<div class="col-4">
+	    								<div class="col-3">
 	      									<div class="form-group row">
-									      		<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm text-right">키워드</label>
-									          	<input type="text" class="form-control form-control-sm col-sm-9 bg-light" 
-		         									aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5;" id="keyword">
+									      		<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm text-center">키워드</label>
+									          	<input type="text" class="form-control form-control-sm col-sm-8 bg-light ml-1" 
+		         									aria-label="Search" placeholder="검색어를 입력하세요" style="border-color: #3f51b5; font-size:0.9rem;" id="keyword">
 	            							</div>
 	        							</div>
 	        							<div class="col-1">
@@ -504,44 +504,8 @@
 							}
 						});
 					}
-					
-					function getNoticeWrite() {
-					    
-						$("#mainNoticeMenu").removeClass("d-sm-flex");
-						$("#mainNoticeMenu").hide();
-						$("#noticeMenu").show();
-						$("#mainNoitce").attr("class","col-lg-7");
-						$("#subNoticeDetailView").attr("class","col-lg-5");
-						
-						$.ajax({
-							url : "${pageContext.request.contextPath}/notice/write",
-							method : "get",
-							dataType : "html",
-							success : function(data) {
-								$("#subNoticeDetailView").html(data);
-							}
-						});
-					}
-					
-					function getNoticeUpdate(i) {
-						let ntcNo = i;
-					   
-						$("#mainNoticeMenu").removeClass("d-sm-flex");
-						$("#mainNoticeMenu").hide();
-						$("#noticeMenu").show();
-						$("#mainNoitce").attr("class","col-lg-7");
-						$("#subNoticeDetailView").attr("class","col-lg-5");
-						
-						$.ajax({
-							url : "${pageContext.request.contextPath}/notice/update/"+ntcNo,
-							method : "get",
-							dataType : "html",
-							success : function(data) {
-								$("#subNoticeDetailView").html(data);
-							}
-						});
-					}
 				</script>
+				
 				<script>
 					function getNoticeDetail(i) {
 						let ntcNo = i;

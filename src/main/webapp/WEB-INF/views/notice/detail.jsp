@@ -198,13 +198,15 @@
 		</div>			                            		
 		<div class="d-sm-flex justify-content-end">
 			<a href="${pageContext.request.contextPath}/notice/list?sysNo=${notice.sysNo}" class="btn btn-primary mr-1">목록</a>
-			<c:if test="${sessionScope.loginUser.userNm eq '관리자'}">
-				<a onclick="getNoticeUpdate('${notice.ntcNo}')" class="btn btn-primary mr-1">수정</a>
-				<form method="post" action="${pageContext.request.contextPath}/notice/delete" enctype="multipart/form-data">
-					<input type="hidden" id="ntcNo" name="ntcNo" value="${notice.ntcNo}"/>
-					<input type="hidden" id="sysNo" name="sysNo" value="${notice.sysNo}"/>
-					<button type="submit" class="btn btn-primary">삭제</button>
-				</form>
+			<c:if test="${sessionScope.loginUser.userType eq '관리자'}">
+				<c:if test="${sysNo eq notice.sysNo or notice.sysNo eq 'SRM'}">
+					<a onclick="getNoticeUpdate('${notice.ntcNo}')" class="btn btn-primary mr-1">수정</a>
+					<form method="post" action="${pageContext.request.contextPath}/notice/delete" enctype="multipart/form-data">
+						<input type="hidden" id="ntcNo" name="ntcNo" value="${notice.ntcNo}"/>
+						<input type="hidden" id="sysNo" name="sysNo" value="${notice.sysNo}"/>
+						<button type="submit" class="btn btn-primary">삭제</button>
+					</form>
+				</c:if>
 			</c:if>
 		</div>
 	</div>

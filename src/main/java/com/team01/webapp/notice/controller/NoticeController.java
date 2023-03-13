@@ -72,6 +72,7 @@ public class NoticeController {
 	@GetMapping("/list/{ntcNo}")
 	public String getNoticeDetailView(@PathVariable int ntcNo, HttpSession session,Model model) {
 		log.info("디테일 실행");
+		
 		//알람 수 및 리스트
 		alarmInfo.info(session, model);
 		model.addAttribute("ntcNo", ntcNo);
@@ -172,7 +173,7 @@ public class NoticeController {
 	 * @return
 	 */
 	@GetMapping("detail/{ntcNo}")
-	public String getNoticeDetail(@PathVariable int ntcNo, Model model) {
+	public String getNoticeDetail(@PathVariable int ntcNo,HttpSession session ,Model model) {
 		log.info("실행");
 		
 		Notice notice = noticeService.noticeDetail(ntcNo);
@@ -183,6 +184,9 @@ public class NoticeController {
 		
 		//조회수 카운트
 		noticeService.inqCnt(ntcNo);
+		
+		//알람 수 및 리스트
+		alarmInfo.info(session, model);
 
 		return "notice/detail";
 	}
