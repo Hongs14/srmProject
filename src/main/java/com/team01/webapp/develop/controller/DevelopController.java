@@ -80,14 +80,13 @@ public class DevelopController {
 		return "develop/developlist";
 	}
 	
-	
-	/**
-	 * SR 요청에 대한 필터링 후 리스트 가져오기
-	 * @author 				정홍주, 김태희
+	/**SR 요청에 대한 필터링 후 리스트 가져오기
+	 * @author 				정홍주
 	 * @param pageNo		SR개발 목록 페이지 위치
-	 * @param examineList	SR검토 리스트
-	 * @param pager			페이지 처리	
-	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
+	 * @param developDto	
+	 * @param model
+	 * @param session
+	 * @param pager
 	 * @return
 	 */
 	@PostMapping(value="/filter/{pageNo}", produces="application/json; charset=UTF-8")
@@ -130,6 +129,13 @@ public class DevelopController {
 		return "develop/developdetail";
 	}
 	
+	/**
+	 * @author			정홍주
+	 * @param srFileNo
+	 * @param userAgent	
+	 * @param response	
+	 * @throws Exception
+	 */
 	@GetMapping("/file/{srFileNo}")
 	public void download(@PathVariable int srFileNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
 		log.info("파일 다운로드");

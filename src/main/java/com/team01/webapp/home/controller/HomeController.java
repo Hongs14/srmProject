@@ -20,10 +20,13 @@ import com.team01.webapp.model.Donut;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Notice;
 import com.team01.webapp.model.ProgressDetail;
+import com.team01.webapp.model.QSTN;
 import com.team01.webapp.model.RequestFilter;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SystemInfo;
 import com.team01.webapp.notice.service.INoticeService;
+import com.team01.webapp.qnaboard.service.IQnaboardService;
+import com.team01.webapp.qnaboard.service.QnaboardService;
 import com.team01.webapp.request.service.IRequestService;
 import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
@@ -42,6 +45,9 @@ public class HomeController {
 	
 	@Autowired
 	INoticeService noticeService;
+	
+	@Autowired
+	IQnaboardService qnaboardService;
 	
 	@Autowired
 	IAlarmService alarmService;
@@ -80,22 +86,31 @@ public class HomeController {
 	 * @return			home 로 리턴
 	 */
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String getHomeGrid(HttpSession session, Pager pager, Notice notice, Model model) {
+	public String getHomeGrid(HttpSession session, Pager pager, Notice notice, QSTN qstn, Model model) {
 		// 공지사항 메인 페이징 처리
-		int pageNo = 1;
+		int noticePageNo = 1;
 		notice.setNtcTtl("");
 		notice.setStartDate("");
 		notice.setEndDate("");
 		notice.setSysNo((String)session.getAttribute("sysNo"));
 		
-		pager = noticeService.returnPage(pageNo,pager,notice);
+		pager = noticeService.returnPage(noticePageNo,pager,notice);
 		
 		List<Notice> noticeList = noticeService.getNoticeListAjax(pager,notice);
 		log.info(pager);
 		model.addAttribute("noticeList",noticeList);
 		
 		// Q n A 페이징 처리
+		int qstnPageNo = 1;
+		qstn.setQstnTtl("");
+		qstn.setStartDate("");
+		qstn.setEndDate("");
+		qstn.setSysNo((String)session.getAttribute("sysNo"));
 		
+		pager = qnaboardService.returnPage(qstnPageNo, pager, qstn);
+		List<QSTN> qstnList = qnaboardService.getQstnList(pager, qstn);
+		log.info(pager);
+		model.addAttribute("qstnList", qstnList);
 		
 		//알람 수 및 리스트
 		alarmInfo.info(session, model); 

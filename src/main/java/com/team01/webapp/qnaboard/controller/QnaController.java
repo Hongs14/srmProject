@@ -120,7 +120,7 @@ public class QnaController {
 	 * @throws Exception
 	 */
 	@GetMapping("/{sysNo}/file")
-	public void fileDownload(int qstnNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
+	public void downloadQnafile(int qstnNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
 		log.info("Qna글 파일 다운로드");
 		
 		QSTNFile qstnFile = qnaboardService.selectFiledownload(qstnNo);
@@ -239,7 +239,7 @@ public class QnaController {
 		model.addAttribute("qstnFile",qstnFile);
 		model.addAttribute("command", "update");
 		model.addAttribute("session",sysNo);
-		log.info("@@@@@@@@@@@@@@@@@"+sysNo);
+		log.info(sysNo);
 		log.info("qstn: "+ qstn);
 		log.info("qstnFile: "+qstnFile);
 		return "qnaboard/qnawrite";
