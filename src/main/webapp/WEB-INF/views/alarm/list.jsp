@@ -64,7 +64,7 @@
 										<h6 class="mb-0 text-white">알림 센터</h6>
 									</div>
 									<ol class="breadcrumb">
-										<li class="breadcrumb-item"><b>나의 알림 확인하기</b></li>
+										<li class="breadcrumb-item"><b>나의 알림 확인하기 </b></li>
 									</ol>
 								</div>
 								<div class="card">
@@ -80,17 +80,18 @@
 												<span class="text-primary h5 m-2">알림 카테고리</span>
 											</div>
 											<div>
+												<button class="btn btn-outline-primary m-1" onclick="alarmAll()">전체</button>
 												<button class="btn btn-outline-danger m-1" onclick="requestResult()">요청결과</button>
 												<button class="btn btn-outline-warning m-1" onclick="srSttsChange()">SR상태변경</button>
 												<button class="btn btn-outline-info m-1" onclick="assigned()">업무배정</button>
 											</div>
 										</div>
 									</div>
-									<div class="d-flex px-5 justify-content-center">
-										<div class="myInfoWrapper shadow-sm mb-5">
-											<table class="table table-hover">
-												<tbody>
-													<c:if test="${command ne 'category' }">
+									<div id="alarmView">
+										<div class="d-flex px-5 justify-content-center">
+											<div class="myInfoWrapper shadow-sm mb-5">
+												<table class="table table-hover">
+													<tbody>
 														<c:choose>
 															<c:when test="${fn:length(alarmList) == 0 }">
 																<div class="alert alert-secondary m-3 p-2" role="alert">
@@ -124,14 +125,14 @@
 																	</tr>																
 																</c:forEach>
 															</c:otherwise>
-														</c:choose>										
-													</c:if>
-													<c:if test="${!empty command and command eq 'category'}">
-														<div id="categoryList"></div>
-													</c:if>												
-												</tbody>
-											</table>
+														</c:choose>																
+													</tbody>
+												</table>
+											</div>
 										</div>
+									</div>
+									<div id="categoryView">
+										<div id="categoryList"></div>
 									</div>
 								</div>
 							</div>
@@ -174,7 +175,7 @@
 									var userType = "${userType}";
 									
 									let data = {sysNo : sysNo, userNo : userNo, alarmCategory : alarmCategory, userType : userType};
-									
+									console.log(data);
 									
 									$.ajax({
 										url : "categoryAlarm",
@@ -183,7 +184,8 @@
 										contentType: "application/json; charset=UTF-8"
 									}).done((data) => {
 										$("#categoryList").html(data);
-										console.log(data);
+										$("#alarmView").addClass("d-none");
+										$("#categoryView").removeClass("d-none");
 									});
 									
 								}
@@ -203,7 +205,9 @@
 										data : JSON.stringify(data),
 										contentType: "application/json; charset=UTF-8"
 									}).done((data) => {
-										$("#categoryList").html(data)
+										$("#categoryList").html(data);
+										$("#alarmView").addClass("d-none");
+										$("#categoryView").removeClass("d-none");
 									});
 								}
 								
@@ -222,10 +226,16 @@
 										data : JSON.stringify(data),
 										contentType: "application/json; charset=UTF-8"
 									}).done((data) => {
-										$("#categoryList").html(data)
+										$("#categoryList").html(data);
+										$("#alarmView").addClass("d-none");
+										$("#categoryView").removeClass("d-none");
 									});
 								}
 								
+								function alarmAll() {
+									$("#alarmView").removeClass("d-none");
+									$("#categoryView").addClass("d-none");
+								}
 								
 							</script>
 							<div class="modal fade" id="alarmBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">

@@ -13,6 +13,7 @@
 			AND sa.SR_NO like #{sysNo}
 			AND sa.USER_NO = #{userNo}
 			AND s.STTS_NO != 8
+			AND s.STTS_NO != 10
 		</if>
 		<if test="userType.equals('관리자')">
 			AND sa.SR_NO like #{sysNo}
