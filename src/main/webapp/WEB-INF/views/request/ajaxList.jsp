@@ -40,7 +40,7 @@
 						<td>
 						<span class="srStts">
 							<c:if test="${request.sttsNm eq '요청'}"><span class="badge badge-dark" style="font-size:100%">${request.sttsNm}</span></c:if>
-							<c:if test="${request.sttsNm eq '검토중'}"><span class="badge badge-dark" style="font-size:100%">${request.sttsNm}</span></c:if>
+							<c:if test="${request.sttsNm eq '검토중'}"><span  class="badge badge-outline-primary" style="font-size:100%; border: 1px solid black;">${request.sttsNm}</span></c:if>
 							<c:if test="${request.sttsNm eq '접수'}"><span class="badge badge-outline-primary" style="font-size:100%; border: 1px solid black;">${request.sttsNm}</span></c:if>
 							<c:if test="${request.sttsNm eq '개발계획'}"><span class="badge badge-info" style="font-size:100%">${request.sttsNm}</span></c:if>
 							<c:if test="${request.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${request.sttsNm}</span></c:if>

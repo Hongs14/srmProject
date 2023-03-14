@@ -25,7 +25,7 @@
 			</div>
 			<div class="col-6 text-right">
 				<c:if test="${sr.sttsNm eq '요청'}"><span class="badge badge-dark" style="font-size:100%">${sr.sttsNm}</span></c:if>
-				<c:if test="${sr.sttsNm eq '검토중'}"><span class="badge badge-dark" style="font-size:100%">${sr.sttsNm}</span></c:if>
+				<c:if test="${sr.sttsNm eq '검토중'}"><span  class="badge badge-outline-primary" style="font-size:100%; border: 1px solid black;">${sr.sttsNm}</span></c:if>
 				<c:if test="${sr.sttsNm eq '접수'}"><span class="badge badge-outline-primary" style="font-size:100%; border: 1px solid black;">${sr.sttsNm}</span></c:if>
 				<c:if test="${sr.sttsNm eq '개발계획'}"><span class="badge badge-info" style="font-size:100%">${sr.sttsNm}</span></c:if>
 				<c:if test="${sr.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${sr.sttsNm}</span></c:if>
