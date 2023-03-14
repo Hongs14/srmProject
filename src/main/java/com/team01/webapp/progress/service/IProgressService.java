@@ -209,7 +209,7 @@ public interface IProgressService {
 
 	public void progressRateAllAdd(ProgressRate progressRate);
 
-	public void progressRateFinishRequest(String srNo, String progNo, String choice);
+	public void progressRateFinishRequest(String srNo, List<String> progNoList, String choice);
 
 	public List<ProgressDetail> getProgressList(List<String> progressArr);
 
