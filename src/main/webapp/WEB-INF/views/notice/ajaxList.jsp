@@ -32,7 +32,7 @@
 								<span class="badge text-danger" style="font-size:100%; ">${notice.seq}</span>
 							</c:when>
 							<c:when test="${notice.ntcPry ne 'Yes'}">
-								${notice.seq}
+								<span class="badge" style="font-size:100%; ">${notice.seq}</span>
 							</c:when>
 						</c:choose>
 						

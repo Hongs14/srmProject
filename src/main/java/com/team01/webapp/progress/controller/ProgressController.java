@@ -78,6 +78,7 @@ public class ProgressController {
 	 * @author					김태희
 	 * @param pageNo			클라이언트가 보낸 페이지 번호 정보 저장
 	 * @param progressfilter	클라이언트가 보낸 필터링 하기 위한 데이터 정보 저장
+	 * @param session			HttpSession 객체 주입
 	 * @param model				View로 데이터 전달을 위한 Model 객체 주입
 	 * @return					progress/list 로 return
 	 */
@@ -99,6 +100,7 @@ public class ProgressController {
 	 * 
 	 * @author				김태희
 	 * @param srNo			클라이언트가 보낸 SR 번호 정보 저장
+	 * @param session		HttpSession 객체 주입
 	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
 	 * @return				progress/detail 로 return
 	 */
@@ -121,6 +123,7 @@ public class ProgressController {
 	 * @author					김태희
 	 * @param pageNo			클라이언트가 보낸 Page 번호 정보 저장
 	 * @param srProgressAjax	클라이언트가 보낸 필터링 후 데이터 정보 저장
+	 * @param session			HttpSession 객체 주입
 	 * @param model				View로 데이터 전달을 위한 Model 객체 주입
 	 * @param pager				클라이언트가 보낸 pager 데이터 정보 저장
 	 * @return					progress/progressListView 로 return
@@ -325,6 +328,7 @@ public class ProgressController {
 	 * @author			김태희
 	 * @param hr		클라이언트가 보낸 hr 정보 저장
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @param session	HttpSession 객체 주입
 	 * @return			progress/progressRateList 로 return
 	 */
 	@RequestMapping(value="progress/detail/progressajax/2", produces="application/json; charset=UTF-8")
@@ -370,39 +374,12 @@ public class ProgressController {
 		return "progress/progressRateAdd";
 	}
 	
-	@RequestMapping(value="progress/detail/progressRateAllAdd", produces="application/json; charset=UTF-8")
-	public String ProgressRateAllAdd(@RequestBody ProgressRate progressRate, HttpSession session) {
-		
-		progressService.progressRateAllAdd(progressRate);
-		
-		session.setAttribute("message", 2);
-		
-		return "redirect:/progress/detail/" + progressRate.getSrNo();
-	}
-	
-	@RequestMapping(value="progress/detail/progressRateFinishRequest", method=RequestMethod.POST)
-	public String progressRateFinishRequest(@RequestBody Progress progress,HttpSession session) {
-		
-		String srNo = progress.getSrNo();
-		String progNo = progress.getProgNo();
-		String choice = progress.getChoice();
-		
-		progressService.progressRateFinishRequest(srNo, progNo, choice);
-		
-		session.setAttribute("message", 2);
-
-		//알람 DB에 저장
-		session.setAttribute("choice", choice);
-		alarmService.insertAlarm(srNo,session);
-		
-		return "redirect:/progress/detail/" + progress.getSrNo();
-	}
-	
 	/**
-	 * 진척율 업데이트
+	 * 진척율 추가(업데이트)
 	 * 
 	 * @author					김태희
 	 * @param progress			클라이언트가 보낸 progress 정보 저장
+	 * @param session			HttpSession 객체 주입
 	 * @return					progress/detail/{srNo} 로 리다이렉트
 	 * @throws IOException
 	 */
@@ -452,6 +429,24 @@ public class ProgressController {
 	}
 	
 	/**
+	 * 진척율 일괄 추가
+	 * 
+	 * @author					김태희
+	 * @param progressRate		클라이언트가 보낸 progressRate 정보 저장
+	 * @param session			HttpSession 객체 주입			
+	 * @return					progress/detail/{srNo} 로 리다이렉트
+	 */
+	@RequestMapping(value="progress/detail/progressRateAllAdd", produces="application/json; charset=UTF-8")
+	public String ProgressRateAllAdd(@RequestBody ProgressRate progressRate, HttpSession session) {
+		
+		progressService.progressRateAllAdd(progressRate);
+		
+		session.setAttribute("message", 2);
+		
+		return "redirect:/progress/detail/" + progressRate.getSrNo();
+	}
+	
+	/**
 	 * 진척율 파일 다운로드
 	 * 
 	 * @author				김태희
@@ -497,6 +492,30 @@ public class ProgressController {
 		}
 	}
 	
+	/**
+	 * 개발 완료 신청 & 승인
+	 * 
+	 * @author					김태희
+	 * @param progress			클라이언트가 보낸 progress 정보 저장
+	 * @param session			HttpSession 객체 주입
+	 * @return					progress/detail/{srNo} 로 리다이렉트
+	 */
+	@RequestMapping(value="progress/detail/progressRateFinishRequest", method=RequestMethod.POST)
+	public String progressRateFinishRequest(@RequestBody Progress progress, HttpSession session) {
+		
+		String srNo = progress.getSrNo();
+		String choice = progress.getChoice();
+		
+		progressService.progressRateFinishRequest(srNo, progress.getProgNoList(), choice);
+		
+		session.setAttribute("message", 2);
+
+		//알람 DB에 저장
+		session.setAttribute("choice", choice);
+		alarmService.insertAlarm(srNo,session);
+		
+		return "redirect:/progress/detail/" + progress.getSrNo();
+	}
 	
 	/**
 	 * 산출물 파일 리스트 출력
@@ -504,6 +523,7 @@ public class ProgressController {
 	 * @author			김태희
 	 * @param hr		클라이언트가 보낸 hr 정보 저장
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @param session	HttpSession 객체 주입
 	 * @return			progress/progressFileAdd 로 리턴
 	 */
 	@RequestMapping(value="progress/detail/progressajax/3", produces="application/json; charset=UTF-8")
@@ -554,6 +574,7 @@ public class ProgressController {
 	 * 
 	 * @author					김태희
 	 * @param progress			클라이언트가 보낸 progress 정보 저장
+	 * @param session			HttpSession 객체 주입
 	 * @return					progress/detail/{srNo} 로 리다이렉트
 	 * @throws IOException
 	 */
@@ -610,6 +631,7 @@ public class ProgressController {
 	 * 
 	 * @author				김태희
 	 * @param progress		클라이언트가 보낸 progress 정보 저장
+	 * @param session		HttpSession 객체 주입
 	 * @return				progress/detail/{srNo} 로 리다이렉트
 	 */
 	@RequestMapping(value="progress/detail/progressFileRemove", produces="application/json; charset=UTF-8")
@@ -635,6 +657,14 @@ public class ProgressController {
 		return "redirect:/progress/detail/" + progress.getSrNo();
 	}
 	
+	/**
+	 * 엑셀 다운로드
+	 * 
+	 * @author				김태희
+	 * @param progressArr	클라이언트가 보낸 progressArr 정보 저장
+	 * @param response		HttpServletResponse 객체 주입
+	 * @throws IOException
+	 */
 	@RequestMapping(value="progress/list/excelDownload", method=RequestMethod.POST)
 	public void excelDownload(@RequestParam List<String> progressArr, HttpServletResponse response) throws IOException {
 		XSSFWorkbook wb=null;
@@ -688,6 +718,15 @@ public class ProgressController {
 		wb.close();
 	}
 	
+	/**
+	 * 계획조정 리스트 조회
+	 * 
+	 * @author					김태희
+	 * @param hr				클라이언트가 보낸 hr 정보 저장
+	 * @param model				View로 데이터 전달을 위한 Model 객체 주입
+	 * @param session			HttpSession 객체 주입
+	 * @return					progress/progressChangeRequest 로 리턴
+	 */
 	@RequestMapping(value="progress/detail/progressajax/4", produces="application/json; charset=UTF-8")
 	public String progressChangeRequestList(@RequestBody HR hr, Model model, HttpSession session) {
 		model.addAttribute("srNo", hr.getSrNo());
@@ -712,12 +751,27 @@ public class ProgressController {
 		return "progress/progressChangeRequestList";
 	}
 	
+	/**
+	 * 기간 추가 신청 페이지 이동
+	 * 
+	 * @author			김태희
+	 * @param srNo		클라이언트가 보낸 srNo 정보 저장
+	 * @return			progress/progressChangeRequest 로 리턴
+	 */
 	@RequestMapping(value="progress/detail/changeRequestList/{srNo}", method=RequestMethod.POST)
 	public String changeRequest(@PathVariable String srNo) {
 		
 		return "progress/progressChangeRequest";
 	}
 	
+	/**
+	 * 기간 추가 신청
+	 * 
+	 * @author					김태희
+	 * @param changeRequest		클라이언트가 보낸 changeRequest 정보 저장
+	 * @param session			HttpSession 객체 주입
+	 * @return					progress/detail/{srNo} 로 리다이렉트
+	 */
 	@RequestMapping(value="progress/detail/changeRequest", method=RequestMethod.POST)
 	public String changeRequestWrite(ChangeRequest changeRequest, HttpSession session) {
 		int userNo = (Integer) session.getAttribute("userNo");
@@ -774,6 +828,15 @@ public class ProgressController {
 		return "redirect:/progress/detail/" + changeRequest.getSrNo();
 	}
 	
+	/**
+	 * 계획 조정 파일 다운로드
+	 * 
+	 * @author				김태희
+	 * @param crNo			클라이언트가 보낸 crNo 정보 저장
+	 * @param userAgent		User-Agent header 정보 저장
+	 * @param response		HttpServletResponse 객체 주입
+	 * @throws Exception
+	 */
 	@RequestMapping(value="progress/detail/ChangeRequestFileDownload/{crNo}")
 	public void ChangeRequestFileDownload(@PathVariable int crNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception {
 		ChangeRequest changeRequest = progressService.getChangeRequestFile(crNo);
@@ -809,6 +872,14 @@ public class ProgressController {
 		}
 	}
 	
+	/**
+	 * 계획 조정 상세 뷰
+	 * 
+	 * @author			김태희
+	 * @param crNo		클라이언트가 보낸 crNo 정보 저장
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			progress/progressChangeRequestDetail 로 리턴
+	 */
 	@RequestMapping(value="progress/detail/changeRequestDetail/{crNo}", method=RequestMethod.POST)
 	public String changeRequestDetail(@PathVariable int crNo, Model model) {
 		ChangeRequest changeRequest = progressService.getChangeRequestFile(crNo);
@@ -826,6 +897,14 @@ public class ProgressController {
 		return "progress/progressChangeRequestDetail";
 	}
 	
+	/**
+	 * 계획 조정 확정
+	 * 
+	 * @author					김태희
+	 * @param changeRequest		클라이언트가 보낸 changeRequest 정보 저장
+	 * @param session			HttpSession 객체 주입
+	 * @return					progress/detail/{srNo} 로 리다이렉트
+	 */
 	@RequestMapping(value="progress/detail/srChangeRequest", produces="application/json; charset=UTF-8")
 	public String progressRateFinishRequest(@RequestBody ChangeRequest changeRequest, HttpSession session) {
 		

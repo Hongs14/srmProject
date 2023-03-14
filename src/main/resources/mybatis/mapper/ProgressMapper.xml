@@ -514,7 +514,7 @@
 			<if test="choice == 1">
 		    	STTS_NO = 8
 		    </if>
-		    <if test="choice == 2">
+		    <if test="(choice == 2 || choice == 3)">
 		    	STTS_NO = 6
 		    </if>
 		WHERE SR_NO = #{srNo}

@@ -69,6 +69,13 @@ public class NoticeController {
 		return "notice/list";
 	}
 	
+	/**
+	 * @author : 황건희
+	 * @param ntcNo		공지사항 상세 조회에 필요한 ntcNo
+	 * @param session	알림 데이터를 받아오기 위한 session
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
+	 */
 	@GetMapping("/list/{ntcNo}")
 	public String getNoticeDetailView(@PathVariable int ntcNo, HttpSession session,Model model) {
 		log.info("디테일 실행");
@@ -82,6 +89,14 @@ public class NoticeController {
 		return "notice/list";
 	}
 
+	/**
+	 * @author : 황건희
+	 * @param pageNo	페이지 위치에 대한 정보
+	 * @param notice	필터링에 필요한 notice 정보
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @param pager		페이징
+	 * @return
+	 */
 	@PostMapping(value="filter/{pageNo}",produces="application/json; charset=UTF-8")
 	public String noticeListAjax(@PathVariable int pageNo, @RequestBody Notice notice, Model model,Pager pager) {
 		log.info("실행");

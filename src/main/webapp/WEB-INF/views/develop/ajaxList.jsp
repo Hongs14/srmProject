@@ -27,15 +27,15 @@
 						<td>
 							<input type="checkbox" onclick="checkSelectAll(this)" name="devleopCheck" value="${develop.srNo}">
 						</td>
-						<td><a href="${pageContext.request.contextPath}/develop/view/${develop.srNo}">${develop.srNo}</a></td>
-		                <td><a href="${pageContext.request.contextPath}/develop/view/${develop.srNo}" class="srdTtl">${develop.srTtl}</a></td>
+						<td><a onclick="location.href='${pageContext.request.contextPath}/develop/view/${develop.srNo}'" style="cursor:pointer;"><b>${develop.srNo}</b></a></td>
+		                <td><a onclick="location.href='${pageContext.request.contextPath}/develop/view/${develop.srNo}'" class="srdTtl" style="cursor:pointer;"><b>${develop.srTtl}</b></a></td>
                        	<td>${develop.sysNm}</td>
 						<td>${develop.userNm}</td>
 						<td>${develop.userOgdp}</td>
 						<td>${develop.srDevDp}</td>
 						<td>
-							<c:if test="${develop.sttsNm eq '접수'}"><span class="badge badge-warning" style="font-size:100%;">${develop.sttsNm}</span></c:if>
-							<c:if test="${develop.sttsNm eq '개발계획'}"><span class="badge text-white" style="background-color:#476A6F; font-size:100%">${develop.sttsNm}</span></c:if>
+							<c:if test="${develop.sttsNm eq '접수'}"><span class="badge badge-primary" style="font-size:100%;">${develop.sttsNm}</span></c:if>
+							<c:if test="${develop.sttsNm eq '개발계획'}"><span class="badge text-white" style="background-color:#0a8091; font-size:100%">${develop.sttsNm}</span></c:if>
 						</td>
 						<td>${develop.srRegDate}</td>
 						<td>${develop.srDdlnDate}</td>

@@ -222,7 +222,7 @@
 				console.log("시작");
 				var startDate = $('#dateStart').val();
 				var endDate = $('#dateEnd').val();
-				var sysNo = "${sessionScope.loginUser.sysNo}";
+				var sysNo = "${session}";
 				var qstnTtl = $('#keyword').val();
 				
 				if(qstnTtl !== "") {
@@ -247,7 +247,7 @@
 				console.log("검색조건 리스트 페이지 번호: "+pageNo);
 				var startDate = $("#dateStart").val();
 				var endDate = $("#dateEnd").val();
-				var sysNo = "${sessionScope.loginUser.sysNo}";
+				var sysNo = "${session}";
 				var qstnTtl = $("#keyword").val();
 				
 				if(qstnTtl !== "") {
@@ -279,7 +279,7 @@
 				$("#mainQstn").attr("class","col-lg-7");
 				$("#miniView").attr("class","col-lg-5");
 				resize();
-				let sysNo = "${sessionScope.loginUser.sysNo}";
+				let sysNo = "${session}";
 				
 				$.ajax({
 					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/view/'+qstnNo,
@@ -319,7 +319,7 @@
 			  	
 			  	var startDate = $("#dateStart").val();
 			  	var endDate = $("#dateEnd").val();
-				var sysNo = "${sessionScope.loginUser.sysNo}";
+				var sysNo = "${session}";
 				var qstnTtl = $("#keyword").val();
 			
 				if(qstnTtl !== "") {
@@ -362,14 +362,13 @@
 				$("#mainQstn").attr("class","col-lg-7");
 				$("#miniView").attr("class","col-lg-5");
 				resize();
-				let sysNo = "${sessionScope.loginUser.sysNo}";
+				let sysNo = "${session}";
 				
 				$.ajax({
 					url :"${pageContext.request.contextPath}/qna/"+sysNo+"/write",
 					type : "GET",
 					dataType : "html",
 					success : function(data) {
-						
 						$('#miniView').html(data);
 					}
 				});

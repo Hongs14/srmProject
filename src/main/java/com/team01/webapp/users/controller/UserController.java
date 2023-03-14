@@ -31,7 +31,7 @@ public class UserController {
 	AlarmInfo alarmInfo;
 	
 	/**
-	 * 로그인 메서드
+	 * 로그인폼으로 이동
 	 * 
 	 * @author			김희률
 	 * @param session	HttpSession 객체 주입
@@ -46,7 +46,7 @@ public class UserController {
 	
 
 	/**
-	 * 로그인 메서드
+	 * 로그인 처리
 	 * 
 	 * @author			김희률
 	 * @param user		클라이언트가 보낸 사용자 정보 저장
@@ -83,7 +83,7 @@ public class UserController {
 	}
 	
 	/**
-	 * 로그아웃 메서드 
+	 * 로그아웃 
 	 * 
 	 * @author			김희률
 	 * @param session	HttpSession 객체 주입, 세션 초기화
@@ -95,11 +95,13 @@ public class UserController {
 		return "user/loginForm";
 	}
 	
+
 	/**
-	 * 회원가입 메서드
+	 * 회원가입
 	 * 
 	 * @author	김희률
-	 * @return	로그인폼으로 이동
+	 * @param	model View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
 	 */
 	@RequestMapping(value = "/user/join", method = RequestMethod.GET)
 	public String join(Model model) {
@@ -108,13 +110,13 @@ public class UserController {
 		return "user/joinForm";
 	}
 
+
 	/**
-	 * 회원가입 메서드
-	 * 
-	 * @author		김희률
-	 * @param user	클라이언트가 보낸 사용자 정보 저장
-	 * @param model	View로 데이터 전달을 위한 Model 객체 주입
-	 * @return		뷰로 이동
+	 * @author	김희률
+	 * @param user		클라이언트가 보낸 사용자 정보 저장
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @param redirectAttributes	일회성 데이터를 View에 전달하기 위한 RedirectAttribute
+	 * @return 뷰로 이동
 	 */
 	@RequestMapping(value="/user/join", method = RequestMethod.POST)
 	public String join(Users user, Model model, RedirectAttributes redirectAttributes) {
@@ -133,6 +135,12 @@ public class UserController {
 		}
 	}
 	
+	/**
+	 * 중복아이디 체크 
+	 * @author 김희률
+	 * @param  userId
+	 * @return duplicated(중복) or success(중복이 아님)
+	 */
 	@ResponseBody
 	@RequestMapping("/user/checkid")
 	public String checkId(@RequestParam String userId)	 {
@@ -148,10 +156,11 @@ public class UserController {
 	}
 	
 	/**
-	 * 나의 정보 확인 메서드
-	 * 
 	 * @author	김희률
-	 * @return	나의 정보 뷰로 이동
+	 * @param userId	사용자의 아이디
+	 * @param session	알림 기능 사용을 위한 session 객체 주입
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			나의 정보 뷰로 이동
 	 */
 	@RequestMapping(value = "/user/myinfo/{userId}", method = RequestMethod.GET)
 	public String myinfo(@PathVariable String userId, HttpSession session, Model model) {
@@ -167,9 +176,9 @@ public class UserController {
 	
 	/**
 	 * 회원탈퇴 메서드
-	 * @author	김희률
-	 * @param userNo
-	 * @return
+	 * @author	김희률		
+	 * @param 	userNo	회원 식별을 위한 userNo
+	 * @return	홈으로 리다이렉트
 	 */
 	@RequestMapping(value = "/user/unregister/{userNo}", method = RequestMethod.GET)
 	public String unregister(@PathVariable int userNo) {
@@ -182,11 +191,12 @@ public class UserController {
 	
 	/**
 	 * 회원정보 수정 메서드
+	 * 
 	 * @author	김희률
-	 * @param userNo
-	 * @param user
-	 * @param model
-	 * @return
+	 * @param userNo	회원 식별을 위한 userNo
+	 * @param user		사용자가 작성한 정보를 저장
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			나의 정보 뷰로 이동
 	 */
 	@RequestMapping(value="/user/update", method = RequestMethod.POST)
 	public String update(Users user, Model model ) {
@@ -197,16 +207,35 @@ public class UserController {
 	}
 	
 	
+	/**
+	 * 회원정보 복구 뷰로 이동
+	 * 
+	 * @author	김희률
+	 * @return 회원정보 복구 뷰로 이동
+	 */
 	@RequestMapping(value="/user/recovery", method = RequestMethod.GET)
 	public String recovery() {
 		return "user/recovery";
 	}
 	
+	/**
+	 * Id 복구페이지로 이동
+	 * 
+	 * @author	김희률
+	 * @return	jsp
+	 */
 	@RequestMapping(value="/user/id_recovery", method = RequestMethod.GET)
 	public String idRecovery() {
 		return "user/idRecovery";
 	}
 	
+	/**
+	 * Id 찾기
+	 * 
+	 * @author	김희률
+	 * @param	user	사용자가 작성한 정보를 저장
+	 * @return 	userId	찾은 아이디를 리턴
+	 */
 	@RequestMapping(value="/user/id_recovery", method = RequestMethod.POST)
 	public @ResponseBody String idRecovery(@RequestBody Users user) {
 		log.info("실행"+user);
@@ -218,11 +247,24 @@ public class UserController {
 		}
 		return userId;
 	}
+	/**
+	 * 비밀번호 찾기 뷰로 이동
+	 * 
+	 * @author	김희률
+	 * @return 	뷰로 이동
+	 */
 	@RequestMapping(value="/user/pswd_recovery", method = RequestMethod.GET)
 	public String pswdRecovery() {
 		return "user/pswdRecovery";
 	}
 	
+	/**
+	 * 비밀번호 찾기
+	 * 
+	 * @author	  	김희률
+	 * @param user	회원이 입력한 정보를 저장
+	 * @return		결과값 success or false
+	 */
 	@RequestMapping(value="/user/pswd_recovery", method = RequestMethod.POST)
 	public @ResponseBody String pswdRecovery(@RequestBody Users user) {
 		int rows = 0;
@@ -235,6 +277,14 @@ public class UserController {
 			return "false";
 		}
 	}
+	
+	/**
+	 * 비밀번호 변경을 위한 현재 비밀번호 확인
+	 * 
+	 * @author		김희률
+	 * @param user	회원이 입력한 정보를 저장
+	 * @return		결과값 success or false
+	 */
 	@RequestMapping(value="/user/check_pswd", method = RequestMethod.POST)
 	public @ResponseBody String checkPswd(@RequestBody Users user) {
 		int rows = 0;
@@ -252,6 +302,13 @@ public class UserController {
 		}
 	}
 	
+	/**
+	 * 비밀번호 변경
+	 * 
+	 * @author		김희률
+	 * @param user	회원이 입력한 정보를 저장
+	 * @return		결과값 success or false
+	 */
 	@RequestMapping(value="/user/update_pswd", method = RequestMethod.POST)
 	public @ResponseBody String updatePswd(@RequestBody Users user) {
 		int rows = 0;

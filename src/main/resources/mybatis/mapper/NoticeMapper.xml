@@ -127,7 +127,7 @@
 					AND n.NTC_TTL like #{ntcTtl}
 					AND SYS_NO = #{sysNo}
 				</if>
-		        ORDER BY n.ntc_pry desc
+		        ORDER BY n.ntc_pry desc, n.NTC_NO asc
 		    )
 		    <![CDATA[
 		    	WHERE ROWNUM <=#{endRowNo}

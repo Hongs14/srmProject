@@ -85,6 +85,16 @@ public class RequestController {
 		
 	}
 	
+	/**
+	 * 메인페이지에서 상세페이지 바로 이동
+	 * 
+	 * @author	김희률
+	 * @param srNo			상세정보를 볼 srNo
+	 * @param session		알림 사용을 위한 session
+	 * @param requestFilter	필터링 기능
+	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
+	 * @return				뷰로 이동
+	 */
 	@RequestMapping(value="/list/{srNo}", method = RequestMethod.GET)
 	public String getDetailList(@PathVariable String srNo, HttpSession session, RequestFilter requestFilter, Model model) {
 		log.info("실행");
@@ -107,8 +117,8 @@ public class RequestController {
 	 * @param pageNo		페이지정보를 저장
 	 * @param requestAjax	필터링에 필요한 정보를 저장
 	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
-	 * @param pager			paging처리를 위한 
-	 * @return
+	 * @param pager			paging처리를 위한 pager객체 주입
+	 * @return 필터링한 리스트 뷰
 	 */
 	@PostMapping(value="/filter/{pageNo}")
 	public String getFilteredList(@PathVariable String pageNo, @RequestBody RequestAjax requestAjax, Model model, Pager pager) {
@@ -123,15 +133,17 @@ public class RequestController {
 	
 	
 	/**
+	 * SR요청 작성 폼으로 이동
+	 * 
 	 * @author					김희률
-	 * @param session			
+	 * @param session						
 	 * @param requestFilter		필터 유지하기
-	 * @param model
-	 * @param pager
-	 * @return
+	 * @param model				View로 데이터 전달을 위한 Model 객체 주입
+	 * @param pager				paging처리를 위한 pager객체 주입
+	 * @return					작성 폼으로 이동
 	 */
 	@RequestMapping(value="/write", method = RequestMethod.GET)
-	public String writeRequest(HttpSession session, RequestFilter requestFilter,  Model model, Pager pager) {
+	public String writeRequest(RequestFilter requestFilter,  Model model, Pager pager) {
 		log.info("정보 로그 실행");
 		requestFilter = requestService.getFilterList(requestFilter);
 		model.addAttribute("requestfilter", requestFilter);
@@ -141,18 +153,18 @@ public class RequestController {
 	}
 	
 	/**
-	 * SR 상세 확인 하기
+	 * SR 상세 조회
 	 * 
 	 * @author	김희률
-	 * @param srNo
-	 * @param requestFilter
-	 * @param session
-	 * @param model
-	 * @param pager
-	 * @return
+	 * @param srNo			상세 조회할 srNo
+	 * @param requestFilter	필터 유지하기
+	 * @param session		세션에서
+	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
+	 * @param pager			paging처리를 위한 pager객체 주입
+	 * @return				상세 조회 뷰
 	 */
 	@RequestMapping(value="/detail/{srNo}", method = RequestMethod.GET)
-	public String getDetail(@PathVariable String srNo, HttpSession session, Model model, Pager pager) {
+	public String getDetail(@PathVariable String srNo, Model model, Pager pager) {
 		log.info("실행"+srNo);
 		Request request = requestService.getRequestDetail(srNo);
 		List<MultipartFile> srFile = requestService.selectRequestFileDetail(srNo);
@@ -164,6 +176,16 @@ public class RequestController {
 	}
 	
 	
+	/**
+	 * 파일 다운로드
+	 * 
+	 * @author	김희률
+	 * @param requestFileNo	다운로드할 파일 넘버
+	 * @param srNo			
+	 * @param userAgent		user의 브라우저 정보
+	 * @param response		View로 데이터 전달을 위한 response
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/fileDownload", method = RequestMethod.GET)
 	public void downloadRequestFile(String requestFileNo,String srNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception {
 		log.info("실행"+ "fileNo: "+requestFileNo);
@@ -212,7 +234,7 @@ public class RequestController {
 	 * @param sr		요청 정보를 담은 sr객체 주입
 	 * @param session	HttpSession 객체 주입
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
-	 * @return
+	 * @return			작성한 내용의 상세 뷰로 이동
 	 */
 	@RequestMapping(value="/write", method = RequestMethod.POST)
 	public String writeRequest(SR sr, SrFile srFile, HttpSession session, Model model) {
@@ -280,8 +302,16 @@ public class RequestController {
 		return "redirect:/request/detail/"+srNo;
 	}
 	
+	/**
+	 * SR 요청 수정 뷰로 이동
+	 * 
+	 * @author	김희률
+	 * @param srNo		수정할 srNo
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			SR 요청 수정 뷰로 이동
+	 */
 	@RequestMapping(value="/update/{srNo}", method = RequestMethod.GET)
-	public String updateRequest(@PathVariable String srNo, HttpSession session, Model model) {
+	public String updateRequest(@PathVariable String srNo, Model model) {
 		log.info("실행");
 		Request sr = requestService.getRequestDetail(srNo);
 		List<MultipartFile> srFile = requestService.selectRequestFileDetail(srNo);
@@ -291,8 +321,16 @@ public class RequestController {
 		return "request/writeForm";
 	}
 	
+	/**
+	 * SR 요청 정보 수정
+	 * @author	김희률
+	 * @param sr		요청 정보를 담은 sr객체 주입
+	 * @param srFile	sr중에서 삭제되지 않은 첨부파일 정보를 담아서 DB에 저장하기 위해 srFile 객체 주입
+	 * @param session	HttpSession 객체 주입
+	 * @return			수정된 요청의 상세페이지로 리다이렉트
+	 */
 	@RequestMapping(value="/update", method = RequestMethod.POST)
-	public String updateRequest(SR sr, SrFile srFile, HttpSession session, Model model) {
+	public String updateRequest(SR sr, SrFile srFile, HttpSession session) {
 		int rows =0;
 		try {
 			log.info("sr: "+sr);
@@ -373,6 +411,14 @@ public class RequestController {
 		return "redirect:/request/detail/"+srNo;
 	}
 	
+	/**
+	 * 요청 삭제
+	 * 
+	 * @author	김희률
+	 * @param srNo	삭제할 srNo
+	 * @param model 결과를 담기 위해 model객체 주입
+	 * @return		SR요청 리스트로 리다이렉트
+	 */
 	@RequestMapping(value="/delete/{srNo}", method = RequestMethod.GET)
 	public String deleteRequest(@PathVariable String srNo, Model model) {
 		log.info("실행");
@@ -386,6 +432,14 @@ public class RequestController {
 		
 	}
 	
+	/**
+	 * 엑셀 다운로드
+	 * 
+	 * @author				김태희
+	 * @param progressArr	클라이언트가 보낸 progressArr 정보 저장
+	 * @param response		HttpServletResponse 객체 주입
+	 * @throws IOException
+	 */
 	@RequestMapping(value="/excelDownload", method=RequestMethod.POST)
 	public void excelDownload(@RequestParam List<String> requestArr, HttpServletResponse response) throws IOException {
 		XSSFWorkbook wb=null;

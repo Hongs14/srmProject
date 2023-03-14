@@ -61,11 +61,7 @@ public class QnaController {
 		log.info("qna목록보기");
 		//알림 수 및 리스트
 		alarmInfo.info(session, model);
-		
-		if(sysNo == "SRM") {
-			sysNo = "SRM";
-		}
-		model.addAttribute("urlSysNo", sysNo);
+		model.addAttribute("session",sysNo);
 		return "qnaboard/qnalist";
 	}
 	
@@ -84,6 +80,7 @@ public class QnaController {
 		pager = qnaboardService.returnPage(pageNo,pager,qstn);
 		List<QSTN> qnalist = qnaboardService.getQstnList(pager,qstn);
 		model.addAttribute("qnalist", qnalist); 
+		model.addAttribute("session",sysNo);
 		log.info(qnalist);
 		model.addAttribute("pager",pager);
 		
@@ -98,7 +95,7 @@ public class QnaController {
 	 * @return			qnaboard/qnadetail.jsp 리턴
 	 */
 	@GetMapping("/{sysNo}/view/{qstnNo}")
-	public String getQnaDetail(@PathVariable int qstnNo, Model model) {
+	public String getQnaDetail(@PathVariable int qstnNo, @PathVariable String sysNo, Model model) {
 		log.info("QnA상세보기");
 		QSTN qstn = qnaboardService.getDetail(qstnNo);
 		
@@ -107,6 +104,7 @@ public class QnaController {
 		log.info(qstnFile);
 		model.addAttribute("qstn", qstn);
 		model.addAttribute("qstnFile", qstnFile);
+		model.addAttribute("session", sysNo);
 		int updateInq = qnaboardService.countInq(qstnNo);
 		if(updateInq == 1) {
 			log.info("조회수 증가");
@@ -122,7 +120,7 @@ public class QnaController {
 	 * @throws Exception
 	 */
 	@GetMapping("/{sysNo}/file")
-	public void fileDownload(int qstnNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
+	public void downloadQnafile(int qstnNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
 		log.info("Qna글 파일 다운로드");
 		
 		QSTNFile qstnFile = qnaboardService.selectFiledownload(qstnNo);
@@ -147,7 +145,7 @@ public class QnaController {
 		response.setContentType(contentType);
 		
 		//응답 바디에 파일 데이터 실기
-		String filePath = "C:/OTI/uploadfiles/qstn/"+savedName;
+		String filePath = "C:/OTI/uploadfiles/qstn/"+qstnNo+"/"+savedName;
 		File file = new File(filePath);
 		log.info("file: "+ filePath);
 				
@@ -168,8 +166,9 @@ public class QnaController {
 	 * @return
 	 */
 	@GetMapping("{sysNo}/write")
-	public String writeQna(Model model) {
+	public String writeQna(@PathVariable String sysNo, Model model) {
 		log.info("Qna작성하기");
+		model.addAttribute("session",sysNo);
 		model.addAttribute("command", "write");
 		return "qnaboard/qnawrite";
 	}
@@ -200,7 +199,7 @@ public class QnaController {
 					qstnFile.setQstnNo(qstn.getQstnNo());		
 					log.info(qstnFile);
 					//서버 파일 시스템에 파일로 저장
-					String filePath = "C:/OTI/uploadfiles/qstn/"+qstnFilePhysNm;
+					String filePath = "C:/OTI/uploadfiles/qstn/"+qstnNo+"/"+qstnFilePhysNm;
 					log.info(filePath);
 					File file = new File(filePath);
 					// 폴더가 없다면 생성
@@ -232,13 +231,15 @@ public class QnaController {
 	 * @return
 	 */
 	@GetMapping("/{sysNo}/update")
-	public String updateQna(@RequestParam int qstnNo, Model model) {
+	public String updateQna(@RequestParam int qstnNo, @PathVariable String sysNo, Model model) {
 		log.info("Qna수정하기");
 		QSTN qstn = qnaboardService.getDetail(qstnNo);
 		List<MultipartFile> qstnFile = qnaboardService.getQstnFileDetail(qstnNo);
 		model.addAttribute("qstn", qstn);
 		model.addAttribute("qstnFile",qstnFile);
 		model.addAttribute("command", "update");
+		model.addAttribute("session",sysNo);
+		log.info(sysNo);
 		log.info("qstn: "+ qstn);
 		log.info("qstnFile: "+qstnFile);
 		return "qnaboard/qnawrite";
@@ -297,11 +298,12 @@ public class QnaController {
 	 * @param qstnNo
 	 * @return
 	 */
-	@GetMapping("/{sysNo}/delete/{qstnNo}")
-	public void deleteQstn(@PathVariable int qstnNo) {
+	@PostMapping("/{sysNo}/delete/{qstnNo}")
+	public String deleteQstn(@PathVariable int qstnNo, @PathVariable String sysNo) {
 		log.info(qstnNo+"번 질문 삭제하기");
 		int result = qnaboardService.eraseQstn(qstnNo);
 		log.info("삭제된 행의 수: "+ result);
+		return  "redirect:/qna/"+sysNo+"/list";
 	}
 	
 	/**Qna댓글읽기
@@ -359,7 +361,6 @@ public class QnaController {
 		log.info("QSTN댓글 삭제");
 		qnaboardService.deleteComment(qstnCmntNo);
 		return qstnCmntNo;
-		
 	}
 	
 }

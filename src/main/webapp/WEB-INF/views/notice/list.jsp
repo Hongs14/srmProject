@@ -143,8 +143,8 @@
 					  	let month = today.getMonth() + 1;  // 월
 					  	let date = today.getDate();  // 날짜
 					  	
-					  	var defaltStartDate = (year + '/' + (month-2) + '/' + date);
-					  	var defaltEndDate = (year + '/' + month + '/' + date);
+					  	var defaltStartDate = (year + '/' + ((month<9? "0"+(month-2) : (month-2))) + '/' + date);
+					  	var defaltEndDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
 					  	
 					  	console.log(defaltStartDate);
 					  	console.log(defaltEndDate);
@@ -260,8 +260,8 @@
 					  	let month = today.getMonth() + 1;  // 월
 					  	let date = today.getDate();  // 날짜
 					  	
-					  	var defaltStartDate = (year + '/' + month + '/' + date);
-					  	var defaltEndDate = (year + '/' + month + '/' + date);
+					  	var defaltStartDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
+					  	var defaltEndDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
 					  	
 					  	console.log(defaltStartDate);
 					  	console.log(defaltEndDate);
@@ -336,8 +336,8 @@
 					  	let lastMonth = day.getMonth()+1;
 					  	let lastDay = day.getDate();
 					  	
-					  	var defaltStartDate = (year + '/' + lastMonth + '/' + lastDay);
-					  	var defaltEndDate = (year + '/' + month + '/' + date);
+					  	var defaltStartDate = (year + '/' + (lastMonth<9? "0"+lastMonth : lastMonth) + '/' + lastDay);
+					  	var defaltEndDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
 					  	
 					  	console.log(defaltStartDate);
 					  	console.log(defaltEndDate);
@@ -408,8 +408,8 @@
 					  	let month = today.getMonth() + 1;  // 월
 					  	let date = today.getDate();  // 날짜
 					  	
-					  	var defaltStartDate = (year + '/' + (month-1) + '/' + date);
-					  	var defaltEndDate = (year + '/' + month + '/' + date);
+					  	var defaltStartDate = (year + '/' + ((month<9? "0"+month : month)-1) + '/' + date);
+					  	var defaltEndDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
 					  	
 					  	console.log(defaltStartDate);
 					  	console.log(defaltEndDate);
