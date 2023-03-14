@@ -82,7 +82,9 @@
 											<div>
 												<button class="btn btn-outline-primary m-1" onclick="alarmAll()">전체</button>
 												<button class="btn btn-outline-danger m-1" onclick="requestResult()">요청결과</button>
-												<button class="btn btn-outline-warning m-1" onclick="srSttsChange()">SR상태변경</button>
+												<c:if test="${userType ne '개발자'}">												
+													<button class="btn btn-outline-warning m-1" onclick="srSttsChange()">SR상태변경</button>
+												</c:if>
 												<button class="btn btn-outline-info m-1" onclick="assigned()">업무배정</button>
 											</div>
 										</div>
@@ -120,6 +122,8 @@
 																				<span class="d-none" id="sttsNm">${alarmList.sttsNm}</span>
 																				<span >${alarmList.message}</span>
 													                    	</div>
+																		</td>
+																		<td>
 																			<i class="fas fa-trash col-1" data-toggle="modal" data-target="#alarmBtn" id="#modalScroll"></i>
 																		</td>
 																	</tr>																

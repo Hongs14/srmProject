@@ -45,7 +45,6 @@ public class AlarmService implements IAlarmService{
 	public List<Alarm> selectCategoryAlarm(Alarm alarm){
 		log.info("실행");
 		List<Alarm> categoryAlarm = alarmRepository.selectCategoryAlarm(alarm);
-		log.info(categoryAlarm);
 		return categoryAlarm;
 	}
 	
@@ -85,10 +84,12 @@ public class AlarmService implements IAlarmService{
 			alarmUser.setAlarmPry("상");
 			alarmUser.setAlarmCategory("SR상태변경");
 			log.info(alarmUser);
-		}else if(alarmUser.getSttsNm().equals("개발 완료") && choice.equals("2")) {
-			alarmUser.setMessage("SR 요청이 개발완료 되었습니다.");
-			alarmUser.setAlarmPry("하");
-			alarmUser.setAlarmCategory("요청결과");
+		}else if(alarmUser.getSttsNm().equals("개발 완료")) {
+			if(choice.equals("2") || choice.equals("3")) {				
+				alarmUser.setMessage("SR 요청이 개발완료 되었습니다.");
+				alarmUser.setAlarmPry("하");
+				alarmUser.setAlarmCategory("요청결과");
+			}
 			log.info(alarmUser);
 		}else if(alarmUser.getSttsNm().equals("반려")) {
 			alarmUser.setMessage("SR 요청이 반려 되었습니다.");

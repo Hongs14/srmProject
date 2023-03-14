@@ -33,6 +33,8 @@
 										<span class="d-none" id="sttsNm">${categoryAlarm.sttsNm}</span>
 										<span >${categoryAlarm.message}</span>
 			                    	</div>
+								</td>
+								<td>
 									<i class="fas fa-trash col-1" data-toggle="modal" data-target="#alarmBtn" id="#modalScroll"></i>
 								</td>
 							</tr>																

@@ -93,7 +93,6 @@ public class HomeController {
 		List<Notice> noticeList = noticeService.getNoticeListAjax(pager,notice);
 		log.info(pager);
 		model.addAttribute("noticeList",noticeList);
-		log.info(noticeList);
 		
 		// Q n A 페이징 처리
 		
