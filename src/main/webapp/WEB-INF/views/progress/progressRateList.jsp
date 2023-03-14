@@ -85,9 +85,16 @@
 				<button class="btn btn-primary btn-sm mr-2" type="button" onclick="progressRateALLAdd()">
 					저장
 				</button>
-				<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFinishRequestModal" onclick="progressRequestModal(1)">
-					완료 요청
-				</button>
+				<c:if test="${userNo != managerNo}">
+					<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFinishRequestModal" onclick="progressRequestModal(1)">
+						완료 요청
+					</button>
+				</c:if>
+				<c:if test="${userNo == managerNo}">
+					<button class="btn btn-warning btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFinishRequestModal" onclick="progressRequestModal(3)">
+						개발 완료
+					</button>	
+				</c:if>
 			</c:if>
 		</c:if>
 		<c:if test="${sttsNm == '완료요청'}">
@@ -212,7 +219,7 @@
 	}
 	
 	function progressRequestModal(choice) {
-		if(choice == 1) {
+		if(choice == 1 || choice == 3) {
 			var progRateArr = new Array();
 		
 			<c:forEach var="list" items="${progressRateList}" begin="0" end="3">
@@ -232,15 +239,27 @@
 			} 
 			
 			if(a == null) {
-				$("#message").text("요청하시겠습니까?");
-				$('#footer').empty();
-				let htmlData = '';
-				htmlData += '<button class="btn btn-primary mr-2" type="button" onclick="progressRateFinishRequest(1)">'
-				htmlData += "네"
-				htmlData += '</button>'
-				htmlData += '<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>';
-				$('#footer').append(htmlData)
-				onMessage();
+				if(choice == 1) {
+					$("#message").text("요청하시겠습니까?");
+					$('#footer').empty();
+					let htmlData = '';
+					htmlData += '<button class="btn btn-primary mr-2" type="button" onclick="progressRateFinishRequest(1)">'
+					htmlData += "네"
+					htmlData += '</button>'
+					htmlData += '<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>';
+					$('#footer').append(htmlData)
+					onMessage();
+				} else {
+					$("#message").text("개발 완료 하시겠습니까?");
+					$('#footer').empty();
+					let htmlData = '';
+					htmlData += '<button class="btn btn-primary mr-2" type="button" onclick="progressRateFinishRequest(3)">'
+					htmlData += "네"
+					htmlData += '</button>'
+					htmlData += '<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>';
+					$('#footer').append(htmlData)
+					onMessage();
+				}
 			} else {
 				$("#message").text(a);
 			}
@@ -309,19 +328,24 @@
 	}
 	
 	function progressRateFinishRequest(choice) {
+		var progNoList = new Array();
 		var srNo = "${srNo}"
 		
 		if(choice == 1) {
 			<c:forEach var="list" items="${progressRateList}" begin="4" end="4">
-				progNo = "${list.progNo}";
+				progNoList.push("${list.progNo}");
+			</c:forEach>
+		} else if(choice == 2) {
+			<c:forEach var="list" items="${progressRateList}" begin="5" end="5">
+				progNoList.push("${list.progNo}");
 			</c:forEach>
 		} else {
-			<c:forEach var="list" items="${progressRateList}" begin="5" end="5">
-				progNo = "${list.progNo}";
+			<c:forEach var="list" items="${progressRateList}" begin="4" end="5">
+				progNoList.push("${list.progNo}");
 			</c:forEach>
 		}
 		
-		data = {srNo : srNo, progNo : progNo, choice : choice}
+		data = {srNo : srNo, progNoList : progNoList, choice : choice}
 		
 		$.ajax({
 			url : "progressRateFinishRequest",

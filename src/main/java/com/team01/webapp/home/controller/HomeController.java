@@ -52,6 +52,15 @@ public class HomeController {
 	@Autowired
 	IRequestService requestService;
 
+	/**
+	 * 메인 페이지 뷰 이동
+	 * 
+	 * @author			김태희
+	 * @param pager		클라이언트가 보낸 pager 데이터 정보 저장
+	 * @param notice	클라이언트가 보낸 notice 데이터 정보 저장
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			user/loginForm 로 리턴
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Pager pager, Notice notice, Model model) {
 		log.info("정보 로그 실행");
@@ -59,6 +68,17 @@ public class HomeController {
 		return "user/loginForm";
 		
 	}
+	
+	/**
+	 * 메인 페이지 조회
+	 * 
+	 * @author			김태희
+	 * @param session	HttpSession 객체 주입
+	 * @param pager		클라이언트가 보낸 pager 데이터 정보 저장
+	 * @param notice	클라이언트가 보낸 notice 데이터 정보 저장
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			home 로 리턴
+	 */
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String getHomeGrid(HttpSession session, Pager pager, Notice notice, Model model) {
 		// 공지사항 메인 페이징 처리
@@ -114,6 +134,14 @@ public class HomeController {
 	}
 
 
+	/**
+	 * 메인 페이지 도넛 차트 조회
+	 * 
+	 * @author			김태희
+	 * @param session	HttpSession 객체 주입
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			home/systemMiniView 로 리턴
+	 */
 	@RequestMapping(value = "/systemMiniView", method = RequestMethod.GET)
 	public String getSystemMiniView(HttpSession session, Model model) {
 		int userNo = (int) session.getAttribute("userNo");
@@ -138,6 +166,16 @@ public class HomeController {
 		return "home/systemMiniView";
 	}
 	
+	/**
+	 * 메인 페이지 리스트 조회
+	 * 
+	 * @author			김태희
+	 * @param sr		클라이언트가 보낸 sr 데이터 정보 저장
+	 * @param session	HttpSession 객체 주입
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @param pager		클라이언트가 보낸 pager 데이터 정보 저장
+	 * @return			home/homeMiniView 로 리턴
+	 */
 	@RequestMapping(value="/homeMiniView", produces="application/json; charset=UTF-8")
 	public String homeMiniView(@RequestBody SR sr, HttpSession session, Model model, Pager pager) {
 		int userNo = (int) session.getAttribute("userNo");
@@ -167,6 +205,14 @@ public class HomeController {
 		return "home/homeMiniView";
 	}
 	
+	/**
+	 * 관리자 메인 요약 뷰 조회
+	 * 
+	 * @author			김태희
+	 * @param sr		클라이언트가 보낸 sr 데이터 정보 저장
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			home/managerMiniView 로 리턴
+	 */
 	@RequestMapping(value = "/managerMiniView", method = RequestMethod.POST)
 	public String getManagerMiniView(@RequestBody SR sr, Model model) {
 		if(sr.getSrNo().equals("초기값")) {
@@ -202,6 +248,14 @@ public class HomeController {
 		return "home/managerMiniView";
 	}
 	
+	/**
+	 * 개발자 메인 요약 뷰 조회
+	 * 
+	 * @author			김태희
+	 * @param devMini	클라이언트가 보낸 devMini 데이터 정보 저장
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			home/devMiniView 로 리턴
+	 */
 	@RequestMapping(value = "/devMiniView", method = RequestMethod.POST)
 	public String getDevMiniView(@RequestBody DevMini devMini, Model model) {
 		if(devMini.getSrNo().equals("초기값")) {

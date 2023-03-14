@@ -358,10 +358,17 @@ public class ProgressService implements IProgressService {
 	}
 
 	@Transactional
-	public void progressRateFinishRequest(String srNo, String progNo, String choice) {
+	public void progressRateFinishRequest(String srNo, List<String> progNoList, String choice) {
 		progressRepository.updateProgressFinishRequest(srNo, choice);
-		progressRepository.updateProgressRateFinishRequest(progNo, choice);
 		
+		if(choice.equals("1") || choice.equals("2")) {
+			progressRepository.updateProgressRateFinishRequest(progNoList.get(0), choice);
+		} else {
+			for(int i=0; i<progNoList.size(); i++) {
+				choice = String.valueOf(i+1);
+				progressRepository.updateProgressRateFinishRequest(progNoList.get(i), choice);
+			}
+		}
 	}
 
 	@Override

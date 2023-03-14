@@ -29,4 +29,5 @@ public class Progress {
 	
 	private String choice;
 	
+	private List<String> progNoList;
 }
