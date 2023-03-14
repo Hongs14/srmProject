@@ -765,10 +765,12 @@ public class ProgressController {
 	}
 	
 	/**
-	 * @author : 김태희
-	 * @param changeRequest
+	 * 기간 추가 신청
+	 * 
+	 * @author					김태희
+	 * @param changeRequest		클라이언트가 보낸 changeRequest 정보 저장
 	 * @param session			HttpSession 객체 주입
-	 * @return
+	 * @return					progress/detail/{srNo} 로 리다이렉트
 	 */
 	@RequestMapping(value="progress/detail/changeRequest", method=RequestMethod.POST)
 	public String changeRequestWrite(ChangeRequest changeRequest, HttpSession session) {
@@ -826,6 +828,15 @@ public class ProgressController {
 		return "redirect:/progress/detail/" + changeRequest.getSrNo();
 	}
 	
+	/**
+	 * 계획 조정 파일 다운로드
+	 * 
+	 * @author				김태희
+	 * @param crNo			클라이언트가 보낸 crNo 정보 저장
+	 * @param userAgent		User-Agent header 정보 저장
+	 * @param response		HttpServletResponse 객체 주입
+	 * @throws Exception
+	 */
 	@RequestMapping(value="progress/detail/ChangeRequestFileDownload/{crNo}")
 	public void ChangeRequestFileDownload(@PathVariable int crNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception {
 		ChangeRequest changeRequest = progressService.getChangeRequestFile(crNo);
@@ -861,6 +872,14 @@ public class ProgressController {
 		}
 	}
 	
+	/**
+	 * 계획 조정 상세 뷰
+	 * 
+	 * @author			김태희
+	 * @param crNo		클라이언트가 보낸 crNo 정보 저장
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return			progress/progressChangeRequestDetail 로 리턴
+	 */
 	@RequestMapping(value="progress/detail/changeRequestDetail/{crNo}", method=RequestMethod.POST)
 	public String changeRequestDetail(@PathVariable int crNo, Model model) {
 		ChangeRequest changeRequest = progressService.getChangeRequestFile(crNo);
@@ -879,10 +898,12 @@ public class ProgressController {
 	}
 	
 	/**
-	 * @author : 김태희
-	 * @param changeRequest
+	 * 계획 조정 확정
+	 * 
+	 * @author					김태희
+	 * @param changeRequest		클라이언트가 보낸 changeRequest 정보 저장
 	 * @param session			HttpSession 객체 주입
-	 * @return
+	 * @return					progress/detail/{srNo} 로 리다이렉트
 	 */
 	@RequestMapping(value="progress/detail/srChangeRequest", produces="application/json; charset=UTF-8")
 	public String progressRateFinishRequest(@RequestBody ChangeRequest changeRequest, HttpSession session) {
