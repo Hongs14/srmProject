@@ -57,7 +57,7 @@
   	<script>
 	  	$(document).ready(function () {
 		    $('#simple-date4 .input-daterange').datepicker({        
-		        format: 'yyyy-mm-dd',        
+		        format: 'yyyy/mm/dd',        
 		        autoclose: true,     
 		        todayHighlight: true,   
 		        todayBtn: 'linked',
@@ -203,9 +203,9 @@
 											  	let year = today.getFullYear(); // 년도
 											  	let month = today.getMonth() + 1;  // 월
 											  	let date = today.getDate();  // 날짜
-											  	
-											  	var defaltStartDate = ((year-1) + '/' + month + '/' + date);
-											  	var defaltEndDate = (year + '/' + month + '/' + date);
+											 
+											  	var defaltStartDate = ((year-1) + '/' + (month<9? "0"+month : month) + '/' + date);
+											  	var defaltEndDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
 											  	
 											  	console.log(defaltStartDate);
 											  	console.log(defaltEndDate);
@@ -308,8 +308,8 @@
 											  	let month = today.getMonth() + 1;  // 월
 											  	let date = today.getDate();  // 날짜
 											  	
-											  	var defaltStartDate = ((year-1) + '/' + month + '/' + date);
-											  	var defaltEndDate = (year + '/' + month + '/' + date);
+											  	var defaltStartDate = ((year-1) + '/' + (month<9? "0"+month : month) + '/' + date);
+											  	var defaltEndDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
 											  	
 											  	console.log(defaltStartDate);
 											  	console.log(defaltEndDate);
@@ -570,7 +570,7 @@
 			</script>
 			<!-- 메시지 모달 창 -->
 			<div class="modal fade" id="ListExcelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-				<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width:450px;">
 					<div class="modal-content">
 						<div class="modal-header bg-primary">
 							<h5 class="modal-title" id="exampleModalScrollableTitle">

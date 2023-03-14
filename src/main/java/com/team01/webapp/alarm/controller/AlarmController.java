@@ -27,6 +27,12 @@ public class AlarmController extends TextWebSocketHandler {
 	@Autowired
 	IAlarmService alarmService;
 	
+	/**
+	 * @author : 황건희
+	 * @param session		알림 데이터를 가져오기 위한 유저의 정보
+	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
+	 */
 	@GetMapping("list")
 	public String alarmList(HttpSession session, Model model) {
 		log.info("실행");
@@ -52,15 +58,25 @@ public class AlarmController extends TextWebSocketHandler {
 		return "alarm/list";
 	}
 	
+	/**
+	 * @author : 황건희
+	 * @param alarm		해당 카테고리에 대한 알람 정보
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
+	 */
 	@PostMapping(value="categoryAlarm", produces="application/json; charset=UTF-8")
 	public String selectCategoryAlarm(@RequestBody Alarm alarm, Model model) {
 		log.info("실행");
 		List<Alarm> categoryAlarm = alarmService.selectCategoryAlarm(alarm);
-		log.info(categoryAlarm);
 		model.addAttribute("categoryAlarm",categoryAlarm);
 		return "alarm/categoryList";
 	}
 	
+	/**
+	 * @author : 황건희
+	 * @param alarm		읽은 알람에 대한 정보
+	 * @return
+	 */
 	@PostMapping(value="updateAlarmCheck")
 	public String updateAlarmCheck(@RequestBody Alarm alarm) {
 		log.info("실행");
@@ -71,6 +87,11 @@ public class AlarmController extends TextWebSocketHandler {
 		return "redirect:/alarm/list";
 	}
 	
+	/**
+	 * @author : 황건희
+	 * @param alarm		알람 삭제
+	 * @return
+	 */
 	@PostMapping(value="delete", produces="application/json; charset=UTF-8")
 	public String deleteAlarm(@RequestBody Alarm alarm) {
 		log.info("실행");

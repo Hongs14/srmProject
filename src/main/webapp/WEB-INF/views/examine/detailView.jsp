@@ -160,7 +160,7 @@
 	</div> 
 </div>
 <div class="modal fade" id="examineBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-	<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-primary">
 				<h5 class="modal-title" id="exampleModalScrollableTitle">
@@ -188,6 +188,8 @@
 <script>
 	function alarmBtn() {
 		
+		var message = "저장되었습니다.";
+		
 		var srNo = document.getElementById("srNo").value;
 		var srOpnn = document.getElementById("srOpnn").value;
 		
@@ -201,6 +203,14 @@
 		console.log(srPry);
 		var sttsNm = sttsNmSelect.options[document.getElementById("examineSttsNm").selectedIndex].text;
 		console.log(sttsNm);
+		var examineSttsNm = "${examine.sttsNm}";
+		
+		if(sttsNm == examineSttsNm){
+			message = "이미 검토중 입니다.	";
+		}else{
+			let msg = '알림이 도착하였습니다.'
+	   		socket.send(msg);
+		}
 		
 		let data = {srNo : srNo, srReqSe : srReqSe, srPry : srPry, sttsNm : sttsNm, srOpnn : srOpnn}
 		console.log(data);
@@ -211,9 +221,7 @@
 			data : JSON.stringify(data),
 			contentType : "application/json; charset=UTF-8"
 		}).done((data) => {
-			$("#message").text("저장 되었습니다.");
-	    	let msg = '알림이 도착하였습니다.'
-    		socket.send(msg);
+			$("#message").text(message);
 	    	setTimeout(function() {
 	    		window.location.href = "${pageContext.request.contextPath}/examine/list";
 	    	}, 2000);

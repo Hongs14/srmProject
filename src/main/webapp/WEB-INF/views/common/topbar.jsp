@@ -36,9 +36,9 @@
 				console.log("message 실행");
 				
 				let userType = "${sessionScope.loginUser.userType}";
-				if(userType != '관리자'){
-					countUp();					
-				}
+				
+				countUp();					
+				
 			};
 			
 			function countUp() {

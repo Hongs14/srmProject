@@ -85,6 +85,14 @@ public class ExamineController {
 		return "examine/list";
 	}
 	
+	/**
+	 * @author : 황건희
+	 * @param srNo				상세조회시 필요한 srNo
+	 * @param examineFilter		검색 필터
+	 * @param session			알림 데이터에 필요한 session
+	 * @param model				View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
+	 */
 	@GetMapping(value="/list/{srNo}")
 	public String getExamineDetail(@PathVariable String srNo, ExamineFilter examineFilter , HttpSession session,Model model) {
 		log.info("실행");
@@ -161,20 +169,31 @@ public class ExamineController {
 	 * @return
 	 */
 	@PostMapping(value="/detail", produces="application/json; charset=UTF-8")
-	public String updateExamine(@RequestBody Examine examine,HttpSession session)throws Exception {
+	public String updateExamine(@RequestBody Examine examine,HttpSession session,Model model)throws Exception {
 		log.info("실행");
 		log.info(examine);
 		
-		examineService.updateExamine(examine);
-		
 		String srNo = examine.getSrNo();
-		
+		Examine selectExamine = examineService.getExamine(srNo);
+		if(selectExamine.getSttsNm().equals(examine.getSttsNm())) {
+			return "redirect:/examine/detail/"+srNo;
+		}else {			
+			examineService.updateExamine(examine);
+		}
+				
 		alarmService.insertAlarm(srNo,session);
 		
 		
 		return "redirect:/examine/detail/"+srNo;
 	}
 	
+	/**
+	 * @author : 황건희
+	 * @param srFileNo		다운로드 받으려는 파일 No
+	 * @param userAgent		현재 유저가 사용하고 있는 브라우저 정보
+	 * @param response		
+	 * @throws Exception
+	 */
 	@GetMapping("/fileDownload")
 	public void download(int srFileNo,@RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
 		log.info("실행");
@@ -216,6 +235,13 @@ public class ExamineController {
 	}
 	
 	//일괄 처리(검토중) or 일괄처리(접수)
+	/**
+	 * @author : 황건희
+	 * @param examineList		일괄 처리하려는 SR 검토 목록
+	 * @param model				View로 데이터 전달을 위한 Model 객체 주입
+	 * @param pager				페이징 
+	 * @return
+	 */
 	@PostMapping(value="/processing")
 	public String updateExamineProcessing(@RequestBody ExamineList examineList,Model model, Pager pager) {
 		log.info("실행");
@@ -233,6 +259,12 @@ public class ExamineController {
 	}
 	
 	//엑셀 다운로드
+	/**
+	 * @author : 황건희
+	 * @param examineArr		엑셀에 입력할 데이터 정보
+	 * @param response			
+	 * @throws IOException
+	 */
 	@PostMapping(value="/excelDownload")
 	public void excelDownload(@RequestParam List<String> examineArr, HttpServletResponse response) throws IOException {
 		log.info("실행");

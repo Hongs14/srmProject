@@ -510,9 +510,9 @@ public class ProgressController {
 		
 		session.setAttribute("message", 2);
 
-//		//알람 DB에 저장
-//		session.setAttribute("choice", choice);
-//		alarmService.insertAlarm(srNo,session);
+		//알람 DB에 저장
+		session.setAttribute("choice", choice);
+		alarmService.insertAlarm(srNo,session);
 		
 		return "redirect:/progress/detail/" + progress.getSrNo();
 	}

@@ -27,8 +27,8 @@
 						<td>
 							<input type="checkbox" onclick="checkSelectAll(this)" name="devleopCheck" value="${develop.srNo}">
 						</td>
-						<td><a href="${pageContext.request.contextPath}/develop/view/${develop.srNo}">${develop.srNo}</a></td>
-		                <td><a href="${pageContext.request.contextPath}/develop/view/${develop.srNo}" class="srdTtl">${develop.srTtl}</a></td>
+						<td><a onclick="location.href='${pageContext.request.contextPath}/develop/view/${develop.srNo}'" style="cursor:pointer;"><b>${develop.srNo}</b></a></td>
+		                <td><a onclick="location.href='${pageContext.request.contextPath}/develop/view/${develop.srNo}'" class="srdTtl" style="cursor:pointer;"><b>${develop.srTtl}</b></a></td>
                        	<td>${develop.sysNm}</td>
 						<td>${develop.userNm}</td>
 						<td>${develop.userOgdp}</td>
