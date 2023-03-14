@@ -59,6 +59,7 @@
 								<div id="file${qstnFile.qstnFileNo}" class="filebox row">
 					              	<a class="delete col-1" onclick="deleteExistingFile('${qstnFile.qstnFilePhysNm}','${qstnFile.qstnFileNo}')"><i class="far fa-minus-square"></i></a>
 					                <a href="file?qstnFileNo=${qstnFile.qstnFileNo}">${qstnFile.qstnFileActlNm}</a>
+					             
 						        </div>
 		               		</c:forEach>
 	               		</c:if>
@@ -68,7 +69,7 @@
 			   	<input type="hidden" id="qstnNo" name="qstnNo" value="${qstn.qstnNo}"/>
 			   	<input type="hidden" id="userNo" name="userNo" value="${sessionScope.loginUser.userNo}">
 			   	<input type="hidden" id="userNm" name="userNm" value="${sessionScope.loginUser.userNm}">
-			   	<input type="hidden" id="sysNo" name="sysNo" value="${sessionScope.loginUser.sysNo}">
+			   	<input type="hidden" id="sysNo" name="sysNo" value="${session}">
 			   	<!-- 작성완료/닫기 -->
 			   	<div class="row mt-3">
 			    	<div class="col-12">
@@ -160,14 +161,15 @@
 		    	$("#qstnModal").modal();
 		    	$("#modalHeader").html("<b>Qna작성</b>");
 		    	$("#modalBody").html("<h4>작성이 완료되었습니다.</h4>"); 
+		    	$('#qstnSubmit').attr("data-dismiss", "modal");
 		    });
 		}
 		
 		let fileNmArray = [];
 		
 		/* 기존의 첨부파일 삭제 */
-		function deleteExistingFile(srFilePhysNm, srFileNo) {
-			fileNmArray.push(srFilePhysNm);
+		function deleteExistingFile(qstnFilePhysNm, qstnFileNo) {
+			fileNmArray.push(qstnFilePhysNm);
 			console.log(fileNmArray);
 			
 			document.querySelector("#file" + qstnFileNo).remove();
@@ -186,12 +188,10 @@
 		            formData.append("qstnMFile", filesArr[i]);
 		        }
 		    }
-		    
 		    for (let j = 0; j< fileNmArray.length; j++){
 		    	console.log(fileNmArray[j]);
 		    	formData.append("deleteFile",fileNmArray[j]);
 		    }
-		 	
 		    let sysNo = $('#sysNo').val();
 		    formData.append("sysNo", sysNo);
 		    
@@ -203,6 +203,9 @@
 		    
 		    let qstnNo = $('#qstnNo').val();
 		    formData.append("qstnNo",qstnNo);
+		    
+		    let qstnFileNo = $("#qstnFileNo").val();
+		    formData.append("qstnFileNo",qstnFileNo);
 		    
 		    console.log(sysNo+" "+qstnCn+" "+qstnTtl+" "+qstnNo);
 		    
@@ -217,7 +220,9 @@
 		     	$("#qstnModal").modal();
 		    	$("#modalHeader").html("<b>Qna수정</b>");
 		    	$("#modalBody").html("<h4>수정이 완료되었습니다.</h4>"); 
+		    	$('#qstnSubmit').attr("data-dismiss", "modal");
 		    	$('#miniView').html(data);
+		    	
 		    	
 		    });
 		    

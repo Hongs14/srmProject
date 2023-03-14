@@ -138,6 +138,7 @@
 			$("#mainQstn").attr("class","col-lg-7");
 			$("#miniView").attr("class","col-lg-5");
 			let sysNo = $('#sysNo').val();
+			
 			$.ajax({ 
 				url: "${pageContext.request.contextPath}/qna/"+sysNo+"/update?qstnNo="+qstnNo,
 				method: "GET",
@@ -153,7 +154,8 @@
 	    	$("#qstnModal").modal('show');
 	    	let sysNo = $('#sysNo').val();
 	    	$('#qstnSubmit').on("click", function(){
-	    		console.log("삭제");
+	    		$('#qstnForm').attr("action", "${pageContext.request.contextPath}/qna/"+sysNo+"/delete/"+qstnNo);
+	    		$('#qstnForm').submit(); 
 	    	});
 		}
 	</script>
@@ -182,7 +184,7 @@
            	<hr/>
         </div>   
         <div class="mx-3 p-3 d-flex flex-column">
-       		<form>
+       		<form id="qstnForm" method="post">
         		<div class="row">
          			<div class="form-group col-sm-2 ">
          				<label class="col-form-label">작성자</label>
