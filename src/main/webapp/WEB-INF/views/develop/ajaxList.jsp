@@ -34,8 +34,8 @@
 						<td>${develop.userOgdp}</td>
 						<td>${develop.srDevDp}</td>
 						<td>
-							<c:if test="${develop.sttsNm eq '접수'}"><span class="badge badge-warning" style="font-size:100%;">${develop.sttsNm}</span></c:if>
-							<c:if test="${develop.sttsNm eq '개발계획'}"><span class="badge text-white" style="background-color:#476A6F; font-size:100%">${develop.sttsNm}</span></c:if>
+							<c:if test="${develop.sttsNm eq '접수'}"><span class="badge badge-primary" style="font-size:100%;">${develop.sttsNm}</span></c:if>
+							<c:if test="${develop.sttsNm eq '개발계획'}"><span class="badge text-white" style="background-color:#0a8091; font-size:100%">${develop.sttsNm}</span></c:if>
 						</td>
 						<td>${develop.srRegDate}</td>
 						<td>${develop.srDdlnDate}</td>
