@@ -292,6 +292,11 @@ public class QnaController {
 		return "redirect:/qna/"+qstn.getSysNo()+"/view/"+qstn.getQstnNo();
 	}
 	
+	/**Qna삭제
+	 * @author		 정홍주
+	 * @param qstnNo
+	 * @return
+	 */
 	@GetMapping("/{sysNo}/delete/{qstnNo}")
 	public void deleteQstn(@PathVariable int qstnNo) {
 		log.info(qstnNo+"번 질문 삭제하기");
@@ -354,6 +359,7 @@ public class QnaController {
 		log.info("QSTN댓글 삭제");
 		qnaboardService.deleteComment(qstnCmntNo);
 		return qstnCmntNo;
+		
 	}
 	
 }
