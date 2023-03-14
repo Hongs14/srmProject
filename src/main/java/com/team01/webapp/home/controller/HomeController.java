@@ -1,5 +1,8 @@
 package com.team01.webapp.home.controller;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -103,10 +106,24 @@ public class HomeController {
 		// Q n A 페이징 처리
 		int qstnPageNo = 1;
 		qstn.setQstnTtl("");
-		qstn.setStartDate("");
-		qstn.setEndDate("");
-		qstn.setSysNo((String)session.getAttribute("sysNo"));
+		Date today = new Date();
+		SimpleDateFormat sdformat = new SimpleDateFormat("yyy-MM-dd");
+		Calendar calendar = Calendar.getInstance();
+
+		// 현재 날짜를 Calendar에 설정
+		calendar.setTime(today);
+		// 3개월 전의 날짜 계산
+		calendar.add(Calendar.MONTH, -3);
+		// 계산된 날짜를 Date 타입으로 변환
+		Date threeMonthsAgo = calendar.getTime();
 		
+		String end = (String)sdformat.format(today);
+		String start = (String)sdformat.format(threeMonthsAgo);
+		
+		log.info(start+" "+end);
+		qstn.setStartDate(start);
+		qstn.setEndDate(end);
+		qstn.setSysNo((String)session.getAttribute("sysNo"));
 		pager = qnaboardService.returnPage(qstnPageNo, pager, qstn);
 		List<QSTN> qstnList = qnaboardService.getQstnList(pager, qstn);
 		log.info(pager);
