@@ -23,7 +23,7 @@
 		AND SYS_NO = #{sysNo}
 		AND TO_CHAR(SR_REG_DATE, 'YYYY') = TO_CHAR(sysdate, 'YYYY')
 		GROUP BY stts.STTS_NO, STTS_NM
-		ORDER BY stts.STTS_NO ASC
+		ORDER BY DECODE(stts.STTS_NM, '요청', 1, '검토중', 2, '접수', 3, '개발중', 4, '완료요청', 5, '개발 완료', 6, '반려', 7, '재검토', 8, '개발계획', 9, '계획조정', 10)
 	</select>
 	
 	<select id="selectDonutListDeveloper" parameterType="int" resultType="donut">
@@ -36,7 +36,7 @@
         AND sr.sr_no = hr.sr_no
 		AND USER_NO = #{userNo}
         GROUP BY stts.STTS_NO, STTS_NM
-		ORDER BY stts.STTS_NO ASC
+		ORDER BY DECODE(stts.STTS_NM, '요청', 1, '검토중', 2, '접수', 3, '개발중', 4, '완료요청', 5, '개발 완료', 6, '반려', 7, '재검토', 8, '개발계획', 9, '계획조정', 10)
 	</select>
 
 	<select id="selectSysInfo2" parameterType="int" resultType="systemInfo">

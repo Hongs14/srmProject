@@ -71,31 +71,37 @@
 							<td style="width:110px">${list.sysNm}</td>
 							<td style="width:90px">
 								<c:choose>
-										<c:when test="${list.sttsNm eq '요청'}">
-											<span class="badge badge-outline-secondary" style="border: 1px solid gray; font-size:90%;">${list.sttsNm}</span>
-										</c:when>
-										<c:when test="${list.sttsNm eq '검토중'}">
-											<span class="badge badge-secondary" style="font-size:90%">${list.sttsNm}</span>
-										</c:when>
-										<c:when test="${list.sttsNm eq '접수'}">
-											<span class="badge badge-warning" style="font-size:90%">${list.sttsNm}</span>
-										</c:when>
-										<c:when test="${list.sttsNm eq '개발중'}">
-											<span class="badge badge-info" style="font-size:90%">${list.sttsNm}</span>
-										</c:when>
-										<c:when test="${list.sttsNm eq '완료요청'}">
-											<span class="badge text-white" style="background-color:#a33bff; font-size:90%;">${list.sttsNm}</span>
-										</c:when>
-										<c:when test="${list.sttsNm eq '개발 완료'}">
-											<span class="badge badge-success" style="font-size:90%">${list.sttsNm}</span>
-										</c:when>
-										<c:when test="${list.sttsNm eq '개발계획'}">
-											<span class="badge text-white" style="background-color:#476A6F; font-size:90%;">${list.sttsNm}</span>
-										</c:when>
-										<c:otherwise>
-											<span class="badge badge-danger" style="font-size:90%">${list.sttsNm}</span>
-										</c:otherwise>
-									</c:choose>
+									<c:when test="${list.sttsNm eq '요청'}">
+										<span class="badge badge-dark" style="font-size:90%;">${list.sttsNm}</span>
+									</c:when>
+									<c:when test="${list.sttsNm eq '검토중'}">
+										<span class="badge badge-outline-primary" style="font-size:90%; border: 1px solid black;">${list.sttsNm}</span>
+									</c:when>
+									<c:when test="${list.sttsNm eq '접수'}">
+										<span class="badge badge-primary" style="font-size:90%;">${list.sttsNm}</span>
+									</c:when>
+									<c:when test="${list.sttsNm eq '개발계획'}">
+										<span class="badge text-white" style="font-size:90%; background-color:#0a8091;">${list.sttsNm}</span>
+									</c:when>
+									<c:when test="${list.sttsNm eq '개발중'}">
+										<span class="badge badge-info" style="font-size:90%">${list.sttsNm}</span>
+									</c:when>
+									<c:when test="${list.sttsNm eq '개발 완료'}">
+										<span class="badge badge-success" style="font-size:90%">${list.sttsNm}</span>
+									</c:when>
+									<c:when test="${list.sttsNm eq '반려'}">
+										<span class="badge badge-danger" style="font-size:90%">${list.sttsNm}</span>
+									</c:when>
+									<c:when test="${list.sttsNm eq '재검토'}">
+										<span class="badge badge-warning" style="font-size:90%">${list.sttsNm}</span>
+									</c:when>
+									<c:when test="${list.sttsNm eq '완료요청'}">
+										<span class="badge text-white" style="font-size:90%; background-color:#a33bff;">${list.sttsNm}</span>
+									</c:when>
+									<c:when test="${list.sttsNm eq '계획조정'}">
+										<span class="badge text-white" style="font-size:90%; background-color:#78380c;">${list.sttsNm}</span>
+									</c:when>
+								</c:choose>
 							</td>
 							<td style="width:100px">${list.srRegDate}</td>
 							<td style="width:40px">
@@ -106,38 +112,46 @@
 							<td style="width:100px">
 								<div class="progress">
 									<c:choose>
+										<c:when test="${list.sttsNm eq '요청'}">
+											<div class="progress-bar bg-dark" role="progressbar"
+											style="width:0%" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:when>
 										<c:when test="${list.sttsNm eq '검토중'}">
-											<div class="progress-bar bg-danger" role="progressbar" 
-											style="width:20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+											<div class="progress-bar bg-dark" role="progressbar"
+											style="width:20%;" aria-valuemin="0" aria-valuemax="100"></div>
 										</c:when>
 										<c:when test="${list.sttsNm eq '접수'}">
-											<div class="progress-bar bg-warning" role="progressbar" 
-											style="width:40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-										</c:when>
-										<c:when test="${list.sttsNm eq '개발중'}">
-											<div class="progress-bar bg-info" role="progressbar" 
-											style="width:60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-										</c:when>
-										<c:when test="${list.sttsNm eq '완료요청'}">
-											<div class="progress-bar" role="progressbar" 
-											style="width:80%; background-color:#a33bff;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-										</c:when>
-										<c:when test="${list.sttsNm eq '개발 완료'}">
-											<div class="progress-bar bg-success" role="progressbar" 
-											style="width:100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+											<div class="progress-bar bg-primary" role="progressbar"
+											style="width:40%" aria-valuemin="0" aria-valuemax="100"></div>
 										</c:when>
 										<c:when test="${list.sttsNm eq '개발계획'}">
-											<div class="progress-bar" role="progressbar" 
-											style="width:50%; background-color:#476A6F;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+											<div class="progress-bar bg" role="progressbar"
+											style="width:50%; background-color:#0a8091;" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:when>
+										<c:when test="${list.sttsNm eq '개발중'}">
+											<div class="progress-bar bg-info" role="progressbar"
+											style="width:60%;" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:when>
+										<c:when test="${list.sttsNm eq '개발 완료'}">
+											<div class="progress-bar bg-success" role="progressbar"
+											style="width:100%;" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:when>
+										<c:when test="${list.sttsNm eq '반려'}">
+											<div class="progress-bar bg-danger" role="progressbar"
+											style="width:0%;" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:when>
+										<c:when test="${list.sttsNm eq '재검토'}">
+											<div class="progress-bar bg-warning" role="progressbar"
+											style="width:0%;" aria-valuemin="0" aria-valuemax="100"></div>
+										</c:when>
+										<c:when test="${list.sttsNm eq '완료요청'}">
+											<div class="progress-bar bg" role="progressbar"
+											style="width:80%; background-color:#a33bff;" aria-valuemin="0" aria-valuemax="100"></div>
 										</c:when>
 										<c:when test="${list.sttsNm eq '계획조정'}">
-											<div class="progress-bar bg-danger" role="progressbar" 
-											style="width:70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+											<div class="progress-bar bg" role="progressbar"
+											style="width:60%; background-color:#78380c;" aria-valuemin="0" aria-valuemax="100"></div>
 										</c:when>
-										<c:otherwise>
-											<div class="progress-bar bg-danger" role="progressbar" 
-											style="width:0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-										</c:otherwise>
 									</c:choose>
 								</div>
 							</td>
