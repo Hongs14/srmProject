@@ -29,7 +29,10 @@ public interface IQnaboardRepository {
 	public int countInqCnt(int qstnNo);
 	public List<MultipartFile> selectQstnFileDetail(int qstnNo);
 	public QSTNFile selectFileDownload(int qstnFileNo);
-	public void insertQstnFileUpload(QSTN qstn);
+	public void insertQstnFileUpload(QSTNFile qstnFile);
+	public int updateQstn(QSTN qstn);
+	public int updateQstnFile(QSTNFile qstnFile);
+	public int deleteQstn(int qstnNo);
 
 	
 }

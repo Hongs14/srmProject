@@ -46,6 +46,37 @@
   		<div id="wrapper">
 		    <!-- Sidebar -->
 		   	<%@include file="/WEB-INF/views/common/sidebar.jsp" %>
+		   	<!-- 모달창 -->
+		   	<div class="modal fade" id="qstnModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+			    	<div class="modal-content">
+						<div class="modal-header bg-primary">
+			         		<h5 class="modal-title" id="exampleModalCenterTitle"> 
+				          		<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+				        		<small class="text-white" id="modalHeader"><b>확인</b></small>
+				        	</h5>
+			         		<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+			           			<span aria-hidden="true">&times;</span>
+			         		</button>
+			       		</div>
+			       		<div class="modal-body justify-content-center text-center p-5">
+				       		<div class="d-flex align-items-center">
+					       		<div id="iconWrapper" class="mr-4">
+						       		<i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#FFA426;"></i>
+					      		</div>
+					       		<div id="modalBody" class="text-left">
+						   
+					       		</div>
+				       		</div>
+			       		</div>
+			       		<div class="modal-footer justify-content-center text-center">
+			         		<button type="button" class="btn btn-outline-primary mx-2" data-dismiss="modal">닫기</button>
+			         		<button id="qstnSubmit" class="btn btn-primary">확인</button>
+			       		</div>
+			     	</div>
+			   	</div>
+			</div>
+		   	<!-- 모달창 -->
 
 			<div id="content-wrapper" class="d-flex flex-column">
 				<div id="content">
@@ -116,7 +147,7 @@
 						            <div class="card-header px-5 d-flex flex-row align-items-center justify-content-between">
 			                			<h6 class="m-0 font-weight-bold text-primary">질문 목록</h6>
 			                			<div class="d-sm-flex justify-content-end">
-			                				<a onclick="writeQstn()" class="btn btn-primary btn-sm">Q&A 등록하기</a>
+			                				<a onclick="writeQstn()" class="btn btn-primary btn-sm" style="cursor:pointer;">Q&A 등록하기</a>
 			                  			</div>
 			                		</div> 
 			                		<div id="qstnlist" style="width: 100%;">
@@ -191,7 +222,7 @@
 				console.log("시작");
 				var startDate = $('#dateStart').val();
 				var endDate = $('#dateEnd').val();
-				var sysNo = "${sessionScope.loginUser.sysNo}";
+				var sysNo = "${session}";
 				var qstnTtl = $('#keyword').val();
 				
 				if(qstnTtl !== "") {
@@ -216,7 +247,7 @@
 				console.log("검색조건 리스트 페이지 번호: "+pageNo);
 				var startDate = $("#dateStart").val();
 				var endDate = $("#dateEnd").val();
-				var sysNo = "${sessionScope.loginUser.sysNo}";
+				var sysNo = "${session}";
 				var qstnTtl = $("#keyword").val();
 				
 				if(qstnTtl !== "") {
@@ -248,7 +279,7 @@
 				$("#mainQstn").attr("class","col-lg-7");
 				$("#miniView").attr("class","col-lg-5");
 				resize();
-				let sysNo = "${sessionScope.loginUser.sysNo}";
+				let sysNo = "${session}";
 				
 				$.ajax({
 					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/view/'+qstnNo,
@@ -288,7 +319,7 @@
 			  	
 			  	var startDate = $("#dateStart").val();
 			  	var endDate = $("#dateEnd").val();
-				var sysNo = "${sessionScope.loginUser.sysNo}";
+				var sysNo = "${session}";
 				var qstnTtl = $("#keyword").val();
 			
 				if(qstnTtl !== "") {
@@ -331,14 +362,13 @@
 				$("#mainQstn").attr("class","col-lg-7");
 				$("#miniView").attr("class","col-lg-5");
 				resize();
-				let sysNo = "${sessionScope.loginUser.sysNo}";
+				let sysNo = "${session}";
 				
 				$.ajax({
 					url :"${pageContext.request.contextPath}/qna/"+sysNo+"/write",
 					type : "GET",
 					dataType : "html",
 					success : function(data) {
-						
 						$('#miniView').html(data);
 					}
 				});
