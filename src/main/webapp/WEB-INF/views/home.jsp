@@ -68,7 +68,7 @@
                <div class="card-header align-items-center">
 					<a href="${pageContext.request.contextPath}/request/list">
 					<i class="fas fa-tasks fa-fw"></i> 
-					<span class="m-0 font-weight-bold text-primary">My SR </span>
+					<span class="m-0 font-weight-bold text-primary">My SR</span>
 					</a>
 				</div>
              		<div id="tabs" class="mx-3">
