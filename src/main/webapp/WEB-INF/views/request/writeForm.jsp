@@ -19,7 +19,8 @@
 			요청등록</li>
 	</ol>
 </div>
-<div class="card">
+
+<div class="card mb-4" style="min-height:760px;">
 	<div class="p-5">
 		<form method="post" onsubmit="return false;"  enctype="multipart/form-data">
 			<c:if test="${command eq 'update'}">
@@ -37,7 +38,7 @@
 					<input id="srUserOgdp" class="col-sm-3" disabled value="${sessionScope.loginUser.userDpNm}" />
 			</div>
 			
-			<div class="row mb-2 mr-0">
+			<div class="row mr-0">
 				<label class="col-sm-2" for="dateInput">등록일 </label> 
 				<div class="form-group col-sm-4 px-0" id="simple-date1" >
 					<div class="input-group date" >
@@ -78,8 +79,8 @@
 					<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
 				</div>
 			</div>
-			<div class="row mb-2">
-				<label class=" font-weight-bold col-sm-2" for="requestFile">파일목록 </label> 
+			<div class="row mb-2" style="min-height: 50px; max-height: 100px; overflow-y:scroll;">
+				<label class=" font-weight-bold col-sm-2" for="requestFile" >파일목록 </label> 
 				
 				<div class="col-sm-10" id="userfile">
 					<div id="requestFile">
