@@ -94,7 +94,7 @@ public class UserService implements IUserService {
 			
 			String sysNo = "";
 			switch(user.getUserOgdp()) {
-				case "북북": 
+				case "북북출판사": 
 					sysNo="BOK";
 					break;
 				case "한국소프트":
