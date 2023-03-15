@@ -45,6 +45,7 @@
 			AND QSTN_TTL like #{qstnTtl}
 		</if>
 		
+		
 	</select>
 	
 	<select id="selectDetail" parameterType="int" resultType="qstn">

@@ -52,7 +52,7 @@ public class QnaController {
 
 	/**QnA목록 보기
 	 * @author 			 정홍주
-	 * @param pageNo
+	 * @param pageNo	
 	 * @param model		
 	 * @return
 	 */
@@ -62,6 +62,26 @@ public class QnaController {
 		//알림 수 및 리스트
 		alarmInfo.info(session, model);
 		model.addAttribute("session",sysNo);
+		return "qnaboard/qnalist";
+	}
+	
+	
+	/**메인화면에서 상세보기
+	 * @author			정홍주
+	 * @param sysNo		속해있는 시스템 이름
+	 * @param qstnNo	조회할 문의글의 번호
+	 * @param session	알림을 띄우기 위함
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
+	 * @return
+	 */
+	@GetMapping("/{sysNo}/list/{qstnNo}")
+	public String getQnaList(@PathVariable String sysNo, @PathVariable int qstnNo, HttpSession session, Model model){
+		log.info("qna목록보기");
+		//알림 수 및 리스트
+		alarmInfo.info(session, model);
+		model.addAttribute("session",sysNo);
+		model.addAttribute("qstnNo", qstnNo);
+		model.addAttribute("command","detail");
 		return "qnaboard/qnalist";
 	}
 	
@@ -120,7 +140,7 @@ public class QnaController {
 	 * @throws Exception
 	 */
 	@GetMapping("/{sysNo}/file")
-	public void fileDownload(int qstnNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
+	public void downloadQnafile(int qstnNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
 		log.info("Qna글 파일 다운로드");
 		
 		QSTNFile qstnFile = qnaboardService.selectFiledownload(qstnNo);
@@ -239,7 +259,7 @@ public class QnaController {
 		model.addAttribute("qstnFile",qstnFile);
 		model.addAttribute("command", "update");
 		model.addAttribute("session",sysNo);
-		log.info("@@@@@@@@@@@@@@@@@"+sysNo);
+		log.info(sysNo);
 		log.info("qstn: "+ qstn);
 		log.info("qstnFile: "+qstnFile);
 		return "qnaboard/qnawrite";
@@ -293,6 +313,11 @@ public class QnaController {
 		return "redirect:/qna/"+qstn.getSysNo()+"/view/"+qstn.getQstnNo();
 	}
 	
+	/**Qna삭제
+	 * @author		 정홍주
+	 * @param qstnNo
+	 * @return
+	 */
 	@PostMapping("/{sysNo}/delete/{qstnNo}")
 	public String deleteQstn(@PathVariable int qstnNo, @PathVariable String sysNo) {
 		log.info(qstnNo+"번 질문 삭제하기");

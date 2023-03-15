@@ -293,4 +293,12 @@
 		FROM USERS, SYSTEM
 		WHERE USERS.USER_NO = SYSTEM.MANAGER_NO AND USER_NO = #{userNo}
 	</select>
+	
+	<update id="updateSttsNo" parameterType="string">
+		UPDATE SR SET STTS_NO = 5 WHERE SR_NO = #{srNo}
+	</update>
+	
+	<select id="selectSrNo" resultType="string">
+		SELECT SR_NO FROM SR WHERE SR_START_DATE = TRUNC(SYSDATE) AND STTS_NO= 9
+	</select>
 </mapper>
