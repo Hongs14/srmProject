@@ -46,7 +46,7 @@
             					<h6 class="mb-0 text-white">SR 개발관리</h6>
          					</div>
             				<ol class="breadcrumb">
-              					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/develop/list/1">SR 관리</a></li>
+              					<li class="breadcrumb-item">SR 관리</li>
               					<li class="breadcrumb-item active" aria-current="page">SR 개발관리</li>
             				</ol>
           				</div>

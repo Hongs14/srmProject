@@ -27,7 +27,7 @@ public interface IUserRepository {
 	 */
 	public int insert(Users user);
 
-	public void insertUserSystem(Users user);
+	public int insertUserSystem(Users user);
 	
 	public UserSystem selectSystemByUserNo(int userNo);
 	

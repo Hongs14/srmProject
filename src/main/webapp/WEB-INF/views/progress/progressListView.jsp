@@ -6,20 +6,20 @@
 		<table class="table align-items-center table-hover border">
 			<thead class="thead-light">
 				<tr>
-					<th>
+					<th style="width:40px;">
                        <div class="custom-control custom-checkbox">
                   			<input type="checkbox" class="custom-control-input" id="customCheckAll" onclick='selectAll(this)' name="progressCheck">
                   			<label class="custom-control-label" for="customCheckAll"></label>
                 		</div>
 					</th>
-					<th style="width:150px;">SR 번호</th>
-					<th style="width:300px;">SR 명</th>
-					<th>업무 구분</th>
-					<th>시스템 구분</th>
-					<th>요청자</th>
-					<th>완료 예정일</th>
-					<th>진행 상태</th>
-					<th>중요도</th>
+					<th style="width:130px;">SR 번호</th>
+					<th style="width:520px;">SR 명</th>
+					<th style="width:100px;">업무 구분</th>
+					<th style="width:150px;">시스템 구분</th>
+					<th style="width:100px;">요청자</th>
+					<th style="width:100px;">완료 예정일</th>
+					<th style="width:100px;">진행 상태</th>
+					<th style="width:50px;">중요도</th>
 				</tr>
 			</thead>
 			<c:forEach var="list" items="${ProgressList}" varStatus="status">
@@ -31,7 +31,7 @@
 	                  			<label class="custom-control-label" for="customCheck${list.srNo}"></label>
 	                		</div>
 						</td>
-						<td>
+						<td style="width:130px;">
 							<a href="${pageContext.request.contextPath}/progress/detail/${list.srNo}" style="text-decoration: none;">
 								<b>
 									${list.srNo}
@@ -39,7 +39,7 @@
 							</a>
 						</td>
 						<td>
-							<a href="${pageContext.request.contextPath}/progress/detail/${list.srNo}" style="width:400px; overflow:hidden; text-overflow: ellipsis; display:block;text-decoration: none;">
+							<a href="${pageContext.request.contextPath}/progress/detail/${list.srNo}" style="width:500px; overflow:hidden; text-overflow: ellipsis; display:block;text-decoration: none;">
 								<b>
 									${list.srTtl}
 								</b>
@@ -49,7 +49,7 @@
 						<td>${list.sysNm}</td>
 						<td>${list.userNm}</td>
 						<td>${list.srDdlnDate}</td>
-						<td>
+						<td style="width:150px;">
 							<c:if test="${list.sttsNm eq '개발중'}"><span class="badge badge-info" style="font-size:100%">${list.sttsNm}</span></c:if>
 							<c:if test="${list.sttsNm eq '개발 완료'}"><span class="badge badge-success" style="font-size:100%">${list.sttsNm}</span></c:if>
 							<c:if test="${list.sttsNm eq '완료요청'}"><span class="badge text-white" style="font-size:100%; background-color:#a33bff;">${list.sttsNm}</span></c:if>

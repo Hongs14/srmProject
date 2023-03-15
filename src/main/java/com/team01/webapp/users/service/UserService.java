@@ -87,39 +87,40 @@ public class UserService implements IUserService {
 	public int join(Users user) {
 		log.info(user.getUserPswd());
 		try {
-		user.setUserDelYn('N');
+			user.setUserDelYn('N');
+			
+			PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+			user.setUserPswd(pe.encode(user.getUserPswd()));
+			
+			String sysNo = "";
+			switch(user.getUserOgdp()) {
+				case "북북": 
+					sysNo="BOK";
+					break;
+				case "한국소프트":
+					sysNo="SRM";
+					break;
+				case "사슈즈":
+					sysNo="SAS";
+					break;
+				case "오티아이":
+					sysNo="OTI";
+					break;
+				case "한국대학교":
+					sysNo="KOR";
+					break;
+					
+			}
+			log.info("sysNo: "+sysNo);
+			userRepository.insert(user);
+			String userId = user.getUserId();
+			user = userRepository.selectByUserId(userId);
+			user.setSysNo(sysNo);
+			log.info("sysNo: "+user.getSysNo());
+			log.info("custNo: "+user.getUserNo());
+			userRepository.insertUserSystem(user);
+			return JOIN_SUCCESS;
 		
-		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		user.setUserPswd(pe.encode(user.getUserPswd()));
-		
-		String sysNo = "";
-		switch(user.getUserOgdp()) {
-			case "북북": 
-				sysNo="BOK";
-				break;
-			case "한국소프트":
-				sysNo="SRM";
-				break;
-			case "사슈즈":
-				sysNo="SAS";
-				break;
-			case "오티아이":
-				sysNo="OTI";
-				break;
-			case "한국대학교":
-				sysNo="KOR";
-				break;
-				
-		}
-		log.info("sysNo: "+sysNo);
-		userRepository.insert(user);
-		String userId = user.getUserId();
-		user = userRepository.selectByUserId(userId);
-		user.setSysNo(sysNo);
-		log.info("sysNo: "+user.getSysNo());
-		log.info("custNo: "+user.getUserNo());
-		userRepository.insertUserSystem(user);
-		return JOIN_SUCCESS;
 		}catch(Exception e){
 			log.info(e.toString());
 			return JOIN_FAIL;

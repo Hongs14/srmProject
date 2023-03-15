@@ -1,4 +1,4 @@
-package com.team01.webapp.examine.service.impl;
+package com.team01.webapp.examine.service;
 
 import java.util.ArrayList;
 import java.util.List;

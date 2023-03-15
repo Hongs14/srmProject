@@ -84,7 +84,7 @@
 	            		<h6 class="mb-0 text-white">SR 검토관리</h6>
 	          		</div>
 	            	<ol class="breadcrumb">
-	              		<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/examine/list">SR 관리</a></li>
+	              		<li class="breadcrumb-item"><b>SR 관리</b></li>
 	              		<li class="breadcrumb-item active" aria-current="page">SR 검토관리</li>
 	            	</ol>
 	          	</div>
@@ -146,7 +146,7 @@
 		                					<div class="form-group row">
 		                						<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">등록자소속</label>
 				                    			<div class="col-sm-9">
-					                    			<select id="userOgdp" class="form-control form-control-sm">
+					                    			<select id="userOgdp" class="form-control form-control-sm" onchange="userDpShow(this)">
 					                        			<option value="0">전체</option>
 					                        			<c:forEach var="users" items="${examineFilter.userOgdpList}">		                        	
 						                        			<option>${users.userOgdp}</option>
@@ -160,9 +160,6 @@
 		                						<label for="exampleFormControlSelect1" class="col-sm-4 col-form-label-sm">부서</label>
 				                    			<select class="form-control form-control-sm col-sm-8" id="userDpNm">
 				                        			<option value="0">전체</option>
-				                        			<c:forEach var="users" items="${examineFilter.userDpList}">		                        	
-					                        			<option>${users.userDpNm}</option>
-				                        			</c:forEach>
 				                    			</select>
 				                			</div>
 		                				</div>
@@ -222,14 +219,6 @@
 													srTtl = "%" + srTtl + "%";
 												}
 												
-												console.log(sysNo);
-												console.log(sttsNo);
-												console.log(srTtl);
-												console.log(userOgdp);
-												console.log(userDpNm);
-												console.log(srRegStartDate);
-												console.log(srRegEndDate);
-												
 												let data = {sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
 														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 												
@@ -276,14 +265,6 @@
 												if(srTtl !== "") {
 													srTtl = "%" + srTtl + "%";
 												}
-												
-												console.log(sysNo);
-												console.log(sttsNo);
-												console.log(srTtl);
-												console.log(userOgdp);
-												console.log(userDpNm);
-												console.log(srRegStartDate);
-												console.log(srRegEndDate);
 												
 												let data = {sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
 														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
@@ -332,14 +313,16 @@
 			               	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 		                  		<h5 class="m-0 font-weight-bold text-primary">SR 검토 목록</h5>
 			                  	<div class="d-sm-flex justify-content-end">
-			                		<button class="btn btn-sm btn-primary mr-1" onclick='selectUnderReview()'>일괄 처리 (검토중)</button>
-			                		<button class="btn btn-sm btn-primary mr-1" onclick='selectreception()'>일괄 처리 (접수)</button>
+			                  		<c:if test="${sessionScope.loginUser.userType eq '관리자'}">			                  		
+				                		<button class="btn btn-sm btn-primary mr-1" onclick='selectUnderReview()'>일괄 처리 (검토중)</button>
+				                		<button class="btn btn-sm btn-primary mr-1" onclick='selectreception()'>일괄 처리 (접수)</button>
+			                  		</c:if>
 			                		<button class="btn btn-sm btn-primary" onclick="excelDownload()">엑셀 다운로드</button>
 			                  	</div>
 			                </div>     
 		                  	<div class="custom-control custom-switch px-5 ml-3" style="width:180px; border-radius:3px; background-color:#eaecf4;">
 			  					<input type="checkbox" class="custom-control-input" id="mySrWork" name="mySrWork" onclick="examineList(1)" >
-			  					<label class="custom-control-label" for="mySrWork"><span class="text-primary">나의 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span></label>
+			  					<label class="custom-control-label" for="mySrWork"><span class="text-primary">담당 SR 조회<i class="fas fa-search fa-sm mx-2"></i> </span></label>
 							</div>
 			                <form>
 					           	<div id="ajaxList" style="width:100%"></div>
@@ -595,6 +578,40 @@
 					</div>
 				</div>
 			</div>
+			<script>
+       			function userDpShow(e) {
+
+       				var bok = ["기획팀","전산팀","마케팅팀"];
+       				var kor = ["회계팀","총무팀","전산팀","인사팀"];
+       				var sas = ["영업팀","전산팀","판매팀"];
+       				var oti = ["기획팀","전산팀","마케팅팀","인사팀"];
+       						
+       				var target = document.getElementById("userDpNm");
+       						
+					if(e.value == "북북출판사"){
+						var userDpNm = bok;
+					}else if(e.value == "한국대학교"){
+						var userDpNm = kor;
+					}else if(e.value == "사슈즈"){
+						var userDpNm = sas;
+					}else if(e.value == "오티아이"){
+						var userDpNm = oti;
+					}
+       						
+					target.options.length = 0;
+					console.log(userDpNm);
+					
+					for(x in userDpNm){
+						var opt = document.createElement("option");
+						
+						opt.value = userDpNm[x];
+						opt.innerText = userDpNm[x];
+						target.appendChild(opt);
+					}
+       						
+
+				}
+			</script>
 			<!-- 로그아웃 모달 -->
 			<%@include file="/WEB-INF/views/common/logout.jsp" %>
 			</div>
