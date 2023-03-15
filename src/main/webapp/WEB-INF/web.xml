@@ -5,6 +5,10 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
 http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" 
 version="4.0">
 
+	<listener>
+          <listener-class>com.team01.webapp.users.listener.SessionListener</listener-class>
+     </listener>
+
 	<!-- DispatcherServlet 설정  -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
@@ -37,12 +41,10 @@ version="4.0">
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	
-	
 	<!-- 404 에러처리 설정(컨트롤러에서 예외처리불가)-->
 	<error-page>
 		<error-code>404</error-code>
 		<location>/WEB-INF/views/error/404.jsp</location>
-	</error-page>
+	</error-page> 
 	
 </web-app>

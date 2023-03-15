@@ -105,7 +105,7 @@
 	
 	<!-- 수정 모달 창 -->
 	<div class="modal fade" id="HumanResourceUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+		<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
 			<div class="modal-content">
 				<div class="modal-header bg-primary">
 					<h5 class="modal-title" id="exampleModalScrollableTitle">

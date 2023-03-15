@@ -6,11 +6,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team01.webapp.model.Users;
+
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 public class LoginInterceptor implements HandlerInterceptor{
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		
 		try {
 			String userType = (String) request.getSession().getAttribute("userType");
