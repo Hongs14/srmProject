@@ -83,8 +83,8 @@
 	   <div id="qnaIndex" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar" style="">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="${pageContext.request.contextPath}/qna/SRM/list">전체 Q&A</a>
-            <c:if test="${sessionScope.loginUser.userOgdp eq '북북' or sessionScope.loginUser.userOgdp eq '한국소프트'}">            
-	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/BOK/list">북북STORE Q&A</a>
+            <c:if test="${sessionScope.loginUser.userOgdp eq '북북출판사' or sessionScope.loginUser.userOgdp eq '한국소프트'}">            
+	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/BOK/list">북북출판사 Q&A</a>
             </c:if>
             <c:if test="${sessionScope.loginUser.userOgdp eq '사슈즈' or sessionScope.loginUser.userOgdp eq '한국소프트'}">
 	            <a class="collapse-item" href="${pageContext.request.contextPath}/qna/SAS/list">사슈즈STORE Q&A</a>

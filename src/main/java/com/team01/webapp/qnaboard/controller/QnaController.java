@@ -52,7 +52,7 @@ public class QnaController {
 
 	/**QnA목록 보기
 	 * @author 			 정홍주
-	 * @param pageNo
+	 * @param pageNo	
 	 * @param model		
 	 * @return
 	 */
@@ -68,19 +68,20 @@ public class QnaController {
 	
 	/**메인화면에서 상세보기
 	 * @author			정홍주
-	 * @param sysNo
-	 * @param qstnNo
-	 * @param session
-	 * @param model
+	 * @param sysNo		속해있는 시스템 이름
+	 * @param qstnNo	조회할 문의글의 번호
+	 * @param session	알림을 띄우기 위함
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
 	@GetMapping("/{sysNo}/list/{qstnNo}")
-	public String getQnaList(@PathVariable String sysNo, int qstnNo, HttpSession session, Model model){
+	public String getQnaList(@PathVariable String sysNo, @PathVariable int qstnNo, HttpSession session, Model model){
 		log.info("qna목록보기");
 		//알림 수 및 리스트
 		alarmInfo.info(session, model);
 		model.addAttribute("session",sysNo);
 		model.addAttribute("qstnNo", qstnNo);
+		model.addAttribute("command","detail");
 		return "qnaboard/qnalist";
 	}
 	

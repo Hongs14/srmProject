@@ -113,7 +113,7 @@ public class HomeController {
 		// 현재 날짜를 Calendar에 설정
 		calendar.setTime(today);
 		// 3개월 전의 날짜 계산
-		calendar.add(Calendar.MONTH, -3);
+		calendar.add(Calendar.MONTH, -2);
 		// 계산된 날짜를 Date 타입으로 변환
 		Date threeMonthsAgo = calendar.getTime();
 		

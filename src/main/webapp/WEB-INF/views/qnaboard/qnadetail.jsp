@@ -169,60 +169,65 @@
     </div>
     
     <!-- Row -->
-    <div class="card mb-4 p-4 detail">
-    	<div class="card-header">
-       		<div class="d-flex flex-row align-items-center justify-content-between">
-            	<div><h6 class="m-0 font-weight-bold text-primary mb-3">문의사항 No.${qstn.qstnNo}</h6></div>
-                <div>조회수  ${qstn.qstnInqCnt}</div>
-            </div>
-            <div>
-           		<h4 class="m-0 font-weight-bold text-primary textDetail">${qstn.qstnTtl}</h4>
-           	</div>
-           	<hr/>
-        </div>   
-        <div class="mx-3 p-3 d-flex flex-column">
+    <div class="card mb-4 detail">
+    	<div class="d-flex flex-row align-items-center justify-content-between px-3 pt-3">
+			<div>
+				<small class="m-0 font-weight-bold text-primary">질문사항 No.${qstn.qstnNo}</small>
+			</div>
+			<div>
+				<small>조회수 : ${qstn.qstnInqCnt} </small>
+			</div>
+		</div>
+		
+        <div class="p-3 d-flex flex-column">
        		<form id="qstnForm" method="post">
-        		<div class="row">
-         			<div class="form-group col-sm-2 ">
-         				<label class="col-form-label">작성자</label>
-         			</div>
-	         		<div class="col-sm-10 mt-2">
-	         			${qstn.userNm}
-	         		</div>
-        		</div>
-           		<div class="row mb-2">
-             		<div class="form-group col-sm-2  d-flex align-text-center">
-             			<label class="col-form-label">작성일</label>
-             		</div>
-             		<div class="col-sm-10  mt-2">
-             			${qstn.qstnWrtDate}
-             		</div>
-           		</div>
-           		<div class="row mb-2">
-             		<div class="form-group col-sm-2 ">
-             			<label class="col-form-label">내용</label>
-             		</div>
-             		<div class="col-sm-10  mt-2 textDetail" id="qstnCn" style="border: 1px solid black; height: 150px; overflow-y:scroll;"  >
-             			${qstn.qstnCn}
-             		</div>
-           		</div>
-           		<div class="row mb-2">
-             		<div class="form-group col-sm-2 ">
-             			<label class="col-form-label">첨부파일</label>
-             		</div>
-            			<div class="col-sm-10">
-            				<c:forEach var="qstnFile" items="${qstnFile}">
-            					<div><a href="${pageContext.request.contextPath}/${sessionScope.loginUser.sysNo}/file?qstnFileNo=${qstnFile.qstnFileNo}">${qstnFile.qstnFileActlNm}</a></div>
-            				</c:forEach>
-            			</div>
-           		</div>
-           		<div class="text-right"> 
+       			<div class="row align-items-center mb-1 ">
+					<div class=" col-sm-2 text-center">
+						<label class="col-form-label">작성자</label>
+					</div>
+					<div class="col-sm-4">
+						<span>${qstn.userNm}</span>
+					</div>
+					<div class=" col-sm-2 text-center">
+						<label class="col-form-label">작성일</label>
+					</div>
+					<div class="col-sm-4">
+						<span>${qstn.qstnWrtDate}</span>
+					</div>
+				</div>	
+       			<div class="row align-items-center mb-2">
+					<div class="col-sm-2 text-center">
+						<label class="col-form-label">제목</label>
+					</div>
+					<div class="col-sm-10">
+						<span class="font-weight-bold text-primary col-form-label">${qstn.qstnTtl}</h5></span>
+					</div>
+				</div>
+       			<div class="row mb-1">
+					<div class=" col-sm-2 text-center">
+						<label class="col-form-label">내용</label>
+					</div>
+					<div class="col-sm-10 border p-2" style="height:200px; overflow-y: scroll;" > 
+						<span>${qstn.qstnCn}</span>
+					</div>
+				</div>
+       			<div class="row align-items-center">
+					<div class=" col-sm-2 text-center">
+						<label class="col-form-label">첨부파일</label>
+					</div>
+					<div class="col-sm-10">	
+						<c:forEach var="qstnFile" items="${qstnFile}">
+							<span><a href="${pageContext.request.contextPath}/${sessionScope.loginUser.sysNo}/file?qstnFileNo=${qstnFile.qstnFileNo}">${qstnFile.qstnFileActlNm}</a></span>
+						</c:forEach>	                            		
+					</div>
+				</div>
+           		<div class="d-sm-flex justify-content-end"> 
            			<input type="hidden" id="sysNo" name="sysNo" value="${qstn.sysNo}"/>
            			<input type="hidden" id="qstnNo" name="qstnNo" value="${qstn.qstnNo}"/>
            			<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/qna/${qstn.sysNo}/list'">목록</button>
            			<c:if test="${qstn.userNo eq sessionScope.loginUser.userNo}">
-           				<input type="button" class="btn btn-primary" value="수정" onclick="updateQstn(${qstn.qstnNo})"/>
-           				<button type="button" class="btn btn-primary" onclick="deleteQstn(${qstn.qstnNo})">삭제</button>
+           				<input type="button" class="btn btn-primary ml-1" value="수정" onclick="updateQstn(${qstn.qstnNo})"/>
+           				<button type="button" class="btn btn-primary ml-1" onclick="deleteQstn(${qstn.qstnNo})">삭제</button>
            			</c:if>
            			
            		</div>
@@ -231,21 +236,23 @@
 	</div>
                     			
 	<!-- 댓글 -->
-	<div class="card  p-4">
+	<div class="card p-4 mb-4">
  		<div id="cmntCount" class="mx-3 mb-2">댓글(${qstn.countCmnt})</div>
- 		<div class="mx-3 p-1  justify-content-between" >
-	  		<div class="row">
-	  			<div class="col-sm-2 form-group" id="qnaComentWriter">
-	  				${sessionScope.loginUser.userNm}
-	  			</div>
-	  			<div class="col-sm-8  form-group">
-	  				<textarea style="width: 100%" class="form-control" id="qnaCmntCn"></textarea>
-	  			</div>
-	  			<div class="col-sm-2 text-right">
-	  				<button type="button" class="btn btn-primary btn-sm" onclick="writeComment();">등록하기</button>
-	  			</div>
-	    	</div>
-		</div>
+	 		<div class="cmnts" style="overflow-y: scroll; height:150px;">
+		 		<div class="mx-3 p-1  justify-content-between" >
+			  		<div class="row">
+			  			<div class="col-sm-2 form-group" id="qnaComentWriter">
+			  				${sessionScope.loginUser.userNm}
+			  			</div>
+			  			<div class="col-sm-8  form-group">
+			  				<textarea style="width: 100%" class="form-control" id="qnaCmntCn"></textarea>
+			  			</div>
+			  			<div class="col-sm-2 text-right">
+			  				<button type="button" class="btn btn-primary btn-sm" onclick="writeComment();">등록하기</button>
+			  			</div>
+			    	</div>
+				</div>
+			</div>
 		<div class="px-4" id="qComment"></div>
 	</div>  
 </html>
