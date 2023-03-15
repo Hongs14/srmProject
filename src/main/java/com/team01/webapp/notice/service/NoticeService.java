@@ -1,4 +1,4 @@
-package com.team01.webapp.notice.service.impl;
+package com.team01.webapp.notice.service;
 
 import java.util.List;
 
