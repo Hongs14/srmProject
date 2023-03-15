@@ -65,6 +65,25 @@ public class QnaController {
 		return "qnaboard/qnalist";
 	}
 	
+	
+	/**메인화면에서 상세보기
+	 * @author			정홍주
+	 * @param sysNo
+	 * @param qstnNo
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/{sysNo}/list/{qstnNo}")
+	public String getQnaList(@PathVariable String sysNo, int qstnNo, HttpSession session, Model model){
+		log.info("qna목록보기");
+		//알림 수 및 리스트
+		alarmInfo.info(session, model);
+		model.addAttribute("session",sysNo);
+		model.addAttribute("qstnNo", qstnNo);
+		return "qnaboard/qnalist";
+	}
+	
 	/**Qna조건 리스트
 	 * @author 			정홍주
 	 * @param pageNo	조회할 페이지 번호
@@ -293,6 +312,11 @@ public class QnaController {
 		return "redirect:/qna/"+qstn.getSysNo()+"/view/"+qstn.getQstnNo();
 	}
 	
+	/**Qna삭제
+	 * @author		 정홍주
+	 * @param qstnNo
+	 * @return
+	 */
 	@PostMapping("/{sysNo}/delete/{qstnNo}")
 	public String deleteQstn(@PathVariable int qstnNo, @PathVariable String sysNo) {
 		log.info(qstnNo+"번 질문 삭제하기");

@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
-	<html lang="ko">
+	<html>
 
 	<head>
 	<c:if test="${sessionScope.loginUser.userType eq '관리자'}">
@@ -241,19 +241,19 @@
 				                    		</thead>
 				                    		<tbody>
 				                    			<c:choose>
-				                    				<c:when test="${fn:length(noticeList) == 0 }">
+				                    				<c:when test="${fn:length(qstnList) == 0 }">
 				                    					<tr>
 				                    						<td colspan="5" class="text-center">해당 Q&A가 없습니다.</td>
 				                    					</tr>
 					                    			</c:when>
 					                    			<c:otherwise>	                    		
-							                    		<c:forEach var="list" items="${qstnList}" end="4">
+							                    		<c:forEach var="qlist" items="${qstnList}" end="4">
 								                      		<tr>
-										                        <td>${list.seq}</td>
-										                        <td>${list.qstnTtl} </td>
-										                        <td>${list.userNm}</td>
-										                        <td>${list.qstnWrtDate}</td>
-										                        <td><a href="${pageContext.request.contextPath}/qna/list/" class="btn btn-sm btn-primary">상세</a></td>
+										                        <td>${qlist.rnum}</td>
+										                        <td>${qlist.qstnTtl} </td>
+										                        <td>${qlist.userNm}</td>
+										                       	<td>${qlist.qstnWrtDate}</td>
+										                        <td><a href="${pageContext.request.contextPath}/qna/${sessionScope.loginUser.sysNo}/list/${qlist.qstnNo}" class="btn btn-sm btn-primary">상세</a></td>
 								                      		</tr>
 							                      		</c:forEach>
 					                    			</c:otherwise>
@@ -289,5 +289,4 @@
 		</div>
 	<%@include file="/WEB-INF/views/common/bottom.jsp" %>
 	</body>
-
 </html>

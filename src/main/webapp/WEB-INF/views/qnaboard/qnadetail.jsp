@@ -4,16 +4,14 @@
 <!DOCTYPE html>
 <html>
 	<script>
+		let qCountCmnt = 0;
+		
   		$(document).ready(function(){
   			console.log("시작할때");
- 
   			readComment();
   		});
-
-  		let qCountCmnt = 0;
   		
   		function readComment(){
-  			console.log("aa");
   			let qstnNo ='${qstn.qstnNo}';
   			console.log(qstnNo);
   			$.ajax({
@@ -50,7 +48,6 @@
 			console.log("댓글달기 실행");
 			let content = $('#qnaCmntCn').val();
 			let qcwriterNo = '${sessionScope.loginUser.userNo}';
-			/* let qcwriter = '${sessionScope.loginUser.userNm}'; */
 			let qstnNo = '${qstn.qstnNo}';
 			
 			let data = {userNo: qcwriterNo, qstnNo: qstnNo, qstnCmntCn: content};
