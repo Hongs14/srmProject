@@ -21,6 +21,34 @@
 				
 				<!-- 메인 컨테이너 Container Fluid-->
 				<div class="container-fluid" id="container-wrapper">
+					<!-- 메시지 모달 창 -->
+					<div class="modal fade" id="ListExcelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+						<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+							<div class="modal-content">
+								<div class="modal-header bg-primary">
+									<h5 class="modal-title" id="exampleModalScrollableTitle">
+							          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+							        	<small class="text-white">
+							        		<b>삭제</b>
+							        	</small>
+									</h5>
+									<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body p-5" style="white-space: normal; text-align:center;">
+									<div class="alert alert-secondary m-3 p-2" role="alert">
+										<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
+										<div id="ListExcelModalMessage"></div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				
 					<div class="d-sm-flex align-items-end justify-content-between">
 						<div class="bg-primary px-3 py-2" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
 							<h6 class="mb-0 text-white">SR 진척관리</h6>
@@ -247,34 +275,6 @@
 										
 									</script>
 								<div id="progressListView" style="width:100%"></div>
-							</div>
-						</div>
-					</div>
-					
-					<!-- 메시지 모달 창 -->
-					<div class="modal fade" id="ListExcelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-						<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
-							<div class="modal-content">
-								<div class="modal-header bg-primary">
-									<h5 class="modal-title" id="exampleModalScrollableTitle">
-							          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
-							        	<small class="text-white">
-							        		<b>삭제</b>
-							        	</small>
-									</h5>
-									<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body p-5" style="white-space: normal; text-align:center;">
-									<div class="alert alert-secondary m-3 p-2" role="alert">
-										<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
-										<div id="ListExcelModalMessage"></div>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
-								</div>
 							</div>
 						</div>
 					</div>
