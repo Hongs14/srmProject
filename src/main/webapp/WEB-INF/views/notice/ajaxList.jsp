@@ -6,6 +6,14 @@
 
 <div class="table-responsive px-5">
 	<table class="table align-items-center table-flush table-hover">
+    	<colgroup>
+    		<col style="width:120px;">
+    		<col style="width:180px;">
+    		<col style="width:310px;">
+    		<col style="width:120px;">
+    		<col style="width:132px;">
+    		<col style="width:120px;">
+    	</colgroup>
     	<thead class="thead-light">
 	    	<tr>
 	    		<th>No.</th>
@@ -26,7 +34,7 @@
 						<tr onclick="getNoticeDetail('${notice.ntcNo}')" style="cursor:pointer;" id="bgChange-${notice.ntcNo}" class="bg">
 					</c:when>
 				</c:choose>
-					<td>
+					<td style="width:120px;">
 						<c:choose>
 							<c:when test="${notice.ntcPry eq 'Yes'}">
 								<span class="badge text-danger" style="font-size:100%; ">${notice.seq}</span>
@@ -37,7 +45,7 @@
 						</c:choose>
 						
 					</td>
-					<td>
+					<td style="width:180px;">
 						<c:choose>
 							<c:when test="${notice.ntcPry eq 'Yes'}">
 								<span class="badge text-danger" style="font-size:100%; border:1px solid red;">공지사항</span>
@@ -47,23 +55,23 @@
 							</c:when>
 						</c:choose>
 					</td>
-					<td>
+					<td style="width:240px;">
 						<c:choose>
 							<c:when test="${notice.ntcPry eq 'Yes'}">
-								<span style="color:red;">${notice.ntcTtl}</span>
+								<span style="color:red;"><b>${notice.ntcTtl}</b></span>
 							</c:when>
 							<c:when test="${notice.ntcPry ne 'Yes'}">
-								${notice.ntcTtl}
+								<b>${notice.ntcTtl}</b>
 							</c:when>
 						</c:choose>
 					</td>
-					<td>
+					<td style="width:120px;">
 						${notice.userId}	
 					</td>
-					<td>
+					<td style="width:132px;">
 						${notice.ntcWrtDate}	
 					</td>
-					<td>
+					<td style="width:120px;">
 						${notice.ntcInqCnt}
 					</td>
 				</tr>
