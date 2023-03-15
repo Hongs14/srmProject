@@ -17,6 +17,39 @@
 </head>
 
 <body id="page-top">
+	<!-- 모달시작 -->
+	<div class="modal fade" id="exampleModalScrollable"
+		tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalScrollableTitle"
+		aria-hidden="true">
+		<div
+			class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+			role="document">
+			<div class="modal-content">
+				 <div class="modal-header bg-primary">
+		         	<h5 class="modal-title" id="exampleModalLabelLogout"> 
+			          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+			        	<small id="selectDev" class="text-white"><b></b></small>
+			        </h5>
+		         	<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+		           		<span aria-hidden="true">&times;</span>
+		         	</button>
+		       	</div>
+			
+				<div class="modal-body" style="white-space: normal;">
+					<div id="modalBody"></div>
+					<div id="modalContent"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-primary"
+						data-dismiss="modal">닫기</button>
+					<button type="button" onclick="submitDev()"	class="btn btn-primary" data-dismiss="modal">등록</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 모달 끝-->
+
 	<div id="wrapper">
 		<!-- Sidebar -->
 		<%@include file="/WEB-INF/views/common/sidebar.jsp"%>
@@ -390,39 +423,7 @@
 											</form>
 										</div>
 										<hr />
-										<!-- 모달 시작-->
 										<div>
-											<div class="modal fade" id="exampleModalScrollable"
-												tabindex="-1" role="dialog"
-												aria-labelledby="exampleModalScrollableTitle"
-												aria-hidden="true">
-												<div
-													class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
-													role="document">
-													<div class="modal-content">
-														 <div class="modal-header bg-primary">
-												         	<h5 class="modal-title" id="exampleModalLabelLogout"> 
-													          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
-													        	<small id="selectDev" class="text-white"><b></b></small>
-													        </h5>
-												         	<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-												           		<span aria-hidden="true">&times;</span>
-												         	</button>
-												       	</div>
-													
-														<div class="modal-body" style="white-space: normal;">
-															<div id="modalBody"></div>
-															<div id="modalContent"></div>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-outline-primary"
-																data-dismiss="modal">닫기</button>
-															<button type="button" onclick="submitDev()"	class="btn btn-primary" data-dismiss="modal">등록</button>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!-- 모달 끝-->
 											<!-- 선택 모달 -->
 											<div class="modal fade" id="checkEffectiveness" tabindex="-1" role="dialog"
 									            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -456,7 +457,6 @@
 											<!-- 모달 끝 -->
 										</div>
 									</div>
-								
 								</div>
 								<!-- 개발단계 관련 내용 -->
 							</div>

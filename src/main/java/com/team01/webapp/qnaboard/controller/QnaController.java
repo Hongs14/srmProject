@@ -165,7 +165,7 @@ public class QnaController {
 		response.setContentType(contentType);
 		
 		//응답 바디에 파일 데이터 실기
-		String filePath = "C:/OTI/uploadfiles/qstn/"+qstnNo+"/"+savedName;
+		String filePath = "C:/OTI/uploadfiles/qstn/"+qstnFile.getQstnNo()+"/"+savedName;
 		File file = new File(filePath);
 		log.info("file: "+ filePath);
 				
@@ -199,7 +199,7 @@ public class QnaController {
 		log.info(qstn);
 		try {
 			int qstnNo = qnaboardService.writeQSTN(qstn);
-			log.info("qstnNo: "+ qstnNo);
+			log.info("qstnNo작성 여부: "+ qstnNo);
 			//첨부파일 추가
 			List<MultipartFile> mf = qstn.getQstnMFile();
 			if(mf!=null &&!mf.isEmpty()) {
@@ -219,7 +219,7 @@ public class QnaController {
 					qstnFile.setQstnNo(qstn.getQstnNo());		
 					log.info(qstnFile);
 					//서버 파일 시스템에 파일로 저장
-					String filePath = "C:/OTI/uploadfiles/qstn/"+qstnNo+"/"+qstnFilePhysNm;
+					String filePath = "C:/OTI/uploadfiles/qstn/"+qstnFile.getQstnNo()+"/"+qstnFilePhysNm;
 					log.info(filePath);
 					File file = new File(filePath);
 					// 폴더가 없다면 생성
@@ -288,7 +288,7 @@ public class QnaController {
 				
 
 				//서버 파일 시스템에 파일로 저장
-				String filePath = "C:/OTI/uploadfiles/qstn/"+qstnFilePhysNm;
+				String filePath = "C:/OTI/uploadfiles/qstn/"+qstnFile.getQstnNo()+"/"+qstnFilePhysNm;
 				File file = new File(filePath);
 				// 폴더가 없다면 생성한다
 				if(!file.exists()) {
