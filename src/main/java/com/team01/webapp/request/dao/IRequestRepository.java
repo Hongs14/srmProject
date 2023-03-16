@@ -47,7 +47,7 @@ public interface IRequestRepository {
 
 	Request selectRequestDetail(String srNo);
 
-	void insertRequestFileUpload(SrFile srFile);
+	int insertRequestFileUpload(SrFile srFile);
 
 	List<MultipartFile> selectRequestFileDetail(String srNo);
 

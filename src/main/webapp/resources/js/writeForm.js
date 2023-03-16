@@ -16,7 +16,9 @@ $(document).ready(function() {
 	var todayResult = getTimeStamp();
 	console.log(todayResult);
 	document.getElementById('dateInput').value = todayResult;
-	if('$command' =='write'){
+	var command = $("#command").val();
+	console.log(command);
+	if(command =='write'){
 		var srCn = "1. 목적 : \n \n2. 개선 내용 : \n \n3. 고려 사항: ";
 		document.getElementById('srCn').value = srCn;
 		console.log(srCn);
@@ -115,19 +117,19 @@ function requestWrite() {
     
     var userNo = document.getElementById('userNo').value;
     formData.append("userNo",userNo);
+    console.log(formData);
     $.ajax({
 		type: "POST",
-		enctype: 'multipart/form-data',	// 필수
+		enctype: 'multipart/form-data',	
 		url: "write",
-		data: formData,	// 필수
-		processData: false,	// 필수
-		contentType: false	// 필수
+		data: formData,	// 전송할 데이터
+		processData: false,	
+		contentType: false	
     }).done((data) => {
     	$("#requestModal").modal();
     	$("#modalHeadText").text("SR 요청");
     	$("#modalBodyText").text("SR 요청이 완료되었습니다.");
     	$('#colNo2').html(data);
-    	console.log("작성완료");
     	let msg = '알림이 도착하였습니다.'
 		socket.send(msg);
     });

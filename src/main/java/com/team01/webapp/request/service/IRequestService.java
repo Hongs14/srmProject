@@ -1,6 +1,5 @@
 package com.team01.webapp.request.service;
 
-import java.io.File;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -39,10 +38,10 @@ public interface IRequestService {
 		Pager returnPage(String pageNo, Pager pager, RequestAjax requestAjax);
 		List<RequestList> getRequestList(Pager pager, RequestAjax requestAjax);
 
-		Request getRequestDetail(String srNo);
+		Request getRequestDetail(String srNo);	
 
-		void requestFileUpload(SrFile srFile);
-
+		int requestFileUpload(SrFile srFile);
+	
 		List<MultipartFile> selectRequestFileDetail(String srNo);
 
 		SrFile selectFileDownload(String srFileNo);
