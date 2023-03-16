@@ -250,6 +250,7 @@
 		    DISTINCT(SYS_NM) AS "sysNm",
 		    SYS_NO AS "sysNo"
 		FROM SYSTEM
+		WHERE SYS_NO NOT IN('SRM')
 	</select>
 	
 	<select id="selectUserOgdpList" resultType="users">

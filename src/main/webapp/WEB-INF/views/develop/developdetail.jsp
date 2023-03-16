@@ -17,6 +17,39 @@
 </head>
 
 <body id="page-top">
+	<!-- 모달시작 -->
+	<div class="modal fade" id="exampleModalScrollable"
+		tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalScrollableTitle"
+		aria-hidden="true">
+		<div
+			class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+			role="document">
+			<div class="modal-content">
+				 <div class="modal-header bg-primary">
+		         	<h5 class="modal-title" id="exampleModalLabelLogout"> 
+			          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+			        	<small id="selectDev" class="text-white"><b></b></small>
+			        </h5>
+		         	<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+		           		<span aria-hidden="true">&times;</span>
+		         	</button>
+		       	</div>
+			
+				<div class="modal-body" style="white-space: normal;">
+					<div id="modalBody"></div>
+					<div id="modalContent"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-primary"
+						data-dismiss="modal">닫기</button>
+					<button type="button" onclick="submitDev()"	class="btn btn-primary" data-dismiss="modal">등록</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 모달 끝-->
+
 	<div id="wrapper">
 		<!-- Sidebar -->
 		<%@include file="/WEB-INF/views/common/sidebar.jsp"%>
@@ -365,17 +398,23 @@
 														<!-- 확인 모달 -->
 														<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
 												        	aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-												        	<div class="modal-dialog modal-dialog-centered" role="document">
+												        	<div class="modal-dialog modal-dialog-centered " role="document" style="max-width:450px;">
 												            	<div class="modal-content">
-												                	<div class="modal-header bg-primary">
+												                	<div class="modal-header bg-primary" style="color: white">
 												                  	<h5 class="modal-title" id="exampleModalCenterTitle"></h5>
 												                  		<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+												                  		확인
 												                  		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 												                    		<span aria-hidden="true">&times;</span>
 												                  		</button>
 												                	</div>
-												                	<div class="modal-body"  style="white-space: normal;">
-												                  		등록을 완료하겠습니까?
+												                	<div class="modal-body justify-content-center text-center p-5"  style="white-space: normal;">
+												                  		<div class="d-flex align-items-center">
+																	    	<div id="iconWrapper" class="mr-4">
+																				<i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#FFA426;"></i>
+																	    	</div>
+																	       <div><h5>제출 하시겠습니까?</h5></div>
+																       </div>
 												                	</div>
 												                	<div class="modal-footer">
 												                  		<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
@@ -390,39 +429,7 @@
 											</form>
 										</div>
 										<hr />
-										<!-- 모달 시작-->
 										<div>
-											<div class="modal fade" id="exampleModalScrollable"
-												tabindex="-1" role="dialog"
-												aria-labelledby="exampleModalScrollableTitle"
-												aria-hidden="true">
-												<div
-													class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
-													role="document">
-													<div class="modal-content">
-														 <div class="modal-header bg-primary">
-												         	<h5 class="modal-title" id="exampleModalLabelLogout"> 
-													          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
-													        	<small id="selectDev" class="text-white"><b></b></small>
-													        </h5>
-												         	<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-												           		<span aria-hidden="true">&times;</span>
-												         	</button>
-												       	</div>
-													
-														<div class="modal-body" style="white-space: normal;">
-															<div id="modalBody"></div>
-															<div id="modalContent"></div>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-outline-primary"
-																data-dismiss="modal">닫기</button>
-															<button type="button" onclick="submitDev()"	class="btn btn-primary" data-dismiss="modal">등록</button>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!-- 모달 끝-->
 											<!-- 선택 모달 -->
 											<div class="modal fade" id="checkEffectiveness" tabindex="-1" role="dialog"
 									            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -456,7 +463,6 @@
 											<!-- 모달 끝 -->
 										</div>
 									</div>
-								
 								</div>
 								<!-- 개발단계 관련 내용 -->
 							</div>
@@ -485,11 +491,6 @@
 				$(".toggle").hide();
 			}
 			
-			if("${dlist.sttsNo}" != 9){
-				let srCn = "<개발내용> \n \n ";
-				$("#srDevCn").val(srCn);
-			}
-			
 			//현재날짜부터 선택 가능
  			let today = new Date();   
  			let sysdate =
@@ -500,6 +501,7 @@
 			console.log(sysdate); 			
  			$('#srDdlnDate').attr("min", sysdate);
  			$('#srStartDate').attr("min", sysdate);
+ 			$('#srStartDate').val(sysdate);
  			$('#srEndDate').attr("min", sysdate);
  			
 		});
@@ -544,7 +546,6 @@
 			console.log(sysdate); 			
  			console.log($('#srDdlnDate').val());
  			//날짜 범위 구하기
- 			$('#srStartDate').attr("min", sysdate);
  			$('#srStartDate').attr("max", end);
  			
  			$('#srEndDate').attr("min", sysdate);
@@ -561,7 +562,6 @@
  			let min = $('#srStartDate').val();
  			$('#srEndDate').attr("min", min);
  			$('#messageStartDate').remove();
- 			$('input[name=hrStartDate]').attr("min", min);
  		});
  	
 		function selectDev(obj) {
@@ -631,6 +631,7 @@
 			if (srDdlnDate == null || srDdlnDate === undefined || srDdlnDate ==="") {
 				check = false;
 				console.log("srDdlnDate: "+check);
+				console.log(srDdlnDate);
 				$('#messageDdln').html("<small>*완료예정날짜를 선택해주세요.</small>")
 			}
 
@@ -648,6 +649,7 @@
 			if (srCn == null || srCn === undefined || srCn==="") {
 			  	check = false;
 			  	console.log("srCn: "+check);
+			  	console.log("srCn: "+srCn);
 			  	$('#messageDevCn').html("<small>*내용을 작성해주세요.</small>");
 			}
 			
@@ -655,21 +657,28 @@
 			$('#selectDev').append('<h3>[' + srDevDp + '] 등록하기 </h3>');
 			$('#leaderSdate').val(srStartDate);
 			$('#leaderEdate').val(srEndDate);
-			console.log("AAAAAAAAAAAAAAAAAAAA"+srStartDate);
+			console.log(srStartDate);
 			
-			$('#hrStartDate').prop("min", srStartDate);
-			$('#hrStartDate').prop("max", srEndDate);
+			if(check == false){
+				$('#checkBody').html("<h5>다시 입력해주세요.</h5>");
+				$('#checkEffectiveness').modal('show');
+				
+			} else {
+				selectList(check);
+			}
 			
-			$('#hrEndDate').attr("min", srStartDate);
-			$('#hrEndDate').attr("max", srDdlnDate);
-			
-			selectList(check);
 	
 		}
+		
+		$('#srDevCn').on('input', function() {
+	 		    if($(this).val() != '') {
+	 		    	$('#messageDevCn').remove();
+	 		    }
+	 	});
 	
 		function selectList(check) {
 			//모달리스트 띄우기
-			
+			console.log("조건의 유무: "+check);
 			let userNo = $('#srDLeader option:first').val();
 			if(userNo == "" || userNo == undefined || userNo == null){
 				userNo = $('#srDLeader').val();
@@ -695,7 +704,7 @@
 				contentType : "application/json; charset=UTF-8",
 				success : function(data) {
 					console.log(data);
-					let message = "등록 되었습니다.";
+					let message = "<h5>등록 되었습니다.</h5>";
 					$('.validate').remove();
 					$("#checkBody").html(message);
 					$("#modalContent").html(data);
@@ -704,7 +713,7 @@
 				},
 				error : function(request, status, error) {
 					if(!check){
-						let message = "다시 입력해주세요.";
+						let message = "<h5>다시 입력해주세요.</h5>";
 						$("#checkBody").html(message);
 					}
 				}
@@ -757,14 +766,12 @@
 			let check = 0;
 			let sysdate = getToday();
 			let rightaway = false;
-			//개발중인지 체크
-			if($('#sttsNo').val() === '5'){
-				if($('#srStartDate').val() === sysdate){
-					rightaway = true;
-				}
-			}
 			
-			console.log(sysdate == $('#srStartDate').val());
+			if($('#srStartDate').val() === sysdate){
+					rightaway = true;
+			};
+			
+			console.log(sysdate === $('#srStartDate').val());
 			console.log("$('#sttsNo').val(): "+$('#sttsNo').val());
 			console.log("sysdate: "+ sysdate);
 			console.log("$('#srStartDate').val(): "+$('#srStartDate').val());
@@ -785,29 +792,36 @@
 					check++;
 					console.log("hrEndDate" + i +" = " + check);
 				}
-			}
-			
+			};
 			console.log("check: "+ check);
 			
-			
-			
-			 if(check == 0 && rightaway == true) {
-				$('.modalCenter').attr("data-dismiss","modal");
-				$('.modalCenter').attr("data-target","#exampleModalCenter");
-				$('.modalCenter').attr("data-toggle", "modal");
+			if($('#sttsNo').val() === '5'){
+				if(check == 0 && rightaway == true) {
+					//개발중으로 등록
+					$('.modalCenter').attr("data-dismiss","modal");
+					$('.modalCenter').attr("data-target","#exampleModalCenter");
+					$('.modalCenter').attr("data-toggle", "modal");
+				} else {
+					if(check > 0 && rightaway == true) {
+						$('#checkBody').html('<h5>필수사항을 모두 작성해주세요.</h5>');
+					} else if(check == 0 && rightaway == false) {
+						$('#checkBody').html('<h5>날짜를 확인해주세요.</h5>');
+					}
+				};
+			 } else if($('#sttsNo').val() === '9'){
 				
-			} else if(check == 0 && rightaway == false){
-				$('#checkBody').html('<h5>날짜를 확인해주세요.</h5>');
-				
-			} else if(check == 0){
-				$('.modalCenter').attr("data-dismiss","modal");
-				$('.modalCenter').attr("data-target","#exampleModalCenter");
-				$('.modalCenter').attr("data-toggle", "modal");
-				
-			}  else{
-				$('#checkBody').html('<h5>다시 확인해주세요.</h5>');
-			}
-		}
+				if(check == 0 && rightaway === false){
+					//개발계획으로 등록
+					$('.modalCenter').attr("data-dismiss","modal");
+					$('.modalCenter').attr("data-target","#exampleModalCenter");
+					$('.modalCenter').attr("data-toggle", "modal");
+				} else if(check > 0){
+					$('#checkBody').html('<h5>필수사항을 모두 작성해주세요.</h5>');
+				} else {
+					$('#checkBody').html('<h5>날짜를 확인해주세요.</h5>');
+				};
+			};
+		};
 		
 	</script>
 	

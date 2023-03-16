@@ -1,4 +1,4 @@
-package com.team01.webapp.alarm.service.impl;
+package com.team01.webapp.alarm.service;
 
 import java.util.ArrayList;
 import java.util.List;
