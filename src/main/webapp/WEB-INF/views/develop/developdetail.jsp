@@ -398,17 +398,23 @@
 														<!-- 확인 모달 -->
 														<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
 												        	aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-												        	<div class="modal-dialog modal-dialog-centered" role="document">
+												        	<div class="modal-dialog modal-dialog-centered " role="document" style="max-width:450px;">
 												            	<div class="modal-content">
-												                	<div class="modal-header bg-primary">
+												                	<div class="modal-header bg-primary" style="color: white">
 												                  	<h5 class="modal-title" id="exampleModalCenterTitle"></h5>
 												                  		<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
+												                  		확인
 												                  		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 												                    		<span aria-hidden="true">&times;</span>
 												                  		</button>
 												                	</div>
-												                	<div class="modal-body"  style="white-space: normal;">
-												                  		등록을 완료하겠습니까?
+												                	<div class="modal-body justify-content-center text-center p-5"  style="white-space: normal;">
+												                  		<div class="d-flex align-items-center">
+																	    	<div id="iconWrapper" class="mr-4">
+																				<i class="fas fa-exclamation-triangle" style="font-size:3rem; color:#FFA426;"></i>
+																	    	</div>
+																	       <div><h5>제출 하시겠습니까?</h5></div>
+																       </div>
 												                	</div>
 												                	<div class="modal-footer">
 												                  		<button type="button" class="btn btn-outline-primary" data-dismiss="modal">닫기</button>
@@ -654,7 +660,7 @@
 			console.log(srStartDate);
 			
 			if(check == false){
-				$('#checkBody').html("다시 입력해주세요.");
+				$('#checkBody').html("<h5>다시 입력해주세요.</h5>");
 				$('#checkEffectiveness').modal('show');
 				
 			} else {
@@ -698,7 +704,7 @@
 				contentType : "application/json; charset=UTF-8",
 				success : function(data) {
 					console.log(data);
-					let message = "등록 되었습니다.";
+					let message = "<h5>등록 되었습니다.</h5>";
 					$('.validate').remove();
 					$("#checkBody").html(message);
 					$("#modalContent").html(data);
@@ -707,7 +713,7 @@
 				},
 				error : function(request, status, error) {
 					if(!check){
-						let message = "다시 입력해주세요.";
+						let message = "<h5>다시 입력해주세요.</h5>";
 						$("#checkBody").html(message);
 					}
 				}
