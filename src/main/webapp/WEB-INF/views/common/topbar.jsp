@@ -115,6 +115,8 @@
 							url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
 						}else if(sttsNm == "요청" && userType == "관리자"){
 							url = "${pageContext.request.contextPath}/examine/list/"+srNo;
+						}else if(sttsNm =="계획조정"){
+							url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
 						}else{
 							url = "${pageContext.request.contextPath}/request/list/"+srNo;
 						}
