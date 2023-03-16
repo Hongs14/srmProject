@@ -126,9 +126,9 @@ function requestWrite() {
 		processData: false,	
 		contentType: false	
     }).done((data) => {
-    	$("#requestModal").modal();
     	$("#modalHeadText").text("SR 요청");
     	$("#modalBodyText").text("SR 요청이 완료되었습니다.");
+    	$("#requestModal").modal();
     	$('#colNo2').html(data);
     	let msg = '알림이 도착하였습니다.'
 		socket.send(msg);
