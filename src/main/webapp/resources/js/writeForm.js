@@ -85,7 +85,7 @@ function deleteFile(num) {
 	filesArr[num].is_delete = true;
 }
 
-/* ajax 처리 */
+/* ajax 작성 처리  */
 function requestWrite() {
 	console.log("requestWrite");
 	// 폼 데이터 담기
