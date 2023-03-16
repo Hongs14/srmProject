@@ -22,6 +22,7 @@
 		WHERE sr.stts_no = stts.stts_no
 		AND SYS_NO = #{sysNo}
 		AND TO_CHAR(SR_REG_DATE, 'YYYY') = TO_CHAR(sysdate, 'YYYY')
+		AND SR_DEL_YN = 'N'
 		GROUP BY stts.STTS_NO, STTS_NM
 		ORDER BY DECODE(stts.STTS_NM, '요청', 1, '검토중', 2, '접수', 3, '개발중', 4, '완료요청', 5, '개발 완료', 6, '반려', 7, '재검토', 8, '개발계획', 9, '계획조정', 10)
 	</select>
@@ -60,6 +61,7 @@
 		WHERE sr.sys_no = system.sys_no
 		AND stts.stts_no = sr.stts_no
 		AND TO_CHAR(SR_REG_DATE, 'YYYY') = TO_CHAR(sysdate, 'YYYY')
+		AND SR_DEL_YN = 'N'
 	    <if test="userType.equals('고객사')">
 	    	AND SR_CUST_NO = #{srCustNo}
 	    	AND sr.sys_no = #{sysNo}
@@ -117,6 +119,7 @@
 					    WHERE sr.sys_no = system.sys_no
 					    AND stts.stts_no = sr.stts_no
 					    AND TO_CHAR(SR_REG_DATE, 'YYYY') = TO_CHAR(sysdate, 'YYYY')
+					    AND SR_DEL_YN = 'N'
 					    <if test="userType.equals('고객사')">
 					    	AND SR_CUST_NO = #{srCustNo}
 					    	AND sr.sys_no = #{sysNo}

@@ -58,7 +58,7 @@ color:white;
 									<div class="row mb-2 mr-0">
 										<div class="col-6">
 								  			<span class="text-primary font-weight-bold">SR No.</span> 
-								  			<span> ${progressDetail.srNo}</span>
+								  			<span class="font-weight-bold"> ${progressDetail.srNo}</span>
 										</div>
 										<div class="col-6 text-right">
 											<span class="font-weight-bold">요청구분 - </span><span class="badge badge-warning"> ${progressDetail.srTypeNm}</span>
@@ -77,7 +77,7 @@ color:white;
 											<span class=" font-weight-bold">진행상태 :  </span> 
 										</div>
 										<div class="col-sm-4">
-											<span> ${progressDetail.sttsNm}</span>
+											<span class="font-weight-bold"> ${progressDetail.sttsNm}</span>
 										</div>
 									</div>
 									<!-- 등록자팀/등록자 -->
