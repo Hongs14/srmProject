@@ -181,7 +181,10 @@
 				    	$("#requestModal").modal();
 				    	$("#modalHeadText").text("SR 삭제");
 				    	$("#modalBodyText").text("SR 삭제가 완료되었습니다.");
-						location.href = '<c:url value="/request/list" />';
+				    	setTimeout(function() {
+				    		location.href = '<c:url value="/request/list" />';
+			    		}, 2000);
+						
 				    });
 			}
 			</script>

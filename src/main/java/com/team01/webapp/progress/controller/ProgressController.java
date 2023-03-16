@@ -712,7 +712,7 @@ public class ProgressController {
 		
 		// 컨텐츠 타입과 파일명 지정
 		response.setContentType("ms-vnd/excel");
-		response.setHeader("Content-Disposition", "attachment;filename=testlist.xlsx");  //파일이름지정.
+		response.setHeader("Content-Disposition", "attachment;filename=progressList.xlsx");  //파일이름지정.
 		//response OutputStream에 엑셀 작성
 		wb.write(response.getOutputStream());
 		wb.close();
@@ -823,6 +823,7 @@ public class ProgressController {
 			e.printStackTrace();
 		}
 		
+		alarmService.insertAlarm(changeRequest.getSrNo(),session);
 		session.setAttribute("message", 4);
 		
 		return "redirect:/progress/detail/" + changeRequest.getSrNo();
