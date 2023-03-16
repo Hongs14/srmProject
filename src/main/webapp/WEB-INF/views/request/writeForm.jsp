@@ -103,6 +103,6 @@
 		    </div>
 		</form>
 		<script src="${pageContext.request.contextPath}/resources/js/writeForm.js"></script>
-		
+		<input type="hidden" value="${command}" id="command">
 	</div>
 </div>

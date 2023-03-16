@@ -129,9 +129,9 @@ public class RequestService implements IRequestService{
 	}
 	
 	@Override
-	public void requestFileUpload(SrFile srFile) {
+	public int requestFileUpload(SrFile srFile) {
 		log.info("실행");
-		requestRepository.insertRequestFileUpload(srFile);
+		return requestRepository.insertRequestFileUpload(srFile);
 	}
 	
 	/**

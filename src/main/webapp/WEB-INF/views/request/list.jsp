@@ -157,7 +157,7 @@
 	     	<div class="bg-primary px-3 py-2" style="border-top-left-radius:10px; border-top-right-radius:10px; width:121px; display:none;" id="srMiniMenu">
 			 	<h6 class="mb-0 text-white">SR 요청관리</h6>
 			</div>
-         	<div class="card mb-4 ">
+         	<div class="card mb-4 " style="min-height:740px;">
          		<!-- 검색 -->
                 <div class="mb-1 mt-5 px-3">
                 <form class="navbar-search">
@@ -405,8 +405,10 @@
 										
 				});
 				
+				/* 나의 SR 체크여부 */
 				var checkMySR = 0;
-				  
+				 
+				/* 필터링한 리스트 가져오기 */
 				function requestList(pageNo) {
 					var userNo = $("#userNo").val();
 					var userType = $("#userType").val();
@@ -468,7 +470,7 @@
 					});
 				}
 				
-				
+				/* SR 상세정보 가져오기 */
 				function getSrDetail(i){
 					let srNo = i;
 					$("#srMenu").removeClass("d-sm-flex");
@@ -491,6 +493,8 @@
 					});
 					
 				}
+				
+				/* SR 입력폼 가져오기 */
 				function getWriteForm(){
 					$("#srMenu").removeClass("d-sm-flex");
 					$("#srMenu").hide();
@@ -506,9 +510,9 @@
 							$('#colNo2').html(data);
 						}
 					});
-					
 				}
 				
+				/* SR 수정폼 가져오기 */
 				function getUpdateForm(srNo){
 					$("#srMenu").removeClass("d-sm-flex");
 					$("#srMenu").hide();
@@ -526,6 +530,7 @@
 					});
 					
 				}
+				/* 체크박스 모두 체크하기 */
 				function selectAll(selectAll) {
 					const checkboxes = document.querySelectorAll('input[name="requestCheck"]');
 				  
@@ -535,6 +540,7 @@
 					
 				}
 				
+				/* 체크박스가 모두 체크되었는지 확인 */
 				function checkSelectAll(checkbox)  {
 				  const selectall 
 				    = document.querySelector('input[name="requestCheck"]');
@@ -544,39 +550,7 @@
 				  }
 				}
 				
-				function excelDownload() {
-					var requestArr = new Array();
-					var checkbox = $("input[name=requestCheck]:checked");
-					
-					// 체크된 체크박스의 값을 가져옴
-					checkbox.each(function(i) {
-						var tr = checkbox.parent().parent().parent().eq(i);
-						var td = tr.children();
-						
-						if(td.eq(1).text() != 'SR 번호') {
-							
-							var srNo = td.eq(1).text();
-							
-							progressArr.push(srNo);
-						}
-					});
-					
-					console.log(progressArr)
-					
-					var form = document.createElement('form');
-					form.setAttribute('method','post');
-					form.setAttribute('action', 'excelDownload');
-					document.charset = "utf-8";
-					
-					var hiddenField = document.createElement("input");
-					hiddenField.setAttribute('type', 'hidden');
-					hiddenField.setAttribute('name', 'requestArr');
-					hiddenField.setAttribute('value', requestArr);
-					form.appendChild(hiddenField);
-					
-					document.body.appendChild(form);
-					form.submit();
-				}
+				/* 검색조건 초기화하기 */
 				function requestFilterReset(){
 					getFilterDate();
 					$("#sysNo").val("전체").prop("selected", true);
@@ -587,6 +561,7 @@
 					$("#keyword").val("");
 				}
 				
+				/* 엑셀 다운로드 */
 				function excelDownload() {
 					var requestArr = new Array();
 					var checkbox = $("input[name=requestCheck]:checked");

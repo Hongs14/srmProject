@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.alarm.service.IAlarmService;
-import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.Request;
 import com.team01.webapp.model.RequestAjax;
 import com.team01.webapp.model.RequestFilter;
@@ -242,12 +241,15 @@ public class RequestController {
 		String srNo = "";
 		try {
 			log.info("sr: "+sr);
-			sr.setSrTtl(Jsoup.clean(sr.getSrTtl(), Whitelist.basic()));
 			String content = sr.getSrCn();
 			content = content.replace("\r\n", "<br>");
 			content = content.replace("\r", "<br>");
 			content = content.replace("\n", "<br>");
+			sr.setSrTtl(Jsoup.clean(sr.getSrTtl(), Whitelist.basic()));
 			sr.setSrCn(Jsoup.clean(content, Whitelist.basic()));
+			if(sr.getSrStd() != null) {
+				sr.setSrStd(Jsoup.clean(sr.getSrStd(), Whitelist.basic()));
+			}
 			int userNo = (int) session.getAttribute("userNo");
 			log.info("loginUser:"+ userNo);
 			sr.setSrCustNo(userNo); 
@@ -489,7 +491,7 @@ public class RequestController {
 		
 		// 컨텐츠 타입과 파일명 지정
 		response.setContentType("ms-vnd/excel");
-		response.setHeader("Content-Disposition", "attachment;filename=testlist.xlsx");  //파일이름지정.
+		response.setHeader("Content-Disposition", "attachment;filename=srRequest.xlsx");  //파일이름지정.
 		//response OutputStream에 엑셀 작성
 		wb.write(response.getOutputStream());
 		wb.close();

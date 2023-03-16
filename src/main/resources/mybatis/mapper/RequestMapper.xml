@@ -36,7 +36,7 @@
 		SELECT
 			DISTINCT USER_OGDP AS "userOgdp"
 		FROM users 
-        WHERE user_ogdp !='한국소프트SRM'
+        WHERE user_ogdp !='한국소프트'
 	</select>
 	
 	<select id="selectSrDevDpList" resultType="sr">
