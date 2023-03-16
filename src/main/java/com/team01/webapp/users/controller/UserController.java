@@ -154,7 +154,27 @@ public class UserController {
 			return "success";
 		}
 	}
-	
+	/**
+	 * 중복이메일 체크 
+	 * @author 김희률
+	 * @param  userId
+	 * @return duplicated(중복) or success(중복이 아님)
+	 */
+	@ResponseBody
+	@RequestMapping("/user/checkEml")
+	public String checkEml(@RequestParam String checkEml)	 {
+		log.info(checkEml+"실행");
+		String userEml = checkEml;
+		int result = userService.checkEml(userEml);
+		log.info("result:"+result);
+		if(result == UserService.JOIN_DUPLICATED) {
+			log.info("중복 이메일");
+			return "duplicated";
+		}else {
+			log.info("중복이 아닌 이메일");
+			return "success";
+		}
+	}
 	/**
 	 * @author	김희률
 	 * @param userId	사용자의 아이디

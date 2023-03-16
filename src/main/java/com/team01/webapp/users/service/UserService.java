@@ -252,6 +252,16 @@ public class UserService implements IUserService {
 	}
 
 
+	@Override
+	public int checkEml(String userEml) {
+		Users dbUser = userRepository.getUserByEml(userEml);
+		if(dbUser != null) {
+			return JOIN_DUPLICATED;
+		}
+		return 0;
+	}
+
+
 	
 
 

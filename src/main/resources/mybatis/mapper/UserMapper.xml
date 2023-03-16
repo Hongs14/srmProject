@@ -94,4 +94,24 @@
 			USER_NO = #{userNo}
 	</update>
 	
+	<select id="getUserByEml" parameterType="string" resultType="users">
+		SELECT 
+		     user_no as "userNo",
+		     user_id as "userId", 
+		     user_pswd as "userPswd", 
+		     user_jbps as "userJbps", 
+		     user_nm as "userNm", 
+		     user_type as "userType", 
+		     user_ogdp as "userOgdp", 
+		     user_eml as "userEml", 
+		     user_telno as "userTelno", 
+		     user_dp_nm as "userDpNm",
+		     user_pswd_temp_yn as "userPswdTempYn"
+		     
+		  FROM 
+			users
+		  WHERE user_eml = #{userEml}
+		  AND user_del_yn != 'Y'
+	</select>
+	
 </mapper>
