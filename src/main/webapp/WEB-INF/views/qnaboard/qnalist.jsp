@@ -164,11 +164,8 @@
 							<script>
 								$(document).ready(function(){
 					          		let qstnNo = $("#detailqstnNo").val();
-					          		let sysNo = "${session}";
-					          		console.log(qstnNo+" "+sysNo);
-						  			getQstnDetail(qstnNo, sysNo);
-						          }
-					          	);
+					          		qnaDetail(qstnNo); 
+						        });
 							</script>
 						</c:if>
 			         	<!-- 로그아웃 모달 -->
@@ -282,29 +279,6 @@
 			
 			};
 			
-			function getQstnDetail(qstnNo, sysNo){
-				$("#mainQstnMenu").removeClass("d-sm-flex");
-				$("#mainQstnMenu").hide();
-				$("#qstnMenu").show();
-				$("#mainQstn").attr("class","col-lg-7");
-				$("#miniView").attr("class","col-lg-5");
-				$(".qstnTtl").css({
-			 		"width" : "360px",
-					"overflow": "hidden",
-					"text-overflow": "ellipsis",
-					"display":"block"
-			 	});
-				
-				resize();
-				console.log("hey");
-				$.ajax({
-					url: "${pageContext.request.contextPath}/qna/"+sysNo+"/view/"+qstnNo,
-					type: "GET",
-					dataType: "html"
-				}).done((data) => {
-					$("#miniView").html(data);
-				});
-			};
 			
 			function qnaDetail(i) {
 				//상세보기
@@ -408,8 +382,8 @@
 						$('#miniView').html(data);
 					}
 				});
-				
 			};
+			
 		</script>
  		<%@include file="/WEB-INF/views/common/bottom.jsp" %>
 	</body>

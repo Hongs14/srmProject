@@ -51,9 +51,9 @@ public class QnaController {
 	
 
 	/**QnA목록 보기
-	 * @author 			 정홍주
-	 * @param pageNo	
-	 * @param model		
+	 * @author 			정홍주
+	 * @param sysNo 	소속된 시스템 
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입	
 	 * @return
 	 */
 	@GetMapping("/{sysNo}/list")
@@ -68,7 +68,7 @@ public class QnaController {
 	
 	/**메인화면에서 상세보기
 	 * @author			정홍주
-	 * @param sysNo		속해있는 시스템 이름
+	 * @param sysNo		소속된 시스템
 	 * @param qstnNo	조회할 문의글의 번호
 	 * @param session	알림을 띄우기 위함
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
@@ -89,7 +89,7 @@ public class QnaController {
 	 * @author 			정홍주
 	 * @param pageNo	조회할 페이지 번호
 	 * @param qstn		조건을 넘길 객체
-	 * @param model	
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @param pager
 	 * @return
 	 */
@@ -110,7 +110,7 @@ public class QnaController {
 	
 	/**	QNA상세보기
 	 * @author			정홍주
-	 * @param model
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @param qstnNo
 	 * @return			qnaboard/qnadetail.jsp 리턴
 	 */
@@ -120,19 +120,25 @@ public class QnaController {
 		QSTN qstn = qnaboardService.getDetail(qstnNo);
 		
 		List<MultipartFile> qstnFile = qnaboardService.getQstnFileDetail(qstnNo);
+		//댓글 목록
+		List<QSTNComment> qnaClist = qnaboardService.getCommentList(qstnNo);
+		int countQstnComment = qnaClist.size();
+		
 		log.info(qstn);
 		log.info(qstnFile);
 		model.addAttribute("qstn", qstn);
 		model.addAttribute("qstnFile", qstnFile);
+		model.addAttribute("qnaClist",qnaClist);
+		model.addAttribute("countQstnComment", countQstnComment);
 		model.addAttribute("session", sysNo);
-		int updateInq = qnaboardService.countInq(qstnNo);
+		/*int updateInq = qnaboardService.countInq(qstnNo);
 		if(updateInq == 1) {
 			log.info("조회수 증가");
-		}
+		}*/
 		return "qnaboard/qnadetail";
 	}
 	
-	/**
+	/**파일 다운로드
 	 * @author 			정홍주
 	 * @param qstnNo	
 	 * @param userAgent	브라우저 정보

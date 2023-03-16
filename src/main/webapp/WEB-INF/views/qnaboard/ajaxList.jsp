@@ -21,7 +21,7 @@
 				<tr>
 					<td class="col-sm-1" onclick="qnaDetail(${qstn.qstnNo})" style="cursor:pointer;">${qstn.rnum}</td>
 					<td class="col-sm-1">질문사항</td>
-					<td class="qstnTtl" onclick="qnaDetail(${qstn.qstnNo})" style="cursor:pointer;"><b>${qstn.qstnTtl}</b></td>
+					<td class="qstnTtl" id="sizeTtl" onclick="qnaDetail(${qstn.qstnNo})" style="cursor:pointer;"><b>${qstn.qstnTtl}</b></td>
 					<td class="col-sm-2">${qstn.userNm}</td>
 					<td class="col-sm-2">${qstn.qstnWrtDate}</td>
 					<td class="col-sm-1 text-center">${qstn.qstnInqCnt}</td>

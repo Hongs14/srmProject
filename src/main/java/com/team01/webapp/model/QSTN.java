@@ -25,7 +25,7 @@ public class QSTN {
 	private String qstnFileActlNm; //원본 파일 이름
 	private String qstnFileExtnNm; //파일 확장명
 	
-	private List<QSTNComment> qstnCmnt;
+	/*private List<QSTNComment> qstnCmnt;*/
 	//첨부파일
 	private int qstnFileNo;
 	private List<MultipartFile> qstnMFile;

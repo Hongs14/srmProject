@@ -4,11 +4,13 @@
 <!DOCTYPE html>
 <html>
 	<script>
-		let qCountCmnt = 0;
 		
   		$(document).ready(function(){
   			console.log("시작할때");
   			readComment();
+  			
+  			var qCountCmnt = "${countQstnComment}";
+  			console.log(qCountCmnt);
   		});
   		
   		function readComment(){
@@ -33,7 +35,7 @@
 						comment += 			'<a id="updateToggle'+item.qstnCmntNo+'" onclick="updateCButton('+item.qstnCmntNo+')">수정</a> | <a onclick="deleteComment('+item.qstnCmntNo+')">삭제</a> |';
 						comment += 		'</div>';
 						comment += 	'</div>';
-						comment += 	'<textarea id="commentContent'+item.qstnCmntNo+'" disabled="disabled" style="border: none; resize:none; width:90%">'+item.qstnCmntCn+'</textarea>';
+						comment += 	'<textarea id="commentContent'+item.qstnCmntNo+'" disabled="disabled" style="border: none; resize:none; width:90%; background-color: #dfdfe3">'+item.qstnCmntCn+'</textarea>';
 						comment +='</div>'; 
 		        		$('#qComment').append(comment); 
 		        	});
@@ -237,22 +239,23 @@
                     			
 	<!-- 댓글 -->
 	<div class="card p-4 mb-4">
- 		<div id="cmntCount" class="mx-3 mb-2">댓글(${qstn.countCmnt})</div>
-	 		<div class="cmnts" style="overflow-y: scroll; height:150px;">
-		 		<div class="mx-3 p-1  justify-content-between" >
-			  		<div class="row">
-			  			<div class="col-sm-2 form-group" id="qnaComentWriter">
-			  				${sessionScope.loginUser.userNm}
-			  			</div>
-			  			<div class="col-sm-8  form-group">
-			  				<textarea style="width: 100%" class="form-control" id="qnaCmntCn"></textarea>
-			  			</div>
-			  			<div class="col-sm-2 text-right">
-			  				<button type="button" class="btn btn-primary btn-sm" onclick="writeComment();">등록하기</button>
-			  			</div>
-			    	</div>
+		<div id="cmntCount" class="mx-3 mb-2">댓글<span>(${countQstnComment})</span></div>
+		<div class="cmnts" style="overflow-y: scroll; height:200px;">
+			<div class="mx-3 p-1" >
+				<div class="row  justify-content-between">
+					<div class="col-sm-2 form-group">
+						${sessionScope.loginUser.userNm}
+					</div>
+					<div class="col-sm-8 ">
+						<textarea  class="form-control" id="qnaCmntCn"></textarea>
+					</div>
+					<div class="col-sm-2 text-right">
+						<button type="button" class="btn btn-primary btn-sm" onclick="writeComment();">등록하기</button>
+					</div>
 				</div>
 			</div>
-		<div class="px-4" id="qComment"></div>
-	</div>  
+			<div class="px-4" id="qComment">              		
+			</div>  
+		</div>
+	</div>
 </html>
