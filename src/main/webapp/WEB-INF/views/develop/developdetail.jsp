@@ -485,11 +485,6 @@
 				$(".toggle").hide();
 			}
 			
-			if("${dlist.sttsNo}" != 9){
-				let srCn = "<개발내용> \n \n ";
-				$("#srDevCn").val(srCn);
-			}
-			
 			//현재날짜부터 선택 가능
  			let today = new Date();   
  			let sysdate =
@@ -500,6 +495,7 @@
 			console.log(sysdate); 			
  			$('#srDdlnDate').attr("min", sysdate);
  			$('#srStartDate').attr("min", sysdate);
+ 			$('#srStartDate').val(sysdate);
  			$('#srEndDate').attr("min", sysdate);
  			
 		});
@@ -544,7 +540,6 @@
 			console.log(sysdate); 			
  			console.log($('#srDdlnDate').val());
  			//날짜 범위 구하기
- 			$('#srStartDate').attr("min", sysdate);
  			$('#srStartDate').attr("max", end);
  			
  			$('#srEndDate').attr("min", sysdate);
@@ -561,7 +556,6 @@
  			let min = $('#srStartDate').val();
  			$('#srEndDate').attr("min", min);
  			$('#messageStartDate').remove();
- 			$('input[name=hrStartDate]').attr("min", min);
  		});
  	
 		function selectDev(obj) {
@@ -631,6 +625,7 @@
 			if (srDdlnDate == null || srDdlnDate === undefined || srDdlnDate ==="") {
 				check = false;
 				console.log("srDdlnDate: "+check);
+				console.log(srDdlnDate);
 				$('#messageDdln').html("<small>*완료예정날짜를 선택해주세요.</small>")
 			}
 
@@ -648,6 +643,7 @@
 			if (srCn == null || srCn === undefined || srCn==="") {
 			  	check = false;
 			  	console.log("srCn: "+check);
+			  	console.log("srCn: "+srCn);
 			  	$('#messageDevCn').html("<small>*내용을 작성해주세요.</small>");
 			}
 			
@@ -655,21 +651,28 @@
 			$('#selectDev').append('<h3>[' + srDevDp + '] 등록하기 </h3>');
 			$('#leaderSdate').val(srStartDate);
 			$('#leaderEdate').val(srEndDate);
-			console.log("AAAAAAAAAAAAAAAAAAAA"+srStartDate);
+			console.log(srStartDate);
 			
-			$('#hrStartDate').prop("min", srStartDate);
-			$('#hrStartDate').prop("max", srEndDate);
+			if(check == false){
+				$('#checkBody').html("다시 입력해주세요.");
+				$('#checkEffectiveness').modal('show');
+				
+			} else {
+				selectList(check);
+			}
 			
-			$('#hrEndDate').attr("min", srStartDate);
-			$('#hrEndDate').attr("max", srDdlnDate);
-			
-			selectList(check);
 	
 		}
+		
+		$('#srDevCn').on('input', function() {
+	 		    if($(this).val() != '') {
+	 		    	$('#messageDevCn').remove();
+	 		    }
+	 	});
 	
 		function selectList(check) {
 			//모달리스트 띄우기
-			
+			console.log("조건의 유무: "+check);
 			let userNo = $('#srDLeader option:first').val();
 			if(userNo == "" || userNo == undefined || userNo == null){
 				userNo = $('#srDLeader').val();
@@ -757,14 +760,12 @@
 			let check = 0;
 			let sysdate = getToday();
 			let rightaway = false;
-			//개발중인지 체크
-			if($('#sttsNo').val() === '5'){
-				if($('#srStartDate').val() === sysdate){
-					rightaway = true;
-				}
-			}
 			
-			console.log(sysdate == $('#srStartDate').val());
+			if($('#srStartDate').val() === sysdate){
+					rightaway = true;
+			};
+			
+			console.log(sysdate === $('#srStartDate').val());
 			console.log("$('#sttsNo').val(): "+$('#sttsNo').val());
 			console.log("sysdate: "+ sysdate);
 			console.log("$('#srStartDate').val(): "+$('#srStartDate').val());
@@ -785,29 +786,36 @@
 					check++;
 					console.log("hrEndDate" + i +" = " + check);
 				}
-			}
-			
+			};
 			console.log("check: "+ check);
 			
-			
-			
-			 if(check == 0 && rightaway == true) {
-				$('.modalCenter').attr("data-dismiss","modal");
-				$('.modalCenter').attr("data-target","#exampleModalCenter");
-				$('.modalCenter').attr("data-toggle", "modal");
+			if($('#sttsNo').val() === '5'){
+				if(check == 0 && rightaway == true) {
+					//개발중으로 등록
+					$('.modalCenter').attr("data-dismiss","modal");
+					$('.modalCenter').attr("data-target","#exampleModalCenter");
+					$('.modalCenter').attr("data-toggle", "modal");
+				} else {
+					if(check > 0 && rightaway == true) {
+						$('#checkBody').html('<h5>필수사항을 모두 작성해주세요.</h5>');
+					} else if(check == 0 && rightaway == false) {
+						$('#checkBody').html('<h5>날짜를 확인해주세요.</h5>');
+					}
+				};
+			 } else if($('#sttsNo').val() === '9'){
 				
-			} else if(check == 0 && rightaway == false){
-				$('#checkBody').html('<h5>날짜를 확인해주세요.</h5>');
-				
-			} else if(check == 0){
-				$('.modalCenter').attr("data-dismiss","modal");
-				$('.modalCenter').attr("data-target","#exampleModalCenter");
-				$('.modalCenter').attr("data-toggle", "modal");
-				
-			}  else{
-				$('#checkBody').html('<h5>다시 확인해주세요.</h5>');
-			}
-		}
+				if(check == 0 && rightaway === false){
+					//개발계획으로 등록
+					$('.modalCenter').attr("data-dismiss","modal");
+					$('.modalCenter').attr("data-target","#exampleModalCenter");
+					$('.modalCenter').attr("data-toggle", "modal");
+				} else if(check > 0){
+					$('#checkBody').html('<h5>필수사항을 모두 작성해주세요.</h5>');
+				} else {
+					$('#checkBody').html('<h5>날짜를 확인해주세요.</h5>');
+				};
+			};
+		};
 		
 	</script>
 	
