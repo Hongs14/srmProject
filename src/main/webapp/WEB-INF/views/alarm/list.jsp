@@ -237,8 +237,24 @@
 								}
 								
 								function alarmAll() {
-									$("#alarmView").removeClass("d-none");
-									$("#categoryView").addClass("d-none");
+									var sysNo = "${sysNo}";
+									var userNo = "${sessionScope.loginUser.userNo}";
+									var alarmCategory = "전체";
+									var userType = "${userType}";
+									
+									let data = {sysNo : sysNo, userNo : userNo, alarmCategory : alarmCategory, userType : userType};
+									console.log(data);
+									
+									$.ajax({
+										url : "categoryAlarm",
+										method : "post",
+										data : JSON.stringify(data),
+										contentType: "application/json; charset=UTF-8"
+									}).done((data) => {
+										$("#categoryList").html(data);
+										$("#alarmView").addClass("d-none");
+										$("#categoryView").removeClass("d-none");
+									});
 								}
 								
 							</script>

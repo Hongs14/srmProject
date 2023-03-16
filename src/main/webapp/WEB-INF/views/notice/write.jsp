@@ -34,7 +34,7 @@
 					<div class="form-group">
 						<select class="form-control form-control-sm" id="sysNo" name="sysNo">
 							<option>한국소프트</option>
-							<option>북북</option>
+							<option>북북출판사</option>
 							<option>한국대학교</option>
 							<option>사슈즈</option>
 							<option>오티아이</option>
