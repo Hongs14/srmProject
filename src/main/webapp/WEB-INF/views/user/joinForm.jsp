@@ -104,6 +104,7 @@
 	                      <input type="email" class="form-control col-sm-10" id="userEml" name="userEml" aria-describedby="emailHelp"
 	                        placeholder="Email Address" oninput="emailRegCheck()"required>
 	                       <small id="emailHelp" class="form-text text-muted">예) user@naver.com, user@daum.net</small>
+	                       <small id="emailCheckHelp" class="form-text text-danger"></small>
 	                    </div>
 	                    <div class="form-group row row-cols-2 px-5 align-items-center">
 	                      <label class="font-weight-bold text-primary col-sm-2 text-right">전화번호 </label>
@@ -346,15 +347,36 @@
         			  $("#emailHelp").html("올바른 이메일 형식입니다.")
         			  $("#emailHelp").removeClass("text-danger");
         			  $("#emailHelp").addClass("text-muted");
-        			  emlCheck = 1;
+
+            		  $.ajax({
+             	            data : {
+             	            	checkEml : userEmail
+             	            },
+             	            url : "${pageContext.request.contextPath}/user/checkEml",
+             	            success : function(data) {
+             	                if(data=='success') {
+             	                    $("#emailCheckHelp").removeClass("text-danger");
+             	                    $("#emailCheckHelp").addClass("text-muted");
+             	                    $("#emailCheckHelp").html(" ** 사용가능한 이메일입니다.");
+             	                   emlCheck = 1;
+             	                } else if (data == 'duplicated') {
+             	                 	$("#emailCheckHelp").removeClass("text-muted");
+          	                    	$("#emailCheckHelp").addClass("text-danger");
+             	                	$("#emailCheckHelp").html(" ** 중복된 이메일입니다.");
+             	                	emlCheck = 0;
+             	                } 
+             	            }
+             	        });
         		  }
     			  
     		  } else if(userEmail == ""){
     			  $("#emailHelp").html("예) user@naver.com, user@daum.net");
     			  $("#emailHelp").removeClass("text-danger");
     			  $("#emailHelp").addClass("text-muted");
+    			  $("#emailCheckHelp").html("");
     			  emlCheck = 0;
     		  }
+    		  
     		  
     	  }
     	  /* 핸드폰번호 정규식 유효성 검증 */

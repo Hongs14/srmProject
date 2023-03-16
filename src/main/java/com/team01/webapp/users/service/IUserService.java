@@ -26,4 +26,6 @@ public interface IUserService {
 	int updatePswd(Users user) throws Exception;
 
 	int getPswd(Users user) throws Exception;
+
+	int checkEml(String userEml);
 }
