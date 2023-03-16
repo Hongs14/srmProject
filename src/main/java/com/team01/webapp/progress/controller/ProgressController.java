@@ -823,6 +823,7 @@ public class ProgressController {
 			e.printStackTrace();
 		}
 		
+		alarmService.insertAlarm(changeRequest.getSrNo(),session);
 		session.setAttribute("message", 4);
 		
 		return "redirect:/progress/detail/" + changeRequest.getSrNo();

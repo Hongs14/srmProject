@@ -103,6 +103,7 @@ public class AlarmService implements IAlarmService{
 			alarmUser.setMessage("SR 요청에 대한 계획 조정 요청 입니다.");
 			alarmUser.setAlarmPry("상");
 			alarmUser.setAlarmCategory("SR상태변경");
+			log.info(alarmUser);
 		}
 		
 		alarmRepository.insertAlarm(alarmUser);
