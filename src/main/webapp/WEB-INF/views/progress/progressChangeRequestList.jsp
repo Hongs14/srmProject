@@ -38,7 +38,7 @@
 					<c:forEach var="list" items="${changeRequestList}">
 						<tr>
 							<th>
-								<a onclick="changeRequestDetail(${list.crNo})" data-toggle="modal" data-target="#ChangeRequestModal">
+								<a onclick="changeRequestDetail(${list.crNo})" data-toggle="modal" data-target="#ChangeRequestModal" style="cursor:pointer;">
 									${list.crTtl}
 								</a>
 							</th>
