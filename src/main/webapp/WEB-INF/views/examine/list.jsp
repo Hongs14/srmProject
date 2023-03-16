@@ -580,7 +580,7 @@
 			</div>
 			<script>
        			function userDpShow(e) {
-
+					var all = ["전체"];
        				var bok = ["기획팀","전산팀","마케팅팀"];
        				var kor = ["회계팀","총무팀","전산팀","인사팀"];
        				var sas = ["영업팀","전산팀","판매팀"];
@@ -596,6 +596,8 @@
 						var userDpNm = sas;
 					}else if(e.value == "오티아이"){
 						var userDpNm = oti;
+					}else{
+						var userDpNm = all;
 					}
        						
 					target.options.length = 0;
