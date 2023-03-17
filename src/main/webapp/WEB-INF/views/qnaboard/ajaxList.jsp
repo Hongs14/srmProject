@@ -4,8 +4,8 @@
 <!DOCTYPE html>
 <html>
 
-<div class="table-responsive px-5">
-	<table class="table align-items-center table-flush table-hover">
+<div class="table-responsive  px-5" id="qstnTable">
+	<table class="table align-items-center table-flush table-hover" style="width:100%">
     	<thead class="thead-light">
 	    	<tr>
 	    		<th class="col-sm-1">No.</th>
@@ -21,7 +21,7 @@
 				<tr>
 					<td class="col-sm-1" onclick="qnaDetail(${qstn.qstnNo})" style="cursor:pointer;">${qstn.rnum}</td>
 					<td class="col-sm-1">질문사항</td>
-					<td class="qstnTtl" id="sizeTtl" onclick="qnaDetail(${qstn.qstnNo})" style="cursor:pointer;"><b>${qstn.qstnTtl}</b></td>
+					<td class="qstnTtl" onclick="qnaDetail(${qstn.qstnNo})" style="cursor:pointer;"><b  id="sizeTtl" >${qstn.qstnTtl}</b></td>
 					<td class="col-sm-2">${qstn.userNm}</td>
 					<td class="col-sm-2">${qstn.qstnWrtDate}</td>
 					<td class="col-sm-1 text-center">${qstn.qstnInqCnt}</td>

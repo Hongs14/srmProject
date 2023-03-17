@@ -145,16 +145,15 @@ public class QnaController {
 	 * @param response
 	 * @throws Exception
 	 */
-	@GetMapping("/{sysNo}/file")
-	public void downloadQnafile(int qstnNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
+	@GetMapping("/file")
+	public void downloadQnafile(@RequestParam int qstnFileNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
 		log.info("Qna글 파일 다운로드");
 		
-		QSTNFile qstnFile = qnaboardService.selectFiledownload(qstnNo);
-		
+		QSTNFile qstnFile = qnaboardService.selectFiledownload(qstnFileNo);
+		log.info(qstnFile);
 		String originalName = qstnFile.getQstnFileActlNm();
 		String savedName = qstnFile.getQstnFilePhysNm();
 		String contentType = qstnFile.getQstnFileExtnNm();
-		log.info("userAgent: "+userAgent);
 		
 		//originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩하는 방법
 		if(userAgent.contains("Trident")|| userAgent.contains("MSIE")) {

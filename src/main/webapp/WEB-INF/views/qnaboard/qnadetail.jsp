@@ -66,10 +66,11 @@
 			console.log("댓글수정 ajax");
 			console.log(i);
 			let content = $('#commentContent'+i).val();
+			let sysNo = "${session}";
 		 	let qstnCmntNo = i;
 			let data = {qstnCmntNo: qstnCmntNo, qstnCmntCn: content};  
 			$.ajax({
-				url: "update/comment",
+				url: "${pageContext.request.contextPath}/qna/"+sysNo+"/update/comment",
 				method: "post",
 				data: JSON.stringify(data),
 				contentType: "application/json; charset=UTF-8"
@@ -84,9 +85,10 @@
 		function deleteComment(i){
 			//댓글 삭제
 			console.log("댓글삭제"+i);
+			let sysNo = "${session}";
 			let qstnCmntNo = i;
 			$.ajax({
-				url: "delete/comment",
+				url: "${pageContext.request.contextPath}/qna/"+sysNo+"/delete/comment",
 				method: "get",
 				data: 'qstnCmntNo='+qstnCmntNo
 			}).done((data) => {
@@ -106,7 +108,7 @@
 			$("#mainQstn").attr("class","col-lg-7");
 			$("#miniView").attr("class","col-lg-5");
 			let sysNo = $('#sysNo').val();
-			
+		
 			$.ajax({ 
 				url: "${pageContext.request.contextPath}/qna/"+sysNo+"/update?qstnNo="+qstnNo,
 				method: "GET",
@@ -171,7 +173,7 @@
 						<label class="col-form-label">제목</label>
 					</div>
 					<div class="col-sm-10">
-						<span class="font-weight-bold text-primary col-form-label">${qstn.qstnTtl}</h5></span>
+						<span class="font-weight-bold text-primary col-form-label">${qstn.qstnTtl}</span>
 					</div>
 				</div>
        			<div class="row mb-1">
@@ -188,7 +190,7 @@
 					</div>
 					<div class="col-sm-10">	
 						<c:forEach var="qstnFile" items="${qstnFile}">
-							<span><a href="${pageContext.request.contextPath}/${sessionScope.loginUser.sysNo}/file?qstnFileNo=${qstnFile.qstnFileNo}">${qstnFile.qstnFileActlNm}</a></span>
+							<span><a href="${pageContext.request.contextPath}/qna/file?qstnFileNo=${qstnFile.qstnFileNo}">${qstnFile.qstnFileActlNm}</a></span>
 						</c:forEach>	                            		
 					</div>
 				</div>

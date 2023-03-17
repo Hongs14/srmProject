@@ -28,7 +28,17 @@
     		.textDetail{
     			white-space:normal !important;
     		} 
-  		</style>
+    		
+    		#sizeTtl{
+    			width: 360px;
+    			overflow: hidden;
+				text-overflow: ellipsis;
+				display:block;
+    		}
+    		.col-lg-7 .qstnTtl{
+    			width: 380px;
+    		}
+		</style>
 	  	<script>
 		  	$(document).ready(function () {
 			    $('#simple-date4 .input-daterange').datepicker({        
@@ -150,12 +160,12 @@
 			                				<a onclick="writeQstn()" class="btn btn-primary btn-sm" style="cursor:pointer;">Q&A 등록하기</a>
 			                  			</div>
 			                		</div> 
-			                		<div id="qstnlist" style="width: 100%;">
+			                		<div id="qstnlist" >
 			                		
 			                		</div>
 			                	</div>
 					        </div>
-					   		<div id="miniView" style="width: 100%;"></div>
+					   		<div id="miniView"></div>
 			        	</div> 
 						<!-- Row -->
 						<c:if test="${!empty command and command eq 'detail'}">
@@ -288,7 +298,7 @@
 				$("#qstnMenu").show();
 				$("#mainQstn").attr("class","col-lg-7");
 				$("#miniView").attr("class","col-lg-5");
-				resize();
+				/* resize(); */
 				let sysNo = "${session}";
 				
 				$.ajax({
