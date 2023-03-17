@@ -157,7 +157,9 @@
 						            <div class="card-header px-5 d-flex flex-row align-items-center justify-content-between">
 			                			<h6 class="m-0 font-weight-bold text-primary">질문 목록</h6>
 			                			<div class="d-sm-flex justify-content-end">
-			                				<a onclick="writeQstn()" class="btn btn-primary btn-sm" style="cursor:pointer;">Q&A 등록하기</a>
+			                				<c:if test="${sessionScope.loginUser.userType eq '고객사'}">
+			                					<a onclick="writeQstn()" class="btn btn-primary btn-sm" style="cursor:pointer;">Q&A 등록하기</a>
+			                				</c:if>
 			                  			</div>
 			                		</div> 
 			                		<div id="qstnlist" >

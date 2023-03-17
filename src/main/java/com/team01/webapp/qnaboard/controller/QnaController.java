@@ -245,7 +245,6 @@ public class QnaController {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return "redirect:/qna/"+qstn.getSysNo()+"/view/"+qstn.getQstnNo();
 	}
 	
@@ -314,6 +313,7 @@ public class QnaController {
 				qnaboardService.changeQstnFile(qstn, qstnFile);
 			}
 		}
+		
 		qnaboardService.changeQstn(qstn);
 		return "redirect:/qna/"+qstn.getSysNo()+"/view/"+qstn.getQstnNo();
 	}

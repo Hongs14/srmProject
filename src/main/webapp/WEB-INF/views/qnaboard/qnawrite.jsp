@@ -136,6 +136,7 @@
 		            formData.append("qstnMFile", filesArr[i]);
 		        }
 		    }
+		    
 		    let sysNo = $('#sysNo').val();
 		    formData.append("sysNo", sysNo);
 		    
@@ -192,7 +193,8 @@
 		    	console.log(fileNmArray[j]);
 		    	formData.append("deleteFile",fileNmArray[j]);
 		    }
-		    let sysNo = $('#sysNo').val();
+		    /* let sysNo = $('#sysNo').val(); */
+		    let sysNo = "${session}";
 		    formData.append("sysNo", sysNo);
 		    
 		    let qstnCn = $('#qstnCn').val();
@@ -204,8 +206,10 @@
 		    let qstnNo = $('#qstnNo').val();
 		    formData.append("qstnNo",qstnNo);
 		    
-		    let qstnFileNo = $("#qstnFileNo").val();
-		    formData.append("qstnFileNo",qstnFileNo);
+		    if(fileNmArray.length > 0){
+		    	let qstnFileNo = $("#qstnFileNo").val();
+		    	formData.append("qstnFileNo",qstnFileNo); 
+		    }
 		    
 		    console.log(sysNo+" "+qstnCn+" "+qstnTtl+" "+qstnNo);
 		    
@@ -222,7 +226,6 @@
 		    	$("#modalBody").html("<h4>수정이 완료되었습니다.</h4>"); 
 		    	$('#qstnSubmit').attr("data-dismiss", "modal");
 		    	$('#miniView').html(data);
-		    	
 		    	
 		    });
 		    

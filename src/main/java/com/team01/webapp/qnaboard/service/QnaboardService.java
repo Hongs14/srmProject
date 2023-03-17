@@ -186,6 +186,5 @@ public class QnaboardService implements IQnaboardService {
 		qnaboardRepository.deleteComment(qstnCmntNo);
 		
 	}
-
 	
 }
