@@ -24,6 +24,7 @@ public class Notice {
 	@JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd")
 	private String ntcPryEndDate;
 	private String userId;
+	private String userNm;
 	private int countCmnt;
 	private String sysNo;
 	private String ntcFilePhysNm; //바꾼 파일 명

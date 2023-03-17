@@ -41,11 +41,12 @@
 		WHERE USER_TYPE='고객사'
 	</select>
 	
-	<select id="selectUserDpList" resultType="users">
+	<select id="selectUserDpList" parameterType="String" resultType="users">
 		SELECT 
 		    DISTINCT(USER_DP_NM) AS "userDpNm"
 		FROM USERS
 		WHERE USER_TYPE='고객사'
+		AND USER_OGDP = #{userOgdp}
 	</select>
 	
 	<!-- SR 검색 조건에 대한 행수 
