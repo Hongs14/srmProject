@@ -206,7 +206,7 @@ public interface IProgressRepository {
 	 * @author			김태희
 	 * @param progress	클라이언트가 보낸 progress 정보 저장
 	 */
-	void updateProgressRate (Progress progress);
+	void updateProgressRate(Progress progress);
 
 	/**
 	 * ProgressFile 정보 리스트로 저장
