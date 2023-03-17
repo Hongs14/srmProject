@@ -197,7 +197,7 @@ public class UserService implements IUserService {
  
 		    messageHelper.setFrom("koreasoftsrm@gmail.com"); // 보내는사람 이메일 
 		    messageHelper.setTo("gmlfbf5102@naver.com"); // 받는사람 이메일 userEml로 변경해야한다!!!!!!!
-		    messageHelper.setSubject("[코리아소프트SRM] 임시 비밀번호 발급 안내"); // 메일제목
+		    messageHelper.setSubject("[한국소프트SRM] 임시 비밀번호 발급 안내"); // 메일제목
 		    messageHelper.setText("고객님의 임시 비밀번호 안내 메일입니다. \n 계정: "+userEml + "\n 임시 비밀번호: "+tempPswd+"\n -임시 비밀번호 발급 요청에 의해 재발급된 임시 비밀번호입니다. \n -임시 비밀번호로 로그인 후 비밀번호를 변경해주세요."); // 메일 내용
  
 		    mailSender.send(mimeMessage);
