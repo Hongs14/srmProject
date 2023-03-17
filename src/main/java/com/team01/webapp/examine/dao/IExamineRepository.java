@@ -52,7 +52,7 @@ public interface IExamineRepository {
 	 * @author : 황건희
 	 * @return
 	 */
-	public List<Users> selectUserDpList();
+	public List<Users> selectUserDpList(String userOgdp);
 	/**
 	 * SR 검색 리스트 카운트
 	 * @author : 황건희

@@ -68,7 +68,7 @@ public class ExamineService implements IExamineService {
 		List<System> sysNmList = new ArrayList<>();
 		List<Users> userOgdpList = new ArrayList<>();
 		List<Users> userDpList = new ArrayList<>();
-		
+		String userOgdp = "전체";
 		//요청 진행상태
 		srSttsList = examineRepository.selectSrSttsList();
 		examineFilter.setSrSttsList(srSttsList);
@@ -79,10 +79,10 @@ public class ExamineService implements IExamineService {
 		
 		//등록자 소속 
 		userOgdpList = examineRepository.selectUserOgdpList();
-		examineFilter.setUserOgdpList(userOgdpList);
+		examineFilter.setUserOgdpList(userOgdpList);	
 		
-		//등록자 부서
-		userDpList = examineRepository.selectUserDpList();
+		//등록자 소속 부서
+		userDpList = examineRepository.selectUserDpList(userOgdp);
 		examineFilter.setUserDpList(userDpList);
 		
 		return examineFilter;
@@ -173,6 +173,32 @@ public class ExamineService implements IExamineService {
 		}
 		return examineList;
 		
+	}
+	
+	@Override
+	public ExamineFilter selectUserDpList(String userOgdp){
+		List<SRStts> srSttsList = new ArrayList<>();
+		List<System> sysNmList = new ArrayList<>();
+		List<Users> userOgdpList = new ArrayList<>();
+		List<Users> userDpList = new ArrayList<>();
+		
+		ExamineFilter examineFilter = new ExamineFilter();
+		//요청 진행상태
+		srSttsList = examineRepository.selectSrSttsList();
+		examineFilter.setSrSttsList(srSttsList);
+		
+		//관련 시스템
+		sysNmList = examineRepository.selectSysNmList();
+		examineFilter.setSysNmList(sysNmList);
+		
+		//등록자 소속 
+		userOgdpList = examineRepository.selectUserOgdpList();
+		examineFilter.setUserOgdpList(userOgdpList);	
+		userDpList = examineRepository.selectUserDpList(userOgdp);
+				
+		examineFilter.setUserDpList(userDpList);
+		log.info(userDpList);
+		return examineFilter;
 	}
 
 }

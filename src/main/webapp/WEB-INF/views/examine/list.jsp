@@ -146,7 +146,7 @@
 		                					<div class="form-group row">
 		                						<label for="exampleFormControlSelect1" class="col-sm-3 col-form-label-sm">등록자소속</label>
 				                    			<div class="col-sm-9">
-					                    			<select id="userOgdp" class="form-control form-control-sm" onchange="userDpShow(this)">
+					                    			<select id="userOgdp" class="form-control form-control-sm" onchange="userDpChange(this)">
 					                        			<option value="0">전체</option>
 					                        			<c:forEach var="users" items="${examineFilter.userOgdpList}">		                        	
 						                        			<option>${users.userOgdp}</option>
@@ -155,14 +155,21 @@
 				                    			</div>
 				                			</div>
 		                				</div>
+		                				
 		                				<div class="col-3">
 		                					<div class="form-group row">
 		                						<label for="exampleFormControlSelect1" class="col-sm-4 col-form-label-sm">부서</label>
-				                    			<select class="form-control form-control-sm col-sm-8" id="userDpNm">
-				                        			<option value="0">전체</option>
-				                    			</select>
+				                    			<div id = "beforeChange" class="col-sm-8">
+					                    			<select class="form-control form-control-sm" id="userDpNm">
+					                        			<option value="0">전체</option>
+					                    			</select>
+				                    			</div>
+				                				<div id="examineUserDp" class="d-none col-sm-8"></div>
 				                			</div>
 		                				</div>
+		                				
+		                			
+		                				
 		                				<div class="col-4">
 				                			<div class="form-group row">
 				                				<label for="exampleFormControlSelect1" class="col-sm-4 col-form-label-sm">키워드</label>
@@ -250,14 +257,15 @@
 												var sysNmSelect = document.getElementById("sysNm");
 												var sttsNoSelect = document.getElementById("sttsNo");
 												var userOgdpSelect = document.getElementById("userOgdp");
-												var userDpSelect = document.getElementById("userDpNm");
 												
 												var sysNm = sysNmSelect.options[document.getElementById("sysNm").selectedIndex].text;
 												var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
 												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
-												var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
+												
+												var userDpSelect = duserDpSelect = document.getElementById("userDpNm2");
+												var userDpNm = userDpSelect.options[document.getElementById("userDpNm2").selectedIndex].text;
 											  	
-											  	var srRegStartDate = document.getElementById("dateStart").value;
+												var srRegStartDate = document.getElementById("dateStart").value;
 											  	var srRegEndDate = document.getElementById("dateEnd").value;
 												
 												var srTtl = document.getElementById("keyword").value;
@@ -579,39 +587,21 @@
 				</div>
 			</div>
 			<script>
-       			function userDpShow(e) {
-					var all = ["전체"];
-       				var bok = ["기획팀","전산팀","마케팅팀"];
-       				var kor = ["회계팀","총무팀","전산팀","인사팀"];
-       				var sas = ["영업팀","전산팀","판매팀"];
-       				var oti = ["기획팀","전산팀","마케팅팀","인사팀"];
-       						
-       				var target = document.getElementById("userDpNm");
-       						
-					if(e.value == "북북출판사"){
-						var userDpNm = bok;
-					}else if(e.value == "한국대학교"){
-						var userDpNm = kor;
-					}else if(e.value == "사슈즈"){
-						var userDpNm = sas;
-					}else if(e.value == "오티아이"){
-						var userDpNm = oti;
-					}else{
-						var userDpNm = all;
-					}
-       						
-					target.options.length = 0;
-					console.log(userDpNm);
+				function userDpChange(e) {
+					console.log(e.value);
 					
-					for(x in userDpNm){
-						var opt = document.createElement("option");
-						
-						opt.value = userDpNm[x];
-						opt.innerText = userDpNm[x];
-						target.appendChild(opt);
-					}
-       						
-
+					let data = {userOgdp : e.value};
+					
+					$.ajax({
+						url : "${pageContext.request.contextPath}/examine/selectUserDp",
+						method : "post",
+						data : JSON.stringify(data),
+						contentType: "application/json; charset=UTF-8"
+					}).done((data) => {
+						$("#examineUserDp").html(data);
+						$("#beforeChange").addClass("d-none");
+						$("#examineUserDp").removeClass("d-none");
+					});
 				}
 			</script>
 			<!-- 로그아웃 모달 -->
