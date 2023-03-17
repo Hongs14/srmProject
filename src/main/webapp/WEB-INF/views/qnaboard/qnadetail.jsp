@@ -4,92 +4,61 @@
 <!DOCTYPE html>
 <html>
 	<script>
-		
+		var qCountCmnt = parseInt("${countQstnComment}",10);
+	
   		$(document).ready(function(){
-  			console.log("시작할때");
+  			console.log("댓글 불러오기");
   			readComment();
-  			
-  			var qCountCmnt = "${countQstnComment}";
   			console.log(qCountCmnt);
+  			
   		});
   		
   		function readComment(){
+  			//댓글 불러오기
   			let qstnNo ='${qstn.qstnNo}';
+  			let sysNo = "${session}";
   			console.log(qstnNo);
   			$.ajax({
-		    	url:"read/comment",
+		    	url:"${pageContext.request.contextPath}/qna/"+sysNo+"/read/comment?qstnNo="+qstnNo,
 		        type:"get",
-		        data: 'qstnNo='+qstnNo,
+		        dataType: "html",
 		        success:function(data){
-		        	console.log(data);
-		        	$.each(data, function(index, item){
-		        		let comment = '<hr/>';
-		        		comment += '<div id="readCmnt">';
-		        		comment += 	'<div class="d-flex px-2 flex-row align-items-center justify-content-between">';
-		        		comment += 		'<div>';
-						comment += 			'<h6 style="color: #406882"><b>'+item.userNm+'</b></h6>';
-						comment += 			'<h6>'+item.qstnCmntDate+'</h6>';
-						comment +=		'</div>';
-						comment += 		'<div>';
-						comment += 			'<input type="hidden" id="qstnCmntNo" value="'+item.qstnCmntNo+'"/>';
-						comment += 			'<a id="updateToggle'+item.qstnCmntNo+'" onclick="updateCButton('+item.qstnCmntNo+')">수정</a> | <a onclick="deleteComment('+item.qstnCmntNo+')">삭제</a> |';
-						comment += 		'</div>';
-						comment += 	'</div>';
-						comment += 	'<textarea id="commentContent'+item.qstnCmntNo+'" disabled="disabled" style="border: none; resize:none; width:90%; background-color: #dfdfe3">'+item.qstnCmntCn+'</textarea>';
-						comment +='</div>'; 
-		        		$('#qComment').append(comment); 
-		        	});
+		        	console.log("통신성공: "+qCountCmnt);
+		        	$('#qComment').html(data);
 		        	
 		         }
-		    })
-		
+		    });
   		};
   		
   		
 		function writeComment(){
+			//댓글 작성
 			console.log("댓글달기 실행");
 			let content = $('#qnaCmntCn').val();
 			let qcwriterNo = '${sessionScope.loginUser.userNo}';
 			let qstnNo = '${qstn.qstnNo}';
+			let sysNo = "${session}";
 			
-			let data = {userNo: qcwriterNo, qstnNo: qstnNo, qstnCmntCn: content};
+			let data = {userNo: qcwriterNo, qstnNo: qstnNo, qstnCmntCn: content, sysNo:sysNo};
 			console.log(data);
 			$.ajax({
-				url: "write/comment",
+				url: "${pageContext.request.contextPath}/qna/"+sysNo+"/write/comment",
 				method: "post",
 				data: JSON.stringify(data),
 				contentType: "application/json; charset=UTF-8"
-			}).done((item) => {
-				console.log(item);
-				
-				let comment = '<hr/>';
-        		comment += '<div class="d-flex px-2 flex-row align-items-center justify-content-between">';
-        		comment += 	'<div>'
-				comment += 		'<span style="color: #406882; margin-right:20px;"><b>'+item.userNm+'</b></span>';
-				comment += 		'<span>'+item.qstnCmntDate+'</span>';
-				comment +=	'</div>'
-				comment += 	'<div>'
-				comment += 		'<input type="hidden" id="qstnCmntNo" value="'+item.qstnCmntNo+'"/>'
-				comment += 		'<a id="updateToggle'+item.qstnCmntNo+'" onclick="updateCButton('+item.qstnCmntNo+')">수정</a> | <a onclick="deleteComment('+item.qstnCmntNo+')">삭제</a> |';
-				comment += 	'</div>';
-				comment +='</div>';
-				comment += '<textarea id="commentContent'+item.qstnCmntNo+'" disabled="disabled" style="border: none; resize:none; width:90%">'+item.qstnCmntCn+'</textarea>';
-				
-        		$('#qComment').append(comment); 
-        		console.log(qCountCmnt);
-        		$('#cmntCount').html('댓글('+(qCountCmnt+1)+')');
+			}).done((data) => {
+				console.log(data);
+				$('#qnaCmntCn').val('');
+				readComment();
+				$('#cmntCount').html('댓글('+(qCountCmnt+1)+')');
         		qCountCmnt += 1;
-        		$('#qnaCmntCn').val('');
-				
 			});
 		}
 		
 		function updateCButton(i){
-			console.log(i);
 			$('#commentContent'+i).removeAttr("disabled");
 			$('#updateToggle'+i).html("변경");
 			$('#updateToggle'+i).attr('onclick', 'udpateComplete('+i+')');
-			
 		};
 
 		function udpateComplete(i){
@@ -119,7 +88,7 @@
 			$.ajax({
 				url: "delete/comment",
 				method: "get",
-				data: 'qstnCmntNo='+qstnCmntNo,
+				data: 'qstnCmntNo='+qstnCmntNo
 			}).done((data) => {
 				console.log("성공");
 				$('#cmntCount').html('댓글('+(qCountCmnt-1)+')');
@@ -239,7 +208,7 @@
                     			
 	<!-- 댓글 -->
 	<div class="card p-4 mb-4">
-		<div id="cmntCount" class="mx-3 mb-2">댓글<span>(${countQstnComment})</span></div>
+		<div  class="mx-3 mb-2"><span id="cmntCount">댓글(${countQstnComment})</span></div>
 		<div class="cmnts" style="overflow-y: scroll; height:200px;">
 			<div class="mx-3 p-1" >
 				<div class="row  justify-content-between">

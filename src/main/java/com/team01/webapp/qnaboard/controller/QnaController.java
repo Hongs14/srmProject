@@ -338,11 +338,12 @@ public class QnaController {
 	 * @return
 	 */
 	@GetMapping(value="/{sysNo}/read/comment")
-	@ResponseBody
-	public List<QSTNComment> readComment(@RequestParam int qstnNo) {
+	public String readComment(@RequestParam int qstnNo, Model model) {
 		List<QSTNComment> list = qnaboardService.getCommentList(qstnNo);
 		log.info("QSTN댓글 읽기" );
-		return list ;
+		log.info(list);
+		model.addAttribute("list",list);
+		return "qnaboard/qnaCmntList";
 	}
 	
 
