@@ -320,4 +320,16 @@ public class ExamineController {
 		wb.close();
 	}
 	
+	@PostMapping(value="/selectUserDp")
+	public String selectUserDp (@RequestBody Examine examine, Model model) {
+		log.info("실행");
+
+		String userOgdp = (String)examine.getUserOgdp();
+		log.info(userOgdp);
+		ExamineFilter userDpList = examineService.selectUserDpList(userOgdp);
+		model.addAttribute("examineFilter",userDpList);
+		return "examine/examineUserDpNm";
+	}
+	
+	
 }

@@ -69,4 +69,7 @@ public interface IExamineService {
 	
 	//엑셀 다운로드
 	public List<Examine> getExamineExcelList(List<String> examineArr);
+	
+	//등록자 소속 부서
+	public ExamineFilter selectUserDpList(String userOgdp);
 }

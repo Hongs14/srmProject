@@ -60,7 +60,7 @@
 		SELECT 
 		    RNUM AS "seq",
 		    NTC_NO AS "ntcNo",
-		    USER_ID AS "userId",
+		    USER_NM AS "userNm",
 		    NTC_TTL AS "ntcTtl",
 		    NTC_INQ_CNT AS "ntcInqCnt",
 	    	NTC_WRT_DATE AS "ntcWrtDate",
@@ -73,7 +73,7 @@
 		        NTC_INQ_CNT,
 		        NTC_WRT_DATE,
 		        NTC_PRY,
-		        USER_ID,
+		        USER_NM,
 		        SYS_NO,
 		        ROWNUM as RNUM
 
@@ -84,7 +84,7 @@
 		            n.NTC_INQ_CNT,
 		            n.NTC_WRT_DATE,
 		            n.NTC_PRY,
-		            u.USER_ID,
+		            u.USER_NM,
 		            n.SYS_NO
 		        FROM NOTICE n, USERS u
 		        WHERE n.user_no = u.user_no

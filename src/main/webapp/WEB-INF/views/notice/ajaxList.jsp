@@ -66,7 +66,7 @@
 						</c:choose>
 					</td>
 					<td style="width:120px;">
-						${notice.userId}	
+						${notice.userNm}	
 					</td>
 					<td style="width:132px;">
 						${notice.ntcWrtDate}	
