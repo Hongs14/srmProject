@@ -28,7 +28,17 @@
     		.textDetail{
     			white-space:normal !important;
     		} 
-  		</style>
+    		
+    		#sizeTtl{
+    			width: 360px;
+    			overflow: hidden;
+				text-overflow: ellipsis;
+				display:block;
+    		}
+    		.col-lg-7 .qstnTtl{
+    			width: 380px;
+    		}
+		</style>
 	  	<script>
 		  	$(document).ready(function () {
 			    $('#simple-date4 .input-daterange').datepicker({        
@@ -150,12 +160,12 @@
 			                				<a onclick="writeQstn()" class="btn btn-primary btn-sm" style="cursor:pointer;">Q&A 등록하기</a>
 			                  			</div>
 			                		</div> 
-			                		<div id="qstnlist" style="width: 100%;">
+			                		<div id="qstnlist" >
 			                		
 			                		</div>
 			                	</div>
 					        </div>
-					   		<div id="miniView" style="width: 100%;"></div>
+					   		<div id="miniView"></div>
 			        	</div> 
 						<!-- Row -->
 						<c:if test="${!empty command and command eq 'detail'}">
@@ -164,11 +174,8 @@
 							<script>
 								$(document).ready(function(){
 					          		let qstnNo = $("#detailqstnNo").val();
-					          		let sysNo = "${session}";
-					          		console.log(qstnNo+" "+sysNo);
-						  			getQstnDetail(qstnNo, sysNo);
-						          }
-					          	);
+					          		qnaDetail(qstnNo); 
+						        });
 							</script>
 						</c:if>
 			         	<!-- 로그아웃 모달 -->
@@ -282,29 +289,6 @@
 			
 			};
 			
-			function getQstnDetail(qstnNo, sysNo){
-				$("#mainQstnMenu").removeClass("d-sm-flex");
-				$("#mainQstnMenu").hide();
-				$("#qstnMenu").show();
-				$("#mainQstn").attr("class","col-lg-7");
-				$("#miniView").attr("class","col-lg-5");
-				$(".qstnTtl").css({
-			 		"width" : "360px",
-					"overflow": "hidden",
-					"text-overflow": "ellipsis",
-					"display":"block"
-			 	});
-				
-				resize();
-				console.log("hey");
-				$.ajax({
-					url: "${pageContext.request.contextPath}/qna/"+sysNo+"/view/"+qstnNo,
-					type: "GET",
-					dataType: "html"
-				}).done((data) => {
-					$("#miniView").html(data);
-				});
-			};
 			
 			function qnaDetail(i) {
 				//상세보기
@@ -314,7 +298,7 @@
 				$("#qstnMenu").show();
 				$("#mainQstn").attr("class","col-lg-7");
 				$("#miniView").attr("class","col-lg-5");
-				resize();
+				/* resize(); */
 				let sysNo = "${session}";
 				
 				$.ajax({
@@ -408,8 +392,8 @@
 						$('#miniView').html(data);
 					}
 				});
-				
 			};
+			
 		</script>
  		<%@include file="/WEB-INF/views/common/bottom.jsp" %>
 	</body>

@@ -47,7 +47,10 @@
 		
 		
 	</select>
-	
+	<!-- 
+		Q&A상세보기
+		작성자 : 정홍주
+	 -->
 	<select id="selectDetail" parameterType="int" resultType="qstn">
 		SELECT QSTN_NO AS "qstnNo", 
 				USER_NM AS "userNm", 
@@ -83,6 +86,10 @@
 		WHERE QSTN_FILE_NO = #{qstnFileNo}
 	</select>
 	
+	<!-- 
+		조회수 올리기
+		작성자 : 정홍주
+	 -->
 	<update id="countInqCnt" parameterType="int">
 		UPDATE QSTN
 		SET QSTN_INQ_CNT = QSTN_INQ_CNT+1
@@ -90,6 +97,10 @@
 		
 	</update>
 	
+	<!-- 
+		댓글 목록 불러오기
+		작성자 : 정홍주
+	 -->
 	<select id="selectCommentList" parameterType="int" resultType="qstnComment">
 		SELECT QSTN_CMNT_NO AS qstnCmntNo, 
 				QSTN_NO AS qstnNo, 
@@ -101,8 +112,10 @@
 		WHERE QC.USER_NO = U.USER_NO AND QC.QSTN_NO = #{qstnNo}
 		ORDER BY QSTN_CMNT_NO 
 	</select>
+	
 	<!-- 
 		Qna 게시글 작성
+		작성자 : 정홍주
 	 -->
 	<insert id="insertQSTN" parameterType="qstn">
 		<selectKey keyProperty="qstnNo" resultType="int" order="BEFORE">
@@ -119,14 +132,13 @@
 	</insert>
 	
 	<!-- 
-		Qna게시글 수정
+		Q&A 게시글 수정
 		작성자  : 정홍주
 	 -->
 	<update id="updateQstn" parameterType="qstn">
 		UPDATE QSTN SET QSTN_TTL = #{qstnTtl}, QSTN_CN = #{qstnCn}
 		WHERE QSTN_NO = #{qstnNo}
 	</update>
-	
 	<update id="updateQstnFile" parameterType="qstnFile">
 		UPDATE QSTN_FILE SET
 			QSTN_FILE_ACTL_NM = #{qstnFileActlNm},
@@ -135,11 +147,18 @@
 		WHERE QSTN_NO = #{qstnNo}
 	</update>
 	
+	<!-- 
+		Q&A 게시글 삭제
+		작성자 : 정홍주
+	 -->
 	<delete id="deleteQstn" parameterType="int">
 		DELETE FROM QSTN WHERE QSTN_NO = #{qstnNo}
 	</delete>
 	
-	
+	<!-- 
+		Q&A댓글 조회
+		작성자 : 정홍주
+	 -->
 	<select id="selectComment" resultType="qstnComment">
 		select rownum, QSTN_CMNT_NO AS qstnCmntNo, 
 				QSTN_NO AS qstnNo, 
@@ -154,19 +173,35 @@
             where rownum = 1
 	</select>
 	
+	<!-- 
+		댓글 수 세기
+		작성자 : 정홍주
+	 -->
 	<select id="countComment" parameterType="int" resultType="int">
 		SELECT COUNT(*) FROM QSTN_COMMENT WHERE QSTN_NO = #{qstnNo}
 	</select>
 	
+	<!-- 
+		댓글 작성
+		작성자 : 정홍주
+	 -->
 	<insert id="insertComment" parameterType="qstnComment">
 		INSERT INTO QSTN_COMMENT VALUES(QSTNCMNTNO_SEQ.NEXTVAL, #{qstnNo}, #{userNo}, #{qstnCmntCn}, SYSDATE)
 	</insert>
 	
+	<!-- 
+		댓글 수정
+		작성자 :정홍주
+	 -->
 	<update id="updateComment" parameterType="qstnComment">
 		UPDATE QSTN_COMMENT set QSTN_CMNT_CN = #{qstnCmntCn}, QSTN_CMNT_DATE = SYSDATE
 		WHERE QSTN_CMNT_NO = #{qstnCmntNo}
 	</update>
 	
+	<!-- 
+		댓글 삭제
+		작성자 : 정홍주
+	 -->
 	<delete id="deleteComment" parameterType="int">
 		DELETE FROM QSTN_COMMENT WHERE QSTN_CMNT_NO = #{qstnCmntNp}
 	</delete>

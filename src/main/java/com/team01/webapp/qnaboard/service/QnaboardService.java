@@ -17,6 +17,10 @@ import com.team01.webapp.util.Pager;
 
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * @author KOSA
+ *
+ */
 @Log4j2
 @Service
 public class QnaboardService implements IQnaboardService {
@@ -35,6 +39,11 @@ public class QnaboardService implements IQnaboardService {
 		return pager;
 	}
 	
+	/* Qna 목록
+	 * @author		정홍주
+	 * @param pager	
+	 * @param qstn	해당 질문 번호
+	 */
 	@Override
 	public List<QSTN> getQstnList(Pager pager, QSTN qstn){
 		
@@ -84,7 +93,7 @@ public class QnaboardService implements IQnaboardService {
 		return qstnFile;
 	}
 	
-	/* 댓글수 증가하기
+	/* 댓글수 
 	 * @author			정홍주
 	 * @param qstnNo	해당 질문 번호
 	 */
@@ -127,30 +136,51 @@ public class QnaboardService implements IQnaboardService {
 		return result;
 	}
 	
+	
+	/* Q&A삭제
+	 * @param qstnNo Qna번호
+	 */
 	public int eraseQstn(int qstnNo) {
 		int result = 0;
 		qnaboardRepository.deleteQstn(qstnNo);
 		return result;
 	}
 
+	/* Q&A작성
+	 * @author			정홍주
+	 * @param qComment 	댓글 객체
+	 */
 	@Override
 	public QSTNComment writeComment(QSTNComment qComment) {
 		qnaboardRepository.insertComment(qComment);
 		qComment = qnaboardRepository.selectComment();
 		return qComment;
 	}
-
+	
+	
+	/* 댓글 목록 불러오기
+	 * @author			정홍주
+	 * @param qstnNo 	게시글 번호
+	 */
 	@Override
 	public List<QSTNComment> getCommentList(int qstnNo) {
 		List<QSTNComment> list = qnaboardRepository.selectCommentList(qstnNo);
 		return list;
 	}
-
+	
+	/* 댓글 수정하기
+	 * @author			정홍주
+	 * @param qComment 	
+	 */
 	@Override
 	public void updateComment(QSTNComment qComment) {
 		qnaboardRepository.updateComment(qComment);
 	}
 
+	/* 댓글 삭제하기
+	 * @author				정홍주
+	 * @param qstnCmntNo 	댓글 번호	
+	 */
 	@Override
 	public void deleteComment(int qstnCmntNo) {
 		qnaboardRepository.deleteComment(qstnCmntNo);

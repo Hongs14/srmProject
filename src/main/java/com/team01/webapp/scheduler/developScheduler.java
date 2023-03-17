@@ -22,7 +22,7 @@ public class developScheduler {
 	/**매일 12시 5분에 실행
 	 * @author	 정홍주
 	 */
-	@Scheduled(cron="0 5 0 * * *")
+	@Scheduled(cron="0 5 12 * * *")
 	public void changeStatus() {
 		//해당 날짜가 되면 개발계획 -> 개발중으로 바뀌기
 		log.info("스케줄러 실행");
