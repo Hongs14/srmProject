@@ -205,6 +205,12 @@ public class NoticeService implements INoticeService{
 		noticeRepository.updatePryCheck();
 	}
 	
+	//댓글 수
+	@Override
+	public int countComment(int ntcNo) {
+		int countCmnt = noticeRepository.countComment(ntcNo);
+		return countCmnt;
+	}
 	
 	//댓글 읽기
 	@Override
