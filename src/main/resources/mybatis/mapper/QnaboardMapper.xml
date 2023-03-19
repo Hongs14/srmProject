@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team01.webapp.qnaboard.dao.IQnaboardRepository">
-	
+	<!-- 
+		Q&A질문 목록 조회
+		작성자 : 정홍주
+	 -->
 	<select id="selectQstnList" resultType="qstn" parameterType="qstn">
 		SELECT 
 		    rnum AS "rnum",
@@ -35,6 +38,10 @@
 		]]>
 	</select>
 	
+	<!-- 
+		전체 행 조회
+		작성자 : 정홍주
+	 -->
 	<select id="totalRow" parameterType="qstn" resultType="int">
 		SELECT COUNT(*) FROM QSTN 	
 		WHERE  QSTN_WRT_DATE BETWEEN 
@@ -75,6 +82,10 @@
 		WHERE QSTN_NO = #{qstnNo}
 	</select>
 	
+	<!-- 
+		첨부파일 조회
+		작성자 : 정홍주
+	 -->
 	<select id="selectFileDownload" parameterType="int" resultType="qstnFile">
 		SELECT
 			QSTN_FILE_NO AS "qstnFileNo",
@@ -139,13 +150,15 @@
 		UPDATE QSTN SET QSTN_TTL = #{qstnTtl}, QSTN_CN = #{qstnCn}
 		WHERE QSTN_NO = #{qstnNo}
 	</update>
-	<update id="updateQstnFile" parameterType="qstnFile">
-		UPDATE QSTN_FILE SET
-			QSTN_FILE_ACTL_NM = #{qstnFileActlNm},
-			QSTN_FILE_PHYS_NM = #{qstnFilePhysNm},
-			QSTN_FILE_EXTN_NM = #{qstnFileExtnNm}
-		WHERE QSTN_NO = #{qstnNo}
-	</update>
+
+	<!-- 
+		지워진 파일 삭제
+		작성자 : 정홍주
+	 -->	
+	<delete id="deleteExistingFile" parameterType="string">
+		DELETE FROM QSTN_FILE
+	      WHERE QSTN_FILE_PHYS_NM=#{qstnFilePhysNm}
+	</delete>
 	
 	<!-- 
 		Q&A 게시글 삭제

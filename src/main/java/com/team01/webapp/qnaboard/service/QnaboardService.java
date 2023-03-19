@@ -128,11 +128,17 @@ public class QnaboardService implements IQnaboardService {
 		return result;
 	}
 	
-	@Transactional
-	public int changeQstnFile(QSTN qstn, QSTNFile qstnFile) {
+	@Override
+	public int changeQstnFile(QSTNFile qstnFile) {
 		int result = 0;
-		qnaboardRepository.updateQstn(qstn);
-		qnaboardRepository.updateQstnFile(qstnFile);
+		result = qnaboardRepository.insertQstnFileUpload(qstnFile);
+		return result;
+	}
+	
+	@Override
+	public int EraseExistingFile(String qstnFilePhysNm) {
+		int result = 0;
+		qnaboardRepository.deleteExistingFile(qstnFilePhysNm);
 		return result;
 	}
 	

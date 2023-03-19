@@ -29,6 +29,7 @@ public class QSTN {
 	//첨부파일
 	private int qstnFileNo;
 	private List<MultipartFile> qstnMFile;
+	private List<String> deleteFile;
 	
 	//조건
 	private String startDate;
@@ -38,5 +39,6 @@ public class QSTN {
 	//paging
 	private int startRowNo;
 	private int endRowNo;
+	
 	
 }

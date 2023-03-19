@@ -29,7 +29,9 @@ public interface IQnaboardService {
 	public QSTNFile selectFiledownload(int qstnNo);
 	public void qstnFileUpload(QSTNFile qstnFile);
 	public int changeQstn(QSTN qstn);
-	public int changeQstnFile(@Param("qstn") QSTN qstn, @Param("qstnFile") QSTNFile qstnFile);
+	public int changeQstnFile(QSTNFile qstnFile);
+	public int EraseExistingFile(String qstnFilePhysNm);
+	
 	public int eraseQstn(int qstnNo);
 	
 
