@@ -11,13 +11,14 @@
 		    QSTN_NO AS 	"qstnNo",
 		    QSTN_TTL AS "qstnTtl",
 		    QSTN_INQ_CNT AS "qstnInqCnt",
-		    QSTN_WRT_DATE AS "qstnWrtDate",	
+		    QSTN_WRT_DATE AS "qstnWrtDate",
+		    QSTN_SECRET AS "qstnSecret",		
 		    USER_NO AS "userNo",
 		    USER_NM AS "userNm"
 		FROM(
-			SELECT ROWNUM AS RNUM, QSTN_NO, QSTN_TTL, QSTN_INQ_CNT, QSTN_WRT_DATE, USER_NO, USER_NM
+			SELECT ROWNUM AS RNUM, QSTN_NO, QSTN_TTL, QSTN_INQ_CNT, QSTN_WRT_DATE, QSTN_SECRET, USER_NO, USER_NM
 		        FROM(
-		        	SELECT QSTN_NO, QSTN_TTL, QSTN_INQ_CNT, QSTN_WRT_DATE, QSTN.USER_NO, USER_NM
+		        	SELECT QSTN_NO, QSTN_TTL, QSTN_INQ_CNT, QSTN_WRT_DATE, QSTN_SECRET, QSTN.USER_NO, USER_NM
 		         	FROM QSTN, USERS  
 		         	WHERE QSTN.USER_NO = USERS.USER_NO  
 		         	AND SYS_NO = #{sysNo}
@@ -27,6 +28,7 @@
 					<if test="qstnTtl != ''">
 						AND QSTN_TTL like #{qstnTtl}
 					</if>
+					
 		        	ORDER BY QSTN_NO DESC
 		        ) 
 		   <![CDATA[
@@ -66,6 +68,7 @@
 				QSTN_CN AS "qstnCn", 
 				QSTN_INQ_CNT AS "qstnInqCnt", 
 				QSTN_WRT_DATE AS "qstnWrtDate",
+				QSTN_SECRET AS "qstnSecret",
 				QSTN.SYS_NO AS "sysNo"
 		FROM QSTN, USERS
 		WHERE QSTN.USER_NO = USERS.USER_NO AND QSTN.QSTN_NO =#{qstnNo}
@@ -132,7 +135,8 @@
 		<selectKey keyProperty="qstnNo" resultType="int" order="BEFORE">
 			SELECT QSTNNO_SEQ.nextval FROM dual
 		</selectKey>
-		INSERT INTO QSTN VALUES(#{qstnNo}, #{userNo}, #{qstnTtl}, #{qstnCn}, 0, SYSDATE, #{sysNo})
+		INSERT INTO QSTN(QSTN_NO, USER_NO, QSTN_TTL, QSTN_CN, QSTN_INQ_CNT, QSTN_WRT_DATE, SYS_NO, QSTN_SECRET) 
+			VALUES(#{qstnNo}, #{userNo}, #{qstnTtl}, #{qstnCn}, 0, SYSDATE, #{sysNo}, #{qstnSecret})
 	</insert>
 	
 	<insert id="insertQstnFileUpload" parameterType="qstnFile">
@@ -147,7 +151,7 @@
 		작성자  : 정홍주
 	 -->
 	<update id="updateQstn" parameterType="qstn">
-		UPDATE QSTN SET QSTN_TTL = #{qstnTtl}, QSTN_CN = #{qstnCn}
+		UPDATE QSTN SET QSTN_TTL = #{qstnTtl}, QSTN_CN = #{qstnCn}, QSTN_SECRET = #{qstnSecret}
 		WHERE QSTN_NO = #{qstnNo}
 	</update>
 

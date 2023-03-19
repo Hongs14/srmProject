@@ -11,7 +11,7 @@
 	    		<th class="col-sm-1">No.</th>
 	      		<th class="col-sm-1">카테고리</th>
 	      		<th class="col-sm-5">글제목</th>
-	      		<th class="col-sm-2">작성자</th>
+	      		<th class="col-sm-2">작성자 </i></th>
 	      		<th class="col-sm-2">작성일</th>
 	      		<th class="col-sm-1 text-center">조회수</th>
 	    	</tr>
@@ -21,7 +21,19 @@
 				<tr>
 					<td class="col-sm-1" onclick="qnaDetail(${qstn.qstnNo})" style="cursor:pointer;">${qstn.rnum}</td>
 					<td class="col-sm-1">질문사항</td>
-					<td class="qstnTtl" onclick="qnaDetail(${qstn.qstnNo})" style="cursor:pointer;"><b  id="sizeTtl" >${qstn.qstnTtl}</b></td>
+					<c:if test="${qstn.qstnSecret eq 'N'}">
+						<td class="qstnTtl" onclick="qnaDetail(${qstn.qstnNo})" style="cursor:pointer;"><b id="sizeTtl"><c:if test='${qstn.qstnSecret eq "Y"}'><i style="color:orange" class="mr-2 fa-solid fa-lock"></i></c:if>${qstn.qstnTtl}</b></td>
+					</c:if>
+					<c:if test="${qstn.qstnSecret eq 'Y'}">
+						<c:choose> 
+							<c:when test="${qstn.userNm eq sessionScope.loginUser.userNm or sessionScope.loginUser.userType eq '관리자' or sessionScope.loginUser.userType eq '개발자'}">
+								<td class="qstnTtl" onclick="qnaDetail(${qstn.qstnNo})" style="cursor:pointer;"><b id="sizeTtl"><c:if test='${qstn.qstnSecret eq "Y"}'><i style="color:orange" class="mr-2 fa-solid fa-lock"></i></c:if>${qstn.qstnTtl}</b></td>
+							</c:when>
+							<c:otherwise>
+								<td class="qstnTtl" onclick="qnaSecret(${qstn.qstnNo})" style="cursor:pointer;"><b id="sizeTtl"><c:if test='${qstn.qstnSecret eq "Y"}'><i style="color:orange" class="mr-2 fa-solid fa-lock"></i></c:if>${qstn.qstnTtl}</b></td>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
 					<td class="col-sm-2">${qstn.userNm}</td>
 					<td class="col-sm-2">${qstn.qstnWrtDate}</td>
 					<td class="col-sm-1 text-center">${qstn.qstnInqCnt}</td>

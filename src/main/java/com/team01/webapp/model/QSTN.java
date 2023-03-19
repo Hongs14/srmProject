@@ -20,6 +20,7 @@ public class QSTN {
 	private String userNm;
 	private int countCmnt;
 	private String sysNo;
+	private String qstnSecret;
 	
 	private String qstnFilePhysNm; //바꾼 파일 명
 	private String qstnFileActlNm; //원본 파일 이름

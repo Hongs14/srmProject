@@ -94,7 +94,7 @@ public class QnaController {
 	 * @return
 	 */
 	@PostMapping(value="/{sysNo}/filter/{pageNo}", produces="application/json; charset=UTF-8")
-	public String getQnaList(@PathVariable int pageNo, @PathVariable String sysNo, @RequestBody QSTN qstn,  Model model,Pager pager) {
+	public String getQnaList(@PathVariable int pageNo, @PathVariable String sysNo, @RequestBody QSTN qstn,  Model model, Pager pager) {
 		log.info("qstn 목록 필터링");
 		log.info(sysNo);
 		pager = qnaboardService.returnPage(pageNo,pager,qstn);
@@ -122,7 +122,7 @@ public class QnaController {
 		List<MultipartFile> qstnFile = qnaboardService.getQstnFileDetail(qstnNo);
 		//댓글 목록
 		List<QSTNComment> qnaClist = qnaboardService.getCommentList(qstnNo);
-		int countQstnComment = qnaClist.size();
+		int countQstnComment = qnaboardService.countComment(qstnNo);
 		
 		log.info(qstn);
 		log.info(qstnFile);
@@ -131,10 +131,7 @@ public class QnaController {
 		model.addAttribute("qnaClist",qnaClist);
 		model.addAttribute("countQstnComment", countQstnComment);
 		model.addAttribute("session", sysNo);
-		/*int updateInq = qnaboardService.countInq(qstnNo);
-		if(updateInq == 1) {
-			log.info("조회수 증가");
-		}*/
+		
 		return "qnaboard/qnadetail";
 	}
 	
@@ -249,7 +246,7 @@ public class QnaController {
 		return "redirect:/qna/"+qstn.getSysNo()+"/view/"+qstn.getQstnNo();
 	}
 	
-	/** Qna 수정하기
+	/** Qna 수정 폼 띄우기
 	 * @author		정홍주
 	 * @param qstn
 	 * @param model View로 데이터 전달을 위한 Model 객체 주입
@@ -270,6 +267,13 @@ public class QnaController {
 		return "qnaboard/qnawrite";
 	}
 	
+	/**qna수정하기
+	 * @author 			정홍주
+	 * @param qstnNo
+	 * @param qstn
+	 * @param qstnFile
+	 * @return
+	 */
 	@PostMapping("/{sysNo}/update")
 	public String updateQna(@RequestParam int qstnNo, QSTN qstn, QSTNFile qstnFile) {
 		try {

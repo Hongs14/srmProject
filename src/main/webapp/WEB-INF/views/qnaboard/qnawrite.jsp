@@ -30,22 +30,36 @@
 			<form onsubmit="return false;" method="post" id="qstnUpdateForm" enctype="multipart/form-data">
 			   	<!-- 글 제목 -->
 			   	<div class="row">
-			   		<div class="col-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">글제목</h6></div>
-			   		<div class="col-10">
+			   		<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">글제목</h6></div>
+			   		<div class="col-sm-10">
 			   			<input class="form-control" name="qstnTtl" id="qstnTtl" <c:if test="${command eq 'update'}">value="${qstn.qstnTtl}"</c:if>/>
+			   		</div>
+			   	</div>
+			   	<!-- 비밀글 여부 -->
+			   	<div class="row">
+			   		<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">비밀글</h6></div>
+			   		<div class="ml-2">
+			   			<c:choose>
+			   				<c:when test="${qstn.qstnSecret eq 'Y'}">
+			   					<input class="form-control" name="qstnSecret" id="qstnSecret" type="checkbox" checked/>
+			   				</c:when>
+			   				<c:otherwise>
+			   					<input class="form-control" name="qstnSecret" id="qstnSecret" type="checkbox" />
+			   				</c:otherwise>
+			   			</c:choose>
 			   		</div>
 			   	</div>
 			   	<!-- 글 내용 -->
 			   	<div class="row mt-3">
-			   		<div class="col-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">글 내용</h6> </div>
-			   		<div class="col-10">
+			   		<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">글 내용</h6> </div>
+			   		<div class="col-sm-10">
 			   			<textarea class="form-control" rows="10" name="qstnCn" id="qstnCn">${qstn.qstnCn}</textarea>
 			   		</div>
 			   	</div>
 			   	<!-- 첨부파일 -->
 			   	<div class="row mt-3">
-			   		<div class="col-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">첨부파일</h6></div>
-			   		<div class="col-10">
+			   		<div class="col-sm-2 col-form-label"><h6 class="m-0 font-weight-bold text-primary">첨부파일</h6></div>
+			   		<div class="col-sm-10">
 		   				<input type="file" class="form-control custom-file-input" id="qstnMFile" name="qstnMFile" onchange="addQstnFile(this)" multiple>
 						<label class="custom-file-label text-truncate" for="customFile">파일 선택</label>
 			   		
@@ -148,6 +162,14 @@
 		    formData.append("userNo", userNo);
 		    console.log(sysNo+" "+qstnTtl+" "+qstnCn+" "+userNo);
 		    
+		    let qstnSecret = "";
+		    if($('#qstnSecret').is(':checked')){
+		    	qstnSecret = "Y";
+		    } else{
+		    	qstnSecret = "N";
+		    }
+		    formData.append("qstnSecret", qstnSecret);
+		    
 		    $.ajax({
 				type: "POST",
 				enctype: 'multipart/form-data',	// 필수
@@ -161,6 +183,7 @@
 		    	$("#modalHeader").html("<b>Qna작성</b>");
 		    	$("#modalBody").html("<h4>작성이 완료되었습니다.</h4>"); 
 		    	$('#qstnSubmit').attr("data-dismiss", "modal");
+		    	readList();
 		    });
 		}
 		
@@ -203,6 +226,14 @@
 		    
 		    let qstnNo = $('#qstnNo').val();
 		    formData.append("qstnNo",qstnNo);
+		    
+		    let qstnSecret = "";
+		    if($('#qstnSecret').is(':checked')){
+		    	qstnSecret = "Y";
+		    } else{
+		    	qstnSecret = "N";
+		    }
+		    formData.append("qstnSecret", qstnSecret);
 		   		    
 		    console.log(sysNo+" "+qstnCn+" "+qstnTtl+" "+qstnNo);
 		    
@@ -219,7 +250,7 @@
 		    	$("#modalBody").html("<h4>수정이 완료되었습니다.</h4>"); 
 		    	$('#qstnSubmit').attr("data-dismiss", "modal");
 		    	$('#miniView').html(data);
-		    	
+		    	readList();
 		    	
 		    });
 		    

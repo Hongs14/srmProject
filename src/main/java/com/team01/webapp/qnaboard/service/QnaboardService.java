@@ -98,7 +98,7 @@ public class QnaboardService implements IQnaboardService {
 	 * @param qstnNo	해당 질문 번호
 	 */
 	@Override
-	public int countInq(int qstnNo) {
+	public int countComment(int qstnNo) {
 		//댓글 개수
 		int countCmnt = qnaboardRepository.countComment(qstnNo);
 		return countCmnt;
