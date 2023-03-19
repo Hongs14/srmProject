@@ -24,6 +24,7 @@
 		        dataType: "html",
 		        success:function(data){
 		        	console.log("통신성공: "+qCountCmnt);
+		        	console.log("%%%%%%%%%%%%%%%%%%%%%%"+data);
 		        	$('#qComment').html(data);
 		        	
 		         }

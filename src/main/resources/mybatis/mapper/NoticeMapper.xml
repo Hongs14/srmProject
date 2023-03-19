@@ -273,12 +273,17 @@
 	</update>
 	
 	<!-- 댓글 -->
+	<!-- 댓글 수 -->
+	<select id="countComment" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM NTC_COMMENT WHERE NTC_NO = #{ntcNo}
+	</select>
+	
 	<!-- 댓글 읽기 -->
 	<select id="selectNoticeCommentList" parameterType="int" resultType="noticeComment">
 		SELECT 
 		    nc.NTC_CMNT_NO AS "ntcCmntNo",
 		    nc.NTC_NO AS "ntcNo",
-		    u.USER_ID AS "userId",
+		    u.USER_NM AS "userNm",
 		    nc.NTC_CMNT_CN AS "ntcCmntCn",
 		    nc.NTC_CMNT_DATE AS "ntcCmntDate"
 		FROM NOTICE ntc, NTC_COMMENT nc, USERS u

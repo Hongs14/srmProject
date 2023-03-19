@@ -112,6 +112,9 @@ public interface INoticeRepository {
 	//공지사항 중요도 체크 변경
 	public void updatePryCheck();
 	
+	//댓글 수
+	public int countComment(int ntcNo);
+	
 	//댓글 읽기
 	public List<NoticeComment> selectNoticeCommentList(int ntcNo);
 	
