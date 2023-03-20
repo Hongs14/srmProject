@@ -310,6 +310,7 @@
 												$("#sttsNo").val("0").prop("selected", true);
 												$("#userOgdp").val("0").prop("selected", true);
 												$("#userDpNm").val("0").prop("selected", true);
+												$("#userDpNm2").val("0").prop("selected", true);
 												document.getElementById("keyword").value = "";
 											}
 										</script>

@@ -8,128 +8,100 @@
 
 
 <script>
+	var ntcCountCmnt = parseInt("${countNtcComment}",10);
+	
 	$(document).ready(function(){
-		console.log("댓글시작");
-	  	readComment();
+	   console.log("댓글 불러오기");
+	   readComment();
+	   console.log(ntcCountCmnt);
+	   
 	});
-	  		
+	
 	function readComment(){
-		let noticeNo ='${notice.ntcNo}';
-	  	console.log(noticeNo);
-	  	$.ajax({
-			url:"${pageContext.request.contextPath}/notice/read/comment"
-			,type:"get"
-			,data: 'ntcNo='+noticeNo
-			,success:function(data){
-			console.log(data);
-			$.each(data, function(index, item){
-				let comment = '<hr/>';
-				comment += '<div id="readCmnt">';
-				comment += 	'<div class="d-flex px-2 flex-row align-items-center justify-content-between">';
-				comment += 		'<div>';
-				comment += 			'<span style="color: #406882; margin-right:20px;"><b>'+item.userId+'</b></span>';
-				comment += 			'<span>'+item.ntcCmntDate+'</span>';
-				comment +=		'</div>';
-				comment += 		'<div>';
-				comment += 			'<input type="hidden" id="ntcCmntNo" value="'+item.ntcCmntNo+'"/>';
-				comment += 			'<a id="updateToggle'+item.ntcCmntNo+'" onclick="updateCButton('+item.ntcCmntNo+')">수정</a> | <a onclick="deleteComment('+item.ntcCmntNo+')">삭제</a> |';
-				comment += 		'</div>';
-				comment += 	'</div>';
-				comment += 	'<textarea id="commentContent'+item.ntcCmntNo+'" disabled="disabled" style="border: none; resize:none; width:90%">'+item.ntcCmntCn+'</textarea>';
-				comment +='</div>'; 
-			    $('#ntcComment').append(comment); 
-			});
-			        	
-			}
-		})
+	   //댓글 불러오기
+	   let ntcNo ='${notice.ntcNo}';
+	   console.log(ntcNo);
+	   $.ajax({
+    	url:"${pageContext.request.contextPath}/notice/read/comment?ntcNo="+ntcNo,
+     	type:"get",
+     	dataType: "html",
+     	success:function(data){
+        	console.log("통신성공: "+ntcCountCmnt);
+        	console.log(data);
+        	$('#ntcComment').html(data);
+	        
+     		}
+		});
 	};
-	  		
+	
+	
 	function writeComment(){
+		//댓글 작성
 		console.log("댓글달기 실행");
 		let content = $('#ntcCmntCn').val();
-		let ntcWriterNo = '${sessionScope.loginUser.userNo}';
-		let ntcwriter = '${sessionScope.loginUser.userId}';
+		let userNo = '${sessionScope.loginUser.userNo}';
 		let ntcNo = '${notice.ntcNo}';
-				
-		let data = {userNo: ntcWriterNo, ntcNo: ntcNo, ntcCmntCn: content};
+		
+		let data = {userNo: userNo, ntcNo: ntcNo, ntcCmntCn: content};
 		console.log(data);
-		console.debug("noticeDetail.jsp::socket",socket);
-		console.debug("noticeDetail.jsp::content",content);
-		socket.send(content);
 		$.ajax({
-			url: "${pageContext.request.contextPath}/notice/write/comment",
-			method: "post",
-			data: JSON.stringify(data),
-			contentType: "application/json; charset=UTF-8"
-		}).done((item) => {
-			console.log(item);
-					
-			let comment = '<hr/>';
-	        comment += '<div class="d-flex px-2 flex-row align-items-center justify-content-between">';
-	        comment += 	'<div>'
-			comment += 		'<span style="color: #406882; margin-right:20px;"><b>'+ntcwriter+'</b></span>';
-			comment += 		'<span>'+item.ntcCmntDate+'</span>';
-			comment +=	'</div>'
-			comment += 	'<div>'
-			comment += 		'<input type="hidden" id="ntcCmntNo" value="'+item.ntcCmntNo+'"/>'
-			comment += 		'<a id="updateToggle'+data.ntcCmntNo+'" onclick="updateCButton('+item.ntcCmntNo+')">수정</a> | <a onclick="deleteComment('+item.ntcCmntNo+')">삭제</a> |';
-			comment += 	'</div>';
-			comment +='</div>';
-			comment += '<textarea id="commentContent'+item.ntcCmntNo+'" disabled="disabled" style="border: none; resize:none; width:90%">'+item.ntcCmntCn+'</textarea>';
-				
-	        $('#ntcComment').append(comment); 
-	        $('#cmntCount').empty();
-	        $('#cmntCount').append('댓글('+(${notice.countCmnt}+1)+')');
-	        $('#ntcCmntCn').val('');
-	        
-					
+		   url: "${pageContext.request.contextPath}/notice/write/comment",
+		   method: "post",
+		   data: JSON.stringify(data),
+		   contentType: "application/json; charset=UTF-8"
+		}).done((data) => {
+		   console.log(data);
+		   $('#ntcCmntCn').val('');
+		   readComment();
+		   $('#cmntCount').html('댓글('+(ntcCountCmnt+1)+')');
+		   ntcCountCmnt += 1;
 		});
 	}
-			
+	
 	function updateCButton(i){
-		console.log(i);
 		$('#commentContent'+i).removeAttr("disabled");
-		console.log("수정 버튼 실행");
 		$('#updateToggle'+i).html("변경");
 		$('#updateToggle'+i).attr('onclick', 'udpateComplete('+i+')');
-				
 	};
-
+	
 	function udpateComplete(i){
+		//댓글 수정
 		console.log("댓글수정 ajax");
 		console.log(i);
 		let content = $('#commentContent'+i).val();
-		let ntcCmntNo = i;
+		 let ntcCmntNo = i;
 		let data = {ntcCmntNo: ntcCmntNo, ntcCmntCn: content};  
 		$.ajax({
-			url: "${pageContext.request.contextPath}/notice/update/comment",
-			method: "post",
-			data: JSON.stringify(data),
-			contentType: "application/json; charset=UTF-8"
+		   url: "${pageContext.request.contextPath}/notice/update/comment",
+		   method: "post",
+		   data: JSON.stringify(data),
+		   contentType: "application/json; charset=UTF-8"
 		}).done((data) => {
-			$('#commentContent'+i).attr('disabled','disabled');
-			$('#updateToggle'+i).html("수정");
-			$('#updateToggle'+i).attr('onclick', 'updateCButton('+i+')');
-			console.log(data);
+		   $('#commentContent'+i).attr('disabled','disabled');
+		   $('#updateToggle'+i).html("수정");
+		   $('#updateToggle'+i).attr('onclick', 'updateCButton('+i+')');
+		   console.log(data);
 		}); 
 	};
-			
+	
 	function deleteComment(i){
+		//댓글 삭제
 		console.log("댓글삭제"+i);
 		let ntcCmntNo = i;
 		$.ajax({
-			url: "${pageContext.request.contextPath}/notice/delete/comment",
-			method: "get",
-			data: 'ntcCmntNo='+ntcCmntNo,
+		   url: "${pageContext.request.contextPath}/notice/delete/comment",
+		   method: "get",
+		   data: 'ntcCmntNo='+ntcCmntNo
 		}).done((data) => {
-			console.log("성공");
-			$('#cmntCount').empty();
-	        $('#cmntCount').append('댓글('+(${notice.countCmnt}-1)+')');
-			$('#ntcComment').empty(); 
-			readComment();
-					
+		   console.log("성공");
+		   $('#cmntCount').html('댓글('+(ntcCountCmnt-1)+')');
+		   ntcCountCmnt -= 1;
+		   $('#ntcComment').empty(); 
+		   readComment();
+		   
 		});
 	};
+
 </script>
 
 <!-- 메인 컨테이너 Container Fluid-->
@@ -213,12 +185,12 @@
 </div>
 <!-- 댓글 -->
 <div class="card p-4 mb-4">
-	<div id="cmntCount" class="mx-3 mb-2">댓글<span>(${notice.countCmnt})</span></div>
+	<div  class="mx-3 mb-2"><span id="cmntCount">댓글(${countNtcComment})</span></div>
 	<div class="cmnts" style="overflow-y: scroll; height:200px;">
 		<div class="mx-3 p-1" >
 			<div class="row  justify-content-between">
 				<div class="col-sm-2 form-group">
-					${sessionScope.loginUser.userId}
+					${sessionScope.loginUser.userNm}
 				</div>
 				<div class="col-sm-8 ">
 					<textarea  class="form-control" id="ntcCmntCn"></textarea>
@@ -228,10 +200,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="px-4" id="ntcComment">              		
-		</div>  
+		<div id="ntcComment"></div>
 	</div>
-</div> 	
+</div>
 
 
 

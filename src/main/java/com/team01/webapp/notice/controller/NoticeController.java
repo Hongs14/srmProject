@@ -193,9 +193,13 @@ public class NoticeController {
 		
 		Notice notice = noticeService.noticeDetail(ntcNo);
 		List<MultipartFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
+		List<NoticeComment> ntcCmntList = noticeService.getCommentList(ntcNo);
+		int countNtcComment = noticeService.countComment(ntcNo);
 		
 		model.addAttribute("notice",notice);
 		model.addAttribute("noticeFile",noticeFile);
+		model.addAttribute("ntcCmntList",ntcCmntList);
+		model.addAttribute("countNtcComment",countNtcComment);
 		
 		//조회수 카운트
 		noticeService.inqCnt(ntcNo);
@@ -219,11 +223,13 @@ public class NoticeController {
 		log.info("실행");
 		Notice notice = noticeService.noticeDetail(ntcNo);
 		List<MultipartFile> noticeFile = noticeService.selectNoticeFileDetail(ntcNo);
-		
+		List<NoticeComment> ntcCmntList = noticeService.getCommentList(ntcNo);
+		int countNtcComment = noticeService.countComment(ntcNo);
 		
 		model.addAttribute("notice",notice);
 		model.addAttribute("noticeFile",noticeFile);
-		
+		model.addAttribute("ntcCmntList",ntcCmntList);
+		model.addAttribute("countNtcComment",countNtcComment);
 		return "notice/update";
 	}
 	
@@ -373,11 +379,12 @@ public class NoticeController {
 	//댓글 
 	//댓글 읽기
 	@GetMapping(value="read/comment")
-	@ResponseBody
-	public List<NoticeComment> readComment(@RequestParam int ntcNo){
+	public String readComment(@RequestParam int ntcNo,Model model){
 		log.info("실행");
 		List<NoticeComment> list = noticeService.getCommentList(ntcNo);
-		return list;
+		model.addAttribute("list",list);
+		
+		return "notice/ntcCmntList";
 	}
 	
 	//댓글 작성
@@ -385,7 +392,7 @@ public class NoticeController {
 	@ResponseBody
 	public NoticeComment writeComment(@RequestBody NoticeComment ntcComment) {
 		log.info("실행");
-		
+		log.info(ntcComment);
 		ntcComment = noticeService.writeComment(ntcComment);
 		
 		return ntcComment;
