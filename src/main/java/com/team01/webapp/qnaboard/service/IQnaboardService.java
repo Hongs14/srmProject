@@ -24,12 +24,14 @@ public interface IQnaboardService {
 	public void deleteComment(int qstnCmntNo);
 	public int writeQSTN(QSTN qstn);
 	
-	public int countInq(int qstnNo);
+	public int countComment(int qstnNo);
 	public List<MultipartFile> getQstnFileDetail(int qstnNo);
 	public QSTNFile selectFiledownload(int qstnNo);
 	public void qstnFileUpload(QSTNFile qstnFile);
 	public int changeQstn(QSTN qstn);
-	public int changeQstnFile(@Param("qstn") QSTN qstn, @Param("qstnFile") QSTNFile qstnFile);
+	public int changeQstnFile(QSTNFile qstnFile);
+	public int EraseExistingFile(String qstnFilePhysNm);
+	
 	public int eraseQstn(int qstnNo);
 	
 

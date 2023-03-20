@@ -105,7 +105,7 @@ public class HomeController {
 		int qstnPageNo = 1;
 		qstn.setQstnTtl("");
 		Date today = new Date();
-		SimpleDateFormat sdformat = new SimpleDateFormat("yyy-MM-dd");
+		SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calendar = Calendar.getInstance();
 
 		// 현재 날짜를 Calendar에 설정
@@ -122,9 +122,10 @@ public class HomeController {
 		qstn.setStartDate(start);
 		qstn.setEndDate(end);
 		qstn.setSysNo((String)session.getAttribute("sysNo"));
+		qstn.setQstnSecret("main");
 		pager = qnaboardService.returnPage(qstnPageNo, pager, qstn);
 		List<QSTN> qstnList = qnaboardService.getQstnList(pager, qstn);
-		log.info(pager);
+		log.info(qstn);
 		model.addAttribute("qstnList", qstnList);
 		
 		//알람 수 및 리스트

@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team01.webapp.qnaboard.dao.IQnaboardRepository">
-	
+	<!-- 
+		Q&A질문 목록 조회
+		작성자 : 정홍주
+	 -->
 	<select id="selectQstnList" resultType="qstn" parameterType="qstn">
 		SELECT 
 		    rnum AS "rnum",
 		    QSTN_NO AS 	"qstnNo",
 		    QSTN_TTL AS "qstnTtl",
 		    QSTN_INQ_CNT AS "qstnInqCnt",
-		    QSTN_WRT_DATE AS "qstnWrtDate",	
+		    QSTN_WRT_DATE AS "qstnWrtDate",
+		    QSTN_SECRET AS "qstnSecret",		
 		    USER_NO AS "userNo",
 		    USER_NM AS "userNm"
 		FROM(
-			SELECT ROWNUM AS RNUM, QSTN_NO, QSTN_TTL, QSTN_INQ_CNT, QSTN_WRT_DATE, USER_NO, USER_NM
+			SELECT ROWNUM AS RNUM, QSTN_NO, QSTN_TTL, QSTN_INQ_CNT, QSTN_WRT_DATE, QSTN_SECRET, USER_NO, USER_NM
 		        FROM(
-		        	SELECT QSTN_NO, QSTN_TTL, QSTN_INQ_CNT, QSTN_WRT_DATE, QSTN.USER_NO, USER_NM
+		        	SELECT QSTN_NO, QSTN_TTL, QSTN_INQ_CNT, QSTN_WRT_DATE, QSTN_SECRET, QSTN.USER_NO, USER_NM
 		         	FROM QSTN, USERS  
 		         	WHERE QSTN.USER_NO = USERS.USER_NO  
 		         	AND SYS_NO = #{sysNo}
@@ -24,6 +28,7 @@
 					<if test="qstnTtl != ''">
 						AND QSTN_TTL like #{qstnTtl}
 					</if>
+					
 		        	ORDER BY QSTN_NO DESC
 		        ) 
 		   <![CDATA[
@@ -35,6 +40,10 @@
 		]]>
 	</select>
 	
+	<!-- 
+		전체 행 조회
+		작성자 : 정홍주
+	 -->
 	<select id="totalRow" parameterType="qstn" resultType="int">
 		SELECT COUNT(*) FROM QSTN 	
 		WHERE  QSTN_WRT_DATE BETWEEN 
@@ -59,6 +68,7 @@
 				QSTN_CN AS "qstnCn", 
 				QSTN_INQ_CNT AS "qstnInqCnt", 
 				QSTN_WRT_DATE AS "qstnWrtDate",
+				QSTN_SECRET AS "qstnSecret",
 				QSTN.SYS_NO AS "sysNo"
 		FROM QSTN, USERS
 		WHERE QSTN.USER_NO = USERS.USER_NO AND QSTN.QSTN_NO =#{qstnNo}
@@ -75,6 +85,10 @@
 		WHERE QSTN_NO = #{qstnNo}
 	</select>
 	
+	<!-- 
+		첨부파일 조회
+		작성자 : 정홍주
+	 -->
 	<select id="selectFileDownload" parameterType="int" resultType="qstnFile">
 		SELECT
 			QSTN_FILE_NO AS "qstnFileNo",
@@ -121,7 +135,8 @@
 		<selectKey keyProperty="qstnNo" resultType="int" order="BEFORE">
 			SELECT QSTNNO_SEQ.nextval FROM dual
 		</selectKey>
-		INSERT INTO QSTN VALUES(#{qstnNo}, #{userNo}, #{qstnTtl}, #{qstnCn}, 0, SYSDATE, #{sysNo})
+		INSERT INTO QSTN(QSTN_NO, USER_NO, QSTN_TTL, QSTN_CN, QSTN_INQ_CNT, QSTN_WRT_DATE, SYS_NO, QSTN_SECRET) 
+			VALUES(#{qstnNo}, #{userNo}, #{qstnTtl}, #{qstnCn}, 0, SYSDATE, #{sysNo}, #{qstnSecret})
 	</insert>
 	
 	<insert id="insertQstnFileUpload" parameterType="qstnFile">
@@ -136,16 +151,18 @@
 		작성자  : 정홍주
 	 -->
 	<update id="updateQstn" parameterType="qstn">
-		UPDATE QSTN SET QSTN_TTL = #{qstnTtl}, QSTN_CN = #{qstnCn}
+		UPDATE QSTN SET QSTN_TTL = #{qstnTtl}, QSTN_CN = #{qstnCn}, QSTN_SECRET = #{qstnSecret}
 		WHERE QSTN_NO = #{qstnNo}
 	</update>
-	<update id="updateQstnFile" parameterType="qstnFile">
-		UPDATE QSTN_FILE SET
-			QSTN_FILE_ACTL_NM = #{qstnFileActlNm},
-			QSTN_FILE_PHYS_NM = #{qstnFilePhysNm},
-			QSTN_FILE_EXTN_NM = #{qstnFileExtnNm}
-		WHERE QSTN_NO = #{qstnNo}
-	</update>
+
+	<!-- 
+		지워진 파일 삭제
+		작성자 : 정홍주
+	 -->	
+	<delete id="deleteExistingFile" parameterType="string">
+		DELETE FROM QSTN_FILE
+	      WHERE QSTN_FILE_PHYS_NM=#{qstnFilePhysNm}
+	</delete>
 	
 	<!-- 
 		Q&A 게시글 삭제

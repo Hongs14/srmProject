@@ -157,7 +157,9 @@
 						            <div class="card-header px-5 d-flex flex-row align-items-center justify-content-between">
 			                			<h6 class="m-0 font-weight-bold text-primary">질문 목록</h6>
 			                			<div class="d-sm-flex justify-content-end">
-			                				<a onclick="writeQstn()" class="btn btn-primary btn-sm" style="cursor:pointer;">Q&A 등록하기</a>
+			                				<c:if test="${sessionScope.loginUser.userType eq '고객사'}">
+			                					<a onclick="writeQstn()" class="btn btn-primary btn-sm" style="cursor:pointer;">Q&A 등록하기</a>
+			                				</c:if>
 			                  			</div>
 			                		</div> 
 			                		<div id="qstnlist" >
@@ -239,11 +241,15 @@
 		
 			$(document).ready(function(){
 				console.log("시작");
+				readList();
+			});
+			
+			function readList(){
 				var startDate = $('#dateStart').val();
 				var endDate = $('#dateEnd').val();
 				var sysNo = "${session}";
 				var qstnTtl = $('#keyword').val();
-				
+			    
 				if(qstnTtl !== "") {
 					qstnTtl = "%" + qstnTtl + "%";
 				}
@@ -260,7 +266,7 @@
 				}).done((data) => {
 					$("#qstnlist").html(data)
 				});
-			});
+			};
 			
 			function searchQnaList(pageNo){
 				console.log("검색조건 리스트 페이지 번호: "+pageNo);
@@ -268,12 +274,12 @@
 				var endDate = $("#dateEnd").val();
 				var sysNo = "${session}";
 				var qstnTtl = $("#keyword").val();
-				
+			
 				if(qstnTtl !== "") {
 					qstnTtl = "%" + qstnTtl + "%";
 				}
 
-				let data = {startDate : startDate, endDate : endDate, qstnTtl : qstnTtl, sysNo : sysNo};
+				let data = {startDate : startDate, endDate : endDate, qstnTtl : qstnTtl, sysNo : sysNo, qstnSecret:qstnSecret};
 				
 				console.log(data);
 				
@@ -301,14 +307,21 @@
 				/* resize(); */
 				let sysNo = "${session}";
 				
-				$.ajax({
-					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/view/'+qstnNo,
-					method : "get",
-					dataType : "html",
-					success : function(data) {
-						$("#miniView").html(data);
-					}
-				});
+					$.ajax({
+						url : '${pageContext.request.contextPath}/qna/'+sysNo+'/view/'+qstnNo,
+						method : "get",
+						dataType : "html",
+						success : function(data) {
+							$("#miniView").html(data);
+						}
+					});
+			};
+			
+			function qnaSecret(i){
+				let qstnNo = i;
+				$("#modalBody").html("<h5>비밀글입니다. 작성자를 확인해주세요.</h5>");
+				$("#qstnModal").modal('show');
+				$("#qstnSubmit").attr("data-dismiss","modal");
 			};
 			
 			function RangeClick(range){

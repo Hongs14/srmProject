@@ -116,6 +116,7 @@
 				dataType : "html"
 			}).done((data)=>{
 				$('#miniView').html(data);
+				
 			});
 		}
 		
