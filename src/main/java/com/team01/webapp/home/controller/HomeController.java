@@ -328,8 +328,6 @@ public class HomeController {
 		model.addAttribute("homeSttsNo", sttsNo);
 		model.addAttribute("homeSysNo", sysNo);
 		
-		log.info(requestFilter);
-		
 		//알림 수 및 리스트
 		alarmInfo.info(session, model); 
 		
