@@ -356,6 +356,7 @@
 					var homeSysNo = '${homeSysNo}';
 					
 					var choice = 0;
+					var userType = $("#userType").val();
 					
 					if(homeSttsNo != '') {
 						if(homeSysNo != '') {
@@ -364,7 +365,10 @@
 						}
 						sttsNo = homeSttsNo;
 						$("#sttsNo").val(sttsNo).prop("selected", true);
-						$('#searchMySR').prop('checked', true);
+						
+						if(userType != '고객사') {
+							$('#searchMySR').prop('checked', true);
+						}
 						var sysNoSelect = document.getElementById("sysNo");
 						sysNo = sysNoSelect.options[document.getElementById("sysNo").selectedIndex].value;
 						choice = 1;

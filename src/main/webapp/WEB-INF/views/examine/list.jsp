@@ -121,8 +121,6 @@
 				                        			<option value="0" selected="selected">전체</option>
 				                        			<option value="1">요청</option>
 				                        			<option value="2">검토중</option>
-				                        			<option value="3">반려</option>
-				                        			<option value="7">재검토</option>
 				                    			</select>
 				                			</div>
 		                				</div>
