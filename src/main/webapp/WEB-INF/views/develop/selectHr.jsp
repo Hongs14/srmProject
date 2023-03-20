@@ -31,5 +31,11 @@
 		</div>
 		<hr class="my-0"/>
 	</div>
-	
 </c:forEach>
+<script>
+	let mindate = $('#srStartDate').val();
+	let maxdate = $('#hrEndDate').val();
+	console.log($('#srStartDate').val());
+	$("input[name='hrStartDate']").attr("min",mindate);
+	$("input[name='hrEndDate']").attr("max",maxdate);
+</script>
