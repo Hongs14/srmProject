@@ -320,7 +320,7 @@ public class RequestController {
 		model.addAttribute("command","update");
 		model.addAttribute("sr", sr);
 		model.addAttribute("srFile", srFile);
-		return "request/writeForm";
+		return "request/updateForm";
 	}
 	
 	/**
