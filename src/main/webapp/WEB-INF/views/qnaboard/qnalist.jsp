@@ -241,11 +241,15 @@
 		
 			$(document).ready(function(){
 				console.log("시작");
+				readList();
+			});
+			
+			function readList(){
 				var startDate = $('#dateStart').val();
 				var endDate = $('#dateEnd').val();
 				var sysNo = "${session}";
 				var qstnTtl = $('#keyword').val();
-				
+			    
 				if(qstnTtl !== "") {
 					qstnTtl = "%" + qstnTtl + "%";
 				}
@@ -262,7 +266,7 @@
 				}).done((data) => {
 					$("#qstnlist").html(data)
 				});
-			});
+			};
 			
 			function searchQnaList(pageNo){
 				console.log("검색조건 리스트 페이지 번호: "+pageNo);
@@ -270,12 +274,12 @@
 				var endDate = $("#dateEnd").val();
 				var sysNo = "${session}";
 				var qstnTtl = $("#keyword").val();
-				
+			
 				if(qstnTtl !== "") {
 					qstnTtl = "%" + qstnTtl + "%";
 				}
 
-				let data = {startDate : startDate, endDate : endDate, qstnTtl : qstnTtl, sysNo : sysNo};
+				let data = {startDate : startDate, endDate : endDate, qstnTtl : qstnTtl, sysNo : sysNo, qstnSecret:qstnSecret};
 				
 				console.log(data);
 				
@@ -303,14 +307,21 @@
 				/* resize(); */
 				let sysNo = "${session}";
 				
-				$.ajax({
-					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/view/'+qstnNo,
-					method : "get",
-					dataType : "html",
-					success : function(data) {
-						$("#miniView").html(data);
-					}
-				});
+					$.ajax({
+						url : '${pageContext.request.contextPath}/qna/'+sysNo+'/view/'+qstnNo,
+						method : "get",
+						dataType : "html",
+						success : function(data) {
+							$("#miniView").html(data);
+						}
+					});
+			};
+			
+			function qnaSecret(i){
+				let qstnNo = i;
+				$("#modalBody").html("<h5>비밀글입니다. 작성자를 확인해주세요.</h5>");
+				$("#qstnModal").modal('show');
+				$("#qstnSubmit").attr("data-dismiss","modal");
 			};
 			
 			function RangeClick(range){

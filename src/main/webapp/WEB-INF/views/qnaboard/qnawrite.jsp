@@ -87,12 +87,11 @@
 	
 	<script>
 		//파일 js
-		let fileNo = 0;
-		let filesArr = new Array();
+		var fileNo = 0;
+		var filesArr = new Array();
 		
 		function addQstnFile(obj){
 			//첨부파일 추가 
-			let maxFileCnt = 5; // 첨부파일 최대 개수
 			let curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
 			console.log(curFileCnt);
 			for (const file of obj.files) {
@@ -150,6 +149,14 @@
 		    formData.append("userNo", userNo);
 		    console.log(sysNo+" "+qstnTtl+" "+qstnCn+" "+userNo);
 		    
+		    let qstnSecret = "";
+		    if($('#qstnSecret').is(':checked')){
+		    	qstnSecret = "Y";
+		    } else{
+		    	qstnSecret = "N";
+		    }
+		    formData.append("qstnSecret", qstnSecret);
+		    
 		    $.ajax({
 				type: "POST",
 				enctype: 'multipart/form-data',	// 필수
@@ -163,10 +170,11 @@
 		    	$("#modalHeader").html("<b>Qna작성</b>");
 		    	$("#modalBody").html("<h4>작성이 완료되었습니다.</h4>"); 
 		    	$('#qstnSubmit').attr("data-dismiss", "modal");
+		    	readList();
 		    });
 		}
 		
-		let fileNmArray = [];
+		var fileNmArray = [];
 		
 		/* 기존의 첨부파일 삭제 */
 		function deleteExistingFile(qstnFilePhysNm, qstnFileNo) {
@@ -182,10 +190,10 @@
 			// 폼 데이터 담기
 			let form = document.querySelector("form");
 		    let formData = new FormData(form);
-		    for (let i = 0; i < filesArr.length; i++) {
+		    for (var i = 0; i < filesArr.length; i++) {
 		        // 삭제되지 않은 파일만 폼데이터에 담기
 		        if (!filesArr[i].is_delete) {
-		        	console.log(filesArr[i]);
+		        	console.log("storeFile: "+filesArr[i]);
 		            formData.append("qstnMFile", filesArr[i]);
 		        }
 		    }
@@ -193,7 +201,6 @@
 		    	console.log(fileNmArray[j]);
 		    	formData.append("deleteFile",fileNmArray[j]);
 		    }
-		    /* let sysNo = $('#sysNo').val(); */
 		    let sysNo = "${session}";
 		    formData.append("sysNo", sysNo);
 		    
@@ -206,11 +213,14 @@
 		    let qstnNo = $('#qstnNo').val();
 		    formData.append("qstnNo",qstnNo);
 		    
-		    if(fileNmArray.length > 0){
-		    	let qstnFileNo = $("#qstnFileNo").val();
-		    	formData.append("qstnFileNo",qstnFileNo); 
+		    let qstnSecret = "";
+		    if($('#qstnSecret').is(':checked')){
+		    	qstnSecret = "Y";
+		    } else{
+		    	qstnSecret = "N";
 		    }
-		    
+		    formData.append("qstnSecret", qstnSecret);
+		   		    
 		    console.log(sysNo+" "+qstnCn+" "+qstnTtl+" "+qstnNo);
 		    
 		    $.ajax({
@@ -226,6 +236,7 @@
 		    	$("#modalBody").html("<h4>수정이 완료되었습니다.</h4>"); 
 		    	$('#qstnSubmit').attr("data-dismiss", "modal");
 		    	$('#miniView').html(data);
+		    	readList();
 		    	
 		    });
 		    

@@ -245,16 +245,27 @@
 				                    						<td colspan="5" class="text-center">해당 Q&A가 없습니다.</td>
 				                    					</tr>
 					                    			</c:when>
-					                    			<c:otherwise>	                    		
+					                    			<c:otherwise>
 							                    		<c:forEach var="qlist" items="${qstnList}" end="4">
-								                      		<tr>
+							                      			<tr>
 										                        <td>${qlist.rnum}</td>
-										                        <td>${qlist.qstnTtl} </td>
+										                        <td><c:if test="${qlist.qstnSecret eq 'Y'}"><i style="color:orange" class="mr-2 fa-solid fa-lock"></i></c:if>${qlist.qstnTtl}</td>
 										                        <td>${qlist.userNm}</td>
 										                       	<td>${qlist.qstnWrtDate}</td>
-										                        <td><a href="${pageContext.request.contextPath}/qna/${sessionScope.loginUser.sysNo}/list/${qlist.qstnNo}" class="btn btn-sm btn-primary">상세</a></td>
+										                      								                      			
+								                      			<c:choose>
+								                      				<c:when test="${qlist.qstnSecret eq 'Y'}">
+								                      					<c:if test="${qlist.userNm eq sessionScope.loginUser.userNm}">
+								                      						<td><a href="${pageContext.request.contextPath}/qna/${sessionScope.loginUser.sysNo}/list/${qlist.qstnNo}" class="btn btn-sm btn-primary">상세</a></td>
+								                      					</c:if>
+								                      				</c:when>
+								                      				<c:otherwise>
+								                      					<td><a href="${pageContext.request.contextPath}/qna/${sessionScope.loginUser.sysNo}/list/${qlist.qstnNo}" class="btn btn-sm btn-primary">상세</a></td>
+								                      				</c:otherwise>
+								                      			</c:choose>
+								                      			
 								                      		</tr>
-							                      		</c:forEach>
+							                      		 </c:forEach>
 					                    			</c:otherwise>
 				                    			</c:choose>
 				                      		</tbody>

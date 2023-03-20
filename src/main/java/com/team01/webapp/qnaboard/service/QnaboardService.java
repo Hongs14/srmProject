@@ -98,7 +98,7 @@ public class QnaboardService implements IQnaboardService {
 	 * @param qstnNo	해당 질문 번호
 	 */
 	@Override
-	public int countInq(int qstnNo) {
+	public int countComment(int qstnNo) {
 		//댓글 개수
 		int countCmnt = qnaboardRepository.countComment(qstnNo);
 		return countCmnt;
@@ -128,11 +128,17 @@ public class QnaboardService implements IQnaboardService {
 		return result;
 	}
 	
-	@Transactional
-	public int changeQstnFile(QSTN qstn, QSTNFile qstnFile) {
+	@Override
+	public int changeQstnFile(QSTNFile qstnFile) {
 		int result = 0;
-		qnaboardRepository.updateQstn(qstn);
-		qnaboardRepository.updateQstnFile(qstnFile);
+		result = qnaboardRepository.insertQstnFileUpload(qstnFile);
+		return result;
+	}
+	
+	@Override
+	public int EraseExistingFile(String qstnFilePhysNm) {
+		int result = 0;
+		qnaboardRepository.deleteExistingFile(qstnFilePhysNm);
 		return result;
 	}
 	

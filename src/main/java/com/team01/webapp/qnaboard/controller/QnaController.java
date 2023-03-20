@@ -94,7 +94,7 @@ public class QnaController {
 	 * @return
 	 */
 	@PostMapping(value="/{sysNo}/filter/{pageNo}", produces="application/json; charset=UTF-8")
-	public String getQnaList(@PathVariable int pageNo, @PathVariable String sysNo, @RequestBody QSTN qstn,  Model model,Pager pager) {
+	public String getQnaList(@PathVariable int pageNo, @PathVariable String sysNo, @RequestBody QSTN qstn,  Model model, Pager pager) {
 		log.info("qstn 목록 필터링");
 		log.info(sysNo);
 		pager = qnaboardService.returnPage(pageNo,pager,qstn);
@@ -122,7 +122,7 @@ public class QnaController {
 		List<MultipartFile> qstnFile = qnaboardService.getQstnFileDetail(qstnNo);
 		//댓글 목록
 		List<QSTNComment> qnaClist = qnaboardService.getCommentList(qstnNo);
-		int countQstnComment = qnaClist.size();
+		int countQstnComment = qnaboardService.countComment(qstnNo);
 		
 		log.info(qstn);
 		log.info(qstnFile);
@@ -131,10 +131,7 @@ public class QnaController {
 		model.addAttribute("qnaClist",qnaClist);
 		model.addAttribute("countQstnComment", countQstnComment);
 		model.addAttribute("session", sysNo);
-		/*int updateInq = qnaboardService.countInq(qstnNo);
-		if(updateInq == 1) {
-			log.info("조회수 증가");
-		}*/
+		
 		return "qnaboard/qnadetail";
 	}
 	
@@ -248,7 +245,7 @@ public class QnaController {
 		return "redirect:/qna/"+qstn.getSysNo()+"/view/"+qstn.getQstnNo();
 	}
 	
-	/** Qna 수정하기
+	/** Qna 수정 폼 띄우기
 	 * @author		정홍주
 	 * @param qstn
 	 * @param model View로 데이터 전달을 위한 Model 객체 주입
@@ -269,49 +266,75 @@ public class QnaController {
 		return "qnaboard/qnawrite";
 	}
 	
+	/**qna수정하기
+	 * @author 			정홍주
+	 * @param qstnNo
+	 * @param qstn
+	 * @param qstnFile
+	 * @return
+	 */
 	@PostMapping("/{sysNo}/update")
 	public String updateQna(@RequestParam int qstnNo, QSTN qstn, QSTNFile qstnFile) {
-		//첨부 파일 유무 조사
-		List<MultipartFile> mf = qstn.getQstnMFile();
-		if(mf!=null &&!mf.isEmpty()) {
-			for(int i=0; i<mf.size(); i++) {		
-				
-				qstnFile = new QSTNFile();
-				
-				//파일 원래 이름 저장
-				qstnFile.setQstnFileActlNm(mf.get(i).getOriginalFilename());
-				//파일의 저장 이름 설정
-				String qstnFilePhysNm = new Date().getTime()+"-"+mf.get(i).getOriginalFilename();
-				qstnFile.setQstnFilePhysNm(qstnFilePhysNm);
-				//파일 타입 설정
-				String str = mf.get(i).getContentType();
-				int beginIndex = str.indexOf("/");
-				int endIndex = str.length();
-				String type = str.substring(beginIndex,endIndex);
-				qstnFile.setQstnFileExtnNm(type);
-				
-
-				//서버 파일 시스템에 파일로 저장
-				String filePath = "C:/OTI/uploadfiles/qstn/"+qstnFile.getQstnNo()+"/"+qstnFilePhysNm;
-				File file = new File(filePath);
-				// 폴더가 없다면 생성한다
-				if(!file.exists()) {
-					try {
-						Files.createDirectories(Paths.get(filePath));
-						log.info("폴더 생성 완료");
-						mf.get(i).transferTo(file);
-					} catch (Exception e) {
-						log.info("생성 실패 : " + filePath);
-					}
-				} else {
-					try {
-						mf.get(i).transferTo(file);
-					} catch (Exception e) {
-						e.printStackTrace();
+		try {
+			//기존 파일을 삭제했다면 삭제처리
+			List<String> df = qstn.getDeleteFile();
+			log.info("DeleteFile: "+df);
+			if(df!=null && !df.isEmpty()) {
+				for(int j=0; j<df.size(); j++) {
+					String filePath = "C:/OTI/uploadfiles/qstn/" + qstn.getQstnNo() + "/" + df.get(j);
+					File file = new File(filePath);
+					log.info("filePath"+filePath);
+					if(file.exists()) {
+						if(file.delete()) {
+							log.info("파일 삭제 성공");
+							qnaboardService.EraseExistingFile(df.get(j));
+						} else {
+							log.info("파일 삭제 실패");
+						}
 					}
 				}
-				qnaboardService.changeQstnFile(qstn, qstnFile);
 			}
+		
+			//첨부 파일 유무 조사
+			List<MultipartFile> mf = qstn.getQstnMFile();
+			if(mf!=null &&!mf.isEmpty()) {
+				for(int i=0; i<mf.size(); i++) {		
+					//파일 원래 이름 저장
+					qstnFile.setQstnFileActlNm(mf.get(i).getOriginalFilename());
+					//파일의 저장 이름 설정
+					String qstnFilePhysNm = new Date().getTime()+"-"+mf.get(i).getOriginalFilename();
+					qstnFile.setQstnFilePhysNm(qstnFilePhysNm);
+					//파일 타입 설정
+					String str = mf.get(i).getContentType();
+					int beginIndex = str.indexOf("/");
+					int endIndex = str.length();
+					String type = str.substring(beginIndex,endIndex);
+					qstnFile.setQstnFileExtnNm(type);
+
+					//서버 파일 시스템에 파일로 저장
+					String filePath = "C:/OTI/uploadfiles/qstn/"+qstnFile.getQstnNo()+"/"+qstnFilePhysNm;
+					File file = new File(filePath);
+					// 폴더가 없다면 생성한다
+					if(!file.exists()) {
+						try {
+							Files.createDirectories(Paths.get(filePath));
+							log.info("폴더 생성 완료");
+							mf.get(i).transferTo(file);
+						} catch (Exception e) {
+						log.info("생성 실패 : " + filePath);
+						}
+					} else {
+					mf.get(i).transferTo(file);
+					}
+					log.info("DB저장");
+					int row = qnaboardService.changeQstnFile(qstnFile);
+					if(row == 1) {
+						log.info("변경성공");
+					}
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		
 		qnaboardService.changeQstn(qstn);

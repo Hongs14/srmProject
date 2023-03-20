@@ -20,6 +20,7 @@ public class QSTN {
 	private String userNm;
 	private int countCmnt;
 	private String sysNo;
+	private String qstnSecret;
 	
 	private String qstnFilePhysNm; //바꾼 파일 명
 	private String qstnFileActlNm; //원본 파일 이름
@@ -29,6 +30,7 @@ public class QSTN {
 	//첨부파일
 	private int qstnFileNo;
 	private List<MultipartFile> qstnMFile;
+	private List<String> deleteFile;
 	
 	//조건
 	private String startDate;
@@ -38,5 +40,6 @@ public class QSTN {
 	//paging
 	private int startRowNo;
 	private int endRowNo;
+	
 	
 }
