@@ -29,6 +29,7 @@
 		    DISTINCT(SYS_NM) AS "sysNm",
 		    SYS_NO AS "sysNo"
 		FROM SYSTEM
+		WHERE SYS_NM != '한국소프트SRM'
 	</select>
 	
 	<!-- 등록자 소속 및 부서 리스트 
