@@ -37,5 +37,5 @@
 	let maxdate = $('#hrEndDate').val();
 	console.log($('#srStartDate').val());
 	$("input[name='hrStartDate']").attr("min",mindate);
-	$("imput[name='hrEndDate']").attr("max",maxdate);
+	$("input[name='hrEndDate']").attr("max",maxdate);
 </script>
