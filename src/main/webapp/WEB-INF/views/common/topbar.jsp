@@ -111,12 +111,10 @@
 						let data = {alarmNo : alarmNo};
 						let url = "";
 	
-						if(sttsNm == "완료요청"){
+						if(sttsNm == "완료요청" || sttsNm =="계획조정" || sttsNm=="개발중"){
 							url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
 						}else if(sttsNm == "요청" && userType == "관리자"){
 							url = "${pageContext.request.contextPath}/examine/list/"+srNo;
-						}else if(sttsNm =="계획조정"){
-							url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
 						}else{
 							url = "${pageContext.request.contextPath}/request/list/"+srNo;
 						}
