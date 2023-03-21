@@ -152,12 +152,11 @@
 									let data = {alarmNo : alarmNo};
 									let url = "";
 
-									if(sttsNm == "완료요청"){
+									if(sttsNm == "완료요청" || sttsNm =="계획조정" || sttsNm =="개발중"){
+										console.log(sttsNm);
 										url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
 									}else if(sttsNm == "요청" && userType == "관리자"){
 										url = "${pageContext.request.contextPath}/examine/list/"+srNo;
-									}else if(sttsNm =="계획조정"){
-										url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
 									}else{
 										url = "${pageContext.request.contextPath}/request/list/"+srNo;
 									}
@@ -261,13 +260,13 @@
 								
 							</script>
 							<div class="modal fade" id="alarmBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-								<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+								<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document"  style="max-width:450px;">
 									<div class="modal-content">
 										<div class="modal-header bg-primary">
 											<h5 class="modal-title" id="exampleModalScrollableTitle">
 									          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
 									        	<small class="text-white">
-									        		<b>알람</b>
+									        		<b>알림</b>
 									        	</small>
 											</h5>
 											<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
