@@ -501,7 +501,9 @@
 			console.log(sysdate); 			
  			$('#srDdlnDate').attr("min", sysdate);
  			$('#srStartDate').attr("min", sysdate);
- 			$('#srStartDate').val(sysdate);
+ 			
+ 			/* $('#srStartDate').val(sysdate); */
+ 			
  			$('#srEndDate').attr("min", sysdate);
  			
 		});
