@@ -152,7 +152,7 @@
 									let data = {alarmNo : alarmNo};
 									let url = "";
 
-									if(userType == "관리자" || userType == "개발자"){
+									if(userType == "관리자" || userType == "개발자" ){
 										if(sttsNm == "완료요청" || sttsNm =="계획조정" || sttsNm=="개발중"){
 											url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
 										}else if(sttsNm == "요청" && userType == "관리자"){
