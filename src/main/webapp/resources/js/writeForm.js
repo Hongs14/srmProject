@@ -139,6 +139,7 @@ function requestWrite() {
 
 var fileNmArray = [];
 
+
 /* 기존의 첨부파일 삭제 */
 function deleteExistingFile(srFilePhysNm, srFileNo) {
 	fileNmArray.push(srFilePhysNm);
