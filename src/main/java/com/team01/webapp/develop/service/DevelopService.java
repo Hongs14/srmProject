@@ -296,7 +296,6 @@ public class DevelopService implements IDevelopService{
 	 */
 	@Override
 	public List<DevelopDto> getPrintExcelList(List<String> developSRArr) {
-		log.info("엑셀 다운로드");
 		List<DevelopDto> list =	new ArrayList<>();
 		DevelopDto develop = null;
 		for(int i=0; i<developSRArr.size(); i++){
