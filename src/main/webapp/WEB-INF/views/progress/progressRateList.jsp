@@ -354,6 +354,8 @@
 			contentType : "application/json; charset=UTF-8"
 		}).done((data) => {
 			window.location.href = "${progress.srNo}";
+			let msg = '알림이 도착하였습니다.'
+		   	socket.send(msg);
 		});
 	}
 	

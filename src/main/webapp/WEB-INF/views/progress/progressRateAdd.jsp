@@ -143,6 +143,7 @@
 		    var progTypeNoStart = ((${progress.progType} - 1) * 20);
 		    var progTypeNoEnd = (${progress.progType} * 20);
 		    
+		   
 		    if((progTypeNoStart < progRate) && (progRate <= progTypeNoEnd)) {
 			    $.ajax({
 					type: "POST",
