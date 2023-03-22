@@ -11,11 +11,11 @@ import com.team01.webapp.model.QSTNComment;
 import com.team01.webapp.model.QSTNFile;
 import com.team01.webapp.qnaboard.dao.IQnaboardRepository;
 import com.team01.webapp.util.Pager;
+import lombok.extern.log4j.Log4j2;
 
-/**
- * @author KOSA
- *
- */
+
+
+@Log4j2
 @Service
 public class QnaboardService implements IQnaboardService {
 	
@@ -23,6 +23,12 @@ public class QnaboardService implements IQnaboardService {
 	public IQnaboardRepository qnaboardRepository;
 	
 
+	/* 페이징 처리
+	 * @author			정홍주
+	 * @param pageNo	현재 위치한 페이지의 번호
+	 * @param pager		페이징
+	 * @param qstn		해당 질문 번호
+	 */
 	@Override
 	public Pager returnPage(int pageNo, Pager pager, QSTN qstn) {
 		int totalList = (int) qnaboardRepository.totalRow(qstn);
@@ -32,7 +38,7 @@ public class QnaboardService implements IQnaboardService {
 	
 	/* Qna 목록
 	 * @author		정홍주
-	 * @param pager	
+	 * @param pager	페이징 처리
 	 * @param qstn	해당 질문 번호
 	 */
 	@Override
@@ -95,20 +101,28 @@ public class QnaboardService implements IQnaboardService {
 	}
 	
 	/* QnA게시글 작성
-	 * @author	정홍주
-	 * @param qstn
+	 * @author		정홍주
+	 * @param qstn	게시글정보가 저장된 객체
 	 */
 	@Override
 	public int writeQSTN(QSTN qstn) {
 		int result = qnaboardRepository.insertQSTN(qstn);
 		return result;
 	}
+	
+	/* QnA파일 업로드
+	 * @author			정홍주
+	 * @param qstnFile	게시글정보가 저장된 객체
+	 */
 	@Override
 	public void qstnFileUpload(QSTNFile qstnFile) {
 		qnaboardRepository.insertQstnFileUpload(qstnFile);
 	}
 	
-	
+	/* QnA게시글 수정
+	 * @author		정홍주
+	 * @param qstn	수정된 정보가 저장된 객체
+	 */
 	@Override
 	public int changeQstn(QSTN qstn) {
 		int result = 0;
@@ -116,6 +130,10 @@ public class QnaboardService implements IQnaboardService {
 		return result;
 	}
 	
+	/* QnA게시글 수정
+	 * @author		정홍주
+	 * @param qstn	수정된 파일이 저장된 객체
+	 */
 	@Override
 	public int changeQstnFile(QSTNFile qstnFile) {
 		int result = 0;
@@ -123,6 +141,10 @@ public class QnaboardService implements IQnaboardService {
 		return result;
 	}
 	
+	/* 기존에 존재한 파일 지우기 
+	 * @author					정홍주
+	 * @param qstnFilePhysNm	지울 파일 이름
+	 */
 	@Override
 	public int EraseExistingFile(String qstnFilePhysNm) {
 		int result = 0;
@@ -164,7 +186,7 @@ public class QnaboardService implements IQnaboardService {
 	
 	/* 댓글 수정하기
 	 * @author			정홍주
-	 * @param qComment 	
+	 * @param qComment 	수정한 정보가 들어있는 객체
 	 */
 	@Override
 	public void updateComment(QSTNComment qComment) {

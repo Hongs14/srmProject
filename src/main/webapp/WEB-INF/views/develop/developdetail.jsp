@@ -615,7 +615,7 @@
 			
 			let srCn = $('#srDevCn').val();
 		
-			
+			//계발계획이 다 입력되었는지 확인
 			let check = true;
 			if(srDevDp == null || srDevDp === undefined || srDevDp === ""){
 				check = false;

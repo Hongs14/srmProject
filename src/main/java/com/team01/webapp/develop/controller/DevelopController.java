@@ -96,7 +96,7 @@ public class DevelopController {
 	
 	/**개발관리 상세보기
 	 * @author 			정홍주
-	 * @param pageNo	
+	 * @param pageNo	SR개발 목록 페이지 위치
 	 * @param srNo		서비스에 보내줄 int타입 객체
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return			develop/developdetail로 이동
@@ -120,11 +120,11 @@ public class DevelopController {
 		return "develop/developdetail";
 	}
 	
-	/**
+	/**파일 다운로드
 	 * @author			정홍주
-	 * @param srFileNo
-	 * @param userAgent	
-	 * @param response	
+	 * @param srFileNo	다운로드 받으려는 파일번호
+	 * @param userAgent	브라우저의 정보
+	 * @param response	View로 데이터 전달을 위한 response
 	 * @throws Exception
 	 */
 	@GetMapping("/file/{srFileNo}")
@@ -161,7 +161,7 @@ public class DevelopController {
 	
 	/**모달창에 해당 팀의 개발자들 목록 띄우기
 	 * @author				정홍주
-	 * @param userDpNmMap	
+	 * @param userDpNmMap	개발계획 정보를 저장한 객체
 	 * @param model			View로 데이터 전달을 위한 Model 객체 주입
 	 * @return				develop/devlistView jsp 파일
 	 */
@@ -210,8 +210,8 @@ public class DevelopController {
 	
 	/** 인력리스트와 개발관리 저장
 	 * @author 					정홍주
-	 * @param updateDevelop		
-	 * @return
+	 * @param updateDevelop		개발관리와 인력리스트가 담겨있는 객체
+	 * @return					개발관리 목록으로 이동
 	 */
 	@PostMapping(value="/updateHr")
     public String insertHrList(UpdateDevelop updateDevelop, HttpSession session){
@@ -224,8 +224,8 @@ public class DevelopController {
 	
 	/**액셀 다운로드
 	 * @author				김태희, 정홍주
-	 * @param developSRArr
-	 * @param response
+	 * @param developSRArr	클라이언트가 보낸  developArr정보 저장
+	 * @param response		HttpServletResponse 객체 주입
 	 */
 	@PostMapping(value="/list/excelDownload")
 	public void excelDownload(@RequestParam List<String> developSRArr, HttpServletResponse response){
