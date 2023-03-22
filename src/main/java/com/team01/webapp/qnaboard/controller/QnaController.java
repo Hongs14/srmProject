@@ -88,9 +88,10 @@ public class QnaController {
 	/**Qna조건 리스트
 	 * @author 			정홍주
 	 * @param pageNo	조회할 페이지 번호
+	 * @param sysNo 	소속된 시스템
 	 * @param qstn		조건을 넘길 객체
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
-	 * @param pager
+	 * @param pager		페이징 처리
 	 * @return
 	 */
 	@PostMapping(value="/{sysNo}/filter/{pageNo}", produces="application/json; charset=UTF-8")
@@ -110,8 +111,9 @@ public class QnaController {
 	
 	/**	QNA상세보기
 	 * @author			정홍주
+	 * @param qstnNo	선택된 Q&A번호
+	 * @param sysNo 	소속된 시스템
 	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
-	 * @param qstnNo
 	 * @return			qnaboard/qnadetail.jsp 리턴
 	 */
 	@GetMapping("/{sysNo}/view/{qstnNo}")
@@ -137,9 +139,9 @@ public class QnaController {
 	
 	/**파일 다운로드
 	 * @author 			정홍주
-	 * @param qstnNo	
+	 * @param qstnNo	Q&A번호
 	 * @param userAgent	브라우저 정보
-	 * @param response
+	 * @param response	HttpServletResponse의 객체
 	 * @throws Exception
 	 */
 	@GetMapping("/file")
@@ -181,10 +183,10 @@ public class QnaController {
 		}
 	}
 	
-	/** Qna 작성하기
+	/**Q&A 폼 불러오기
 	 * @author		정홍주
-	 * @param qstn
-	 * @param model View로 데이터 전달을 위한 Model 객체 주입
+	 * @param sysNo	시스템 번호
+	 * @param model	View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
 	@GetMapping("{sysNo}/write")
@@ -195,6 +197,12 @@ public class QnaController {
 		return "qnaboard/qnawrite";
 	}
 
+	/** Q&A 작성하기
+	 * @author			정홍주
+	 * @param qstn		Q&A객체
+	 * @param qstnFile	Q&A파일 객체
+	 * @return
+	 */
 	@PostMapping("{sysNo}/write")
 	public String writeQna(QSTN qstn, QSTNFile qstnFile) {
 		log.info(qstn.getSysNo()+"시스템 Qna작성하기");
@@ -246,9 +254,10 @@ public class QnaController {
 	}
 	
 	/** Qna 수정 폼 띄우기
-	 * @author		정홍주
-	 * @param qstn
-	 * @param model View로 데이터 전달을 위한 Model 객체 주입
+	 * @author			정홍주
+	 * @param qstnNo	수정할 Q&A번호
+	 * @param sysNo		접속한 시스템 번호
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
 	@GetMapping("/{sysNo}/update")
@@ -268,9 +277,9 @@ public class QnaController {
 	
 	/**qna수정하기
 	 * @author 			정홍주
-	 * @param qstnNo
-	 * @param qstn
-	 * @param qstnFile
+	 * @param qstnNo	수정할 Q&A번호
+	 * @param qstn		수정한 정보가 들어간 Q&A객체
+	 * @param qstnFile	수정한 정보가 들어간 Q&A 파일 객체
 	 * @return
 	 */
 	@PostMapping("/{sysNo}/update")
@@ -342,8 +351,9 @@ public class QnaController {
 	}
 	
 	/**Qna삭제
-	 * @author		 정홍주
-	 * @param qstnNo
+	 * @author			정홍주
+	 * @param qstnNo 	삭제할 Q&A번호
+	 * @param sysNo		접속한 시스템 번호
 	 * @return
 	 */
 	@PostMapping("/{sysNo}/delete/{qstnNo}")
@@ -356,7 +366,8 @@ public class QnaController {
 	
 	/**Qna댓글읽기
 	 * @author			정홍주
-	 * @param qstnNo
+	 * @param qstnNo	댓글 달 Q&A번호
+	 * @param model		View로 데이터 전달을 위한 Model 객체 주입
 	 * @return
 	 */
 	@GetMapping(value="/{sysNo}/read/comment")
@@ -371,7 +382,7 @@ public class QnaController {
 
 	/**Qna댓글작성
 	 * @author			정홍주
-	 * @param qComment
+	 * @param qComment	작성한 댓글이 저장된 객체
 	 * @return
 	 */
 	@PostMapping(value="/{sysNo}/write/comment", produces="application/json; charset=UTF-8")
@@ -387,7 +398,7 @@ public class QnaController {
 	
 	/**Qna댓글 수정
 	 * @author			정홍주
-	 * @param qComment
+	 * @param qComment	작성한 댓글이 저장된 객체
 	 * @return
 	 */
 	@PostMapping(value="/{sysNo}/update/comment", produces="application/json; charset=UTF-8")
