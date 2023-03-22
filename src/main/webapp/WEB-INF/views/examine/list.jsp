@@ -180,13 +180,11 @@
 		                				</div>
 		                				<script>
 			                				$(document).ready(function () {
-												console.log("시작");
 												var sysNo = "${loginUser.sysNo}";
 												
 												if ( $('#mySrWork').prop('checked') ) {
 													
 													sysNo = "${loginUser.sysNo}";
-													console.log("sysNo");
 												}else{
 													sysNo="";
 												}
@@ -209,9 +207,6 @@
 											  	var defaltStartDate = ((year-1) + '/' + (month<9? "0"+month : month) + '/' + date);
 											  	var defaltEndDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
 											  	
-											  	console.log(defaltStartDate);
-											  	console.log(defaltEndDate);
-											  	
 											  	document.getElementById("dateStart").value = defaltStartDate;
 											  	document.getElementById("dateEnd").value = defaltEndDate;
 											  	
@@ -227,8 +222,6 @@
 												let data = {sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
 														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 												
-												console.log(data);
-												
 												$.ajax({
 													url : "${pageContext.request.contextPath}/examine/filter/1",
 													method : "post",
@@ -240,14 +233,11 @@
 											});
 										
 											function examineList(pageNo) {
-												console.log(pageNo);
-
 												var sysNo = "${loginUser.sysNo}";
 												
 												if ( $('#mySrWork').prop('checked') ) {
 													
 													sysNo = "${loginUser.sysNo}";
-													console.log("sysNo");
 												}else{
 													sysNo="";
 												}
@@ -275,8 +265,6 @@
 												let data = {sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
 														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 												
-												console.log(data);
-												
 												$.ajax({
 													url : "${pageContext.request.contextPath}/examine/filter/"+pageNo,
 													method : "post",
@@ -297,9 +285,6 @@
 											  	
 											  	var defaltStartDate = ((year-1) + '/' + (month<9? "0"+month : month) + '/' + date);
 											  	var defaltEndDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
-											  	
-											  	console.log(defaltStartDate);
-											  	console.log(defaltEndDate);
 											  	
 											  	document.getElementById("dateStart").value = defaltStartDate;
 											  	document.getElementById("dateEnd").value = defaltEndDate;
@@ -355,11 +340,9 @@
 									function selectUnderReview() {
 										
 										var sysNo = "${loginUser.sysNo}";
-										console.log("sysNo");
 										if ( $('#mySrWork').prop('checked') ) {
 											
 											sysNo = "${loginUser.sysNo}";
-											console.log("sysNo");
 										}else{
 											sysNo="";
 										}
@@ -393,8 +376,6 @@
 									  				srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl			
 									  		};
 									  		
-									  		console.log(data);
-									  		
 										  	$.ajax({
 										  		url : "${pageContext.request.contextPath}/examine/processing",
 												method : "post",
@@ -415,7 +396,6 @@
 										if ( $('#mySrWork').prop('checked') ) {
 											
 											sysNo = "${loginUser.sysNo}";
-											console.log("sysNo");
 										}else{
 											sysNo="";
 										}
@@ -448,8 +428,6 @@
 									  				sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm, 
 									  				srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl			
 									  		};
-									  		
-									  		console.log(data);
 									  		
 										  	$.ajax({
 										  		url : "${pageContext.request.contextPath}/examine/processing",
@@ -491,7 +469,6 @@
 					
 					let srNo = i;
 					$(".ex_info").hide();
-					console.log(srNo);
 					$("#srMainMenu").removeClass("d-sm-flex");
 					$("#srMainMenu").hide();
 					$("#srSubMenu").show();
@@ -534,8 +511,6 @@
 							examineArr.push(srNo);
 						}
 					});
-					
-					console.log(examineArr);
 					
 					if(examineArr.length == 0) {
 				    	$('#ListExcelModal').modal('show');
@@ -587,7 +562,6 @@
 			</div>
 			<script>
 				function userDpChange(e) {
-					console.log(e.value);
 					
 					let data = {userOgdp : e.value};
 					

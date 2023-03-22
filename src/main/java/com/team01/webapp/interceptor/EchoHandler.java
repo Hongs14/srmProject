@@ -27,21 +27,16 @@ public class EchoHandler extends TextWebSocketHandler{
 		// 클라이언트가 서버로 연결시
 		@Override
 		public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-			log.info("실행");
 			String senderId = getMemberId(session); // 접속한 유저의 http세션을 조회하여 id를 얻는 함수
 			sessions.add(session);
 			if(senderId!=null) {	// 로그인 값이 있는 경우만
-				log(senderId + " 연결 됨");
 				users.put(senderId, session);   // 로그인중 개별유저 저장
 			}
 		}
 		// 클라이언트가 Data 전송 시
 		@Override
 		protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-			log.info("실행");
 			String senderId = getMemberId(session);
-			log.info("handelTextMessage"+":"+senderId+":"+message);
-			log.info(sessions);
 			for(WebSocketSession sess : sessions) {				
 				sess.sendMessage(new TextMessage(senderId + ","+message.getPayload()));
 			}
@@ -50,10 +45,8 @@ public class EchoHandler extends TextWebSocketHandler{
 		// 연결 해제될 때
 		@Override
 		public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-			log.info("실행");
 			String senderId = getMemberId(session);
 			if(senderId!=null) {	// 로그인 값이 있는 경우만
-				log(senderId + " 연결 종료됨");
 				users.remove(senderId);
 				sessions.remove(session);
 			}
@@ -61,7 +54,6 @@ public class EchoHandler extends TextWebSocketHandler{
 		// 에러 발생시
 		@Override
 		public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-			log.info("실행");
 			log(session.getId() + " 익셉션 발생: " + exception.getMessage());
 
 		}
@@ -72,7 +64,6 @@ public class EchoHandler extends TextWebSocketHandler{
 		// 웹소켓에 id 가져오기
 	    // 접속한 유저의 http세션을 조회하여 id를 얻는 함수
 		private String getMemberId(WebSocketSession session) {
-			log.info("실행");
 			Map<String, Object> httpSession = session.getAttributes();
 			String userId = (String) httpSession.get("userId"); // 세션에 저장된 m_id 기준 조회
 			return userId==null? null: userId;

@@ -276,8 +276,6 @@
  
  <script>
  function updateInfo(){
-	 console.log("updateInfo 실행!!");
-	 console.log($("#userId").val());
 	$(".updatable").attr("disabled",false);
 	$(".updatable").addClass("border");
 	$("#updateInfo_fun").hide();
@@ -378,10 +376,6 @@
  		 emptyCheck = 1;
  		
  		 if(emlCheck != 1 || emptyCheck != 1 || telnoCheck != 1) {
-   			console.log("회원정보수정 실패");
-   			console.log("emlCheck"+emlCheck);
-   			console.log("emptyCheck"+emptyCheck);
-   			console.log(telnoCheck);
    			var body = document.getElementsByTagName("body")[0];
    			window.scroll({
    	            behavior: 'smooth',
@@ -393,8 +387,6 @@
 			$(".myInfoWrapper").submit();
 			$("#dialogWrapper").text("회원정보를 수정하였습니다.");
  			$("#userModal").modal();
-	    	console.log("변경완료");
- 			 
  		 }
  	  }
 	/* 비밀번호 수정 */
@@ -402,15 +394,11 @@
 		var userNo = $("#userNo").val();
 		var pswdConfirm = 0;
 		var pswdCheckAgain = 0;
-		
-		console.log("updatePswd 실행");
 		pswdConfirm = checkPswdFun(userNo);
 		
 		/* 비밀번호 재입력 확인 */
 	  	var inputed = $('#newPswd').val();
         var reinputed = $('#checkPswd').val();
-        console.log(inputed);
-        console.log(reinputed);
         
         if(reinputed=="" && (inputed != reinputed || inputed == reinputed)){
             $(".signupbtn").css("background-color", "#aaaaaa");
@@ -448,8 +436,6 @@
  		 	pswdCheckAgain = 1;
 	  	}
 		
-		console.log("pswdConfirm"+pswdConfirm+" | pswdCheckAgain: "+pswdCheckAgain);
-		
 		let data = {userPswd: inputed, userNo:userNo};
 		/* 비밀번호 업데이트 */
         if(pswdCheckAgain == 1 && pswdConfirm == 1){
@@ -460,11 +446,9 @@
     			data : JSON.stringify(data),
     			contentType: "application/json; charset=UTF-8"
     		}).done((data) => {
-    			console.log(data);
     			$("#updatePswd").modal('hide');
     			 $("#dialogWrapper").text("비밀번호를 변경하였습니다.");
     			$("#userModal").modal();
-    	    	console.log("변경완료");
     		});
         }
 	}
@@ -473,9 +457,9 @@
 	function checkPswdFun(userNo){
 		var userId = $("#userId").val();
 	  	var currentPswd = $("#currentPswd").val();
-	  	console.log(userNo+", "+currentPswd);
 	  	
 	  	let data = {userPswd: currentPswd, userId:userId};
+	  	
 	  	$.ajax({
 			url : "${pageContext.request.contextPath}/user/check_pswd",
 			method : "post",
@@ -483,7 +467,6 @@
 			data : JSON.stringify(data),
 			contentType: "application/json; charset=UTF-8"
 		}).done((data) => {
-			console.log(data);
 			if(data == 'success'){
 				pswdConfirm = 1;
 				$("#currentPswdHelp").text("");

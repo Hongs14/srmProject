@@ -481,7 +481,6 @@
 	<script>
 	 	$(document).ready(function(){
 			let sttsNo = $("#sttsNo").val();
-			console.log(sttsNo);
 
 			$('.addlist').prop("disabled", true);
 			
@@ -497,8 +496,7 @@
  			    leadingZeros(today.getFullYear(), 4) + '-' +
  			    leadingZeros(today.getMonth() + 1, 2) + '-' +
  			    leadingZeros(today.getDate(), 2);
- 			
-			console.log(sysdate); 			
+ 			    
  			$('#srDdlnDate').attr("min", sysdate);
  			$('#srStartDate').attr("min", sysdate);
  			
@@ -544,9 +542,7 @@
  			    leadingZeros(today.getFullYear(), 4) + '-' +
  			    leadingZeros(today.getMonth() + 1, 2) + '-' +
  			    leadingZeros(today.getDate(), 2);
- 			
-			console.log(sysdate); 			
- 			console.log($('#srDdlnDate').val());
+ 			    
  			//날짜 범위 구하기
  			$('#srStartDate').attr("max", end);
  			
@@ -575,8 +571,6 @@
 				method : "get",
 				dataType : "json",
 				success : function(data) {
-					console.log(data);
-					console.log(data[0].userDpNm);
 					$('#HrList').empty();
 					$('#srDevDp').val(data[0].userDpNm);
 					$('#pickDevNm').empty();
@@ -589,7 +583,6 @@
 					}
 				},
 				error : function(request, status, error) {
-					console.log("실패");
 					alert("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
 				}
 			});
@@ -615,7 +608,6 @@
 
 		function registerDevelop(){
 			//SR개발계획 등록
-			console.log("개발계획 등록");
 			let srDevDp = $('#srDevDp').val();
 			let srDdlnDate = $('#srDdlnDate').val();
 			let srStartDate = $('#srStartDate').val();
@@ -627,31 +619,24 @@
 			let check = true;
 			if(srDevDp == null || srDevDp === undefined || srDevDp === ""){
 				check = false;
-				console.log("srDevdp: "+check);
 				$('#messageDev').html("<small>*개발자를 선택해주세요</small>");
 			} 
 			if (srDdlnDate == null || srDdlnDate === undefined || srDdlnDate ==="") {
 				check = false;
-				console.log("srDdlnDate: "+check);
-				console.log(srDdlnDate);
 				$('#messageDdln').html("<small>*완료예정날짜를 선택해주세요.</small>")
 			}
 
 			if (srStartDate == null || srStartDate === undefined || srStartDate==="") {
 			  	check = false;
-			  	console.log("srStartDate: "+check);
 			  	$('#messageStartDate').html("<small>*계획시작날짜를 선택해주세요.</small>");
 			}
 
 			if (srEndDate == null || srEndDate === undefined || srEndDate==="") {
 			  	check = false;
-			  	console.log("srEndDate: "+check);
 			  	$('#messageEndDate').html("<small>*계획종료날짜를 선택해주세요.</small>");
 			}
 			if (srCn == null || srCn === undefined || srCn==="") {
 			  	check = false;
-			  	console.log("srCn: "+check);
-			  	console.log("srCn: "+srCn);
 			  	$('#messageDevCn').html("<small>*내용을 작성해주세요.</small>");
 			}
 			
@@ -659,7 +644,6 @@
 			$('#selectDev').append('<h3>[' + srDevDp + '] 등록하기 </h3>');
 			$('#leaderSdate').val(srStartDate);
 			$('#leaderEdate').val(srEndDate);
-			console.log(srStartDate);
 			
 			if(check == false){
 				$('#checkBody').html("<h5>다시 입력해주세요.</h5>");
@@ -680,7 +664,6 @@
 	
 		function selectList(check) {
 			//모달리스트 띄우기
-			console.log("조건의 유무: "+check);
 			let userNo = $('#srDLeader option:first').val();
 			if(userNo == "" || userNo == undefined || userNo == null){
 				userNo = $('#srDLeader').val();
@@ -688,15 +671,12 @@
 			let userDpNm = $('#srDevDp').val();
 			let startDate = $('#srStartDate').val();
 			let endDate = $('#srEndDate').val(); 
-			console.log($('#srDLeader option:first').val());
-			console.log(userNo);
 			let data = {
 				userDpNm : userDpNm,
 				userNo : userNo,
 				hrStartDate : startDate,
 				hrEndDate : endDate
 			};
-			console.log(data);
 	
 			$.ajax({
 				url : '<c:url value="/develop/devlist"/>',
@@ -705,7 +685,6 @@
 				data : JSON.stringify(data),
 				contentType : "application/json; charset=UTF-8",
 				success : function(data) {
-					console.log(data);
 					let message = "<h5>등록 되었습니다.</h5>";
 					$('.validate').remove();
 					$("#checkBody").html(message);
@@ -727,7 +706,6 @@
 			//HR리스트에 일반개발자 등록
 			var checkBoxArr = [];
 			var srNo = '${dlist.srNo}';
-			console.log(srNo);
 			$("input:checkbox[name='devName']:checked").each(function(i) {
 				//체크박스값 배열에 넣기
 				var userNo = $(this).val();
@@ -735,10 +713,8 @@
 					userNo : userNo,
 					srNo : srNo
 				};
-				console.log("data"+data);
 				checkBoxArr.push(data);
 			});
-			console.log(checkBoxArr);
 	
 			$.ajax({
 				url : '<c:url value="/develop/selectNm"/>',
@@ -746,7 +722,6 @@
 				data : JSON.stringify(checkBoxArr),
 				contentType : "application/json; charset=UTF-8",
 				success : function(data) {
-					console.log(data);
 					$('#HrList').html(data);
 				}
 			});
@@ -756,8 +731,6 @@
 		$(document).on('click', '.deleteHr', function(){
 			//리스트 지우기
 			let userNo = $(this).parent().parent().find('input').val();
-			console.log($(this).parent().parent().find('input').val());
-			console.log('hr삭제하기');
 			$(this).parent().parent().remove();
 			$("#" + userNo).prop("checked", false);
 			$("#allcheck").prop("checked", false);
@@ -773,29 +746,19 @@
 					rightaway = true;
 			};
 			
-			console.log(sysdate === $('#srStartDate').val());
-			console.log("$('#sttsNo').val(): "+$('#sttsNo').val());
-			console.log("sysdate: "+ sysdate);
-			console.log("$('#srStartDate').val(): "+$('#srStartDate').val());
-			console.log("rightaway: "+rightaway);
-			
 			for(let i = 0;i<$("select[name=taskNo]").length;i++){
 				if(($("select[name='taskNo']").eq(i).val() === undefined || $("select[name='taskNo']").eq(i).val() == null || $("select[name='taskNo']").eq(i).val() === "")){
 					check++;
-					console.log("taskNo" + i +" = " + check);
 				} 
 				
 				if(($("input[name='hrStartDate']").eq(i).val() === undefined || $("input[name='hrStartDate']").eq(i).val() == null || $("input[name='hrStartDate']").eq(i).val() === "")){
 					check++;
-					console.log("hrStartDate" + i +" = " + check);
 				} 
 					
 				if(($("input[name='hrEndDate']").eq(i).val() === undefined || $("input[name='hrEndDate']").eq(i).val() == null || $("input[name='hrEndDate']").eq(i).val() === "")){
 					check++;
-					console.log("hrEndDate" + i +" = " + check);
 				}
 			};
-			console.log("check: "+ check);
 			
 			if($('#sttsNo').val() === '5'){
 				if(check == 0 && rightaway == true) {

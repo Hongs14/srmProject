@@ -11,13 +11,9 @@ import com.team01.webapp.model.Notice;
 import com.team01.webapp.model.NoticeComment;
 import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.notice.dao.INoticeRepository;
-import com.team01.webapp.notice.service.INoticeService;
 import com.team01.webapp.util.Pager;
 
-import lombok.extern.log4j.Log4j2;
-
 @Service
-@Log4j2
 public class NoticeService implements INoticeService{
 
 	@Autowired
@@ -30,17 +26,13 @@ public class NoticeService implements INoticeService{
 	 */
 	@Override
 	public int getTotalRows() {
-		log.info("실행");
 		int rows = noticeRepository.selectTotalNoticeListCount();
 		return rows;
 	}
 	
 	@Override
 	public Pager returnPage(int pageNo, Pager pager, Notice notice) {
-		log.info("실행");
-		log.info(notice);
 		int totalListNum = (int) noticeRepository.selectTotalNoticeCount(notice);
-		log.info(totalListNum);
 		pager = new Pager(10,5,totalListNum,pageNo);
 		return pager;
 	}
@@ -53,8 +45,6 @@ public class NoticeService implements INoticeService{
 	 */
 	@Override
 	public List<Notice> getNoticeList(Pager pager) {
-		log.info("실행");
-		
 		List<Notice> list = noticeRepository.selectNoticeList(pager);
 		
 		return list;
@@ -63,7 +53,6 @@ public class NoticeService implements INoticeService{
 	// 필터링 된 공지사항 리스트
 	@Override
 	public List<Notice> getNoticeListAjax(Pager pager, Notice notice){
-		log.info("실행");
 		notice.setStartRowNo(pager.getStartRowNo());
 		notice.setEndRowNo(pager.getEndRowNo());
 		List<Notice> list = noticeRepository.selectFilterNoticeList(notice);
@@ -79,7 +68,6 @@ public class NoticeService implements INoticeService{
 	 */
 	@Override
 	public void noticeWrite(Notice notice) {
-		log.info("실행");
 		if(notice.getSysNo().equals("한국소프트")) {
 			notice.setSysNo("SRM");
 		}else if(notice.getSysNo().equals("북북")) {
@@ -102,7 +90,6 @@ public class NoticeService implements INoticeService{
 	 */
 	@Override
 	public void noticeFileUpload(Notice notice) {
-		log.info("실행");
 		noticeRepository.insertNoticeFileUpload(notice);
 		
 	}
@@ -115,7 +102,6 @@ public class NoticeService implements INoticeService{
 	 */
 	@Override
 	public Notice noticeDetail(int ntcNo) {
-		log.info("실행");
 		Notice notice = noticeRepository.selectNoticeDetail(ntcNo);
 		return notice;
 	}
@@ -123,7 +109,6 @@ public class NoticeService implements INoticeService{
 	//공지사항 상세조회 첨부파일 읽어오기
 	@Override
 	public List<MultipartFile> selectNoticeFileDetail(int ntcNo) {
-		log.info("실행");
 		List<MultipartFile> noticeFile = noticeRepository.selectNoticeFileDetail(ntcNo);
 		return noticeFile;
 	}
@@ -131,7 +116,6 @@ public class NoticeService implements INoticeService{
 	//공지사항 상세조회 첨부파일 다운로드
 	@Override
 	public NoticeFile selectFiledownload(int ntcFileNo) {
-		log.info("실행");
 		NoticeFile noticeFile = noticeRepository.selectFileDownload(ntcFileNo);
 		
 		return noticeFile;
@@ -145,7 +129,6 @@ public class NoticeService implements INoticeService{
 	 */
 	@Transactional
 	public void inqCnt(int ntcNo) {
-		log.info("실행");
 		noticeRepository.selectInqCnt(ntcNo);
 	}
 	
@@ -157,24 +140,18 @@ public class NoticeService implements INoticeService{
 	 */
 	@Override
 	public void noticeUpdate(Notice notice) {
-		log.info("실행");
 		int ntcNo = notice.getNtcNo();
-		log.info(ntcNo);
 		String ntcCn = notice.getNtcCn();
 		noticeRepository.updateNotice(ntcNo,ntcCn);
-		log.info("실행");
 	}
 	@Override
 	public void noticeUpdate(Notice notice,NoticeFile noticeFile) {
-		log.info("실행");
 		int ntcNo = notice.getNtcNo();
-		log.info(ntcNo);
 		String ntcCn = notice.getNtcCn();
 		noticeRepository.updateNotice(ntcNo,ntcCn);
 		
 		//첨부파일 수정
 		noticeFile.setNtcNo(ntcNo);
-		log.info(noticeFile);
 		noticeRepository.updateNoticeFileUpload(noticeFile);
 		
 	}
@@ -186,14 +163,12 @@ public class NoticeService implements INoticeService{
 	 */
 	@Override
 	public void noticeDelete(int ntcNo) {
-		log.info("실행");
 		noticeRepository.delete(ntcNo);
 	}
 	
 	//공지사항 첨부파일 삭제
 	@Override
 	public int noticeFileDelete(int ntcFileNo) {
-		log.info("실행");
 		int ntcNo = noticeRepository.deleteFile(ntcFileNo);
 		return ntcNo;
 	}
@@ -201,7 +176,6 @@ public class NoticeService implements INoticeService{
 	//공지사항 중요도 체크 변경
 	@Override
 	public void updatePryCheck() {
-		log.info("실행");
 		noticeRepository.updatePryCheck();
 	}
 	
@@ -215,7 +189,6 @@ public class NoticeService implements INoticeService{
 	//댓글 읽기
 	@Override
 	public List<NoticeComment> getCommentList(int ntcNo) {
-		log.info("실행");
 		List<NoticeComment> list = noticeRepository.selectNoticeCommentList(ntcNo);
 		return list;
 	}
@@ -223,7 +196,6 @@ public class NoticeService implements INoticeService{
 	//댓글 작성
 	@Override
 	public NoticeComment writeComment(NoticeComment ntcComment) {
-		log.info("실행");
 		noticeRepository.insertComment(ntcComment);
 		ntcComment = noticeRepository.selectComment();
 		return ntcComment;
@@ -232,15 +204,12 @@ public class NoticeService implements INoticeService{
 	//댓글 수정
 	@Override
 	public void updateComment(NoticeComment ntcComment) {
-		log.info("실행");
 		int a = noticeRepository.updateComment(ntcComment);
-		log.info(a);
 	}
 
 	//댓글 삭제
 	@Override
 	public void deleteComment(int ntcCmntNo) {
-		log.info("실행");
 		noticeRepository.deleteComment(ntcCmntNo);
 	}
 	

@@ -18,10 +18,7 @@ import com.team01.webapp.users.service.IUserService;
 import com.team01.webapp.users.service.UserService;
 import com.team01.webapp.util.AlarmInfo;
 
-import lombok.extern.log4j.Log4j2;
-
 @Controller
-@Log4j2
 public class UserController {
 	
 	@Autowired
@@ -40,7 +37,6 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user/login", method = RequestMethod.GET)
 	public String login(HttpSession session, Model model) {
-		log.info("실행");
 		return "user/loginForm";
 	}
 	
@@ -56,8 +52,6 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user/login", method = RequestMethod.POST)
 	public String login(Users user, HttpSession session, Model model) {
-		
-		log.info(user+" post 실행");
 		UserService.LoginResult loginResult = userService.login(user);
 		
 		if(loginResult == UserService.LoginResult.WRONG_ID) {
@@ -74,7 +68,6 @@ public class UserController {
 			session.setAttribute("userNo", user.getUserNo());
 			session.setAttribute("userId", user.getUserId());
 			session.setAttribute("sysNo", user.getSysNo());
-			log.info(user);
 			if(user.getUserPswdTempYn()=='Y') {
 				return "user/tempPswd";
 			}
@@ -105,8 +98,6 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/join", method = RequestMethod.GET)
 	public String join(Model model) {
-		log.info("정보 로그 실행");
-		log.info(model.getAttribute("result"));
 		return "user/joinForm";
 	}
 
@@ -120,7 +111,6 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user/join", method = RequestMethod.POST)
 	public String join(Users user, Model model, RedirectAttributes redirectAttributes) {
-		log.info(user.getUserPswd()+"실행");
 		int result = userService.join(user);
 		if(result == UserService.JOIN_SUCCESS) {
 			redirectAttributes.addFlashAttribute("result", "success");
@@ -144,13 +134,10 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/user/checkid")
 	public String checkId(@RequestParam String userId)	 {
-		log.info(userId+"실행");
 		int result = userService.checkId(userId);
 		if(result == UserService.JOIN_DUPLICATED) {
-			log.info("중복 아이디");
 			return "duplicated";
 		}else {
-			log.info("중복이 아닌 아이디");
 			return "success";
 		}
 	}
@@ -163,15 +150,11 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/user/checkEml")
 	public String checkEml(@RequestParam String checkEml)	 {
-		log.info(checkEml+"실행");
 		String userEml = checkEml;
 		int result = userService.checkEml(userEml);
-		log.info("result:"+result);
 		if(result == UserService.JOIN_DUPLICATED) {
-			log.info("중복 이메일");
 			return "duplicated";
 		}else {
-			log.info("중복이 아닌 이메일");
 			return "success";
 		}
 	}
@@ -184,12 +167,10 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/myinfo/{userId}", method = RequestMethod.GET)
 	public String myinfo(@PathVariable String userId, HttpSession session, Model model) {
-		log.info("실행");
 		//알림 수 및 리스트
 		alarmInfo.info(session, model); 
 		Users user = userService.getMyInfo(userId);
 		model.addAttribute("user", user);
-		log.info("user: "+user);
 		return "user/myInfo";
 	}
 	
@@ -202,10 +183,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/unregister/{userNo}", method = RequestMethod.GET)
 	public String unregister(@PathVariable int userNo) {
-		log.info("unregister 실행"+ userNo);
-		
 		int rows = userService.unregister(userNo);
-		log.info("변경 행수: " + rows);
 		return "redirect:/";
 	}
 	
@@ -220,9 +198,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user/update", method = RequestMethod.POST)
 	public String update(Users user, Model model ) {
-		log.info("user: "+user);
 		int rows = userService.updateUserInfo(user);
-		log.info("변경행수: "+rows);
 		return "redirect:/user/myinfo/"+user.getUserId();
 	}
 	
@@ -258,12 +234,10 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user/id_recovery", method = RequestMethod.POST)
 	public @ResponseBody String idRecovery(@RequestBody Users user) {
-		log.info("실행"+user);
 		String userId="";
 		try {
 			userId = userService.findUserId(user);
 		} catch (Exception e) {
-			log.info(e.getMessage());
 		}
 		return userId;
 	}
@@ -290,10 +264,8 @@ public class UserController {
 		int rows = 0;
 		try {
 			rows = userService.sendRecoveryMail(user);
-			log.info("변경 행수: "+rows);
 			return "success";
 		}catch(Exception e) {
-			log.info(e.getMessage());
 			return "false";
 		}
 	}
@@ -310,14 +282,12 @@ public class UserController {
 		int rows = 0;
 		try {
 			rows = userService.getPswd(user);
-			log.info("결과: "+rows);
 			if(rows == 1) {
 				return "success";
 			}else {
 				return "false";
 			}
 		}catch(Exception e) {
-			log.info(e.getMessage());
 			return "false";
 		}
 	}
@@ -334,10 +304,8 @@ public class UserController {
 		int rows = 0;
 		try {
 			rows = userService.updatePswd(user);
-			log.info("변경 행수: "+rows);
 			return "success";
 		}catch(Exception e) {
-			log.info(e.getMessage());
 			return "false";
 		}
 	}

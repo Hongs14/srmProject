@@ -16,10 +16,7 @@ import com.team01.webapp.model.SystemInfo;
 import com.team01.webapp.progress.dao.IProgressRepository;
 import com.team01.webapp.util.Pager;
 
-import lombok.extern.log4j.Log4j2;
-
 @Service
-@Log4j2
 public class HomeService implements IHomeService{
 	
 	@Autowired
@@ -30,7 +27,6 @@ public class HomeService implements IHomeService{
 
 	@Override
 	public List<SystemInfo> getSystemMiniView(int userNo) {
-		log.info("실행");
 		return homeRepository.selectSysInfo(userNo);
 	}
 
@@ -60,9 +56,6 @@ public class HomeService implements IHomeService{
 		
 		sr.setEnd(end);
 		sr.setStart(start);
-		
-		log.info(start);
-		log.info(end);
 		
 		return homeRepository.selectHomeList(sr);
 		

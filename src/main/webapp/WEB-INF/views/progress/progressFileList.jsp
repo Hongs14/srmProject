@@ -15,7 +15,7 @@
 
 	<div class="table-responsive">
 	<div class="input-group-append float-right mb-3">
-		<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료')}">
+		<c:if test="${!(sttsNm == '완료요청' || sttsNm == '개발 완료' || sttsNm == '계획조정')}">
 			<c:if test="${check}">
 				<button class="btn btn-primary btn-sm mr-2" type="button" data-toggle="modal" data-target="#progressFileModal" id="#modalScroll" onclick="progressFileAdd()">
 					추가

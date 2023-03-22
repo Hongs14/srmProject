@@ -32,13 +32,10 @@ import com.team01.webapp.request.service.IRequestService;
 import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
 
-import lombok.extern.log4j.Log4j2;
-
 /**
  * Handles requests for the application home page.
  */
 @Controller
-@Log4j2
 public class HomeController {
 	
 	@Autowired
@@ -70,7 +67,6 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Pager pager, Notice notice, Model model) {
-		log.info("정보 로그 실행");
 		
 		return "user/loginForm";
 		
@@ -98,7 +94,6 @@ public class HomeController {
 		pager = noticeService.returnPage(noticePageNo,pager,notice);
 		
 		List<Notice> noticeList = noticeService.getNoticeListAjax(pager,notice);
-		log.info(pager);
 		model.addAttribute("noticeList",noticeList);
 		
 		// Q n A 페이징 처리
@@ -118,14 +113,12 @@ public class HomeController {
 		String end = (String)sdformat.format(today);
 		String start = (String)sdformat.format(threeMonthsAgo);
 		
-		log.info(start+" "+end);
 		qstn.setStartDate(start);
 		qstn.setEndDate(end);
 		qstn.setSysNo((String)session.getAttribute("sysNo"));
 		qstn.setQstnSecret("main");
 		pager = qnaboardService.returnPage(qstnPageNo, pager, qstn);
 		List<QSTN> qstnList = qnaboardService.getQstnList(pager, qstn);
-		log.info(qstn);
 		model.addAttribute("qstnList", qstnList);
 		
 		//알람 수 및 리스트

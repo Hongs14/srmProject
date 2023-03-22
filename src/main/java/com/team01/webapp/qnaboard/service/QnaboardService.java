@@ -4,18 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.team01.webapp.model.Notice;
-import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.model.QSTN;
 import com.team01.webapp.model.QSTNComment;
 import com.team01.webapp.model.QSTNFile;
 import com.team01.webapp.qnaboard.dao.IQnaboardRepository;
 import com.team01.webapp.util.Pager;
-
 import lombok.extern.log4j.Log4j2;
+
+
 
 @Log4j2
 @Service
@@ -33,11 +31,8 @@ public class QnaboardService implements IQnaboardService {
 	 */
 	@Override
 	public Pager returnPage(int pageNo, Pager pager, QSTN qstn) {
-		log.info("페이징");
 		int totalList = (int) qnaboardRepository.totalRow(qstn);
-		log.info(totalList);
 		pager = new Pager(10,5,totalList,pageNo);
-		log.info(pager);
 		return pager;
 	}
 	
@@ -54,7 +49,6 @@ public class QnaboardService implements IQnaboardService {
 		
 		qstn.setStartRowNo(start);
 		qstn.setEndRowNo(end);
-		log.info(qstn);
 		List<QSTN> list = qnaboardRepository.selectQstnList(qstn);
 		
 		return list;
@@ -122,8 +116,6 @@ public class QnaboardService implements IQnaboardService {
 	 */
 	@Override
 	public void qstnFileUpload(QSTNFile qstnFile) {
-		log.info("파일 업로드실행");
-		log.info(qstnFile);
 		qnaboardRepository.insertQstnFileUpload(qstnFile);
 	}
 	

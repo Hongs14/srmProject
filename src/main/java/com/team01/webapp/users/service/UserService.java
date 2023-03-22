@@ -16,10 +16,7 @@ import com.team01.webapp.model.UserSystem;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.users.dao.IUserRepository;
 
-import lombok.extern.log4j.Log4j2;
-
 @Service
-@Log4j2
 public class UserService implements IUserService {
 	public enum LoginResult {
 		SUCCESS, WRONG_ID, WRONG_PASSWORD
@@ -38,11 +35,8 @@ public class UserService implements IUserService {
 	
 	@Override
 	public LoginResult login(Users user) {
-		log.info("userId: "+ user.getUserId()+ "실행");
 		PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		Users dbUser = getUser(user.getUserId());
-		log.info("dbUser"+ dbUser);
-		log.info("ViewUser: "+ user);
 		
 		if(dbUser == null) {
 			return LoginResult.WRONG_ID;
@@ -64,7 +58,6 @@ public class UserService implements IUserService {
 		user.setUserDpNm(dbUser.getUserDpNm());
 		user.setUserPswdTempYn(dbUser.getUserPswdTempYn());
 		UserSystem userSystem = userRepository.selectSystemByUserNo(user.getUserNo());
-		log.info("userSystem: "+userSystem);
 		String sysNo = userSystem.getSysNo();
 		String sysNm = userSystem.getSysNm();
 		user.setSysNm(sysNm);
@@ -77,7 +70,6 @@ public class UserService implements IUserService {
 
 	@Override
 	public Users getUser(String userId) {
-		log.info(userId+ "실행 ");
 		return userRepository.selectByUserId(userId);
 	}
 	
@@ -85,7 +77,6 @@ public class UserService implements IUserService {
 	@Override
 	@Transactional
 	public int join(Users user) {
-		log.info(user.getUserPswd());
 		try {
 			user.setUserDelYn('N');
 			
@@ -111,18 +102,14 @@ public class UserService implements IUserService {
 					break;
 					
 			}
-			log.info("sysNo: "+sysNo);
 			userRepository.insert(user);
 			String userId = user.getUserId();
 			user = userRepository.selectByUserId(userId);
 			user.setSysNo(sysNo);
-			log.info("sysNo: "+user.getSysNo());
-			log.info("custNo: "+user.getUserNo());
 			userRepository.insertUserSystem(user);
 			return JOIN_SUCCESS;
 		
 		}catch(Exception e){
-			log.info(e.toString());
 			return JOIN_FAIL;
 		}
 		
@@ -137,16 +124,13 @@ public class UserService implements IUserService {
 	
 	@Override
 	public int updateUserInfo(Users user) {
-		log.info("user: "+user);
 		int rows = userRepository.updateUserInfo(user);
-		log.info("변경 행수: " + rows);
 		return rows;
 	}
 
 
 	@Override
 	public Users getMyInfo(String userId) {
-		log.info("실행");
 		return userRepository.selectByUserId(userId);
 	}
 
@@ -163,7 +147,6 @@ public class UserService implements IUserService {
 
 	@Override
 	public String findUserId(Users user) throws Exception {
-		log.info(user);
 		user = userRepository.selectUserId(user);
 		return user.getUserId();
 	}
@@ -172,20 +155,17 @@ public class UserService implements IUserService {
 	@Override
 	@Transactional
 	public int sendRecoveryMail(Users user) throws Exception {
-		log.info("user: "+user);
 		try {
 			String userEml = user.getUserEml();
 			Users dbUser = userRepository.selectUserId(user);
 			String userId = dbUser.getUserId();
 			int userNo = dbUser.getUserNo();
-			log.info("userNo: "+userNo);
 			if(userId == "" || userId == null) {
 				return 0;
 			}
 			
 			String tempPswd = UUID.randomUUID().toString().replace("-", "");
 			tempPswd = tempPswd.substring(0, 10);
-			log.info(tempPswd);
 			
 			PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 			String securePswd = pe.encode(tempPswd);
@@ -210,7 +190,6 @@ public class UserService implements IUserService {
 	
 	@Override
 	public int getPswd(Users user) throws Exception {
-		log.info("user: "+user);
 		try {
 			PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 			String securePswd = pe.encode(user.getUserPswd());
@@ -223,8 +202,6 @@ public class UserService implements IUserService {
 					return 0;
 				}
 			}
-			log.info(securePswd);
-			log.info("dbUser:" + dbUser);
 			
 		} catch (Exception e) {
 			throw e;
@@ -236,7 +213,6 @@ public class UserService implements IUserService {
 	@Override
 	@Transactional
 	public int updatePswd(Users user) throws Exception{
-		log.info("user: "+user);
 		int rows = 0;
 		try {
 			int userNo = user.getUserNo();

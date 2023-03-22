@@ -63,16 +63,12 @@
              	sttsNoList = [];
              	ColorList = ['#6e707e', '#e3eaef', '#a11811', '#406882', '#36b9cc', '#66bb6a', '#ffa426', '#a33bff', '#0a8091', '#78380c'];
              	backgroundColor = [];
-             	console.log(backgroundColor);
              	
              	<c:forEach var="list" items="${donutList}">
              		labelse.push('${list.sttsNm}');
              		data.push(${list.count});
              		backgroundColor.push(ColorList[${list.sttsNo - 1}]);
              	</c:forEach>
-             	
-             	console.log(labelse);
-             	console.log(sttsNoList);
              
 				var ctx = document.getElementById("myPieChart");
 				var myPieChart = new Chart(ctx, {

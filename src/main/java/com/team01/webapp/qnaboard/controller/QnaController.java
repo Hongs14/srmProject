@@ -2,7 +2,6 @@ package com.team01.webapp.qnaboard.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.team01.webapp.model.NoticeFile;
 import com.team01.webapp.model.QSTN;
 import com.team01.webapp.model.QSTNComment;
 import com.team01.webapp.model.QSTNFile;
@@ -58,7 +56,6 @@ public class QnaController {
 	 */
 	@GetMapping("/{sysNo}/list")
 	public String getQnaList(@PathVariable String sysNo, HttpSession session, Model model){
-		log.info("qna목록보기");
 		//알림 수 및 리스트
 		alarmInfo.info(session, model);
 		model.addAttribute("session",sysNo);
@@ -76,7 +73,6 @@ public class QnaController {
 	 */
 	@GetMapping("/{sysNo}/list/{qstnNo}")
 	public String getQnaList(@PathVariable String sysNo, @PathVariable int qstnNo, HttpSession session, Model model){
-		log.info("qna목록보기");
 		//알림 수 및 리스트
 		alarmInfo.info(session, model);
 		model.addAttribute("session",sysNo);
@@ -96,13 +92,10 @@ public class QnaController {
 	 */
 	@PostMapping(value="/{sysNo}/filter/{pageNo}", produces="application/json; charset=UTF-8")
 	public String getQnaList(@PathVariable int pageNo, @PathVariable String sysNo, @RequestBody QSTN qstn,  Model model, Pager pager) {
-		log.info("qstn 목록 필터링");
-		log.info(sysNo);
 		pager = qnaboardService.returnPage(pageNo,pager,qstn);
 		List<QSTN> qnalist = qnaboardService.getQstnList(pager,qstn);
 		model.addAttribute("qnalist", qnalist); 
 		model.addAttribute("session",sysNo);
-		log.info(qnalist);
 		model.addAttribute("pager",pager);
 		
 		return "qnaboard/ajaxList";
@@ -118,16 +111,12 @@ public class QnaController {
 	 */
 	@GetMapping("/{sysNo}/view/{qstnNo}")
 	public String getQnaDetail(@PathVariable int qstnNo, @PathVariable String sysNo, Model model) {
-		log.info("QnA상세보기");
 		QSTN qstn = qnaboardService.getDetail(qstnNo);
 		
 		List<MultipartFile> qstnFile = qnaboardService.getQstnFileDetail(qstnNo);
 		//댓글 목록
 		List<QSTNComment> qnaClist = qnaboardService.getCommentList(qstnNo);
 		int countQstnComment = qnaboardService.countComment(qstnNo);
-		
-		log.info(qstn);
-		log.info(qstnFile);
 		model.addAttribute("qstn", qstn);
 		model.addAttribute("qstnFile", qstnFile);
 		model.addAttribute("qnaClist",qnaClist);
@@ -146,10 +135,8 @@ public class QnaController {
 	 */
 	@GetMapping("/file")
 	public void downloadQnafile(@RequestParam int qstnFileNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
-		log.info("Qna글 파일 다운로드");
 		
 		QSTNFile qstnFile = qnaboardService.selectFiledownload(qstnFileNo);
-		log.info(qstnFile);
 		String originalName = qstnFile.getQstnFileActlNm();
 		String savedName = qstnFile.getQstnFilePhysNm();
 		String contentType = qstnFile.getQstnFileExtnNm();
@@ -171,7 +158,6 @@ public class QnaController {
 		//응답 바디에 파일 데이터 실기
 		String filePath = "C:/OTI/uploadfiles/qstn/"+qstnFile.getQstnNo()+"/"+savedName;
 		File file = new File(filePath);
-		log.info("file: "+ filePath);
 				
 		if(file.exists()) {
 			InputStream is = new FileInputStream(file);
@@ -191,7 +177,6 @@ public class QnaController {
 	 */
 	@GetMapping("{sysNo}/write")
 	public String writeQna(@PathVariable String sysNo, Model model) {
-		log.info("Qna작성하기");
 		model.addAttribute("session",sysNo);
 		model.addAttribute("command", "write");
 		return "qnaboard/qnawrite";
@@ -205,11 +190,8 @@ public class QnaController {
 	 */
 	@PostMapping("{sysNo}/write")
 	public String writeQna(QSTN qstn, QSTNFile qstnFile) {
-		log.info(qstn.getSysNo()+"시스템 Qna작성하기");
-		log.info(qstn);
 		try {
 			int qstnNo = qnaboardService.writeQSTN(qstn);
-			log.info("qstnNo작성 여부: "+ qstnNo);
 			//첨부파일 추가
 			List<MultipartFile> mf = qstn.getQstnMFile();
 			if(mf!=null &&!mf.isEmpty()) {
@@ -227,16 +209,13 @@ public class QnaController {
 					String type = str.substring(beginIndex,endIndex);
 					qstnFile.setQstnFileExtnNm(type);
 					qstnFile.setQstnNo(qstn.getQstnNo());		
-					log.info(qstnFile);
 					//서버 파일 시스템에 파일로 저장
 					String filePath = "C:/OTI/uploadfiles/qstn/"+qstnFile.getQstnNo()+"/"+qstnFilePhysNm;
-					log.info(filePath);
 					File file = new File(filePath);
 					// 폴더가 없다면 생성
 					if(!file.exists()) {
 						try {
 							Files.createDirectories(Paths.get(filePath));
-							log.info("폴더 생성 완료");
 							mf.get(i).transferTo(file);
 						} catch (Exception e) {
 							log.info("생성 실패 : " + filePath);
@@ -262,16 +241,12 @@ public class QnaController {
 	 */
 	@GetMapping("/{sysNo}/update")
 	public String updateQna(@RequestParam int qstnNo, @PathVariable String sysNo, Model model) {
-		log.info("Qna수정하기");
 		QSTN qstn = qnaboardService.getDetail(qstnNo);
 		List<MultipartFile> qstnFile = qnaboardService.getQstnFileDetail(qstnNo);
 		model.addAttribute("qstn", qstn);
 		model.addAttribute("qstnFile",qstnFile);
 		model.addAttribute("command", "update");
 		model.addAttribute("session",sysNo);
-		log.info(sysNo);
-		log.info("qstn: "+ qstn);
-		log.info("qstnFile: "+qstnFile);
 		return "qnaboard/qnawrite";
 	}
 	
@@ -287,15 +262,12 @@ public class QnaController {
 		try {
 			//기존 파일을 삭제했다면 삭제처리
 			List<String> df = qstn.getDeleteFile();
-			log.info("DeleteFile: "+df);
 			if(df!=null && !df.isEmpty()) {
 				for(int j=0; j<df.size(); j++) {
 					String filePath = "C:/OTI/uploadfiles/qstn/" + qstn.getQstnNo() + "/" + df.get(j);
 					File file = new File(filePath);
-					log.info("filePath"+filePath);
 					if(file.exists()) {
 						if(file.delete()) {
-							log.info("파일 삭제 성공");
 							qnaboardService.EraseExistingFile(df.get(j));
 						} else {
 							log.info("파일 삭제 실패");
@@ -327,7 +299,6 @@ public class QnaController {
 					if(!file.exists()) {
 						try {
 							Files.createDirectories(Paths.get(filePath));
-							log.info("폴더 생성 완료");
 							mf.get(i).transferTo(file);
 						} catch (Exception e) {
 						log.info("생성 실패 : " + filePath);
@@ -335,10 +306,9 @@ public class QnaController {
 					} else {
 					mf.get(i).transferTo(file);
 					}
-					log.info("DB저장");
 					int row = qnaboardService.changeQstnFile(qstnFile);
 					if(row == 1) {
-						log.info("변경성공");
+						
 					}
 				}
 			}
@@ -358,9 +328,7 @@ public class QnaController {
 	 */
 	@PostMapping("/{sysNo}/delete/{qstnNo}")
 	public String deleteQstn(@PathVariable int qstnNo, @PathVariable String sysNo) {
-		log.info(qstnNo+"번 질문 삭제하기");
 		int result = qnaboardService.eraseQstn(qstnNo);
-		log.info("삭제된 행의 수: "+ result);
 		return  "redirect:/qna/"+sysNo+"/list";
 	}
 	
@@ -373,8 +341,6 @@ public class QnaController {
 	@GetMapping(value="/{sysNo}/read/comment")
 	public String readComment(@RequestParam int qstnNo, Model model) {
 		List<QSTNComment> list = qnaboardService.getCommentList(qstnNo);
-		log.info("QSTN댓글 읽기" );
-		log.info(list);
 		model.addAttribute("list",list);
 		return "qnaboard/qnaCmntList";
 	}
@@ -389,9 +355,6 @@ public class QnaController {
 	@ResponseBody
 	public QSTNComment writeComment(@RequestBody QSTNComment qComment){
 		//RequestBody안에는 json타입으로 있어야 함.
-		log.info("QSTN댓글달기");
-		log.info(qComment);
-		
 		qComment = qnaboardService.writeComment(qComment);
 		return qComment;
 	}
@@ -404,8 +367,6 @@ public class QnaController {
 	@PostMapping(value="/{sysNo}/update/comment", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public QSTNComment updateComment(@RequestBody QSTNComment qComment) {
-		log.info("QSTN댓글 수정");
-		log.info(qComment);
 		qnaboardService.updateComment(qComment);
 		return qComment;
 	}
@@ -418,7 +379,6 @@ public class QnaController {
 	@GetMapping(value="{sysNo}/delete/comment")
 	@ResponseBody
 	public int deleteComment(@RequestParam int qstnCmntNo) {
-		log.info("QSTN댓글 삭제");
 		qnaboardService.deleteComment(qstnCmntNo);
 		return qstnCmntNo;
 	}

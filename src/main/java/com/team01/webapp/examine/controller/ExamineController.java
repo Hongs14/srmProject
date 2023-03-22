@@ -28,12 +28,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
 
 import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.examine.service.IExamineService;
-import com.team01.webapp.interceptor.EchoHandler;
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.ExamineList;
@@ -42,12 +39,9 @@ import com.team01.webapp.model.Users;
 import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
 
-import lombok.extern.log4j.Log4j2;
-
 
 @Controller
 @RequestMapping("/examine")
-@Log4j2
 public class ExamineController {
 
 	@Autowired
@@ -68,7 +62,6 @@ public class ExamineController {
 	 */
 	@GetMapping(value="/list")
 	public String getExamineList(ExamineFilter examineFilter , HttpSession session,Model model) {
-		log.info("실행");
 		
 		examineFilter = examineService.filterList(examineFilter);
 		
@@ -95,7 +88,6 @@ public class ExamineController {
 	 */
 	@GetMapping(value="/list/{srNo}")
 	public String getExamineDetail(@PathVariable String srNo, ExamineFilter examineFilter , HttpSession session,Model model) {
-		log.info("실행");
 		
 		examineFilter = examineService.filterList(examineFilter);
 		
@@ -125,8 +117,6 @@ public class ExamineController {
 	 */
 	@PostMapping(value="/filter/{pageNo}", produces="application/json; charset=UTF-8")
 	public String getExamineFilter(@PathVariable int pageNo, @RequestBody ExamineList examineList, Model model, Pager pager) {
-		log.info("실행");
-		log.info("pageNo"+pageNo);
 		pager = examineService.returnPage(pageNo,pager,examineList);
 		
 		List<Examine> list = examineService.getExamineList(pager, examineList);
@@ -146,7 +136,6 @@ public class ExamineController {
 	 */
 	@GetMapping(value="/detail/{srNo}")
 	public String getExamineDetail(@PathVariable String srNo, HttpSession session, Model model) {
-		log.info("실행");
 		
 		//로그인 유저 정보 가져오기
 		int userNo = (Integer) session.getAttribute("userNo");
@@ -170,8 +159,6 @@ public class ExamineController {
 	 */
 	@PostMapping(value="/detail", produces="application/json; charset=UTF-8")
 	public String updateExamine(@RequestBody Examine examine,HttpSession session,Model model)throws Exception {
-		log.info("실행");
-		log.info(examine);
 		
 		String srNo = examine.getSrNo();
 		Examine selectExamine = examineService.getExamine(srNo);
@@ -196,14 +183,12 @@ public class ExamineController {
 	 */
 	@GetMapping("/fileDownload")
 	public void download(int srFileNo,@RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
-		log.info("실행");
 		
 		SrFile srFile = examineService.selectFileDownload(srFileNo);
 		
 		String originalName = srFile.getSrFileActlNm();
 		String savedName = srFile.getSrFilePhysNm();
 		String contentType = srFile.getSrFileExtnNm();
-		log.info("userAgent: "+userAgent);
 		
 		//originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩하는 방법
 		if(userAgent.contains("Trident")|| userAgent.contains("MSIE")) {
@@ -222,8 +207,7 @@ public class ExamineController {
 		//응답 바디에 파일 데이터 실기
 		String filePath = "C:/OTI/uploadfiles/request/"+srFile.getSrNo()+"/"+savedName;
 		File file = new File(filePath);
-		log.info("file: "+ file);
-				
+		
 		if(file.exists()) {
 			InputStream is = new FileInputStream(file);
 			OutputStream os = response.getOutputStream();
@@ -244,7 +228,6 @@ public class ExamineController {
 	 */
 	@PostMapping(value="/processing")
 	public String updateExamineProcessing(@RequestBody ExamineList examineList,Model model, Pager pager) {
-		log.info("실행");
 
 		examineService.updateExamineProcessing(examineList);
 		
@@ -267,8 +250,6 @@ public class ExamineController {
 	 */
 	@PostMapping(value="/excelDownload")
 	public void excelDownload(@RequestParam List<String> examineArr, HttpServletResponse response) throws IOException {
-		log.info("실행");
-		log.info(examineArr);
 		XSSFWorkbook wb=null;
 		Sheet sheet=null;
 		Row row=null;
@@ -322,10 +303,8 @@ public class ExamineController {
 	
 	@PostMapping(value="/selectUserDp")
 	public String selectUserDp (@RequestBody Examine examine, Model model) {
-		log.info("실행");
 
 		String userOgdp = (String)examine.getUserOgdp();
-		log.info(userOgdp);
 		ExamineFilter userDpList = examineService.selectUserDpList(userOgdp);
 		model.addAttribute("examineFilter",userDpList);
 		return "examine/examineUserDpNm";

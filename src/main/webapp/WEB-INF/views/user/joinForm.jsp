@@ -465,7 +465,6 @@
     		 emptyCheck = 1;
     		
     		 if(idCheck != 1 || pswdCheck != 1 || emlCheck != 1 || emptyCheck != 1 || telnoCheck != 1) {
-	   			console.log("회원가입 실패");
 	   			var body = document.getElementsByTagName("body")[0];
 	   			window.scroll({
 	   	            behavior: 'smooth',

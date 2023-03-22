@@ -17,11 +17,8 @@ import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.model.Alarm;
 import com.team01.webapp.model.Users;
 
-import lombok.extern.log4j.Log4j2;
-
 @Controller
 @RequestMapping("/alarm")
-@Log4j2
 public class AlarmController extends TextWebSocketHandler {
 	
 	@Autowired
@@ -35,7 +32,6 @@ public class AlarmController extends TextWebSocketHandler {
 	 */
 	@GetMapping("list")
 	public String alarmList(HttpSession session, Model model) {
-		log.info("실행");
 		//알림 수
 		int userNo = (Integer) session.getAttribute("userNo");
 		Alarm alarm = new Alarm();
@@ -66,7 +62,6 @@ public class AlarmController extends TextWebSocketHandler {
 	 */
 	@PostMapping(value="categoryAlarm", produces="application/json; charset=UTF-8")
 	public String selectCategoryAlarm(@RequestBody Alarm alarm, Model model) {
-		log.info("실행");
 		List<Alarm> categoryAlarm = alarmService.selectCategoryAlarm(alarm);
 		model.addAttribute("categoryAlarm",categoryAlarm);
 		return "alarm/categoryList";
@@ -79,8 +74,6 @@ public class AlarmController extends TextWebSocketHandler {
 	 */
 	@PostMapping(value="updateAlarmCheck")
 	public String updateAlarmCheck(@RequestBody Alarm alarm) {
-		log.info("실행");
-		log.info(alarm);
 		int alarmNo = alarm.getAlarmNo();
 		alarmService.updateCheck(alarmNo);
 		
@@ -94,10 +87,7 @@ public class AlarmController extends TextWebSocketHandler {
 	 */
 	@PostMapping(value="delete", produces="application/json; charset=UTF-8")
 	public String deleteAlarm(@RequestBody Alarm alarm) {
-		log.info("실행");
-		
 		int alarmNo = alarm.getAlarmNo();
-		log.info(alarmNo);
 		alarmService.deleteAlarm(alarmNo);
 		
 		return "redirect:/alarm/list";

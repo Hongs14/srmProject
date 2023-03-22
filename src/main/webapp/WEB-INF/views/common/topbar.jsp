@@ -21,20 +21,18 @@
 			    socket = sock;
 			    
 			    sock.onopen = function() {
-		           console.log('Info: connection opened.');
+			    
 		       };
 			    // 데이터를 전달 받았을때 
 			    sock.onmessage = onMessage; 
 			    
 			    sock.onclose = function (event) {
-		           console.log('Info: connection closed.');
+			    
 		       };
 			
 			});
 			
 			function onMessage(){
-				console.log("message 실행");
-				
 				let userType = "${sessionScope.loginUser.userType}";
 				
 				countUp();					
@@ -100,13 +98,9 @@
                 <script>
 	                function updateCheck(i) {
 						var srNo = i;
-						console.log(srNo);
 						var alarmNo = document.getElementById("alarmNo").innerText;
-						console.log(alarmNo);
 						var sttsNm = document.getElementById("sttsNm").innerText;
-						console.log(sttsNm);
 						var userType="${sessionScope.loginUser.userType}";
-						console.log(userType);
 						
 						let data = {alarmNo : alarmNo};
 						let url = "";
@@ -121,8 +115,6 @@
 						}else{
 							url = "${pageContext.request.contextPath}/request/list/"+srNo;
 						}
-						
-						console.log(data);
 						
 						$.ajax({
 							url : "${pageContext.request.contextPath}/alarm/updateAlarmCheck",

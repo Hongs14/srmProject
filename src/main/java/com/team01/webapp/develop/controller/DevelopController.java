@@ -7,7 +7,6 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,20 +33,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.team01.webapp.alarm.service.IAlarmService;
 import com.team01.webapp.develop.service.IDevelopService;
 import com.team01.webapp.model.CheckBoxArr;
+import com.team01.webapp.model.DevelopDto;
 import com.team01.webapp.model.DevelopFilter;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.UpdateDevelop;
-import com.team01.webapp.model.DevelopDto;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.util.AlarmInfo;
 import com.team01.webapp.util.Pager;
 
-import lombok.extern.log4j.Log4j2;
-
 @Controller
 @RequestMapping("/develop")
-@Log4j2
 public class DevelopController {
 	
 	@Autowired
@@ -67,7 +63,6 @@ public class DevelopController {
 	 */
 	@GetMapping(value="/list/{pageNo}")
 	public String getDevelopList(@PathVariable int pageNo, DevelopFilter developFilter, HttpSession session, Model model) {
-		log.info("SR개발 목록");
 		
 		developFilter = developService.filterList(developFilter);
 		Users loginUser = developService.getLoginUserInfo((Integer) session.getAttribute("userNo"));
@@ -91,10 +86,7 @@ public class DevelopController {
 	 */
 	@PostMapping(value="/filter/{pageNo}", produces="application/json; charset=UTF-8")
 	public String getDevelopFilter(@PathVariable int pageNo, @RequestBody DevelopDto developDto, Model model, HttpSession session, Pager pager) {
-		log.info("필터링한 목록");
-		log.info("pageNo "+pageNo);
 		pager = developService.returnPage(pageNo, pager, developDto);
-		log.info(pager);
 		List<DevelopDto> list = developService.getDevelopList(pager, developDto);
 		model.addAttribute("develop",list);
 		model.addAttribute("pager",pager);
@@ -120,7 +112,6 @@ public class DevelopController {
 		model.addAttribute("dlist", srDetail);
 		model.addAttribute("devlist", devList);
 		model.addAttribute("loginUser", loginUser);
-		log.info("devList"+devList);
 		model.addAttribute("hrlist",hrlist);
 		model.addAttribute("leader", leader);
 		//알림 수 및 리스트
@@ -138,10 +129,8 @@ public class DevelopController {
 	 */
 	@GetMapping("/file/{srFileNo}")
 	public void download(@PathVariable int srFileNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception{
-		log.info("파일 다운로드");
 		
 		SrFile srFile = developService.getSrFile(srFileNo);
-		log.info(srFile);
 		String originalName = srFile.getSrFileActlNm();
 		String savedName = srFile.getSrFilePhysNm();
 		String contentType = srFile.getSrFileExtnNm();
@@ -159,7 +148,6 @@ public class DevelopController {
 		
 		// 응답 바디에 파일 데이터 싣기
 		String filePath = "C:/OTI/uploadfiles/request/"+srFile.getSrNo()+"/"+ savedName;
-		log.info("filePath: "+filePath);
 		File file = new File(filePath);
 		if(file.exists()) {
 			InputStream is = new FileInputStream(file);
@@ -187,8 +175,6 @@ public class DevelopController {
 	
 		
 		List<Users> list = developService.selectDeveloperList(userDpNm, userNo, sDate, eDate);
-		log.info("팀별 개발자 조회: " + userDpNm);
-		log.info(list);
 		model.addAttribute("devlistByDp", list);
 		return "develop/devlistView";
 	}
@@ -202,8 +188,6 @@ public class DevelopController {
 	@ResponseBody
 	public List<Users> updateDevLeader(@RequestParam int userNo) {
 		List<Users> user = developService.selectDevName(userNo);
-		log.info("개발담당자 선택");
-		log.info(user);
 		return user;
 	}
 	
@@ -219,9 +203,6 @@ public class DevelopController {
 		 for(int i=0; i<checkBoxArr.size(); i++) {
 		      user.addAll(developService.selectDevName(checkBoxArr.get(i).getUserNo()));
 		 }
-	 
-	     log.info("HR등록 인력리스트");
-	     log.info(user);
 	     model.addAttribute("pickName", user);  
 	     
 	     return "develop/selectHr";
@@ -234,9 +215,7 @@ public class DevelopController {
 	 */
 	@PostMapping(value="/updateHr")
     public String insertHrList(UpdateDevelop updateDevelop, HttpSession session){
-		log.info(updateDevelop);
 		int result = developService.updateDevelopSr(updateDevelop);
-		log.info("HR등록 성공시 1 / 실패시 0: "+ result);
 		alarmService.insertAlarm(updateDevelop.getSrNo(), session);
 		
 		return "redirect:/develop/list/1";

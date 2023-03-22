@@ -6,23 +6,17 @@
 	var ntcCountCmnt = parseInt("${countNtcComment}",10);
 	
 	$(document).ready(function(){
-	   console.log("댓글 불러오기");
 	   readComment();
-	   console.log(ntcCountCmnt);
-	   
 	});
 	
 	function readComment(){
 	   //댓글 불러오기
 	   let ntcNo ='${notice.ntcNo}';
-	   console.log(ntcNo);
 	   $.ajax({
 		url:"${pageContext.request.contextPath}/notice/read/comment?ntcNo="+ntcNo,
 	 	type:"get",
 	 	dataType: "html",
 	 	success:function(data){
-	    	console.log("통신성공: "+ntcCountCmnt);
-	    	console.log(data);
 	    	$('#ntcComment').html(data);
 	        
 	 		}
@@ -32,20 +26,17 @@
 	
 	function writeComment(){
 		//댓글 작성
-		console.log("댓글달기 실행");
 		let content = $('#ntcCmntCn').val();
 		let userNo = '${sessionScope.loginUser.userNo}';
 		let ntcNo = '${notice.ntcNo}';
 		
 		let data = {userNo: userNo, ntcNo: ntcNo, ntcCmntCn: content};
-		console.log(data);
 		$.ajax({
 		   url: "${pageContext.request.contextPath}/notice/write/comment",
 		   method: "post",
 		   data: JSON.stringify(data),
 		   contentType: "application/json; charset=UTF-8"
 		}).done((data) => {
-		   console.log(data);
 		   $('#ntcCmntCn').val('');
 		   readComment();
 		   $('#cmntCount').html('댓글('+(ntcCountCmnt+1)+')');
@@ -61,8 +52,6 @@
 	
 	function udpateComplete(i){
 		//댓글 수정
-		console.log("댓글수정 ajax");
-		console.log(i);
 		let content = $('#commentContent'+i).val();
 		 let ntcCmntNo = i;
 		let data = {ntcCmntNo: ntcCmntNo, ntcCmntCn: content};  
@@ -75,20 +64,17 @@
 		   $('#commentContent'+i).attr('disabled','disabled');
 		   $('#updateToggle'+i).html("수정");
 		   $('#updateToggle'+i).attr('onclick', 'updateCButton('+i+')');
-		   console.log(data);
 		}); 
 	};
 	
 	function deleteComment(i){
 		//댓글 삭제
-		console.log("댓글삭제"+i);
 		let ntcCmntNo = i;
 		$.ajax({
 		   url: "${pageContext.request.contextPath}/notice/delete/comment",
 		   method: "get",
 		   data: 'ntcCmntNo='+ntcCmntNo
 		}).done((data) => {
-		   console.log("성공");
 		   $('#cmntCount').html('댓글('+(ntcCountCmnt-1)+')');
 		   ntcCountCmnt -= 1;
 		   $('#ntcComment').empty(); 
@@ -199,9 +185,7 @@
 	$(document).ready(function () {
 		var ntcNo = document.getElementById('ntcNo').value;
 		var str = location.href;
-	  	console.log(str);
 		var index = str.indexOf("?")+1;
-		console.log(index);
 	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
 	 
 	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
@@ -211,16 +195,10 @@
 	 
 	    // str의 값은 a=1&b=first&c=true
 	    str = str.substring(index, lastIndex); 
-	    console.log(str);
-
 	    var arr = str.split("=");
-	    console.log(arr);
-	    
 	    var sysNo = arr[1];
-	    console.log(sysNo);
 	    
 		let data = {ntcNo : ntcNo};
-		console.log(data);
      			
 		$.ajax({
 			type: "post",
@@ -239,7 +217,6 @@
 	function addNoticeFile(obj){
 		var maxFileCnt = 5; // 첨부파일 최대 개수
 		var curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
-		console.log(curFileCnt);
 		for (const file of obj.files) {
 			var reader = new FileReader();
 			reader.onload = function() {
@@ -285,16 +262,12 @@
 	    for (var i = 0; i < filesArr.length; i++) {
 	        // 삭제되지 않은 파일만 폼데이터에 담기
 	        if (!filesArr[i].is_delete) {
-	        	console.log("돌아감");
-	        	console.log(filesArr[i]);
 	            formData.append("ntcMFile", filesArr[i]);
 	        }
 	    }
 	    
 	    var str = location.href;
-	  	console.log(str);
 		var index = str.indexOf("?")+1;
-		console.log(index);
 	    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
 	 
 	    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
@@ -304,13 +277,8 @@
 	 
 	    // str의 값은 a=1&b=first&c=true
 	    str = str.substring(index, lastIndex); 
-	    console.log(str);
-
 	    var arr = str.split("=");
-	    console.log(arr);
-	    
 	    var sysNo = arr[1];
-	    console.log(sysNo);
 	    
 	    var ntcCn = document.getElementById('ntcCn').value;
 	    formData.append("ntcCn",ntcCn);

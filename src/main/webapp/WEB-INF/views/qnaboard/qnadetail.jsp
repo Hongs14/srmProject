@@ -7,24 +7,18 @@
 		var qCountCmnt = parseInt("${countQstnComment}",10);
 	
   		$(document).ready(function(){
-  			console.log("댓글 불러오기");
   			readComment();
-  			console.log(qCountCmnt);
-  			
   		});
   		
   		function readComment(){
   			//댓글 불러오기
   			let qstnNo ='${qstn.qstnNo}';
   			let sysNo = "${session}";
-  			console.log(qstnNo);
   			$.ajax({
 		    	url:"${pageContext.request.contextPath}/qna/"+sysNo+"/read/comment?qstnNo="+qstnNo,
 		        type:"get",
 		        dataType: "html",
 		        success:function(data){
-		        	console.log("통신성공: "+qCountCmnt);
-		        	console.log("%%%%%%%%%%%%%%%%%%%%%%"+data);
 		        	$('#qComment').html(data);
 		        	
 		         }
@@ -34,21 +28,18 @@
   		
 		function writeComment(){
 			//댓글 작성
-			console.log("댓글달기 실행");
 			let content = $('#qnaCmntCn').val();
 			let qcwriterNo = '${sessionScope.loginUser.userNo}';
 			let qstnNo = '${qstn.qstnNo}';
 			let sysNo = "${session}";
 			
 			let data = {userNo: qcwriterNo, qstnNo: qstnNo, qstnCmntCn: content, sysNo:sysNo};
-			console.log(data);
 			$.ajax({
 				url: "${pageContext.request.contextPath}/qna/"+sysNo+"/write/comment",
 				method: "post",
 				data: JSON.stringify(data),
 				contentType: "application/json; charset=UTF-8"
 			}).done((data) => {
-				console.log(data);
 				$('#qnaCmntCn').val('');
 				readComment();
 				$('#cmntCount').html('댓글('+(qCountCmnt+1)+')');
@@ -64,8 +55,6 @@
 
 		function udpateComplete(i){
 			//댓글 수정
-			console.log("댓글수정 ajax");
-			console.log(i);
 			let content = $('#commentContent'+i).val();
 			let sysNo = "${session}";
 		 	let qstnCmntNo = i;
@@ -79,13 +68,11 @@
 				$('#commentContent'+i).attr('disabled','disabled');
 				$('#updateToggle'+i).html("수정");
 				$('#updateToggle'+i).attr('onclick', 'updateCButton('+i+')');
-				console.log(data);
 			}); 
 		};
 		
 		function deleteComment(i){
 			//댓글 삭제
-			console.log("댓글삭제"+i);
 			let sysNo = "${session}";
 			let qstnCmntNo = i;
 			$.ajax({
@@ -93,7 +80,6 @@
 				method: "get",
 				data: 'qstnCmntNo='+qstnCmntNo
 			}).done((data) => {
-				console.log("성공");
 				$('#cmntCount').html('댓글('+(qCountCmnt-1)+')');
         		qCountCmnt -= 1;
 				$('#qComment').empty(); 

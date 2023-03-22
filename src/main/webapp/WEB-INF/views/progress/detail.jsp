@@ -375,7 +375,7 @@ color:white;
 									<h5 class="modal-title" id="exampleModalScrollableTitle">
 							          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
 							        	<small class="text-white">
-							        		<b>삭제</b>
+							        		<b>안내</b>
 							        	</small>
 									</h5>
 									<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">

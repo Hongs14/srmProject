@@ -11,23 +11,17 @@
 	var ntcCountCmnt = parseInt("${countNtcComment}",10);
 	
 	$(document).ready(function(){
-	   console.log("댓글 불러오기");
 	   readComment();
-	   console.log(ntcCountCmnt);
-	   
 	});
 	
 	function readComment(){
 	   //댓글 불러오기
 	   let ntcNo ='${notice.ntcNo}';
-	   console.log(ntcNo);
 	   $.ajax({
     	url:"${pageContext.request.contextPath}/notice/read/comment?ntcNo="+ntcNo,
      	type:"get",
      	dataType: "html",
      	success:function(data){
-        	console.log("통신성공: "+ntcCountCmnt);
-        	console.log(data);
         	$('#ntcComment').html(data);
 	        
      		}
@@ -37,20 +31,17 @@
 	
 	function writeComment(){
 		//댓글 작성
-		console.log("댓글달기 실행");
 		let content = $('#ntcCmntCn').val();
 		let userNo = '${sessionScope.loginUser.userNo}';
 		let ntcNo = '${notice.ntcNo}';
 		
 		let data = {userNo: userNo, ntcNo: ntcNo, ntcCmntCn: content};
-		console.log(data);
 		$.ajax({
 		   url: "${pageContext.request.contextPath}/notice/write/comment",
 		   method: "post",
 		   data: JSON.stringify(data),
 		   contentType: "application/json; charset=UTF-8"
 		}).done((data) => {
-		   console.log(data);
 		   $('#ntcCmntCn').val('');
 		   readComment();
 		   $('#cmntCount').html('댓글('+(ntcCountCmnt+1)+')');
@@ -66,8 +57,6 @@
 	
 	function udpateComplete(i){
 		//댓글 수정
-		console.log("댓글수정 ajax");
-		console.log(i);
 		let content = $('#commentContent'+i).val();
 		 let ntcCmntNo = i;
 		let data = {ntcCmntNo: ntcCmntNo, ntcCmntCn: content};  
@@ -80,20 +69,17 @@
 		   $('#commentContent'+i).attr('disabled','disabled');
 		   $('#updateToggle'+i).html("수정");
 		   $('#updateToggle'+i).attr('onclick', 'updateCButton('+i+')');
-		   console.log(data);
 		}); 
 	};
 	
 	function deleteComment(i){
 		//댓글 삭제
-		console.log("댓글삭제"+i);
 		let ntcCmntNo = i;
 		$.ajax({
 		   url: "${pageContext.request.contextPath}/notice/delete/comment",
 		   method: "get",
 		   data: 'ntcCmntNo='+ntcCmntNo
 		}).done((data) => {
-		   console.log("성공");
 		   $('#cmntCount').html('댓글('+(ntcCountCmnt-1)+')');
 		   ntcCountCmnt -= 1;
 		   $('#ntcComment').empty(); 

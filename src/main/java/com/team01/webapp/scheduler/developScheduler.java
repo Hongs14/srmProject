@@ -6,14 +6,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.team01.webapp.develop.service.IDevelopService;
-import com.team01.webapp.notice.service.INoticeService;
-
-import lombok.extern.log4j.Log4j2;
 
 
 @EnableScheduling
 @Component
-@Log4j2
 public class developScheduler {
 
 	@Autowired
@@ -25,11 +21,10 @@ public class developScheduler {
 	@Scheduled(cron="0 5 12 * * *")
 	public void changeStatus() {
 		//해당 날짜가 되면 개발계획 -> 개발중으로 바뀌기
-		log.info("스케줄러 실행");
 		
 		int result = developService.changeStatus();
 		if(result == 1) {
-			log.info("성공");
+			
 		}
 		
 	}

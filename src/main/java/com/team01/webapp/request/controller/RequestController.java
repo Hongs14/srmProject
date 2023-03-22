@@ -72,7 +72,6 @@ public class RequestController {
 	 */
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public String getRequestFilter(HttpSession session, RequestFilter requestFilter, Model model) {
-		log.info("실행");
 		requestFilter = requestService.getFilterList(requestFilter);
 		model.addAttribute("requestfilter", requestFilter);
 		model.addAttribute("command", "list");
@@ -96,7 +95,6 @@ public class RequestController {
 	 */
 	@RequestMapping(value="/list/{srNo}", method = RequestMethod.GET)
 	public String getDetailList(@PathVariable String srNo, HttpSession session, RequestFilter requestFilter, Model model) {
-		log.info("실행");
 		requestFilter = requestService.getFilterList(requestFilter);
 		
 		//알림 수 및 리스트
@@ -143,7 +141,6 @@ public class RequestController {
 	 */
 	@RequestMapping(value="/write", method = RequestMethod.GET)
 	public String writeRequest(RequestFilter requestFilter,  Model model, Pager pager) {
-		log.info("정보 로그 실행");
 		requestFilter = requestService.getFilterList(requestFilter);
 		model.addAttribute("requestfilter", requestFilter);
 		model.addAttribute("pager", pager);
@@ -164,12 +161,10 @@ public class RequestController {
 	 */
 	@RequestMapping(value="/detail/{srNo}", method = RequestMethod.GET)
 	public String getDetail(@PathVariable String srNo, Model model, Pager pager) {
-		log.info("실행"+srNo);
 		Request request = requestService.getRequestDetail(srNo);
 		List<MultipartFile> srFile = requestService.selectRequestFileDetail(srNo);
 		model.addAttribute("sr", request);
 		model.addAttribute("srFile", srFile);
-		log.info("request: "+request+" srFile: "+srFile);
 		return "request/ajaxDetail";
 		
 	}
@@ -187,14 +182,12 @@ public class RequestController {
 	 */
 	@RequestMapping(value="/fileDownload", method = RequestMethod.GET)
 	public void downloadRequestFile(String requestFileNo,String srNo, @RequestHeader("User-Agent") String userAgent, HttpServletResponse response) throws Exception {
-		log.info("실행"+ "fileNo: "+requestFileNo);
 		
 			SrFile srFile = requestService.selectFileDownload(requestFileNo);
 			
 			String originalName = srFile.getSrFileActlNm();
 			String savedName = srFile.getSrFilePhysNm();
 			String contentType = srFile.getSrFileExtnNm();
-			log.info("userAgent: "+userAgent);
 			
 			//originalName이 한글이 포함되어 있을 경우, 브라우저별로 한글을 인코딩하는 방법
 			if(userAgent.contains("Trident")|| userAgent.contains("MSIE")) {
@@ -213,7 +206,6 @@ public class RequestController {
 			//응답 바디에 파일 데이터 실기
 			String filePath = "C:/OTI/uploadfiles/request/"+srNo+"/"+savedName;
 			File file = new File(filePath);
-			log.info("file: "+ file);
 					
 			if(file.exists()) {
 				InputStream is = new FileInputStream(file);
@@ -240,7 +232,6 @@ public class RequestController {
 		int rows =0;
 		String srNo = "";
 		try {
-			log.info("sr: "+sr);
 			String content = sr.getSrCn();
 			content = content.replace("\r\n", "<br>");
 			content = content.replace("\r", "<br>");
@@ -251,7 +242,6 @@ public class RequestController {
 				sr.setSrStd(Jsoup.clean(sr.getSrStd(), Whitelist.basic()));
 			}
 			int userNo = (int) session.getAttribute("userNo");
-			log.info("loginUser:"+ userNo);
 			sr.setSrCustNo(userNo); 
 			sr.setSysNo(requestService.getSysNo(userNo));
 			sr.setSttsNo(1);
@@ -285,7 +275,6 @@ public class RequestController {
 					if(!file.exists()) {
 						try {
 							Files.createDirectories(Paths.get(filePath));
-							log.info("폴더 생성 완료");
 							mf.get(i).transferTo(file);
 						} catch (Exception e) {
 							log.info("생성 실패 : " + filePath);
@@ -300,7 +289,6 @@ public class RequestController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		log.info("변경 행수 : "+ rows);
 		return "redirect:/request/detail/"+srNo;
 	}
 	
@@ -314,7 +302,6 @@ public class RequestController {
 	 */
 	@RequestMapping(value="/update/{srNo}", method = RequestMethod.GET)
 	public String updateRequest(@PathVariable String srNo, Model model) {
-		log.info("실행");
 		Request sr = requestService.getRequestDetail(srNo);
 		List<MultipartFile> srFile = requestService.selectRequestFileDetail(srNo);
 		model.addAttribute("command","update");
@@ -335,7 +322,6 @@ public class RequestController {
 	public String updateRequest(SR sr, SrFile srFile, HttpSession session) {
 		int rows =0;
 		try {
-			log.info("sr: "+sr);
 			sr.setSrTtl(Jsoup.clean(sr.getSrTtl(), Whitelist.basic()));
 			String srNo = sr.getSrNo();
 			String content = sr.getSrCn();
@@ -344,7 +330,6 @@ public class RequestController {
 			content = content.replace("\n", "<br>");
 			sr.setSrCn(Jsoup.clean(content, Whitelist.basic()));
 			int userNo = (int) session.getAttribute("userNo");
-			log.info("loginUser:"+ userNo);
 			sr.setSrCustNo(userNo); 
 			sr.setSysNo(requestService.getSysNo(userNo));
 			sr.setSttsNo(1);
@@ -352,15 +337,12 @@ public class RequestController {
 			
 			//기존 파일을 삭제했다면 삭제처리
 			List<String> df = sr.getDeleteFile();
-			log.info("DeleteFile: "+df);
 			if(df!=null && !df.isEmpty()) {
 				for(int j=0; j<df.size(); j++) {
 					String filePath = "C:/OTI/uploadfiles/request/" + sr.getSrNo() + "/" + df.get(j);
 					File file = new File(filePath);
-					log.info("filePath"+filePath);
 					if(file.exists()) {
 						if(file.delete()) {
-							log.info("파일 삭제 성공");
 							requestService.deleteExistingFile(df.get(j));
 						} else {
 							log.info("파일 삭제 실패");
@@ -393,7 +375,6 @@ public class RequestController {
 					if(!file.exists()) {
 						try {
 							Files.createDirectories(Paths.get(filePath));
-							log.info("폴더 생성 완료");
 							mf.get(i).transferTo(file);
 						} catch (Exception e) {
 							log.info("생성 실패 : " + filePath);
@@ -408,7 +389,6 @@ public class RequestController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		log.info("변경 행수 : "+ rows);
 		String srNo = sr.getSrNo();
 		return "redirect:/request/detail/"+srNo;
 	}
@@ -423,7 +403,6 @@ public class RequestController {
 	 */
 	@RequestMapping(value="/delete/{srNo}", method = RequestMethod.GET)
 	public String deleteRequest(@PathVariable String srNo, Model model) {
-		log.info("실행");
 		int rows = requestService.deleteRequest(srNo);
 		if(rows == 1) {
 			model.addAttribute("result", "success");
