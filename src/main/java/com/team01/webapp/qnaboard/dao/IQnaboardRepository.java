@@ -10,31 +10,36 @@ import com.team01.webapp.model.QSTNFile;
 import com.team01.webapp.util.Pager;
 
 public interface IQnaboardRepository {
+	
+	/**Q&A글  CRUD
+	 * @author : 정홍주
+	 */
 	public List<QSTN> selectQstnList(QSTN qstn);
 	public int totalRow(QSTN qstn);
 	public Pager returnPager(int pageNo, Pager pager, QSTN qstn);
 	public QSTN selectDetail(int qstnNo);
 	
 	public int insertQSTN(QSTN qstn);
-	public void	insertComment(QSTNComment qComment);
-	
-	public int countComment(int qstnNo);
-	
-	public List<QSTNComment> selectCommentList(int qstnNo);
-	public QSTNComment selectComment();
-	
-	public void updateComment(QSTNComment qComment);
-	public void deleteComment(int qstnCmntNo);
-	
 	public int countInqCnt(int qstnNo);
 	public List<MultipartFile> selectQstnFileDetail(int qstnNo);
 	public QSTNFile selectFileDownload(int qstnFileNo);
 	public int insertQstnFileUpload(QSTNFile qstnFile);
+	
 	public int updateQstn(QSTN qstn);
 	public int updateQstnFile(QSTNFile qstnFile);
 	public int deleteQstn(int qstnNo);
 	
 	public int deleteExistingFile(String qstnFilePhysNm);
-
+	
+	
+	/**Q&A댓글  CRUD
+	 * @author : 정홍주
+	 */
+	public void	insertComment(QSTNComment qComment);
+	public int countComment(int qstnNo);
+	public List<QSTNComment> selectCommentList(int qstnNo);
+	public QSTNComment selectComment();
+	public void updateComment(QSTNComment qComment);
+	public void deleteComment(int qstnCmntNo);
 	
 }
