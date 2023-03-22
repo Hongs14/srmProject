@@ -107,7 +107,6 @@
 		function addQstnFile(obj){
 			//첨부파일 추가 
 			let curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
-			console.log(curFileCnt);
 			for (const file of obj.files) {
 				let reader = new FileReader();
 				reader.onload = function() {
@@ -137,15 +136,12 @@
 		
 		function qstnWrite() {
 			//QSTN 작성
-			console.log("Qna 파일 작성");
 			// 폼 데이터 담기
 			let form = document.querySelector("form");
 		    let formData = new FormData(form);
 		    for (let i = 0; i < filesArr.length; i++) {
 		        // 삭제되지 않은 파일만 폼데이터에 담기
 		        if (!filesArr[i].is_delete) {
-		        	console.log("삭제되지 않은 파일 담기");
-		        	console.log(filesArr[i]);
 		            formData.append("qstnMFile", filesArr[i]);
 		        }
 		    }
@@ -161,7 +157,6 @@
 		    
 		    let userNo = $('#userNo').val();
 		    formData.append("userNo", userNo);
-		    console.log(sysNo+" "+qstnTtl+" "+qstnCn+" "+userNo);
 		    
 		    let qstnSecret = "";
 		    if($('#qstnSecret').is(':checked')){
@@ -193,7 +188,6 @@
 		/* 기존의 첨부파일 삭제 */
 		function deleteExistingFile(qstnFilePhysNm, qstnFileNo) {
 			fileNmArray.push(qstnFilePhysNm);
-			console.log(fileNmArray);
 			
 			document.querySelector("#file" + qstnFileNo).remove();
 		}
@@ -207,12 +201,10 @@
 		    for (var i = 0; i < filesArr.length; i++) {
 		        // 삭제되지 않은 파일만 폼데이터에 담기
 		        if (!filesArr[i].is_delete) {
-		        	console.log("storeFile: "+filesArr[i]);
 		            formData.append("qstnMFile", filesArr[i]);
 		        }
 		    }
 		    for (let j = 0; j< fileNmArray.length; j++){
-		    	console.log(fileNmArray[j]);
 		    	formData.append("deleteFile",fileNmArray[j]);
 		    }
 		    let sysNo = "${session}";
@@ -234,8 +226,6 @@
 		    	qstnSecret = "N";
 		    }
 		    formData.append("qstnSecret", qstnSecret);
-		   		    
-		    console.log(sysNo+" "+qstnCn+" "+qstnTtl+" "+qstnNo);
 		    
 		    $.ajax({
 				type: "POST",

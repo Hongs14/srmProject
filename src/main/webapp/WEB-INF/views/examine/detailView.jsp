@@ -104,7 +104,6 @@
 			function sttsNmChange() {
 				var sttsNmSelect = document.getElementById("examineSttsNm");
 				var sttsNm = sttsNmSelect.options[document.getElementById("examineSttsNm").selectedIndex].text;
-				console.log(sttsNm);
 				
 				if(sttsNm == "접수" ){
 					$('#srOpnn').addClass('d-none');
@@ -198,11 +197,8 @@
 		var sttsNmSelect = document.getElementById("examineSttsNm");
 		
 		var srReqSe = srReqSeSelect.options[document.getElementById("srReqSe").selectedIndex].text;
-		console.log(srReqSe);
 		var srPry = srPrySelect.options[document.getElementById("srPry").selectedIndex].text;
-		console.log(srPry);
 		var sttsNm = sttsNmSelect.options[document.getElementById("examineSttsNm").selectedIndex].text;
-		console.log(sttsNm);
 		var examineSttsNm = "${examine.sttsNm}";
 		
 		if(sttsNm == examineSttsNm){
@@ -213,7 +209,6 @@
 		}
 		
 		let data = {srNo : srNo, srReqSe : srReqSe, srPry : srPry, sttsNm : sttsNm, srOpnn : srOpnn}
-		console.log(data);
 		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/examine/detail",

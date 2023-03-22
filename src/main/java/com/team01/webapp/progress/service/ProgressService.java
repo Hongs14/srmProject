@@ -28,10 +28,7 @@ import com.team01.webapp.model.Users;
 import com.team01.webapp.progress.dao.IProgressRepository;
 import com.team01.webapp.util.Pager;
 
-import lombok.extern.log4j.Log4j2;
-
 @Service
-@Log4j2
 public class ProgressService implements IProgressService {
 	
 	@Autowired
@@ -170,8 +167,6 @@ public class ProgressService implements IProgressService {
 		
 		for(int i=0; i<developerList.size(); i++) {
 			List<DeveloperSR> srList = progressRepository.selectDeveloperSR(developerList.get(i).getUserNo());
-			log.info(srList);
-			
 			developerList.get(i).setSrList(srList);
 		}
 		

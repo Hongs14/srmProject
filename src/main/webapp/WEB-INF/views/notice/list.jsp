@@ -135,8 +135,6 @@
 
 				<script>
 					$(document).ready(function () {
-						console.log("시작");
-						
 						let today = new Date();   
 						
 					  	let year = today.getFullYear(); // 년도
@@ -145,9 +143,6 @@
 					  	
 					  	var defaltStartDate = (year + '/' + ((month<9? "0"+(month-2) : (month-2))) + '/' + date);
 					  	var defaltEndDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
-					  	
-					  	console.log(defaltStartDate);
-					  	console.log(defaltEndDate);
 					  	
 					  	document.getElementById("dateStart").value = defaltStartDate;
 					  	document.getElementById("dateEnd").value = defaltEndDate;
@@ -168,24 +163,15 @@
 					    str = str.substring(index, lastIndex); 
 
 					    var arr = str.split("=");
-					    console.log(arr);
-					    
 					    var sysNo = arr[1];
-					    console.log(sysNo);
 					    
 						var ntcTtl = document.getElementById("keyword").value;
 						
 						if(ntcTtl !== "") {
 							ntcTtl = "%" + ntcTtl + "%";
 						}
-						
-						console.log(ntcTtl);
-						console.log(startDate);
-						console.log(endDate);
 
 						let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, sysNo : sysNo};
-						
-						console.log(data);
 						
 						$.ajax({
 							url : "${pageContext.request.contextPath}/notice/filter/1",
@@ -195,7 +181,6 @@
 						}).done((data) => {
 							$("#noticeList").html(data)
 							var ntcNo = "${ntcNo}";
-							console.log("공지사항 디테일 No"+ntcNo);
 							var bg = "bgChange-"+ntcNo;
 							$('#' + bg).addClass("bgChange");
 						});
@@ -203,14 +188,11 @@
 					
 					
 					function searchNoticeList(pageNo) {
-						console.log(pageNo);
 						var startDate = document.getElementById("dateStart").value;
 						var endDate = document.getElementById("dateEnd").value;
 						
 						var str = location.href;
-					  	console.log(str);
 						var index = str.indexOf("?")+1;
-						console.log(index);
 					    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
 					 
 					    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
@@ -220,27 +202,14 @@
 					 
 					    // str의 값은 a=1&b=first&c=true
 					    str = str.substring(index, lastIndex); 
-					    console.log(str);
-
 					    var arr = str.split("=");
-					    console.log(arr);
-					    
 					    var sysNo = arr[1];
-					    console.log(sysNo);
-						
 						var ntcTtl = document.getElementById("keyword").value;
 						
 						if(ntcTtl !== "") {
 							ntcTtl = "%" + ntcTtl + "%";
 						}
-						
-						console.log(ntcTtl);
-						console.log(startDate);
-						console.log(endDate);
-
 						let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl, sysNo : sysNo};
-						
-						console.log(data);
 						
 						$.ajax({
 							url : "${pageContext.request.contextPath}/notice/filter/"+pageNo,
@@ -263,9 +232,6 @@
 					  	var defaltStartDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
 					  	var defaltEndDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
 					  	
-					  	console.log(defaltStartDate);
-					  	console.log(defaltEndDate);
-					  	
 					  	document.getElementById("dateStart").value = defaltStartDate;
 					  	document.getElementById("dateEnd").value = defaltEndDate;
 					  	
@@ -277,9 +243,7 @@
 						var ntcMonth = null;
 						
 						var str = location.href;
-					  	console.log(str);
 						var index = str.indexOf("?")+1;
-						console.log(index);
 					    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
 					 
 					    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
@@ -289,31 +253,16 @@
 					 
 					    // str의 값은 a=1&b=first&c=true
 					    str = str.substring(index, lastIndex); 
-					    console.log(str);
-
 					    var arr = str.split("=");
-					    console.log(arr);
-					    
 					    var sysNo = arr[1];
-					    console.log(sysNo);
-						
 						var ntcTtl = document.getElementById("keyword").value;
 						
 						if(ntcTtl !== "") {
 							ntcTtl = "%" + ntcTtl + "%";
 						}
-
-						console.log(ntcTtl);
-						console.log(startDate);
-						console.log(endDate);
-						console.log(ntcToday);
-						console.log(ntcWeek);
-						console.log(ntcMonth);
-
+						
 						let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
 								ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
-						
-						console.log(data);
 						
 						$.ajax({
 							url : "${pageContext.request.contextPath}/notice/filter/"+pageNo,
@@ -339,9 +288,6 @@
 					  	var defaltStartDate = (year + '/' + (lastMonth<9? "0"+lastMonth : lastMonth) + '/' + lastDay);
 					  	var defaltEndDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
 					  	
-					  	console.log(defaltStartDate);
-					  	console.log(defaltEndDate);
-					  	
 					  	document.getElementById("dateStart").value = defaltStartDate;
 					  	document.getElementById("dateEnd").value = defaltEndDate;
 					  	
@@ -353,9 +299,7 @@
 						var ntcMonth = null;
 						
 						var str = location.href;
-					  	console.log(str);
 						var index = str.indexOf("?")+1;
-						console.log(index);
 					    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
 					 
 					    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
@@ -365,31 +309,16 @@
 					 
 					    // str의 값은 a=1&b=first&c=true
 					    str = str.substring(index, lastIndex); 
-					    console.log(str);
-
 					    var arr = str.split("=");
-					    console.log(arr);
-					    
 					    var sysNo = arr[1];
-					    console.log(sysNo);
-						
 						var ntcTtl = document.getElementById("keyword").value;
 						
 						if(ntcTtl !== "") {
 							ntcTtl = "%" + ntcTtl + "%";
 						}
 
-						console.log(ntcTtl);
-						console.log(startDate);
-						console.log(endDate);
-						console.log(ntcToday);
-						console.log(ntcWeek);
-						console.log(ntcMonth);
-
 						let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
 								ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
-						
-						console.log(data);
 						
 						$.ajax({
 							url : "${pageContext.request.contextPath}/notice/filter/"+pageNo,
@@ -411,9 +340,6 @@
 					  	var defaltStartDate = (year + '/' + ((month<9? "0"+month : month)-1) + '/' + date);
 					  	var defaltEndDate = (year + '/' + (month<9? "0"+month : month) + '/' + date);
 					  	
-					  	console.log(defaltStartDate);
-					  	console.log(defaltEndDate);
-					  	
 					  	document.getElementById("dateStart").value = defaltStartDate;
 					  	document.getElementById("dateEnd").value = defaltEndDate;
 					  	
@@ -425,9 +351,7 @@
 						var ntcMonth = "1개월전";
 						
 						var str = location.href;
-					  	console.log(str);
 						var index = str.indexOf("?")+1;
-						console.log(index);
 					    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
 					 
 					    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
@@ -436,32 +360,17 @@
 					    }
 					 
 					    // str의 값은 a=1&b=first&c=true
-					    str = str.substring(index, lastIndex); 
-					    console.log(str);
-
+					    str = str.substring(index, lastIndex);
 					    var arr = str.split("=");
-					    console.log(arr);
-					    
 					    var sysNo = arr[1];
-					    console.log(sysNo);
-						
 						var ntcTtl = document.getElementById("keyword").value;
 						
 						if(ntcTtl !== "") {
 							ntcTtl = "%" + ntcTtl + "%";
 						}
-
-						console.log(ntcTtl);
-						console.log(startDate);
-						console.log(endDate);
-						console.log(ntcToday);
-						console.log(ntcWeek);
-						console.log(ntcMonth);
-
+						
 						let data = {startDate : startDate, endDate : endDate, ntcTtl : ntcTtl,
 								ntcToday : ntcToday, ntcWeek : ntcWeek, ntcMonth : ntcMonth, sysNo : sysNo};
-						
-						console.log(data);
 						
 						$.ajax({
 							url : "${pageContext.request.contextPath}/notice/filter/"+pageNo,
@@ -476,9 +385,7 @@
 					function getNoticeDetail(i) {
 						let ntcNo = i;
 						var str = location.href;
-					  	console.log(str);
 						var index = str.indexOf("?")+1;
-						console.log(index);
 					    var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
 					 
 					    // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
@@ -488,14 +395,8 @@
 					 
 					    // str의 값은 a=1&b=first&c=true
 					    str = str.substring(index, lastIndex); 
-					    console.log(str);
-
 					    var arr = str.split("=");
-					    console.log(arr);
-					    
 					    var sysNo = arr[1];
-					    console.log(sysNo);
-					    
 					    var className = $(".bg");
 	                  	className.removeClass("bgChange")
 					    
@@ -513,7 +414,6 @@
 								$("#subNoticeDetailView").html(data);
 								var bg = "bgChange-"+ntcNo;
 								$('#' + bg).addClass("bgChange");
-								console.log(bg+"실행1");
 							}
 						});
 					}
@@ -540,7 +440,6 @@
 								$("#subNoticeDetailView").html(data);
 								var bg = "bgChange-"+ntcNo;
 								$('#' + bg).addClass("bgChange");
-								console.log(bg+"실행2");
 							}
 						});
 					}

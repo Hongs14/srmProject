@@ -10,24 +10,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.team01.webapp.develop.dao.IDevelopRepository;
+import com.team01.webapp.model.DevelopDto;
 import com.team01.webapp.model.DevelopFilter;
-import com.team01.webapp.model.Examine;
-import com.team01.webapp.model.ExamineList;
 import com.team01.webapp.model.HR;
 import com.team01.webapp.model.Progress;
 import com.team01.webapp.model.SR;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SrFile;
-import com.team01.webapp.model.DevelopDto;
 import com.team01.webapp.model.System;
 import com.team01.webapp.model.UpdateDevelop;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
 
-import lombok.extern.log4j.Log4j2;
-
 @Service
-@Log4j2
 public class DevelopService implements IDevelopService{
 
 	@Autowired
@@ -148,14 +143,12 @@ public class DevelopService implements IDevelopService{
 	 */
 	@Override
 	public List<Users> selectDevName(int userNo) {
-		log.info("개발담당자 선택");
 		List<Users> user = developRepository.selectNameByNo(userNo);
 		return user;
 	}
 	
 	@Override
 	public Users getLeader(String srNo) {
-		log.info("개발담당자 불러오기");
 		Users user = developRepository.selectLeader(srNo);
 		return user;
 	}
@@ -172,10 +165,8 @@ public class DevelopService implements IDevelopService{
 	 */
 	@Override
 	public List<Users> selectDeveloperList(String userDpNm, int userNo, String sDate, String eDate) {
-		log.info("개발자 리스트 띄우기");
 		
 		List<Users> list = developRepository.selectDeveloperByDp(userDpNm, userNo);
-		log.info(list);
 		for(int i=0; i<list.size();i++) {
 
 			LocalDate ld = LocalDate.parse(sDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -199,13 +190,10 @@ public class DevelopService implements IDevelopService{
 			int result = 0;
 	
 			int check = developRepository.checkHr(updateDevelop.getSrNo());
-			log.info(check);
 			//SR테이블에 저장
 			int result1 = developRepository.updateSr(updateDevelop);
 			int result2 = 0;
 			int result3 = 1;
-			
-			log.info("개발계획 수정 result1: "+result1); 
 			
 			//HR테이블에 저장
 			List<HR> listHR = new ArrayList<>();
@@ -219,17 +207,13 @@ public class DevelopService implements IDevelopService{
 				hr.setHrLeader(updateDevelop.getHrLeader()[i]);
 				listHR.add(hr);
 			}
-			log.info(listHR);
 			
 			if(check > 0) {
 				result2 = developRepository.deleteHr(updateDevelop.getSrNo());
-				log.info("HR리스트 삭제 result2: "+ result2);
 				result3 =developRepository.insertHrRow(listHR);
-				log.info("HR리스트 삽입 result3: "+ result3);
 				
 			} else {
 				result2 =developRepository.insertHrRow(listHR);
-				log.info("HR리스트 삭제없이 삽입 result2: "+ result2);
 			
 			}
 			if(updateDevelop.getSttsNo() == 5) {
@@ -243,13 +227,12 @@ public class DevelopService implements IDevelopService{
 					progress.setSrNo(updateDevelop.getSrNo());
 					progress.setProgType(i+1);
 					progNoList.add(progress);
-					log.info(progress);
 					srSeq++;
 				}
 			
 				int row = developRepository.insertProg(progNoList);
 				if(row == 1) {
-					log.info("삽입 성공");
+					
 				}
 			}
 			
@@ -264,7 +247,6 @@ public class DevelopService implements IDevelopService{
 	public int insertProgress(String srNo){
 		int row = 0;
 		try {
-			log.info("Progress INSERT: "+ srNo);
 			int srSeq = 0;
 			List<Progress> progNoList = new ArrayList<>();
 			srSeq = developRepository.selectMaxProgNo()+1;		
@@ -276,7 +258,6 @@ public class DevelopService implements IDevelopService{
 				progress.setSrNo(srNo);
 				progress.setProgType(i+1);
 				progNoList.add(progress);
-				log.info(progress);
 				srSeq++;
 			}
 		
@@ -300,7 +281,6 @@ public class DevelopService implements IDevelopService{
 			develop = developRepository.selectDevelopContent(developSRArr.get(i));
 			list.add(develop);
 		}
-		log.info(list);
 		return list;
 	}
 	
@@ -310,13 +290,10 @@ public class DevelopService implements IDevelopService{
 	 */
 	@Override
 	public int changeStatus() {
-		log.info("스케줄러 실행");
 		List<String> list = developRepository.selectSrNo();
-		log.info(list);
 		int result = 0;
 		for(int k = 0; k <list.size(); k++) {
 			String srNo = list.get(k);
-			log.info(srNo);
 			result =  insertProgress(srNo);
 		}
 		return result;

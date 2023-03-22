@@ -8,21 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team01.webapp.examine.dao.IExamineRepository;
-import com.team01.webapp.examine.service.IExamineService;
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.ExamineList;
-import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SRStts;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.System;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;
 
-import lombok.extern.log4j.Log4j2;
-
 @Service
-@Log4j2
 public class ExamineService implements IExamineService {
 	
 	@Autowired
@@ -30,7 +25,6 @@ public class ExamineService implements IExamineService {
 	
 	@Override
 	public int getTotalRows() {
-		log.info("실행");
 		int rows = examineRepository.selectExamineListAllCount();
 		return 0;
 	}
@@ -45,7 +39,6 @@ public class ExamineService implements IExamineService {
 	 */
 	@Override
 	public List<Examine> getExamineList(Pager pager,ExamineList examinelist) {
-		log.info("실행");
 		
 		examinelist.setStartRowNo(pager.getStartRowNo());
 		examinelist.setEndRowNo(pager.getEndRowNo());
@@ -62,7 +55,6 @@ public class ExamineService implements IExamineService {
 	 */
 	@Override
 	public ExamineFilter filterList(ExamineFilter examineFilter) {
-		log.info("실행");
 		
 		List<SRStts> srSttsList = new ArrayList<>();
 		List<System> sysNmList = new ArrayList<>();
@@ -98,9 +90,7 @@ public class ExamineService implements IExamineService {
 	 */
 	@Override
 	public Pager returnPage(int pageNo, Pager pager, ExamineList examinelist) {
-		log.info("실행");
 		int totalListNum = (int) examineRepository.selectTotalExamineCount(examinelist);
-		log.info(totalListNum);
 		pager = new Pager(10,5,totalListNum,pageNo);
 		
 		return pager;
@@ -109,7 +99,6 @@ public class ExamineService implements IExamineService {
 
 	@Override
 	public Examine getExamine(String srNo) {
-		log.info("실행");
 		Examine examine = examineRepository.selectExamine(srNo);
 		
 		return examine;
@@ -117,7 +106,6 @@ public class ExamineService implements IExamineService {
 	
 	@Override
 	public List<MultipartFile> selectExamineFileList(String srNo){
-		log.info("실행");
 		
 		List<MultipartFile> examineFileList = examineRepository.selectExamineFileList(srNo);
 		
@@ -126,7 +114,6 @@ public class ExamineService implements IExamineService {
 	
 	@Override
 	public SrFile selectFileDownload(int srFileNo) {
-		log.info("실행");
 		
 		SrFile srFile = examineRepository.selectExamineFileDownload(srFileNo);
 		
@@ -136,7 +123,6 @@ public class ExamineService implements IExamineService {
 
 	@Override
 	public void updateExamine(Examine examine) {
-		log.info("실행");
 		examineRepository.updateExamine(examine);
 		
 	}
@@ -144,7 +130,6 @@ public class ExamineService implements IExamineService {
 
 	@Override
 	public void updateExamineProcessing(ExamineList examinelist) {
-		log.info("실행");
 		if(examinelist.getSrNo() != null) {			
 			examineRepository.updateExamineProcessing(examinelist);
 		}
@@ -163,13 +148,11 @@ public class ExamineService implements IExamineService {
 	//엑셀 다운로드
 	@Override
 	public List<Examine> getExamineExcelList(List<String> examineArr){
-		log.info("실행");
 		Examine examine = null;
 		ArrayList<Examine> examineList = new ArrayList<>();
 		for(int i=0; i<examineArr.size(); i++) {
 			examine = examineRepository.selectExamine(examineArr.get(i));
 			examineList.add(examine);
-			log.info(examine);
 		}
 		return examineList;
 		
@@ -197,7 +180,6 @@ public class ExamineService implements IExamineService {
 		userDpList = examineRepository.selectUserDpList(userOgdp);
 				
 		examineFilter.setUserDpList(userDpList);
-		log.info(userDpList);
 		return examineFilter;
 	}
 

@@ -192,11 +192,9 @@
 			//오늘 날짜 디폴트로 입력
 			$(document).ready(function() {
 				var todayResult = getTimeStamp();
-				console.log(todayResult);
 				$('#dateEnd').val(todayResult);
 				
 				var dateStart =getLastYearTimeStamp();
-				console.log(dateStart);
 				$('#dateStart').val(dateStart);
 			});
 				
@@ -240,7 +238,6 @@
 			};
 		
 			$(document).ready(function(){
-				console.log("시작");
 				readList();
 			});
 			
@@ -256,8 +253,6 @@
 				
 				let data = {startDate : startDate, endDate : endDate, qstnTtl : qstnTtl, sysNo : sysNo};
 				
-				console.log(data);
-				
 				$.ajax({
 					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/filter/1',
 					method : "post",
@@ -269,7 +264,6 @@
 			};
 			
 			function searchQnaList(pageNo){
-				console.log("검색조건 리스트 페이지 번호: "+pageNo);
 				var startDate = $("#dateStart").val();
 				var endDate = $("#dateEnd").val();
 				var sysNo = "${session}";
@@ -280,8 +274,6 @@
 				}
 
 				let data = {startDate : startDate, endDate : endDate, qstnTtl : qstnTtl, sysNo : sysNo, qstnSecret:qstnSecret};
-				
-				console.log(data);
 				
 				$.ajax({
 					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/filter/'+pageNo ,
@@ -325,7 +317,6 @@
 			};
 			
 			function RangeClick(range){
-				console.log(range);
 				let today = new Date();   
 				let year = today.getFullYear(); // 년도
 			  	let month = today.getMonth() + 1;  // 월
@@ -345,8 +336,6 @@
 				}
 			  	
 				var defaultEndDate = (year + '/' + month + '/' + date);
-				console.log("시작날짜: "+defaultStartDate);
-			  	console.log("끝 날짜: "+defaultEndDate);
 			  	$("#dateStart").val(defaultStartDate);
 			  	$("#dateEnd").val(defaultEndDate);
 			  	
@@ -362,8 +351,6 @@
 				let data = {startDate : startDate, endDate : endDate, qstnTtl : qstnTtl,
 							range: range, sysNo : sysNo};
 				
-				console.log(data);
-				
 				$.ajax({
 					url : '${pageContext.request.contextPath}/qna/'+sysNo+'/filter/1' ,
 					method : "post",
@@ -372,7 +359,6 @@
 					
 					}).done((data) => {
 						$("#qstnlist").html(data);
-						console.log($('#qstnCn'));
 						resize();					
 						
 					});

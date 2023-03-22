@@ -121,7 +121,6 @@
 	function addNoticeFile(obj){
 		var maxFileCnt = 5; // 첨부파일 최대 개수
 		var curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
-		console.log(curFileCnt);
 		for (const file of obj.files) {
 			var reader = new FileReader();
 			reader.onload = function() {
@@ -156,8 +155,6 @@
 	for (var i = 0; i < filesArr.length; i++) {
 		// 삭제되지 않은 파일만 폼데이터에 담기
 		if (!filesArr[i].is_delete) {
-			console.log("돌아감");
-			console.log(filesArr[i]);
 			formData.append("ntcMFile", filesArr[i]);
 		}
 	}
@@ -166,9 +163,7 @@
 	formData.append("ntcTtl",ntcTtl);
 						    
     var str = location.href;
-  	console.log(str);
 	var index = str.indexOf("?")+1;
-	console.log(index);
     var lastIndex = str.indexOf("#") > -1 ? str.indexOf("#") + 1 : str.length;
  
     // index 값이 0이라는 것은 QueryString이 없다는 것을 의미하기에 종료
@@ -178,22 +173,15 @@
  
     // str의 값은 a=1&b=first&c=true
     str = str.substring(index, lastIndex); 
-    console.log(str);
-
     var arr = str.split("=");
-    console.log(arr);
-    
     var sysNo = arr[1];
-    console.log(sysNo);
 	formData.append("sysNo",sysNo);
 						    
 	var ntcPrySelect = document.getElementById("ntcPry");
 	var ntcPry = ntcPrySelect.options[document.getElementById("ntcPry").selectedIndex].value;
-	console.log(ntcPry);
 	formData.append("ntcPry",ntcPry);
 	
 	var ntcPryStartDate = document.getElementById("datePryStart").value;
-	console.log(ntcPryStartDate);
 	if(document.getElementById("datePryStart").value != ""){		
 		ntcPryStartDate = document.getElementById("datePryStart").value;
 		formData.append("ntcPryStartDate",ntcPryStartDate);
@@ -203,7 +191,6 @@
 	}
 	
 	var ntcPryEndDate = document.getElementById("datePryEnd").value;
-	console.log(ntcPryEndDate);
 	if(document.getElementById("datePryEnd").value != ""){		
 		ntcPryEndDate = document.getElementById("datePryEnd").value;
 		formData.append("ntcPryEndDate",ntcPryEndDate);

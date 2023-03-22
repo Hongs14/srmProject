@@ -130,9 +130,6 @@ public class ProgressController {
 	 */
 	@RequestMapping(value="progress/list/progressajax/{pageNo}", produces="application/json; charset=UTF-8")
 	public String progressAjax(@PathVariable String pageNo, @RequestBody SrProgressAjax srProgressAjax, HttpSession session, Model model, Pager pager) {
-		
-		log.info("pageNo " + pageNo);
-		log.info("choice : " + srProgressAjax.getChoice());
 		List<SystemInfo> system = null;
 		srProgressAjax.setAdminSysNo("");
 		
@@ -144,27 +141,18 @@ public class ProgressController {
 			srProgressAjax.setUserNo(userNo);
 			
 			if(userType.equals("관리자")) {
-				log.info(srProgressAjax);
 				system = homeService.getSystemMiniViewDetail(userNo);
 				srProgressAjax.setAdminSysNo(system.get(0).getSysNo());
 			}
 		}
 		
-		log.info("srProgressAjax " + srProgressAjax);
-		
 		pager = progressService.returnPage(pageNo, pager, srProgressAjax);
 		
-		log.info(pager);
-		
 		List<SrProgressList> list = progressService.ProgressList(pager, srProgressAjax);
-		
-		log.info(list);
 		
 		model.addAttribute("ProgressList", list);
 		model.addAttribute("pager", pager);
 		model.addAttribute("choice", srProgressAjax.getChoice());
-		
-		log.info(pager);
 		
 		return "progress/progressListView";
 	}
@@ -258,8 +246,6 @@ public class ProgressController {
 	@RequestMapping(value="progress/detail/developerinsert/{srNo}", produces="application/json; charset=UTF-8")
 	public String developerinsert(@PathVariable String srNo, @RequestBody ThArr thArr) {
 		
-		log.info(thArr.getThArr().size());
-		
 		progressService.developerInsert(thArr);
 		
 		return "redirect:/progress/detail/" + srNo;
@@ -313,9 +299,6 @@ public class ProgressController {
 	 */
 	@RequestMapping(value="progress/detail/developerDelete", produces="application/json; charset=UTF-8")
 	public String developerDelete(@RequestBody HR hr) {
-		
-		log.info(hr.getSrNo());
-		log.info(hr.getUserNo());
 
 		progressService.developerDelete(hr.getSrNo(), hr.getUserNo());
 		
@@ -388,8 +371,6 @@ public class ProgressController {
 		// 첨부 파일이 있는지 확인
 		List<MultipartFile> mfList = progress.getProgressattach();
 		
-		log.info(progress);
-		
 		if(mfList != null && !mfList.isEmpty()) {
 			for(int i=0; i<mfList.size(); i++) {
 				// 파일의 원래 이름
@@ -410,7 +391,6 @@ public class ProgressController {
 				if(!dir.exists()) {
 					try {
 						Files.createDirectories(Paths.get(filePath));
-						log.info("폴더 생성 완료");
 						mfList.get(i).transferTo(dir);
 					} catch (Exception e) {
 						log.info("생성 실패 : " + filePath);
@@ -479,8 +459,6 @@ public class ProgressController {
 		String filePath = "C:/OTI/uploadfiles/" + srNo + "/" + savedName;
 		
 		File file = new File(filePath);
-		
-		log.info(file);
 		
 		if(file.exists()) {
 			InputStream is = new FileInputStream(file);
@@ -587,8 +565,6 @@ public class ProgressController {
 		
 		progress.setProgNo(progNo.getProgNo());
 		
-		log.info(progress);
-		
 		if(mfList != null && !mfList.isEmpty()) {
 			for(int i=0; i<mfList.size(); i++) {
 				// 파일의 원래 이름
@@ -609,7 +585,6 @@ public class ProgressController {
 				if(!dir.exists()) {
 					try {
 						Files.createDirectories(Paths.get(filePath));
-						log.info("폴더 생성 완료");
 						mfList.get(i).transferTo(dir);
 					} catch (Exception e) {
 						log.info("생성 실패 : " + filePath);
@@ -644,7 +619,6 @@ public class ProgressController {
 			
 			if(file.exists()) {
 				if(file.delete()) {
-					log.info("파일 삭제 성공");
 					progressService.removeProgressFiles(progress.getProgressFile().get(i).getProgFileNo());
 				} else {
 					log.info("파일 삭제 실패");
@@ -743,9 +717,6 @@ public class ProgressController {
 		List<Integer> humanList = progressService.humanList(hr.getSrNo());
 		
 		boolean check = humanList.contains(userNo);
-		log.info("userNo : " + userNo);
-		log.info("humanList : " + humanList);
-		log.info("check : " + check);
 		model.addAttribute("check", check);
 		
 		return "progress/progressChangeRequestList";
@@ -808,7 +779,6 @@ public class ProgressController {
 				if(!file.exists()) {
 					try {
 						Files.createDirectories(Paths.get(filePath));
-						log.info("폴더 생성 완료");
 						mf.transferTo(file);
 					} catch (Exception e) {
 						log.info("생성 실패 : " + filePath);
@@ -892,8 +862,6 @@ public class ProgressController {
 		
 		String managerNo = progressService.managerNo(changeRequest.getSrNo());
 		model.addAttribute("managerNo", managerNo);
-		
-		log.info(managerNo);
 		
 		return "progress/progressChangeRequestDetail";
 	}

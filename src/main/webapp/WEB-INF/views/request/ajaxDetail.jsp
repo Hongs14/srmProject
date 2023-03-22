@@ -171,12 +171,10 @@
 			<script>
 			/* SR 삭제 */
 			function deleteRequest(srNo) {
-				console.log("삭제 실행: "+srNo);
 				 $.ajax({
 						type: "GET",
 						url: "delete/"+srNo,
 				    }).done((data) => {
-				    	console.log(data);
 				    	$("#deleteFun").modal('hide');
 				    	$("#requestModal").modal();
 				    	$("#modalHeadText").text("SR 삭제");

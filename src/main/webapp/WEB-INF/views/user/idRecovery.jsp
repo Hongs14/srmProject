@@ -106,7 +106,6 @@
 	 <!-- 아이디 찾기 모달 -->
   <script>
 	  function findId(){
-		  console.log("아이디 찾기 실행 ");
 		  var userNm = $("#userNm").val();
 		  var userEml = $("#userEml").val(); 
 		  if(userNm == ""){
@@ -120,7 +119,6 @@
 		  }
 		  if(userNm != "" && userEml != ""){
 			 let data = {userNm:userNm, userEml:userEml};
-			  console.log("유저 정보: "+userNm+", "+userEml);
 			  $.ajax({
 					url :"${pageContext.request.contextPath}/user/id_recovery",
 					type : "post",
@@ -140,7 +138,6 @@
 					},
 					error: function(e){
 						alert("실패 ");
-						console.log(e);
 					}
 				}); 
 		  }

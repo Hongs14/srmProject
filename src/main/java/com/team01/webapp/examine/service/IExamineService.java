@@ -7,7 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.team01.webapp.model.Examine;
 import com.team01.webapp.model.ExamineFilter;
 import com.team01.webapp.model.ExamineList;
-import com.team01.webapp.model.ProgressDetail;
 import com.team01.webapp.model.SrFile;
 import com.team01.webapp.model.Users;
 import com.team01.webapp.util.Pager;

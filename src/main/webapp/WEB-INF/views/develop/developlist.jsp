@@ -164,11 +164,9 @@
 											
 										function getDateFilter(){
 											var todayResult = getTimeStamp();
-											console.log(todayResult);
 											$('#endDate').val(todayResult);
 											
 											var dateStart =getLastYearTimeStamp();
-											console.log(dateStart);
 											$('#startDate').val(dateStart);
 										};
 			                			
@@ -244,8 +242,6 @@
 											let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp: srDevDp,
 													srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
 											
-											console.log(data);
-											
 											$.ajax({
 												url : '<c:url value="/develop/filter/1"/>',
 												method : "post",
@@ -259,14 +255,11 @@
 										function developList(pageNo) {
 											//조건별로 검색
 											var sysNo = 0;
-											console.log("개발관리 조건 리스트 불러오기");
 											
 											sysNo = $('#sysNo').val();
 											
 											if($('#searchMySR').prop('checked')){
-												console.log("내 목록보기 체크");
 												sysNo = "${loginUser.sysNo}";
-												console.log(sysNo);
 											}  
 										
 											
@@ -284,7 +277,6 @@
 											
 											let data = {sysNo : sysNo, sttsNo : sttsNo, userOgdp : userOgdp, srDevDp: srDevDp,
 													srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, sysNo: sysNo, srTtl : srTtl };
-											console.log(data);
 											
 											$.ajax({
 												url :  '<c:url value="/develop/filter/'+pageNo+'"/>',
@@ -304,7 +296,6 @@
 											// 체크된 체크박스의 값을 가져옴
 											checkbox.each(function(i) {
 												let tr = checkbox.parent().parent().eq(i);
-												console.log(checkbox.parent().parent().eq(i));
 												let td = tr.children();
 											
 												if(td.eq(1).text() != 'SR번호') {
@@ -313,7 +304,6 @@
 													
 													developSRArr.push(srNo);
 												}
-												console.log(developSRArr);
 											});
 											
 										 	if(developSRArr.length == 0) {
@@ -338,7 +328,6 @@
 										};
 										
 										function searchClear(){
-											console.log("검색조건 초기화");
 										
 											for(let i=0; i< $('.clear').length ; i++){
 												$($('.clear')[i]).find('option:first').prop('selected', true);

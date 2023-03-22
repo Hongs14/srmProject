@@ -151,13 +151,9 @@
  		var userNo = $("#userNo").val();
  		var pswdCheckAgain = 0;
  		
- 		console.log("updatePswd 실행");
- 		
  		/* 비밀번호 재입력 확인 */
  	  	var inputed = $('#newPswd').val();
          var reinputed = $('#checkPswd').val();
-         console.log(inputed);
-         console.log(reinputed);
          
          if(reinputed=="" && (inputed != reinputed || inputed == reinputed)){
              $("#checkPswd").css("background-color", "#FFCECE");
@@ -194,8 +190,6 @@
   		 	pswdCheckAgain = 1;
  	  	}
  		
- 		console.log("pswdCheckAgain: "+pswdCheckAgain);
- 		
  		let data = {userPswd: inputed, userNo:userNo};
  		/* 비밀번호 업데이트 */
          if(pswdCheckAgain == 1){
@@ -206,10 +200,8 @@
      			data : JSON.stringify(data),
      			contentType: "application/json; charset=UTF-8"
      		}).done((data) => {
-     			console.log(data);
      			$("#dialogWrapper").text("비밀번호를 변경하였습니다.");
      			$("#userModal").modal();
-     	    	console.log("변경완료");
      	    	setTimeout(function() {
      	    		window.location.href = "/webapp/home";
 	    		}, 2000);

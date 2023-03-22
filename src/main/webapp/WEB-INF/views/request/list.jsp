@@ -305,11 +305,9 @@
 				
 				function getFilterDate(){
 					var todayResult = getTimeStamp();
-					console.log(todayResult);
 					document.getElementById('dateEnd').value = todayResult;
 					
 					var dateStart =getLastYearTimeStamp();
-					console.log(dateStart);
 					document.getElementById('dateStart').value = dateStart;
 				}
 				//오늘 날짜 양식
@@ -421,27 +419,18 @@
 						if(userType == '고객사'){
 							checkMySR = '고객사';
 							userNo = $("#userNo").val();
-							console.log(userNo);
-							console.log("checkMySR: "+checkMySR);
 						} else if(userType == '관리자'){
 							checkMySR = '관리자';
 							userNo = $("#userNo").val();
-							console.log(userNo);
-							console.log("checkMySR: "+checkMySR);
 						} else if (userType == '개발자'){
 							checkMySR = '개발자';
 							userNo = $("#userNo").val();
-							console.log(userNo);
-							console.log("checkMySR: "+checkMySR);
 						}
 						
 						
 					  } else {
 						checkMySR = 0;
-						console.log("checkMySR: "+checkMySR);
 					  }
-					console.log("requestList + checkMySR: "+checkMySR);
-					console.log(pageNo);
 					var sysNoSelect = document.getElementById("sysNo");
 					var sttsNoSelect = document.getElementById("sttsNo");
 					var userOgdpSelect = document.getElementById("userOgdp");
@@ -582,8 +571,6 @@
 							requestArr.push(srNo);
 						}
 					});
-					
-					console.log(requestArr);
 					
 					var form = document.createElement('form');
 					form.setAttribute('method','post');

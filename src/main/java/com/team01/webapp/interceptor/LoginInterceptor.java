@@ -6,11 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.team01.webapp.model.Users;
-
-import lombok.extern.log4j.Log4j2;
-
-@Log4j2
 public class LoginInterceptor implements HandlerInterceptor{
 
 	@Override

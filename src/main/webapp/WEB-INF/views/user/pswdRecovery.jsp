@@ -175,7 +175,6 @@
      	}
          function findPswd(){
          	var userEml = $("#userEml").val();
-         	console.log("메일 테스트: "+userEml);
          	var userNm = $("#userNm").val();
 	   		if(userNm == ""){
 	   			 $("#userNmHelp").html("아이디를 입력해주세요");
@@ -187,7 +186,6 @@
     		  	}
          	if(userEml !=""){
          		let data = {userNm:userNm, userEml:userEml};
-   			  	console.log(userEml);
    			 	showSpinner("회원정보를 확인 중입니다. 잠시만 기다려주세요...");
    			  $.ajax({
    					url :"${pageContext.request.contextPath}/user/pswd_recovery",
@@ -195,7 +193,6 @@
    					data : JSON.stringify(data),
    					contentType: "application/json; charset=UTF-8",
    					success: function(data){
-   	   					console.log(data);
    						if(data == 'success'){
    							$("#spinner").hide();
    							$("#dialogWrapper").html("임시 비밀번호를 회원님의 메일로 전송했습니다.");
@@ -213,7 +210,6 @@
    					error: function(e){
    						$("#spinner").hide();
    						alert("실패 ");
-   						console.log(e);
    					}
    				});
          	}

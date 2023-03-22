@@ -21,10 +21,7 @@ import com.team01.webapp.model.Users;
 import com.team01.webapp.request.dao.IRequestRepository;
 import com.team01.webapp.util.Pager;
 
-import lombok.extern.log4j.Log4j2;
-
 @Service
-@Log4j2
 public class RequestService implements IRequestService{
 	
 	@Autowired
@@ -67,7 +64,6 @@ public class RequestService implements IRequestService{
 		//개발 부서 리스트
 		srDevDpList = requestRepository.selectSrDevDpList();
 		requestFilter.setSrDevDpList(srDevDpList);
-		log.info("srDevDpList: "+srDevDpList);
 		
 		return requestFilter;
 	}
@@ -75,11 +71,7 @@ public class RequestService implements IRequestService{
 	
 	@Override
 	public Pager returnPage(String pageNo, Pager pager, RequestAjax requestAjax) {
-		log.info("pageNo: "+pageNo + "실행");
-		log.info(pager);
-		log.info("requestAjax: "+requestAjax);
 		int totalListNum = requestRepository.selectTotalRequestCount(requestAjax);
-		log.info("totalListNum: "+ totalListNum);
 		int pagerNo = Integer.parseInt(pageNo);
 		pager = new Pager(7, 5, totalListNum, pagerNo);
 		return pager;
@@ -89,13 +81,11 @@ public class RequestService implements IRequestService{
 	@Override
 	@Transactional
 	public List<RequestList> getRequestList(Pager pager, RequestAjax requestAjax) {
-		log.info("실행");
 		int start = (pager.getPageNo()-1)* pager.getRowsPerPage()+1;
 		int end = pager.getPageNo() * pager.getRowsPerPage();
 		
 		requestAjax.setStart(start);
 		requestAjax.setEnd(end);
-		log.info("pager: "+pager+"requestAjax: "+requestAjax);
 		List<RequestList> requestLists = requestRepository.selectRequestList(requestAjax);
 		return requestLists;
 	}
@@ -106,7 +96,6 @@ public class RequestService implements IRequestService{
 	@Override
 	@Transactional
 	public String writeRequest(SR sr) {
-		log.info("실행"+sr);
 		String srSysNo = sr.getSysNo(); 
 		String sysNo = "%"+srSysNo+"%";
 		String maxSrNo = requestRepository.selectMaxSrNo(sysNo);
@@ -121,7 +110,6 @@ public class RequestService implements IRequestService{
 			srNo = srSysNo+"-SR-"+number;
 		}
 		sr.setSrNo(srNo);
-		log.info("SR NO: "+srNo);
 		
 		int rows = requestRepository.insertRequest(sr);
 		return srNo;
@@ -130,7 +118,6 @@ public class RequestService implements IRequestService{
 	
 	@Override
 	public int requestFileUpload(SrFile srFile) {
-		log.info("실행");
 		return requestRepository.insertRequestFileUpload(srFile);
 	}
 	
@@ -139,19 +126,16 @@ public class RequestService implements IRequestService{
 	 */
 	@Override
 	public Request getRequestDetail(String srNo) {
-		log.info("실행");
 		return requestRepository.selectRequestDetail(srNo);
 	}
 	@Override
 	public List<MultipartFile> selectRequestFileDetail(String srNo) {
-		log.info("실행");
 		List<MultipartFile> requestFile = requestRepository.selectRequestFileDetail(srNo);
 		return requestFile;
 	}
 
 	@Override
 	public SrFile selectFileDownload(String srFileNo) {
-		log.info("실행");
 		SrFile srFile = requestRepository.selectFileDownload(srFileNo);
 		return srFile;
 	}
@@ -159,8 +143,6 @@ public class RequestService implements IRequestService{
 	@Override
 	@Transactional
 	public int updateRequest(SR sr) {
-		log.info("실행"+sr);
-		
 		int rows = requestRepository.updateRequest(sr);
 		return rows;
 	}
@@ -168,7 +150,6 @@ public class RequestService implements IRequestService{
 	//업데이트시 파일 삭제
 	@Override
 	public int deleteExistingFile(String srFilePhysNm) {
-		log.info("실행"+srFilePhysNm);
 		return requestRepository.deleteExistingFile(srFilePhysNm);
 	}
 
@@ -184,7 +165,6 @@ public class RequestService implements IRequestService{
 		for(int i=0; i<requestArr.size(); i++) {
 			requestSr = requestRepository.selectRequestSr(requestArr.get(i));
 			requestList.add(requestSr);
-			log.info(requestSr);
 		}
 		
 		return requestList;
