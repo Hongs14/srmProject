@@ -507,10 +507,10 @@
 		});
 	 	
  		function falseDisabled(){
- 			$(".taskNo").prop("disabled", false);
- 			$("#updateHrForm").submit();
  			let msg = '알림이 도착하였습니다.'
     		socket.send(msg);
+ 			$(".taskNo").prop("disabled", false);
+ 			$("#updateHrForm").submit();
  		};
  		
  		function getToday(){
