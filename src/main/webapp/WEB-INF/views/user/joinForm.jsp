@@ -76,7 +76,7 @@
 	                  <form action="${pageContext.request.contextPath}/user/join" class="needs-validation" method="post" id="joinForm" novalidate>
 	                  
 	                  <h6 class="m-3 px-5 mt-5 font-weight-bold text-primary">가입 타입 선택 </h6>
-	                  	<div class="container mb-5 border p-5">
+	                  	<div class="container mb-5 p-5">
 	                  	<div class="userType_check row row-cols-3 justify-content-md-center" role="group" onchange="optionChange1();" aria-label="radio group">
 						  <div class="col text-center">
 							  <input type="radio" class="btn-check" name="userType" id="userType1" autocomplete="off"  value="고객사" checked>
