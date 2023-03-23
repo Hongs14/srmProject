@@ -5,10 +5,6 @@
 <html lang="ko">
 <head>
   	<%@include file="/WEB-INF/views/common/head.jsp" %>
-	<script src="${pageContext.request.contextPath}/resources/tinymce2/tinymce.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/tinymce2/theme.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/tinymce2/tinymceinit.js"></script>
-	
 	<style>
 	.modal{
 		z-index:1050;
@@ -346,6 +342,7 @@
 				  }
 				  return zero + n;
 				}
+				
 				$(document).ready(function () {
 					var sysNo = 0;
 					var sttsNo = 0;

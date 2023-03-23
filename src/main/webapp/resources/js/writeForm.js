@@ -126,6 +126,7 @@ function requestWrite() {
 		processData: false,	
 		contentType: false	
     }).done((data) => {
+    	requestList(1);
     	$("#modalHeadText").text("SR 요청");
     	$("#modalBodyText").text("SR 요청이 완료되었습니다.");
     	$("#requestModal").modal();
@@ -197,6 +198,7 @@ function requestUpdate() {
     	$("#requestModal").modal();
     	$("#modalHeadText").text("SR 수정");
     	$("#modalBodyText").text("SR 수정이 완료되었습니다.");
+    	requestList(1);
     });
 }
 
