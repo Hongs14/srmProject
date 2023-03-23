@@ -104,7 +104,7 @@
 															<c:otherwise>
 																<c:forEach var="alarmList" items="${alarmList}">
 																	<tr style="cursor:pointer;">
-																		<td class="row border-bottom" onclick="updateCheck('${alarmList.srNo}')" style="border-top: 0; ">
+																		<td class="row border-bottom" onclick="updateCheck('${alarmList.srNo}','${alarmList.alarmNo}','${alarmList.sttsNm }')" style="border-top: 0; ">
 																			<div class="col-2 text-center mt-3">
 																				<c:if test="${alarmList.messageCheck eq 89}">
 																					<i class="fa-regular fa-square-check icon"></i>
@@ -141,14 +141,13 @@
 								</div>
 							</div>
 							<script>
-								function updateCheck(i) {
+								function updateCheck(i,j,k) {
 									var srNo = i;
 									console.log(srNo);
-									var alarmNo = document.getElementById("alarmNo").innerText;
+									var alarmNo = j;
 									console.log(alarmNo);
-									var sttsNm = document.getElementById("sttsNm").innerText;
+									var sttsNm = k;
 									console.log(sttsNm);
-									
 									let data = {alarmNo : alarmNo};
 									let url = "";
 									

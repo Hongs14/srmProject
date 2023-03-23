@@ -73,7 +73,7 @@
 					</c:when>
 					<c:otherwise>
 	               		<c:forEach var="alarmList" items="${alarmList}"  begin="0" end="2" step="1">                
-							<a class="dropdown-item d-flex align-items-center" onclick="updateCheck('${alarmList.srNo}')">
+							<a class="dropdown-item d-flex align-items-center" onclick="updateCheck('${alarmList.srNo}','${alarmList.alarmNo}','${alarmList.sttsNm }')">
 								<div class="mr-3">
 									<div class="icon-circle bg-primary">
 										<c:if test="${alarmList.messageCheck eq 89}">
@@ -96,18 +96,16 @@
 				</c:choose>	
                 <a class="dropdown-item text-center small text-gray-500" href="${pageContext.request.contextPath}/alarm/list">Show All Alerts</a>
                 <script>
-	                function updateCheck(i) {
+	                function updateCheck(i,j,k) {
 						var srNo = i;
-						var alarmNo = document.getElementById("alarmNo").innerText;
-						var sttsNm = document.getElementById("sttsNm").innerText;
+						var alarmNo = j;
+						var sttsNm = k;
 						var userType="${sessionScope.loginUser.userType}";
-						
 						let data = {alarmNo : alarmNo};
 						let url = "";
 
 						var userType = "${userType}";
-						console.log(sttsNm);
-						
+
 						if(userType == "관리자" || userType == "개발자" ){
 							if(sttsNm == "완료요청" || sttsNm =="계획조정" || sttsNm=="개발중"){
 								url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
