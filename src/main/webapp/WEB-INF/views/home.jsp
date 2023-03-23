@@ -70,7 +70,7 @@
 	          
 	          			<!-- Row -->
 			          	<div class="row">
-				     		<div class="col-xl-8 col-lg-7 mb-4">
+				     		<div class="col-xl-8 col-lg-7 mb-4" style="min-width:700px;">
 			              		<div class="card">
 			               			<div class="card-header align-items-center">
 										<i class="fas fa-tasks fa-fw"></i> 
