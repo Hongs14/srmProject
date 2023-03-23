@@ -236,12 +236,12 @@
 												var sysNo = "${loginUser.sysNo}";
 												
 												if ( $('#mySrWork').prop('checked') ) {
-													
+													console.log("담당SR 실행");
 													sysNo = "${loginUser.sysNo}";
 												}else{
 													sysNo="";
 												}
-												
+
 												var sysNmSelect = document.getElementById("sysNm");
 												var sttsNoSelect = document.getElementById("sttsNo");
 												var userOgdpSelect = document.getElementById("userOgdp");
@@ -250,8 +250,14 @@
 												var sttsNo = sttsNoSelect.options[document.getElementById("sttsNo").selectedIndex].value;
 												var userOgdp = userOgdpSelect.options[document.getElementById("userOgdp").selectedIndex].text;
 												
-												var userDpSelect = duserDpSelect = document.getElementById("userDpNm2");
-												var userDpNm = userDpSelect.options[document.getElementById("userDpNm2").selectedIndex].text;
+												if(userOgdp == "전체"){
+													var userDpSelect = document.getElementById("userDpNm");
+													var userDpNm = userDpSelect.options[document.getElementById("userDpNm").selectedIndex].text;
+												}else{
+													var userDpSelect = duserDpSelect = document.getElementById("userDpNm2");
+													var userDpNm = userDpSelect.options[document.getElementById("userDpNm2").selectedIndex].text;													
+												}
+												
 											  	
 												var srRegStartDate = document.getElementById("dateStart").value;
 											  	var srRegEndDate = document.getElementById("dateEnd").value;
@@ -261,6 +267,7 @@
 												if(srTtl !== "") {
 													srTtl = "%" + srTtl + "%";
 												}
+												
 												
 												let data = {sysNo : sysNo, sysNm : sysNm, sttsNo : sttsNo, userOgdp : userOgdp, userDpNm : userDpNm,
 														srRegStartDate : srRegStartDate, srRegEndDate : srRegEndDate, srTtl : srTtl};
