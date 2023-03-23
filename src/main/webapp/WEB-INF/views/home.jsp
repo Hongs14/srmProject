@@ -41,6 +41,15 @@
 			.on {
 				background-color: rgba(0, 0, 0, 0.075);
 			}
+			.subtab{
+					display: block;
+				}
+			@media (max-width:1600px) {
+				.subtab{
+					display: none;
+				}
+			}
+			
 	    </style>
 	  	
 	</head>
@@ -90,16 +99,16 @@
 											<li class="nav-item" role="presentation">
 												<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(6, 1)">개발완료</a>
 											</li>
-											<li class="nav-item" role="presentation">
+											<li class="nav-item subtab" role="presentation">
 												<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(3, 1)">반려</a>
 											</li>
-											<li class="nav-item" role="presentation">
+											<li class="nav-item subtab" role="presentation">
 												<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(7, 1)">재검토</a>
 											</li>
-											<li class="nav-item" role="presentation">
+											<li class="nav-item subtab" role="presentation">
 												<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(9, 1)">개발 계획</a>
 											</li>
-											<li class="nav-item" role="presentation">
+											<li class="nav-item subtab" role="presentation">
 												<a class="nav-link" data-toggle="pill" onclick="homeMiniViewChange(10, 1)">계획 조정</a>
 											</li>
 										</ul>
