@@ -143,21 +143,30 @@
 							<script>
 								function updateCheck(i) {
 									var srNo = i;
+									console.log(srNo);
 									var alarmNo = document.getElementById("alarmNo").innerText;
+									console.log(alarmNo);
 									var sttsNm = document.getElementById("sttsNm").innerText;
+									console.log(sttsNm);
 									
 									let data = {alarmNo : alarmNo};
 									let url = "";
-
+									
+									var userType = "${userType}";
+									
 									if(userType == "관리자" || userType == "개발자" ){
 										if(sttsNm == "완료요청" || sttsNm =="계획조정" || sttsNm=="개발중"){
 											url = "${pageContext.request.contextPath}/progress/detail/"+srNo;
 										}else if(sttsNm == "요청" && userType == "관리자"){
 											url = "${pageContext.request.contextPath}/examine/list/"+srNo;
+										}else if(sttsNm == "개발계획"){
+											url = "${pageContext.request.contextPath}/develop/view/"+srNo;
 										}
 									}else{
 										url = "${pageContext.request.contextPath}/request/list/"+srNo;
 									}
+									
+									console.log(data);
 									
 									$.ajax({
 										url : "updateAlarmCheck",
@@ -176,6 +185,7 @@
 									var userType = "${userType}";
 									
 									let data = {sysNo : sysNo, userNo : userNo, alarmCategory : alarmCategory, userType : userType};
+									console.log(data);
 									
 									$.ajax({
 										url : "categoryAlarm",
@@ -197,6 +207,7 @@
 									var userType = "${userType}";
 									
 									let data = {sysNo : sysNo, userNo : userNo, alarmCategory : alarmCategory, userType : userType};
+									console.log(data);
 									
 									$.ajax({
 										url : "categoryAlarm",
@@ -217,6 +228,7 @@
 									var userType = "${userType}";
 									
 									let data = {sysNo : sysNo, userNo : userNo, alarmCategory : alarmCategory, userType : userType};
+									console.log(data);
 									
 									$.ajax({
 										url : "categoryAlarm",
@@ -237,6 +249,7 @@
 									var userType = "${userType}";
 									
 									let data = {sysNo : sysNo, userNo : userNo, alarmCategory : alarmCategory, userType : userType};
+									console.log(data);
 									
 									$.ajax({
 										url : "categoryAlarm",
@@ -284,7 +297,9 @@
 								function selectCheck() {
 									
 									var alarmNo = document.getElementById("alarmNo").innerText;
+									console.log(alarmNo);
 									let data = {alarmNo : alarmNo}
+									console.log(data);
 									
 									$.ajax({
 										url : "${pageContext.request.contextPath}/alarm/delete",

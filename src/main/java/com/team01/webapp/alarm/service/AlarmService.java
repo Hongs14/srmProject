@@ -11,7 +11,10 @@ import com.team01.webapp.alarm.dao.IAlarmRepository;
 import com.team01.webapp.model.Alarm;
 import com.team01.webapp.model.Users;
 
+import lombok.extern.log4j.Log4j2;
+
 @Service
+@Log4j2
 public class AlarmService implements IAlarmService{
 
 	@Autowired
@@ -90,7 +93,6 @@ public class AlarmService implements IAlarmService{
 			alarmUser.setAlarmPry("상");
 			alarmUser.setAlarmCategory("SR상태변경");
 		}
-		
 		alarmRepository.insertAlarm(alarmUser);
 	}
 	
