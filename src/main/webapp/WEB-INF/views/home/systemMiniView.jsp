@@ -61,7 +61,7 @@
              	labelse = [];
              	data = [];
              	sttsNoList = [];
-             	ColorList = ['#6e707e', '#e3eaef', '#a11811', '#406882', '#36b9cc', '#66bb6a', '#ffa426', '#a33bff', '#0a8091', '#78380c'];
+             	ColorList = ['#6e707e', '#ef4f4f', '#a11811', '#406882', '#36b9cc', '#66bb6a', '#ffa426', '#a33bff', '#0a8091', '#78380c'];
              	backgroundColor = [];
              	
              	<c:forEach var="list" items="${donutList}">
@@ -101,15 +101,17 @@
 					    	}
 				    	},
 				    	datalabels : {
+				            backgroundColor: null,
+				            borderRadius: 5,
 				    		formatter : function (value, context) {
 				    			var idx = context.dataIndex;
-				    			return context.chart.data.labels[idx] + value + "건";
+				    			return context.chart.data.labels[idx] +"\n"+ value + "건";
 				    		},
 				    		display : 'auto',
 				    		font : {
-				    			size : '15',
+				    			size : '12',
 				    		},
-				    		color : '#000',
+				    		color : '#fff',
 				    	},
 				    },
 				  },
