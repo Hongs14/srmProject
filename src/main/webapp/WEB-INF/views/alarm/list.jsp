@@ -124,7 +124,7 @@
 													                    	</div>
 																		</td>
 																		<td>
-																			<i class="fas fa-trash col-1" data-toggle="modal" data-target="#alarmBtn" id="#modalScroll"></i>
+																			<i class="fas fa-trash col-1" onclick="selectCheck(${alarmList.alarmNo})"></i>
 																		</td>
 																	</tr>																
 																</c:forEach>
@@ -263,51 +263,22 @@
 								}
 								
 							</script>
-							<div class="modal fade" id="alarmBtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-								<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document"  style="max-width:450px;">
-									<div class="modal-content">
-										<div class="modal-header bg-primary">
-											<h5 class="modal-title" id="exampleModalScrollableTitle">
-									          	<img src="${pageContext.request.contextPath}/resources/images/logoOnly.png" style="width:20px;">
-									        	<small class="text-white">
-									        		<b>알림</b>
-									        	</small>
-											</h5>
-											<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body p-5" style="white-space: normal;">
-											<div class="alert alert-secondary m-3 p-2" role="alert">
-												<h6><i class="fas fa-exclamation-triangle"></i><b> 안내 </b></h6>
-												<div>
-													<span>정말 삭제 하시겠습니까?</span>
-												</div>
-											</div>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="selectCheck()">네</button>
-											<button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
-										</div>
-									</div>
-								</div>
-							</div>
 							<script>
-								function selectCheck() {
-									
-									var alarmNo = document.getElementById("alarmNo").innerText;
-									console.log(alarmNo);
-									let data = {alarmNo : alarmNo}
-									console.log(data);
-									
-									$.ajax({
-										url : "${pageContext.request.contextPath}/alarm/delete",
-										method : "post",
-										data : JSON.stringify(data),
-										contentType : "application/json; charset=UTF-8"
-									}).done((data) => {
-										window.location.href ='${pageContext.request.contextPath}/alarm/list';
-									})
+							function selectCheck(i) {
+								
+								var alarmNo = i;
+								console.log(alarmNo);
+								let data = {alarmNo : alarmNo}
+								console.log(data);
+								
+								$.ajax({
+									url : "${pageContext.request.contextPath}/alarm/delete",
+									method : "post",
+									data : JSON.stringify(data),
+									contentType : "application/json; charset=UTF-8"
+								}).done((data) => {
+									window.location.href ='${pageContext.request.contextPath}/alarm/list';
+								})
 								}
 							</script>
 	          			<!-- 로그아웃 모달 -->
