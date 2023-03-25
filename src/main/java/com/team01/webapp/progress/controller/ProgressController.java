@@ -495,6 +495,16 @@ public class ProgressController {
 		return "redirect:/progress/detail/" + progress.getSrNo();
 	}
 	
+	@RequestMapping(value="progress/detail/progressRateFinishReturn", method=RequestMethod.POST)
+	public String progressRateFinishReturn(@RequestBody Progress progress, HttpSession session) {
+		
+		progressService.progressRateFinishReturn(progress.getSrNo(), progress.getProgNo());
+		
+		session.setAttribute("message", 2);
+		
+		return "redirect:/progress/detail/" + progress.getSrNo();
+	}
+	
 	/**
 	 * 산출물 파일 리스트 출력
 	 * 

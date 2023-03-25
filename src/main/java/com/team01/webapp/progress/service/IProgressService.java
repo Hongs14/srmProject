@@ -228,4 +228,6 @@ public interface IProgressService {
 	public void changeRequestUpdate(ChangeRequest changeRequest);
 
 	public Users getSysUserData(String sysNo);
+
+	public void progressRateFinishReturn(String srNo, String progNo);
 }
