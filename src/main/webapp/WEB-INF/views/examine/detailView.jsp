@@ -207,20 +207,29 @@
 			let msg = '알림이 도착하였습니다.'
 	   		socket.send(msg);
 		}
+		console.log(srOpnn);
 		
-		let data = {srNo : srNo, srReqSe : srReqSe, srPry : srPry, sttsNm : sttsNm, srOpnn : srOpnn}
-		
-		$.ajax({
-			url : "${pageContext.request.contextPath}/examine/detail",
-			method : "post",
-			data : JSON.stringify(data),
-			contentType : "application/json; charset=UTF-8"
-		}).done((data) => {
-			$("#message").text(message);
-	    	setTimeout(function() {
-	    		window.location.href = "${pageContext.request.contextPath}/examine/list";
-	    	}, 2000);
-		})
-		
+		if(sttsNm == "반려" || sttsNm == "재검토"){
+			if(srOpnn == ""){
+				message = "검토의견을 작성해주세요";
+				$("#srOpnn").addClass("border-danger");
+				$("#message").text(message);
+				return false;
+			}else{
+				let data = {srNo : srNo, srReqSe : srReqSe, srPry : srPry, sttsNm : sttsNm, srOpnn : srOpnn}
+				
+				$.ajax({
+					url : "${pageContext.request.contextPath}/examine/detail",
+					method : "post",
+					data : JSON.stringify(data),
+					contentType : "application/json; charset=UTF-8"
+				}).done((data) => {
+					$("#message").text(message);
+			    	setTimeout(function() {
+			    		window.location.href = "${pageContext.request.contextPath}/examine/list";
+			    	}, 2000);
+				})
+			}
+		}
 	}
 </script>
