@@ -215,21 +215,21 @@
 				$("#srOpnn").addClass("border-danger");
 				$("#message").text(message);
 				return false;
-			}else{
-				let data = {srNo : srNo, srReqSe : srReqSe, srPry : srPry, sttsNm : sttsNm, srOpnn : srOpnn}
-				
-				$.ajax({
-					url : "${pageContext.request.contextPath}/examine/detail",
-					method : "post",
-					data : JSON.stringify(data),
-					contentType : "application/json; charset=UTF-8"
-				}).done((data) => {
-					$("#message").text(message);
-			    	setTimeout(function() {
-			    		window.location.href = "${pageContext.request.contextPath}/examine/list";
-			    	}, 2000);
-				})
 			}
 		}
+		
+		let data = {srNo : srNo, srReqSe : srReqSe, srPry : srPry, sttsNm : sttsNm, srOpnn : srOpnn}
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/examine/detail",
+			method : "post",
+			data : JSON.stringify(data),
+			contentType : "application/json; charset=UTF-8"
+		}).done((data) => {
+			$("#message").text(message);
+	    	setTimeout(function() {
+	    		window.location.href = "${pageContext.request.contextPath}/examine/list";
+	    	}, 2000);
+		})
 	}
 </script>
