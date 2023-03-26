@@ -271,6 +271,9 @@
 			htmlData += '<button class="btn btn-primary mr-2" type="button" onclick="progressRateFinishRequest(2)">'
 			htmlData += "네"
 			htmlData += '</button>'
+			htmlData += '<button class="btn btn-primary mr-2" type="button" onclick="progressRateFinishReturn()">'
+			htmlData += "아니오"
+			htmlData += '</button>'
 			htmlData += '<button type="button" class="btn btn-outline-primary mr-2" data-dismiss="modal">닫기</button>';
 			$('#footer').append(htmlData)
 			onMessage();
@@ -356,6 +359,25 @@
 			let msg = '알림이 도착하였습니다.'
 		   	socket.send(msg);
 			window.location.href = "${progress.srNo}";
+		});
+	}
+	
+	function progressRateFinishReturn() {
+		var srNo = "${srNo}"
+		
+		<c:forEach var="list" items="${progressRateList}" begin="4" end="4">
+			progNo = "${list.progNo}";
+		</c:forEach>
+		
+		data = {srNo : srNo, progNo : progNo};
+		
+		$.ajax({
+			url : "progressRateFinishReturn",
+			method : "post",
+			data : JSON.stringify(data),
+			contentType : "application/json; charset=UTF-8"
+		}).done((data) => {
+			window.location.href = srNo;
 		});
 	}
 	
