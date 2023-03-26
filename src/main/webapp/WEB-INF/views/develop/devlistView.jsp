@@ -21,7 +21,7 @@
 		<c:if test="${users.devList.size() != 0}">
 			<c:forEach var="devlist" items="${users.devList}">
 				<div class="row">
-					<div style="text-color:#406882"><b><fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy/MM/dd"/></b></div>
+					<div style="text-color:#406882"><b><fmt:formatDate value="${devlist.hrStartDate}" pattern="yyyy/MM/dd"/></b></div>
 					 ~<div style="text-color:#406882"><b><fmt:formatDate value="${devlist.hrEndDate}" pattern="yyyy/MM/dd"/></b></div>
 					&nbsp;<div>${devlist.srTtl}</div>
 					&nbsp;/&nbsp;<div>${devlist.taskNm}</div>
