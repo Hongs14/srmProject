@@ -228,6 +228,8 @@
 													data : JSON.stringify(data),
 													contentType: "application/json; charset=UTF-8"
 												}).done((data) => {
+													$("#underReview").addClass("d-none");
+													$("#reception").addClass("d-none");
 													$("#ajaxList").html(data)
 												});
 											});
@@ -278,6 +280,8 @@
 													data : JSON.stringify(data),
 													contentType: "application/json; charset=UTF-8"
 												}).done((data) => {
+													$("#underReview").removeClass("d-none");
+													$("#reception").removeClass("d-none");
 													$("#ajaxList").html(data)
 												});
 											}
@@ -313,8 +317,8 @@
 		                  		<h5 class="m-0 font-weight-bold text-primary">SR 검토 목록</h5>
 			                  	<div class="d-sm-flex justify-content-end">
 			                  		<c:if test="${sessionScope.loginUser.userType eq '관리자'}">			                  		
-				                		<button class="btn btn-sm btn-primary mr-1" onclick='selectUnderReview()'>일괄 처리 (검토중)</button>
-				                		<button class="btn btn-sm btn-primary mr-1" onclick='selectreception()'>일괄 처리 (접수)</button>
+				                		<button id="underReview" class="btn btn-sm btn-primary mr-1" onclick='selectUnderReview()'>일괄 처리 (검토중)</button>
+				                		<button id="reception" class="btn btn-sm btn-primary mr-1" onclick='selectreception()'>일괄 처리 (접수)</button>
 			                  		</c:if>
 			                		<button class="btn btn-sm btn-primary" onclick="excelDownload()">엑셀 다운로드</button>
 			                  	</div>
@@ -389,9 +393,9 @@
 												data : JSON.stringify(data),
 												contentType: "application/json; charset=UTF-8"
 											}).done((data) => {
-												$("#ajaxList").html(data);
 												let msg = "알림이 도착했습니다.";
 												socket.send(msg);
+												window.location.href = "${pageContext.request.contextPath}/examine/list" ;
 											});
 									  	});
 
@@ -442,9 +446,9 @@
 												data : JSON.stringify(data),
 												contentType: "application/json; charset=UTF-8"
 											}).done((data) => {
-												$("#ajaxList").html(data);
 												let msg = "알림이 도착했습니다.";
 												socket.send(msg);
+												window.location.href = "${pageContext.request.contextPath}/examine/list" ;
 											});
 									  	});
 
