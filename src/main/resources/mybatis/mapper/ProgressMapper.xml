@@ -632,4 +632,20 @@
 		WHERE USERS.user_no = SYSTEM.manager_no
 		AND SYS_NO = #{sysNo}
 	</select>
+	
+	<update id="updateProgress" parameterType="string">
+		UPDATE PROGRESS
+		SET
+		    PROG_START_DATE = null,
+		    PROG_END_DATE = null,
+            PROG_RATE = 0
+		WHERE PROG_NO = #{progNo}
+	</update>
+	
+	<update id="updateSrSttsDeveloping" parameterType="string">
+		UPDATE SR
+		SET 
+		    STTS_NO = 5
+		WHERE SR_NO = #{srNo}
+	</update>
 </mapper>

@@ -282,5 +282,9 @@ public interface IProgressRepository {
 	void updateDeveloperEndDate(@Param("userNo") int userNo, @Param("srNo") String srNo, @Param("hrEndDate") String crDdlnDate);
 
 	Users selectSysUserData(String sysNo);
+
+	void updateProgress(String progNo);
+	
+	void updateSrSttsDeveloping(String srNo);
 	
 }

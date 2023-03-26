@@ -389,7 +389,7 @@
 														</div>
 														<div class="text-right my-3">
 															<c:if test="${dlist.sttsNo == 4}">
-																<button type="button" data-toggle="modal" onclick="checkSubmit()" data-target="#checkEffectiveness" id="#modalCenter" class="btn btn-primary toggle modalCenter" disabled="disabled">저장</button>
+																<button type="button" data-toggle="modal" onclick="checkSubmit()" data-target="#checkEffectiveness" id="#modalCenter" class="btn btn-primary toggle modalCenter addlist" disabled="disabled">저장</button>
 															</c:if>
 															<c:if test="${dlist.sttsNo == 9}">
 																<button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="#modalCenter" class="btn btn-primary toggle">수정</button>
@@ -689,6 +689,7 @@
 					$('.validate').remove();
 					$("#checkBody").html(message);
 					$("#modalContent").html(data);
+					$('.addlist').css("background-color","#2DA44E");
 					$('.addlist').prop("disabled", false);
 					$('.modalCenter').prop("disabled",false);
 				},

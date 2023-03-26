@@ -365,6 +365,13 @@ public class ProgressService implements IProgressService {
 			}
 		}
 	}
+	
+	@Transactional
+	public void progressRateFinishReturn(String srNo, String progNo) {
+		progressRepository.updateProgress(progNo);
+		
+		progressRepository.updateSrSttsDeveloping(srNo);
+	}
 
 	@Override
 	public List<ProgressDetail> getProgressList(List<String> progressArr) {
