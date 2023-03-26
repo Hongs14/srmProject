@@ -141,10 +141,10 @@
 		HR리스트 불러오기
 	 -->
 	<select id="selectHrList" parameterType="string" resultType="hr">
-		SELECT SR_NO AS "srNo", HR.USER_NO AS "userNo", HR.TASK_NO AS "taskNo", HR_START_DATE AS "hrStartDate", HR_LEADER as "hrLeader",
-        HR_END_DATE AS "hrEndDate",HR_LEADER AS "hrLeader", USERS.USER_NM AS "userNm", TASK_Nm AS "taskNm"
-		FROM HR, USERS, TASK
-		WHERE HR.USER_NO = USERS.USER_NO AND HR.TASK_NO = TASK.TASK_NO AND SR_NO = #{srNo}
+		SELECT HR.SR_NO AS "srNo", HR.USER_NO AS "userNo", HR.TASK_NO AS "taskNo", HR_START_DATE AS "hrStartDate", HR_LEADER as "hrLeader",
+        HR.HR_END_DATE AS "hrEndDate",HR.HR_LEADER AS "hrLeader", USERS.USER_NM AS "userNm", TASK_Nm AS "taskNm"
+		FROM SR, HR, USERS, TASK
+		WHERE HR.USER_NO = USERS.USER_NO AND HR.TASK_NO = TASK.TASK_NO AND SR.SR_NO = #{srNo} AND SR.SR_NO = HR.SR_NO AND SR.STTS_NO IN (5, 9)
 	</select>
 	
 	<!-- 
